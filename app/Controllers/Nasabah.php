@@ -25,7 +25,8 @@ class Nasabah extends ResourceController
 
         if($errors) {
             return $this->fail($errors,400,true);
-        } else {
+        } 
+        else {
             $email        = $data['email'];
             $otp          = $this->baseController->generateOTP(6);
 
@@ -105,7 +106,11 @@ class Nasabah extends ResourceController
     
                     return $this->respondCreated($response);
                 } else {
-                    return $this->fail('otp not found',404,true);
+                    $response = [
+                        'code_otp' => 'otp not found',
+                    ];
+
+                    return $this->fail($response,404,true);
                 }                
             } 
             else {

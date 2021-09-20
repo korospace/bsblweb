@@ -87,10 +87,10 @@ class Validation
             ],
 		],
 		'alamat' => [
-            'rules'  => 'required|min_length[6]|max_length[255]',
+            'rules'  => 'required|min_length[10]|max_length[255]',
             'errors' => [
                 'required'    => 'alamat is required',
-                'min_length'  => 'min 6 character',
+                'min_length'  => 'min 10 character',
                 'max_length'  => 'max 255 character',
             ],
 		],
@@ -111,19 +111,19 @@ class Validation
             ],
 		],
 		'tgl_lahir' => [
-            'rules'  => 'required|min_length[6]|max_length[20]',
+            'rules'  => 'required|min_length[11]|max_length[16]',
             'errors' => [
                 'required'    => 'tgl lahir is required',
-                'min_length'  => 'min 6 character',
-                'max_length'  => 'max 20 character',
+                'min_length'  => 'min 11 character',
+                'max_length'  => 'max 16 character',
             ],
 		],
 		'kelamin' => [
-            'rules'  => 'required|min_length[6]|max_length[10]',
+            'rules'  => 'required|min_length[9]|max_length[9]',
             'errors' => [
                 'required'    => 'kelamin is required',
-                'min_length'  => 'min 6 character',
-                'max_length'  => 'max 10 character',
+                'min_length'  => 'min 9 character',
+                'max_length'  => 'max 9 character',
             ],
 		]
 	];

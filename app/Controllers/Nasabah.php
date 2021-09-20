@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Models\NasabahModel;
 use App\Controllers\BaseController;
 use CodeIgniter\RESTful\ResourceController;
-use \Firebase\JWT\JWT;
 use Exception;
 
 class Nasabah extends ResourceController

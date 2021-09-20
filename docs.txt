@@ -5,6 +5,9 @@ must be install
 - sudo apt-get install php-xml
 - sudo apt-get install php-pgsql
 
+deploy
+- enable .env in .gitignore
+
 
 1. change environment
 

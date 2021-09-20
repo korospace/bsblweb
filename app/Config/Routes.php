@@ -31,7 +31,7 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+
 $routes->group("nasabah", function ($routes) {
     $routes->post("register",     "Nasabah::register");
     $routes->post("login",        "Nasabah::login");
@@ -40,8 +40,11 @@ $routes->group("nasabah", function ($routes) {
     $routes->get("logout",        "Nasabah::logout");
     $routes->get("getdata",       "Nasabah::getData");
     $routes->get("editprofile",   "Nasabah::editProfile");
-    // $routes->get("profile", "User::details");
+    $routes->add("(:any)",        "Notfound::MethodNf");
 });
+
+$routes->add('/',       'Home::index');
+$routes->add('/(:any)', 'Notfound::ControllerNf');
 
 /*
  * --------------------------------------------------------------------

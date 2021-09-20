@@ -188,7 +188,7 @@ class Nasabah extends ResourceController
             return $this->respond($result['message'],200);
         } 
         else {
-            return $this->fail($result['message'],200);
+            return $this->fail($result['message'],200,true);
         }
         
     }
@@ -229,7 +229,7 @@ class Nasabah extends ResourceController
             }
         } 
         else {
-            return $this->fail($result['message'],200);
+            return $this->fail($result['message'],200,true);
         }
     }
 
@@ -308,7 +308,7 @@ class Nasabah extends ResourceController
             }
         } 
         else {
-            return $this->fail($result['message'],200);
+            return $this->fail($result['message'],200,true);
         }
         
     }
@@ -340,7 +340,7 @@ class Nasabah extends ResourceController
             }
         } 
         else {
-            return $this->fail($result['message'],200);
+            return $this->fail($result['message'],200,true);
         }
         
     }

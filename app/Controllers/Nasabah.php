@@ -173,11 +173,19 @@ class Nasabah extends ResourceController
                     } 
                 } 
                 else {
-                    return $this->fail('wrong password',401,true);
+                    $response = [
+                        'password' => 'password not found',
+                    ];
+    
+                    return $this->fail($response,404,true);
                 }
             } 
             else {
-                return $this->fail('email not found',404,true);
+                $response = [
+                    'email' => 'email not found',
+                ];
+
+                return $this->fail($response,404,true);
             }
         }
     }

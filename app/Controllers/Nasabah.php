@@ -174,7 +174,7 @@ class Nasabah extends ResourceController
                 } 
                 else {
                     $response = [
-                        'password' => 'password not found',
+                        'password' => 'password not match',
                     ];
     
                     return $this->fail($response,404,true);
@@ -200,7 +200,7 @@ class Nasabah extends ResourceController
             return $this->respond($result['message'],200);
         } 
         else {
-            return $this->fail($result['message'],200,true);
+            return $this->fail($result['message'],401,true);
         }
         
     }

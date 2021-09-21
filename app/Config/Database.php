@@ -32,27 +32,27 @@ class Database extends Config
      */
 
     //  Mysql
-    public $default = [
-        'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => '',
-        'database' => '',
-        'DBDriver' => 'MySQLi',
-        'DBPrefix' => '',
-        'pConnect' => false,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
-        'charset'  => 'utf8',
-        'DBCollat' => 'utf8_general_ci',
-        'swapPre'  => '',
-        'encrypt'  => false,
-        'compress' => false,
-        'strictOn' => false,
-        'failover' => [],
-        'port'     => 3306,
-    ];
+    // public $default = [
+    //     'DSN'      => '',
+    //     'hostname' => 'localhost',
+    //     'username' => 'root',
+    //     'password' => '',
+    //     'database' => '',
+    //     'DBDriver' => 'MySQLi',
+    //     'DBPrefix' => '',
+    //     'pConnect' => false,
+    //     'DBDebug'  => (ENVIRONMENT !== 'production'),
+    //     'charset'  => 'utf8',
+    //     'DBCollat' => 'utf8_general_ci',
+    //     'swapPre'  => '',
+    //     'encrypt'  => false,
+    //     'compress' => false,
+    //     'strictOn' => false,
+    //     'failover' => [],
+    //     'port'     => 3306,
+    // ];
 
-    // Postgresql
+    // Postgresql local
     // public $default = [
     //     'DSN'      => 'Postgre://banksampah:banksampah@localhost:5432/banksampah?charset=utf8&connect_timeout=5',
     //     'hostname' => 'localhost',
@@ -72,6 +72,27 @@ class Database extends Config
     //     'failover' => [],
     //     'port'     => 3306,
     // ];
+
+    // Postgresql heroku
+    public $default = [
+        'DSN'      => 'Postgre://eaxzuarmydxosq:d954bef2bfff907b334e42c56281241a363d925a52f7863bc8092b09da443e01@ec2-35-171-250-21.compute-1.amazonaws.com:5432/d3njo8irs6ur6?charset=utf8&connect_timeout=100',
+        'hostname' => 'ec2-35-171-250-21.compute-1.amazonaws.com',
+        'username' => 'eaxzuarmydxosq',
+        'password' => 'd954bef2bfff907b334e42c56281241a363d925a52f7863bc8092b09da443e01',
+        'database' => 'd3njo8irs6ur6',
+        'DBDriver' => 'Postgre',
+        'DBPrefix' => '',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'charset'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => 5432,
+    ];
 
     /**
      * This database connection is used when

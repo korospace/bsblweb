@@ -42,11 +42,11 @@ class Validation
     //--------------------------------------------------------------------
 	public $nasabahRegister = [
 		'email' => [
-			'rules'  => 'required|min_length[8]|max_length[20]|is_unique[nasabah.email]|valid_email',
+			'rules'  => 'required|min_length[8]|max_length[40]|is_unique[nasabah.email]|valid_email',
 			'errors' => [
                 'required'    => 'email is required',
                 'min_length'  => 'min 8 character',
-                'max_length'  => 'max 20 character',
+                'max_length'  => 'max 40 character',
                 'is_unique'   => 'email is exist',
                 'valid_email' => 'Email is not in format',
 			]
@@ -156,13 +156,6 @@ class Validation
 	];
     
 	public $editProfileNasabah = [
-		'id' => [
-            'rules'  => 'required|min_length[9]',
-            'errors' => [
-                'required'    => 'id is required',
-                'min_length'  => 'min 9 character',
-            ],
-		],
 		'username' => [
             'rules'  => 'required|min_length[8]|max_length[20]|is_unique[nasabah.username,nasabah.id,{id}]',
             'errors' => [

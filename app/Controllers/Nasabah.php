@@ -20,6 +20,9 @@ class Nasabah extends ResourceController
     public function register()
     {
 		$data   = $this->request->getPost();
+        var_dump($data);
+        var_dump($_POST);
+        die;
         $this->validation->run($data,'nasabahRegister');
         $errors = $this->validation->getErrors();
 

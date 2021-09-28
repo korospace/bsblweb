@@ -461,4 +461,43 @@ class Nasabah extends ResourceController
         }
         
     }
+
+    public function sendKritik()
+    {
+        $this->validation->run($_POST,'kritikSaran');
+        $errors = $this->validation->getErrors();
+
+        if($errors) {
+            $response = [
+                'status'   => 400,
+                'error'    => true,
+                'messages' => $errors,
+            ];
+    
+            return $this->respond($response,400);
+        } 
+        else {
+            $sendEmail = $this->baseController->sendKritikSaran($_POST['name'],$_POST['email'],$_POST['message']);
+
+            if ($sendEmail == true) {
+                $response = [
+                    'status'   => 200,
+                    "error"    => false,
+                    'messages' => 'kritik dan saran successfully sent',
+                ];
+
+                return $this->respond($response,201);
+            } 
+            else {
+                $response = [
+                    'status'   => 500,
+                    'error'    => true,
+                    'messages' => $sendEmail,
+                ];
+        
+                return $this->respond($response,500);
+            }
+        }
+        
+    }
 }

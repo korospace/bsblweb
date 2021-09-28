@@ -123,13 +123,13 @@ class Nasabah extends Migration
             ],
             'tgl_lahir' => [
                 'type' => 'character varying',
-                'constraint' => 20,
+                'constraint' => 10,
                 'null' => false,
-                'default' => '03-oktober-2000',
+                'default' => '00-00-0000',
             ],
             'kelamin' => [
                 'type' => 'character varying',
-                'constraint' => 10,
+                'constraint' => 9,
                 'default' => 'laki-laki',
                 'null' => false,
             ],
@@ -149,11 +149,6 @@ class Nasabah extends Migration
                 'constraint' => 6,
                 'null' => true,
             ],
-            // 'created_at' => [
-            //     'type' => 'character varying',
-            //     'constraint' => 255,
-            //     'null' => false,
-            // ],
         ]);
 
         $this->forge->addPrimaryKey('id');

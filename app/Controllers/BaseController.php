@@ -90,16 +90,52 @@ class BaseController extends Controller
         try {
             $mail->isSMTP();                          
             $mail->Host       = 'smtp.gmail.com';
-            $mail->Username   = 'banksampahbudiluhur@gmail.com';
-            $mail->Password   = 'latxapaiejnamadl';
             $mail->Port       = 465;
             $mail->SMTPAuth   = true;
             $mail->SMTPSecure = 'ssl';
+            $mail->Username   = 'banksampahbudiluhur@gmail.com';
+            $mail->Password   = 'latxapaiejnamadl';
             $mail->Subject    = 'code OTP';
             $mail->Body       = "Terimakasih sudah bergabung bersama Bank Sampah Budiluhur.<br>berikut adalah code OTP anda:<br><h1>$otp</h1>";
 
-            $mail->setFrom('banksampahbudiluhur@gmail.com', 'Bank Sampah Budiluhur');
+            $mail->setFrom('banksampahbudiluhur@gmail.com', 'Bank Sampah UBL');
             $mail->addAddress($email);
+            $mail->isHTML(true);
+
+            if($mail->send()) {
+                return true;
+            }
+        } 
+        catch (Exception $e) {
+            return $e;
+        }
+    }
+
+    /**
+     * Send Kritik AND Saran
+     */
+    public function sendKritikSaran(String $userName,String $userEmail,String $message)
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();                          
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->Port       = 465;
+            $mail->SMTPAuth   = true;
+            $mail->SMTPSecure = 'ssl';
+            // $mail->Username   = 'banksampahbudiluhur@gmail.com';
+            // $mail->Password   = 'latxapaiejnamadl';
+            $mail->Username   = 'bsublservice@gmail.com';
+            $mail->Password   = 'fowvxqgcnvldnnlz';
+            $mail->Subject    = 'Kritik Dan Saran';
+            $mail->Body       = "<p>name  : $userName</p>
+            <p>email : $userEmail</p><br>
+            <p><b><u>kriti dan saran:</u></b></p>$message";
+
+            $mail->setFrom($userEmail,$userName);
+            $mail->addAddress('banksampahbudiluhur@gmail.com','Banksampah Budiluhur');
+            $mail->addReplyTo($userEmail,$userName);
             $mail->isHTML(true);
 
             if($mail->send()) {

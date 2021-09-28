@@ -42,7 +42,7 @@ class Validation
     //--------------------------------------------------------------------
 	public $nasabahRegister = [
 		'email' => [
-			'rules'  => 'required|min_length[8]|max_length[40]|is_unique[nasabah.email]|valid_email',
+			'rules'  => 'required|max_length[40]|is_unique[nasabah.email]|valid_email',
 			'errors' => [
                 'required'    => 'email is required',
                 'min_length'  => 'min 8 character',
@@ -69,7 +69,7 @@ class Validation
             ],
 		],
 		'nama_lengkap' => [
-            'rules'  => 'required|min_length[6]|max_length[40]|is_unique[nasabah.nama_lengkap]',
+            'rules'  => 'required|max_length[40]|is_unique[nasabah.nama_lengkap]',
             'errors' => [
                 'required'    => 'nama lengkap is required',
                 'min_length'  => 'min 6 character',
@@ -78,7 +78,7 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|min_length[6]|max_length[12]|is_unique[nasabah.notelp]',
+            'rules'  => 'required|max_length[12]|is_unique[nasabah.notelp]',
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'min_length'  => 'min 6 character',
@@ -87,7 +87,7 @@ class Validation
             ],
 		],
 		'alamat' => [
-            'rules'  => 'required|min_length[10]|max_length[255]',
+            'rules'  => 'required|max_length[255]',
             'errors' => [
                 'required'    => 'alamat is required',
                 'min_length'  => 'min 10 character',
@@ -111,11 +111,11 @@ class Validation
             ],
 		],
 		'tgl_lahir' => [
-            'rules'  => 'required|min_length[11]|max_length[16]',
+            'rules'  => 'required|min_length[10]|max_length[10]',
             'errors' => [
                 'required'    => 'tgl lahir is required',
-                'min_length'  => 'min 11 character',
-                'max_length'  => 'max 16 character',
+                'min_length'  => 'min 10 character',
+                'max_length'  => 'max 10 character',
             ],
 		],
 		'kelamin' => [
@@ -166,7 +166,7 @@ class Validation
             ],
 		],
 		'nama_lengkap' => [
-            'rules'  => 'required|min_length[6]|max_length[40]|is_unique[nasabah.nama_lengkap,nasabah.id,{id}]',
+            'rules'  => 'required|max_length[40]|is_unique[nasabah.nama_lengkap,nasabah.id,{id}]',
             'errors' => [
                 'required'    => 'nama lengkap is required',
                 'min_length'  => 'min 6 character',
@@ -175,7 +175,7 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|min_length[6]|max_length[12]|is_unique[nasabah.notelp,nasabah.id,{id}]',
+            'rules'  => 'required|max_length[12]|is_unique[nasabah.notelp,nasabah.id,{id}]',
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'min_length'  => 'min 6 character',
@@ -184,7 +184,7 @@ class Validation
             ],
 		],
 		'alamat' => [
-            'rules'  => 'required|min_length[6]|max_length[255]',
+            'rules'  => 'required|max_length[255]',
             'errors' => [
                 'required'    => 'alamat is required',
                 'min_length'  => 'min 6 character',
@@ -192,19 +192,19 @@ class Validation
             ],
 		],
 		'tgl_lahir' => [
-            'rules'  => 'required|min_length[6]|max_length[20]',
+            'rules'  => 'required|min_length[10]|max_length[10]',
             'errors' => [
                 'required'    => 'tgl lahir is required',
-                'min_length'  => 'min 6 character',
-                'max_length'  => 'max 20 character',
+                'min_length'  => 'min 10 character',
+                'max_length'  => 'max 10 character',
             ],
 		],
 		'kelamin' => [
-            'rules'  => 'required|min_length[6]|max_length[10]',
+            'rules'  => 'required|min_length[9]|max_length[9]',
             'errors' => [
                 'required'    => 'kelamin is required',
-                'min_length'  => 'min 6 character',
-                'max_length'  => 'max 10 character',
+                'min_length'  => 'min 9 character',
+                'max_length'  => 'max 9 character',
             ],
 		]
 	];
@@ -215,6 +215,29 @@ class Validation
             'errors' => [
                 'min_length'  => 'min 8 character',
                 'max_length'  => 'max 20 character',
+            ],
+		],
+	];
+
+    public $kritikSaran = [
+		'name' => [
+            'rules'  => 'required|max_length[20]',
+            'errors' => [
+                'required'   => 'name is required',
+                'max_length' => 'max 20 character',
+            ],
+		],
+		'email' => [
+            'rules'  => 'required|valid_email',
+            'errors' => [
+                'required'    => 'email is required',
+                'valid_email' => 'Email is not in format',
+            ],
+		],
+		'message' => [
+            'rules'  => 'required',
+            'errors' => [
+                'message' => 'message is required',
             ],
 		],
 	];

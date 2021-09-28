@@ -40,7 +40,15 @@ $routes->group("nasabah", function ($routes) {
     $routes->get("getprofile",    "Nasabah::getProfile");
     $routes->put("editprofile",   "Nasabah::editProfile");
     $routes->delete("logout",     "Nasabah::logout");
+    $routes->post("sendkritik",   "Nasabah::sendKritik");
     $routes->add("(:any)",        "Notfound::MethodNf");
+});
+
+$routes->group("admin", function ($routes) {
+    $routes->post("login",            "Admin::login");
+    $routes->post("addadmin",         "Admin::addAdmin");
+    $routes->post("logout",           "Admin::logout");
+    $routes->post("add-berita-acara", "Admin::addBeritaAcara");
 });
 
 $routes->add('/',       'Home::index');

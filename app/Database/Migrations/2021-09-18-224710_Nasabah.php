@@ -67,10 +67,9 @@ class Nasabah extends Migration
         //         'null' => true,
         //     ],
         //     'is_verify' => [
-        //         'type' => 'ENUM',
-        //         'constraint' => ['yes','no'],
+        //         'type' => 'boolean',
         //         'null' => false,
-        //         'default' => 'no',
+        //         'default' => false,
         //     ],
         //     'otp' => [
         //         'type' => 'varchar',
@@ -139,10 +138,9 @@ class Nasabah extends Migration
                 'null' => true,
             ],
             'is_verify' => [
-                'type' => 'character varying',
-                'constraint' => 3,
+                'type' => 'BOOLEAN',
                 'null' => false,
-                'default' => 'no',
+                'default' => false,
             ],
             'otp' => [
                 'type' => 'character varying',

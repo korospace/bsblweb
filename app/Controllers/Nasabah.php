@@ -181,7 +181,7 @@ class Nasabah extends ResourceController
                 if (password_verify($login_pass,$database_pass)) {
                     $is_verify = $nasabahData['message']['is_verify'];
 
-                    if ($is_verify == 'no') {
+                    if ($is_verify == false) {
                         $response = [
                             'status'   => 401,
                             'error'    => true,

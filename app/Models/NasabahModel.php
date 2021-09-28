@@ -10,9 +10,6 @@ class NasabahModel extends Model
     protected $table         = 'nasabah';
     protected $primaryKey    = 'id';
     protected $allowedFields = ['id','id_nasabah','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token'];
-	protected $useTimestamps = true;
-	protected $dateFormat    = 'datetime';
-	protected $createdField  = 'created_at';
 
     public function getLastNasabah(){
         try {
@@ -73,7 +70,7 @@ class NasabahModel extends Model
     public function emailVerification($otp){
         try {
             $data = [
-                'is_verify' => 'yes',
+                'is_verify' => true,
                 'otp'       => null
             ];
     

@@ -20,6 +20,11 @@ class Admin extends ResourceController
         $this->adminModel     = new AdminModel;
     }
 
+    /**
+     * Login
+     *   url    : domain.com/admin/login
+     *   method : POST
+     */
     public function login(): object
     {
         $data   = $this->request->getPost();
@@ -36,6 +41,7 @@ class Admin extends ResourceController
             return $this->respond($response,400);
         } 
         else {
+            // get admin data from DB by username
             $adminData  = $this->adminModel->getAdminByUsername($this->request->getPost("username"));
 
             if ($adminData['success'] == true) {
@@ -92,7 +98,9 @@ class Admin extends ResourceController
                     $response = [
                         'status'   => 404,
                         'error'    => true,
-                        'messages' => 'password not match',
+                        'messages' => [
+                            'password' => "password not match",
+                        ],
                     ];
             
                     return $this->respond($response,404);

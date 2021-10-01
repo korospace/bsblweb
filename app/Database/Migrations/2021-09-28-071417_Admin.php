@@ -46,9 +46,9 @@ class Admin extends Migration
             ],
             'tgl_lahir' => [
                 'type' => 'character varying',
-                'constraint' => 16,
+                'constraint' => 10,
                 'null' => false,
-                'default' => '03-oktober-2000',
+                'default' => '00-00-0000',
             ],
             'kelamin' => [
                 'type' => 'character varying',

@@ -40,7 +40,9 @@ class AdminModel extends Model
             if (empty($dataAdmin)) {    
                 return [
                     'success' => false,
-                    'message' => "username notfound",
+                    'message' => [
+                        'username' => "username notfound",
+                    ],
                     'code'    => 404
                 ];
             } 

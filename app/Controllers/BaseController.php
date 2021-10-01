@@ -87,7 +87,7 @@ class BaseController extends Controller
     {
         $path   = $path;
         $data   = file_get_contents($path);
-        $base64 = 'data:' . $type . ';base64,' . base64_encode($data);
+        $base64 = 'data:'.preg_replace('/\s+/', '', $type).';base64,' . base64_encode($data);
       
         return $base64;
     }

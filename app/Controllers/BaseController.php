@@ -202,7 +202,7 @@ class BaseController extends Controller
     /**
      * Check token nasabah AND admin
      */
-    public function checkToken(string $token,string $target): array
+    public function checkToken(?string $token,string $target): array
     {
         try {
             $db          = \Config\Database::connect();

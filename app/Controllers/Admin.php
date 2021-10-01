@@ -48,7 +48,10 @@ class Admin extends ResourceController
                 $login_pass    = $this->request->getPost("password");
                 $database_pass = $adminData['message']['password'];
 
+                // verify password
                 if (password_verify($login_pass,$database_pass)) {
+
+                    // is admin active or not
                     $is_active = $adminData['message']['active'];
 
                     if ($is_active == 'f') {
@@ -118,10 +121,15 @@ class Admin extends ResourceController
         }
     }
 
+    /**
+     * Session Check
+     *   url    : domain.com/admin/sessioncheck
+     *   method : GET
+     */
     public function sessionCheck(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
         if ($result['success'] == true) {
@@ -141,7 +149,7 @@ class Admin extends ResourceController
     public function getProfile(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
         if ($result['success'] == true) {
@@ -181,7 +189,7 @@ class Admin extends ResourceController
     public function editProfile(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
         if ($result['success'] == true) {
@@ -291,7 +299,7 @@ class Admin extends ResourceController
     public function logout(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
         if ($result['success'] == true) {
@@ -332,7 +340,7 @@ class Admin extends ResourceController
     public function getNasabah(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
         if ($result['success'] == true) {
@@ -372,7 +380,7 @@ class Admin extends ResourceController
     public function addNasabah(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
 		if ($result['success'] == true) {
@@ -466,7 +474,7 @@ class Admin extends ResourceController
     public function editNasabah(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
         if ($result['success'] == true) {
@@ -578,7 +586,7 @@ class Admin extends ResourceController
 	public function deleteNasabah(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
         if ($result['success'] == true) {
@@ -629,7 +637,7 @@ class Admin extends ResourceController
     public function getAdmin(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
         if ($result['success'] == true) {
@@ -684,7 +692,7 @@ class Admin extends ResourceController
     public function addAdmin(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
 		if ($result['success'] == true) {
@@ -783,7 +791,7 @@ class Admin extends ResourceController
     public function editAdmin(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
 		if ($result['success'] == true) {
@@ -906,7 +914,7 @@ class Admin extends ResourceController
 	public function deleteAdmin(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'admin');
 
         if ($result['success'] == true) {

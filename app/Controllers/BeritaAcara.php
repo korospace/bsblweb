@@ -49,7 +49,7 @@ class BeritaAcara extends ResourceController
             else {
                 $data = [
                     "title"      => strtolower(trim($data['title'])),
-                    "thumbnail"  => $this->baseController->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['new_thumbnail']['type']),
+                    "thumbnail"  => $this->baseController->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
                     "content"    => trim($data['content']),
                     "kategori"   => strtolower(trim($data['kategori'])),
                     "created_by" => $result['message']['data']['id_admin'],

@@ -222,6 +222,11 @@ class BeritaAcara extends ResourceController
         }
     }
 
+    /**
+     * Delete item
+     *   url    : domain.com/berita_acara/deleteitem?id=:id
+     *   method : DELETE
+     */
 	public function deleteItem(): object
     {
         $authHeader = $this->request->getHeader('token');

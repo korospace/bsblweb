@@ -111,7 +111,7 @@ class BeritaAcaraModel extends Model
             if ($this->db->affectedRows() > 0) {
                 return [
                     "success"  => true,
-                    'message' => 'delete berita is success',
+                    'message' => "delete berita with id $id is success",
                 ];
             } 
             else {   

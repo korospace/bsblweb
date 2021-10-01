@@ -80,7 +80,7 @@ class KategoriBeritaModel extends Model
             if ($this->db->affectedRows() > 0) {
                 return [
                     "success"  => true,
-                    'message' => 'delete kategori is success',
+                    'message' => "delete kategori with id $id is success",
                 ];
             } 
             else {   

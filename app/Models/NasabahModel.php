@@ -110,7 +110,9 @@ class NasabahModel extends Model
             if (empty($dataNasabah)) {    
                 return [
                     'success' => false,
-                    'message' => "email notfound",
+                    'message' => [
+                        'email' => "email not found",
+                    ],
                     'code'    => 404
                 ];
             } 

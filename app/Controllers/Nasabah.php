@@ -230,7 +230,9 @@ class Nasabah extends ResourceController
                     $response = [
                         'status'   => 404,
                         'error'    => true,
-                        'messages' => 'password not match',
+                        'messages' => [
+                            'password' => "password not match",
+                        ],
                     ];
             
                     return $this->respond($response,404);

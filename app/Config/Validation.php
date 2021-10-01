@@ -88,7 +88,6 @@ class Validation
             'rules'  => 'required|max_length[255]',
             'errors' => [
                 'required'    => 'alamat is required',
-                'min_length'  => 'min 10 character',
                 'max_length'  => 'max 255 character',
             ],
 		],
@@ -265,6 +264,16 @@ class Validation
 	];
     
 	public $editProfileNasabahByAdmin = [
+		'email' => [
+			'rules'  => 'required|max_length[40]|is_unique[nasabah.email,nasabah.id,{id}]|valid_email|valid_emails',
+			'errors' => [
+                'required'     => 'email is required',
+                'max_length'   => 'max 40 character',
+                'is_unique'    => 'email is exist',
+                'valid_email'  => 'Email is not in format',
+                'valid_emails' => "Email's provider is not valid",
+			]
+		],
 		'username' => [
             'rules'  => 'required|min_length[8]|max_length[20]|is_unique[nasabah.username,nasabah.id,{id}]',
             'errors' => [

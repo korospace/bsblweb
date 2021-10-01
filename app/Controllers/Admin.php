@@ -191,7 +191,6 @@ class Admin extends ResourceController
         }
     }
 
-
     /**
      * Edit own profile
      *   url    : domain.com/admin/editprofile
@@ -307,6 +306,11 @@ class Admin extends ResourceController
         }
     }
 
+    /**
+     * Logout
+     *   url    : domain.com/admin/logout
+     *   method : DELETE
+     */
     public function logout(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -348,6 +352,12 @@ class Admin extends ResourceController
         
     }
 
+    /**
+     * Get nasabah
+     *   url    : - domain.com/admin/getnasabah
+     *            - domain.com/admin/getnasabah?id_nasabah=:id_nasabah
+     *   method : GET
+     */
     public function getNasabah(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -388,6 +398,11 @@ class Admin extends ResourceController
 
     }
 
+    /**
+     * Add nasabah
+     *   url    : domain.com/admin/addnasabah
+     *   method : POST
+     */
     public function addNasabah(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -482,6 +497,11 @@ class Admin extends ResourceController
         }
     }
 
+    /**
+     * Edit nasabah
+     *   url    : domain.com/admin/editnasabah
+     *   method : PUT
+     */
     public function editNasabah(): object
     {
         $authHeader = $this->request->getHeader('token');

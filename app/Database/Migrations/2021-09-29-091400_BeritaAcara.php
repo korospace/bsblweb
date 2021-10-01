@@ -27,14 +27,21 @@ class BeritaAcara extends Migration
                 'constraint' => 10000,
                 'null' => false,
             ],
+            'kategori' => [
+                'type' => 'character varying',
+                'constraint' => 20,
+                'null' => false,
+            ],
             'created_by' => [
                 'type' => 'character varying',
-                'constraint' => 40,
+                'constraint' => 10,
                 'null' => false,
             ],
         ]);
 
         $this->forge->addPrimaryKey('id');
+        $this->forge->addForeignKey('kategori','kategori_berita','name','CASCADE','CASCADE');
+        $this->forge->addForeignKey('created_by','admin','id_admin','SET NULL','SET NULL');
         $this->forge->addField("created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('berita_acara');
     }

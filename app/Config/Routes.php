@@ -45,10 +45,32 @@ $routes->group("nasabah", function ($routes) {
 });
 
 $routes->group("admin", function ($routes) {
-    $routes->post("login",            "Admin::login");
-    $routes->post("addadmin",         "Admin::addAdmin");
-    $routes->post("logout",           "Admin::logout");
-    $routes->post("add-berita-acara", "Admin::addBeritaAcara");
+    $routes->post("login",           "Admin::login");
+    $routes->get("sessioncheck",     "Admin::sessionCheck");
+    $routes->get("getprofile",       "Admin::getProfile");
+    $routes->put("editprofile",      "Admin::editProfile");
+    $routes->delete("logout",        "Admin::logout");
+    $routes->get("getnasabah",       "Admin::getNasabah");
+    $routes->post("addnasabah",      "Admin::addNasabah");
+    $routes->put("editnasabah",      "Admin::editNasabah");
+    $routes->delete("deletenasabah", "Admin::deleteNasabah");
+    $routes->get("getadmin",         "Admin::getAdmin");
+    $routes->post("addadmin",        "Admin::addAdmin");
+    $routes->put("editadmin",        "Admin::editAdmin");
+    $routes->delete("deleteadmin",   "Admin::deleteAdmin");
+});
+
+$routes->group("kategori_berita", function ($routes) {
+    $routes->post("additem",      "KategoriBerita::addItem");
+    $routes->get("getitem",       "KategoriBerita::getItem");
+    $routes->delete("deleteitem", "KategoriBerita::deleteItem");
+});
+
+$routes->group("berita_acara", function ($routes) {
+    $routes->post("additem",      "BeritaAcara::addItem");
+    $routes->get("getitem",       "BeritaAcara::getItem");
+    $routes->put("updateitem",    "BeritaAcara::updateItem");
+    $routes->delete("deleteitem", "BeritaAcara::deleteItem");
 });
 
 $routes->add('/',       'Home::index');

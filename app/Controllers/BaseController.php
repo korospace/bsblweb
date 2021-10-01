@@ -81,6 +81,19 @@ class BaseController extends Controller
     }
 
     /**
+     * file to Base64.
+     */
+    public function base64Decode(string $path) : string
+    {
+        $path   = $path;
+        $type   = pathinfo($path, PATHINFO_EXTENSION);
+        $data   = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+      
+        return $base64;
+    }
+
+    /**
      * Send Email OTP.
      */
     public function sendVerification(String $email,String $otp)
@@ -124,10 +137,10 @@ class BaseController extends Controller
             $mail->Port       = 465;
             $mail->SMTPAuth   = true;
             $mail->SMTPSecure = 'ssl';
-            // $mail->Username   = 'banksampahbudiluhur@gmail.com';
-            // $mail->Password   = 'latxapaiejnamadl';
-            $mail->Username   = 'bsublservice@gmail.com';
-            $mail->Password   = 'fowvxqgcnvldnnlz';
+            $mail->Username   = 'banksampahbudiluhur@gmail.com';
+            $mail->Password   = 'latxapaiejnamadl';
+            // $mail->Username   = 'bsublservice@gmail.com';
+            // $mail->Password   = 'fowvxqgcnvldnnlz';
             $mail->Subject    = 'Kritik Dan Saran';
             $mail->Body       = "<p>name  : $userName</p>
             <p>email : $userEmail</p><br>
@@ -148,9 +161,9 @@ class BaseController extends Controller
     }
 
     /**
-     * Generate New Token.
+     * Generate New Token Nasabah
      */
-    public function generateToken(string $id,string $id_nasabah,bool $rememberme): string
+    public function generateTokenNasabah(string $id,string $id_nasabah,bool $rememberme): string
     {
         // $iat = time(); // current timestamp value
         // $nbf = $iat + 10;
@@ -167,13 +180,33 @@ class BaseController extends Controller
     }
 
     /**
-     * Check token.
+     * Generate New Token Admin
      */
-    public function checkToken(string $token): array
+    public function generateTokenAdmin(string $id,string $id_admin,string $privilege): string
+    {
+        // $iat = time(); // current timestamp value
+        // $nbf = $iat + 10;
+
+        $payload = array(
+            // "iat" => $iat, // issued at
+            // "nbf" => $nbf, //not before in seconds
+            "id"        => $id,
+            "id_admin"  => $id_admin,
+            "privilege" => $privilege,
+            "expired"   => time()+3600, 
+        );
+
+        return JWT::encode($payload, $this->getKey());
+    }
+
+    /**
+     * Check token nasabah AND admin
+     */
+    public function checkToken(string $token,string $target): array
     {
         try {
             $db          = \Config\Database::connect();
-            $dataNasabah = $db->table('nasabah')->where("token", $token)->get()->getResultArray();
+            $dataNasabah = $db->table($target)->where("token", $token)->get()->getResultArray();
         } 
         catch (phpException $e) {
             return [
@@ -194,12 +227,10 @@ class BaseController extends Controller
                     $response = [
                         'status'   => 200,
                         'error'    => false,
-                        'data'     => [
-                            'id'         => $decoded['id'],
-                            'id_nasabah' => $decoded['id_nasabah'],
-                            'expired'    => $decoded['expired'] - time(),
-                        ]
+                        'data'     => $decoded
                     ];
+
+                    $response['data']['expired'] = $decoded['expired'] - time();
     
                     return [
                         'success' => true,
@@ -208,12 +239,12 @@ class BaseController extends Controller
                 } 
                 else {
                     try {
-                        // set nasabah token null in database 
+                        // set nasabah OR admin token null in database 
                         $data = [
                             'token' => null
                         ];
 
-                        $db->table('nasabah')->where('token', $token)->update($data);
+                        $db->table($target)->where('token', $token)->update($data);
                         
                         if ($db->affectedRows()> 0) {
                             return [

@@ -13,11 +13,11 @@ class Nasabah extends ResourceController
 
 	public function __construct()
     {
-        $this->validation = \Config\Services::validation();
+        $this->validation     = \Config\Services::validation();
         $this->baseController = new BaseController;
     }
 
-    public function register()
+    public function register(): object
     {
 		$data   = $this->request->getPost();
         $this->validation->run($data,'nasabahRegister');
@@ -33,7 +33,7 @@ class Nasabah extends ResourceController
             return $this->respond($response,400);
         } 
         else {
-            $email        = $data['email'];
+            $email        = trim($data['email']);
             $otp          = $this->baseController->generateOTP(6);
 
             $nasabahModel = new NasabahModel();
@@ -65,12 +65,12 @@ class Nasabah extends ResourceController
                 "id"           => uniqid(),
                 "id_nasabah"   => $idNasabah,
                 "email"        => $email,
-                "username"     => $data['username'],
-                "password"     => password_hash($data['password'], PASSWORD_DEFAULT),
-                "nama_lengkap" => $data['nama_lengkap'],
-                "notelp"       => $data['notelp'],
-                "alamat"       => $data['alamat'],
-                "tgl_lahir"    => $data['tgl_lahir'],
+                "username"     => trim($data['username']),
+                "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
+                "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
+                "notelp"       => trim($data['notelp']),
+                "alamat"       => trim($data['alamat']),
+                "tgl_lahir"    => trim($data['tgl_lahir']),
                 "kelamin"      => $data['kelamin'],
                 "otp"          => $otp,
             ];
@@ -113,7 +113,7 @@ class Nasabah extends ResourceController
 
     }
 
-    public function verification()
+    public function verification(): object
     {
 		$data   = $this->request->getPost();
         $this->validation->run($data,'codeOTP');
@@ -155,7 +155,7 @@ class Nasabah extends ResourceController
         }    
     }
 
-    public function login()
+    public function login(): object
     {
 		$data   = $this->request->getPost();
         $this->validation->run($data,'nasabahLogin');
@@ -196,7 +196,7 @@ class Nasabah extends ResourceController
                         // rememberMe check
                         $rememberme   = ($this->request->getPost("rememberme") == 'yes') ? true : '';
                         // generate new token
-                        $token        = $this->baseController->generateToken(
+                        $token        = $this->baseController->generateTokenNasabah(
                             $id,
                             $nasabahData['message']['id_nasabah'],
                             $rememberme
@@ -217,12 +217,12 @@ class Nasabah extends ResourceController
                         } 
                         else {
                             $response = [
-                                'status'   => $nasabahData['code'],
+                                'status'   => $editNasabah['code'],
                                 'error'    => true,
-                                'messages' => $nasabahData['message'],
+                                'messages' => $editNasabah['message'],
                             ];
                     
-                            return $this->respond($response,$nasabahData['code']);
+                            return $this->respond($response,$editNasabah['code']);
                         }
                     } 
                 } 
@@ -248,11 +248,11 @@ class Nasabah extends ResourceController
         }
     }
 
-    public function sessionCheck()
+    public function sessionCheck(): object
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->baseController->checkToken($token,'nasabah');
 
         if ($result['success'] == true) {
             return $this->respond($result['message'],200);
@@ -268,11 +268,11 @@ class Nasabah extends ResourceController
         }
     }
 
-    public function getProfile()
+    public function getProfile(): object
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->baseController->checkToken($token,'nasabah');
 
         if ($result['success'] == true) {
             $nasabahModel = new NasabahModel();
@@ -309,11 +309,11 @@ class Nasabah extends ResourceController
         }
     }
 
-    public function editProfile()
+    public function editProfile(): object
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->baseController->checkToken($token,'nasabah');
 
         if ($result['success'] == true) {
             $this->baseController->_methodParser('data');
@@ -341,10 +341,7 @@ class Nasabah extends ResourceController
                     $newpass = '';
                     $oldpass = '';
 
-                    try {
-                        $newpass = $data['new_password'];
-                        $oldpass = $data['old_password'];
-
+                    if (isset($data['new_password'])) {
                         $this->validation->run($data,'editNewPassword');
                         $errors = $this->validation->getErrors();
                         
@@ -357,16 +354,19 @@ class Nasabah extends ResourceController
                     
                             return $this->respond($response,400);
                         } 
-                    } 
-                    catch (Exception $e) {}
+                        else {
+                            $newpass = $data['new_password'];
+                            $oldpass = $data['old_password'];
+                        }
+                    }
             
                     $data = [
                         "id"           => $data['id'],
-                        "username"     => $data['username'],
-                        "nama_lengkap" => $data['nama_lengkap'],
-                        "notelp"       => $data['notelp'],
-                        "alamat"       => $data['alamat'],
-                        "tgl_lahir"    => $data['tgl_lahir'],
+                        "username"     => trim($data['username']),
+                        "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
+                        "notelp"       => trim($data['notelp']),
+                        "alamat"       => trim($data['alamat']),
+                        "tgl_lahir"    => trim($data['tgl_lahir']),
                         "kelamin"      => $data['kelamin'],
                     ];
 
@@ -420,11 +420,11 @@ class Nasabah extends ResourceController
         
     }
 
-    public function logout()
+    public function logout(): object
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->baseController->checkToken($token,'nasabah');
 
         if ($result['success'] == true) {
             $nasabahModel = new NasabahModel();
@@ -462,7 +462,7 @@ class Nasabah extends ResourceController
         
     }
 
-    public function sendKritik()
+    public function sendKritik(): object
     {
         $this->validation->run($_POST,'kritikSaran');
         $errors = $this->validation->getErrors();

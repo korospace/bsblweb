@@ -11,9 +11,10 @@ class NasabahModel extends Model
     protected $primaryKey    = 'id';
     protected $allowedFields = ['id','id_nasabah','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token'];
 
-    public function getLastNasabah(){
+    public function getLastNasabah(): array
+    {
         try {
-            $lastNasabah = $this->db->table($this->table)->orderBy('created_at','DESC')->limit(1)->get()->getResultArray();
+            $lastNasabah = $this->db->table($this->table)->orderBy('created_at','DESC')->get()->getResultArray();
 
             if (empty($lastNasabah)) {    
                 return [
@@ -38,7 +39,8 @@ class NasabahModel extends Model
         }
     }
 
-    public function addNasabah($data){
+    public function addNasabah(array $data): array
+    {
         try {
             $query = $this->db->table($this->table)->insert($data);
 
@@ -67,7 +69,8 @@ class NasabahModel extends Model
         }
     }
 
-    public function emailVerification($otp){
+    public function emailVerification(string $otp): array
+    {
         try {
             $data = [
                 'is_verify' => true,
@@ -99,9 +102,10 @@ class NasabahModel extends Model
         }
     }
 
-    public function getNasabahByEmail($email){
+    public function getNasabahByEmail(string $email): array
+    {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,email,username,password,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,is_verify,created_at")->where("email",$email)->get()->getResultArray();
+            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,email,username,password,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,is_verify,created_at")->where("email",$email)->get()->getFirstRow();
             
             if (empty($dataNasabah)) {    
                 return [
@@ -113,7 +117,7 @@ class NasabahModel extends Model
             else {   
                 return [
                     'success' => true,
-                    'message' => $dataNasabah[0]
+                    'message' => $dataNasabah
                 ];
             }
         } 
@@ -126,7 +130,8 @@ class NasabahModel extends Model
         }
     }
 
-    public function updateToken($id,$token){
+    public function updateToken(string $id,string $token): array
+    {
         try {
             $data = [
                 'token' => $token
@@ -157,9 +162,10 @@ class NasabahModel extends Model
         }
     }
 
-    public function getProfileNasabah($id){
+    public function getProfileNasabah(string $id): array
+    {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,created_at")->where("id",$id)->get()->getResultArray();
+            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,created_at")->where("id",$id)->get()->getFirstRow();
             
             if (empty($dataNasabah)) {    
                 return [
@@ -170,7 +176,7 @@ class NasabahModel extends Model
             } else {   
                 return [
                     'success' => true,
-                    'message' => $dataNasabah[0]
+                    'message' => $dataNasabah
                 ];
             }
         } 
@@ -183,7 +189,8 @@ class NasabahModel extends Model
         }
     }
 
-    public function editProfileNasabah($data){
+    public function editProfileNasabah(array $data): array
+    {
         try {
 
             $this->db->table($this->table)->where('id',$data['id'])->update($data);
@@ -191,7 +198,7 @@ class NasabahModel extends Model
             if ($this->db->affectedRows() > 0) {
                 return [
                     "success"  => true,
-                    'message' => 'edit profile success',
+                    'message' => 'edit profile is success',
                 ];
             } 
             else {   
@@ -210,7 +217,8 @@ class NasabahModel extends Model
         }
     }
 
-    public function setTokenNull(string $id){
+    public function setTokenNull(string $id): array
+    {
         try {
             $data = [
                 'token' => null

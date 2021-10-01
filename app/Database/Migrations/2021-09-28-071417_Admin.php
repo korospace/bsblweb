@@ -36,7 +36,7 @@ class Admin extends Migration
             ],
             'notelp' => [
                 'type' => 'character varying',
-                'constraint' => 12,
+                'constraint' => 14,
                 'null' => false,
             ],
             'alamat' => [

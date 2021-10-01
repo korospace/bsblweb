@@ -112,7 +112,7 @@ class Nasabah extends Migration
             ],
             'notelp' => [
                 'type' => 'character varying',
-                'constraint' => 12,
+                'constraint' => 14,
                 'null' => false,
             ],
             'alamat' => [
@@ -127,7 +127,7 @@ class Nasabah extends Migration
                 'default' => '00-00-0000',
             ],
             'kelamin' => [
-                'type' => 'character varying',
+                'type' => 'ENUM',
                 'constraint' => 9,
                 'default' => 'laki-laki',
                 'null' => false,

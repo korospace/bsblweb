@@ -172,6 +172,7 @@ class BeritaAcara extends ResourceController
 
                 if ($this->request->getFile('new_thumbnail')) {
                     $xx['new_thumbnail'] = $this->request->getFile('new_thumbnail'); 
+                    // var_dump($this->request->getFile('new_thumbnail'));die;
 
                     $this->validation->run($xx,'ifImgageUploadCheck');
                     $errors = $this->validation->getErrors();

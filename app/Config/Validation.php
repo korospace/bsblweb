@@ -551,11 +551,11 @@ class Validation
             ],
 		],
 		'thumbnail' => [
-            'rules'  => 'uploaded[thumbnail]|max_size[thumbnail,200]|is_image[thumbnail]|mime_in[thumbnail,image/png,image/jpg,image/jpeg,image/webp]',
+            'rules'  => 'uploaded[thumbnail]|max_size[thumbnail,200]|mime_in[thumbnail,image/png,image/jpg,image/jpeg,image/webp]',
             'errors' => [
                 'uploaded' => 'thumbnail is required',
                 'max_size' => 'max size is 200kb',
-                'is_image' => 'your file is not image',
+                // 'is_image' => 'your file is not image',
                 'mime_in'  => 'your file is not in format(png/jpg/webp)',
             ],
 		],
@@ -612,10 +612,10 @@ class Validation
 
 	public $ifImgageUploadCheck = [
         'new_thumbnail' => [
-            'rules'  => 'max_size[new_thumbnail,200]|is_image[new_thumbnail]|mime_in[new_thumbnail,image/png,image/jpg,image/jpeg,image/webp]',
+            'rules'  => 'max_size[new_thumbnail,200]|mime_in[new_thumbnail,image/png,image/jpg,image/jpeg,image/webp]',
             'errors' => [
                 'max_size' => 'max size is 200kb',
-                'is_image' => 'your file is not image',
+                // 'is_image' => 'your file is not image',
                 'mime_in'  => 'your file is not in format(png/jpg/webp)',
             ],
         ],

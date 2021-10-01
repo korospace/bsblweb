@@ -349,7 +349,7 @@ class BaseController extends Controller
                         'name'=>$filename,
                         'tmp_name'=>$tmp_name,
                         'size'=>strlen( $body ),
-                        'type'=>$value
+                        'type'=>preg_replace('/\s+/', '', $value)
                     );
 
                     file_put_contents($tmp_name, $body);

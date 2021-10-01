@@ -146,6 +146,11 @@ class Admin extends ResourceController
         }
     }
 
+    /**
+     * Get own profile
+     *   url    : domain.com/admin/getprofile
+     *   method : GET
+     */
     public function getProfile(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -186,6 +191,12 @@ class Admin extends ResourceController
         }
     }
 
+
+    /**
+     * Edit own profile
+     *   url    : domain.com/admin/editprofile
+     *   method : PUT
+     */
     public function editProfile(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -254,7 +265,7 @@ class Admin extends ResourceController
                             unset($data['old_password']);
                         } 
                         else {
-                            return $this->fail("wrong old password",401,true);
+                            return $this->fail(['old_password' => 'wrong old password'],401,true);
                         }
                     }
 

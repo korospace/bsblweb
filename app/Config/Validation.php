@@ -578,7 +578,7 @@ class Validation
 
 	public $updateBeritaAcara = [
 		'id' => [
-            'rules'  => 'required|is_natural_no_zero|is_not_unique[kategori_berita.id]',
+            'rules'  => 'required|is_natural_no_zero|is_not_unique[berita_acara.id]',
             'errors' => [
                 'required' => 'title is required',
                 'is_natural_no_zero' => 'only number allowed',

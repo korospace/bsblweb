@@ -188,7 +188,7 @@ class AdminModel extends Model
                 $nasabah = $this->db->table('nasabah')->select("id,id_nasabah,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,is_verify,created_at")->where("id_nasabah",$get['id_nasabah'])->get()->getFirstRow();
             } 
             else {
-                $nasabah = $this->db->table('nasabah')->select("id,id_nasabah,nama_lengkap")->get()->getResultArray();
+                $nasabah = $this->db->table('nasabah')->select("id,id_nasabah,nama_lengkap,created_at")->orderBy('created_at','DESC')->get()->getResultArray();
             }
             
             if (empty($nasabah)) {    

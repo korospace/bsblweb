@@ -22,7 +22,7 @@ class KategoriBerita extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        // $this->forge->addUniqueKey('name');
+        $this->forge->addUniqueKey('name');
         $this->forge->createTable('kategori_berita');
     }
 

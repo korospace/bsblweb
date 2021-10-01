@@ -19,6 +19,11 @@ class KategoriBerita extends ResourceController
         $this->kategoriModel  = new KategoriBeritaModel;
     }
 
+    /**
+     * Add item
+     *   url    : domain.com/kategori_berita/additem
+     *   method : POST
+     */
 	public function addItem(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -74,6 +79,11 @@ class KategoriBerita extends ResourceController
         }
     }
 
+    /**
+     * Get item
+     *   url    : domain.com/kategori_berita/getitem
+     *   method : GET
+     */
 	public function getItem(): object
     {
         $dbresponse = $this->kategoriModel->getItem();
@@ -98,6 +108,11 @@ class KategoriBerita extends ResourceController
         }
     }
 
+    /**
+     * Delete item
+     *   url    : domain.com/kategori_berita/deleteitem?id=:id
+     *   method : GET
+     */
 	public function deleteItem(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -112,7 +127,7 @@ class KategoriBerita extends ResourceController
                 $response = [
                     'status'   => 400,
                     'error'    => true,
-                    'messages' => $errors,
+                    'messages' => $errors['id'],
                 ];
         
                 return $this->respond($response,400);

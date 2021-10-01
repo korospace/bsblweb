@@ -614,6 +614,11 @@ class Admin extends ResourceController
         }
     }
 
+    /**
+     * Delete nasabah
+     *   url    : domain.com/admin/deletenasabah?id=:id
+     *   method : DELETE
+     */
 	public function deleteNasabah(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -665,6 +670,12 @@ class Admin extends ResourceController
         }
     }
 
+    /**
+     * Get admin
+     *   url    : - domain.com/admin/getadmin
+     *            - domain.com/admin/getadmin?id_admin=:id_admin
+     *   method : GET
+     */
     public function getAdmin(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -720,6 +731,11 @@ class Admin extends ResourceController
 
     }
 
+    /**
+     * Add admin
+     *   url    : domain.com/admin/addadmin
+     *   method : POST
+     */
     public function addAdmin(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -819,6 +835,11 @@ class Admin extends ResourceController
         }
     }
 
+    /**
+     * Edit admin
+     *   url    : domain.com/admin/editadmin
+     *   method : PUT
+     */
     public function editAdmin(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -942,6 +963,11 @@ class Admin extends ResourceController
         }
     }
 
+    /**
+     * Delete admin
+     *   url    : domain.com/admin/deleteadmin?id=:id
+     *   method : DELETE
+     */
 	public function deleteAdmin(): object
     {
         $authHeader = $this->request->getHeader('token');

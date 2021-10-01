@@ -582,7 +582,7 @@ class Validation
             'errors' => [
                 'required' => 'title is required',
                 'is_natural_no_zero' => 'only number allowed',
-                'is_not_unique' => 'berita with ({value}) is not found',
+                'is_not_unique' => 'berita with id ({value}) is not found',
             ],
 		],
 		'title' => [

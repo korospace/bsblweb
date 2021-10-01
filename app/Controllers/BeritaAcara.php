@@ -49,7 +49,7 @@ class BeritaAcara extends ResourceController
             else {
                 $data = [
                     "title"      => strtolower(trim($data['title'])),
-                    "thumbnail"  => $this->baseController->base64Decode($_FILES['thumbnail']['tmp_name']),
+                    "thumbnail"  => $this->baseController->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['new_thumbnail']['type']),
                     "content"    => trim($data['content']),
                     "kategori"   => strtolower(trim($data['kategori'])),
                     "created_by" => $result['message']['data']['id_admin'],
@@ -186,7 +186,7 @@ class BeritaAcara extends ResourceController
                         return $this->respond($response,400);
                     } 
 
-                    $data['thumbnail'] = $this->baseController->base64Decode($_FILES['new_thumbnail']['tmp_name']);
+                    $data['thumbnail'] = $this->baseController->base64Decode($_FILES['new_thumbnail']['tmp_name'],$_FILES['new_thumbnail']['type']);
                 }
 
                 $dbresponse = $this->beritaModel->editItem($data);

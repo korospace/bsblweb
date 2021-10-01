@@ -19,6 +19,11 @@ class BeritaAcara extends ResourceController
         $this->beritaModel    = new BeritaAcaraModel;
     }
 
+    /**
+     * Add item
+     *   url    : domain.com/berita_acara/additem
+     *   method : POST
+     */
 	public function addItem(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -83,6 +88,12 @@ class BeritaAcara extends ResourceController
         }
     }
 
+    /**
+     * Get admin
+     *   url    : - domain.com/admin/berita_acara
+     *            - domain.com/admin/berita_acara/getitem?id=:id
+     *   method : GET
+     */
     public function getItem(): object
     {
         // id_berita must be number
@@ -123,7 +134,12 @@ class BeritaAcara extends ResourceController
         }
     }
 
-	public function updateItem(): object
+    /**
+     * Update item
+     *   url    : domain.com/berita_acara/edititem
+     *   method : PUT
+     */
+	public function editItem(): object
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
@@ -173,7 +189,7 @@ class BeritaAcara extends ResourceController
                     $data['thumbnail'] = $this->baseController->base64Decode($_FILES['new_thumbnail']['tmp_name']);
                 }
 
-                $dbresponse = $this->beritaModel->updateItem($data);
+                $dbresponse = $this->beritaModel->editItem($data);
 
                 if ($dbresponse['success'] == true) {
                     $response = [

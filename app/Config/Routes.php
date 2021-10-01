@@ -69,7 +69,7 @@ $routes->group("kategori_berita", function ($routes) {
 $routes->group("berita_acara", function ($routes) {
     $routes->post("additem",      "BeritaAcara::addItem");
     $routes->get("getitem",       "BeritaAcara::getItem");
-    $routes->put("updateitem",    "BeritaAcara::updateItem");
+    $routes->put("edititem",      "BeritaAcara::editItem");
     $routes->delete("deleteitem", "BeritaAcara::deleteItem");
 });
 

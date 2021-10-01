@@ -76,6 +76,33 @@ class BeritaAcaraModel extends Model
         }
     }
 
+    public function editItem(array $data): array
+    {
+        try {
+            $this->db->table($this->table)->where('id',$data['id'])->update($data);
+            
+            if ($this->db->affectedRows() > 0) {
+                return [
+                    "success"  => true,
+                    'message' => 'edit berita is success',
+                ];
+            } 
+            else {   
+                return [
+                    'success' => true,
+                    'message' => "nothing updated",
+                ];
+            } 
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
     public function deleteItem(string $id): array
     {
         try {
@@ -94,33 +121,6 @@ class BeritaAcaraModel extends Model
                     'code'    => 404
                 ];
             }     
-        } 
-        catch (Exception $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
-            ];
-        }
-    }
-
-    public function updateItem(array $data): array
-    {
-        try {
-            $this->db->table($this->table)->where('id',$data['id'])->update($data);
-            
-            if ($this->db->affectedRows() > 0) {
-                return [
-                    "success"  => true,
-                    'message' => 'edit berita is success',
-                ];
-            } 
-            else {   
-                return [
-                    'success' => true,
-                    'message' => "nothing updated",
-                ];
-            } 
         } 
         catch (Exception $e) {
             return [

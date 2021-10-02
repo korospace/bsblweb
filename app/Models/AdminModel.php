@@ -66,12 +66,16 @@ class AdminModel extends Model
     {
         try {
             $data = [
-                'token' => $token
+                'token' => $token,
+                'last_active' => time()
             ];
-    
-            $this->db->table($this->table)->where('id', $id)->update($data);
+
+            $this->db->table($this->table)->where('id',$id)->update($data);
             
             if ($this->db->affectedRows() > 0) {
+                // non active admin
+                $this->nonActiveAdmin();
+
                 return [
                     "success"  => true,
                     'message' => 'update new token is success',
@@ -124,7 +128,6 @@ class AdminModel extends Model
     public function editProfileAdmin(array $data): array
     {
         try {
-
             $this->db->table($this->table)->where('id',$data['id'])->update($data);
             
             if ($this->db->affectedRows() > 0) {
@@ -153,10 +156,10 @@ class AdminModel extends Model
     {
         try {
             $data = [
-                'token' => null
+                'token' => null,
             ];
     
-            $this->db->table($this->table)->where('id', $id)->update($data);
+            $this->db->table($this->table)->where('id',$id)->update($data);
             
             if ($this->db->affectedRows() > 0) {
                 return [
@@ -329,6 +332,30 @@ class AdminModel extends Model
                 'message' => $e->getMessage(),
                 'code'    => 500
             ];
+        }
+    }
+
+    public function nonActiveAdmin(): void
+    {
+        try {
+            $timeNow    = time();
+            $rangeTotal = (3600*24)*30;
+            $builder    = $this->db;
+            $admins     = $builder->query("SELECT id FROM admin WHERE $timeNow-last_active >= $rangeTotal")->getResultArray();
+            
+            // var_dump((time()-1633184363)/60);
+            // var_dump($admins);die;
+
+            foreach ($admins as $admin) {
+                $data = [
+                    'active' => false,
+                ];
+        
+                $this->db->table($this->table)->where('id',$admin['id'])->update($data);
+            }
+        } 
+        catch (Exception $e) {
+            
         }
     }
 }

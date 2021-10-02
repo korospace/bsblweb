@@ -67,6 +67,12 @@ class Admin extends Migration
                 'default' => true,
                 'null' => false,
             ],
+            'last_active' => [
+                'type' => 'bigint',
+                'constraint' => 19,
+                'default' => 0,
+                'null' => false,
+            ],
             'token' => [
                 'type' => 'character varying',
                 'constraint' => 255,
@@ -75,8 +81,7 @@ class Admin extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey('id_admin');
-        $this->forge->addField("last_active TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+        $this->forge->addUniqueKey(['id_admin','username','nama_lengkap','notelp']);
         $this->forge->addField("created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('admin');
     }

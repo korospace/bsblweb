@@ -127,7 +127,7 @@ class Nasabah extends Migration
                 'default' => '00-00-0000',
             ],
             'kelamin' => [
-                'type' => 'ENUM',
+                'type' => 'character varying',
                 'constraint' => 9,
                 'default' => 'laki-laki',
                 'null' => false,
@@ -150,7 +150,7 @@ class Nasabah extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey('id_nasabah');
+        $this->forge->addUniqueKey(['id_nasabah','email','username','nama_lengkap','notelp']);
         $this->forge->addField("created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('nasabah');
     }

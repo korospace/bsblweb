@@ -799,6 +799,7 @@ class Admin extends ResourceController
                         "tgl_lahir"    => trim($data['tgl_lahir']),
                         "kelamin"      => strtolower(trim($data['kelamin'])),
                         "privilege"    => strtolower(trim($data['privilege'])),
+                        "last_active"  => time(),
                     ];
     
                     $addAdmin = $this->adminModel->addAdmin($data);
@@ -915,6 +916,11 @@ class Admin extends ResourceController
     
                         if ($newpass != '') {
                             $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
+                        }
+                        if ($data['active'] == true) {
+                            // date_default_timezone_set('Asia/Jakarta');
+                            // $data['last_active'] = date('Y-m-d H:i:s', time());
+                            $data['last_active'] = time();
                         }
         
                         $editAdmin = $this->adminModel->editProfileAdmin($data);

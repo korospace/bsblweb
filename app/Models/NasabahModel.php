@@ -136,10 +136,10 @@ class NasabahModel extends Model
     {
         try {
             $data = [
-                'token' => $token
+                'token' => $token,
             ];
     
-            $this->db->table($this->table)->where('id', $id)->update($data);
+            $this->db->table($this->table)->where('id',$id)->update($data);
             
             if ($this->db->affectedRows() > 0) {
                 return [
@@ -194,7 +194,6 @@ class NasabahModel extends Model
     public function editProfileNasabah(array $data): array
     {
         try {
-
             $this->db->table($this->table)->where('id',$data['id'])->update($data);
             
             if ($this->db->affectedRows() > 0) {
@@ -223,10 +222,10 @@ class NasabahModel extends Model
     {
         try {
             $data = [
-                'token' => null
+                'token' => null,
             ];
     
-            $this->db->table($this->table)->where('id', $id)->update($data);
+            $this->db->table($this->table)->where('id',$id)->update($data);
             
             if ($this->db->affectedRows() > 0) {
                 return [

@@ -46,3 +46,7 @@ deploy
 
     1- go to app/Config/Routes.php
     2- go to line 35
+
+8- make seed
+
+    1- php spark make:seeder UserSeeder

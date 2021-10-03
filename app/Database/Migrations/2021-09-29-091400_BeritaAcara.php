@@ -19,12 +19,11 @@ class BeritaAcara extends Migration
                 'null' => false,
             ],
             'thumbnail' => [
-                'type' => 'BYTEA',
+                'type' => 'text',
                 'null' => false,
             ],
             'content' => [
-                'type' => 'character varying',
-                'constraint' => 10000,
+                'type' => 'text',
                 'null' => false,
             ],
             'kategori' => [

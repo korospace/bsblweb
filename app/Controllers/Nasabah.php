@@ -195,7 +195,7 @@ class Nasabah extends ResourceController
                         // database row id
                         $id           = $nasabahData['message']['id'];
                         // rememberMe check
-                        $rememberme   = ($this->request->getPost("rememberme") == 'yes') ? true : '';
+                        $rememberme   = ($this->request->getPost("rememberme") == '1') ? true : false;
                         // generate new token
                         $token        = $this->baseController->generateTokenNasabah(
                             $id,

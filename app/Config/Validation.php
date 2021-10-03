@@ -408,7 +408,6 @@ class Validation
             'rules'  => 'required|max_length[40]|is_unique[admin.nama_lengkap,admin.id,{id}]',
             'errors' => [
                 'required'    => 'nama lengkap is required',
-                'min_length'  => 'min 6 character',
                 'max_length'  => 'max 40 character',
                 'is_unique'   => 'nama lengkap is exist',
             ],
@@ -417,7 +416,6 @@ class Validation
             'rules'  => 'required|max_length[12]|is_unique[admin.notelp,admin.id,{id}]',
             'errors' => [
                 'required'    => 'nomor telepon is required',
-                'min_length'  => 'min 6 character',
                 'max_length'  => 'max 12 character',
                 'is_unique'   => 'no.telp is exist',
             ],
@@ -426,7 +424,6 @@ class Validation
             'rules'  => 'required|max_length[255]',
             'errors' => [
                 'required'    => 'alamat is required',
-                'min_length'  => 'min 6 character',
                 'max_length'  => 'max 255 character',
             ],
 		],
@@ -438,11 +435,9 @@ class Validation
             ],
 		],
 		'kelamin' => [
-            'rules'  => 'required|min_length[9]|max_length[9]|in_list[laki-laki,perempuan]',
+            'rules'  => 'required|in_list[laki-laki,perempuan]',
             'errors' => [
                 'required'    => 'kelamin is required',
-                'min_length'  => 'min 9 character',
-                'max_length'  => 'max 9 character',
                 'in_list'     => "value must be 'laki-laki' or 'perempuan'",
             ],
 		]

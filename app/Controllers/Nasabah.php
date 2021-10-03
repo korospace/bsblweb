@@ -254,7 +254,7 @@ class Nasabah extends ResourceController
     public function sessionCheck(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'nasabah');
 
         if ($result['success'] == true) {
@@ -274,7 +274,7 @@ class Nasabah extends ResourceController
     public function getProfile(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'nasabah');
 
         if ($result['success'] == true) {
@@ -315,7 +315,7 @@ class Nasabah extends ResourceController
     public function editProfile(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'nasabah');
 
         if ($result['success'] == true) {
@@ -425,7 +425,7 @@ class Nasabah extends ResourceController
     public function logout(): object
     {
         $authHeader = $this->request->getHeader('token');
-        $token      = $authHeader->getValue();
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
         $result     = $this->baseController->checkToken($token,'nasabah');
 
         if ($result['success'] == true) {

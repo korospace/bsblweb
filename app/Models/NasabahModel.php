@@ -105,7 +105,7 @@ class NasabahModel extends Model
     public function getNasabahByEmail(string $email): array
     {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,password")->where("email",$email)->get()->getResultArray();
+            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,password,is_verify")->where("email",$email)->get()->getResultArray();
             
             if (empty($dataNasabah)) {    
                 return [

@@ -207,7 +207,7 @@ class BaseController extends Controller
     {
         try {
             $db          = \Config\Database::connect();
-            $dataNasabah = $db->table($target)->where("token", $token)->get()->getResultArray();
+            $dataNasabah = $db->table($target)->select('token')->where("token", $token)->get()->getResultArray();
         } 
         catch (phpException $e) {
             return [

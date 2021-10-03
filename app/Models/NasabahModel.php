@@ -14,7 +14,7 @@ class NasabahModel extends Model
     public function getLastNasabah(): array
     {
         try {
-            $lastNasabah = $this->db->table($this->table)->orderBy('created_at','DESC')->get()->getResultArray();
+            $lastNasabah = $this->db->table($this->table)->select('id_nasabah')->orderBy('created_at','DESC')->get()->getResultArray();
 
             if (empty($lastNasabah)) {    
                 return [
@@ -105,7 +105,7 @@ class NasabahModel extends Model
     public function getNasabahByEmail(string $email): array
     {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,email,username,password,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,is_verify,created_at")->where("email",$email)->get()->getResultArray();
+            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,password")->where("email",$email)->get()->getResultArray();
             
             if (empty($dataNasabah)) {    
                 return [

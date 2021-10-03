@@ -42,7 +42,7 @@ class BeritaAcara extends Migration
         $this->forge->addPrimaryKey('id');
         $this->forge->addUniqueKey('title');
         $this->forge->addForeignKey('kategori','kategori_berita','name','CASCADE','CASCADE');
-        // $this->forge->addForeignKey('created_by','admin','id_admin','SET NULL','SET NULL');
+        $this->forge->addForeignKey('created_by','admin','id_admin','NO ACTION','NO ACTION');
         $this->forge->addField("created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('berita_acara');
     }

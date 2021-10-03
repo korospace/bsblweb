@@ -19,6 +19,7 @@ class AdminSeed extends Seeder
             'tgl_lahir' => '00-00-0000',
             'kelamin' => 'laki-laki',
             'privilege' => 'super',
+            'last_active' => time(),
         ];
 
         $this->db->table('admin')->insert($data);

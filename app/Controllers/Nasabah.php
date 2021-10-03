@@ -10,11 +10,13 @@ use Exception;
 class Nasabah extends ResourceController
 {
     public $basecontroller;
+    public $nasabahModel;
 
 	public function __construct()
     {
         $this->validation     = \Config\Services::validation();
         $this->baseController = new BaseController;
+        $this->nasabahModel   = new NasabahModel;
     }
 
     public function register(): object
@@ -36,8 +38,7 @@ class Nasabah extends ResourceController
             $email        = trim($data['email']);
             $otp          = $this->baseController->generateOTP(6);
 
-            $nasabahModel = new NasabahModel();
-            $lastNasabah  = $nasabahModel->getLastNasabah();
+            $lastNasabah  = $this->nasabahModel->getLastNasabah();
             $idNasabah    = '';
 
             if ($lastNasabah['success'] == true) {
@@ -75,7 +76,7 @@ class Nasabah extends ResourceController
                 "otp"          => $otp,
             ];
 
-            $addNasabah = $nasabahModel->addNasabah($data);
+            $addNasabah = $this->nasabahModel->addNasabah($data);
 
             if ($addNasabah['success'] == true) {
                 $sendEmail = $this->baseController->sendVerification($email,$otp);
@@ -129,9 +130,9 @@ class Nasabah extends ResourceController
             return $this->respond($response,400);
         } 
         else {
-            $nasabahModel = new NasabahModel();
+            
             $email        = $this->request->getPost('code_otp');
-            $editNasabah  = $nasabahModel->emailVerification($email);
+            $editNasabah  = $this->nasabahModel->emailVerification($email);
 
             if ($editNasabah['success'] == true) {
                 $response = [
@@ -171,8 +172,8 @@ class Nasabah extends ResourceController
             return $this->respond($response,400);
         } 
         else {
-            $nasabahModel = new NasabahModel();
-            $nasabahData  = $nasabahModel->getNasabahByEmail($this->request->getPost("email"));
+            
+            $nasabahData  = $this->nasabahModel->getNasabahByEmail($this->request->getPost("email"));
 
             if ($nasabahData['success'] == true) {
                 $login_pass    = $this->request->getPost("password");
@@ -203,7 +204,7 @@ class Nasabah extends ResourceController
                         );
 
                         // edit nasabah in database
-                        $editNasabah = $nasabahModel->updateToken($id,$token);
+                        $editNasabah = $this->nasabahModel->updateToken($id,$token);
 
                         if ($editNasabah['success'] == true) {
                             $response = [
@@ -277,9 +278,9 @@ class Nasabah extends ResourceController
         $result     = $this->baseController->checkToken($token,'nasabah');
 
         if ($result['success'] == true) {
-            $nasabahModel = new NasabahModel();
+            
             $id           = $result['message']['data']['id'];
-            $dataNasabah  = $nasabahModel->getProfileNasabah($id);
+            $dataNasabah  = $this->nasabahModel->getProfileNasabah($id);
             
             if ($dataNasabah['success'] == true) {
                 $response = [
@@ -336,8 +337,7 @@ class Nasabah extends ResourceController
             } 
             else {
                 $id           = $data['id'];
-                $nasabahModel = new NasabahModel();
-                $dataNasabah  = $nasabahModel->where("id",$id)->first();
+                $dataNasabah  = $this->nasabahModel->db->table('nasabah')->select('password')->where("id",$id)->get()->getResultArray();
 
                 if (!empty($dataNasabah)) {
                     $newpass = '';
@@ -373,7 +373,7 @@ class Nasabah extends ResourceController
                     ];
 
                     if ($newpass != '') {
-                        if (password_verify($oldpass,$dataNasabah['password'])) {
+                        if (password_verify($oldpass,$dataNasabah[0]['password'])) {
                             $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
                             unset($data['new_password']);
                             unset($data['old_password']);
@@ -383,7 +383,7 @@ class Nasabah extends ResourceController
                         }
                     }
 
-                    $editNasabah  = $nasabahModel->editProfileNasabah($data);
+                    $editNasabah  = $this->nasabahModel->editProfileNasabah($data);
 
                     if ($editNasabah['success'] == true) {
                         $response = [
@@ -429,9 +429,9 @@ class Nasabah extends ResourceController
         $result     = $this->baseController->checkToken($token,'nasabah');
 
         if ($result['success'] == true) {
-            $nasabahModel = new NasabahModel();
+            
             $id           = $result['message']['data']['id'];
-            $editNasabah  = $nasabahModel->setTokenNull($id);
+            $editNasabah  = $this->nasabahModel->setTokenNull($id);
 
             if ($editNasabah['success'] == true) {
                 $response = [

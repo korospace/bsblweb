@@ -88,16 +88,19 @@ class Nasabah extends Migration
             'id_nasabah' => [
                 'type' => 'character varying',
                 'constraint' => 10,
+                'unique' => true,
                 'null' => false,
             ],
             'email' => [
                 'type' => 'character varying',
                 'constraint' => 30,
+                'unique' => true,
                 'null' => false,
             ],
             'username' => [
                 'type' => 'character varying',
                 'constraint' => 20,
+                'unique' => true,
                 'null' => false,
             ],
             'password' => [
@@ -108,11 +111,13 @@ class Nasabah extends Migration
             'nama_lengkap' => [
                 'type' => 'character varying',
                 'constraint' => 40,
+                'unique' => true,
                 'null' => false,
             ],
             'notelp' => [
                 'type' => 'character varying',
                 'constraint' => 14,
+                'unique' => true,
                 'null' => false,
             ],
             'alamat' => [

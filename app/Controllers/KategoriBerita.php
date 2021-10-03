@@ -127,7 +127,7 @@ class KategoriBerita extends ResourceController
                 $response = [
                     'status'   => 400,
                     'error'    => true,
-                    'messages' => $errors['id'],
+                    'messages' => $errors,
                 ];
         
                 return $this->respond($response,400);

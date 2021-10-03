@@ -222,7 +222,7 @@ class Admin extends ResourceController
             else {
                 $id         = $data['id'];
 
-                $dataAdmin  = $this->adminModel->where("id",$id)->first();
+                $dataAdmin  = $this->adminModel->db->table('admin')->select('password')->where("id",$id)->get()->getResultArray();
 
                 if (!empty($dataAdmin)) {
                     $newpass = '';
@@ -258,7 +258,7 @@ class Admin extends ResourceController
                     ];
 
                     if ($newpass != '') {
-                        if (password_verify($oldpass,$dataAdmin['password'])) {
+                        if (password_verify($oldpass,$dataAdmin[0]['password'])) {
                             $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
                             unset($data['new_password']);
                             unset($data['old_password']);
@@ -514,7 +514,7 @@ class Admin extends ResourceController
 
             $id           = (isset($data['id'])) ? $data['id'] : 'null';
             $nasabahModel = new NasabahModel();
-            $dataNasabah  = $nasabahModel->where("id",$id)->first();
+            $dataNasabah  = $nasabahModel->db->table('nasabah')->select('id')->where("id",$id)->get()->getResultArray();
             
             if (!empty($dataNasabah)) {
     
@@ -864,7 +864,7 @@ class Admin extends ResourceController
                 global $data;
 
                 $id        = (isset($data['id'])) ? $data['id'] : 'null';
-                $dataAdmin = $this->adminModel->where("id",$id)->first();
+                $dataAdmin = $this->adminModel->db->table('admin')->select('id')->where("id",$id)->get()->getResultArray();
 
                 if (!empty($dataAdmin)) {
                     $this->validation->run($data,'editProfileAdminByAdmin');

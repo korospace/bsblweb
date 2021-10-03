@@ -49,4 +49,5 @@ deploy
 
 8- make seed
 
-    1- php spark make:seeder UserSeeder
+    1- php spark make:seeder AdminSeed
+    2- php spark db:seed AdminSeed

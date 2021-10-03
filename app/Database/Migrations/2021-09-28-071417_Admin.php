@@ -17,11 +17,13 @@ class Admin extends Migration
             'id_admin' => [
                 'type' => 'character varying',
                 'constraint' => 10,
+                'unique' => true,
                 'null' => false,
             ],
             'username' => [
                 'type' => 'character varying',
                 'constraint' => 20,
+                'unique' => true,
                 'null' => false,
             ],
             'password' => [
@@ -32,11 +34,13 @@ class Admin extends Migration
             'nama_lengkap' => [
                 'type' => 'character varying',
                 'constraint' => 40,
+                'unique' => true,
                 'null' => false,
             ],
             'notelp' => [
                 'type' => 'character varying',
                 'constraint' => 14,
+                'unique' => true,
                 'null' => false,
             ],
             'alamat' => [

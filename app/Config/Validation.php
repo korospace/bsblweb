@@ -566,7 +566,7 @@ class Validation
             'rules'  => 'required|is_not_unique[kategori_berita.id]',
             'errors' => [
                 'required'      => 'title is required',
-                'is_not_unique' => 'id kategori not in table kategori berita',
+                'is_not_unique' => 'id_kategori with value ({value}) is not found',
             ],
 		]
 	];
@@ -576,7 +576,7 @@ class Validation
             'rules'  => 'required|is_not_unique[kategori_sampah.id]',
             'errors' => [
                 'required'      => 'id kategori is required',
-                'is_not_unique' => 'id kategori not in table sampah',
+                'is_not_unique' => 'id_kategori with value ({value}) is not found',
             ],
 		],
 		'jenis' => [
@@ -625,7 +625,7 @@ class Validation
             'errors' => [
                 'required'      => 'title is required',
                 'max_length'    => 'max 20 character',
-                'is_not_unique' => 'id kategori not in database',
+                'is_not_unique' => 'id_kategori with value ({value}) is not found',
             ],
 		]
 	];
@@ -642,7 +642,7 @@ class Validation
             'rules'  => 'required|is_not_unique[kategori_sampah.id]',
             'errors' => [
                 'required'      => 'id kategori is required',
-                'is_not_unique' => 'id kategori not in table sampah',
+                'is_not_unique' => 'id_kategori with value ({value}) is not found',
             ],
 		],
 		'jenis' => [

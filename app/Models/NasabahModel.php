@@ -49,10 +49,10 @@ class NasabahModel extends Model
             if ($query == true) {
                 $dompetUang = $this->createDompetUang($data['id']);
 
-                if ($dompetUang['status'] == true) {
+                if ($dompetUang['success'] == true) {
                     $dompetEmas = $this->createDompetEmas($data['id']);
 
-                    if ($dompetEmas['status'] == true) {
+                    if ($dompetEmas['success'] == true) {
                         return [
                             "success"  => true,
                             'message' => 'register nasabah success',

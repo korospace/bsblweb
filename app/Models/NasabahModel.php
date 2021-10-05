@@ -44,9 +44,9 @@ class NasabahModel extends Model
         try {
             $this->db->transBegin();
 
-            $this->db->query("INSERT INTO nasabah(id,email,username,password,nama_lengkap,notelp,alamat,tgl_lahir,kelamin) VALUES(".$data['id'].",".$data['email'].",".$data['username'].",".$data['password'].",".$data['nama_lengkap'].",".$data['alamat'].",".$data['tgl_lahir'].",".$data['kelamin'].")");
-            $this->db->query("INSERT INTO dompet_uang (id_nasabah) VALUES(".$data['id'].")");
-            $this->db->query("INSERT INTO dompet_emas (id_nasabah) VALUES(".$data['id'].")");
+            $this->db->query("INSERT INTO nasabah(id,email,username,password,nama_lengkap,notelp,alamat,tgl_lahir,kelamin) VALUES('".$data['id']."','".$data['email']."','".$data['username']."','".$data['password']."','".$data['nama_lengkap']."','".$data['alamat']."','".$data['tgl_lahir']."','".$data['kelamin']."')");
+            $this->db->query("INSERT INTO dompet_uang (id_nasabah) VALUES('".$data['id']."')");
+            $this->db->query("INSERT INTO dompet_emas (id_nasabah) VALUES('".$data['id']."')");
 
             if ($this->db->transStatus() === false) {
                 $this->db->transRollback();

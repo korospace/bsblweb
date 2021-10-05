@@ -52,7 +52,31 @@ class BeritaAcara extends ResourceController
                 return $this->respond($response,400);
             } 
             else {
+                $lastBerita  = $this->beritaModel->getLastBerita();
+                $idBerita    = '';
+    
+                if ($lastBerita['success'] == true) {
+                    $lastID    = $lastBerita['message']['id'];
+                    $lastID    = (int)substr($lastID,2)+1;
+                    $lastID    = sprintf('%03d',$lastID);
+                    $idBerita  = $lastID;
+                }
+                else if ($lastBerita['code'] == 404) {
+                    $idBerita = 'BA001';
+                } 
+                else {
+                    $response = [
+                        'status'   => $lastBerita['code'],
+                        'error'    => true,
+                        'messages' => $lastBerita['message'],
+                    ];
+            
+                    return $this->respond($response,$lastBerita['code']);
+    
+                }
+
                 $data = [
+                    "id"         => $idBerita,
                     "title"      => strtolower(trim($data['title'])),
                     "thumbnail"  => $this->baseController->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
                     // "thumbnail"  => $dbFileName,
@@ -96,29 +120,14 @@ class BeritaAcara extends ResourceController
     }
 
     /**
-     * Get admin
-     *   url    : - domain.com/admin/berita_acara
-     *            - domain.com/admin/berita_acara/getitem?id=:id
+     * Get item
+     *   url    : - domain.com/berita_acara/berita_acara
+     *            - domain.com/berita_acara/berita_acara/getitem?kategori=:id_kategori
+     *            - domain.com/berita_acara/berita_acara/getitem?id_berita=:id
      *   method : GET
      */
     public function getItem(): object
     {
-        // id_berita must be number
-        if ($this->request->getGet('id')) {
-            $this->validation->run($this->request->getGet(),'idForGetDataCheck');
-            $errors = $this->validation->getErrors();
-
-            if($errors) {
-                $response = [
-                    'status'   => 400,
-                    'error'    => true,
-                    'messages' => $errors,
-                ];
-        
-                return $this->respond($response,400);
-            } 
-        }
-
         $dbResponse = $this->beritaModel->getItem($this->request->getGet());
     
         if ($dbResponse['success'] == true) {

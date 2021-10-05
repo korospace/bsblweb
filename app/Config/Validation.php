@@ -517,21 +517,11 @@ class Validation
 		]
 	];
 
-    public $idForGetDataCheck = [
-		'id' => [
-            'rules'  => 'is_natural_no_zero',
-            'errors' => [
-                'is_natural_no_zero' => 'only number allowed',
-            ],
-		],
-	];
-
     public $idForDeleteCheck = [
 		'id' => [
-            'rules'  => 'required|is_natural_no_zero',
+            'rules'  => 'required',
             'errors' => [
-                'required'           => 'id is required',
-                'is_natural_no_zero' => 'only number allowed',
+                'required' => 'id is required',
             ],
 		],
 	];

@@ -9,7 +9,28 @@ class BeritaAcaraModel extends Model
 {
     protected $table         = 'berita_acara';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['title','thumbnail','content','kategori','created_by'];
+    protected $allowedFields = ['id','title','thumbnail','content','kategori','created_by'];
+
+    public function getLastBerita(): array
+    {
+        try {
+            $lastBerita = $this->db->table($this->table)->select('id')->orderBy('id','DESC')->get()->getResultArray();
+
+            if (!empty($lastBerita)) { 
+                return [
+                    'success' => true,
+                    'message' => $lastBerita[0]
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
 
     public function addItem(array $data): array
     {
@@ -48,10 +69,10 @@ class BeritaAcaraModel extends Model
                 $berita = $this->db->table($this->table)->select("berita_acara.id,berita_acara.title,berita_acara.kategori,admin.nama_lengkap AS author,berita_acara.created_at,berita_acara.content,berita_acara.thumbnail")->join('admin', 'berita_acara.created_by = admin.id_admin')->where("berita_acara.id",$get['id_berita'])->get()->getFirstRow();
             } 
             else if (isset($get['kategori']) && !isset($get['id_berita'])) {
-                $berita = $this->db->table($this->table)->select('id,title,kategori,created_at,thumbnail')->where("kategori",$get['kategori'])->orderBy('created_at','DESC')->get()->getResultArray();
+                $berita = $this->db->table($this->table)->select('id,title,kategori_berita.name AS kategori,created_at,thumbnail')->join('kategori_berita','berita_acara.id_kategori = kategori_berita.id')->where("id_kategori",$get['kategori'])->orderBy('created_at','DESC')->get()->getResultArray();
             } 
             else {
-                $berita = $this->db->table($this->table)->select('id,title,kategori,created_at,thumbnail')->orderBy('created_at','DESC')->get()->getResultArray();
+                $berita = $this->db->table($this->table)->select('id,title,kategori_berita.name AS kategori,created_at,thumbnail')->join('kategori_berita','berita_acara.id_kategori = kategori_berita.id')->orderBy('created_at','DESC')->get()->getResultArray();
             }
             
             if (empty($berita)) {    

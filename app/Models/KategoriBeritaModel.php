@@ -9,7 +9,28 @@ class KategoriBeritaModel extends Model
 {
     protected $table         = 'kategori_berita';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['name'];
+    protected $allowedFields = ['id','name'];
+
+    public function getLastKategori(): array
+    {
+        try {
+            $lastKategori = $this->db->table($this->table)->select('id')->orderBy('id','DESC')->get()->getResultArray();
+
+            if (!empty($lastKategori)) { 
+                return [
+                    'success' => true,
+                    'message' => $lastKategori[0]
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
 
     public function addItem(array $data): array
     {

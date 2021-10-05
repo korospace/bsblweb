@@ -46,6 +46,34 @@ class KategoriBerita extends ResourceController
                 return $this->respond($response,400);
             } 
             else {
+                $lastKategori  = $this->kategoriModel->getLastKategori();
+                $idKategori    = '';
+    
+                if ($lastKategori['success'] == true) {
+                    $lastID     = $lastKategori['message']['id'];
+                    $lastID     = (int)substr($lastID,2)+1;
+                    $lastID     = sprintf('%02d',$lastID);
+                    $idKategori = $lastID;
+                }
+                else if ($lastKategori['code'] == 404) {
+                    $idKategori = 'KB01';
+                } 
+                else {
+                    $response = [
+                        'status'   => $lastKategori['code'],
+                        'error'    => true,
+                        'messages' => $lastKategori['message'],
+                    ];
+            
+                    return $this->respond($response,$lastKategori['code']);
+    
+                }
+                
+                $data = [
+                    "id"   => $idKategori,
+                    "name" => trim($data['name']),
+                ];
+
                 $dbresponse = $this->kategoriModel->addItem($data);
 
                 if ($dbresponse['success'] == true) {

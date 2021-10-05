@@ -77,7 +77,7 @@ class KategoriBeritaModel extends Model
             if (empty($kategori)) {    
                 return [
                     'success' => false,
-                    'message' => "kategori notfound",
+                    'message' => "kategori berita notfound",
                     'code'    => 404
                 ];
             } else {   

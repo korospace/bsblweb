@@ -2,26 +2,26 @@
 
 namespace App\Controllers;
 
-use App\Models\BeritaAcaraModel;
+use App\Models\SampahModel;
 use App\Controllers\BaseController;
 use CodeIgniter\RESTful\ResourceController;
 use Exception;
 
-class BeritaAcara extends ResourceController
+class Sampah extends ResourceController
 {
     public $baseController;
-    public $beritaModel;
+    public $sampahModel;
 
 	public function __construct()
     {
         $this->validation     = \Config\Services::validation();
         $this->baseController = new BaseController;
-        $this->beritaModel    = new BeritaAcaraModel;
+        $this->sampahModel    = new SampahModel;
     }
 
     /**
      * Add item
-     *   url    : domain.com/berita_acara/additem
+     *   url    : domain.com/sampah/additem
      *   method : POST
      */
 	public function addItem(): object
@@ -32,14 +32,8 @@ class BeritaAcara extends ResourceController
 
         if ($result['success'] == true) {
             $data = $this->request->getPost(); 
-            $data['thumbnail'] = $this->request->getFile('thumbnail'); 
-            
-            // $file = $data['thumbnail'];
-            // $newFileName = $file->getRandomName();
-            // $dbFileName  = base_url().'/assets/img/thumbnail/'.$newFileName;
-            // var_dump($dbFileName);die;
 
-            $this->validation->run($data,'addBeritaAcara');
+            $this->validation->run($data,'addSampah');
             $errors = $this->validation->getErrors();
 
             if($errors) {
@@ -52,40 +46,36 @@ class BeritaAcara extends ResourceController
                 return $this->respond($response,400);
             } 
             else {
-                $lastBerita  = $this->beritaModel->getLastBerita();
-                $idBerita    = '';
+                $lastSampah  = $this->sampahModel->getLastSampah();
+                $idSampah    = '';
     
-                if ($lastBerita['success'] == true) {
-                    $lastID    = $lastBerita['message']['id'];
+                if ($lastSampah['success'] == true) {
+                    $lastID    = $lastSampah['message']['id'];
                     $lastID    = (int)substr($lastID,2)+1;
                     $lastID    = sprintf('%03d',$lastID);
-                    $idBerita  = 'BA'.$lastID;
+                    $idSampah  = 'S'.$lastID;
                 }
-                else if ($lastBerita['code'] == 404) {
-                    $idBerita = 'BA001';
+                else if ($lastSampah['code'] == 404) {
+                    $idSampah = 'S001';
                 } 
                 else {
                     $response = [
-                        'status'   => $lastBerita['code'],
+                        'status'   => $lastSampah['code'],
                         'error'    => true,
-                        'messages' => $lastBerita['message'],
+                        'messages' => $lastSampah['message'],
                     ];
             
-                    return $this->respond($response,$lastBerita['code']);
-    
+                    return $this->respond($response,$lastSampah['code']);
                 }
 
                 $data = [
-                    "id"          => $idBerita,
-                    "title"       => strtolower(trim($data['title'])),
-                    "thumbnail"   => $this->baseController->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
-                    // "thumbnail"  => $dbFileName,
-                    "content"     => trim($data['content']),
+                    "id"          => $idSampah,
                     "id_kategori" => trim($data['id_kategori']),
-                    "created_by"  => $result['message']['data']['id'],
+                    "jenis"       => strtolower(trim($data['jenis'])),
+                    "harga"       => trim($data['harga']),
                 ];
 
-                $dbresponse = $this->beritaModel->addItem($data);
+                $dbresponse = $this->sampahModel->addItem($data);
 
                 if ($dbresponse['success'] == true) {
                     $response = [
@@ -94,7 +84,6 @@ class BeritaAcara extends ResourceController
                         'messages' => $dbresponse['message'],
                     ];
 
-                    // $file->move('assets/img/thumbnail/', $newFileName);
                     return $this->respond($response,201);
                 } 
                 else {
@@ -121,14 +110,13 @@ class BeritaAcara extends ResourceController
 
     /**
      * Get item
-     *   url    : - domain.com/berita_acara
-     *            - domain.com/berita_acara/getitem?kategori=:id_kategori
-     *            - domain.com/berita_acara/getitem?id_berita=:id
+     *   url    : - domain.com/sampah/
+     *            - domain.com/sampah/getitem?kategori=:id_kategori
      *   method : GET
      */
     public function getItem(): object
     {
-        $dbResponse = $this->beritaModel->getItem($this->request->getGet());
+        $dbResponse = $this->sampahModel->getItem($this->request->getGet());
     
         if ($dbResponse['success'] == true) {
             $response = [
@@ -152,7 +140,7 @@ class BeritaAcara extends ResourceController
 
     /**
      * Update item
-     *   url    : domain.com/berita_acara/edititem
+     *   url    : domain.com/sampah/edititem
      *   method : PUT
      */
 	public function editItem(): object
@@ -165,7 +153,7 @@ class BeritaAcara extends ResourceController
             $this->baseController->_methodParser('data');
             global $data;
 
-            $this->validation->run($data,'updateBeritaAcara');
+            $this->validation->run($data,'updateSampah');
             $errors = $this->validation->getErrors();
 
             if($errors) {
@@ -179,42 +167,13 @@ class BeritaAcara extends ResourceController
             } 
             else {
                 $data = [
-                    "id"         => trim($data['id']),
-                    "title"      => strtolower(trim($data['title'])),
-                    "content"    => trim($data['content']),
-                    "id_kategori"   => trim($data['id_kategori']),
-                    "created_by" => $result['message']['data']['id'],
+                    "id"          => $data['id'],
+                    "id_kategori" => trim($data['id_kategori']),
+                    "jenis"       => strtolower(trim($data['jenis'])),
+                    "harga"       => trim($data['harga']),
                 ];
 
-                if ($this->request->getFile('new_thumbnail')) {
-                    $xx['new_thumbnail'] = $this->request->getFile('new_thumbnail');
-
-                    $this->validation->run($xx,'ifImgageUploadCheck');
-                    $errors = $this->validation->getErrors();
-
-                    if($errors) {
-                        $response = [
-                            'status'   => 400,
-                            'error'    => true,
-                            'messages' => $errors,
-                        ];
-                
-                        return $this->respond($response,400);
-                    }  
-
-                    // $file          = $xx['new_thumbnail'];
-                    // $newFileName   = $file->getRandomName();
-                    // $dbFileName    = base_url().'/assets/img/thumbnail/'.$newFileName;
-                    // $old_thumbnail = $this->beritaModel->getOldThumbnail($data['id']);
-                    // $old_thumbnail = explode('/',$old_thumbnail);
-                    // $old_thumbnail = end($old_thumbnail);
-                    // $realPath      = $_SERVER["DOCUMENT_ROOT"].'/bsblapi/assets/img/thumbnail/';
-
-                    $data['thumbnail'] = $this->baseController->base64Decode($_FILES['new_thumbnail']['tmp_name'],$_FILES['new_thumbnail']['type']);
-                    // $data['thumbnail'] = $dbFileName;
-                }
-
-                $dbresponse = $this->beritaModel->editItem($data);
+                $dbresponse = $this->sampahModel->editItem($data);
 
                 if ($dbresponse['success'] == true) {
                     $response = [
@@ -222,11 +181,6 @@ class BeritaAcara extends ResourceController
                         'error' => false,
                         'messages' => $dbresponse['message'],
                     ];
-
-                    // if (isset($xx['new_thumbnail'])) {
-                    //     rename($file->getPathname(),$realPath.$newFileName);
-                    //     unlink($realPath.$old_thumbnail);
-                    // }
 
                     return $this->respond($response,201);
                 } 
@@ -254,7 +208,7 @@ class BeritaAcara extends ResourceController
 
     /**
      * Delete item
-     *   url    : domain.com/berita_acara/deleteitem?id=:id
+     *   url    : domain.com/sampah/deleteitem?id=:id
      *   method : DELETE
      */
 	public function deleteItem(): object
@@ -277,7 +231,7 @@ class BeritaAcara extends ResourceController
                 return $this->respond($response,400);
             } 
             else {
-                $dbresponse = $this->beritaModel->deleteItem($this->request->getGet('id'));
+                $dbresponse = $this->sampahModel->deleteItem($this->request->getGet('id'));
 
                 if ($dbresponse['success'] == true) {
                     $response = [

@@ -5,30 +5,30 @@ namespace App\Models;
 use CodeIgniter\Model;
 use Exception;
 
-class KategoriSampahModel extends Model
+class SampahModel extends Model
 {
-    protected $table         = 'kategori_sampah';
+    protected $table         = 'sampah';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','name'];
+    protected $allowedFields = ['id','id_kategori','jenis','harga'];
 
-    public function getLastKategori(): array
+    public function getLastSampah(): array
     {
         try {
-            $lastKategori = $this->db->table($this->table)->select('id')->orderBy('id','DESC')->get()->getResultArray();
+            $lastSampah = $this->db->table($this->table)->select('id')->orderBy('id','DESC')->get()->getResultArray();
 
-            if (!empty($lastKategori)) { 
+            if (!empty($lastSampah)) { 
                 return [
                     'success' => true,
-                    'message' => $lastKategori[0]
+                    'message' => $lastSampah[0]
                 ];
             }
-            else {
+            else {   
                 return [
                     'success' => false,
-                    'message' => 'not found',
+                    'message' => "not found",
                     'code'    => 404
                 ];
-            }
+            } 
         } 
         catch (Exception $e) {
             return [
@@ -49,13 +49,13 @@ class KategoriSampahModel extends Model
             if ($query == true) {
                 return [
                     "success"  => true,
-                    'message' => 'add new kategori is success',
+                    'message' => 'add new sampah is success',
                 ];
             } 
             else {   
                 return [
                     'success' => false,
-                    'message' => "add new kategori is failed",
+                    'message' => "add new sampah is failed",
                     'code'    => 500
                 ];
             } 
@@ -69,23 +69,56 @@ class KategoriSampahModel extends Model
         }
     }
 
-    public function getItem(): array
+    public function getItem(array $get): array
     {
         try {
-            $kategori = $this->db->table($this->table)->get()->getResultArray();
+            if (isset($get['kategori'])) {
+                $sampah = $this->db->table($this->table)->select("sampah.id,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga")->join('kategori_sampah','sampah.id_kategori = kategori_sampah.id')->where("sampah.id_kategori",$get['kategori'])->get()->getResultArray();
+            } 
+            else {
+                $sampah = $this->db->table($this->table)->select('sampah.id,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga')->join('kategori_sampah','sampah.id_kategori = kategori_sampah.id')->get()->getResultArray();
+            }
             
-            if (empty($kategori)) {    
+            if (empty($sampah)) {    
                 return [
                     'success' => false,
-                    'message' => "kategori sampah notfound",
+                    'message' => "sampah notfound",
                     'code'    => 404
                 ];
-            } else {   
+            } 
+            else {   
                 return [
                     'success' => true,
-                    'message' => $kategori
+                    'message' => $sampah
                 ];
             }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
+    public function editItem(array $data): array
+    {
+        try {
+            $this->db->table($this->table)->where('id',$data['id'])->update($data);
+            
+            if ($this->db->affectedRows() > 0) {
+                return [
+                    "success" => true,
+                    'message' => 'edit sampah is success',
+                ];
+            } 
+            else {   
+                return [
+                    'success' => true,
+                    'message' => "nothing updated",
+                ];
+            } 
         } 
         catch (Exception $e) {
             return [
@@ -104,13 +137,13 @@ class KategoriSampahModel extends Model
             if ($this->db->affectedRows() > 0) {
                 return [
                     "success"  => true,
-                    'message' => "delete kategori with id $id is success",
+                    'message' => "delete sampah with id $id is success",
                 ];
             } 
             else {   
                 return [
                     'success' => false,
-                    'message' => "kategori with id $id is not found",
+                    'message' => "sampah with id $id is not found",
                     'code'    => 404
                 ];
             }     
@@ -123,5 +156,4 @@ class KategoriSampahModel extends Model
             ];
         }
     }
-
 }

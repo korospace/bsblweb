@@ -558,25 +558,50 @@ class Validation
 		'content' => [
             'rules'  => 'required|max_length[9980]',
             'errors' => [
-                'required'    => 'title is required',
+                'required'    => 'content is required',
                 'max_length'  => 'max 10.000 character',
             ],
 		],
 		'id_kategori' => [
-            'rules'  => 'required|max_length[20]|is_not_unique[kategori_berita.id]',
+            'rules'  => 'required|is_not_unique[kategori_berita.id]',
             'errors' => [
                 'required'      => 'title is required',
-                'max_length'    => 'max 20 character',
-                'is_not_unique' => 'id kategori not in database',
+                'is_not_unique' => 'id kategori not in table kategori berita',
             ],
 		]
+	];
+
+	public $addSampah = [
+		'id_kategori' => [
+            'rules'  => 'required|is_not_unique[kategori_sampah.id]',
+            'errors' => [
+                'required'      => 'title is required',
+                'is_not_unique' => 'id kategori not in table sampah',
+            ],
+		],
+		'jenis' => [
+            'rules'  => 'required|max_length[40]|is_unique[sampah.jenis]',
+            'errors' => [
+                'required'    => 'jenis is required',
+                'max_length'  => 'max 40 character',
+                'is_unique'   => 'jenis is exist',
+            ],
+		],
+		'harga' => [
+            'rules'  => 'required|max_length[11]|is_natural_no_zero',
+            'errors' => [
+                'required'           => 'harga is required',
+                'max_length'         => 'max 11 character',
+                'is_natural_no_zero' => 'only number allowed',
+            ],
+		],
 	];
 
 	public $updateBeritaAcara = [
 		'id' => [
             'rules'  => 'required|is_not_unique[berita_acara.id]',
             'errors' => [
-                'required' => 'title is required',
+                'required'      => 'title is required',
                 'is_not_unique' => 'berita with id ({value}) is not found',
             ],
 		],
@@ -603,6 +628,39 @@ class Validation
                 'is_not_unique' => 'id kategori not in database',
             ],
 		]
+	];
+
+	public $updateSampah = [
+		'id' => [
+            'rules'  => 'required|is_not_unique[sampah.id]',
+            'errors' => [
+                'required'      => 'title is required',
+                'is_not_unique' => 'sampah with id ({value}) is not found',
+            ],
+		],
+		'id_kategori' => [
+            'rules'  => 'required|is_not_unique[kategori_sampah.id]',
+            'errors' => [
+                'required'      => 'title is required',
+                'is_not_unique' => 'id kategori not in table sampah',
+            ],
+		],
+		'jenis' => [
+            'rules'  => 'required|max_length[40]|is_unique[sampah.jenis,sampah.id,{id}]',
+            'errors' => [
+                'required'    => 'jenis is required',
+                'max_length'  => 'max 40 character',
+                'is_unique'   => 'jenis is exist',
+            ],
+		],
+		'harga' => [
+            'rules'  => 'required|max_length[11]|is_natural_no_zero',
+            'errors' => [
+                'required'           => 'harga is required',
+                'max_length'         => 'max 11 character',
+                'is_natural_no_zero' => 'only number allowed',
+            ],
+		],
 	];
 
 	public $ifImgageUploadCheck = [

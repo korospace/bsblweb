@@ -79,6 +79,13 @@ $routes->group("kategori_sampah", function ($routes) {
     $routes->delete("deleteitem", "KategoriSampah::deleteItem");
 });
 
+$routes->group("sampah", function ($routes) {
+    $routes->post("additem",      "Sampah::addItem");
+    $routes->get("getitem",       "Sampah::getItem");
+    $routes->put("edititem",      "Sampah::editItem");
+    $routes->delete("deleteitem", "Sampah::deleteItem");
+});
+
 $routes->add('/',       'Home::index');
 $routes->add('/(:any)', 'Notfound::ControllerNf');
 

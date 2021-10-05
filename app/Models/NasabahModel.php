@@ -42,47 +42,30 @@ class NasabahModel extends Model
     public function addNasabah(array $data): array
     {
         try {
-            $query = $this->db->table($this->table)->insert($data);
+            $this->db->transBegin();
 
-            $query = $query ? true : false;
+            $this->db->query("INSERT INTO nasabah (id,email,username,password,nama_lengkap,notelp,alamat,tgl_lahir,kelamin) VALUES('".$data['id']."','".$data['email']."','".$data['username']."','".$data['password']."','".$data['nama_lengkap']."','".$data['alamat']."','".$data['tgl_lahir']."','".$data['kelamin']."');");
+            $this->db->query("INSERT INTO dompet_uang (id_nasabah) VALUES('".$data['id']."');");
+            $this->db->query("INSERT INTO dompet_emas (id_nasabah) VALUES('".$data['id']."');");
 
-            if ($query == true) {
-                $dompetUang = $this->createDompetUang($data['id']);
-
-                if ($dompetUang['success'] == true) {
-                    $dompetEmas = $this->createDompetEmas($data['id']);
-
-                    if ($dompetEmas['success'] == true) {
-                        return [
-                            "success"  => true,
-                            'message' => 'register nasabah success',
-                        ];
-                    }
-                    else {
-                        return [
-                            'success' => false,
-                            'message' => $dompetEmas['message'],
-                            'code'    => 500
-                        ];
-                    }
-                }
-                else {
-                    return [
-                        'success' => false,
-                        'message' => $dompetUang['message'],
-                        'code'    => 500
-                    ];
-                }
-            }
-            else {   
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
                 return [
                     'success' => false,
                     'message' => "register nasabah failed",
                     'code'    => 500
                 ];
             } 
+            else {
+                $this->db->transCommit();
+                return [
+                    "success"  => true,
+                    'message' => 'register nasabah success',
+                ];
+            }
         } 
         catch (Exception $e) {
+            $this->db->transRollback();
             return [
                 'success' => false,
                 'message' => $e->getMessage(),

@@ -774,7 +774,7 @@ class Admin extends ResourceController
                     $idAdmin    = '';
     
                     if ($lastAdmin['success'] == true) {
-                        $lastID  = $lastAdmin['message']['id_admin'];
+                        $lastID  = $lastAdmin['message']['id'];
                         $lastID  = (int)substr($lastID,1)+1;
                         $lastID  = sprintf('%03d',$lastID);
                         $idAdmin = 'A'.$lastID;

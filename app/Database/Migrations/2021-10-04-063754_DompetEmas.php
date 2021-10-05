@@ -22,7 +22,7 @@ class DompetEmas extends Migration
             'jumlah' => [
                 'type' => 'text',
                 'null' => false,
-                'default' => 'laki-laki',
+                'default' => '0',
             ],
         ]);
 

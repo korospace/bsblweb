@@ -22,6 +22,13 @@ class AdminModel extends Model
                     'message' => $lastAdmin[0]
                 ];
             }
+            else {
+                return [
+                    'success' => false,
+                    'message' => 'not found',
+                    'code'    => 404
+                ];
+            }
         } 
         catch (Exception $e) {
             return [

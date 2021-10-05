@@ -187,8 +187,8 @@ class AdminModel extends Model
     public function getNasabah(array $get): array
     {
         try {
-            if (isset($get['id_nasabah'])) {
-                $nasabah = $this->db->table('nasabah')->select("id,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,is_verify,created_at")->where("id_nasabah",$get['id_nasabah'])->get()->getFirstRow();
+            if (isset($get['id'])) {
+                $nasabah = $this->db->table('nasabah')->select("id,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,is_verify,created_at")->where("id",$get['id'])->get()->getFirstRow();
             } 
             else {
                 $nasabah = $this->db->table('nasabah')->select("id,nama_lengkap,created_at")->orderBy('created_at','DESC')->get()->getResultArray();

@@ -73,6 +73,12 @@ $routes->group("berita_acara", function ($routes) {
     $routes->delete("deleteitem", "BeritaAcara::deleteItem");
 });
 
+$routes->group("kategori_sampah", function ($routes) {
+    $routes->post("additem",      "KategoriSampah::addItem");
+    $routes->get("getitem",       "KategoriSampah::getItem");
+    $routes->delete("deleteitem", "KategoriSampah::deleteItem");
+});
+
 $routes->add('/',       'Home::index');
 $routes->add('/(:any)', 'Notfound::ControllerNf');
 

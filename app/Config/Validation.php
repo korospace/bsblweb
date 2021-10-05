@@ -517,6 +517,17 @@ class Validation
 		]
 	];
 
+	public $addKategoriSampah = [
+		'kategori_name' => [
+            'rules'  => 'required|max_length[20]|is_unique[kategori_sampah.name]',
+            'errors' => [
+                'required'    => 'kategori name is required',
+                'max_length'  => 'max 20 character',
+                'is_unique'   => 'kategori name is exist',
+            ],
+		]
+	];
+
     public $idForDeleteCheck = [
 		'id' => [
             'rules'  => 'required',

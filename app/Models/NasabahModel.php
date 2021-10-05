@@ -51,8 +51,8 @@ class NasabahModel extends Model
             $alamat      = $data['alamat'];
             $tglLahir    = $data['tgl_lahir'];
             $kelamin     = $data['kelamin'];
-            $this->db->transBegin();
 
+            $this->db->transBegin();
             $this->db->query("INSERT INTO nasabah(id,email,username,password,nama_lengkap,notelp,alamat,tgl_lahir,kelamin) VALUES('$id','$email','$username','$password','$namaLengkap','$notelp','$alamat','$tglLahir','$kelamin');");
             $this->db->query("INSERT INTO dompet_uang (id_nasabah) VALUES('$id');");
             $this->db->query("INSERT INTO dompet_emas (id_nasabah) VALUES('$id');");
@@ -79,50 +79,6 @@ class NasabahModel extends Model
                 'success' => false,
                 'message' => $e->getMessage(),
                 'code'    => 500
-            ];
-        }
-    }
-
-    public function createDompetUang(string $id): array
-    {
-        try {
-            $query = $this->db->table('dompet_uang')->insert(['id_nasabah' => $id]);
-
-            $query = $query ? true : false;
-            
-            if ($query == true) {
-                return [
-                    'success' => true,
-                    'message' => 'create dompet uang success'
-                ];
-            }
-        } 
-        catch (Exception $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage()
-            ];
-        }
-    }
-
-    public function createDompetEmas(string $id): array
-    {
-        try {
-            $query = $this->db->table('dompet_emas')->insert(['id_nasabah' => $id]);
-
-            $query = $query ? true : false;
-            
-            if ($query == true) {
-                return [
-                    'success' => true,
-                    'message' => 'create dompet emas success'
-                ];
-            }
-        } 
-        catch (Exception $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage()
             ];
         }
     }

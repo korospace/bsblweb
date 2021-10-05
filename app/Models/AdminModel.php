@@ -255,10 +255,10 @@ class AdminModel extends Model
     {
         try {
             if (isset($get['id_admin'])) {
-                $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,active,last_active,created_at")->where("id_admin",$get['id_admin'])->get()->getFirstRow();
+                $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,active,last_active,created_at")->where("id",$get['id_admin'])->where("id !=",$id_admin)->get()->getFirstRow();
             } 
             else {
-                $admin = $this->db->table($this->table)->select("id,nama_lengkap,privilege")->where("id_admin !=",$id_admin)->get()->getResultArray();
+                $admin = $this->db->table($this->table)->select("id,nama_lengkap,privilege")->where("id !=",$id_admin)->get()->getResultArray();
             }
             
             if (empty($admin)) {    

@@ -71,7 +71,7 @@ class KategoriBerita extends ResourceController
                 
                 $data = [
                     "id"   => $idKategori,
-                    "name" => trim($data['name']),
+                    "name" => trim($data['kategori_name']),
                 ];
 
                 $dbresponse = $this->kategoriModel->addItem($data);

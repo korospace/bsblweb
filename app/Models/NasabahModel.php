@@ -42,11 +42,20 @@ class NasabahModel extends Model
     public function addNasabah(array $data): array
     {
         try {
+            $id          = $data['id'];
+            $email       = $data['email'];
+            $username    = $data['username'];
+            $password    = $data['password'];
+            $namaLengkap = $data['nama_lengkap'];
+            $notelp      = $data['notelp'];
+            $alamat      = $data['alamat'];
+            $tglLahir    = $data['tgl_lahir'];
+            $kelamin     = $data['kelamin'];
             $this->db->transBegin();
 
-            $this->db->query("INSERT INTO nasabah(id,email,username,password,nama_lengkap,notelp,alamat,tgl_lahir,kelamin) VALUES('".$data['id']."','".$data['email']."','".$data['username']."','".$data['password']."','".$data['nama_lengkap']."','".$data['alamat']."','".$data['tgl_lahir']."','".$data['kelamin']."')");
-            $this->db->query("INSERT INTO dompet_uang (id_nasabah) VALUES('".$data['id']."')");
-            $this->db->query("INSERT INTO dompet_emas (id_nasabah) VALUES('".$data['id']."')");
+            $this->db->query("INSERT INTO nasabah(id,email,username,password,nama_lengkap,notelp,alamat,tgl_lahir,kelamin) VALUES('$id','$email','$username','$password','$namaLengkap','$notelp','$alamat','$tglLahir','$kelamin');");
+            $this->db->query("INSERT INTO dompet_uang (id_nasabah) VALUES('$id');");
+            $this->db->query("INSERT INTO dompet_emas (id_nasabah) VALUES('$id');");
 
             if ($this->db->transStatus() === false) {
                 $this->db->transRollback();

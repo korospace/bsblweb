@@ -25,8 +25,8 @@ class BeritaAcaraModel extends Model
             else {   
                 return [
                     'success' => false,
-                    'message' => "add new kategori is failed",
-                    'code'    => 500
+                    'message' => "not found",
+                    'code'    => 404
                 ];
             } 
         } 

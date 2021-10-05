@@ -575,7 +575,7 @@ class Validation
 		'id_kategori' => [
             'rules'  => 'required|is_not_unique[kategori_sampah.id]',
             'errors' => [
-                'required'      => 'title is required',
+                'required'      => 'id kategori is required',
                 'is_not_unique' => 'id kategori not in table sampah',
             ],
 		],
@@ -601,7 +601,7 @@ class Validation
 		'id' => [
             'rules'  => 'required|is_not_unique[berita_acara.id]',
             'errors' => [
-                'required'      => 'title is required',
+                'required'      => 'id is required',
                 'is_not_unique' => 'berita with id ({value}) is not found',
             ],
 		],
@@ -634,14 +634,14 @@ class Validation
 		'id' => [
             'rules'  => 'required|is_not_unique[sampah.id]',
             'errors' => [
-                'required'      => 'title is required',
+                'required'      => 'id is required',
                 'is_not_unique' => 'sampah with id ({value}) is not found',
             ],
 		],
 		'id_kategori' => [
             'rules'  => 'required|is_not_unique[kategori_sampah.id]',
             'errors' => [
-                'required'      => 'title is required',
+                'required'      => 'id kategori is required',
                 'is_not_unique' => 'id kategori not in table sampah',
             ],
 		],

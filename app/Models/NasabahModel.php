@@ -45,13 +45,35 @@ class NasabahModel extends Model
             $query = $this->db->table($this->table)->insert($data);
 
             $query = $query ? true : false;
-            
+
             if ($query == true) {
-                return [
-                    "success"  => true,
-                    'message' => 'register nasabah success',
-                ];
-            } 
+                $dompetUang = $this->createDompetUang($data['id']);
+
+                if ($dompetUang['status'] == true) {
+                    $dompetEmas = $this->createDompetEmas($data['id']);
+
+                    if ($dompetEmas['status'] == true) {
+                        return [
+                            "success"  => true,
+                            'message' => 'register nasabah success',
+                        ];
+                    }
+                    else {
+                        return [
+                            'success' => false,
+                            'message' => $dompetEmas['message'],
+                            'code'    => 500
+                        ];
+                    }
+                }
+                else {
+                    return [
+                        'success' => false,
+                        'message' => $dompetUang['message'],
+                        'code'    => 500
+                    ];
+                }
+            }
             else {   
                 return [
                     'success' => false,
@@ -65,6 +87,50 @@ class NasabahModel extends Model
                 'success' => false,
                 'message' => $e->getMessage(),
                 'code'    => 500
+            ];
+        }
+    }
+
+    public function createDompetUang(string $id): array
+    {
+        try {
+            $query = $this->db->table('dompet_uang')->insert(['id_nasabah' => $id]);
+
+            $query = $query ? true : false;
+            
+            if ($query == true) {
+                return [
+                    'success' => true,
+                    'message' => 'create dompet uang success'
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function createDompetEmas(string $id): array
+    {
+        try {
+            $query = $this->db->table('dompet_emas')->insert(['id_nasabah' => $id]);
+
+            $query = $query ? true : false;
+            
+            if ($query == true) {
+                return [
+                    'success' => true,
+                    'message' => 'create dompet emas success'
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
             ];
         }
     }

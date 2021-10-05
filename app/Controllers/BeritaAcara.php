@@ -59,7 +59,7 @@ class BeritaAcara extends ResourceController
                     $lastID    = $lastBerita['message']['id'];
                     $lastID    = (int)substr($lastID,2)+1;
                     $lastID    = sprintf('%03d',$lastID);
-                    $idBerita  = $lastID;
+                    $idBerita  = 'BA'.$lastID;
                 }
                 else if ($lastBerita['code'] == 404) {
                     $idBerita = 'BA001';

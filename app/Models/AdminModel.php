@@ -9,12 +9,12 @@ class AdminModel extends Model
 {
     protected $table         = 'admin';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','id_admin','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','privilage','active','token','last_active'];
+    protected $allowedFields = ['id','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','privilage','active','token','last_active'];
 
     public function getLastAdmin(): array
     {
         try {
-            $lastAdmin = $this->db->table($this->table)->orderBy('created_at','DESC')->get()->getResultArray();
+            $lastAdmin = $this->db->table($this->table)->select('id')->orderBy('created_at','DESC')->get()->getResultArray();
 
             if (!empty($lastAdmin)) { 
                 return [
@@ -35,7 +35,7 @@ class AdminModel extends Model
     public function getAdminByUsername(string $username): array
     {
         try {
-            $dataAdmin = $this->db->table($this->table)->select("id,id_admin,password,privilege,last_active")->where("username",$username)->get()->getResultArray();
+            $dataAdmin = $this->db->table($this->table)->select("id,password,privilege,last_active")->where("username",$username)->get()->getResultArray();
 
             if (empty($dataAdmin)) {    
                 return [
@@ -101,7 +101,7 @@ class AdminModel extends Model
     public function getProfileAdmin(string $id): array
     {
         try {
-            $dataAdmin = $this->db->table($this->table)->select("id,id_admin,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,created_at")->where("id",$id)->get()->getFirstRow();
+            $dataAdmin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,created_at")->where("id",$id)->get()->getFirstRow();
             
             if (empty($dataAdmin)) {    
                 return [
@@ -188,10 +188,10 @@ class AdminModel extends Model
     {
         try {
             if (isset($get['id_nasabah'])) {
-                $nasabah = $this->db->table('nasabah')->select("id,id_nasabah,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,is_verify,created_at")->where("id_nasabah",$get['id_nasabah'])->get()->getFirstRow();
+                $nasabah = $this->db->table('nasabah')->select("id,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,is_verify,created_at")->where("id_nasabah",$get['id_nasabah'])->get()->getFirstRow();
             } 
             else {
-                $nasabah = $this->db->table('nasabah')->select("id,id_nasabah,nama_lengkap,created_at")->orderBy('created_at','DESC')->get()->getResultArray();
+                $nasabah = $this->db->table('nasabah')->select("id,nama_lengkap,created_at")->orderBy('created_at','DESC')->get()->getResultArray();
             }
             
             if (empty($nasabah)) {    
@@ -248,10 +248,10 @@ class AdminModel extends Model
     {
         try {
             if (isset($get['id_admin'])) {
-                $admin = $this->db->table($this->table)->select("id,id_admin,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,active,last_active,created_at")->where("id_admin",$get['id_admin'])->get()->getFirstRow();
+                $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,active,last_active,created_at")->where("id_admin",$get['id_admin'])->get()->getFirstRow();
             } 
             else {
-                $admin = $this->db->table($this->table)->select("id,id_admin,nama_lengkap,privilege")->where("id_admin !=",$id_admin)->get()->getResultArray();
+                $admin = $this->db->table($this->table)->select("id,nama_lengkap,privilege")->where("id_admin !=",$id_admin)->get()->getResultArray();
             }
             
             if (empty($admin)) {    
@@ -310,7 +310,7 @@ class AdminModel extends Model
     public function deleteAdmin(string $id,string $id_admin): array
     {
         try {
-            $this->db->table($this->table)->where('id', $id)->where('id_admin !=', $id_admin)->delete();
+            $this->db->table($this->table)->where('id', $id)->where('id !=', $id_admin)->delete();
             
             if ($this->db->affectedRows() > 0) {
                 return [

@@ -83,7 +83,7 @@ class BaseController extends Controller
     /**
      * file to Base64.
      */
-    public function base64Decode(string $path,string $type) : string
+    public function base64Decode(String $path,String $type) : string
     {
         $path   = $path;
         $data   = file_get_contents($path);
@@ -164,7 +164,7 @@ class BaseController extends Controller
     /**
      * Generate New Token 
      */
-    public function generateToken(string $id,bool $rememberme): string
+    public function generateToken(String $id,bool $rememberme,?String $privilege = null): string
     {
         // $iat = time(); // current timestamp value
         // $nbf = $iat + 10;
@@ -175,6 +175,8 @@ class BaseController extends Controller
             "id"         => $id,
             "expired"    => ($rememberme == true) ? time()+2592000 : time()+3600, 
         );
+
+        ($privilege) ? $payload['privilege'] = $privilege : '' ;
 
         return JWT::encode($payload, $this->getKey());
     }

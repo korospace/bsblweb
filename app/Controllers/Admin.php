@@ -69,9 +69,9 @@ class Admin extends ResourceController
                         // database row id
                         $id           = $adminData['message']['id'];
                         // generate new token
-                        $token        = $this->baseController->generateTokenAdmin(
+                        $token        = $this->baseController->generateToken(
                             $id,
-                            $adminData['message']['id_admin'],
+                            false,
                             $privilege,
                         );
 
@@ -357,7 +357,7 @@ class Admin extends ResourceController
     /**
      * Get nasabah
      *   url    : - domain.com/admin/getnasabah
-     *            - domain.com/admin/getnasabah?id_nasabah=:id_nasabah
+     *            - domain.com/admin/getnasabah?id=:id
      *   method : GET
      */
     public function getNasabah(): object
@@ -431,14 +431,14 @@ class Admin extends ResourceController
                 $idNasabah    = '';
 
                 if ($lastNasabah['success'] == true) {
-                    $lastID = $lastNasabah['message']['id_nasabah'];
+                    $lastID = $lastNasabah['message']['id'];
                     $lastID = (int)substr($lastID,4)+1;
-                    $lastID = sprintf('%05d',$lastID);
+                    $lastID = sprintf('%06d',$lastID);
 
                     $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").$lastID;
                 }
                 else if ($lastNasabah['code'] == 404) {
-                    $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").'00001';
+                    $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").'000001';
                 } 
                 else {
                     $response = [
@@ -452,8 +452,7 @@ class Admin extends ResourceController
                 }
                 
                 $data = [
-                    "id"           => uniqid(),
-                    "id_nasabah"   => $idNasabah,
+                    "id"           => $idNasabah,
                     "email"        => trim($data['email']),
                     "username"     => trim($data['username']),
                     "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
@@ -675,7 +674,7 @@ class Admin extends ResourceController
     /**
      * Get admin
      *   url    : - domain.com/admin/getadmin
-     *            - domain.com/admin/getadmin?id_admin=:id_admin
+     *            - domain.com/admin/getadmin?id=:id
      *   method : GET
      */
     public function getAdmin(): object
@@ -777,7 +776,7 @@ class Admin extends ResourceController
                     if ($lastAdmin['success'] == true) {
                         $lastID  = $lastAdmin['message']['id_admin'];
                         $lastID  = (int)substr($lastID,1)+1;
-                        $lastID  = sprintf('%02d',$lastID);
+                        $lastID  = sprintf('%03d',$lastID);
                         $idAdmin = 'A'.$lastID;
                     } 
                     else {
@@ -791,8 +790,7 @@ class Admin extends ResourceController
                     }
                     
                     $data = [
-                        "id"           => uniqid(),
-                        "id_admin"     => $idAdmin,
+                        "id"           => $idAdmin,
                         "username"     => trim($data['username']),
                         "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
                         "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),

@@ -551,8 +551,8 @@ class Validation
                 'max_length'  => 'max 10.000 character',
             ],
 		],
-		'kategori' => [
-            'rules'  => 'required|max_length[20]|is_not_unique[kategori_berita.name]',
+		'id_kategori' => [
+            'rules'  => 'required|max_length[20]|is_not_unique[kategori_berita.id]',
             'errors' => [
                 'required'      => 'title is required',
                 'max_length'    => 'max 20 character',

@@ -9,7 +9,7 @@ class BeritaAcaraModel extends Model
 {
     protected $table         = 'berita_acara';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','title','thumbnail','content','kategori','created_by'];
+    protected $allowedFields = ['id','title','thumbnail','content','id_kategori','created_by'];
 
     public function getLastBerita(): array
     {
@@ -22,6 +22,13 @@ class BeritaAcaraModel extends Model
                     'message' => $lastBerita[0]
                 ];
             }
+            else {   
+                return [
+                    'success' => false,
+                    'message' => "add new kategori is failed",
+                    'code'    => 500
+                ];
+            } 
         } 
         catch (Exception $e) {
             return [

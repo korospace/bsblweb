@@ -10,7 +10,8 @@ class BeritaAcara extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'serial',
+                'type' => 'character varying',
+                'constraint' => 10,
                 'null' => false,
             ],
             'title' => [
@@ -26,7 +27,7 @@ class BeritaAcara extends Migration
                 'type' => 'text',
                 'null' => false,
             ],
-            'kategori' => [
+            'id_kategori' => [
                 'type' => 'character varying',
                 'constraint' => 20,
                 'null' => false,
@@ -40,8 +41,8 @@ class BeritaAcara extends Migration
 
         $this->forge->addPrimaryKey('id');
         $this->forge->addUniqueKey('title');
-        $this->forge->addForeignKey('kategori','kategori_berita','name','CASCADE','CASCADE');
-        $this->forge->addForeignKey('created_by','admin','id_admin','NO ACTION','NO ACTION');
+        $this->forge->addForeignKey('id_kategori','kategori_berita','id','CASCADE','CASCADE');
+        $this->forge->addForeignKey('created_by','admin','id','NO ACTION','NO ACTION');
         $this->forge->addField("created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('berita_acara');
     }

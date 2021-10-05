@@ -23,7 +23,8 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'https://bsblbackend.herokuapp.com/';
+    // public $baseURL = 'https://bsblbackend.herokuapp.com/';
+    public $baseURL = 'http://localhost/bsblapi';
 
     /**
      * --------------------------------------------------------------------------

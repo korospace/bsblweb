@@ -11,13 +11,7 @@ class Admin extends Migration
         $this->forge->addField([
             'id' => [
                 'type' => 'character varying',
-                'constraint' => 20,
-                'null' => false,
-            ],
-            'id_admin' => [
-                'type' => 'character varying',
                 'constraint' => 10,
-                'unique' => true,
                 'null' => false,
             ],
             'username' => [
@@ -85,7 +79,7 @@ class Admin extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey(['id_admin','username','nama_lengkap','notelp']);
+        $this->forge->addUniqueKey(['username','nama_lengkap','notelp']);
         $this->forge->addField("created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('admin');
     }

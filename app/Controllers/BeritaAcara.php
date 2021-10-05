@@ -33,6 +33,11 @@ class BeritaAcara extends ResourceController
         if ($result['success'] == true) {
             $data = $this->request->getPost(); 
             $data['thumbnail'] = $this->request->getFile('thumbnail'); 
+            
+            // $file = $data['thumbnail'];
+            // $newFileName = $file->getRandomName();
+            // $dbFileName  = base_url().'/assets/img/thumbnail/'.$newFileName;
+            // var_dump($dbFileName);die;
 
             $this->validation->run($data,'addBeritaAcara');
             $errors = $this->validation->getErrors();
@@ -50,6 +55,7 @@ class BeritaAcara extends ResourceController
                 $data = [
                     "title"      => strtolower(trim($data['title'])),
                     "thumbnail"  => $this->baseController->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
+                    // "thumbnail"  => $dbFileName,
                     "content"    => trim($data['content']),
                     "kategori"   => strtolower(trim($data['kategori'])),
                     "created_by" => $result['message']['data']['id_admin'],
@@ -64,6 +70,7 @@ class BeritaAcara extends ResourceController
                         'messages' => $dbresponse['message'],
                     ];
 
+                    // $file->move('assets/img/thumbnail/', $newFileName);
                     return $this->respond($response,201);
                 } 
                 else {
@@ -171,8 +178,7 @@ class BeritaAcara extends ResourceController
                 ];
 
                 if ($this->request->getFile('new_thumbnail')) {
-                    $xx['new_thumbnail'] = $this->request->getFile('new_thumbnail'); 
-                    // var_dump($this->request->getFile('new_thumbnail'));die;
+                    $xx['new_thumbnail'] = $this->request->getFile('new_thumbnail');
 
                     $this->validation->run($xx,'ifImgageUploadCheck');
                     $errors = $this->validation->getErrors();
@@ -185,9 +191,18 @@ class BeritaAcara extends ResourceController
                         ];
                 
                         return $this->respond($response,400);
-                    } 
+                    }  
+
+                    // $file          = $xx['new_thumbnail'];
+                    // $newFileName   = $file->getRandomName();
+                    // $dbFileName    = base_url().'/assets/img/thumbnail/'.$newFileName;
+                    // $old_thumbnail = $this->beritaModel->getOldThumbnail($data['id']);
+                    // $old_thumbnail = explode('/',$old_thumbnail);
+                    // $old_thumbnail = end($old_thumbnail);
+                    // $realPath      = $_SERVER["DOCUMENT_ROOT"].'/bsblapi/assets/img/thumbnail/';
 
                     $data['thumbnail'] = $this->baseController->base64Decode($_FILES['new_thumbnail']['tmp_name'],$_FILES['new_thumbnail']['type']);
+                    // $data['thumbnail'] = $dbFileName;
                 }
 
                 $dbresponse = $this->beritaModel->editItem($data);
@@ -198,6 +213,11 @@ class BeritaAcara extends ResourceController
                         'error' => false,
                         'messages' => $dbresponse['message'],
                     ];
+
+                    // if (isset($xx['new_thumbnail'])) {
+                    //     rename($file->getPathname(),$realPath.$newFileName);
+                    //     unlink($realPath.$old_thumbnail);
+                    // }
 
                     return $this->respond($response,201);
                 } 

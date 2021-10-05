@@ -52,9 +52,11 @@ class Admin extends ResourceController
                 if (password_verify($login_pass,$database_pass)) {
 
                     // is admin active or not
-                    $is_active = $adminData['message']['active'];
+                    $last_active = $adminData['message']['last_active'];
+                    $rangeTotal  = (3600*24)*30;
+                    $privilege   = $adminData['message']['privilege'];
 
-                    if ($is_active == 'f') {
+                    if (time()-$last_active >= $rangeTotal && $privilege != 'super') {
                         $response = [
                             'status'   => 401,
                             'error'    => true,
@@ -70,7 +72,7 @@ class Admin extends ResourceController
                         $token        = $this->baseController->generateTokenAdmin(
                             $id,
                             $adminData['message']['id_admin'],
-                            $adminData['message']['privilege'],
+                            $privilege,
                         );
 
                         // edit admin in database

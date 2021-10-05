@@ -9,12 +9,12 @@ class NasabahModel extends Model
 {
     protected $table         = 'nasabah';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','id_nasabah','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token'];
+    protected $allowedFields = ['id','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token'];
 
     public function getLastNasabah(): array
     {
         try {
-            $lastNasabah = $this->db->table($this->table)->select('id_nasabah')->orderBy('created_at','DESC')->get()->getResultArray();
+            $lastNasabah = $this->db->table($this->table)->select('id')->orderBy('created_at','DESC')->get()->getResultArray();
 
             if (empty($lastNasabah)) {    
                 return [
@@ -105,7 +105,7 @@ class NasabahModel extends Model
     public function getNasabahByEmail(string $email): array
     {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,password,is_verify")->where("email",$email)->get()->getResultArray();
+            $dataNasabah = $this->db->table($this->table)->select("id,password,is_verify")->where("email",$email)->get()->getResultArray();
             
             if (empty($dataNasabah)) {    
                 return [
@@ -167,7 +167,7 @@ class NasabahModel extends Model
     public function getProfileNasabah(string $id): array
     {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("id,id_nasabah,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,created_at")->where("id",$id)->get()->getFirstRow();
+            $dataNasabah = $this->db->table($this->table)->select("id,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,created_at")->where("id",$id)->get()->getFirstRow();
             
             if (empty($dataNasabah)) {    
                 return [

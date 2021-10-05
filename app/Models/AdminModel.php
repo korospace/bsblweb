@@ -35,7 +35,7 @@ class AdminModel extends Model
     public function getAdminByUsername(string $username): array
     {
         try {
-            $dataAdmin = $this->db->table($this->table)->select("id,id_admin,password,privilege,active")->where("username",$username)->get()->getResultArray();
+            $dataAdmin = $this->db->table($this->table)->select("id,id_admin,password,privilege,last_active")->where("username",$username)->get()->getResultArray();
 
             if (empty($dataAdmin)) {    
                 return [

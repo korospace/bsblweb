@@ -42,14 +42,14 @@ class Nasabah extends ResourceController
             $idNasabah    = '';
 
             if ($lastNasabah['success'] == true) {
-                $lastID = $lastNasabah['message']['id_nasabah'];
+                $lastID = $lastNasabah['message']['id'];
                 $lastID = (int)substr($lastID,4)+1;
-                $lastID = sprintf('%05d',$lastID);
+                $lastID = sprintf('%06d',$lastID);
 
                 $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").$lastID;
             }
             else if ($lastNasabah['code'] == 404) {
-                $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").'00001';
+                $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").'000001';
             } 
             else {
                 $response = [
@@ -63,8 +63,7 @@ class Nasabah extends ResourceController
             }
             
             $data = [
-                "id"           => uniqid(),
-                "id_nasabah"   => $idNasabah,
+                "id"           => $idNasabah,
                 "email"        => $email,
                 "username"     => trim($data['username']),
                 "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
@@ -197,9 +196,8 @@ class Nasabah extends ResourceController
                         // rememberMe check
                         $rememberme   = ($this->request->getPost("rememberme") == '1') ? true : false;
                         // generate new token
-                        $token        = $this->baseController->generateTokenNasabah(
+                        $token        = $this->baseController->generateToken(
                             $id,
-                            $nasabahData['message']['id_nasabah'],
                             $rememberme
                         );
 

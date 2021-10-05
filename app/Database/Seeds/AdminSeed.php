@@ -9,8 +9,7 @@ class AdminSeed extends Seeder
     public function run()
     {
         $data = [
-            'id' => uniqid(),
-            'id_admin' => 'A01',
+            'id' => 'A001',
             'username' => 'superadmin',
             'password' => password_hash(trim('superadmin'), PASSWORD_DEFAULT),
             'nama_lengkap' => 'super admin 1',

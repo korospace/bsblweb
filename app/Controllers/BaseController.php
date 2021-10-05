@@ -162,9 +162,9 @@ class BaseController extends Controller
     }
 
     /**
-     * Generate New Token Nasabah
+     * Generate New Token 
      */
-    public function generateTokenNasabah(string $id,string $id_nasabah,bool $rememberme): string
+    public function generateToken(string $id,bool $rememberme): string
     {
         // $iat = time(); // current timestamp value
         // $nbf = $iat + 10;
@@ -173,28 +173,7 @@ class BaseController extends Controller
             // "iat" => $iat, // issued at
             // "nbf" => $nbf, //not before in seconds
             "id"         => $id,
-            "id_nasabah" => $id_nasabah,
             "expired"    => ($rememberme == true) ? time()+2592000 : time()+3600, 
-        );
-
-        return JWT::encode($payload, $this->getKey());
-    }
-
-    /**
-     * Generate New Token Admin
-     */
-    public function generateTokenAdmin(string $id,string $id_admin,string $privilege): string
-    {
-        // $iat = time(); // current timestamp value
-        // $nbf = $iat + 10;
-
-        $payload = array(
-            // "iat" => $iat, // issued at
-            // "nbf" => $nbf, //not before in seconds
-            "id"        => $id,
-            "id_admin"  => $id_admin,
-            "privilege" => $privilege,
-            "expired"   => time()+3600, 
         );
 
         return JWT::encode($payload, $this->getKey());

@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class KategoriBerita extends Migration
+class KategoriSampah extends Migration
 {
     public function up()
     {
@@ -19,12 +19,12 @@ class KategoriBerita extends Migration
                 'constraint' => 20,
                 'unique' => true,
                 'null' => false,
-            ]
+            ],
         ]);
 
         $this->forge->addPrimaryKey('id');
         $this->forge->addUniqueKey('name');
-        $this->forge->createTable('kategori_berita');
+        $this->forge->createTable('kategori_sampah');
     }
 
     public function down()

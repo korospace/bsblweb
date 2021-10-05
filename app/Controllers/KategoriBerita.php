@@ -53,7 +53,7 @@ class KategoriBerita extends ResourceController
                     $lastID     = $lastKategori['message']['id'];
                     $lastID     = (int)substr($lastID,2)+1;
                     $lastID     = sprintf('%02d',$lastID);
-                    $idKategori = $lastID;
+                    $idKategori = 'KB'.$lastID;
                 }
                 else if ($lastKategori['code'] == 404) {
                     $idKategori = 'KB01';

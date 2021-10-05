@@ -182,7 +182,7 @@ class BeritaAcara extends ResourceController
                     "id"         => trim($data['id']),
                     "title"      => strtolower(trim($data['title'])),
                     "content"    => trim($data['content']),
-                    "kategori"   => strtolower(trim($data['kategori'])),
+                    "id_kategori"   => strtolower(trim($data['id_kategori'])),
                     "created_by" => $result['message']['data']['id_admin'],
                 ];
 

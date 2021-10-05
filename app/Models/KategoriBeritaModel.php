@@ -22,6 +22,13 @@ class KategoriBeritaModel extends Model
                     'message' => $lastKategori[0]
                 ];
             }
+            else {
+                return [
+                    'success' => false,
+                    'message' => 'not found',
+                    'code'    => 404
+                ];
+            }
         } 
         catch (Exception $e) {
             return [

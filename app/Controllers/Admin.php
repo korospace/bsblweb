@@ -982,7 +982,7 @@ class Admin extends ResourceController
 
         if ($result['success'] == true) {
             $privilege = $result['message']['data']['privilege'];
-            $id_admin  = $result['message']['data']['id_admin'];
+            $id_admin  = $result['message']['data']['id'];
 
             if ($privilege != 'super') {
                 $response = [

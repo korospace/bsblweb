@@ -254,8 +254,8 @@ class AdminModel extends Model
     public function getAdmin(array $get,string $id_admin): array
     {
         try {
-            if (isset($get['id_admin'])) {
-                $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,active,last_active,created_at")->where("id",$get['id_admin'])->where("id !=",$id_admin)->get()->getFirstRow();
+            if (isset($get['id'])) {
+                $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,active,last_active,created_at")->where("id",$get['id'])->where("id !=",$id_admin)->get()->getFirstRow();
             } 
             else {
                 $admin = $this->db->table($this->table)->select("id,nama_lengkap,privilege")->where("id !=",$id_admin)->get()->getResultArray();

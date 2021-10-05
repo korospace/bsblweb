@@ -76,10 +76,10 @@ class BeritaAcaraModel extends Model
                 $berita = $this->db->table($this->table)->select("berita_acara.id,berita_acara.title,berita_acara.kategori,admin.nama_lengkap AS author,berita_acara.created_at,berita_acara.content,berita_acara.thumbnail")->join('admin', 'berita_acara.created_by = admin.id_admin')->where("berita_acara.id",$get['id_berita'])->get()->getFirstRow();
             } 
             else if (isset($get['kategori']) && !isset($get['id_berita'])) {
-                $berita = $this->db->table($this->table)->select('id,title,kategori_berita.name AS kategori,created_at,thumbnail')->join('kategori_berita','berita_acara.id_kategori = kategori_berita.id')->where("id_kategori",$get['kategori'])->orderBy('created_at','DESC')->get()->getResultArray();
+                $berita = $this->db->table($this->table)->select('berita_acara.id,berita_acara.title,kategori_berita.name AS kategori,berita_acara.created_at,berita_acara.thumbnail')->join('kategori_berita','berita_acara.id_kategori = kategori_berita.id')->where("berita_acara.id_kategori",$get['kategori'])->orderBy('created_at','DESC')->get()->getResultArray();
             } 
             else {
-                $berita = $this->db->table($this->table)->select('id,title,kategori_berita.name AS kategori,created_at,thumbnail')->join('kategori_berita','berita_acara.id_kategori = kategori_berita.id')->orderBy('created_at','DESC')->get()->getResultArray();
+                $berita = $this->db->table($this->table)->select('berita_acara.id,berita_acara.title,kategori_berita.name AS kategori,berita_acara.created_at,berita_acara.thumbnail')->join('kategori_berita','berita_acara.id_kategori = kategori_berita.id')->orderBy('created_at','DESC')->get()->getResultArray();
             }
             
             if (empty($berita)) {    

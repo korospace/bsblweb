@@ -81,8 +81,8 @@ class BeritaAcara extends ResourceController
                     "thumbnail"   => $this->baseController->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
                     // "thumbnail"  => $dbFileName,
                     "content"     => trim($data['content']),
-                    "id_kategori" => strtolower(trim($data['id_kategori'])),
-                    "created_by"  => $result['message']['data']['id_admin'],
+                    "id_kategori" => trim($data['id_kategori']),
+                    "created_by"  => $result['message']['data']['id'],
                 ];
 
                 $dbresponse = $this->beritaModel->addItem($data);
@@ -182,8 +182,8 @@ class BeritaAcara extends ResourceController
                     "id"         => trim($data['id']),
                     "title"      => strtolower(trim($data['title'])),
                     "content"    => trim($data['content']),
-                    "id_kategori"   => strtolower(trim($data['id_kategori'])),
-                    "created_by" => $result['message']['data']['id_admin'],
+                    "id_kategori"   => trim($data['id_kategori']),
+                    "created_by" => $result['message']['data']['id'],
                 ];
 
                 if ($this->request->getFile('new_thumbnail')) {

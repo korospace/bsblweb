@@ -556,7 +556,7 @@ class Validation
             'errors' => [
                 'required'      => 'title is required',
                 'max_length'    => 'max 20 character',
-                'is_not_unique' => 'kategori not in database',
+                'is_not_unique' => 'id kategori not in database',
             ],
 		]
 	];
@@ -590,7 +590,7 @@ class Validation
             'errors' => [
                 'required'      => 'title is required',
                 'max_length'    => 'max 20 character',
-                'is_not_unique' => 'kategori not in database',
+                'is_not_unique' => 'id kategori not in database',
             ],
 		]
 	];

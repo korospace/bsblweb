@@ -42,10 +42,6 @@ class KategoriBeritaModel extends Model
     public function addItem(array $data): array
     {
         try {
-            $data = [
-                "name" => strtolower(trim($data['kategori_name'])),
-            ];
-
             $query = $this->db->table($this->table)->insert($data);
 
             $query = $query ? true : false;

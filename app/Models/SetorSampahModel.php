@@ -26,7 +26,7 @@ class SetorSampahModel extends Model
                 $harga      = (int)$hargaAsli[0]['harga']*(float)$jumlah;
                 $totalHarga = $totalHarga+$harga;
 
-                $queryDetilSetor .= "('$idsetor','$idsampah','$jumlah','$harga'),";
+                $queryDetilSetor .= "('$idsetor','$idsampah',$jumlah,$harga),";
             }
 
             $queryDetilSetor  = rtrim($queryDetilSetor, ",");

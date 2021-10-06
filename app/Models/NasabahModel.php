@@ -181,7 +181,7 @@ class NasabahModel extends Model
     public function getProfileNasabah(string $id): array
     {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("id,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,created_at")->where("id",$id)->get()->getFirstRow();
+            $dataNasabah = $this->db->table($this->table)->select("nasabah.id,nasabah.email,nasabah.username,nasabah.nama_lengkap,nasabah.alamat,nasabah.notelp,nasabah.tgl_lahir,nasabah.kelamin,dompet_uang.jumlah AS saldo_uang,dompet_emas.jumlah AS saldo_emas,nasabah.created_at")->join('dompet_uang', 'dompet_uang.id_nasabah = nasabah.id')->join('dompet_emas', 'dompet_emas.id_nasabah = nasabah.id')->where("nasabah.id",$id)->get()->getFirstRow();
             
             if (empty($dataNasabah)) {    
                 return [

@@ -673,4 +673,38 @@ class Validation
             ],
         ],
 	];
+
+	public $setorSampah1 = [
+		'id_nasabah' => [
+            'rules'  => 'required|is_not_unique[nasabah.id]',
+            'errors' => [
+                'required'      => 'id nasabah is required',
+                'is_not_unique' => 'id_nasabah with value ({value}) is not found',
+            ],
+		],
+		'transaction' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'id sampah is required',
+            ],
+		],
+	];
+
+	public $setorSampah2 = [
+		'id_sampah' => [
+            'rules'  => 'required|is_not_unique[sampah.id]',
+            'errors' => [
+                'required'      => 'id sampah is required',
+                'is_not_unique' => 'id_sampah with value ({value}) is not found',
+            ],
+		],
+		'jumlah' => [
+            'rules'  => 'required|max_length[11]|numeric',
+            'errors' => [
+                'required'   => 'jumlah is required',
+                'max_length' => 'max 11 character',
+                'numeric'    => 'only number allowed',
+            ],
+		],
+	];
 }

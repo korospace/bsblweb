@@ -86,6 +86,10 @@ $routes->group("sampah", function ($routes) {
     $routes->delete("deleteitem", "Sampah::deleteItem");
 });
 
+$routes->group("setor_sampah", function ($routes) {
+    $routes->post("addtransaction", "SetorSampah::addTransaction");
+});
+
 $routes->add('/',       'Home::index');
 $routes->add('/(:any)', 'Notfound::ControllerNf');
 

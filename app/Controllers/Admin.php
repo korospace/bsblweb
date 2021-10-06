@@ -597,7 +597,7 @@ class Admin extends ResourceController
                     'status'   => 404,
                     'error'    => true,
                     'messages' => [
-                        'id'   => "nasabah with id $id not found",
+                        'id'   => "nasabah with id ($id) not found",
                     ],
                 ];
         
@@ -950,7 +950,7 @@ class Admin extends ResourceController
                         'status'   => 404,
                         'error'    => true,
                         'messages' => [
-                            'id'   => "admin with id $id not found",
+                            'id'   => "admin with id ($id) not found",
                         ],
                     ];
             

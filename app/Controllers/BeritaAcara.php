@@ -271,7 +271,7 @@ class BeritaAcara extends ResourceController
                 $response = [
                     'status'   => 400,
                     'error'    => true,
-                    'messages' => $errors,
+                    'messages' => $errors['id'],
                 ];
         
                 return $this->respond($response,400);

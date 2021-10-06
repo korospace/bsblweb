@@ -88,6 +88,7 @@ $routes->group("sampah", function ($routes) {
 
 $routes->group("setor_sampah", function ($routes) {
     $routes->post("addtransaction", "SetorSampah::addTransaction");
+    $routes->get("gettransaction",  "SetorSampah::getTransaction");
 });
 
 $routes->add('/',       'Home::index');

@@ -187,8 +187,18 @@ class BaseController extends Controller
     public function checkToken(?string $token,string $target): array
     {
         try {
-            $db          = \Config\Database::connect();
-            $dataNasabah = $db->table($target)->select('token')->where("token", $token)->get()->getResultArray();
+            $db = \Config\Database::connect();
+
+            if ($target == 'union') {
+                $dataNasabah = $db->table('admin')->select('token')->where("token", $token)->get()->getResultArray();
+
+                if (empty($dataNasabah)) {
+                    $dataNasabah = $db->table('nasabah')->select('token')->where("token", $token)->get()->getResultArray();
+                }
+            } 
+            else {
+                $dataNasabah = $db->table($target)->select('token')->where("token", $token)->get()->getResultArray();
+            }
         } 
         catch (phpException $e) {
             return [
@@ -225,8 +235,13 @@ class BaseController extends Controller
                         $data = [
                             'token' => null
                         ];
-
-                        $db->table($target)->where('token', $token)->update($data);
+                
+                        if ($target == 'union') {
+                            $db->table(['admin','nasabah'])->where('token', $token)->update($data);
+                        } 
+                        else {
+                            $db->table($target)->where('token', $token)->update($data);
+                        }
                         
                         if ($db->affectedRows()> 0) {
                             return [

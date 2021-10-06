@@ -31,9 +31,6 @@ class SetorSampahModel extends Model
 
             $queryDetilSetor  = rtrim($queryDetilSetor, ",");
             $queryDetilSetor .= ';';
-            // var_dump($queryDetilSetor);
-            // var_dump($totalHarga);
-            // die;
 
             $this->db->transBegin();
             $this->db->query("INSERT INTO setor_sampah (id,id_nasabah) VALUES('$idsetor','$idnasabah');");
@@ -58,6 +55,55 @@ class SetorSampahModel extends Model
         } 
         catch (Exception $e) {
             $this->db->transRollback();
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
+    public function getTransaction(array $get,bool $isAdmin,?string $idNasabah): array
+    {
+        try {
+            if ($isAdmin) {
+                if (isset($get['id_nasabah'])) {
+                    $id_nasabah  = $get['id_nasabah'];
+                    $transaction = $this->db->query("SELECT setor_sampah.id AS id_transaksi,SUM(detil_setor_sampah.harga) AS total,setor_sampah.tgl_setor FROM setor_sampah JOIN detil_setor_sampah ON (setor_sampah.id = detil_setor_sampah.id_setor) WHERE setor_sampah.id_nasabah = '$id_nasabah' GROUP BY setor_sampah.id ORDER BY setor_sampah.tgl_setor DESC;")->getResultArray();
+                } 
+                else if (isset($get['id_transaksi']) && !isset($get['id_nasabah'])) {
+                    $id_transaksi = $get['id_transaksi'];
+                    $transaction  = $this->db->query("SELECT setor_sampah.id,setor_sampah.id_nasabah,setor_sampah.tgl_setor,sampah.jenis,detil_setor_sampah.jumlah,detil_setor_sampah.harga FROM setor_sampah JOIN detil_setor_sampah ON (setor_sampah.id = detil_setor_sampah.id_setor) JOIN sampah ON (detil_setor_sampah.id_sampah = sampah.id) WHERE setor_sampah.id = '$id_transaksi';")->getResultArray();
+                } 
+                else {
+                    $transaction = $this->db->query("SELECT setor_sampah.id_nasabah,setor_sampah.id AS id_transaksi,SUM(detil_setor_sampah.harga) AS total,setor_sampah.tgl_setor FROM setor_sampah JOIN detil_setor_sampah ON (setor_sampah.id = detil_setor_sampah.id_setor) GROUP BY setor_sampah.id ORDER BY setor_sampah.tgl_setor DESC;")->getResultArray();
+                }
+            } 
+            else {
+                if (isset($get['id_transaksi'])) {
+                    $id_transaksi = $get['id_transaksi'];
+                    $transaction  = $this->db->query("SELECT setor_sampah.id,setor_sampah.id_nasabah,setor_sampah.tgl_setor,sampah.jenis,detil_setor_sampah.jumlah,detil_setor_sampah.harga FROM setor_sampah JOIN detil_setor_sampah ON (setor_sampah.id = detil_setor_sampah.id_setor) JOIN sampah ON (detil_setor_sampah.id_sampah = sampah.id) WHERE setor_sampah.id = '$id_transaksi' AND setor_sampah.id_nasabah = '$idNasabah';")->getResultArray();
+                } 
+                else {
+                    $transaction = $this->db->query("SELECT setor_sampah.id AS id_transaksi,SUM(detil_setor_sampah.harga) AS total,setor_sampah.tgl_setor FROM setor_sampah JOIN detil_setor_sampah ON (setor_sampah.id = detil_setor_sampah.id_setor) WHERE setor_sampah.id_nasabah = '$idNasabah' GROUP BY setor_sampah.id ORDER BY setor_sampah.tgl_setor DESC;")->getResultArray();
+                }
+            }
+
+            if (empty($transaction)) {    
+                return [
+                    'success' => false,
+                    'message' => "transaction notfound",
+                    'code'    => 404
+                ];
+            } 
+            else {   
+                return [
+                    'success' => true,
+                    'data'    => $transaction
+                ];
+            }
+        } 
+        catch (Exception $e) {
             return [
                 'success' => false,
                 'message' => $e->getMessage(),

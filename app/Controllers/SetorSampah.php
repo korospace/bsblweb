@@ -94,4 +94,52 @@ class SetorSampah extends ResourceController
             return $this->respond($response,$result['code']);
         }
     }
+
+    /**
+     * Add new transaction
+     *   url    : domain.com/setor_sampah/gettransaction
+     *   method : GET
+     */
+    public function getTransaction()
+    {
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $result     = $this->baseController->checkToken($token,'union');
+
+        if ($result['success'] == true) {
+
+            $isAdmin    = isset($result['message']['data']['privilege']);
+            $idNasabah  = $result['message']['data']['id'];
+
+            $dbresponse = $this->setorSampahModel->getTransaction($this->request->getGet(),$isAdmin,$idNasabah);
+
+            if ($dbresponse['success'] == true) {
+                $response = [
+                    'status'   => 200,
+                    "error"    => false,
+                    'data'     => $dbresponse['data'],
+                ];
+
+                return $this->respond($response,200);
+            } 
+            else {
+                $response = [
+                    'status'   => $dbresponse['code'],
+                    'error'    => true,
+                    'messages' => $dbresponse['message'],
+                ];
+        
+                return $this->respond($response,$dbresponse['code']);
+            }
+        } 
+        else {
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
+        }
+    }
 }

@@ -310,6 +310,47 @@ class Nasabah extends ResourceController
         }
     }
 
+    public function getSaldo(): object
+    {
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $result     = $this->baseController->checkToken($token,'nasabah');
+
+        if ($result['success'] == true) {
+            
+            $id        = $result['message']['data']['id'];
+            $dataSaldo = $this->nasabahModel->getSaldoNasabah($id);
+            
+            if ($dataSaldo['success'] == true) {
+                $response = [
+                    'status' => 200,
+                    'error'  => false,
+                    'data '  => $dataSaldo['message']
+                ];
+
+                return $this->respond($response,200);
+            } 
+            else {
+                $response = [
+                    'status'   => $dataSaldo['code'],
+                    'error'    => true,
+                    'messages' => $dataSaldo['message'],
+                ];
+        
+                return $this->respond($response,$dataSaldo['code']);
+            }
+        } 
+        else {
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
+        }
+    }
+
     public function editProfile(): object
     {
         $authHeader = $this->request->getHeader('token');

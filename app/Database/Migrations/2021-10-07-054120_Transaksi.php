@@ -4,13 +4,13 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class RiwayatPenarikan extends Migration
+class Transaksi extends Migration
 {
     public function up()
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'serial',
+                'type' => 'text',
                 'null' => false,
             ],
             'id_nasabah' => [
@@ -18,21 +18,17 @@ class RiwayatPenarikan extends Migration
                 'constraint' => 10,
                 'null' => false,
             ],
-            'jenis_dompet' => [
+            'type' => [
                 'type' => 'character varying',
-                'constraint' => 4,
-                'null' => false,
-            ],
-            'jumlah' => [
-                'type' => 'text',
+                'constraint' => 5,
                 'null' => false,
             ],
         ]);
 
         $this->forge->addPrimaryKey('id');
         $this->forge->addForeignKey('id_nasabah','nasabah','id','CASCADE','CASCADE');
-        $this->forge->addField("tgl_tarik TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
-        $this->forge->createTable('riwayat_penarikan');
+        $this->forge->addField("date TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+        $this->forge->createTable('transaksi');
     }
 
     public function down()

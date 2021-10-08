@@ -355,6 +355,50 @@ class Admin extends ResourceController
     }
 
     /**
+     * Get total saldo
+     *   url    : domain.com/admin/totalsaldo
+     *   method : GET
+     */
+    public function getTotalSaldo(): object
+    {
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $result     = $this->baseController->checkToken($token,'admin');
+
+        if ($result['success'] == true) {
+            $totalSaldo = $this->adminModel->getTotalSaldo();
+            
+            if ($totalSaldo['success'] == true) {
+                $response = [
+                    'status' => 200,
+                    'error'  => false,
+                    'data '  => $totalSaldo['message']
+                ];
+
+                return $this->respond($response,200);
+            } 
+            else {
+                $response = [
+                    'status'   => $totalSaldo['code'],
+                    'error'    => true,
+                    'messages' => $totalSaldo['message'],
+                ];
+        
+                return $this->respond($response,$totalSaldo['code']);
+            }
+        } 
+        else {
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
+        }
+    }
+
+    /**
      * Get nasabah
      *   url    : - domain.com/admin/getnasabah
      *            - domain.com/admin/getnasabah?id=:id

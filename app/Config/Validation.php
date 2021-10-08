@@ -682,10 +682,10 @@ class Validation
                 'is_not_unique' => 'id_nasabah with value ({value}) is not found',
             ],
 		],
-		'transaction' => [
+		'transaksi' => [
             'rules'  => 'required',
             'errors' => [
-                'required' => 'id sampah is required',
+                'required' => 'transaksi is required',
             ],
 		],
 	];
@@ -704,6 +704,41 @@ class Validation
                 'required'   => 'jumlah is required',
                 'max_length' => 'max 11 character',
                 'numeric'    => 'only number allowed',
+            ],
+		],
+	];
+
+	public $tarikSaldo = [
+		'id_nasabah' => [
+            'rules'  => 'required|is_not_unique[nasabah.id]',
+            'errors' => [
+                'required'      => 'id nasabah is required',
+                'is_not_unique' => 'id_nasabah with value ({value}) is not found',
+            ],
+		],
+		'jenis_dompet' => [
+            'rules'  => 'required|in_list[uang,emas]',
+            'errors' => [
+                'required' => 'jenis dompet sampah is required',
+                'in_list'  => "value must be 'uang' or 'emas'",
+            ],
+		],
+		'jumlah' => [
+            'rules'  => 'required|max_length[11]|numeric',
+            'errors' => [
+                'required'   => 'jumlah is required',
+                'max_length' => 'max 11 character',
+                'numeric'    => 'only number allowed',
+            ],
+		],
+	];
+
+	public $detilTransaksiCheck = [
+		'type' => [
+            'rules'  => 'required|in_list[setor,tarik]',
+            'errors' => [
+                'required' => 'type is required',
+                'in_list'  => "value must be 'setor' or 'tarik'",
             ],
 		],
 	];

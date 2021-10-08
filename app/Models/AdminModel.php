@@ -191,6 +191,33 @@ class AdminModel extends Model
         }
     }
 
+    public function getTotalSaldo(): array
+    {
+        try {
+            $totalSaldo = $this->db->table('dompet_uang')->select("SUM(dompet_uang.jumlah) AS saldo_uang,SUM(dompet_emas.jumlah) AS saldo_emas")->join('dompet_emas', 'dompet_uang.id_nasabah = dompet_emas.id_nasabah')->get()->getFirstRow();
+            
+            if (empty($totalSaldo)) {    
+                return [
+                    'success' => false,
+                    'message' => "saldo notfound",
+                    'code'    => 404
+                ];
+            } else {   
+                return [
+                    'success' => true,
+                    'message' => $totalSaldo
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
     public function getNasabah(array $get): array
     {
         try {
@@ -198,7 +225,7 @@ class AdminModel extends Model
                 $nasabah = $this->db->table('nasabah')->select("nasabah.id,nasabah.email,nasabah.username,nasabah.nama_lengkap,nasabah.alamat,nasabah.notelp,nasabah.tgl_lahir,nasabah.kelamin,dompet_uang.jumlah AS saldo_uang,dompet_emas.jumlah AS saldo_emas,nasabah.created_at")->join('dompet_uang', 'dompet_uang.id_nasabah = nasabah.id')->join('dompet_emas', 'dompet_emas.id_nasabah = nasabah.id')->where("nasabah.id",$get['id'])->get()->getFirstRow();
             } 
             else {
-                $nasabah = $this->db->table('nasabah')->select("id,nama_lengkap,created_at")->orderBy('created_at','DESC')->get()->getResultArray();
+                $nasabah = $this->db->table('nasabah')->select("nasabah.id,nasabah.nama_lengkap,dompet_uang.jumlah AS saldo_uang,dompet_emas.jumlah AS saldo_emas,nasabah.created_at")->join('dompet_uang', 'dompet_uang.id_nasabah = nasabah.id')->join('dompet_emas', 'dompet_emas.id_nasabah = nasabah.id')->orderBy('created_at','DESC')->get()->getResultArray();
             }
             
             if (empty($nasabah)) {    

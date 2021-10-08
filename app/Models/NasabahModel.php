@@ -181,7 +181,7 @@ class NasabahModel extends Model
     public function getProfileNasabah(string $id): array
     {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("nasabah.id,nasabah.email,nasabah.username,nasabah.nama_lengkap,nasabah.alamat,nasabah.notelp,nasabah.tgl_lahir,nasabah.kelamin,dompet_uang.jumlah AS saldo_uang,dompet_emas.jumlah AS saldo_emas,nasabah.created_at")->join('dompet_uang', 'dompet_uang.id_nasabah = nasabah.id')->join('dompet_emas', 'dompet_emas.id_nasabah = nasabah.id')->where("nasabah.id",$id)->get()->getFirstRow();
+            $dataNasabah = $this->db->table($this->table)->select("nasabah.id,nasabah.email,nasabah.username,nasabah.nama_lengkap,nasabah.alamat,nasabah.notelp,nasabah.tgl_lahir,nasabah.kelamin,nasabah.created_at")->where("nasabah.id",$id)->get()->getFirstRow();
             
             if (empty($dataNasabah)) {    
                 return [
@@ -193,6 +193,33 @@ class NasabahModel extends Model
                 return [
                     'success' => true,
                     'message' => $dataNasabah
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
+    public function getSaldoNasabah(string $id): array
+    {
+        try {
+            $dataSaldo = $this->db->table('dompet_uang')->select("dompet_uang.jumlah AS saldo_uang,dompet_emas.jumlah AS saldo_emas")->join('dompet_emas', 'dompet_uang.id_nasabah = dompet_emas.id_nasabah')->where("dompet_uang.id_nasabah",$id)->get()->getFirstRow();
+            
+            if (empty($dataSaldo)) {    
+                return [
+                    'success' => false,
+                    'message' => "saldo nasabah with id $id notfound",
+                    'code'    => 404
+                ];
+            } else {   
+                return [
+                    'success' => true,
+                    'message' => $dataSaldo
                 ];
             }
         } 

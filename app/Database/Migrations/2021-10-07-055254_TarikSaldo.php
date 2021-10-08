@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class DetilSetorSampah extends Migration
+class TarikSaldo extends Migration
 {
     public function up()
     {
@@ -13,29 +13,24 @@ class DetilSetorSampah extends Migration
                 'type' => 'serial',
                 'null' => false,
             ],
-            'id_setor' => [
+            'id_transaksi' => [
                 'type' => 'text',
                 'null' => false,
             ],
-            'id_sampah' => [
+            'jenis_dompet' => [
                 'type' => 'character varying',
-                'constraint' => 10,
+                'constraint' => 4,
                 'null' => false,
             ],
             'jumlah' => [
-                'type' => 'integer',
-                'null' => false,
-            ],
-            'harga' => [
-                'type' => 'integer',
+                'type' => 'DOUBLE PRECISION',
                 'null' => false,
             ],
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('id_setor','setor_sampah','id','CASCADE','CASCADE');
-        $this->forge->addForeignKey('id_sampah','sampah','id','SET NULL','SET NULL');
-        $this->forge->createTable('detil_setor_sampah');
+        $this->forge->addForeignKey('id_transaksi','transaksi','id','CASCADE','CASCADE');
+        $this->forge->createTable('tarik_saldo');
     }
 
     public function down()

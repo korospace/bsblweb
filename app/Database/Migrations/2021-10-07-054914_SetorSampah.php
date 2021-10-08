@@ -10,19 +10,31 @@ class SetorSampah extends Migration
     {
         $this->forge->addField([
             'id' => [
+                'type' => 'serial',
+                'null' => false,
+            ],
+            'id_transaksi' => [
                 'type' => 'text',
                 'null' => false,
             ],
-            'id_nasabah' => [
+            'id_sampah' => [
                 'type' => 'character varying',
                 'constraint' => 10,
+                'null' => false,
+            ],
+            'jumlah' => [
+                'type' => 'DOUBLE PRECISION',
+                'null' => false,
+            ],
+            'harga' => [
+                'type' => 'integer',
                 'null' => false,
             ],
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('id_nasabah','nasabah','id','CASCADE','CASCADE');
-        $this->forge->addField("tgl_setor TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+        $this->forge->addForeignKey('id_transaksi','transaksi','id','CASCADE','CASCADE');
+        $this->forge->addForeignKey('id_sampah','sampah','id','SET NULL','SET NULL');
         $this->forge->createTable('setor_sampah');
     }
 

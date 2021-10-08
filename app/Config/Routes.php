@@ -37,6 +37,7 @@ $routes->group("nasabah", function ($routes) {
     $routes->post("login",        "Nasabah::login");
     $routes->post("verification", "Nasabah::verification");
     $routes->get("sessioncheck",  "Nasabah::sessionCheck");
+    $routes->get("getsaldo",      "Nasabah::getSaldo");
     $routes->get("getprofile",    "Nasabah::getProfile");
     $routes->put("editprofile",   "Nasabah::editProfile");
     $routes->delete("logout",     "Nasabah::logout");
@@ -50,6 +51,7 @@ $routes->group("admin", function ($routes) {
     $routes->get("getprofile",       "Admin::getProfile");
     $routes->put("editprofile",      "Admin::editProfile");
     $routes->delete("logout",        "Admin::logout");
+    $routes->get("totalsaldo",       "Admin::getTotalSaldo");
     $routes->get("getnasabah",       "Admin::getNasabah");
     $routes->post("addnasabah",      "Admin::addNasabah");
     $routes->put("editnasabah",      "Admin::editNasabah");
@@ -86,9 +88,10 @@ $routes->group("sampah", function ($routes) {
     $routes->delete("deleteitem", "Sampah::deleteItem");
 });
 
-$routes->group("setor_sampah", function ($routes) {
-    $routes->post("addtransaction", "SetorSampah::addTransaction");
-    $routes->get("gettransaction",  "SetorSampah::getTransaction");
+$routes->group("transaksi", function ($routes) {
+    $routes->post("setorsampah", "Transaksi::setorSampah");
+    $routes->post("tariksaldo",  "Transaksi::tarikSaldo");
+    $routes->get("getdata",      "Transaksi::getData");
 });
 
 $routes->add('/',       'Home::index');

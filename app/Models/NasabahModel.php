@@ -11,10 +11,10 @@ class NasabahModel extends Model
     protected $primaryKey    = 'id';
     protected $allowedFields = ['id','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token'];
 
-    public function getLastNasabah(): array
+    public function getLastNasabah(string $codepos): array
     {
         try {
-            $lastNasabah = $this->db->table($this->table)->select('id')->orderBy('created_at','DESC')->get()->getResultArray();
+            $lastNasabah = $this->db->table($this->table)->select('id')->like('id', $codepos)->orderBy('created_at','DESC')->get()->getResultArray();
 
             if (empty($lastNasabah)) {    
                 return [

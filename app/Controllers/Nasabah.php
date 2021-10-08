@@ -38,18 +38,18 @@ class Nasabah extends ResourceController
             $email        = trim($data['email']);
             $otp          = $this->baseController->generateOTP(6);
 
-            $lastNasabah  = $this->nasabahModel->getLastNasabah();
+            $lastNasabah  = $this->nasabahModel->getLastNasabah($data['kodepos']);
             $idNasabah    = '';
 
             if ($lastNasabah['success'] == true) {
                 $lastID = $lastNasabah['message']['id'];
-                $lastID = (int)substr($lastID,4)+1;
-                $lastID = sprintf('%06d',$lastID);
+                $lastID = (int)substr($lastID,9)+1;
+                // $lastID = sprintf('%06d',$lastID);
 
-                $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").$lastID;
+                $idNasabah = $data['kodepos'].$this->request->getPost("rt").$this->request->getPost("rw").$lastID;
             }
             else if ($lastNasabah['code'] == 404) {
-                $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").'000001';
+                $idNasabah = $data['kodepos'].$this->request->getPost("rt").$this->request->getPost("rw").'1';
             } 
             else {
                 $response = [

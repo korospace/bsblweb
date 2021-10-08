@@ -91,6 +91,13 @@ class Validation
                 'max_length'  => 'max 255 character',
             ],
 		],
+		'kodepos' => [
+            'rules'  => 'required|is_natural',
+            'errors' => [
+                'required'    => 'kodepos is required',
+                'is_natural'  => 'only number allowed',
+            ],
+		],
 		'rt' => [
             'rules'  => 'required|min_length[2]|max_length[2]',
             'errors' => [

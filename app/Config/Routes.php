@@ -62,6 +62,8 @@ $routes->group("admin", function ($routes) {
     $routes->delete("deleteadmin",   "Admin::deleteAdmin");
 });
 
+$routes->get("/kodepos/(:segment)", "KodePos::searchKodePos/$1");
+
 $routes->group("kategori_berita", function ($routes) {
     $routes->post("additem",      "KategoriBerita::addItem");
     $routes->get("getitem",       "KategoriBerita::getItem");

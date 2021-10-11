@@ -471,18 +471,18 @@ class Admin extends ResourceController
             } 
             else {
                 $nasabahModel = new NasabahModel();
-                $lastNasabah  = $nasabahModel->getLastNasabah();
+                $lastNasabah  = $nasabahModel->getLastNasabah($data['kodepos']);
                 $idNasabah    = '';
 
                 if ($lastNasabah['success'] == true) {
                     $lastID = $lastNasabah['message']['id'];
-                    $lastID = (int)substr($lastID,4)+1;
-                    $lastID = sprintf('%06d',$lastID);
-
-                    $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").$lastID;
+                    $lastID = (int)substr($lastID,9)+1;
+                    // $lastID = sprintf('%06d',$lastID);
+    
+                    $idNasabah = $data['kodepos'].$this->request->getPost("rt").$this->request->getPost("rw").$lastID;
                 }
                 else if ($lastNasabah['code'] == 404) {
-                    $idNasabah = $this->request->getPost("rt").$this->request->getPost("rw").'000001';
+                    $idNasabah = $data['kodepos'].$this->request->getPost("rt").$this->request->getPost("rw").'1';
                 } 
                 else {
                     $response = [
@@ -492,7 +492,6 @@ class Admin extends ResourceController
                     ];
             
                     return $this->respond($response,$lastNasabah['code']);
-
                 }
                 
                 $data = [

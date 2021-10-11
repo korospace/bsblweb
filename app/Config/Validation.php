@@ -129,6 +129,7 @@ class Validation
             ],
 		]
 	];
+    
 	public $adminRegister = [
 		'username' => [
             'rules'  => 'required|min_length[8]|max_length[20]|is_unique[admin.username]',
@@ -746,6 +747,28 @@ class Validation
             'errors' => [
                 'required' => 'type is required',
                 'in_list'  => "value must be 'setor' or 'tarik'",
+            ],
+		],
+	];
+	public $pindahSaldo = [
+		'idnasabah' => [
+			'rules'  => 'is_unique[jatah_pindah_saldo.id_nasabah]',
+			'errors' => [
+                'is_unique' => 'jatah pindah saldo hari ini sudah dipakai',
+			]
+		],
+		'dompet_asal' => [
+            'rules'  => 'required|in_list[uang,emas]',
+            'errors' => [
+                'required'    => 'username is required',
+                'in_list'     => "value must be 'uang' or 'emas'",
+            ],
+		],
+		'jumlah' => [
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'jumlah is required',
+                'numeric'  => 'only number allowed',
             ],
 		],
 	];

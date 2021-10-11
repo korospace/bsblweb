@@ -10,8 +10,7 @@ class Nasabah extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'character varying',
-                'constraint' => 10,
+                'type' => 'text',
                 'null' => false,
             ],
             'email' => [

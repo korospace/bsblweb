@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\NasabahModel;
+use App\Models\SampahModel;
 use App\Controllers\BaseController;
+use CodeIgniter\Model;
 use CodeIgniter\RESTful\ResourceController;
 use Exception;
 
@@ -19,6 +21,11 @@ class Nasabah extends ResourceController
         $this->nasabahModel   = new NasabahModel;
     }
 
+    /**
+     * register
+     *   url    : domain.com/nasabah/register
+     *   method : POST
+     */
     public function register(): object
     {
 		$data   = $this->request->getPost();
@@ -59,7 +66,6 @@ class Nasabah extends ResourceController
                 ];
         
                 return $this->respond($response,$lastNasabah['code']);
-
             }
             
             $data = [
@@ -113,6 +119,11 @@ class Nasabah extends ResourceController
 
     }
 
+    /**
+     * Verifikasi akun
+     *   url    : domain.com/nasabah/verification
+     *   method : POST
+     */
     public function verification(): object
     {
 		$data   = $this->request->getPost();
@@ -155,6 +166,11 @@ class Nasabah extends ResourceController
         }    
     }
 
+    /**
+     * Login
+     *   url    : domain.com/nasabah/login
+     *   method : POST
+     */
     public function login(): object
     {
 		$data   = $this->request->getPost();
@@ -249,6 +265,11 @@ class Nasabah extends ResourceController
         }
     }
 
+    /**
+     * Check nasabah session
+     *   url    : domain.com/nasabah/sessioncheck
+     *   method : GET
+     */
     public function sessionCheck(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -269,6 +290,11 @@ class Nasabah extends ResourceController
         }
     }
 
+    /**
+     * Get data profile
+     *   url    : domain.com/nasabah/getprofile
+     *   method : GET
+     */
     public function getProfile(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -310,6 +336,85 @@ class Nasabah extends ResourceController
         }
     }
 
+    /**
+     * Pindah saldo
+     *   url    : domain.com/nasabah/pindahsaldo
+     *   method : POST
+     */
+    public function pindahSaldo(): object
+    {
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $result     = $this->baseController->checkToken($token,'nasabah');
+
+        if ($result['success'] == true) {
+            $data   = $this->request->getPost();
+            $data['idnasabah'] = $result['message']['data']['id'];
+            $this->validation->run($data,'pindahSaldo');
+            $errors = $this->validation->getErrors();
+
+            if ($errors) {
+                $response = [
+                    'status'   => 400,
+                    'error'    => true,
+                    'messages' => $errors,
+                ];
+        
+                return $this->respond($response,400);
+            } 
+            else {
+                $id        = $data['idnasabah'];
+                $dataSaldo = $this->nasabahModel->getSaldoNasabah($id);
+
+                if ((float)$dataSaldo['saldo_'.$data['dompet_asal']] < (float)$data['jumlah']) {
+                    $response = [
+                        'status'   => 400,
+                        'error'    => true,
+                        'messages' => 'saldo '.$data['dompet_asal'].' tidak cukup',
+                    ];
+            
+                    return $this->respond($response,400);
+                }
+
+                $data['hasilkonversi'] = $this->konversiSaldo($data);
+                $dbresponse = $this->nasabahModel->pindahSaldo($data);
+                
+                if ($dbresponse['success'] == true) {
+                    $response = [
+                        'status' => 201,
+                        'error'  => false,
+                        'data '  => $dbresponse['message']
+                    ];
+    
+                    return $this->respond($response,201);
+                } 
+                else {
+                    $response = [
+                        'status'   => $dbresponse['code'],
+                        'error'    => true,
+                        'messages' => $dbresponse['message'],
+                    ];
+            
+                    return $this->respond($response,$dbresponse['code']);
+                }
+            }
+        } 
+        else {
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
+        }
+    }
+
+    /**
+     * Get saldo
+     *   url    : domain.com/nasabah/getsaldo
+     *   method : GET
+     */
     public function getSaldo(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -351,6 +456,58 @@ class Nasabah extends ResourceController
         }
     }
 
+    /**
+     * Total sampah
+     *   url    : domain.com/nasabah/totalsampah
+     *   method : GET
+     */
+    public function totalSampah(): object
+    {
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $result     = $this->baseController->checkToken($token,'nasabah');
+        
+        if ($result['success'] == true) {
+            
+            $id          = $result['message']['data']['id'];
+            $sampahModel = new SampahModel;
+            $dbResponse  = $sampahModel->totalItem($id);
+        
+            if ($dbResponse['success'] == true) {
+                $response = [
+                    'status' => 200,
+                    'error'  => false,
+                    'data'   => $dbResponse['message'],
+                ];
+    
+                return $this->respond($response,200);
+            } 
+            else {
+                $response = [
+                    'status'   => $dbResponse['code'],
+                    'error'    => true,
+                    'messages' => $dbResponse['message'],
+                ];
+        
+                return $this->respond($response,$dbResponse['code']);
+            }
+        } 
+        else {
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
+        }
+    }
+
+    /**
+     * Edit profile
+     *   url    : domain.com/nasabah/editprofile
+     *   method : PUT
+     */
     public function editProfile(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -461,6 +618,11 @@ class Nasabah extends ResourceController
         
     }
 
+    /**
+     * Logout
+     *   url    : domain.com/nasabah/logout
+     *   method : DELETE
+     */
     public function logout(): object
     {
         $authHeader = $this->request->getHeader('token');
@@ -503,6 +665,11 @@ class Nasabah extends ResourceController
         
     }
 
+    /**
+     * Send kritik
+     *   url    : domain.com/nasabah/sendkritik
+     *   method : POST
+     */
     public function sendKritik(): object
     {
         $this->validation->run($_POST,'kritikSaran');

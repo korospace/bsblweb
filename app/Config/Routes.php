@@ -38,6 +38,8 @@ $routes->group("nasabah", function ($routes) {
     $routes->post("verification", "Nasabah::verification");
     $routes->get("sessioncheck",  "Nasabah::sessionCheck");
     $routes->get("getsaldo",      "Nasabah::getSaldo");
+    $routes->post("pidahsaldo",   "Nasabah::pindahSaldo");
+    $routes->get("totalsampah",   "Nasabah::totalSampah");
     $routes->get("getprofile",    "Nasabah::getProfile");
     $routes->put("editprofile",   "Nasabah::editProfile");
     $routes->delete("logout",     "Nasabah::logout");
@@ -62,8 +64,6 @@ $routes->group("admin", function ($routes) {
     $routes->delete("deleteadmin",   "Admin::deleteAdmin");
 });
 
-$routes->get("/kodepos/(:segment)", "KodePos::searchKodePos/$1");
-
 $routes->group("kategori_berita", function ($routes) {
     $routes->post("additem",      "KategoriBerita::addItem");
     $routes->get("getitem",       "KategoriBerita::getItem");
@@ -86,6 +86,7 @@ $routes->group("kategori_sampah", function ($routes) {
 $routes->group("sampah", function ($routes) {
     $routes->post("additem",      "Sampah::addItem");
     $routes->get("getitem",       "Sampah::getItem");
+    $routes->get("totalitem",     "Sampah::totalItem");
     $routes->put("edititem",      "Sampah::editItem");
     $routes->delete("deleteitem", "Sampah::deleteItem");
 });

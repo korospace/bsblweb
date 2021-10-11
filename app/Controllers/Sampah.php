@@ -139,6 +139,35 @@ class Sampah extends ResourceController
     }
 
     /**
+     * Get item
+     *   url    : domain.com/sampah/totalitem
+     *   method : GET
+     */
+    public function totalItem(): object
+    {
+        $dbResponse = $this->sampahModel->totalItem();
+    
+        if ($dbResponse['success'] == true) {
+            $response = [
+                'status' => 200,
+                'error'  => false,
+                'data'   => $dbResponse['message'],
+            ];
+
+            return $this->respond($response,200);
+        } 
+        else {
+            $response = [
+                'status'   => $dbResponse['code'],
+                'error'    => true,
+                'messages' => $dbResponse['message'],
+            ];
+    
+            return $this->respond($response,$dbResponse['code']);
+        }
+    }
+
+    /**
      * Update item
      *   url    : domain.com/sampah/edititem
      *   method : PUT

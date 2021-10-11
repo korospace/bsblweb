@@ -102,6 +102,50 @@ class SampahModel extends Model
         }
     }
 
+    public function totalItem(?string $idnasabah = null): array
+    {
+        try {
+            $totalSampah = [];
+            $kategori    = $this->db->table('kategori_sampah')->get()->getResultArray();
+
+            if ($idnasabah) {
+                $setorSampah = $this->db->table('setor_sampah')->select('kategori_sampah.name AS kategori,sampah.jenis AS jenis,SUM(setor_sampah.jumlah) AS jumlah')->join('sampah', 'setor_sampah.id_sampah = sampah.id')->join('transaksi', 'setor_sampah.id_transaksi = transaksi.id')->join('kategori_sampah', 'sampah.id_kategori = kategori_sampah.id')->where('transaksi.id_nasabah=',$idnasabah)->groupBy(["kategori_sampah.name", "sampah.jenis"])->get()->getResultArray();
+            } 
+            else {
+                $setorSampah = $this->db->table('setor_sampah')->select('kategori_sampah.name AS kategori,sampah.jenis AS jenis,SUM(setor_sampah.jumlah) AS jumlah')->join('sampah', 'setor_sampah.id_sampah = sampah.id')->join('kategori_sampah', 'sampah.id_kategori = kategori_sampah.id')->groupBy(["kategori_sampah.name", "sampah.jenis"])->get()->getResultArray();
+            }
+            
+            foreach ($kategori as $k) {
+                $totalSampah[$k['name']] = [
+                    'title'  => $k['name'],
+                    'total'  => 0,
+                    'detail' => [],
+                ];
+            }
+
+            foreach ($setorSampah as $s) {
+                $totalSampah[$s['kategori']]['total'] = round($totalSampah[$s['kategori']]['total']+(float)$s['jumlah'],4);
+                $totalSampah[$s['kategori']]['detail'][] = [
+                    'jenis'  => $s['jenis'],
+                    'jumlah' => $s['jumlah'],
+                ];
+            }
+            
+            // var_dump($totalSampah);die; 
+            return [
+                'success' => true,
+                'message' => $totalSampah
+            ];
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
     public function editItem(array $data): array
     {
         try {

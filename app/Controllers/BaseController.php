@@ -264,7 +264,7 @@ class BaseController extends Controller
                 return [
                     'success' => false,
                     'code'    => 401,
-                    'message' => 'invalid token'
+                    'message' => 'access denied'
                 ];
             }
         } 

@@ -9,7 +9,7 @@ class NasabahModel extends Model
 {
     protected $table         = 'nasabah';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token'];
+    protected $allowedFields = ['id','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token','otp'];
 
     public function getLastNasabah(string $codepos): array
     {
@@ -19,7 +19,7 @@ class NasabahModel extends Model
             if (empty($lastNasabah)) {    
                 return [
                     'success' => false,
-                    'message' => "last nasabah notfound",
+                    'message' => "last id nasabah notfound",
                     'code'    => 404
                 ];
             } 
@@ -51,9 +51,10 @@ class NasabahModel extends Model
             $alamat      = $data['alamat'];
             $tglLahir    = $data['tgl_lahir'];
             $kelamin     = $data['kelamin'];
+            $otp         = $data['otp'];
 
             $this->db->transBegin();
-            $this->db->query("INSERT INTO nasabah(id,email,username,password,nama_lengkap,notelp,alamat,tgl_lahir,kelamin) VALUES('$id','$email','$username','$password','$namaLengkap','$notelp','$alamat','$tglLahir','$kelamin');");
+            $this->db->query("INSERT INTO nasabah(id,email,username,password,nama_lengkap,notelp,alamat,tgl_lahir,kelamin,otp) VALUES('$id','$email','$username','$password','$namaLengkap','$notelp','$alamat','$tglLahir','$kelamin','$otp');");
             $this->db->query("INSERT INTO dompet_uang (id_nasabah) VALUES('$id');");
             $this->db->query("INSERT INTO dompet_emas (id_nasabah) VALUES('$id');");
 
@@ -205,6 +206,45 @@ class NasabahModel extends Model
         }
     }
 
+    public function pindahSaldo(array $data): array
+    {
+        try {
+            $idnasabah    = $data['idnasabah'];
+            $dompetAsal   = $data['dompet_asal'];
+            $jumlah       = (float)$data['jumlah'];
+            $dompetTujuan = ($data['dompet_asal'] == 'uang') ? 'uang' : 'emas';
+            $hasilKonversi= (float)$data['hasilkonversi'];
+
+            $this->db->transBegin();
+            $this->db->query("UPDATE dompet_$dompetAsal SET jumlah=jumlah-$jumlah WHERE id_nasabah='$idnasabah';");
+            $this->db->query("UPDATE dompet_$dompetTujuan SET jumlah=jumlah+$hasilKonversi WHERE id_nasabah='$idnasabah';");
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                return [
+                    'success' => false,
+                    'message' => "pindah saldo is failed",
+                    'code'    => 500
+                ];
+            } 
+            else {
+                $this->db->transCommit();
+                return [
+                    "success"  => true,
+                    'message' => 'pindah saldo is success',
+                ];
+            }    
+        } 
+        catch (Exception $e) {
+            $this->db->transRollback();
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
     public function getSaldoNasabah(string $id): array
     {
         try {
@@ -219,7 +259,7 @@ class NasabahModel extends Model
             } else {   
                 return [
                     'success' => true,
-                    'message' => $dataSaldo
+                    'message' => (array)$dataSaldo
                 ];
             }
         } 

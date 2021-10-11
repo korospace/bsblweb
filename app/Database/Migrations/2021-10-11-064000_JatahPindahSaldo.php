@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class DompetEmas extends Migration
+class JatahPindahSaldo extends Migration
 {
     public function up()
     {
@@ -15,20 +15,18 @@ class DompetEmas extends Migration
             ],
             'id_nasabah' => [
                 'type' => 'text',
-                'unique' => true,
                 'null' => false,
             ],
-            'jumlah' => [
-                'type' => 'double precision',
+            'date' => [
+                'type' => 'bigint',
+                'constraint' => 19,
                 'null' => false,
-                'default' => 0,
             ],
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey('id_nasabah');
         $this->forge->addForeignKey('id_nasabah','nasabah','id','CASCADE','CASCADE');
-        $this->forge->createTable('dompet_emas');
+        $this->forge->createTable('jatah_pindah_saldo');
     }
 
     public function down()

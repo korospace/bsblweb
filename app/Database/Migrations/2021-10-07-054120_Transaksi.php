@@ -14,8 +14,7 @@ class Transaksi extends Migration
                 'null' => false,
             ],
             'id_nasabah' => [
-                'type' => 'character varying',
-                'constraint' => 10,
+                'type' => 'text',
                 'null' => false,
             ],
             'type' => [

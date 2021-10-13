@@ -107,12 +107,14 @@ class BaseController extends Controller
             $mail->Port       = 465;
             $mail->SMTPAuth   = true;
             $mail->SMTPSecure = 'ssl';
-            $mail->Username   = 'banksampahbudiluhur@gmail.com';
-            $mail->Password   = 'latxapaiejnamadl';
+            // $mail->Username   = 'banksampahbudiluhur@gmail.com';
+            // $mail->Password   = 'latxapaiejnamadl';
+            $mail->Username   = 'bsublservice@gmail.com';
+            $mail->Password   = 'cibqkqfbrvoaxvwt';
             $mail->Subject    = 'code OTP';
             $mail->Body       = "Terimakasih sudah bergabung bersama Bank Sampah Budiluhur.<br>berikut adalah code OTP anda:<br><h1>$otp</h1>";
 
-            $mail->setFrom('banksampahbudiluhur@gmail.com', 'Bank Sampah UBL');
+            $mail->setFrom('bsublservice@gmail.com', 'Bank Sampah UBL');
             $mail->addAddress($email);
             $mail->isHTML(true);
 
@@ -138,10 +140,10 @@ class BaseController extends Controller
             $mail->Port       = 465;
             $mail->SMTPAuth   = true;
             $mail->SMTPSecure = 'ssl';
-            $mail->Username   = 'banksampahbudiluhur@gmail.com';
-            $mail->Password   = 'latxapaiejnamadl';
-            // $mail->Username   = 'bsublservice@gmail.com';
-            // $mail->Password   = 'fowvxqgcnvldnnlz';
+            // $mail->Username   = 'banksampahbudiluhur@gmail.com';
+            // $mail->Password   = 'latxapaiejnamadl';
+            $mail->Username   = 'bsublservice@gmail.com';
+            $mail->Password   = 'cibqkqfbrvoaxvwt';
             $mail->Subject    = 'Kritik Dan Saran';
             $mail->Body       = "<p>name  : $userName</p>
             <p>email : $userEmail</p><br>

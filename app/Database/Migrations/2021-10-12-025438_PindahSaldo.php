@@ -4,32 +4,38 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Sampah extends Migration
+class PindahSaldo extends Migration
 {
     public function up()
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'character varying',
-                'constraint' => 10,
+                'type' => 'serial',
                 'null' => false,
             ],
-            'id_kategori' => [
-                'type' => 'character varying',
-                'constraint' => 20,
+            'id_transaksi' => [
+                'type' => 'text',
                 'null' => false,
             ],
-            'jenis' => [
+            'dompet_asal' => [
                 'type' => 'character varying',
-                'constraint' => 40,
-                'unique' => true,
-                'null' => false,
-            ],
-            'harga' => [
-                'type' => 'integer',
+                'constraint' => 4,
                 'null' => false,
             ],
             'jumlah' => [
+                'type' => 'numeric',
+                'null' => false,
+            ],
+            'dompet_tujuan' => [
+                'type' => 'character varying',
+                'constraint' => 4,
+                'null' => false,
+            ],
+            'hasil_konversi' => [
+                'type' => 'numeric',
+                'null' => false,
+            ],
+            'harga_emas' => [
                 'type' => 'numeric',
                 'default' => 0,
                 'null' => false,
@@ -37,9 +43,8 @@ class Sampah extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey('jenis');
-        $this->forge->addForeignKey('id_kategori','kategori_sampah','id','CASCADE','CASCADE');
-        $this->forge->createTable('sampah');
+        $this->forge->addForeignKey('id_transaksi','transaksi','id','CASCADE','CASCADE');
+        $this->forge->createTable('pindah_saldo');
     }
 
     public function down()

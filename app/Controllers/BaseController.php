@@ -191,9 +191,11 @@ class BaseController extends Controller
 
             if ($target == 'union') {
                 $dataNasabah = $db->table('admin')->select('token')->where("token", $token)->get()->getResultArray();
+                $unionTable = 'admin';
 
                 if (empty($dataNasabah)) {
                     $dataNasabah = $db->table('nasabah')->select('token')->where("token", $token)->get()->getResultArray();
+                    $unionTable = 'nasabah';
                 }
             } 
             else {
@@ -208,14 +210,16 @@ class BaseController extends Controller
             ];
         }
 
+        // var_dump(!empty($dataNasabah));die;
+        // var_dump($token);die;
         if (!empty($dataNasabah)) {
             try {
                 $key     = $this->getKey();
                 $decoded = JWT::decode($token, $key, array("HS256"));
                 $decoded = (array)$decoded;
-    
+                
                 if (time() < $decoded['expired']) {
-    
+                    
                     $response = [
                         'status'   => 200,
                         'error'    => false,
@@ -223,7 +227,7 @@ class BaseController extends Controller
                     ];
 
                     $response['data']['expired'] = $decoded['expired'] - time();
-    
+                    
                     return [
                         'success' => true,
                         'message' => $response
@@ -237,7 +241,7 @@ class BaseController extends Controller
                         ];
                 
                         if ($target == 'union') {
-                            $db->table(['admin','nasabah'])->where('token', $token)->update($data);
+                            $db->table($unionTable)->where('token', $token)->update($data);
                         } 
                         else {
                             $db->table($target)->where('token', $token)->update($data);
@@ -275,6 +279,24 @@ class BaseController extends Controller
                 'message' => 'access denied'
             ];
         }
+    }
+
+    /**
+     * Unix timestamp parser
+     */
+    public function SECONDS_TO_HMS(int $seconds): string
+    {
+
+        $hrs  = floor($seconds / 3600);
+        $mins = intval(($seconds / 60) % 60); 
+        $sec  = intval($seconds % 60);
+
+        $hrs  = str_pad($hrs,2,'0',STR_PAD_LEFT);
+        $mins = str_pad($mins,2,'0',STR_PAD_LEFT);
+        $sec  = str_pad($sec,2,'0',STR_PAD_LEFT);
+
+        return $hrs." jam ".$mins." menit";
+        // return $hrs." jam ".$mins." menit ".$sec." detik";
     }
 
     /**

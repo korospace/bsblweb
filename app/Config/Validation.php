@@ -69,11 +69,10 @@ class Validation
             ],
 		],
 		'nama_lengkap' => [
-            'rules'  => 'required|max_length[40]|is_unique[nasabah.nama_lengkap]',
+            'rules'  => 'required|max_length[40]',
             'errors' => [
                 'required'    => 'nama lengkap is required',
                 'max_length'  => 'max 40 character',
-                'is_unique'   => 'nama lengkap is exist',
             ],
 		],
 		'notelp' => [
@@ -232,12 +231,11 @@ class Validation
             ],
 		],
 		'nama_lengkap' => [
-            'rules'  => 'required|max_length[40]|is_unique[nasabah.nama_lengkap,nasabah.id,{id}]',
+            'rules'  => 'required|max_length[40]',
             'errors' => [
                 'required'    => 'nama lengkap is required',
                 'min_length'  => 'min 6 character',
                 'max_length'  => 'max 40 character',
-                'is_unique'   => 'nama lengkap is exist',
             ],
 		],
 		'notelp' => [
@@ -292,12 +290,11 @@ class Validation
             ],
 		],
 		'nama_lengkap' => [
-            'rules'  => 'required|max_length[40]|is_unique[nasabah.nama_lengkap,nasabah.id,{id}]',
+            'rules'  => 'required|max_length[40]',
             'errors' => [
                 'required'    => 'nama lengkap is required',
                 'min_length'  => 'min 6 character',
                 'max_length'  => 'max 40 character',
-                'is_unique'   => 'nama lengkap is exist',
             ],
 		],
 		'notelp' => [
@@ -669,6 +666,14 @@ class Validation
                 'is_natural_no_zero' => 'only number allowed',
             ],
 		],
+		'jumlah' => [
+            'rules'  => 'required|max_length[11]|numeric',
+            'errors' => [
+                'required'           => 'jumlah is required',
+                'max_length'         => 'max 11 character',
+                'numeric' => 'only number allowed',
+            ],
+		],
 	];
 
 	public $ifImgageUploadCheck = [
@@ -743,20 +748,15 @@ class Validation
 
 	public $detilTransaksiCheck = [
 		'type' => [
-            'rules'  => 'required|in_list[setor,tarik]',
+            'rules'  => 'required|in_list[setor,tarik,pindah]',
             'errors' => [
                 'required' => 'type is required',
-                'in_list'  => "value must be 'setor' or 'tarik'",
+                'in_list'  => "value must be 'setor/tarik/pindah'",
             ],
 		],
 	];
+
 	public $pindahSaldo = [
-		'idnasabah' => [
-			'rules'  => 'is_unique[jatah_pindah_saldo.id_nasabah]',
-			'errors' => [
-                'is_unique' => 'jatah pindah saldo hari ini sudah dipakai',
-			]
-		],
 		'dompet_asal' => [
             'rules'  => 'required|in_list[uang,emas]',
             'errors' => [

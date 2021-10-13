@@ -206,45 +206,6 @@ class NasabahModel extends Model
         }
     }
 
-    public function pindahSaldo(array $data): array
-    {
-        try {
-            $idnasabah    = $data['idnasabah'];
-            $dompetAsal   = $data['dompet_asal'];
-            $jumlah       = (float)$data['jumlah'];
-            $dompetTujuan = ($data['dompet_asal'] == 'uang') ? 'uang' : 'emas';
-            $hasilKonversi= (float)$data['hasilkonversi'];
-
-            $this->db->transBegin();
-            $this->db->query("UPDATE dompet_$dompetAsal SET jumlah=jumlah-$jumlah WHERE id_nasabah='$idnasabah';");
-            $this->db->query("UPDATE dompet_$dompetTujuan SET jumlah=jumlah+$hasilKonversi WHERE id_nasabah='$idnasabah';");
-
-            if ($this->db->transStatus() === false) {
-                $this->db->transRollback();
-                return [
-                    'success' => false,
-                    'message' => "pindah saldo is failed",
-                    'code'    => 500
-                ];
-            } 
-            else {
-                $this->db->transCommit();
-                return [
-                    "success"  => true,
-                    'message' => 'pindah saldo is success',
-                ];
-            }    
-        } 
-        catch (Exception $e) {
-            $this->db->transRollback();
-            return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
-            ];
-        }
-    }
-
     public function getSaldoNasabah(string $id): array
     {
         try {

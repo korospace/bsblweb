@@ -19,7 +19,7 @@ class Transaksi extends Migration
             ],
             'type' => [
                 'type' => 'character varying',
-                'constraint' => 5,
+                'constraint' => 6,
                 'null' => false,
             ],
         ]);

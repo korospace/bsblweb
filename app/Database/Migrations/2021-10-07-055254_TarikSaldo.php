@@ -23,7 +23,7 @@ class TarikSaldo extends Migration
                 'null' => false,
             ],
             'jumlah' => [
-                'type' => 'DOUBLE PRECISION',
+                'type' => 'numeric',
                 'null' => false,
             ],
         ]);

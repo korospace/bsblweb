@@ -23,7 +23,7 @@ class SetorSampah extends Migration
                 'null' => false,
             ],
             'jumlah' => [
-                'type' => 'DOUBLE PRECISION',
+                'type' => 'numeric',
                 'null' => false,
             ],
             'harga' => [

@@ -19,7 +19,7 @@ class DompetEmas extends Migration
                 'null' => false,
             ],
             'jumlah' => [
-                'type' => 'double precision',
+                'type' => 'numeric',
                 'null' => false,
                 'default' => 0,
             ],

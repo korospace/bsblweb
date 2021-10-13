@@ -19,7 +19,7 @@ class DompetUang extends Migration
                 'null' => false,
             ],
             'jumlah' => [
-                'type' => 'integer',
+                'type' => 'numeric',
                 'null' => false,
                 'default' => 0,
             ],

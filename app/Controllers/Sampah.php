@@ -145,7 +145,29 @@ class Sampah extends ResourceController
      */
     public function totalItem(): object
     {
-        $dbResponse = $this->sampahModel->totalItem();
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $id         = null;
+
+        if (!is_null($token)) {
+            $result = $this->baseController->checkToken($token,'nasabah');
+        
+            if ($result['success'] == true) {
+                
+                $id = $result['message']['data']['id'];
+            } 
+            else {
+                $response = [
+                    'status'   => $result['code'],
+                    'error'    => true,
+                    'messages' => $result['message'],
+                ];
+        
+                return $this->respond($response,$result['code']);
+            }
+        }
+
+        $dbResponse = $this->sampahModel->totalItem($id);
     
         if ($dbResponse['success'] == true) {
             $response = [
@@ -200,6 +222,7 @@ class Sampah extends ResourceController
                     "id_kategori" => trim($data['id_kategori']),
                     "jenis"       => strtolower(trim($data['jenis'])),
                     "harga"       => trim($data['harga']),
+                    "jumlah"      => trim($data['jumlah']),
                 ];
 
                 $dbresponse = $this->sampahModel->editItem($data);

@@ -73,10 +73,10 @@ class SampahModel extends Model
     {
         try {
             if (isset($get['kategori'])) {
-                $sampah = $this->db->table($this->table)->select("sampah.id,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga")->join('kategori_sampah','sampah.id_kategori = kategori_sampah.id')->where("sampah.id_kategori",$get['kategori'])->get()->getResultArray();
+                $sampah = $this->db->table($this->table)->select("sampah.id,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah")->join('kategori_sampah','sampah.id_kategori = kategori_sampah.id')->where("sampah.id_kategori",$get['kategori'])->orderBy('id','ASC')->get()->getResultArray();
             } 
             else {
-                $sampah = $this->db->table($this->table)->select('sampah.id,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga')->join('kategori_sampah','sampah.id_kategori = kategori_sampah.id')->get()->getResultArray();
+                $sampah = $this->db->table($this->table)->select('sampah.id,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah')->join('kategori_sampah','sampah.id_kategori = kategori_sampah.id')->orderBy('id','ASC')->get()->getResultArray();
             }
             
             if (empty($sampah)) {    

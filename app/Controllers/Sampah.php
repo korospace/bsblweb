@@ -150,11 +150,12 @@ class Sampah extends ResourceController
         $id         = null;
 
         if (!is_null($token)) {
-            $result = $this->baseController->checkToken($token,'nasabah');
+            $result = $this->baseController->checkToken($token,'union');
         
             if ($result['success'] == true) {
-                
-                $id = $result['message']['data']['id'];
+                if (!isset($result['message']['data']['privilege'])) {
+                    $id = $result['message']['data']['id'];
+                }
             } 
             else {
                 $response = [

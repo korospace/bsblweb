@@ -164,8 +164,9 @@ class TransaksiModel extends Model
             if (isset($get['id_transaksi']) && !isset($get['id_nasabah'])) {
                 $id_transaksi   = $get['id_transaksi'];
                 $code_transaksi = substr($get['id_transaksi'],0,3);
-
+                
                 if ($code_transaksi == 'TSS') {
+                    var_dump('haha '.$id_transaksi);die;
                     $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,sampah.jenis,setor_sampah.jumlah,setor_sampah.harga,transaksi.date FROM transaksi JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi) JOIN sampah ON (setor_sampah.id_sampah = sampah.id) WHERE transaksi.id = '$id_transaksi';")->getResultArray();
 
                     $transaction = $this->makeDetilTransaksi($transaction);

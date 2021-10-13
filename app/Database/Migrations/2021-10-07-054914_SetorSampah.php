@@ -20,7 +20,7 @@ class SetorSampah extends Migration
             'id_sampah' => [
                 'type' => 'character varying',
                 'constraint' => 10,
-                'null' => false,
+                'null' => true,
             ],
             'jumlah' => [
                 'type' => 'numeric',
@@ -34,7 +34,7 @@ class SetorSampah extends Migration
 
         $this->forge->addPrimaryKey('id');
         $this->forge->addForeignKey('id_transaksi','transaksi','id','CASCADE','CASCADE');
-        $this->forge->addForeignKey('id_sampah','sampah','id','SET NULL','SET NULL');
+        $this->forge->addForeignKey('id_sampah','sampah','id','NO ACTION','NO ACTION');
         $this->forge->createTable('setor_sampah');
     }
 

@@ -9,7 +9,7 @@ class NasabahModel extends Model
 {
     protected $table         = 'nasabah';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token','otp'];
+    protected $allowedFields = ['id','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token','otp','is_verify'];
 
     public function getLastNasabah(string $codepos): array
     {
@@ -42,19 +42,20 @@ class NasabahModel extends Model
     public function addNasabah(array $data): array
     {
         try {
-            $id          = $data['id'];
-            $email       = $data['email'];
-            $username    = $data['username'];
-            $password    = $data['password'];
-            $namaLengkap = $data['nama_lengkap'];
-            $notelp      = $data['notelp'];
-            $alamat      = $data['alamat'];
-            $tglLahir    = $data['tgl_lahir'];
-            $kelamin     = $data['kelamin'];
-            $otp         = $data['otp'];
+            $id = $data['id'];
+            // $email       = $data['email'];
+            // $username    = $data['username'];
+            // $password    = $data['password'];
+            // $namaLengkap = $data['nama_lengkap'];
+            // $notelp      = $data['notelp'];
+            // $alamat      = $data['alamat'];
+            // $tglLahir    = $data['tgl_lahir'];
+            // $kelamin     = $data['kelamin'];
+            // $otp         = $data['otp'];
 
             $this->db->transBegin();
-            $this->db->query("INSERT INTO nasabah(id,email,username,password,nama_lengkap,notelp,alamat,tgl_lahir,kelamin,otp) VALUES('$id','$email','$username','$password','$namaLengkap','$notelp','$alamat','$tglLahir','$kelamin','$otp');");
+            // $this->db->query("INSERT INTO nasabah(id,email,username,password,nama_lengkap,notelp,alamat,tgl_lahir,kelamin,otp) VALUES('$id','$email','$username','$password','$namaLengkap','$notelp','$alamat','$tglLahir','$kelamin','$otp');");
+            $this->db->table($this->table)->insert($data);
             $this->db->query("INSERT INTO dompet_uang (id_nasabah) VALUES('$id');");
             $this->db->query("INSERT INTO dompet_emas (id_nasabah) VALUES('$id');");
 

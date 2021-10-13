@@ -568,7 +568,7 @@ class Nasabah extends ResourceController
 
             if ($sendEmail == true) {
                 $response = [
-                    'status'   => 200,
+                    'status'   => 201,
                     "error"    => false,
                     'messages' => 'kritik dan saran successfully sent',
                 ];

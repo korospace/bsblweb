@@ -370,9 +370,10 @@ class Validation
             ],
 		],
 		'email' => [
-            'rules'  => 'required|valid_email',
+            'rules'  => 'required|max_length[40]|valid_email',
             'errors' => [
                 'required'    => 'email is required',
+                'max_length'  => 'max 40 character',
                 'valid_email' => 'Email is not in format',
             ],
 		],

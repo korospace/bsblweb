@@ -103,6 +103,8 @@ $routes->group("transaksi", function ($routes) {
 });
 
 $routes->add('/',       'HomePage::index');
+$routes->add('/signup', 'SignUp::index');
+$routes->add('/login',  'Login::index');
 $routes->add('/(:any)', 'Notfound::ControllerNf');
 
 /*

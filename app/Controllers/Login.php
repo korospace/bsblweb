@@ -4,14 +4,14 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 
-class SignUp extends BaseController
+class Login extends BaseController
 {
     public function index()
     {
         $data = [
-            'title' => 'Silahkan Daftarkan Diri Anda'
+            'title' => 'Silahkan Login'
         ];
 
-        return view('SignUp/index',$data);
+        return view('Login/index',$data);
     }
 }

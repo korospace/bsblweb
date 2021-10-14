@@ -225,7 +225,7 @@ class Nasabah extends ResourceController
                                 'status'   => 200,
                                 'error'    => false,
                                 'messages' => 'loggin success',
-                                'token   ' => $token
+                                'token'    => $token
                             ];
     
                             return $this->respond($response,200);

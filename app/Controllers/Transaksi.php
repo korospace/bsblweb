@@ -226,11 +226,11 @@ class Transaksi extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'nasabah');
+        $result     = $this->baseController->checkToken($token,'admin');
 
         if ($result['success'] == true) {
             $data   = $this->request->getPost();
-            $data['idnasabah'] = $result['message']['data']['id'];
+            // $data['idnasabah'] = $result['message']['data']['id'];
             $this->validation->run($data,'pindahSaldo');
             $errors = $this->validation->getErrors();
 
@@ -244,22 +244,22 @@ class Transaksi extends ResourceController
                 return $this->respond($response,400);
             } 
             else {
-                $jatahHabis = $this->transaksiModel->jatahPindahSaldoCheck($data['idnasabah']);
+                // $jatahHabis = $this->transaksiModel->jatahPindahSaldoCheck($data['idnasabah']);
                 
-                if ($jatahHabis['status']) {
-                    $nextJatah = $this->baseController->SECONDS_TO_HMS($jatahHabis['date']);
+                // if ($jatahHabis['status']) {
+                //     $nextJatah = $this->baseController->SECONDS_TO_HMS($jatahHabis['date']);
                     
-                    $response  = [
-                        'status'   => 400,
-                        'error'    => true,
-                        'messages' => "jatah selanjutnya tersedia dalam $nextJatah",
-                    ];
+                //     $response  = [
+                //         'status'   => 400,
+                //         'error'    => true,
+                //         'messages' => "jatah selanjutnya tersedia dalam $nextJatah",
+                //     ];
             
-                    return $this->respond($response,400);
-                } 
+                //     return $this->respond($response,400);
+                // } 
 
                 $nasabahModel      = new NasabahModel;
-                $dataSaldo         = $nasabahModel->getSaldoNasabah($data['idnasabah']);
+                $dataSaldo         = $nasabahModel->getSaldoNasabah($data['id_nasabah']);
                 $saldoDompetAsal   = (float)$dataSaldo['message']['saldo_'.$data['dompet_asal']];
                 $saldoDompetTujuan = ($data['dompet_asal'] == 'uang') ? (float)$dataSaldo['message']['saldo_emas'] : (float)$dataSaldo['message']['saldo_uang'];
                 $jumlahPindah      = (float)$data['jumlah'];
@@ -277,15 +277,15 @@ class Transaksi extends ResourceController
                 $konversiSaldo = $this->konversiSaldo($data);
 
                 $newdata = [
-                    'idnasabah'           => $data['idnasabah'],
+                    'idnasabah'           => $data['id_nasabah'],
                     'idtransaksi'         => 'TPS'.$this->baseController->generateOTP(9),
                     'jumlahPindah'        => $jumlahPindah,
-                    'hasilKonversi'       => $konversiSaldo['hasil'],
-                    'hargaemas'           => $konversiSaldo['hargaemas'],
+                    'hasilKonversi'       => $konversiSaldo,
+                    'hargaemas'           => $data['harga_emas'],
                     'nama_dompet_asal'    => ($data['dompet_asal'] == 'uang') ? 'uang' : 'emas',
                     'saldo_dompet_asal'   => $saldoDompetAsal-$jumlahPindah,
                     'nama_dompet_tujuan'  => ($data['dompet_asal'] == 'uang') ? 'emas' : 'uang',
-                    'saldo_dompet_tujuan' => $saldoDompetTujuan+$konversiSaldo['hasil']
+                    'saldo_dompet_tujuan' => $saldoDompetTujuan+$konversiSaldo
                 ];
                 
                 // var_dump($newdata);die;
@@ -296,7 +296,7 @@ class Transaksi extends ResourceController
                         'status'     => 201,
                         'error'      => false,
                         'message'    => $dbresponse['message'],
-                        'harga_emas' => $konversiSaldo['hargaemas'],
+                        // 'harga_emas' => $konversiSaldo['hargaemas'],
                     ];
     
                     return $this->respond($response,201);
@@ -323,27 +323,21 @@ class Transaksi extends ResourceController
         }
     }
 
-    public function konversiSaldo(array $data): array
+    public function konversiSaldo(array $data): float
     {
         if ($data['dompet_asal'] == 'uang') {
-            // var_dump([
+            // return [
             //     'hargaemas' => $this->getHargaEmas(),
-            //     'hasil'     => floor((float)$data['jumlah']/$this->getHargaEmas()),
-            // ]);die;
-            return [
-                'hargaemas' => $this->getHargaEmas(),
-                'hasil'     => (float)$data['jumlah']/$this->getHargaEmas(),
-            ];
+            //     'hasil'     => (float)$data['jumlah']/$this->getHargaEmas(),
+            // ];
+            return (float)$data['jumlah']/$data['harga_emas'];
         } 
         else {
-            // var_dump([
+            // return [
             //     'hargaemas' => $this->getHargaEmas(),
-            //     'hasil'     =>round((float)$data['jumlah']*$this->getHargaEmas()),
-            // ]);die;
-            return [
-                'hargaemas' => $this->getHargaEmas(),
-                'hasil'     => round((float)$data['jumlah']*$this->getHargaEmas()),
-            ];
+            //     'hasil'     => round((float)$data['jumlah']*$this->getHargaEmas()),
+            // ];
+            return round((float)$data['jumlah']*$data['harga_emas']);
         }
     }
 

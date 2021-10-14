@@ -758,18 +758,32 @@ class Validation
 	];
 
 	public $pindahSaldo = [
+		'id_nasabah' => [
+            'rules'  => 'required|is_not_unique[nasabah.id]',
+            'errors' => [
+                'required'      => 'id nasabah is required',
+                'is_not_unique' => "nasabah with id ({value}) is not found",
+            ],
+		],
 		'dompet_asal' => [
             'rules'  => 'required|in_list[uang,emas]',
             'errors' => [
-                'required'    => 'username is required',
+                'required'    => 'dompet_asal is required',
                 'in_list'     => "value must be 'uang' or 'emas'",
+            ],
+		],
+		'harga_emas' => [
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required'    => 'harga_emas is required',
+                'numeric'     => "value must be number",
             ],
 		],
 		'jumlah' => [
             'rules'  => 'required|numeric',
             'errors' => [
                 'required' => 'jumlah is required',
-                'numeric'  => 'only number allowed',
+                'numeric'  => 'value must be number',
             ],
 		],
 	];

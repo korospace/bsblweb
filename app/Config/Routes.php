@@ -102,7 +102,7 @@ $routes->group("transaksi", function ($routes) {
     $routes->add("(:any)",        "Notfound::MethodNf");
 });
 
-$routes->add('/',       'Home::index');
+$routes->add('/',       'HomePage::index');
 $routes->add('/(:any)', 'Notfound::ControllerNf');
 
 /*

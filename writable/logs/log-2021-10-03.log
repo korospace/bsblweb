@@ -1,0 +1,68 @@
+CRITICAL - 2021-10-03 04:31:36 --> fopen(http://localhost/bsblapi/assets/img/thumbnail/index.html): failed to open stream: HTTP wrapper does not support writeable connections
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'fopen(http://lo...', '/opt/lampp/htdo...', 174, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/HTTP/Files/UploadedFile.php(174): fopen('http://localhos...', 'x+b')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/HTTP/Files/UploadedFile.php(130): CodeIgniter\HTTP\Files\UploadedFile->setPath('http://localhos...')
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(40): CodeIgniter\HTTP\Files\UploadedFile->move('http://localhos...', '1633253496_e377...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-03 04:33:02 --> fopen(http://localhost/bsblapi/assets/img/thumbnail/index.html): failed to open stream: HTTP wrapper does not support writeable connections
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'fopen(http://lo...', '/opt/lampp/htdo...', 174, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/HTTP/Files/UploadedFile.php(174): fopen('http://localhos...', 'x+b')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/HTTP/Files/UploadedFile.php(130): CodeIgniter\HTTP\Files\UploadedFile->setPath('http://localhos...')
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(40): CodeIgniter\HTTP\Files\UploadedFile->move('http://localhos...', '1633253582_919a...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-03 05:08:13 --> The original file is not a valid file.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/HTTP/Files/UploadedFile.php(137): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidFile()
+#1 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(216): CodeIgniter\HTTP\Files\UploadedFile->move('assets/img/thum...', '1633255692_fa42...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->editItem()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-03 05:11:05 --> The original file is not a valid file.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/HTTP/Files/UploadedFile.php(137): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidFile()
+#1 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(216): CodeIgniter\HTTP\Files\UploadedFile->move('assets/img/thum...', '1633255864_f0d7...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->editItem()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-03 05:13:43 --> The original file is not a valid file.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/HTTP/Files/UploadedFile.php(137): CodeIgniter\HTTP\Exceptions\HTTPException::forInvalidFile()
+#1 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(216): CodeIgniter\HTTP\Files\UploadedFile->move('assets/img/thum...', '1633256022_4368...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->editItem()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-03 05:22:25 --> rename(): Cannot rename a file across wrapper types
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'rename(): Canno...', '/opt/lampp/htdo...', 216, Array)
+#1 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(216): rename('/opt/lampp/temp...', 'http://localhos...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->editItem()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-03 05:25:16 --> rename(/opt/lampp/temp/homeadminuxFn5R,/assets/img/thumbnail/1633256715_cf4815df80029ad88ffb.png): No such file or directory
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'rename(/opt/lam...', '/opt/lampp/htdo...', 216, Array)
+#1 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(216): rename('/opt/lampp/temp...', '/assets/img/thu...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->editItem()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-03 05:28:07 --> unlink(): http does not allow unlinking
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'unlink(): http ...', '/opt/lampp/htdo...', 217, Array)
+#1 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(217): unlink('http://localhos...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->editItem()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}

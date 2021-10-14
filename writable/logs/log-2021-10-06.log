@@ -1,0 +1,304 @@
+ERROR - 2021-10-06 04:26:10 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-10-06 04:26:10 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(191): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(31): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'admin')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->addTransaction()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-10-06 04:34:12 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-10-06 04:34:12 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(191): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(31): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'admin')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->addTransaction()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-10-06 04:49:14 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-10-06 04:49:14 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(191): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(31): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'admin')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->addTransaction()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-06 05:18:31 --> Cannot use object of type stdClass as array
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(65): App\Models\SetorSampahModel->addTransaction(Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->addTransaction()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-10-06 05:30:06 --> ErrorException: pg_query(): Query failed: ERROR:  operator does not exist: character varying = integer
+LINE 1: ...ompet_uang SET jumlah=jumlah+4500 WHERE id_nasabah=060600000...
+                                                             ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts. in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'UPDATE dompet_u...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE dompet_u...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE dompet_u...')
+#4 /opt/lampp/htdocs/bsblapi/app/Models/SetorSampahModel.php(40): CodeIgniter\Database\BaseConnection->query('UPDATE dompet_u...')
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(65): App\Models\SetorSampahModel->addTransaction(Array)
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->addTransaction()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-10-06 05:30:48 --> ErrorException: pg_query(): Query failed: ERROR:  column &quot;id_setor&quot; of relation &quot;setor_sampah&quot; does not exist
+LINE 1: INSERT INTO setor_sampah (id_setor,id_sampah,jumlah,harga) V...
+                                  ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'INSERT INTO set...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO set...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO set...')
+#4 /opt/lampp/htdocs/bsblapi/app/Models/SetorSampahModel.php(41): CodeIgniter\Database\BaseConnection->query('INSERT INTO set...')
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(65): App\Models\SetorSampahModel->addTransaction(Array)
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->addTransaction()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-10-06 06:56:42 --> ErrorException: pg_query(): Query failed: ERROR:  invalid input syntax for type integer: &quot;1.5&quot;
+LINE 1: ..._sampah,jumlah,harga) VALUES('SS111633146','S001','1.5','750...
+                                                             ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'INSERT INTO det...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO det...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO det...')
+#4 /opt/lampp/htdocs/bsblapi/app/Models/SetorSampahModel.php(41): CodeIgniter\Database\BaseConnection->query('INSERT INTO det...')
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(65): App\Models\SetorSampahModel->addTransaction(Array)
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->addTransaction()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2021-10-06 08:39:38 --> Undefined index: privilege
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(112): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 112, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-10-06 08:51:10 --> ErrorException: pg_query(): Query failed: ERROR:  unterminated quoted string at or near &quot;'&quot;
+LINE 1: ..._sampah.id_nasabah = '0606000001' GROUP BY setor_sampah.id;'
+                                                                      ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'SELECT setor_sa...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT setor_sa...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT setor_sa...')
+#4 /opt/lampp/htdocs/bsblapi/app/Models/SetorSampahModel.php(77): CodeIgniter\Database\BaseConnection->query('SELECT setor_sa...')
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(114): App\Models\SetorSampahModel->getTransaction(Array, false, '0606000001')
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-10-06 09:03:38 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;WHERE&quot;
+LINE 1: ...mpah ON (detil_setor_sampah.id_sampah = sampah.id WHERE seto...
+                                                             ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'SELECT setor_sa...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT setor_sa...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT setor_sa...')
+#4 /opt/lampp/htdocs/bsblapi/app/Models/SetorSampahModel.php(75): CodeIgniter\Database\BaseConnection->query('SELECT setor_sa...')
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(114): App\Models\SetorSampahModel->getTransaction(Array, false, '0606000001')
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-10-06 09:15:04 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;ORDER&quot;
+LINE 1: ..._nasabah = '0606000001' GROUP BY setor_sampah.id; ORDER BY s...
+                                                             ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'SELECT setor_sa...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT setor_sa...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT setor_sa...')
+#4 /opt/lampp/htdocs/bsblapi/app/Models/SetorSampahModel.php(78): CodeIgniter\Database\BaseConnection->query('SELECT setor_sa...')
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(114): App\Models\SetorSampahModel->getTransaction(Array, false, '0606000001')
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-10-06 09:27:10 --> ErrorException: pg_query(): Query failed: ERROR:  relation &quot;union&quot; does not exist
+LINE 1: UPDATE &quot;union&quot; SET &quot;token&quot; = NULL
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'UPDATE "union" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "union" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "union" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "union" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(235): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-06 09:27:34 --> ErrorException: pg_query(): Query failed: ERROR:  relation &quot;union&quot; does not exist
+LINE 1: UPDATE &quot;union&quot; SET &quot;token&quot; = NULL
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'UPDATE "union" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "union" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "union" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "union" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(235): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-06 09:27:58 --> ErrorException: pg_query(): Query failed: ERROR:  relation &quot;union&quot; does not exist
+LINE 1: UPDATE &quot;union&quot; SET &quot;token&quot; = NULL
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'UPDATE "union" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "union" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "union" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "union" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(235): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-06 09:29:04 --> ErrorException: pg_query(): Query failed: ERROR:  relation &quot;union&quot; does not exist
+LINE 1: UPDATE &quot;union&quot; SET &quot;token&quot; = NULL
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'UPDATE "union" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "union" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "union" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "union" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(235): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-06 09:30:45 --> ErrorException: pg_query(): Query failed: ERROR:  relation &quot;union&quot; does not exist
+LINE 1: UPDATE &quot;union&quot; SET &quot;token&quot; = NULL
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'UPDATE "union" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "union" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "union" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "union" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(235): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-06 09:33:34 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;UNION&quot;
+LINE 1: UPDATE nasabah SET token=null UNION UPDATE admin SET token=n...
+                                      ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'UPDATE nasabah ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE nasabah ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE nasabah ...')
+#4 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(232): CodeIgniter\Database\BaseConnection->query('UPDATE nasabah ...')
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-10-06 09:34:43 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;UNION&quot;
+LINE 1: UPDATE nasabah SET token=null UNION UPDATE admin SET token=n...
+                                      ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'UPDATE nasabah ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE nasabah ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE nasabah ...')
+#4 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(232): CodeIgniter\Database\BaseConnection->query('UPDATE nasabah ...')
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2021-10-06 09:37:14 --> Return value of App\Controllers\BaseController::checkToken() must be of the type array, none returned
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-06 09:38:02 --> Return value of App\Controllers\BaseController::checkToken() must be of the type array, none returned
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-06 10:17:39 --> Return value of App\Controllers\BaseController::checkToken() must be of the type array, none returned
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-10-06 10:20:57 --> ErrorException: pg_query(): Query failed: ERROR:  column reference &quot;token&quot; is ambiguous
+LINE 1: SELECT &quot;token&quot;
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'SELECT "token"\n...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "token"\n...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "token"\n...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(193): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-06 10:23:10 --> ErrorException: pg_query(): Query failed: ERROR:  column reference &quot;token&quot; is ambiguous
+LINE 1: SELECT &quot;token&quot;
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'SELECT "token"\n...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "token"\n...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "token"\n...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(193): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(107): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'union')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->getTransaction()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}

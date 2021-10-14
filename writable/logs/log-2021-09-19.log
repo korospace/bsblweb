@@ -1,0 +1,162 @@
+ERROR - 2021-09-19 02:38:50 --> Table 'banksampah.nasabahh' doesn't exist
+CRITICAL - 2021-09-19 02:38:50 --> Table 'banksampah.nasabahh' doesn't exist
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php(280): mysqli->query('UPDATE `nasabah...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `nasabah...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `nasabah...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE `nasabah...', Array, false)
+#4 /opt/lampp/htdocs/bsblapi/app/Models/NasabahModel.php(31): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(202): App\Models\NasabahModel->emailVerification('641703')
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->verification()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-09-19 02:39:53 --> Table 'banksampah.nasabahh' doesn't exist
+CRITICAL - 2021-09-19 02:39:53 --> Table 'banksampah.nasabahh' doesn't exist
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php(280): mysqli->query('UPDATE `nasabah...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `nasabah...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `nasabah...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE `nasabah...', Array, false)
+#4 /opt/lampp/htdocs/bsblapi/app/Models/NasabahModel.php(31): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(203): App\Models\NasabahModel->emailVerification('641703')
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->verification()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-09-19 02:47:21 --> Table 'banksampah.nasabahh' doesn't exist
+ERROR - 2021-09-19 02:50:29 --> Unknown column 'ot' in 'where clause'
+CRITICAL - 2021-09-19 04:08:53 --> Cannot use object of type stdClass as array
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-09-19 04:09:21 --> Cannot use object of type stdClass as array
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-09-19 04:10:31 --> Cannot use object of type stdClass as array
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-09-19 04:19:41 --> Return value of App\Controllers\Nasabah::countTokenAge() must be of the type int, string returned
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(338): App\Controllers\Nasabah::countTokenAge('2021-09-19 16:1...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-19 05:11:37 --> Expired token
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(315): Firebase\JWT\JWT::decode('eyJ0eXAiOiJKV1Q...', '03102000', Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-19 05:14:20 --> Expired token
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(315): Firebase\JWT\JWT::decode('eyJ0eXAiOiJKV1Q...', '03102000', Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-19 05:16:37 --> Undefined index: exp
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(323): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 323, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-19 21:40:36 --> Undefined property: App\Controllers\Nasabah::$validation
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(17): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', '/opt/lampp/htdo...', 17, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-19 21:41:27 --> required|max_length is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('required|max_le...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('nama_lengkap', 'nama_lengkap', NULL, Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(22): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-09-19 21:43:20 --> required|max_length is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('required|max_le...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('nama_lengkap', 'nama_lengkap', NULL, Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(22): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-09-19 21:46:32 --> required|max_length is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('required|max_le...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('nama_lengkap', 'nama_lengkap', NULL, Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(22): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-09-19 21:49:40 --> required|min_length is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('required|min_le...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('nama_lengkap', 'nama_lengkap', NULL, Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(22): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-09-19 21:50:38 --> required|min_length is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('required|min_le...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('nama_lengkap', 'nama_lengkap', NULL, Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(22): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-09-19 21:54:40 --> required|min_length is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('required|min_le...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('nama_lengkap', 'nama_lengkap', NULL, Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(22): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-09-19 21:55:09 --> required  is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('required ')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('email', 'email', NULL, Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(22): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-09-19 22:02:07 --> required|min_length is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('required|min_le...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('nama_lengkap', 'nama_lengkap', NULL, Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(22): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-09-19 22:02:46 --> required|min_length is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('required|min_le...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('nama_lengkap', 'nama_lengkap', NULL, Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(22): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}

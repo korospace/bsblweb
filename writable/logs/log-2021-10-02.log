@@ -1,0 +1,407 @@
+ERROR - 2021-10-02 05:47:56 --> ErrorException: pg_query(): Query failed: ERROR:  column reference &quot;id&quot; is ambiguous
+LINE 1: SELECT &quot;id&quot;, &quot;title&quot;, &quot;kategori&quot;, &quot;nama_lengkap&quot;, &quot;created_a...
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT "id", "t...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "id", "t...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "id", "t...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "id", "t...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(48): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(115): App\Models\BeritaAcaraModel->getItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 05:49:18 --> ErrorException: pg_query(): Query failed: ERROR:  column reference &quot;id&quot; is ambiguous
+LINE 4: WHERE &quot;id&quot; = '1'
+              ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT "berita_...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "berita_...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "berita_...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "berita_...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(48): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(115): App\Models\BeritaAcaraModel->getItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 05:49:57 --> ErrorException: pg_query(): Query failed: ERROR:  column reference &quot;id&quot; is ambiguous
+LINE 4: WHERE &quot;id&quot; = '1'
+              ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT "berita_...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "berita_...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "berita_...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "berita_...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(48): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(115): App\Models\BeritaAcaraModel->getItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 05:54:08 --> ErrorException: pg_query(): Query failed: ERROR:  relation &quot;berita_acaraAS&quot; does not exist
+LINE 2: FROM &quot;berita_acaraAS&quot; &quot;ba&quot;
+             ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT "ba"."id...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "ba"."id...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "ba"."id...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "ba"."id...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(48): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(115): App\Models\BeritaAcaraModel->getItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 05:55:03 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;'author'&quot;
+LINE 1: ... &quot;berita_acara&quot;.&quot;kategori&quot;, admin.nama_lengkap AS 'author', ...
+                                                             ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT "berita_...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "berita_...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "berita_...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "berita_...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(48): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(115): App\Models\BeritaAcaraModel->getItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 05:55:25 --> ErrorException: pg_query(): Query failed: ERROR:  schema &quot;admin&quot; does not exist
+LINE 1: ...berita_acara&quot;.&quot;title&quot;, &quot;berita_acara&quot;.&quot;kategori&quot;, admin.nama...
+                                                             ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT "berita_...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "berita_...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "berita_...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "berita_...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(48): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(115): App\Models\BeritaAcaraModel->getItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 06:40:09 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;.&quot;
+LINE 1: SELECT &quot;SELECT&quot; &quot;ba&quot;.&quot;id&quot;, &quot;ba&quot;.&quot;title&quot;, &quot;ba&quot;.&quot;kategori&quot;, &quot;a...
+                            ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT "SELECT"...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "SELECT"...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "SELECT"...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "SELECT"...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Model.php(720): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(50): CodeIgniter\Model->__call('get', Array)
+#7 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(115): App\Models\BeritaAcaraModel->getItem(Array)
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#10 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#12 {main}
+ERROR - 2021-10-02 06:41:39 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;SELECT&quot;
+LINE 1: SELECT SELECT ba.id, ba.title, ba.kategori, ad.nama_lengkap ...
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT SELECT b...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT SELECT b...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT SELECT b...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT SELECT b...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Model.php(720): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(50): CodeIgniter\Model->__call('get', Array)
+#7 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(115): App\Models\BeritaAcaraModel->getItem(Array)
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#10 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#12 {main}
+ERROR - 2021-10-02 06:42:19 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;SELECT&quot;
+LINE 1: SELECT SELECT ba.id, ba.title, ba.kategori, ad.nama_lengkap ...
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT SELECT b...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT SELECT b...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT SELECT b...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT SELECT b...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Model.php(720): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(50): CodeIgniter\Model->__call('get', Array)
+#7 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(115): App\Models\BeritaAcaraModel->getItem(Array)
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#10 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#12 {main}
+ERROR - 2021-10-02 06:42:53 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;SELECT&quot;
+LINE 1: SELECT SELECT ba.id, ba.title, ba.kategori, ad.nama_lengkap ...
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT SELECT b...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT SELECT b...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT SELECT b...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT SELECT b...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Model.php(720): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(50): CodeIgniter\Model->__call('get', Array)
+#7 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(115): App\Models\BeritaAcaraModel->getItem(Array)
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#10 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#12 {main}
+ERROR - 2021-10-02 18:56:50 --> ErrorException: pg_query(): Query failed: ERROR:  invalid input syntax for type timestamp: &quot;Asia/Jakarta&quot;
+LINE 1: ...K2hwdxAEuuJITUrRbbP2sqvaHjcAHJQ', &quot;last_active&quot; = 'Asia/Jaka...
+                                                             ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'UPDATE "admin" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "admin" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "admin" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "admin" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(75): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 19:59:35 --> ErrorException: pg_query(): Query failed: ERROR:  duplicate key value violates unique constraint &quot;pk_admin&quot;
+DETAIL:  Key (id)=(6157c06251d44) already exists. in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'UPDATE "admin" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "admin" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "admin" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "admin" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(76): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 20:01:34 --> ErrorException: pg_query(): Query failed: ERROR:  duplicate key value violates unique constraint &quot;pk_admin&quot;
+DETAIL:  Key (id)=(6157c06251d44) already exists. in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'UPDATE "admin" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "admin" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "admin" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "admin" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(76): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 20:02:01 --> ErrorException: pg_query(): Query failed: ERROR:  duplicate key value violates unique constraint &quot;pk_admin&quot;
+DETAIL:  Key (id)=(6157c06251d44) already exists. in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'UPDATE "admin" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "admin" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "admin" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "admin" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(76): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 20:03:57 --> ErrorException: pg_query(): Query failed: ERROR:  duplicate key value violates unique constraint &quot;pk_admin&quot;
+DETAIL:  Key (id)=(6157c06251d44) already exists. in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'UPDATE "admin" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "admin" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "admin" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "admin" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(76): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 20:04:37 --> ErrorException: pg_query(): Query failed: ERROR:  duplicate key value violates unique constraint &quot;pk_admin&quot;
+DETAIL:  Key (id)=(6157c06251d44) already exists. in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'UPDATE "admin" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "admin" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "admin" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "admin" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(76): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 20:08:34 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;&quot;:last_active&quot;&quot;
+LINE 3: WHERE &quot;last_active &gt; last_active - INTERVAL &gt;&quot; &quot;:last_active...
+                                                       ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'SELECT "id"\nFRO...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "id"\nFRO...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "id"\nFRO...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "id"\nFRO...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(348): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(79): App\Models\AdminModel->nonActiveAdmin()
+#7 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#10 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#12 {main}
+ERROR - 2021-10-02 20:09:31 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;SELECT&quot;
+LINE 1: SELECT SELECT id FROM admin WHERE last_active &gt; last_active ...
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'SELECT SELECT i...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT SELECT i...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT SELECT i...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT SELECT i...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Model.php(720): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(346): CodeIgniter\Model->__call('get', Array)
+#7 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(79): App\Models\AdminModel->nonActiveAdmin()
+#8 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#10 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#11 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#13 {main}
+ERROR - 2021-10-02 20:10:07 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;SELECT&quot;
+LINE 1: SELECT SELECT id FROM admin WHERE last_active &gt; last_active ...
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'SELECT SELECT i...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT SELECT i...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT SELECT i...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT SELECT i...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Model.php(720): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(345): CodeIgniter\Model->__call('get', Array)
+#7 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(79): App\Models\AdminModel->nonActiveAdmin()
+#8 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#10 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#11 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#13 {main}
+ERROR - 2021-10-02 20:10:24 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;SELECT&quot;
+LINE 1: SELECT SELECT id FROM admin WHERE last_active &gt; last_active ...
+               ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'SELECT SELECT i...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT SELECT i...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT SELECT i...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT SELECT i...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Model.php(720): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(343): CodeIgniter\Model->__call('get', Array)
+#7 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(79): App\Models\AdminModel->nonActiveAdmin()
+#8 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#10 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#11 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#13 {main}
+ERROR - 2021-10-02 20:11:01 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;FROM&quot;
+LINE 2: FROM &quot;admin&quot;
+        ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'SELECT id FROM ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT id FROM ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT id FROM ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT id FROM ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Model.php(720): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(343): CodeIgniter\Model->__call('get', Array)
+#7 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(79): App\Models\AdminModel->nonActiveAdmin()
+#8 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#10 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#11 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#13 {main}
+ERROR - 2021-10-02 20:31:56 --> ErrorException: pg_query(): Query failed: ERROR:  column &quot;interval&quot; does not exist
+LINE 1: SELECT id FROM admin WHERE last_active &gt; INTERVAL-last_activ...
+                                                 ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'SELECT id FROM ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT id FROM ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT id FROM ...')
+#4 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(344): CodeIgniter\Database\BaseConnection->query('SELECT id FROM ...')
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(79): App\Models\AdminModel->nonActiveAdmin()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 09:26:31 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: SELECT id FROM admin WHERE (time()-last_active) &gt;= 2592000
+                                         ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'SELECT id FROM ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT id FROM ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT id FROM ...')
+#4 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(343): CodeIgniter\Database\BaseConnection->query('SELECT id FROM ...')
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(77): App\Models\AdminModel->nonActiveAdmin()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 09:27:30 --> ErrorException: pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: SELECT id FROM admin WHERE time()-last_active &gt;= 2592000
+                                        ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #135, 'SELECT id FROM ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT id FROM ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT id FROM ...')
+#4 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(343): CodeIgniter\Database\BaseConnection->query('SELECT id FROM ...')
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(77): App\Models\AdminModel->nonActiveAdmin()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(77): App\Models\AdminModel->updateToken('6157c06251d44', 'eyJ0eXAiOiJKV1Q...')
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->login()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-10-02 09:38:45 --> ErrorException: pg_query(): Query failed: ERROR:  duplicate key value violates unique constraint &quot;pk_admin&quot;
+DETAIL:  Key (id)=(6158538a9385c) already exists. in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'UPDATE "admin" ...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('UPDATE "admin" ...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE "admin" ...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE "admin" ...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(131): CodeIgniter\Database\BaseBuilder->update(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(926): App\Models\AdminModel->editProfileAdmin(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->editAdmin()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}

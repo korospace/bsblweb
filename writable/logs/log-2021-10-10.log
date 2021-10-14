@@ -1,0 +1,40 @@
+ERROR - 2021-10-10 07:51:05 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-10-10 07:51:05 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "sampah"...', Array, false)
+#2 /opt/lampp/htdocs/bsblapi/app/Models/SampahModel.php(79): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/Sampah.php(119): App\Models\SampahModel->getItem(Array)
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Sampah->getItem()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sampah))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-10-10 07:51:49 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-10-10 07:51:49 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#2 /opt/lampp/htdocs/bsblapi/app/Models/SampahModel.php(108): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/Sampah.php(148): App\Models\SampahModel->totalItem()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Sampah->totalItem()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sampah))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-10-10 08:12:49 --> ErrorException: pg_query(): Query failed: ERROR:  column sampah.name does not exist
+LINE 1: SELECT &quot;kategori_sampah&quot;.&quot;name&quot; AS &quot;kategori&quot;, &quot;sampah&quot;.&quot;nam...
+                                                       ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'SELECT "kategor...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "kategor...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "kategor...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "kategor...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/SampahModel.php(110): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Sampah.php(148): App\Models\SampahModel->totalItem()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Sampah->totalItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sampah))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}

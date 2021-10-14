@@ -1,0 +1,313 @@
+ERROR - 2021-09-20 00:40:51 --> Table 'banksampah.produk' doesn't exist
+CRITICAL - 2021-09-20 00:40:51 --> Table 'banksampah.produk' doesn't exist
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php(280): mysqli->query('SELECT *\nFROM `...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(138): CodeIgniter\Database\BaseBuilder->get()
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(183): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2021-09-20 00:56:41 --> Undefined index: status
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(185): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 185, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 00:57:23 --> Undefined offset: 0
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(138): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined offse...', '/opt/lampp/htdo...', 138, Array)
+#1 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(183): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-09-20 00:57:57 --> Undefined offset: 0
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(138): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined offse...', '/opt/lampp/htdo...', 138, Array)
+#1 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(183): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessioncheck()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-09-20 01:10:00 --> Undefined index: id_nasabah
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(203): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 203, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->logout()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 01:10:30 --> Trying to get property 'id_nasabah' of non-object
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(203): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Trying to get p...', '/opt/lampp/htdo...', 203, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->logout()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-20 03:29:52 --> Unknown column 'otp' in 'field list'
+CRITICAL - 2021-09-20 03:29:52 --> Unknown column 'otp' in 'field list'
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php(280): mysqli->query('INSERT INTO `na...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `na...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `na...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('INSERT INTO `na...', Array, false)
+#4 /opt/lampp/htdocs/bsblapi/app/Models/NasabahModel.php(22): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(61): App\Models\NasabahModel->addNasabah(Array)
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2021-09-20 03:35:15 --> edit_unique is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('edit_unique')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('username', 'username', 'korokun123', Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Controller.php(160): CodeIgniter\Validation\Validation->run()
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(275): CodeIgniter\Controller->validate(Array, Array)
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-09-20 03:35:59 --> edit_unique is not a valid rule.
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(285): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('edit_unique')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('username', 'username', 'korokun123', Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Controller.php(160): CodeIgniter\Validation\Validation->run()
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(275): CodeIgniter\Controller->validate(Array, Array)
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-09-20 04:05:31 --> Unknown column 'rt' in 'field list'
+ERROR - 2021-09-20 04:06:03 --> Unknown column 'code_otp' in 'field list'
+ERROR - 2021-09-20 04:10:36 --> Unknown column 'rt' in 'field list'
+ERROR - 2021-09-20 04:23:06 --> Unknown column 'rt' in 'field list'
+ERROR - 2021-09-20 04:30:45 --> Unknown column 'rt' in 'field list'
+CRITICAL - 2021-09-20 04:39:28 --> Undefined index: new_password
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(256): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 256, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 04:45:48 --> Undefined index: new_password
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(266): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 266, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 04:46:03 --> Undefined index: new_password
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(266): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 266, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 04:46:10 --> Undefined index: new_password
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(266): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 266, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 04:46:17 --> Undefined index: new_password
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(266): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 266, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 04:50:09 --> Undefined index: old_password
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(267): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 267, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 04:53:50 --> Undefined index: new_password
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(271): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 271, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/public/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-20 20:22:37 --> Error connecting to the database: MySQL server has gone away
+CRITICAL - 2021-09-20 20:22:37 --> Unable to connect to the database.
+Main connection [MySQLi]: MySQL server has gone away
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(138): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(212): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->getProfile()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-09-20 22:07:30 --> Table 'banksampah.nasabaah' doesn't exist
+CRITICAL - 2021-09-20 22:07:30 --> Table 'banksampah.nasabaah' doesn't exist
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php(280): mysqli->query('SELECT *\nFROM `...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 /opt/lampp/htdocs/bsblapi/app/Models/NasabahModel.php(18): CodeIgniter\Database\BaseBuilder->get()
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(40): App\Models\NasabahModel->getLastNasabah()
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-09-20 22:08:48 --> Error connecting to the database: Unknown database 'banksampahh'
+CRITICAL - 2021-09-20 22:08:48 --> Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'banksampahh'
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT 1\nFROM `...', Array, false)
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Rules.php(161): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(277): CodeIgniter\Validation\Rules->is_unique('cstrwahid@gmail...', 'email', Array, NULL)
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('email', 'email', 'cstrwahid@gmail...', Array, Array)
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(23): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-09-20 22:10:47 --> Table 'banksampah.nasabaah' doesn't exist
+CRITICAL - 2021-09-20 22:10:47 --> Call to a member function getResultArray() on bool
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(40): App\Models\NasabahModel->getLastNasabah()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-20 22:11:38 --> Table 'banksampah.nasabaah' doesn't exist
+ERROR - 2021-09-20 22:12:30 --> Table 'banksampah.nasabaah' doesn't exist
+CRITICAL - 2021-09-20 22:14:33 --> Undefined index: is_verify
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(171): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 171, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->login()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-20 22:19:36 --> Table 'banksampah.nasabaha' doesn't exist
+CRITICAL - 2021-09-20 22:20:22 --> Undefined index: message
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(129): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 129, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->verification()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-20 22:25:49 --> Table 'banksampah.nasaba' doesn't exist
+CRITICAL - 2021-09-20 22:25:49 --> Table 'banksampah.nasaba' doesn't exist
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php(280): mysqli->query('SELECT *\nFROM `...')
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(138): CodeIgniter\Database\BaseBuilder->get()
+#5 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(244): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessionCheck()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-09-20 22:27:46 --> Error connecting to the database: MySQL server has gone away
+CRITICAL - 2021-09-20 22:27:46 --> Unable to connect to the database.
+Main connection [MySQLi]: MySQL server has gone away
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Model.php(210): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/BaseModel.php(622): CodeIgniter\Model->doFirst()
+#4 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(133): CodeIgniter\BaseModel->first()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->login()
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#9 {main}
+ERROR - 2021-09-20 22:27:56 --> Table 'banksampah.nasaba' doesn't exist
+CRITICAL - 2021-09-20 22:27:56 --> Undefined index: code
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(256): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 256, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessionCheck()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-20 22:29:04 --> Table 'banksampah.nasaba' doesn't exist
+ERROR - 2021-09-20 22:29:59 --> Table 'banksampah.nasaba' doesn't exist
+CRITICAL - 2021-09-20 22:29:59 --> Undefined index: code
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(246): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 246, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessionCheck()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-20 22:30:09 --> Table 'banksampah.nasaba' doesn't exist
+ERROR - 2021-09-20 22:31:12 --> Table 'banksampah.nasaba' doesn't exist
+CRITICAL - 2021-09-20 22:31:12 --> Undefined index: code
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(251): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 251, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessionCheck()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-20 22:31:46 --> Table 'banksampah.nasaba' doesn't exist
+CRITICAL - 2021-09-20 22:33:12 --> Call to a member function getValue() on null
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessionCheck()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-09-20 22:33:30 --> Undefined index: code
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(251): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 251, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->sessionCheck()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-20 22:39:28 --> Table 'banksampah.nasabahh' doesn't exist
+CRITICAL - 2021-09-20 22:40:35 --> Undefined index: code
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(406): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 406, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->logout()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 22:44:31 --> Undefined index: message
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(399): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 399, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->logout()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-20 22:55:23 --> Table 'banksampah.nasabahh' doesn't exist
+ERROR - 2021-09-20 22:55:49 --> Duplicate entry '060400001' for key 'id_nasabah'
+ERROR - 2021-09-20 22:56:45 --> Duplicate entry '060400001' for key 'id_nasabah'
+CRITICAL - 2021-09-20 23:18:04 --> Undefined index: id
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(323): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 323, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 23:25:04 --> Undefined index: new_password
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(345): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 345, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 23:25:31 --> Undefined index: new_password
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(345): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 345, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-09-20 23:25:47 --> Undefined index: new_password
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(345): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 345, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}

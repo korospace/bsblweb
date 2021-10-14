@@ -1,0 +1,8 @@
+CRITICAL - 2021-10-05 23:13:50 --> time() expects exactly 0 parameters, 1 given
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'time() expects ...', '/opt/lampp/htdo...', 29, Array)
+#1 /opt/lampp/htdocs/bsblapi/app/Controllers/SetorSampah.php(29): time('d-m-y')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\SetorSampah->addTransaction()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\SetorSampah))
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}

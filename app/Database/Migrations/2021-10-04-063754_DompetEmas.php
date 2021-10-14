@@ -18,7 +18,17 @@ class DompetEmas extends Migration
                 'unique' => true,
                 'null' => false,
             ],
-            'jumlah' => [
+            'jumlah_galery24' => [
+                'type' => 'numeric',
+                'null' => false,
+                'default' => 0,
+            ],
+            'jumlah_ubs' => [
+                'type' => 'numeric',
+                'null' => false,
+                'default' => 0,
+            ],
+            'jumlah_antam' => [
                 'type' => 'numeric',
                 'null' => false,
                 'default' => 0,

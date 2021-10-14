@@ -1,0 +1,21 @@
+ERROR - 2021-10-04 22:29:01 --> ErrorException: pg_query(): Query failed: ERROR:  foreign key constraint "detil_setor_sampah_id_sampah_foreign" cannot be implemented
+DETAIL:  Key columns "id_sampah" and "id" are of incompatible types: integer and character varying. in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Forge.php(442): CodeIgniter\Database\BaseConnection->query()
+#5 /opt/lampp/htdocs/bsblapi/app/Database/Migrations/2021-10-04-051324_DetilSetorSampah.php(37): CodeIgniter\Database\Forge->createTable()
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/MigrationRunner.php(863): App\Database\Migrations\DetilSetorSampah->up()
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/MigrationRunner.php(186): CodeIgniter\Database\MigrationRunner->migrate()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Commands/Database/Migrate.php(84): CodeIgniter\Database\MigrationRunner->latest()
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CLI/Commands.php(63): CodeIgniter\Commands\Database\Migrate->run()
+#10 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CLI/CommandRunner.php(70): CodeIgniter\CLI\Commands->run()
+#11 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CLI/CommandRunner.php(56): CodeIgniter\CLI\CommandRunner->index()
+#12 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(800): CodeIgniter\CLI\CommandRunner->_remap()
+#13 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController()
+#14 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest()
+#15 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CLI/Console.php(48): CodeIgniter\CodeIgniter->run()
+#16 /opt/lampp/htdocs/bsblapi/spark(63): CodeIgniter\CLI\Console->run()
+#17 {main}

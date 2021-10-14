@@ -1,0 +1,222 @@
+CRITICAL - 2021-09-29 01:29:13 --> Call to undefined method App\Models\AdminModel::editProfileAdmin
+#0 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(255): CodeIgniter\Model->__call('editProfileAdmi...', Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->editProfile()
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-09-29 02:18:30 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: SSL SYSCALL error: Success
+FATAL:  no pg_hba.conf entry for host &quot;114.124.131.110&quot;, user &quot;eaxzuarmydxosq&quot;, database &quot;d3njo8irs6ur6&quot;, SSL off
+CRITICAL - 2021-09-29 02:18:30 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: SSL SYSCALL error: Success
+FATAL:  no pg_hba.conf entry for host &quot;114.124.131.110&quot;, user &quot;eaxzuarmydxosq&quot;, database &quot;d3njo8irs6ur6&quot;, SSL off
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(196): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(340): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'admin')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->getAllNasabah()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-09-29 02:55:19 --> ErrorException: pg_query(): Query failed: ERROR:  column &quot;id_nasabah&quot; does not exist
+LINE 1: SELECT &quot;id&quot;, &quot;id_nasabah&quot;, &quot;nama_lengkap&quot;, &quot;privilege&quot;
+                     ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #128, 'SELECT "id", "i...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT "id", "i...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT "id", "i...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "id", "i...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/AdminModel.php(200): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/Admin.php(397): App\Models\AdminModel->getAdmin(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Admin->getAdmin()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-09-29 05:25:46 --> ErrorException: pg_query(): Query failed: ERROR:  column &quot;nama_lengkap&quot; of relation &quot;kategori_berita&quot; does not exist
+LINE 1: INSERT INTO &quot;kategori_berita&quot; (&quot;nama_lengkap&quot;, &quot;notelp&quot;, &quot;al...
+                                       ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'INSERT INTO "ka...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO "ka...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO "ka...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('INSERT INTO "ka...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/KategoriBeritaModel.php(17): CodeIgniter\Database\BaseBuilder->insert(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/KategoriBerita.php(44): App\Models\KategoriBeritaModel->addItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\KategoriBerita->addItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\KategoriBerita))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-09-29 05:50:10 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-09-29 05:50:10 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/BaseController.php(196): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsblapi/app/Controllers/KategoriBerita.php(105): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...', 'admin')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\KategoriBerita->deleteItem()
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\KategoriBerita))
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-09-29 08:07:17 --> preg_match(): Compilation failed: unmatched closing parenthesis at offset 61
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'preg_match(): C...', '/opt/lampp/htdo...', 161, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/FormatRules.php(161): preg_match('/(0[1-9]|1[0-9]...', '11-01-2000')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(277): CodeIgniter\Validation\FormatRules->regex_match('11-01-2000', '/(0[1-9]|1[0-9]...', Array, NULL)
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('tgl_lahir', 'tgl_lahir', '11-01-2000', Array, Array)
+#4 /opt/lampp/htdocs/bsblapi/app/Controllers/Nasabah.php(23): CodeIgniter\Validation\Validation->run(Array, 'nasabahRegister')
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#6 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2021-09-29 22:24:29 --> Argument 2 passed to CodeIgniter\Validation\Rules::is_not_unique() must be of the type string, null given, called in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php on line 277
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(277): CodeIgniter\Validation\Rules->is_not_unique('tes', NULL)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Validation/Validation.php(151): CodeIgniter\Validation\Validation->processRules('kategori', 'kategori', 'tes', Array, Array)
+#2 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(33): CodeIgniter\Validation\Validation->run(Array, 'addBeritaAcara')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#5 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-09-29 22:32:55 --> Cannot use object of type CodeIgniter\HTTP\Files\UploadedFile as array
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-09-29 22:34:53 --> Cannot use object of type CodeIgniter\HTTP\Files\UploadedFile as array
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-09-29 22:56:34 --> base64_decode() expects parameter 1 to be string, array given
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'base64_decode()...', '/opt/lampp/htdo...', 61, Array)
+#1 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(61): base64_decode(Array)
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-09-29 23:05:01 --> Call to a member function base64Decode() on null
+#0 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+ERROR - 2021-09-29 23:11:43 --> ErrorException: pg_query(): Query failed: ERROR:  column &quot;title&quot; of relation &quot;kategori_berita&quot; does not exist
+LINE 1: INSERT INTO &quot;kategori_berita&quot; (&quot;title&quot;, &quot;thumbnail&quot;, &quot;conten...
+                                       ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'INSERT INTO "ka...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO "ka...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO "ka...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('INSERT INTO "ka...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(17): CodeIgniter\Database\BaseBuilder->insert(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(68): App\Models\BeritaAcaraModel->addItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-09-29 23:16:19 --> ErrorException: pg_query(): Query failed: ERROR:  column &quot;title&quot; of relation &quot;kategori_berita&quot; does not exist
+LINE 1: INSERT INTO &quot;kategori_berita&quot; (&quot;title&quot;, &quot;thumbnail&quot;, &quot;conten...
+                                       ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'INSERT INTO "ka...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO "ka...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO "ka...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('INSERT INTO "ka...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(18): CodeIgniter\Database\BaseBuilder->insert(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(68): App\Models\BeritaAcaraModel->addItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-09-29 23:21:55 --> ErrorException: pg_query(): Query failed: ERROR:  column &quot;title&quot; of relation &quot;kategori_berita&quot; does not exist
+LINE 1: INSERT INTO &quot;kategori_berita&quot; (&quot;title&quot;, &quot;thumbnail&quot;, &quot;conten...
+                                       ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'INSERT INTO "ka...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO "ka...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO "ka...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('INSERT INTO "ka...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(18): CodeIgniter\Database\BaseBuilder->insert(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(68): App\Models\BeritaAcaraModel->addItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-09-29 23:24:10 --> ErrorException: pg_query(): Query failed: ERROR:  column &quot;title&quot; of relation &quot;kategori_berita&quot; does not exist
+LINE 1: INSERT INTO &quot;kategori_berita&quot; (&quot;title&quot;, &quot;thumbnail&quot;, &quot;conten...
+                                       ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'INSERT INTO "ka...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO "ka...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO "ka...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('INSERT INTO "ka...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(18): CodeIgniter\Database\BaseBuilder->insert(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(68): App\Models\BeritaAcaraModel->addItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-09-29 23:26:42 --> ErrorException: pg_query(): Query failed: ERROR:  column &quot;title&quot; of relation &quot;kategori_berita&quot; does not exist
+LINE 1: INSERT INTO &quot;kategori_berita&quot; (&quot;title&quot;, &quot;thumbnail&quot;, &quot;conten...
+                                       ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'INSERT INTO "ka...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO "ka...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO "ka...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('INSERT INTO "ka...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(18): CodeIgniter\Database\BaseBuilder->insert(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(68): App\Models\BeritaAcaraModel->addItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-09-29 23:36:48 --> ErrorException: pg_query(): Query failed: ERROR:  insert or update on table &quot;berita_acara&quot; violates foreign key constraint &quot;berita_acara_kategori_foreign&quot;
+DETAIL:  Key (kategori)=(webinarxx) is not present in table &quot;kategori_berita&quot;. in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'INSERT INTO "be...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO "be...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO "be...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('INSERT INTO "be...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(35): CodeIgniter\Database\BaseBuilder->insert(Array)
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(68): App\Models\BeritaAcaraModel->addItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->addItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+ERROR - 2021-09-29 23:50:09 --> ErrorException: pg_query(): Query failed: ERROR:  invalid input syntax for type integer: &quot;webinar&quot;
+LINE 3: WHERE &quot;id&quot; = 'webinar'
+                     ^ in /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #130, 'SELECT *\nFROM "...')
+#2 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT *\nFROM "...')
+#3 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM "...')
+#4 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 /opt/lampp/htdocs/bsblapi/app/Models/BeritaAcaraModel.php(66): CodeIgniter\Database\BaseBuilder->get()
+#6 /opt/lampp/htdocs/bsblapi/app/Controllers/BeritaAcara.php(103): App\Models\BeritaAcaraModel->getItem(Array)
+#7 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\BeritaAcara->getItem()
+#8 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BeritaAcara))
+#9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}

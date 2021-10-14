@@ -1,22 +1,27 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="<?= base_url('logo.png'); ?>" type="image/x-icon">
-    <title><?= $title ?></title>
 
-    <!-- Css -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="assets/images/banksampah-logo.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+  <title><?= $title ?></title>
 
-  </head>
-  <body>
+  <!-- Render Css -->
+  <?= $this->renderSection('contentCss'); ?>
 
-    <!-- Render Section -->
-    <?= $this->renderSection('content'); ?>
+</head>
 
-    <!-- JavaScript -->
-    <!-- <script src="<?= base_url('aset/js/myjs.js'); ?>"></script> -->
-  </body>
+<body>
+
+  <!-- Render Section -->
+  <?= $this->renderSection('content'); ?>
+
+  
+  <!-- Render Js -->
+  <?= $this->renderSection('contentJs'); ?>
+</body>
+
 </html>

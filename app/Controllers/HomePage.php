@@ -9,7 +9,7 @@ class HomePage extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'bsbl | Homepage'
+            'title' => 'Selamat Datang di Website Bank Sampah Budi Luhur'
         ];
 
         return view('HomePage/index',$data);

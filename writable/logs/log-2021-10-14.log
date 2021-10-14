@@ -14,3 +14,39 @@ Stack trace:
 #9 /opt/lampp/htdocs/bsblapi/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
 #10 /opt/lampp/htdocs/bsblapi/index.php(37): CodeIgniter\CodeIgniter->run()
 #11 {main}
+CRITICAL - 2021-10-14 09:00:32 --> Call to undefined function CodeIgniter\locale_set_default()
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\bootstrap.php(146): CodeIgniter\CodeIgniter->initialize()
+#1 C:\xampp\htdocs\bsbl\index.php(28): require('C:\\xampp\\htdocs...')
+#2 {main}
+CRITICAL - 2021-10-14 09:02:08 --> Call to undefined function CodeIgniter\locale_set_default()
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\bootstrap.php(146): CodeIgniter\CodeIgniter->initialize()
+#1 C:\xampp\htdocs\bsbl\index.php(28): require('C:\\xampp\\htdocs...')
+#2 {main}
+CRITICAL - 2021-10-14 09:04:37 --> Call to undefined function CodeIgniter\locale_set_default()
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\bootstrap.php(146): CodeIgniter\CodeIgniter->initialize()
+#1 C:\xampp\htdocs\bsbl\index.php(28): require('C:\\xampp\\htdocs...')
+#2 {main}
+CRITICAL - 2021-10-14 09:09:35 --> Call to undefined function CodeIgniter\locale_set_default()
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\bootstrap.php(146): CodeIgniter\CodeIgniter->initialize()
+#1 C:\xampp\htdocs\bsbl\index.php(28): require('C:\\xampp\\htdocs...')
+#2 {main}
+CRITICAL - 2021-10-14 09:10:45 --> Call to undefined function CodeIgniter\locale_set_default()
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\bootstrap.php(146): CodeIgniter\CodeIgniter->initialize()
+#1 C:\xampp\htdocs\bsbl\spark(45): require('C:\\xampp\\htdocs...')
+#2 {main}
+CRITICAL - 2021-10-14 09:11:27 --> Call to undefined function CodeIgniter\locale_set_default()
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\bootstrap.php(146): CodeIgniter\CodeIgniter->initialize()
+#1 C:\xampp\htdocs\bsbl\index.php(28): require('C:\\xampp\\htdocs...')
+#2 {main}
+CRITICAL - 2021-10-14 09:11:28 --> Call to undefined function CodeIgniter\locale_set_default()
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\bootstrap.php(146): CodeIgniter\CodeIgniter->initialize()
+#1 C:\xampp\htdocs\bsbl\index.php(28): require('C:\\xampp\\htdocs...')
+#2 {main}
+CRITICAL - 2021-10-14 09:11:45 --> Call to undefined function CodeIgniter\locale_set_default()
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\bootstrap.php(146): CodeIgniter\CodeIgniter->initialize()
+#1 C:\xampp\htdocs\bsbl\index.php(28): require('C:\\xampp\\htdocs...')
+#2 {main}
+CRITICAL - 2021-10-14 09:12:06 --> Call to undefined function CodeIgniter\locale_set_default()
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\bootstrap.php(146): CodeIgniter\CodeIgniter->initialize()
+#1 C:\xampp\htdocs\bsbl\spark(45): require('C:\\xampp\\htdocs...')
+#2 {main}

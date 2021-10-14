@@ -2,6 +2,6 @@
 
 <?= $this->section('content'); ?>
 
-<h1>this is home page</h1>
+<h1>this is home page by Einsa</h1>
 
 <?= $this->endSection(); ?>

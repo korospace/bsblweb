@@ -8,7 +8,7 @@
 <?= $this->endSection(); ?>
 
 <!-- JS -->
-<?= $this->section('contentCss'); ?>
+<?= $this->section('contentJs'); ?>
   <script src="assets/js/jquery-2.1.0.min.js"></script>
   <script src="assets/js/popper.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
@@ -17,6 +17,7 @@
   <script src="assets/js/jquery.counterup.min.js"></script>
   <script src="assets/js/imgfix.min.js"></script>
   <script src="assets/js/custom.js"></script>
+  <script src="assets/js/homePage.js"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
@@ -99,10 +100,10 @@
     <section class="info rubbish">
       <div class="container">
         <h1 class="text-center">Data Sampah</h1>
-        <div class="row">
+        <div id="totalSampahWraper" class="row">
           <div class="col-md-3 col-sm-6">
             <div class="counter">
-              <span class="counter-value">15</span>
+              <span class="counter-value">15000</span>
               <div class="counter-content">
                 <h3>KG<br>Kertas</br></h3>
               </div>

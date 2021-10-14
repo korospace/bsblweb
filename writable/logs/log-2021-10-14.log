@@ -50,3 +50,80 @@ CRITICAL - 2021-10-14 09:12:06 --> Call to undefined function CodeIgniter\locale
 #0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\bootstrap.php(146): CodeIgniter\CodeIgniter->initialize()
 #1 C:\xampp\htdocs\bsbl\spark(45): require('C:\\xampp\\htdocs...')
 #2 {main}
+CRITICAL - 2021-10-14 05:08:32 --> Undefined constant "base_url"
+#0 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\View\View.php(214): include()
+#1 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\View\View.php(230): CodeIgniter\View\View->render('Layout/template', Array, true)
+#3 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('HomePage/index', Array, true)
+#4 C:\xampp\htdocs\banksampah\app\Controllers\HomePage.php(15): view('HomePage/index', Array)
+#5 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\HomePage->index()
+#6 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomePage))
+#7 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\banksampah\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2021-10-14 05:13:09 --> Undefined variable $baseURL
+#0 C:\xampp\htdocs\banksampah\app\Views\Layout\template.php(23): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 23)
+#1 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\View\View.php(230): CodeIgniter\View\View->render('Layout/template', Array, true)
+#4 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('HomePage/index', Array, true)
+#5 C:\xampp\htdocs\banksampah\app\Controllers\HomePage.php(15): view('HomePage/index', Array)
+#6 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\HomePage->index()
+#7 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomePage))
+#8 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\banksampah\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2021-10-14 05:19:07 --> Undefined constant "App\Controllers\base_url"
+#0 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\HomePage->index()
+#1 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\HomePage))
+#2 C:\xampp\htdocs\banksampah\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\banksampah\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+ERROR - 2021-10-14 05:41:49 --> Error connecting to the database: Call to undefined function CodeIgniter\Database\Postgre\pg_connect()
+CRITICAL - 2021-10-14 05:41:49 --> Unable to connect to the database.
+Main connection [Postgre]: Call to undefined function CodeIgniter\Database\Postgre\pg_connect()
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Database\BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#2 C:\xampp\htdocs\bsbl\app\Models\SampahModel.php(109): CodeIgniter\Database\BaseBuilder->get()
+#3 C:\xampp\htdocs\bsbl\app\Controllers\Sampah.php(171): App\Models\SampahModel->totalItem(NULL)
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Sampah->totalItem()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sampah))
+#6 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-14 05:49:21 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-10-14 06:05:54 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-10-14 06:08:33 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-10-14 06:09:59 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}

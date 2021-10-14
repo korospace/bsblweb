@@ -19,9 +19,14 @@
   <!-- Render Section -->
   <?= $this->renderSection('content'); ?>
 
-  
+
+  <script src="assets/js/axios.min.js"></script>
+  <script>
+    let baseurl = 'https://t-gadgetcors.herokuapp.com/https://bsblbackend.herokuapp.com' // '<?= base_url() ?>';
+  </script>
   <!-- Render Js -->
   <?= $this->renderSection('contentJs'); ?>
+
 </body>
 
 </html>

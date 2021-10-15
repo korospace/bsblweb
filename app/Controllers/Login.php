@@ -12,6 +12,13 @@ class Login extends BaseController
             'title' => 'Silahkan Login'
         ];
 
-        return view('Login/index',$data);
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+
+        if ($token == null) {
+            return view('Login/index',$data);
+        } 
+        else {
+            return redirect()->to(base_url().'/dashboard/nasabah');
+        }
     }
 }

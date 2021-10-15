@@ -302,8 +302,11 @@
                     <div class="invalid-feedback"></div>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                      <input name="email" type="text" id="email" placeholder="E-Mail Address"
-                        style="background-color: rgba(250,250,250,0.3);">
+                      <input name="email" type="email" id="email" placeholder="E-Mail Address"
+                        style="background-color: rgba(250,250,250,0.3);" 
+                        required 
+										    data-email
+										    autocomplete="off">
                         <small
                           id="email-contact-error"
                           class="position-absolute text-danger"></small>

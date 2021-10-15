@@ -9,9 +9,6 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-	<script src="assets/js/jquery-2.1.0.min.js"></script>
-	<script src="assets/js/popper.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
 	<script src="assets/js/scrollreveal.min.js"></script>
 	<script src="assets/js/waypoints.min.js"></script>
 	<script src="assets/js/jquery.counterup.min.js"></script>
@@ -25,8 +22,8 @@
 
 	<!-- **** Loading Spinner **** -->
 	<?= $this->include('Components/loadingSpinner'); ?>
+
 	<div class="container-fluid register-wraper d-flex justify-content-center align-items-center">
-		
 		<div class="container register">
 			<div class="row">
 				<div class="col-md-3 register-left">

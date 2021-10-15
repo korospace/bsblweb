@@ -11,14 +11,11 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-  <script src="assets/js/jquery-2.1.0.min.js"></script>
-  <script src="assets/js/popper.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
   <script src="assets/js/scrollreveal.min.js"></script>
   <script src="assets/js/waypoints.min.js"></script>
   <script src="assets/js/imgfix.min.js"></script>
-  <script src="assets/js/custom.js"></script>
   <script src="assets/js/jquery.counterup.min.js"></script>
+  <script src="assets/js/custom.js"></script>
   <script src="assets/js/homePage.js"></script>
 <?= $this->endSection(); ?>
 
@@ -27,16 +24,8 @@
 
 <body>
 
-  <!-- ***** Preloader Start ***** -->
-  <!-- <div id="preloader">
-      <div class="jumper">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div> -->
-  <!-- ***** Preloader End ***** -->
-
+	<!-- **** Loading Spinner **** -->
+	<?= $this->include('Components/loadingSpinner'); ?>
 
   <!-- ***** Header Area Start ***** -->
   <header class="header-area header-sticky">
@@ -292,14 +281,21 @@
             <div class="contact-form">
               <form id="contact">
                 <div class="row">
-                  <div class="col-md-6 col-sm-12">
-                      <input name="name" type="text" id="name" placeholder="Full Name"
-                        style="background-color: rgba(250,250,250,0.3);">
-                        <small
-                          id="nama-contact-error"
-                          class="position-absolute text-danger"></small>
-                        <div class="invalid-feedback"></div>
-                    <div class="invalid-feedback"></div>
+                  <!-- name input -->
+                  <div class="col-md-6 col-sm-12 form-group position-relative bg-success">
+                      <input
+                        type="text"
+                        name="name" 
+                        id="input-contact-nama" 
+                        class="form-control" 
+                        placeholder="Full Name" 
+                        required 
+                        autocomplete="off" />
+                      <small
+                        id="nama-contact-error"
+                        class="position-absolute text-danger"></small>
+                      <small 
+                        class="invalid-feedback position-absolute"></small>
                   </div>
                   <div class="col-md-6 col-sm-12">
                       <input name="email" type="email" id="email" placeholder="E-Mail Address"

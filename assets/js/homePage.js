@@ -1,4 +1,8 @@
-// get total sampah
+/* 
+-------------- 
+get total sampah
+--------------
+*/
 axios.get(APIURL+'/sampah/totalitem')
 .then(res => {
     let elTotalSampah = '';
@@ -15,24 +19,31 @@ axios.get(APIURL+'/sampah/totalitem')
         </div>`;
     }
 
+    // modif number
+    function kFormatter(num) {
+        return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'K' : Math.sign(num)*Math.abs(num)
+    }
+
     document.getElementById('totalSampahWraper').innerHTML = elTotalSampah;
 }) 
 .catch(res => {
 })
 
-// modif number
-function kFormatter(num) {
-    return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'K' : Math.sign(num)*Math.abs(num)
-}
-
-let validatorKritik = new Validator(document.querySelector("form"), {
+/* 
+-------------- 
+send kritik 
+--------------
+*/
+// form validation
+let validatorNasabah = new Validator(document.getElementById("contact"), {
     delay: 0
 });
 
 $('#contact').on('submit', function(e) {
     e.preventDefault();
+    
     if (isValidForm()) {
-        //showLoadingSpinner();
+        showLoadingSpinner();
         
         // clear error message
         $('#messages-nasabah-error').text('');
@@ -46,12 +57,12 @@ $('#contact').on('submit', function(e) {
             }
         })
         .then((response) => {
-            //hideLoadingSpinner();
+            hideLoadingSpinner();
             
         })
         .catch((error) => {
             console.log(error);
-            //hideLoadingSpinner();
+            hideLoadingSpinner();
             // Swal.fire({
             //         title : 'Success',
             //         text : 'Pesan Telah Terkirim',
@@ -59,9 +70,9 @@ $('#contact').on('submit', function(e) {
             //         timer: 5000
             //     });
             // error email/password
-            if (error.response.status == 400) {
-                $('#message-contact-error').text(error.response.data.messages.messages);
-            }
+            // if (error.response.status == 400) {
+            //     $('#message-contact-error').text(error.response.data.messages.messages);
+            // }
         })
     }
 

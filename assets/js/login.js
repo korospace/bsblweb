@@ -21,7 +21,6 @@ $('#formLoginNasabah').on('submit', function(e) {
         $('#password-nasabah-error').text('');
 
         let form = new FormData(e.target);
-
         axios
         .post(`${APIURL}/nasabah/login`,form, {
             headers: {

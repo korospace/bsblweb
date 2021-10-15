@@ -11,15 +11,15 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-<script src="assets/js/jquery-2.1.0.min.js"></script>
-<script src="assets/js/owl-carousel.js"></script>
-<script src="assets/js/popper.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/scrollreveal.min.js"></script>
-<script src="assets/js/waypoints.min.js"></script>
-<script src="assets/js/jquery.counterup.min.js"></script>
-<script src="assets/js/imgfix.min.js"></script>
-<script src="assets/js/custom.js"></script>
+  <script src="assets/js/jquery-2.1.0.min.js"></script>
+  <script src="assets/js/popper.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/scrollreveal.min.js"></script>
+  <script src="assets/js/waypoints.min.js"></script>
+  <script src="assets/js/imgfix.min.js"></script>
+  <script src="assets/js/custom.js"></script>
+  <script src="assets/js/jquery.counterup.min.js"></script>
+  <script src="assets/js/homePage.js"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
@@ -99,40 +99,41 @@
   </div>
   <!-- ***** Welcome Area End ***** -->
 
-  <!-- Info Data Rubbish -->
-  <section class="info rubbish">
-    <div class="container">
-      <h1 class="text-center">Data Sampah</h1>
-      <div class="row">
-        <div class="col-md-3 col-sm-6">
-          <div class="counter">
-            <span class="counter-value">15</span>
-            <div class="counter-content">
-              <h3>KG<br>Kertas</br></h3>
+    <!-- Info Data Rubbish -->
+    <section class="info rubbish">
+      <div class="container">
+        <h1 class="text-center">Data Sampah</h1>
+        <div id="totalSampahWraper" class="row">
+          <div class="col-md-3 col-sm-6">
+            <div class="counter">
+              <span class="counter-value">0</span>
+              <div class="counter-content">
+                <h3>KG<br>Kertas</br></h3>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="counter">
-            <span class="counter-value">10</span>
-            <div class="counter-content">
-              <h3>KG<br>Plastik</br></h3>
+          <div class="col-md-3 col-sm-6">
+            <div class="counter">
+              <span class="counter-value">0</span>
+              <div class="counter-content">
+                <h3>KG<br>Plastik</br></h3>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="counter">
-            <span class="counter-value">8</span>
-            <div class="counter-content">
-              <h3>KG<br>Logam</br></h3>
+          <div class="col-md-3 col-sm-6">
+            <div class="counter">
+              <span class="counter-value">0</span>
+              <div class="counter-content">
+                <h3>KG<br>Logam</br></h3>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="counter">
-            <span class="counter-value">3</span>
-            <div class="counter-content">
-              <h3>KG<br>Lain-Lain</br></h3>
+          <div class="col-md-3 col-sm-6">
+            <div class="counter">
+              <span class="counter-value">0</span>
+              <div class="counter-content">
+                <h3>KG<br>Lain-Lain</br></h3>
+              </div>
             </div>
           </div>
         </div>
@@ -289,31 +290,36 @@
         <div class="row">
           <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="contact-form">
-              <form id="contact" action="" method="post">
+              <form id="contact">
                 <div class="row">
                   <div class="col-md-6 col-sm-12">
-                    <fieldset>
-                      <input name="name" type="text" id="name" placeholder="Full Name" required=""
+                      <input name="name" type="text" id="name" placeholder="Full Name"
                         style="background-color: rgba(250,250,250,0.3);">
-                    </fieldset>
+                        <small
+                          id="nama-contact-error"
+                          class="position-absolute text-danger"></small>
+                        <div class="invalid-feedback"></div>
+                    <div class="invalid-feedback"></div>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <fieldset>
-                      <input name="email" type="text" id="email" placeholder="E-Mail Address" required=""
+                      <input name="email" type="text" id="email" placeholder="E-Mail Address"
                         style="background-color: rgba(250,250,250,0.3);">
-                    </fieldset>
+                        <small
+                          id="email-contact-error"
+                          class="position-absolute text-danger"></small>
+                        <div class="invalid-feedback"></div>
                   </div>
                   <div class="col-lg-12">
-                    <fieldset>
-                      <textarea name="message" rows="6" id="message" placeholder="Your Message" required=""
+                      <textarea name="message" rows="6" id="message" placeholder="Your Message"
                         style="background-color: rgba(250,250,250,0.3);"></textarea>
-                    </fieldset>
+                        <small
+                          id="message-contact-error"
+                          class="position-absolute text-danger"></small>
+                        <div class="invalid-feedback"></div>
                   </div>
                   <div class="col-lg-12">
-                    <fieldset>
                       <button type="submit" id="form-submit" class="main-button">Send Message
                         Now</button>
-                    </fieldset>
                   </div>
                 </div>
               </form>
@@ -331,6 +337,7 @@
         </div>
       </div>
     </div>
+    
   </footer>
 
   <!-- footer section starts  -->

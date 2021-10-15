@@ -38,6 +38,8 @@
   
   <!-- Render Js -->
   <?= $this->renderSection('contentJs'); ?>
+  <script src="assets/js/jquery.validate.min.js"></script>
+
 </body>
 
 </html>

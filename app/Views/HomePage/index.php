@@ -11,27 +11,15 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-<<<<<<< HEAD
   <script src="assets/js/jquery-2.1.0.min.js"></script>
   <script src="assets/js/popper.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
   <script src="assets/js/scrollreveal.min.js"></script>
   <script src="assets/js/waypoints.min.js"></script>
-  <script src="assets/js/jquery.counterup.min.js"></script>
   <script src="assets/js/imgfix.min.js"></script>
   <script src="assets/js/custom.js"></script>
+  <script src="assets/js/jquery.counterup.min.js"></script>
   <script src="assets/js/homePage.js"></script>
-=======
-<script src="assets/js/jquery-2.1.0.min.js"></script>
-<script src="assets/js/owl-carousel.js"></script>
-<script src="assets/js/popper.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/scrollreveal.min.js"></script>
-<script src="assets/js/waypoints.min.js"></script>
-<script src="assets/js/jquery.counterup.min.js"></script>
-<script src="assets/js/imgfix.min.js"></script>
-<script src="assets/js/custom.js"></script>
->>>>>>> 8e0fae848a301b5191f3a4e63096b0dbd4490782
 <?= $this->endSection(); ?>
 
 <!-- Body -->
@@ -118,34 +106,34 @@
         <div id="totalSampahWraper" class="row">
           <div class="col-md-3 col-sm-6">
             <div class="counter">
-              <span class="counter-value">15000</span>
+              <span class="counter-value">0</span>
               <div class="counter-content">
                 <h3>KG<br>Kertas</br></h3>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="counter">
-            <span class="counter-value">10</span>
-            <div class="counter-content">
-              <h3>KG<br>Plastik</br></h3>
+          <div class="col-md-3 col-sm-6">
+            <div class="counter">
+              <span class="counter-value">0</span>
+              <div class="counter-content">
+                <h3>KG<br>Plastik</br></h3>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="counter">
-            <span class="counter-value">8</span>
-            <div class="counter-content">
-              <h3>KG<br>Logam</br></h3>
+          <div class="col-md-3 col-sm-6">
+            <div class="counter">
+              <span class="counter-value">0</span>
+              <div class="counter-content">
+                <h3>KG<br>Logam</br></h3>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="counter">
-            <span class="counter-value">3</span>
-            <div class="counter-content">
-              <h3>KG<br>Lain-Lain</br></h3>
+          <div class="col-md-3 col-sm-6">
+            <div class="counter">
+              <span class="counter-value">0</span>
+              <div class="counter-content">
+                <h3>KG<br>Lain-Lain</br></h3>
+              </div>
             </div>
           </div>
         </div>
@@ -302,23 +290,24 @@
         <div class="row">
           <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="contact-form">
-              <form id="contact" action="" method="post">
+              <form id="contact" action="" method="post" onsubmit="sendMssg(this, event)">
                 <div class="row">
                   <div class="col-md-6 col-sm-12">
                     <fieldset>
-                      <input name="name" type="text" id="name" placeholder="Full Name" required=""
+                      <input name="name" type="text" id="name" placeholder="Full Name"
                         style="background-color: rgba(250,250,250,0.3);">
                     </fieldset>
+                    <small class="error"></small>
                   </div>
                   <div class="col-md-6 col-sm-12">
                     <fieldset>
-                      <input name="email" type="text" id="email" placeholder="E-Mail Address" required=""
+                      <input name="email" type="text" id="email" placeholder="E-Mail Address"
                         style="background-color: rgba(250,250,250,0.3);">
                     </fieldset>
                   </div>
                   <div class="col-lg-12">
                     <fieldset>
-                      <textarea name="message" rows="6" id="message" placeholder="Your Message" required=""
+                      <textarea name="message" rows="6" id="message" placeholder="Your Message"
                         style="background-color: rgba(250,250,250,0.3);"></textarea>
                     </fieldset>
                   </div>
@@ -344,6 +333,7 @@
         </div>
       </div>
     </div>
+    
   </footer>
 
   <!-- footer section starts  -->

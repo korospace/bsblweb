@@ -175,6 +175,7 @@ class BaseController extends Controller
             // "iat" => $iat, // issued at
             // "nbf" => $nbf, //not before in seconds
             "id"         => $id,
+            "uniqueid"   => uniqid(),
             "expired"    => ($rememberme == true) ? time()+2592000 : time()+3600, 
         );
 
@@ -184,44 +185,26 @@ class BaseController extends Controller
     }
 
     /**
-     * Check token nasabah AND admin
+     * Check token
      */
-    public function checkToken(?string $token,string $target): array
+    public function checkToken(?string $token,?string $target = null): array
     {
         try {
-            $db = \Config\Database::connect();
-
-            if ($target == 'union') {
-                $dataNasabah = $db->table('admin')->select('token')->where("token", $token)->get()->getResultArray();
-                $unionTable = 'admin';
-
-                if (empty($dataNasabah)) {
-                    $dataNasabah = $db->table('nasabah')->select('token')->where("token", $token)->get()->getResultArray();
-                    $unionTable = 'nasabah';
+            $db      = \Config\Database::connect();
+            $key     = $this->getKey();
+            $decoded = JWT::decode($token, $key, array("HS256"));
+            $decoded = (array)$decoded;
+            $table   = (isset($decoded['privilege'])) ? 'admin' : 'nasabah';
+            
+            if (time() < $decoded['expired']) {
+                if ($table == 'admin') {
+                    $dataUser = $db->table('admin')->select('token')->where("token", $token)->get()->getResultArray();
+                } 
+                else {
+                    $dataUser = $db->table('nasabah')->select('token')->where("token", $token)->get()->getResultArray();
                 }
-            } 
-            else {
-                $dataNasabah = $db->table($target)->select('token')->where("token", $token)->get()->getResultArray();
-            }
-        } 
-        catch (phpException $e) {
-            return [
-                'success' => false,
-                'code'    => 500,
-                'message' => $e->getMessage()
-            ];
-        }
 
-        // var_dump(!empty($dataNasabah));die;
-        // var_dump($token);die;
-        if (!empty($dataNasabah)) {
-            try {
-                $key     = $this->getKey();
-                $decoded = JWT::decode($token, $key, array("HS256"));
-                $decoded = (array)$decoded;
-                
-                if (time() < $decoded['expired']) {
-                    
+                if (!empty($dataUser)) {
                     $response = [
                         'status'   => 200,
                         'error'    => false,
@@ -236,45 +219,26 @@ class BaseController extends Controller
                     ];
                 } 
                 else {
-                    try {
-                        // set nasabah OR admin token null in database 
-                        $data = [
-                            'token' => null
-                        ];
-                
-                        if ($target == 'union') {
-                            $db->table($unionTable)->where('token', $token)->update($data);
-                        } 
-                        else {
-                            $db->table($target)->where('token', $token)->update($data);
-                        }
-                        
-                        if ($db->affectedRows()> 0) {
-                            return [
-                                'success' => false,
-                                'code'    => 401,
-                                'message' => 'token expired'
-                            ];
-                        }
-                    } 
-                    catch (phpException $e) {
-                        return [
-                            'success' => false,
-                            'code'    => 500,
-                            'message' => $e->getMessage()
-                        ];
-                    }
+                    return [
+                        'success' => false,
+                        'code'    => 401,
+                        'message' => 'access denied'
+                    ];
                 }
             } 
-            catch (phpException $ex) {
-                return [
-                    'success' => false,
-                    'code'    => 401,
-                    'message' => 'access denied'
-                ];
+            else {
+                $db->table($table)->where('id', $decoded['id'])->update(['token' => null]);
+                
+                if ($db->affectedRows()> 0) {
+                    return [
+                        'success' => false,
+                        'code'    => 401,
+                        'message' => 'token expired'
+                    ];
+                }
             }
         } 
-        else {
+        catch (phpException $ex) {
             return [
                 'success' => false,
                 'code'    => 401,

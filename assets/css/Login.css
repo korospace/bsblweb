@@ -10,9 +10,13 @@
     color: #f8f9fa;
 }
 
+.register-wraper {
+    height: 100vh;
+}
+
 .register {
     background: -webkit-linear-gradient(left, #537629, #c1d966);
-    margin-top: 7rem;
+    /* margin-top: 7rem; */
     padding: 3%;
 }
 
@@ -141,4 +145,10 @@
     margin-top: 8%;
     margin-bottom: -15%;
     color: #495057;
+}
+
+.pristine-error {
+    color: red;
+    font-size: 12px;
+    letter-spacing: 1px;
 }

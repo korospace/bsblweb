@@ -18,7 +18,7 @@
 
   <!-- Render Section -->
   <?= $this->renderSection('content'); ?>
-  
+  <script src="assets/js/validator.min.js"></script>
   <script src="assets/js/sweetalert2.all.min.js"></script>
   <script src="assets/js/axios.min.js"></script>
   <script>

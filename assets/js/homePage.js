@@ -25,6 +25,7 @@ function kFormatter(num) {
     return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'K' : Math.sign(num)*Math.abs(num)
 }
 
+// Send Message Function (Bug : need twice click)
 sendMssg = (e, event) => {
     event.preventDefault();
     $("form#contact").validate({
@@ -44,9 +45,9 @@ sendMssg = (e, event) => {
         submitHandler: function(form) {
             let formKritik = new FormData(form);
             Swal.fire({
-                titile : "Checking...",
+                title : "Checking...",
                 text : "Please wait",
-                imageUrl : "images/ajaxloader.gif",
+                imageUrl : "assets/images/loader.gif",
                 showConfirmButton: false,
                 allowOutsideClick: false
             });
@@ -65,8 +66,6 @@ sendMssg = (e, event) => {
             .catch(res => {
                 console.log(res);
             });
-
-
         }
     });
 }

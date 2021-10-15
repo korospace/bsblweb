@@ -290,7 +290,7 @@
         <div class="row">
           <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="contact-form">
-              <form id="contact" action="" method="post" onsubmit="sendMssg(this, event)">
+              <form id="contact" method="post" onsubmit="sendMssg(this, event)">
                 <div class="row">
                   <div class="col-md-6 col-sm-12">
                     <fieldset>

@@ -22,8 +22,8 @@
 
 	<!-- **** Loading Spinner **** -->
 	<?= $this->include('Components/loadingSpinner'); ?>
+
 	<div class="container-fluid register-wraper d-flex justify-content-center align-items-center">
-		
 		<div class="container register">
 			<div class="row">
 				<div class="col-md-3 register-left">

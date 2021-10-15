@@ -26,14 +26,6 @@
 
   <!-- Render Content -->
   <?= $this->renderSection('content'); ?>
-<<<<<<< HEAD
-  <script src="assets/js/validator.min.js"></script>
-  <script src="assets/js/sweetalert2.all.min.js"></script>
-  <script src="assets/js/axios.min.js"></script>
-  <script>
-    let baseurl = 'https://t-gadgetcors.herokuapp.com/https://bsblbackend.herokuapp.com' // '<?= base_url() ?>';
-    </script>
-=======
   
   <!-- Global Js -->
   <script>
@@ -44,7 +36,6 @@
 	<script src="<?= base_url('assets/js/validator.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/sweetalert2.min.js'); ?>"></script>
   
->>>>>>> 19bf97d5cb8a34b1a583cfd70d717a44fa6eb681
   <!-- Render Js -->
   <?= $this->renderSection('contentJs'); ?>
   <script src="assets/js/jquery.validate.min.js"></script>

@@ -290,35 +290,36 @@
         <div class="row">
           <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="contact-form">
-              <form id="contact" method="post" onsubmit="sendMssg(this, event)">
+              <form id="contact">
                 <div class="row">
                   <div class="col-md-6 col-sm-12">
-                    <fieldset>
                       <input name="name" type="text" id="name" placeholder="Full Name"
                         style="background-color: rgba(250,250,250,0.3);">
+                        <small
+                          id="nama-contact-error"
+                          class="position-absolute text-danger"></small>
                         <div class="invalid-feedback"></div>
-                    </fieldset>
                     <div class="invalid-feedback"></div>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <fieldset>
                       <input name="email" type="text" id="email" placeholder="E-Mail Address"
                         style="background-color: rgba(250,250,250,0.3);">
+                        <small
+                          id="email-contact-error"
+                          class="position-absolute text-danger"></small>
                         <div class="invalid-feedback"></div>
-                    </fieldset>
                   </div>
                   <div class="col-lg-12">
-                    <fieldset>
                       <textarea name="message" rows="6" id="message" placeholder="Your Message"
                         style="background-color: rgba(250,250,250,0.3);"></textarea>
+                        <small
+                          id="message-contact-error"
+                          class="position-absolute text-danger"></small>
                         <div class="invalid-feedback"></div>
-                    </fieldset>
                   </div>
                   <div class="col-lg-12">
-                    <fieldset>
                       <button type="submit" id="form-submit" class="main-button">Send Message
                         Now</button>
-                    </fieldset>
                   </div>
                 </div>
               </form>

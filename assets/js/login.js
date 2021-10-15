@@ -44,25 +44,32 @@ $('#formLoginNasabah').on('submit', function(e) {
             // account not verify
             if (error.response.status == 401) {
                 Swal.fire({
-                    title: 'Submit your Github username',
+                    title: 'CODE OTP',
                     input: 'text',
                     inputAttributes: {
                         autocapitalize: 'off'
                     },
+                    html:'akun belum ter-verifikasi. check email anda untuk melihat code OTP',
+                    footer: 'merasa kesulitan? <a href="">hubungi admin</a>',
                     showCancelButton: true,
-                    confirmButtonText: 'Look up',
+                    confirmButtonText: 'submit',
                     showLoaderOnConfirm: true,
-                    preConfirm: (login) => {
-                        return fetch(`//api.github.com/users/${login}`)
-                        .then(response => {
-                            if (!response.ok) {
-                            throw new Error(response.statusText)
+                    preConfirm: (otp) => {
+                        let form = new FormData();
+                        form.append('code_otp',otp);
+
+                        axios
+                        .post(`${APIURL}/nasabah/verification`,form, {
+                            headers: {
+                                // header options 
                             }
-                            return response.json()
+                        })
+                        .then((response) => {
+                            return response.data.messages
                         })
                         .catch(error => {
                             Swal.showValidationMessage(
-                            `Request failed: ${error}`
+                                `code otp tidak valid`
                             )
                         })
                     },
@@ -71,8 +78,9 @@ $('#formLoginNasabah').on('submit', function(e) {
                 .then((result) => {
                     if (result.isConfirmed) {
                         Swal.fire({
-                        title: `${result.value.login}'s avatar`,
-                        imageUrl: result.value.avatar_url
+                            icon: 'success',
+                            title: 'success!',
+                            text: 'silahkan login kembali',
                         })
                     }
                 })

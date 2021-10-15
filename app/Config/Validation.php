@@ -195,11 +195,9 @@ class Validation
 
 	public $codeOTP = [
 		'code_otp' => [
-            'rules'  => 'required|min_length[6]|max_length[6]',
+            'rules'  => 'required',
             'errors' => [
-                'required'    => 'code_otp is required',
-                'min_length'  => 'min 6 character',
-                'max_length'  => 'max 6 character',
+                'required' => 'code_otp is required',
             ],
 		]
 	];

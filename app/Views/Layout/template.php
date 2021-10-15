@@ -32,6 +32,10 @@
     const BASEURL = '<?= base_url(); ?>';
     const APIURL  = 'https://t-gadgetcors.herokuapp.com/https://bsblbackend.herokuapp.com';
   </script>
+  
+	<script src="assets/js/jquery-2.1.0.min.js"></script>
+	<script src="assets/js/popper.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
 	<script src="<?= base_url('assets/js/axios.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/validator.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/sweetalert2.min.js'); ?>"></script>

@@ -25,6 +25,9 @@ class Dashboard extends BaseController
         $result = $this->checkToken($token);
 
         if ($result['success'] == false) {
+            setcookie('token', null, -1, '/'); 
+            unset($_COOKIE['token']); 
+
             return redirect()->to(base_url().'/login');
         } 
         else {

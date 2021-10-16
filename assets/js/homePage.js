@@ -43,7 +43,13 @@ $('#contact').on('submit', function(e) {
     e.preventDefault();
     
     if (isValidForm()) {
-        showLoadingSpinner();
+        //showLoadingSpinner();
+        Swal.fire({
+            title: 'Loading',
+            text: 'Tungggu Sebentar..',
+            showConfirmButton: false,
+            allowOutsideClick: false
+        });
         
         // clear error message
         $('#messages-nasabah-error').text('');
@@ -57,22 +63,32 @@ $('#contact').on('submit', function(e) {
             }
         })
         .then((response) => {
-            hideLoadingSpinner();
+            Swal.fire({
+                icon : 'success',
+                title : 'Success',
+                text : 'Pesan Telah Terkirim',
+                showConfirmButton: false, 
+                timer: 5000
+            });
+            // document.getElementById('input-contact-nama').value = ' ';
+            // document.getElementById('input-contact-email').value = ' ';
+            document.getElementById('message').value = ' ';
             
         })
         .catch((error) => {
             console.log(error);
-            hideLoadingSpinner();
-            // Swal.fire({
-            //         title : 'Success',
-            //         text : 'Pesan Telah Terkirim',
-            //         showConfirmButton: false, 
-            //         timer: 5000
-            //     });
+            
+            Swal.fire({
+                    icon : 'error',
+                    title : 'error',
+                    text : 'Error',
+                    showConfirmButton: false, 
+                    timer: 5000
+                });
             // error email/password
-            // if (error.response.status == 400) {
-            //     $('#message-contact-error').text(error.response.data.messages.messages);
-            // }
+            if (error.response.status == 400) {
+                $('#message-contact-error').text(error.response.data.messages.messages);
+            }
         })
     }
 

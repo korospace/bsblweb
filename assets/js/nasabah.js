@@ -69,11 +69,26 @@ const getDataProfile = () => {
                 })
             }
         })
-
-        // update card
-        const updateDataCard = (data) => {
-            $('#card-username').html(data.username);
-        };
 };
 
 getDataProfile();
+
+// update card
+const updateDataCard = (data) => {
+    let date      = new Date(parseInt(data.created_at));
+    let idNasabah = [...data.id].map((e,i) => {
+        if (i==4) {
+            return e+"&nbsp;&nbsp;&nbsp;";
+        }
+        else if (i==8) {
+            return e+"&nbsp;&nbsp;&nbsp;";
+        }
+        else{
+            return e;
+        }
+    });
+
+    $('#card-id').html(idNasabah.toString().replace(/,/g,''));
+    $('#card-date').html(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
+    $('#card-username').html(data.username);
+};

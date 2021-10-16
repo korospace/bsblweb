@@ -282,7 +282,7 @@
               <form id="contact">
                 <div class="row">
                   <!-- name input -->
-                  <div class="col-md-6 col-sm-12 form-group position-relative bg-success">
+                  <div class="col-md-6 col-sm-12 form-group position-relative">
                       <input
                         type="text"
                         name="name" 
@@ -294,23 +294,32 @@
                       <small
                         id="nama-contact-error"
                         class="position-absolute text-danger"></small>
-                      <small 
-                        class="invalid-feedback position-absolute"></small>
+                      <div class="invalid-feedback ein-contact-error"></div>
                   </div>
-                  <div class="col-md-6 col-sm-12">
-                      <input name="email" type="email" id="email" placeholder="E-Mail Address"
-                        style="background-color: rgba(250,250,250,0.3);" 
+                  <div class="col-md-6 col-sm-12 form-group position-relative">
+                      <input 
+                        type="email" 
+                        name="email" 
+                        id="input-contact-email"
+                        class="form-control" 
+                        placeholder="E-Mail Address"
                         required 
 										    data-email
-										    autocomplete="off">
+										    autocomplete="off"/>
                         <small
                           id="email-contact-error"
                           class="position-absolute text-danger"></small>
-                        <div class="invalid-feedback"></div>
+                        <div class="invalid-feedback ein-contact-error"></div>
                   </div>
                   <div class="col-lg-12">
-                      <textarea name="message" rows="6" id="message" placeholder="Your Message"
-                        style="background-color: rgba(250,250,250,0.3);"></textarea>
+                      <textarea 
+                        name="message" 
+                        rows="6" 
+                        id="message" 
+                        class="form-group position-relative"
+                        placeholder="Your Message"
+                        required
+                        ></textarea>
                         <small
                           id="message-contact-error"
                           class="position-absolute text-danger"></small>

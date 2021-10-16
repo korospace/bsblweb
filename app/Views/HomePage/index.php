@@ -13,6 +13,7 @@
 <?= $this->section('contentJs'); ?>
   <script src="<?= base_url('assets/js/scrollreveal.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/waypoints.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/owl-carousel.js'); ?>"></script>
   <script src="<?= base_url('assets/js/imgfix.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/jquery.counterup.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/custom.js'); ?>"></script>
@@ -169,11 +170,10 @@
           data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
           <div class="features-item">
             <div class="features-icon">
-              <!-- <h2>03</h2> -->
               <img src="assets/images/features-icon-3.png" alt="">
               <h4>PSL</h4>
               <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-              <a href="#testimonials" class="main-button">
+              <a href="dashboard/nasabah" class="main-button">
                 Read More
               </a>
             </div>

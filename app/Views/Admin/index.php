@@ -2,21 +2,20 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/Login.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/smooth-scrollbar.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/plugins/smooth-scrollbar.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -37,7 +36,7 @@
 		<div class="collapse navbar-collapse  w-auto  max-height-vh-100 h-100" id="sidenav-collapse-main">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link  active" href="dashboard">
+					<a class="nav-link  active" href="<?= base_url('dashboard/admin');?>">
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +65,7 @@
 					<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link  " href="profile">
+					<a class="nav-link  " href="<?= base_url('profile');?>">
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -110,28 +109,24 @@
 				</nav>
 				<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 					<div class="ms-md-auto pe-md-3 d-flex align-items-center">
-						<div class="input-group">
-							<span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" placeholder="Type here...">
-						</div>
+						<ul class="navbar-nav  justify-content-end">
+							<li class="nav-item d-flex align-items-center">
+								<a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+									<i class="fa fa-user me-sm-1"></i>
+									<span class="d-sm-inline d-none">Log Out</span>
+								</a>
+							</li>
+							<li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+								<a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+									<div class="sidenav-toggler-inner">
+										<i class="sidenav-toggler-line"></i>
+										<i class="sidenav-toggler-line"></i>
+										<i class="sidenav-toggler-line"></i>
+									</div>
+								</a>
+							</li>
+						</ul>
 					</div>
-					<ul class="navbar-nav  justify-content-end">
-						<li class="nav-item d-flex align-items-center">
-							<a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-								<i class="fa fa-user me-sm-1"></i>
-								<span class="d-sm-inline d-none">Log Out</span>
-							</a>
-						</li>
-						<li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-							<a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-								<div class="sidenav-toggler-inner">
-									<i class="sidenav-toggler-line"></i>
-									<i class="sidenav-toggler-line"></i>
-									<i class="sidenav-toggler-line"></i>
-								</div>
-							</a>
-						</li>
-					</ul>
 				</div>
 			</div>
 		</nav>
@@ -225,7 +220,7 @@
 				<!-- Row 2 -->
 				<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mt-3">
 					<div class="card">
-						<a class="nav-link" href="tables">
+						<a class="nav-link" href="<?= base_url('tables');?>">
 							<div class="card-body p-3">
 								<div class="row">
 									<div class="col-8">

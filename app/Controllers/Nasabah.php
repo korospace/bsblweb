@@ -79,6 +79,7 @@ class Nasabah extends ResourceController
                 "tgl_lahir"    => trim($data['tgl_lahir']),
                 "kelamin"      => $data['kelamin'],
                 "otp"          => $otp,
+                "created_at"   => (int)time(),
             ];
 
             $addNasabah = $this->nasabahModel->addNasabah($data);

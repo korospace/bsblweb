@@ -413,7 +413,7 @@
                                                 <span class="mask bg-gradient-dark"></span>
                                                 <div class="card-body position-relative z-index-1 p-3">
                                                     <i class="fas fa-wifi text-white p-2"></i>
-                                                    <h5 class="text-white mt-4 mb-5 pb-2">06&nbsp;&nbsp;&nbsp;02&nbsp;&nbsp;&nbsp;0001</h5>
+                                                    <h5 class="text-white mt-4 mb-5 pb-2">_ _ _ _ _&nbsp;&nbsp;&nbsp;_ _ _ _&nbsp;&nbsp;&nbsp;_</h5>
                                                     <div class="d-flex">
                                                         <div class="d-flex">
                                                             <div class="me-4" style="font-family: 'qc-medium';">
@@ -422,7 +422,7 @@
                                                             </div>
                                                             <div style="font-family: 'qc-medium';">
                                                                 <p class="text-white text-sm opacity-8 mb-0">Tanggal Bergabung</p>
-                                                                <h6 class="text-white mb-0">01/03/2021<h6>
+                                                                <h6 class="text-white mb-0">_ _/_ _/_ _ _ _<h6>
                                                             </div>
                                                         </div>
                                                         <div class="ms-auto w-20 d-flex align-items-end justify-content-end">

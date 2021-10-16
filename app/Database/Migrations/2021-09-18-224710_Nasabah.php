@@ -74,11 +74,15 @@ class Nasabah extends Migration
                 'constraint' => 6,
                 'null' => true,
             ],
+            'created_at' => [
+                'type' => 'bigint',
+                'null' => false,
+            ],
         ]);
 
         $this->forge->addPrimaryKey('id');
         $this->forge->addUniqueKey(['email','username','nama_lengkap','notelp']);
-        $this->forge->addField("created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+        // $this->forge->addField("created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('nasabah');
     }
 

@@ -55,8 +55,7 @@ const getDataProfile = () => {
         .then((response) => {
             hideLoadingSpinner();
             
-            console.log(response.data);
-            localStorage.setItem('userdata',JSON.stringify(response.data.data));
+            updateDataCard(response.data.data);
         })
         .catch((error) => {
             hideLoadingSpinner();
@@ -70,6 +69,11 @@ const getDataProfile = () => {
                 })
             }
         })
+
+        // update card
+        const updateDataCard = (data) => {
+            $('#card-username').html(data.username);
+        };
 };
 
 getDataProfile();

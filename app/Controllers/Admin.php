@@ -506,6 +506,7 @@ class Admin extends ResourceController
                     "kelamin"      => $data['kelamin'],
                     "is_verify"    => true,
                     "otp"          => null,
+                    "created_at"   => (int)time(),
                 ];
 
                 $addNasabah = $nasabahModel->addNasabah($data);

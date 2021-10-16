@@ -102,15 +102,15 @@ $routes->group("transaksi", function ($routes) {
     $routes->add("(:any)",        "Notfound::MethodNf");
 });
 
-$routes->add('/',       'HomePage::index');
-$routes->add('/signup', 'SignUp::index');
-$routes->add('/login',  'Login::index');
-$routes->add('/dashboard',          'Dashboard::dashboard');
+$routes->add('/',                   'HomePage::index');
+$routes->add('/signup',             'SignUp::index');
+$routes->add('/login',              'Login::index');
+$routes->add('/dashboard/admin',    'Dashboard::dashboardAdmin');
 $routes->add('/dashboard/nasabah',  'Dashboard::dashboardNasabah');
-$routes->add('/tables', 'Tables::tables');
-$routes->add('/info', 'UserInfo::info');
-$routes->add('/profile', 'ProfileAdmin::profileadmin');
-$routes->add('/(:any)', 'Notfound::ControllerNf');
+$routes->add('/tables',             'Tables::tables');
+$routes->add('/info',               'UserInfo::info');
+$routes->add('/profile',            'ProfileAdmin::profileadmin');
+$routes->add('/(:any)',             'Notfound::ControllerNf');
 
 /*
  * --------------------------------------------------------------------

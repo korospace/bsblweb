@@ -32,7 +32,6 @@
     const BASEURL = '<?= base_url(); ?>';
     const APIURL  = 'https://t-gadgetcors.herokuapp.com/https://bsblbackend.herokuapp.com';
   </script>
-
 	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/popper.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
@@ -42,7 +41,6 @@
   
   <!-- Render Js -->
   <?= $this->renderSection('contentJs'); ?>
-  <script src="assets/js/jquery.validate.min.js"></script>
 
 </body>
 

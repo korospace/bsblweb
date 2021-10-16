@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 
 class Dashboard extends BaseController
 {
-    public function dashboard()
+    public function dashboardAdmin()
     {
         $data = [
             'title' => 'Admin | dashboard'

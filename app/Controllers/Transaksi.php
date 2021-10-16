@@ -29,7 +29,7 @@ class Transaksi extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $data  = $this->request->getPost();
@@ -105,7 +105,7 @@ class Transaksi extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $data  = $this->request->getPost();
@@ -178,7 +178,7 @@ class Transaksi extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'union');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
 
@@ -226,7 +226,7 @@ class Transaksi extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $data   = $this->request->getPost();

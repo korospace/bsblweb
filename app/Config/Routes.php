@@ -99,7 +99,7 @@ $routes->group("transaksi", function ($routes) {
     $routes->post("tariksaldo",  "Transaksi::tarikSaldo");
     $routes->get("getdata",      "Transaksi::getData");
     $routes->post("pindahsaldo", "Transaksi::pindahSaldo");
-    $routes->add("(:any)",        "Notfound::MethodNf");
+    $routes->add("(:any)",       "Notfound::MethodNf");
 });
 
 $routes->add('/',                   'HomePage::index');

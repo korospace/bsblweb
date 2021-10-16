@@ -28,7 +28,7 @@ class KategoriSampah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $data = $this->request->getPost(); 
@@ -145,7 +145,7 @@ class KategoriSampah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $this->validation->run($this->request->getGet(),'idForDeleteCheck');

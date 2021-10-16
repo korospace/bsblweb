@@ -28,7 +28,7 @@ class Sampah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $data = $this->request->getPost(); 
@@ -150,7 +150,7 @@ class Sampah extends ResourceController
         $id         = null;
 
         if (!is_null($token)) {
-            $result = $this->baseController->checkToken($token,'union');
+            $result = $this->baseController->checkToken($token);
         
             if ($result['success'] == true) {
                 if (!isset($result['message']['data']['privilege'])) {
@@ -199,7 +199,7 @@ class Sampah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $this->baseController->_methodParser('data');
@@ -268,7 +268,7 @@ class Sampah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $this->validation->run($this->request->getGet(),'idForDeleteCheck');

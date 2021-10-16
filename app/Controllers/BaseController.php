@@ -187,7 +187,7 @@ class BaseController extends Controller
     /**
      * Check token
      */
-    public function checkToken(?string $token,?string $target = null): array
+    public function checkToken(?string $token,?bool $dbcheck = null): array
     {
         try {
             $db      = \Config\Database::connect();
@@ -196,7 +196,10 @@ class BaseController extends Controller
             $decoded = (array)$decoded;
             $table   = (isset($decoded['privilege'])) ? 'admin' : 'nasabah';
             
-            if (time() < $decoded['expired']) {
+            if ($dbcheck == false) {
+                return ['success' => true,];
+            }
+            else if (time() < $decoded['expired']) {
                 if ($table == 'admin') {
                     $dataUser = $db->table('admin')->select('token')->where("token", $token)->get()->getResultArray();
                 } 

@@ -17,12 +17,13 @@ class Dashboard extends BaseController
 
     public function dashboardNasabah()
     {
-        $data = [
-            'title' => 'Nasabah | dashboard'
-        ];
 
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
-        $result = $this->checkToken($token);
+        $result = $this->checkToken($token,false);
+        $data   = [
+            'title' => 'Nasabah | dashboard',
+            'token' => $token,
+        ];
 
         if ($result['success'] == false) {
             setcookie('token', null, -1, '/'); 

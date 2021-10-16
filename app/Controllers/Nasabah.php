@@ -274,7 +274,7 @@ class Nasabah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'nasabah');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             return $this->respond($result['message'],200);
@@ -299,7 +299,7 @@ class Nasabah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'nasabah');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             
@@ -345,7 +345,7 @@ class Nasabah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'nasabah');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             
@@ -391,7 +391,7 @@ class Nasabah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'nasabah');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $this->baseController->_methodParser('data');
@@ -506,7 +506,7 @@ class Nasabah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'nasabah');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             

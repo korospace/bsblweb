@@ -7,7 +7,7 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-
+    <script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Html -->

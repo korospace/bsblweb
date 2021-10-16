@@ -132,7 +132,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             return $this->respond($result['message'],200);
@@ -157,7 +157,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $id         = $result['message']['data']['id'];
@@ -202,7 +202,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $this->baseController->_methodParser('data');
@@ -317,7 +317,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $id         = $result['message']['data']['id'];
@@ -363,7 +363,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $totalSaldo = $this->adminModel->getTotalSaldo();
@@ -408,7 +408,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $getnasabah = $this->adminModel->getNasabah($this->request->getGet());
@@ -453,7 +453,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
 		if ($result['success'] == true) {
             $data   = $this->request->getPost();
@@ -550,7 +550,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $this->baseController->_methodParser('data');
@@ -667,7 +667,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
 
@@ -724,7 +724,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $privilege = $result['message']['data']['privilege'];
@@ -784,7 +784,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
 		if ($result['success'] == true) {
             $privilege = $result['message']['data']['privilege'];
@@ -888,7 +888,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
 		if ($result['success'] == true) {
             $privilege = $result['message']['data']['privilege'];
@@ -1021,7 +1021,7 @@ class Admin extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token,'admin');
+        $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
             $privilege = $result['message']['data']['privilege'];

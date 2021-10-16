@@ -10,6 +10,9 @@
   <link rel="stylesheet"    href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap">
   <title><?= $title ?></title>
 
+  <!-- Global Css -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.css'); ?>">
   <!-- Render Css -->
   <?= $this->renderSection('contentCss'); ?>
 
@@ -29,26 +32,9 @@
   <script src="<?= base_url('assets/js/validator.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/sweetalert2.min.js'); ?>"></script>
   <script>
+    const TOKEN   = '<?= (isset($token)) ? $token : null; ?>';
     const BASEURL = '<?= base_url(); ?>';
     const APIURL  = 'https://t-gadgetcors.herokuapp.com/https://bsblbackend.herokuapp.com';
-
-    if(!navigator.onLine){
-        showAlert({
-            message: `<strong>Ups . . .</strong> koneksi anda terputus!`,
-            btnclose: false,
-            type:'danger' // success/warning/danger/info/light/dark/primary/secondary
-        })
-    }
-    window.onoffline = () => {
-        showAlert({
-            message: `<strong>Ups . . .</strong> koneksi anda terputus!`,
-            btnclose: false,
-            type:'danger'
-        })
-    };
-    window.ononline = () => {
-        hideAlert();
-    };
   </script>
   
   <!-- Render Js -->

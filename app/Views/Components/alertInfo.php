@@ -18,6 +18,24 @@
             $('#alert #close').removeClass('d-none');
             $('#alert').removeClass('show');
         }
+        
+        if(!navigator.onLine){
+            showAlert({
+                message: `<strong>Ups . . .</strong> koneksi anda terputus!`,
+                btnclose: false,
+                type:'danger'
+            })
+        }
+        window.onoffline = () => {
+            showAlert({
+                message: `<strong>Ups . . .</strong> koneksi anda terputus!`,
+                btnclose: false,
+                type:'danger'
+            })
+        };
+        window.ononline = () => {
+            hideAlert();
+        };
     </script>
 <?= $this->endSection(); ?>
 

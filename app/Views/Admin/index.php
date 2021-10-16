@@ -8,7 +8,6 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/nucleo-svg.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/soft-ui-dashboard.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/flex-slider.css">
-	<link rel="stylesheet" href="assets/css/Login.css">
 <?= $this->endSection(); ?>
 
 <!-- JS -->

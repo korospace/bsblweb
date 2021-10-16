@@ -3,11 +3,29 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
     <style>
+        #loading-spinner-wraper{
+            display: none;
+            position: fixed !important;
+            align-items: center !important;
+            justify-content: center !important;
+            top:0 !important;
+            left:0 !important;
+            right:0 !important;
+            bottom:0 !important;
+            z-index:10000 !important;
+            background-color:rgba(0,0,0,0.4) !important;
+        }
+        #loading-spinner-wraper.show{
+            display: flex !important;
+        }
         .loading{
-            width: 160px;
-            height: 160px;
-            border-radius: 6px;
-            background-color: white;
+            width: 160px !important;
+            height: 160px !important;
+            border-radius: 6px !important;
+            background-color: white !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
         }
 
         .fade-in{
@@ -57,7 +75,7 @@
     <script>
         // show spinner
         function showLoadingSpinner() {
-            $('#loading-spinner-wraper').addClass('d-flex fade-in');
+            $('#loading-spinner-wraper').addClass('show fade-in');
             $('#loading-spinner-wraper div.loading').addClass('bounce-in'); 
         }
 
@@ -65,7 +83,7 @@
         function hideLoadingSpinner() {
             $('#loading-spinner-wraper').addClass('fade-out');
             setTimeout(() => {
-                $('#loading-spinner-wraper').removeClass('d-flex fade-in fade-out');
+                $('#loading-spinner-wraper').removeClass('show fade-in fade-out');
                 $('#loading-spinner-wraper div.loading').removeClass('bounce-in'); 
             }, 50);
         }
@@ -74,11 +92,9 @@
 
 <?= $this->section('content'); ?>
     <div
-      id="loading-spinner-wraper"
-      class="position-fixed d-none justify-content-center align-items-center" 
-      style="top:0;bottom:0;left:0;right:0;z-index:10000;background-color:rgba(0,0,0,0.4);">
+      id="loading-spinner-wraper">
         <div 
-          class="loading d-flex justify-content-center align-items-center">
+          class="loading">
             <img
               style="width: 30%;"
               src="<?= base_url('assets/images/spinner.svg'); ?>">

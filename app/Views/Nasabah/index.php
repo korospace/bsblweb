@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
 <?= $this->endSection(); ?>
 
@@ -417,7 +418,7 @@
                                                         <div class="d-flex">
                                                             <div class="me-4" style="font-family: 'qc-medium';">
                                                                 <p class="text-white text-sm opacity-8 mb-0">Username</p>
-                                                                <h6 class="text-white mb-0">Heru Saputro</h6>
+                                                                <h6 id="card-username" class="text-white mb-0">_ _ _ _ _ _</h6>
                                                             </div>
                                                             <div style="font-family: 'qc-medium';">
                                                                 <p class="text-white text-sm opacity-8 mb-0">Tanggal Bergabung</p>

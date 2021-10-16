@@ -40,7 +40,7 @@
 
 body {
   margin: 0;
-  font-family: var(--bs-font-sans-serif);
+  /* font-family: var(--bs-font-sans-serif); */
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -5791,124 +5791,6 @@ fieldset:disabled .btn {
 .btn .badge {
   position: relative;
   top: -1px;
-}
-
-.alert {
-  position: relative;
-  padding: 1rem 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid transparent;
-  border-radius: 0.5rem;
-}
-
-.alert-heading {
-  color: inherit;
-}
-
-.alert-link {
-  font-weight: 600;
-}
-
-.alert-dismissible {
-  padding-right: 3rem;
-}
-
-.alert-dismissible .btn-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 2;
-  padding: 1.25rem 1rem;
-}
-
-.alert-primary {
-  color: #7a075f;
-  background-color: #f5ceec;
-  border-color: #efb6e2;
-}
-
-.alert-primary .alert-link {
-  color: #62064c;
-}
-
-.alert-secondary {
-  color: #4f5867;
-  background-color: #e6e9ee;
-  border-color: #dadee6;
-}
-
-.alert-secondary .alert-link {
-  color: #3f4652;
-}
-
-.alert-success {
-  color: #345609;
-  background-color: #e6f7d0;
-  border-color: #daf3b9;
-}
-
-.alert-success .alert-link {
-  color: #2a4507;
-}
-
-.alert-info {
-  color: #0e748b;
-  background-color: #d1f3fa;
-  border-color: #b9ecf8;
-}
-
-.alert-info .alert-link {
-  color: #0b5d6f;
-}
-
-.alert-warning {
-  color: #645314;
-  background-color: #fef5d6;
-  border-color: #fef1c2;
-}
-
-.alert-warning .alert-link {
-  color: #504210;
-}
-
-.alert-danger {
-  color: #8c0404;
-  background-color: #fbcdcd;
-  border-color: #f9b4b4;
-}
-
-.alert-danger .alert-link {
-  color: #700303;
-}
-
-.alert-light {
-  color: #5d5e60;
-  background-color: #fbfbfc;
-  border-color: #f8f9fa;
-}
-
-.alert-light .alert-link {
-  color: #4a4b4d;
-}
-
-.alert-dark {
-  color: #1f2b3e;
-  background-color: #d6dae1;
-  border-color: #c2c8d1;
-}
-
-.alert-dark .alert-link {
-  color: #192232;
-}
-
-.alert-white {
-  color: #666666;
-  background-color: white;
-  border-color: white;
-}
-
-.alert-white .alert-link {
-  color: #525252;
 }
 
 @keyframes progress-bar-stripes {
@@ -18632,45 +18514,6 @@ fieldset:disabled .btn {
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-.alert-primary {
-  background-image: linear-gradient(310deg, #7928CA 0%, #d6006c 100%);
-}
-
-.alert-secondary {
-  background-image: linear-gradient(310deg, #627594 0%, #8ca1cb 100%);
-}
-
-.alert-success {
-  background-image: linear-gradient(310deg, #17ad37 0%, #84dc14 100%);
-}
-
-.alert-info {
-  background-image: linear-gradient(310deg, #2152ff 0%, #02c6f3 100%);
-}
-
-.alert-warning {
-  background-image: linear-gradient(310deg, #f53939 0%, #fac60b 100%);
-}
-
-.alert-danger {
-  background-image: linear-gradient(310deg, #ea0606 0%, #ff3d59 100%);
-}
-
-.alert-light {
-  background-image: linear-gradient(310deg, #CED4DA 0%, #d1dae6 100%);
-}
-
-.alert-dark {
-  background-image: linear-gradient(310deg, #141727 0%, #2c3154 100%);
-}
-
-.btn-close:focus {
-  box-shadow: none;
-}
-
-.alert-dismissible .btn-close {
-  background-image: none;
-}
 
 .avatar {
   color: #fff;

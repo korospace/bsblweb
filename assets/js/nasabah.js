@@ -11,12 +11,10 @@ const sessioncheck = () => {
         })
         .then((response) => {
             hideLoadingSpinner();
-            $('head style').append(`<link rel="stylesheet" href="${BASEURL}/assets/css/soft-ui-dashboard.css"></link>`);
             $('#container').removeClass('d-none');
         })
         .catch((error) => {
             hideLoadingSpinner();
-            $('head style').append(`<link rel="stylesheet" href="${BASEURL}/assets/css/soft-ui-dashboard.css"></link>`);
             $('#container').removeClass('d-none');
     
             // 401 Unauthorized
@@ -43,3 +41,35 @@ const sessioncheck = () => {
 };
 
 sessioncheck();
+
+// Get data profile
+const getDataProfile = () => {
+    showLoadingSpinner();
+
+    axios
+        .get(`${APIURL}/nasabah/getprofile`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            hideLoadingSpinner();
+            
+            console.log(response.data);
+            localStorage.setItem('userdata',JSON.stringify(response.data.data));
+        })
+        .catch((error) => {
+            hideLoadingSpinner();
+    
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>gagal mendapatkan data nasabah</strong> silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
+
+getDataProfile();

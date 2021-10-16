@@ -310,7 +310,7 @@ class Nasabah extends ResourceController
                 $response = [
                     'status' => 200,
                     'error'  => false,
-                    'data '  => $dataNasabah['message']
+                    'data'   => $dataNasabah['message']
                 ];
 
                 return $this->respond($response,200);

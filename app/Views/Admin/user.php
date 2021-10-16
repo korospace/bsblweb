@@ -2,23 +2,21 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-	<link rel="stylesheet" type="text/css" href="assets/css/nucleo-icons.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/flex-slider.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/nucleo-svg.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/soft-ui-dashboard.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/flex-slider.css">
-	<link rel="stylesheet" href="assets/css/Login.css">
+	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-	<script src="assets/js/core/popper.min.js"></script>
-	<script src="assets/js/core/bootstrap.min.js"></script>
-	<script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
-	<script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
-	<script src="assets/js/plugins/chartjs.min.js"></script>
-	<script src="assets/js/soft-ui-dashboard.min.js"></script>
+	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/smooth-scrollbar.min.js'); ?>"></script>
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -39,7 +37,7 @@
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100 h-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/dashboard.php">
+          <a class="nav-link" href="<?= base_url('dashboard/admin');?>">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -64,16 +62,12 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
-        <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
-        </li>
         <li class="nav-item">
-          <a class="nav-link  active" href="profile">
+          <a class="nav-link  active" href="<?= base_url('info');?>">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink">
-                <!-- <title>customer-support</title> -->
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g transform="translate(-1717.000000, -291.000000)" fill="#FFFFFF" fill-rule="nonzero">
                     <g transform="translate(1716.000000, 291.000000)">

@@ -187,7 +187,7 @@ class BaseController extends Controller
     /**
      * Check token
      */
-    public function checkToken(?string $token,?bool $dbcheck = null): array
+    public function checkToken(?string $token,?bool $dbcheck = true): array
     {
         try {
             $db      = \Config\Database::connect();

@@ -165,3 +165,12 @@ CRITICAL - 2021-10-15 09:47:15 --> Undefined variable $totalTime
 #6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
 >>>>>>> 95f065a64dc290f08d260b555f68087fe2daa649
 #7 {main}
+CRITICAL - 2021-10-15 11:14:50 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}

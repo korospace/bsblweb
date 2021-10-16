@@ -152,6 +152,10 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+.ein-contact-error {
+  margin-top: -25px;
+}
+
 ::selection {
   background: #c1d966;
   color: #fff;

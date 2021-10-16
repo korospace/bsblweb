@@ -2,22 +2,21 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-	<link rel="stylesheet" type="text/css" href="assets/css/nucleo-icons.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/flex-slider.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/nucleo-svg.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/soft-ui-dashboard.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/flex-slider.css">
+	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/Login.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-	<script src="assets/js/core/popper.min.js"></script>
-	<script src="assets/js/core/bootstrap.min.js"></script>
-	<script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
-	<script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
-	<script src="assets/js/plugins/chartjs.min.js"></script>
-	<script src="assets/js/soft-ui-dashboard.min.js"></script>
+	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/smooth-scrollbar.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -30,7 +29,7 @@
 				aria-hidden="true" id="iconSidenav"></i>
 			<a class="navbar-brand m-0" href="https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.php"
 				target="_blank">
-				<img src="assets/images/banksampah-logo.png" class="navbar-brand-img h-100" alt="main_logo">
+				<img src="<?= base_url('assets/images/banksampah-logo.png'); ?>" class="navbar-brand-img h-100" alt="main_logo">
 				<span class="ms-1 font-weight-bold">Dashboard Admin BSBL</span>
 			</a>
 		</div>

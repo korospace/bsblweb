@@ -2,21 +2,21 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
-<link rel="stylesheet" type="text/css" href="assets/css/flex-slider.css">
-<link rel="stylesheet" type="text/css" href="assets/css/owl-carousel.css">
-<link rel="stylesheet" href="assets/css/index.css">
+  <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/index.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-  <script src="assets/js/scrollreveal.min.js"></script>
-  <script src="assets/js/waypoints.min.js"></script>
-  <script src="assets/js/imgfix.min.js"></script>
-  <script src="assets/js/jquery.counterup.min.js"></script>
-  <script src="assets/js/custom.js"></script>
-  <script src="assets/js/homePage.js"></script>
+  <script src="<?= base_url('assets/js/scrollreveal.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/waypoints.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/imgfix.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/jquery.counterup.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/custom.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/homePage.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->

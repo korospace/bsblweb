@@ -296,7 +296,7 @@
                         class="position-absolute text-danger"></small>
                       <div class="invalid-feedback ein-contact-error"></div>
                   </div>
-                  <div class="col-md-6 col-sm-12 form-group position-relative">
+                  <div class="col-md-6 col-sm-12 form-group">
                       <input 
                         type="email" 
                         name="email" 
@@ -307,9 +307,9 @@
 										    data-email
 										    autocomplete="off"/>
                         <small
-                          id="email-contact-error"
-                          class="position-absolute text-danger"></small>
-                        <div class="invalid-feedback ein-contact-error"></div>
+                            id="email-contact-error"
+                            class="text-danger"></small>
+                          <div class="invalid-feedback ein-contact-error"></div>
                   </div>
                   <div class="col-lg-12">
                       <textarea 

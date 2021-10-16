@@ -110,6 +110,7 @@ $routes->add('/dashboard/nasabah',  'Dashboard::dashboardNasabah');
 $routes->add('/tables',             'Tables::tables');
 $routes->add('/info',               'UserInfo::info');
 $routes->add('/profile',            'ProfileAdmin::profileadmin');
+$routes->add('/profilenasabah',     'ProfileNasabah::profilenasabah');
 $routes->add('/(:any)',             'Notfound::ControllerNf');
 
 /*

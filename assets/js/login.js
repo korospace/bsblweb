@@ -41,7 +41,7 @@ $('#formLoginNasabah').on('submit', function(e) {
                 $('#password-nasabah-error').text(error.response.data.messages.password);
             }
             // account not verify
-            if (error.response.status == 401) {
+            else if (error.response.status == 401) {
                 showPopupOtp();
             }
             // server error

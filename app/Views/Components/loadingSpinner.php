@@ -21,10 +21,6 @@
         .bounce-in {
             animation: bounce-in .5s !important;
         }
-        
-        .bounce-out {
-            animation: bounce-out .5s alternate !important;
-        }
 
         /* Animasi */
         @keyframes fade-in {
@@ -53,15 +49,6 @@
                 transform: scale(1);
             }
         }
-
-        @keyframes bounce-out {
-            0% {
-                transform: scale(1);
-            }
-            100% {
-                transform: scale(0.7);
-            }
-        }
     </style>
 <?= $this->endSection(); ?>
 
@@ -76,13 +63,10 @@
 
         // hide spinner
         function hideLoadingSpinner() {
-            $('#loading-spinner-wraper div.loading').addClass('bounce-out'); 
+            $('#loading-spinner-wraper').addClass('fade-out');
             setTimeout(() => {
-                $('#loading-spinner-wraper').addClass('fade-out');
-                setTimeout(() => {
-                    $('#loading-spinner-wraper').removeClass('d-flex fade-in fade-out');
-                    $('#loading-spinner-wraper div.loading').removeClass('bounce-in bounce-out'); 
-                }, 200);
+                $('#loading-spinner-wraper').removeClass('d-flex fade-in fade-out');
+                $('#loading-spinner-wraper div.loading').removeClass('bounce-in'); 
             }, 50);
         }
     </script>
@@ -92,12 +76,12 @@
     <div
       id="loading-spinner-wraper"
       class="position-fixed d-none justify-content-center align-items-center" 
-      style="top:0;bottom:0;left:0;right:0;z-index:100;background-color:rgba(0,0,0,0.4);">
+      style="top:0;bottom:0;left:0;right:0;z-index:10000;background-color:rgba(0,0,0,0.4);">
         <div 
           class="loading d-flex justify-content-center align-items-center">
             <img
               style="width: 30%;"
-              src="assets/images/spinner.svg">
+              src="<?= base_url('assets/images/spinner.svg'); ?>">
         </div>
     </div>
 <?= $this->endSection(); ?>

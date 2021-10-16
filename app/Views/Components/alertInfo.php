@@ -2,6 +2,7 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
+    <style></style>
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -43,7 +44,7 @@
   <div
     id="alert" 
     class="container-fluid position-fixed alert alert-dismissible fade"
-    style="top:0;" role="alert">
+    style="top:0;z-index:10000;" role="alert">
       <span id="message">custom text</span>
       <button id="close" type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>

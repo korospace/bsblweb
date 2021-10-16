@@ -42,46 +42,14 @@ $('#formLoginNasabah').on('submit', function(e) {
             }
             // account not verify
             if (error.response.status == 401) {
-                Swal.fire({
-                    title: 'CODE OTP',
-                    input: 'text',
-                    inputAttributes: {
-                        autocapitalize: 'off'
-                    },
-                    html:'akun belum ter-verifikasi. check email anda untuk melihat code OTP',
-                    footer: 'merasa kesulitan? <a href="">hubungi admin</a>',
-                    showCancelButton: true,
-                    confirmButtonText: 'submit',
-                    showLoaderOnConfirm: true,
-                    preConfirm: (otp) => {
-                        let form = new FormData();
-                        form.append('code_otp',otp);
-
-                        return axios
-                        .post(`${APIURL}/nasabah/verification`,form, {
-                            headers: {
-                                // header options 
-                            }
-                        })
-                        .then((response) => {
-                            return response.data.messages
-                        })
-                        .catch(error => {
-                            Swal.showValidationMessage(
-                                `code otp tidak valid`
-                            )
-                        })
-                    },
-                    allowOutsideClick: () => !Swal.isLoading()
-                })
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'success!',
-                            text: 'silahkan login kembali',
-                        })
-                    }
+                showPopupOtp();
+            }
+            // server error
+            else{
+                showAlert({
+                    message: `<strong>server error</strong> coba sekali lagi!`,
+                    btnclose: true,
+                    type:'danger' 
                 })
             }
         })
@@ -101,4 +69,51 @@ function isValidForm() {
     })
 
     return isValid;
+}
+
+/* 
+PopUp OTP
+*/
+function showPopupOtp() {
+    Swal.fire({
+        title: 'CODE OTP',
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        html:'akun belum ter-verifikasi. check email anda untuk melihat code OTP',
+        footer: 'merasa kesulitan? <a href="">hubungi admin</a>',
+        showCancelButton: true,
+        confirmButtonText: 'submit',
+        showLoaderOnConfirm: true,
+        preConfirm: (otp) => {
+            let form = new FormData();
+            form.append('code_otp',otp);
+
+            return axios
+            .post(`${APIURL}/nasabah/verification`,form, {
+                headers: {
+                    // header options 
+                }
+            })
+            .then((response) => {
+                return response.data.messages
+            })
+            .catch(error => {
+                Swal.showValidationMessage(
+                    `code otp tidak valid`
+                )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    })
+    .then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                icon: 'success',
+                title: 'success!',
+                text: 'silahkan login kembali',
+            })
+        }
+    })
 }

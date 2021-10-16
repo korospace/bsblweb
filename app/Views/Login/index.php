@@ -22,6 +22,8 @@
 
 	<!-- **** Loading Spinner **** -->
 	<?= $this->include('Components/loadingSpinner'); ?>
+	<!-- **** Alert Info **** -->
+  	<?= $this->include('Components/alertInfo'); ?>
 
 	<div class="container-fluid register-wraper d-flex justify-content-center align-items-center">
 		<div class="container register">

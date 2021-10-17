@@ -168,3 +168,18 @@ CRITICAL - 2021-10-16 09:05:40 --> Undefined variable $totalTime
 #5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
 #6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
 #7 {main}
+CRITICAL - 2021-10-16 21:07:09 --> Maximum execution time of 120 seconds exceeded
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2021-10-16 21:11:56 --> Maximum execution time of 120 seconds exceeded
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2021-10-16 21:16:01 --> Undefined variable: totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40, Array)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}

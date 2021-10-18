@@ -195,7 +195,7 @@ class BaseController extends Controller
             $decoded = JWT::decode($token, $key, array("HS256"));
             $decoded = (array)$decoded;
             $table   = (isset($decoded['privilege'])) ? 'admin' : 'nasabah';
-            
+
             if ($dbcheck == false) {
                 return ['success' => true,];
             }
@@ -233,12 +233,17 @@ class BaseController extends Controller
                 $db->table($table)->where('id', $decoded['id'])->update(['token' => null]);
                 
                 if ($db->affectedRows()> 0) {
-                    return [
-                        'success' => false,
-                        'code'    => 401,
-                        'message' => 'token expired'
-                    ];
+                    $msg = 'token expired';
                 }
+                else {
+                    $msg = 'access denied';
+                }
+
+                return [
+                    'success' => false,
+                    'code'    => 401,
+                    'message' => $msg 
+                ];
             }
         } 
         catch (phpException $ex) {

@@ -33,6 +33,8 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 
 $routes->group("nasabah", function ($routes) {
+    $routes->add('/',             'Dashboard::dashboardNasabah');
+    $routes->add('profile',       'Profile::profileNasabah');
     $routes->post("register",     "Nasabah::register");
     $routes->post("verification", "Nasabah::verification");
     $routes->post("login",        "Nasabah::login");
@@ -42,7 +44,7 @@ $routes->group("nasabah", function ($routes) {
     $routes->delete("logout",     "Nasabah::logout");
     $routes->get("getsaldo",      "Nasabah::getSaldo");
     $routes->post("sendkritik",   "Nasabah::sendKritik");
-    $routes->add("(:any)",        "Notfound::MethodNf");
+    $routes->add("(:any)",        "Notfound::PageNotFound");
 });
 
 $routes->group("admin", function ($routes) {
@@ -60,14 +62,14 @@ $routes->group("admin", function ($routes) {
     $routes->post("addadmin",        "Admin::addAdmin");
     $routes->put("editadmin",        "Admin::editAdmin");
     $routes->delete("deleteadmin",   "Admin::deleteAdmin");
-    $routes->add("(:any)",        "Notfound::MethodNf");
+    $routes->add("(:any)",           "Notfound::PageNotFound");
 });
 
 $routes->group("kategori_berita", function ($routes) {
     $routes->post("additem",      "KategoriBerita::addItem");
     $routes->get("getitem",       "KategoriBerita::getItem");
     $routes->delete("deleteitem", "KategoriBerita::deleteItem");
-    $routes->add("(:any)",        "Notfound::MethodNf");
+    $routes->add("(:any)",        "Notfound::PageNotFound");
 });
 
 $routes->group("berita_acara", function ($routes) {
@@ -75,14 +77,14 @@ $routes->group("berita_acara", function ($routes) {
     $routes->get("getitem",       "BeritaAcara::getItem");
     $routes->put("edititem",      "BeritaAcara::editItem");
     $routes->delete("deleteitem", "BeritaAcara::deleteItem");
-    $routes->add("(:any)",        "Notfound::MethodNf");
+    $routes->add("(:any)",        "Notfound::PageNotFound");
 });
 
 $routes->group("kategori_sampah", function ($routes) {
     $routes->post("additem",      "KategoriSampah::addItem");
     $routes->get("getitem",       "KategoriSampah::getItem");
     $routes->delete("deleteitem", "KategoriSampah::deleteItem");
-    $routes->add("(:any)",        "Notfound::MethodNf");
+    $routes->add("(:any)",        "Notfound::PageNotFound");
 });
 
 $routes->group("sampah", function ($routes) {
@@ -91,7 +93,7 @@ $routes->group("sampah", function ($routes) {
     $routes->get("totalitem",     "Sampah::totalItem");
     $routes->put("edititem",      "Sampah::editItem");
     $routes->delete("deleteitem", "Sampah::deleteItem");
-    $routes->add("(:any)",        "Notfound::MethodNf");
+    $routes->add("(:any)",        "Notfound::PageNotFound");
 });
 
 $routes->group("transaksi", function ($routes) {
@@ -99,19 +101,17 @@ $routes->group("transaksi", function ($routes) {
     $routes->post("tariksaldo",  "Transaksi::tarikSaldo");
     $routes->get("getdata",      "Transaksi::getData");
     $routes->post("pindahsaldo", "Transaksi::pindahSaldo");
-    $routes->add("(:any)",       "Notfound::MethodNf");
+    $routes->add("(:any)",       "Notfound::PageNotFound");
 });
 
 $routes->add('/',                   'HomePage::index');
 $routes->add('/signup',             'SignUp::index');
 $routes->add('/login',              'Login::index');
 $routes->add('/dashboard/admin',    'Dashboard::dashboardAdmin');
-$routes->add('/dashboard/nasabah',  'Dashboard::dashboardNasabah');
 $routes->add('/tables',             'Tables::tables');
 $routes->add('/info',               'UserInfo::info');
 $routes->add('/profile',            'ProfileAdmin::profileadmin');
-$routes->add('/profilenasabah',     'ProfileNasabah::profilenasabah');
-$routes->add('/(:any)',             'Notfound::ControllerNf');
+$routes->add('/(:any)',             'Notfound::PageNotFound');
 
 /*
  * --------------------------------------------------------------------

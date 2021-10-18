@@ -6,7 +6,7 @@ Register Nasabah
 */
 $('#formRegister').on('submit', function(e) {
     e.preventDefault();
-    let form   = new FormData(e.target);
+    let form = new FormData(e.target);
     
     if (doValidate(form)) {
         showLoadingSpinner();
@@ -32,9 +32,7 @@ $('#formRegister').on('submit', function(e) {
                     showCancelButton: false,
                     confirmButtonText: 'ok',
                 }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.replace(`${BASEURL}/login`);
-                    } 
+                    window.location.replace(`${BASEURL}/login`);
                 })
             }, 500);
         })
@@ -43,12 +41,18 @@ $('#formRegister').on('submit', function(e) {
 
             // bad request
             if (error.response.status == 400) {
-                $('#email-regist').addClass('is-invalid');
-                $('#email-regist-error').text(error.response.data.messages.email);
-                $('#username-regist').addClass('is-invalid');
-                $('#username-regist-error').text(error.response.data.messages.username);
-                $('#notelp-regist').addClass('is-invalid');
-                $('#notelp-regist-error').text(error.response.data.messages.notelp);
+                if (error.response.data.messages.email) {
+                    $('#email-regist').addClass('is-invalid');
+                    $('#email-regist-error').text(error.response.data.messages.email);
+                }
+                if (error.response.data.messages.username) {
+                    $('#username-regist').addClass('is-invalid');
+                    $('#username-regist-error').text(error.response.data.messages.username);
+                }
+                if (error.response.data.messages.notelp) {
+                    $('#notelp-regist').addClass('is-invalid');
+                    $('#notelp-regist-error').text(error.response.data.messages.notelp);
+                }
             }
             // error server
             else if (error.response.status == 500) {

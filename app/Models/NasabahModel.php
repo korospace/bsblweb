@@ -46,8 +46,7 @@ class NasabahModel extends Model
 
             $this->db->transBegin();
             $this->db->table($this->table)->insert($data);
-            $this->db->query("INSERT INTO dompet_uang (id_nasabah) VALUES('$id');");
-            $this->db->query("INSERT INTO dompet_emas (id_nasabah) VALUES('$id');");
+            $this->db->query("INSERT INTO dompet (id_nasabah) VALUES('$id');");
 
             if ($this->db->transStatus() === false) {
                 $this->db->transRollback();
@@ -200,7 +199,7 @@ class NasabahModel extends Model
     public function getSaldoNasabah(string $id): array
     {
         try {
-            $dataSaldo = $this->db->table('dompet_uang')->select("dompet_uang.jumlah AS saldo_uang,dompet_emas.jumlah AS saldo_emas")->join('dompet_emas', 'dompet_uang.id_nasabah = dompet_emas.id_nasabah')->where("dompet_uang.id_nasabah",$id)->get()->getFirstRow();
+            $dataSaldo = $this->db->table('dompet')->select("uang,galery24,ubs,antam")->where("id_nasabah",$id)->get()->getFirstRow();
             
             if (empty($dataSaldo)) {    
                 return [

@@ -21,7 +21,7 @@ $('#formLoginNasabah').on('submit', function(e) {
         .then((response) => {
             hideLoadingSpinner();
             document.cookie = `token=${response.data.token}; path=/;`;
-            window.location.replace(`${BASEURL}/dashboard/nasabah`);
+            window.location.replace(`${BASEURL}/nasabah`);
         })
         .catch((error) => {
             hideLoadingSpinner();
@@ -39,7 +39,7 @@ $('#formLoginNasabah').on('submit', function(e) {
             }
             // account not verify
             else if (error.response.status == 401) {
-                showPopupOtp();
+                showPopupOtp(form);
             }
             // server error
             else{
@@ -80,7 +80,7 @@ function doValidate(form) {
 /* 
 PopUp OTP
 */
-function showPopupOtp() {
+function showPopupOtp(formLogin) {
     Swal.fire({
         title: 'CODE OTP',
         input: 'text',
@@ -96,30 +96,130 @@ function showPopupOtp() {
             let form = new FormData();
             form.append('code_otp',otp);
 
+            // Cek OTP
             return axios
             .post(`${APIURL}/nasabah/verification`,form, {
                 headers: {
                     // header options 
                 }
             })
-            .then((response) => {
-                return response.data.messages
+            .then(() => {
+                // Login
+                return axios
+                .post(`${APIURL}/nasabah/login`,formLogin, {
+                    headers: {
+                        // header options 
+                    }
+                })
+                .then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'success!',
+                    })
+
+                    setTimeout(() => {
+                        document.cookie = `token=${response.data.token}; path=/;`;
+                        window.location.replace(`${BASEURL}/nasabah`);
+                    }, 2000);
+                })
+                .catch(() => {
+                    Swal.close();
+
+                    showAlert({
+                        message: `<strong>Ups . . .</strong> terjadi kesalahan, coba sekali lagi!`,
+                        btnclose: true,
+                        type:'danger' 
+                    })
+                })
             })
             .catch(error => {
-                Swal.showValidationMessage(
-                    `code otp tidak valid`
-                )
+                if (error.response.status == 404) {
+                    Swal.showValidationMessage(
+                        `code otp tidak valid`
+                    )
+                }
+                else if (error.response.status == 500) {
+                    Swal.showValidationMessage(
+                        `terjadi kesalahan, coba sekali lagi`
+                    )
+                }
             })
         },
         allowOutsideClick: () => !Swal.isLoading()
     })
-    .then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                icon: 'success',
-                title: 'success!',
-                text: 'silahkan login kembali',
-            })
-        }
-    })
+}
+
+/* 
+-------------- 
+Login Admin 
+--------------
+*/
+
+$('#formLoginAdmin').on('submit', function(e) {
+    e.preventDefault();
+
+    if (doValidateAdmin()) {
+        showLoadingSpinner();
+        let form = new FormData(e.target);
+
+        axios
+        .post(`${APIURL}/admin/login`,form, {
+            headers: {
+                // header options 
+            }
+        })
+        .then((response) => {
+            hideLoadingSpinner();
+            document.cookie = `token=${response.data.token}; path=/;`;
+            window.location.replace(`${BASEURL}/dashboard/admin`);
+        })
+        .catch((error) => {
+            hideLoadingSpinner();
+            console.log(error.response);
+            console.log(error);
+
+            // error email/password
+            if (error.response.status == 404) {
+                if (error.response.data.messages.username) {
+                    $('#admin-username').addClass('is-invalid');
+                    $('#admin-username-error').text(error.response.data.messages.username);
+                } 
+                else if (error.response.data.messages.password){
+                    $('#admin-password').addClass('is-invalid');
+                    $('#admin-password-error').text(error.response.data.messages.password);
+                }
+            }
+            // server error
+            else{
+                showAlert({
+                    message: `<strong>Ups . . .</strong> terjadi kesalahan, coba sekali lagi!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+    }
+})
+
+function doValidateAdmin(form) {
+    let status     = true;
+
+    // clear error message first
+    $('.form-control').removeClass('is-invalid');
+    $('.text-danger').html('');
+
+    // email validation
+    if ($('#admin-username').val() == '') {
+        $('#admin-username').addClass('is-invalid');
+        $('#admin-username-error').html('*email harus di isi');
+        status = false;
+    }
+    // password validation
+    if ($('#admin-password').val() == '') {
+        $('#admin-password').addClass('is-invalid');
+        $('#admin-password-error').html('*password harus di isi');
+        status = false;
+    }
+
+    return status;
 }

@@ -16,6 +16,7 @@ class Nasabah extends ResourceController
 
 	public function __construct()
     {
+        // date_default_timezone_set("Asia/Jakarta");
         $this->validation     = \Config\Services::validation();
         $this->baseController = new BaseController;
         $this->nasabahModel   = new NasabahModel;
@@ -357,7 +358,7 @@ class Nasabah extends ResourceController
                 $response = [
                     'status' => 200,
                     'error'  => false,
-                    'data '  => $dataSaldo['message']
+                    'data'   => $dataSaldo['message']
                 ];
 
                 return $this->respond($response,200);
@@ -455,7 +456,7 @@ class Nasabah extends ResourceController
                             unset($data['old_password']);
                         } 
                         else {
-                            return $this->fail(["old_password" => "wrong old password"],401,true);
+                            return $this->fail(["old_password" => "password lama anda salah"],400,true);
                         }
                     }
 

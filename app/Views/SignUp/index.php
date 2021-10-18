@@ -106,9 +106,6 @@
                   Laki Laki
                 </label>
               </div>
-              <small
-                id="kelamin-regist-error"
-                class="text-danger"></small>
             </div>
             <div class="input-group col-lg-6 mb-4 form-group">
               <div class="form-check">
@@ -117,9 +114,6 @@
                   Perempuan
                 </label>
               </div>
-              <small
-                id="kelamin-regist-error"
-                class="text-danger"></small>
             </div>
             <!-- **** RW **** -->
             <div class="input-group col-lg-6 mb-4 form-group">

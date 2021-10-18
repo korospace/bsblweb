@@ -18,7 +18,7 @@ class Login extends BaseController
             return view('Login/index',$data);
         } 
         else {
-            return redirect()->to(base_url().'/dashboard/nasabah');
+            return redirect()->to(base_url().'/nasabah');
         }
     }
 }

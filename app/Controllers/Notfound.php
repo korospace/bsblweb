@@ -2,29 +2,14 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\RESTful\ResourceController;
-
-class Notfound extends ResourceController
+class Notfound extends BaseController
 {
-    public function ControllerNf()
+    public function PageNotFound()
     {
-        $response = [
-            'status' => 404,
-            'error' => true,
-            'messages' => 'controller not found',
+        $data = [
+            'title' => '404 page not found'
         ];
 
-        return $this->respond($response,404);
-    }
-
-    public function MethodNf()
-    {
-        $response = [
-            'status' => 404,
-            'error' => true,
-            'messages' => 'method not found',
-        ];
-
-        return $this->respond($response,404);
+        return view('NotFound/index',$data);
     }
 }

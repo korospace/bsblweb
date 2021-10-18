@@ -104,7 +104,6 @@ function showPopupOtp(formLogin) {
                 }
             })
             .then(() => {
-
                 // Login
                 return axios
                 .post(`${APIURL}/nasabah/login`,formLogin, {
@@ -148,4 +147,79 @@ function showPopupOtp(formLogin) {
         },
         allowOutsideClick: () => !Swal.isLoading()
     })
+}
+
+/* 
+-------------- 
+Login Admin 
+--------------
+*/
+
+$('#formLoginAdmin').on('submit', function(e) {
+    e.preventDefault();
+
+    if (doValidateAdmin()) {
+        showLoadingSpinner();
+        let form = new FormData(e.target);
+
+        axios
+        .post(`${APIURL}/admin/login`,form, {
+            headers: {
+                // header options 
+            }
+        })
+        .then((response) => {
+            hideLoadingSpinner();
+            document.cookie = `token=${response.data.token}; path=/;`;
+            window.location.replace(`${BASEURL}/dashboard/admin`);
+        })
+        .catch((error) => {
+            hideLoadingSpinner();
+            console.log(error.response);
+            console.log(error);
+
+            // error email/password
+            if (error.response.status == 404) {
+                if (error.response.data.messages.username) {
+                    $('#admin-username').addClass('is-invalid');
+                    $('#admin-username-error').text(error.response.data.messages.username);
+                } 
+                else if (error.response.data.messages.password){
+                    $('#admin-password').addClass('is-invalid');
+                    $('#admin-password-error').text(error.response.data.messages.password);
+                }
+            }
+            // server error
+            else{
+                showAlert({
+                    message: `<strong>Ups . . .</strong> terjadi kesalahan, coba sekali lagi!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+    }
+})
+
+function doValidateAdmin(form) {
+    let status     = true;
+
+    // clear error message first
+    $('.form-control').removeClass('is-invalid');
+    $('.text-danger').html('');
+
+    // email validation
+    if ($('#admin-username').val() == '') {
+        $('#admin-username').addClass('is-invalid');
+        $('#admin-username-error').html('*email harus di isi');
+        status = false;
+    }
+    // password validation
+    if ($('#admin-password').val() == '') {
+        $('#admin-password').addClass('is-invalid');
+        $('#admin-password-error').html('*password harus di isi');
+        status = false;
+    }
+
+    return status;
 }

@@ -32,7 +32,7 @@ const sessioncheck = () => {
             // server error
             else{
                 showAlert({
-                    message: `<strong>server error</strong> silahkan refresh halaman!`,
+                    message: `<strong>server error...</strong> silahkan refresh halaman!`,
                     btnclose: true,
                     type:'danger' 
                 })
@@ -44,8 +44,6 @@ sessioncheck();
 
 // Get data profile
 const getDataProfile = () => {
-    showLoadingSpinner();
-
     axios
         .get(`${APIURL}/nasabah/getprofile`,{
             headers: {
@@ -53,17 +51,13 @@ const getDataProfile = () => {
             }
         })
         .then((response) => {
-            hideLoadingSpinner();
-            
             updateDataCard(response.data.data);
         })
         .catch((error) => {
-            hideLoadingSpinner();
-    
             // 500 server error
             if (error.response.status == 500) {
                 showAlert({
-                    message: `<strong>gagal mendapatkan data nasabah</strong> silahkan refresh halaman!`,
+                    message: `<strong>server error...</strong> gagal mendapatkan data nasabah, silahkan refresh halaman!`,
                     btnclose: true,
                     type:'danger' 
                 })
@@ -75,20 +69,38 @@ getDataProfile();
 
 // update card
 const updateDataCard = (data) => {
-    let date      = new Date(parseInt(data.created_at));
-    let idNasabah = [...data.id].map((e,i) => {
-        if (i==4) {
-            return e+"&nbsp;&nbsp;&nbsp;";
-        }
-        else if (i==8) {
-            return e+"&nbsp;&nbsp;&nbsp;";
-        }
-        else{
-            return e;
-        }
-    });
+    let date = new Date(parseInt(data.created_at) * 1000);
 
-    $('#card-id').html(idNasabah.toString().replace(/,/g,''));
-    $('#card-date').html(`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
+    // id card
+    $('#card-id').html(`${data.id.slice(0, 5)}&nbsp;&nbsp;&nbsp;${data.id.slice(5, 9)}&nbsp;&nbsp;&nbsp;${data.id.slice(9,99999999)}`);
+    // username
     $('#card-username').html(data.username);
+    // tgl bergabung
+    $('#card-date').html(`${date.toLocaleString("en-US",{day: "numeric"})}/${date.toLocaleString("en-US",{month: "numeric"})}/${date.toLocaleString("en-US",{year: "numeric"})}`);
 };
+
+// Get data saldo
+const getDataSaldo = () => {
+    axios
+        .get(`${APIURL}/nasabah/getsaldo`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            console.log(response.data.data);
+            // updateCardSaldo(response.data.data);
+        })
+        .catch((error) => {
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>server error...</strong> gagal mendapatkan data saldo, silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
+
+getDataSaldo();

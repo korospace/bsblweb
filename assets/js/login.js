@@ -39,7 +39,7 @@ $('#formLoginNasabah').on('submit', function(e) {
             }
             // account not verify
             else if (error.response.status == 401) {
-                showPopupOtp();
+                showPopupOtp(form);
             }
             // server error
             else{
@@ -80,7 +80,7 @@ function doValidate(form) {
 /* 
 PopUp OTP
 */
-function showPopupOtp() {
+function showPopupOtp(formLogin) {
     Swal.fire({
         title: 'CODE OTP',
         input: 'text',
@@ -103,7 +103,19 @@ function showPopupOtp() {
                 }
             })
             .then((response) => {
-                return response.data.messages
+                return axios
+                .post(`${APIURL}/nasabah/login`,formLogin, {
+                    headers: {
+                        // header options 
+                    }
+                })
+                .then((response) => {
+                    hideLoadingSpinner();
+                    document.cookie = `token=${response.data.token}; path=/;`;
+                    window.location.replace(`${BASEURL}/dashboard/nasabah`);
+
+                    return true;
+                })
             })
             .catch(error => {
                 Swal.showValidationMessage(

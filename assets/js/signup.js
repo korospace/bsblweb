@@ -32,9 +32,7 @@ $('#formRegister').on('submit', function(e) {
                     showCancelButton: false,
                     confirmButtonText: 'ok',
                 }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.replace(`${BASEURL}/login`);
-                    } 
+                    window.location.replace(`${BASEURL}/login`);
                 })
             }, 500);
         })

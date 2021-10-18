@@ -456,7 +456,7 @@ class Nasabah extends ResourceController
                             unset($data['old_password']);
                         } 
                         else {
-                            return $this->fail(["old_password" => "wrong old password"],401,true);
+                            return $this->fail(["old_password" => "password lama anda salah"],400,true);
                         }
                     }
 

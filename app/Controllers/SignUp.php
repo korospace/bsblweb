@@ -18,7 +18,7 @@ class SignUp extends BaseController
             return view('SignUp/index',$data);
         } 
         else {
-            return redirect()->to(base_url().'/dashboard/nasabah');
+            return redirect()->to(base_url().'/nasabah');
         }
     }
 }

@@ -53,7 +53,7 @@
                         aria-hidden="true" id="iconSidenav"></i>
                     <a class="navbar-brand m-0" href="https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.php"
                         target="_blank">
-                        <img src="../assets/images/banksampah-logo.png" class="navbar-brand-img h-100" alt="main_logo">
+                        <img src="<?= base_url('assets/images/banksampah-logo.png');?>" class="navbar-brand-img h-100" alt="main_logo">
                         <span class="ms-1 font-weight-bold">Laporan BSBL</span>
                     </a>
                 </div>
@@ -88,7 +88,7 @@
                         </li>
 
                         <li class="nav-item mt-2">
-                            <a class="nav-link" href="<?= base_url('profilenasabah');?>">
+                            <a class="nav-link" href="<?= base_url('nasabah/profile');?>">
                                 <div
                                     class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                                     <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@
                         </li>
                         <hr class="horizontal dark mt-2 mb-0">
                         <li class="nav-item">
-                            <a class="nav-link  " href="../pages/profile.php">
+                            <a id="btn-logout" class="nav-link" href="../pages/profile.php">
                                 <div
                                     class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                                     <svg width='12px' height='12px' version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -466,7 +466,7 @@
                                                         <h6 class="text-center mb-0">Tunai</h6>
                                                         <span class="text-xs">Tabungan Tunai</span>
                                                         <hr class="horizontal dark my-3">
-                                                        <h5 class="mb-0">Rp11.500.000</h5>
+                                                        <h5 class="mb-0">Rp <span id="saldo-uang"></span></h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -481,7 +481,7 @@
                                                         <h6 class="text-center mb-0">UBS</h6>
                                                         <span class="text-xs">Tabungan UBS</span>
                                                         <hr class="horizontal dark my-3">
-                                                        <h5 class="mb-0">2 Kg</h5>
+                                                        <h5 class="mb-0"><span id="saldo-ubs"></span> g</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -498,9 +498,9 @@
                                                     </div>
                                                     <div class="card-body pt-0 p-3 text-center" style="font-family: 'qc-medium';">
                                                         <h6 class="text-center mb-0">Antam</h6>
-                                                        <span class="text-xs">Tabungan Antan</span>
+                                                        <span class="text-xs">Tabungan Antam</span>
                                                         <hr class="horizontal dark my-3">
-                                                        <h5 class="mb-0">2 Kg</h5>
+                                                        <h5 class="mb-0"><span id="saldo-antam"></span> g</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -512,10 +512,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="card-body pt-0 p-3 text-center" style="font-family: 'qc-medium';">
-                                                        <h6 class="text-center mb-0">Gallery 24</h6>
-                                                        <span class="text-xs">Tabungan Gallery 24</span>
+                                                        <h6 class="text-center mb-0">Gallery24</h6>
+                                                        <span class="text-xs">Tabungan Gallery24</span>
                                                         <hr class="horizontal dark my-3">
-                                                        <h5 class="mb-0">2 Kg</h5>
+                                                        <h5 class="mb-0"><span id="saldo-galery24"></span> g</h5>
                                                     </div>
                                                 </div>
                                             </div>

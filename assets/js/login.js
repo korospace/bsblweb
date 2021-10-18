@@ -21,7 +21,7 @@ $('#formLoginNasabah').on('submit', function(e) {
         .then((response) => {
             hideLoadingSpinner();
             document.cookie = `token=${response.data.token}; path=/;`;
-            window.location.replace(`${BASEURL}/dashboard/nasabah`);
+            window.location.replace(`${BASEURL}/nasabah`);
         })
         .catch((error) => {
             hideLoadingSpinner();
@@ -96,42 +96,56 @@ function showPopupOtp(formLogin) {
             let form = new FormData();
             form.append('code_otp',otp);
 
+            // Cek OTP
             return axios
             .post(`${APIURL}/nasabah/verification`,form, {
                 headers: {
                     // header options 
                 }
             })
-            .then((response) => {
+            .then(() => {
+
+                // Login
                 return axios
                 .post(`${APIURL}/nasabah/login`,formLogin, {
                     headers: {
                         // header options 
                     }
                 })
-                .then((response) => {
-                    hideLoadingSpinner();
-                    document.cookie = `token=${response.data.token}; path=/;`;
-                    window.location.replace(`${BASEURL}/dashboard/nasabah`);
+                .then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'success!',
+                    })
 
-                    return true;
+                    setTimeout(() => {
+                        document.cookie = `token=${response.data.token}; path=/;`;
+                        window.location.replace(`${BASEURL}/nasabah`);
+                    }, 2000);
+                })
+                .catch(() => {
+                    Swal.close();
+
+                    showAlert({
+                        message: `<strong>Ups . . .</strong> terjadi kesalahan, coba sekali lagi!`,
+                        btnclose: true,
+                        type:'danger' 
+                    })
                 })
             })
             .catch(error => {
-                Swal.showValidationMessage(
-                    `code otp tidak valid`
-                )
+                if (error.response.status == 404) {
+                    Swal.showValidationMessage(
+                        `code otp tidak valid`
+                    )
+                }
+                else if (error.response.status == 500) {
+                    Swal.showValidationMessage(
+                        `terjadi kesalahan, coba sekali lagi`
+                    )
+                }
             })
         },
         allowOutsideClick: () => !Swal.isLoading()
-    })
-    .then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                icon: 'success',
-                title: 'success!',
-                text: 'silahkan login kembali',
-            })
-        }
     })
 }

@@ -33,6 +33,8 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 
 $routes->group("nasabah", function ($routes) {
+    $routes->add('/',             'Dashboard::dashboardNasabah');
+    $routes->add('profile',       'Profile::profileNasabah');
     $routes->post("register",     "Nasabah::register");
     $routes->post("verification", "Nasabah::verification");
     $routes->post("login",        "Nasabah::login");
@@ -106,11 +108,9 @@ $routes->add('/',                   'HomePage::index');
 $routes->add('/signup',             'SignUp::index');
 $routes->add('/login',              'Login::index');
 $routes->add('/dashboard/admin',    'Dashboard::dashboardAdmin');
-$routes->add('/dashboard/nasabah',  'Dashboard::dashboardNasabah');
 $routes->add('/tables',             'Tables::tables');
 $routes->add('/info',               'UserInfo::info');
 $routes->add('/profile',            'ProfileAdmin::profileadmin');
-$routes->add('/profilenasabah',     'ProfileNasabah::profilenasabah');
 $routes->add('/(:any)',             'Notfound::ControllerNf');
 
 /*

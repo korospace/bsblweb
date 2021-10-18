@@ -11,7 +11,7 @@
   #notfound {
     position: relative;
     height: 100vh;
-    background: #030005;
+    background: -webkit-linear-gradient(left, #537629, #c1d966);
   }
   
   #notfound .notfound {
@@ -50,9 +50,9 @@
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: -12px;
-    color: #030005;
+    color: #41601b;
     text-transform: uppercase;
-    text-shadow: -1px -1px 0px #c1d966, 1px 1px 0px #d02424;
+    text-shadow: -1px -1px 0px #c1d966, 1px 1px 0px #41601b;
     letter-spacing: -20px;
   }
   
@@ -73,6 +73,7 @@
   }
   
   .notfound a {
+    margin-top: 5rem;
     font-family: 'Montserrat', sans-serif;
     display: inline-block;
     text-transform: uppercase;

@@ -5199,6 +5199,7 @@
  }
 
  .navbar {
+   margin-top: 2rem;
    position: relative;
    display: flex;
    flex-wrap: wrap;

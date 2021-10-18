@@ -11,6 +11,11 @@
   <title><?= $title ?></title>
 
   <!-- Global Css -->
+  <style>
+    .swal2-confirm {
+    background-color: #c1d966 !important;
+    }
+  </style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.css'); ?>">
   <!-- Render Css -->

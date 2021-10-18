@@ -78,6 +78,36 @@ const getDataProfile = () => {
 
 getDataProfile();
 
+// Get data saldo
+const getDataSaldo = () => {
+    axios
+        .get(`${APIURL}/nasabah/getsaldo`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            $('#saldo-uang').html(response.data.data.uang);
+            $('#saldo-ubs').html(response.data.data.ubs);
+            $('#saldo-antam').html(response.data.data.antam);
+            $('#saldo-galery24').html(response.data.data.galery24);
+        })
+        .catch((error) => {
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>server error...</strong> gagal mendapatkan data saldo, silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
+
+if (pageTitle[1] == 'dashboard') {
+    getDataSaldo();
+}
+
 // update card
 const updateDataCard = (data) => {
     let date = new Date(parseInt(data.created_at) * 1000);
@@ -298,36 +328,6 @@ function validateFormEditProfile(form) {
     }
 
     return status;
-}
-
-// Get data saldo
-const getDataSaldo = () => {
-    axios
-        .get(`${APIURL}/nasabah/getsaldo`,{
-            headers: {
-                token: TOKEN
-            }
-        })
-        .then((response) => {
-            $('#saldo-uang').html(response.data.data.uang);
-            $('#saldo-ubs').html(response.data.data.ubs);
-            $('#saldo-antam').html(response.data.data.antam);
-            $('#saldo-galery24').html(response.data.data.galery24);
-        })
-        .catch((error) => {
-            // 500 server error
-            if (error.response.status == 500) {
-                showAlert({
-                    message: `<strong>server error...</strong> gagal mendapatkan data saldo, silahkan refresh halaman!`,
-                    btnclose: true,
-                    type:'danger' 
-                })
-            }
-        })
-};
-
-if (pageTitle[1] == 'dashboard') {
-    getDataSaldo();
 }
 
 // logout

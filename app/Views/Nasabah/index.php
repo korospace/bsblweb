@@ -454,9 +454,9 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-xs-6 col-md-4 p-2">
+								<div class="col-xs-6 col-md-4 p-2 h-100">
 									<div class="row d-flex justify-content-center">
-										<div class="col-md-6">
+										<div class="col-md-6 h-100">
 											<div class="card">
 												<div class="card-header mx-4 p-3 text-center">
 													<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
@@ -466,7 +466,7 @@
 												<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
 													<h6 class="text-center mb-0">Tunai</h6>
 													<hr class="horizontal dark my-3">
-													<h5 class="mb-0">Rp11.500.000</h5>
+													<h5 class="mb-0">Rp <span id="saldo-uang">0</span></h5>
 												</div>
 											</div>
 										</div>
@@ -480,7 +480,7 @@
 												<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
 													<h6 class="text-center mb-0">UBS</h6>
 													<hr class="horizontal dark my-3">
-													<h5 class="mb-0">2 Kg</h5>
+													<h5 class="mb-0"><span id="saldo-ubs">0</span> g</h5>
 												</div>
 											</div>
 										</div>
@@ -498,7 +498,7 @@
 												<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
 													<h6 class="text-center mb-0">Antam</h6>
 													<hr class="horizontal dark my-3">
-													<h5 class="mb-0">2 Kg</h5>
+													<h5 class="mb-0"><span id="saldo-antam">0</span> g</h5>
 												</div>
 											</div>
 										</div>
@@ -512,7 +512,7 @@
 												<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
 													<h6 class="text-center mb-0">Gallery 24</h6>
 													<hr class="horizontal dark my-3">
-													<h5 class="mb-0">2 Kg</h5>
+													<h5 class="mb-0"><span id="saldo-galery24">0</span> g</h5>
 												</div>
 											</div>
 										</div>

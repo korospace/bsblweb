@@ -46,7 +46,7 @@ class Validation
 			'errors' => [
                 'required'     => 'email is required',
                 'max_length'   => 'max 40 character',
-                'is_unique'    => 'email is exist',
+                'is_unique'    => 'email sudah terdaftar',
                 'valid_email'  => 'Email is not in format',
                 'valid_emails' => "Email's provider is not valid",
 			]
@@ -57,7 +57,7 @@ class Validation
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
                 'max_length'  => 'max 20 character',
-                'is_unique'   => 'username is exist',
+                'is_unique'   => 'username sudah terdaftar',
             ],
 		],
 		'password' => [
@@ -76,11 +76,12 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|max_length[14]|is_unique[nasabah.notelp]',
+            'rules'  => 'required|max_length[14]|is_unique[nasabah.notelp]|is_natural',
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 12 character',
-                'is_unique'   => 'no.telp is exist',
+                'is_unique'   => 'no.telp sudah dipakai',
+                'is_natural'  => 'only number allowed',
             ],
 		],
 		'alamat' => [
@@ -91,26 +92,30 @@ class Validation
             ],
 		],
 		'kodepos' => [
-            'rules'  => 'required|is_natural',
+            'rules'  => 'required|is_natural|min_length[5]|max_length[5]',
             'errors' => [
                 'required'    => 'kodepos is required',
                 'is_natural'  => 'only number allowed',
+                'min_length'  => 'min 5 character',
+                'max_length'  => 'max 5 character',
             ],
 		],
 		'rt' => [
-            'rules'  => 'required|min_length[2]|max_length[2]',
+            'rules'  => 'required|min_length[2]|max_length[2]|is_natural',
             'errors' => [
                 'required'    => 'rt is required',
                 'min_length'  => 'min 2 character',
                 'max_length'  => 'max 2 character',
+                'is_natural'  => 'only number allowed',
             ],
 		],
 		'rw' => [
-            'rules'  => 'required|min_length[2]|max_length[2]',
+            'rules'  => 'required|min_length[2]|max_length[2]|is_natural',
             'errors' => [
                 'required'    => 'rw is required',
                 'min_length'  => 'min 2 character',
                 'max_length'  => 'max 2 character',
+                'is_natural'  => 'only number allowed',
             ],
 		],
 		'tgl_lahir' => [
@@ -136,7 +141,7 @@ class Validation
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
                 'max_length'  => 'max 20 character',
-                'is_unique'   => 'username is exist',
+                'is_unique'   => 'username sudah terdaftar',
             ],
 		],
 		'password' => [
@@ -148,11 +153,10 @@ class Validation
             ],
 		],
 		'nama_lengkap' => [
-            'rules'  => 'required|max_length[40]|is_unique[admin.nama_lengkap]',
+            'rules'  => 'required|max_length[40]',
             'errors' => [
                 'required'    => 'nama lengkap is required',
                 'max_length'  => 'max 40 character',
-                'is_unique'   => 'nama lengkap is exist',
             ],
 		],
 		'notelp' => [
@@ -160,7 +164,7 @@ class Validation
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 14 character',
-                'is_unique'   => 'no.telp is exist',
+                'is_unique'   => 'no.telp sudah dipakai',
             ],
 		],
 		'alamat' => [
@@ -225,7 +229,7 @@ class Validation
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
                 'max_length'  => 'max 20 character',
-                'is_unique'   => 'username is exist',
+                'is_unique'   => 'username sudah terdaftar',
             ],
 		],
 		'nama_lengkap' => [
@@ -237,11 +241,12 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|max_length[12]|is_unique[nasabah.notelp,nasabah.id,{id}]',
+            'rules'  => 'required|max_length[12]|is_unique[nasabah.notelp,nasabah.id,{id}]|is_natural',
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 12 character',
-                'is_unique'   => 'no.telp is exist',
+                'is_unique'   => 'no.telp sudah dipakai',
+                'is_natural'  => 'only number allowed',
             ],
 		],
 		'alamat' => [
@@ -273,7 +278,7 @@ class Validation
 			'errors' => [
                 'required'     => 'email is required',
                 'max_length'   => 'max 40 character',
-                'is_unique'    => 'email is exist',
+                'is_unique'    => 'email sudah terdaftar',
                 'valid_email'  => 'Email is not in format',
                 'valid_emails' => "Email's provider is not valid",
 			]
@@ -284,7 +289,7 @@ class Validation
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
                 'max_length'  => 'max 20 character',
-                'is_unique'   => 'username is exist',
+                'is_unique'   => 'username sudah terdaftar',
             ],
 		],
 		'nama_lengkap' => [
@@ -300,7 +305,7 @@ class Validation
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 12 character',
-                'is_unique'   => 'no.telp is exist',
+                'is_unique'   => 'no.telp sudah dipakai',
             ],
 		],
 		'alamat' => [
@@ -405,15 +410,14 @@ class Validation
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
                 'max_length'  => 'max 20 character',
-                'is_unique'   => 'username is exist',
+                'is_unique'   => 'username sudah terdaftar',
             ],
 		],
 		'nama_lengkap' => [
-            'rules'  => 'required|max_length[40]|is_unique[admin.nama_lengkap,admin.id,{id}]',
+            'rules'  => 'required|max_length[40]',
             'errors' => [
                 'required'    => 'nama lengkap is required',
                 'max_length'  => 'max 40 character',
-                'is_unique'   => 'nama lengkap is exist',
             ],
 		],
 		'notelp' => [
@@ -421,7 +425,7 @@ class Validation
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 12 character',
-                'is_unique'   => 'no.telp is exist',
+                'is_unique'   => 'no.telp sudah dipakai',
             ],
 		],
 		'alamat' => [
@@ -454,15 +458,14 @@ class Validation
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
                 'max_length'  => 'max 20 character',
-                'is_unique'   => 'username is exist',
+                'is_unique'   => 'username sudah terdaftar',
             ],
 		],
 		'nama_lengkap' => [
-            'rules'  => 'required|max_length[40]|is_unique[admin.nama_lengkap,admin.id,{id}]',
+            'rules'  => 'required|max_length[40]',
             'errors' => [
                 'required'    => 'nama lengkap is required',
                 'max_length'  => 'max 40 character',
-                'is_unique'   => 'nama lengkap is exist',
             ],
 		],
 		'notelp' => [
@@ -470,7 +473,7 @@ class Validation
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 14 character',
-                'is_unique'   => 'no.telp is exist',
+                'is_unique'   => 'no.telp sudah dipakai',
             ],
 		],
 		'alamat' => [

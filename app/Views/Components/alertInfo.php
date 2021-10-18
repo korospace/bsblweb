@@ -6,7 +6,7 @@
 <?= $this->endSection(); ?>
 
 <!-- JS -->
-<?= $this->section('contentJs'); ?>
+<?= $this->section('jsComponent'); ?>
     <script>
         function showAlert(data) {
             $('#alert #message').html(data.message);

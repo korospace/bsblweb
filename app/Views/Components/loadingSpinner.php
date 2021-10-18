@@ -71,7 +71,7 @@
 <?= $this->endSection(); ?>
 
 <!-- JS -->
-<?= $this->section('contentJs'); ?>
+<?= $this->section('jsComponent'); ?>
     <script>
         // show spinner
         function showLoadingSpinner() {

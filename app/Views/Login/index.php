@@ -49,34 +49,27 @@
 								<div class="col-md-12">
 									<div class="form-group position-relative">
 										<input
-										  type="email"
+										  type="text"
 										  name="email" 
-										  id="input-nasabah-email" 
+										  id="nasabah-email" 
 										  class="form-control" 
 										  placeholder="Email" 
-										  required 
-										  data-email
 										  autocomplete="off" />
 										<small
-										  id="email-nasabah-error"	
+										  id="nasabah-email-error"	
 										  class="position-absolute text-danger"></small>
-										<div 
-										  class="invalid-feedback position-absolute"></div>
 									</div>
 									<div class="form-group position-relative" style="margin-top: 36px;">
 										<input 
 										  type="password" 
 										  name="password" 
-										  id="input-nasabah-password" 
+										  id="nasabah-password" 
 										  class="form-control" 
 										  placeholder="Password" 
-										  required
 										  autocomplete="off" />
 										<small
-										  id="password-nasabah-error"
+										  id="nasabah-password-error"
 										  class="position-absolute text-danger"></small>
-										<div	
-										  class="invalid-feedback position-absolute"></div>
 									</div>
 								</div>
 								<div class="col d-flex justify-content-center">

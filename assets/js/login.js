@@ -4,23 +4,14 @@ Login Nasabah
 --------------
 */
 
-// form validation
-let validatorNasabah = new Validator(document.getElementById("formLoginNasabah"), {
-    delay: 0
-});
-
 // form on submit
 $('#formLoginNasabah').on('submit', function(e) {
     e.preventDefault();
 
-    if (isValidForm()) {
+    if (doValidate()) {
         showLoadingSpinner();
-        
-        // clear error message
-        $('#email-nasabah-error').text('');
-        $('#password-nasabah-error').text('');
-
         let form = new FormData(e.target);
+
         axios
         .post(`${APIURL}/nasabah/login`,form, {
             headers: {
@@ -37,8 +28,14 @@ $('#formLoginNasabah').on('submit', function(e) {
 
             // error email/password
             if (error.response.status == 404) {
-                $('#email-nasabah-error').text(error.response.data.messages.email);
-                $('#password-nasabah-error').text(error.response.data.messages.password);
+                if (error.response.data.messages.email) {
+                    $('#nasabah-email').addClass('is-invalid');
+                    $('#nasabah-email-error').text(error.response.data.messages.email);
+                } 
+                else if (error.response.data.messages.password){
+                    $('#nasabah-password').addClass('is-invalid');
+                    $('#nasabah-password-error').text(error.response.data.messages.password);
+                }
             }
             // account not verify
             else if (error.response.status == 401) {
@@ -47,7 +44,7 @@ $('#formLoginNasabah').on('submit', function(e) {
             // server error
             else{
                 showAlert({
-                    message: `<strong>server error</strong> coba sekali lagi!`,
+                    message: `<strong>Ups . . .</strong> terjadi kesalahan, coba sekali lagi!`,
                     btnclose: true,
                     type:'danger' 
                 })
@@ -56,19 +53,28 @@ $('#formLoginNasabah').on('submit', function(e) {
     }
 })
 
-/* 
-check message in div.feedback
-*/
-function isValidForm() {
-    let isValid = true;
+// form validation
+function doValidate(form) {
+    let status     = true;
 
-    $('.invalid-feedback').each(function(e) {
-        if ($(this).text() !== '') {
-            isValid = false;
-        }
-    })
+    // clear error message first
+    $('.form-control').removeClass('is-invalid');
+    $('.text-danger').html('');
 
-    return isValid;
+    // email validation
+    if ($('#nasabah-email').val() == '') {
+        $('#nasabah-email').addClass('is-invalid');
+        $('#nasabah-email-error').html('*email harus di isi');
+        status = false;
+    }
+    // password validation
+    if ($('#nasabah-password').val() == '') {
+        $('#nasabah-password').addClass('is-invalid');
+        $('#nasabah-password-error').html('*password harus di isi');
+        status = false;
+    }
+
+    return status;
 }
 
 /* 

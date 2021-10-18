@@ -34,25 +34,11 @@ axios.get(APIURL+'/sampah/totalitem')
 send kritik 
 --------------
 */
-// form validation
-let validatorNasabah = new Validator(document.getElementById("contact"), {
-    delay: 0
-});
-
 $('#contact').on('submit', function(e) {
     e.preventDefault();
     
-    if (isValidForm()) {
-        //showLoadingSpinner();
-        Swal.fire({
-            title: 'Loading',
-            text: 'Tungggu Sebentar..',
-            showConfirmButton: false,
-            allowOutsideClick: false
-        });
-        
-        // clear error message
-        $('#messages-nasabah-error').text('');
+    if (doValidate()) {
+        showLoadingSpinner();
 
         let form = new FormData(e.target);
 
@@ -63,89 +49,75 @@ $('#contact').on('submit', function(e) {
             }
         })
         .then((response) => {
-            Swal.fire({
-                icon : 'success',
-                title : 'Success',
-                text : 'Pesan Telah Terkirim',
-                showConfirmButton: false, 
-                timer: 5000
-            });
-            // document.getElementById('input-contact-nama').value = ' ';
-            // document.getElementById('input-contact-email').value = ' ';
-            document.getElementById('message').value = ' ';
-            
+            hideLoadingSpinner();
+
+            setTimeout(() => {
+                Swal.fire({
+                    icon : 'success',
+                    title : 'Success',
+                    text : 'Pesan Telah Terkirim',
+                    showConfirmButton: false, 
+                    timer: 2000
+                });
+            }, 500);
         })
         .catch((error) => {
-            console.log(error);
-            
-            Swal.fire({
-                    icon : 'error',
-                    title : 'error',
-                    text : 'Error',
-                    showConfirmButton: false, 
-                    timer: 5000
-                });
-            // error email/password
-            if (error.response.status == 400) {
-                $('#message-contact-error').text(error.response.data.messages.messages);
+            hideLoadingSpinner();
+
+            // error server
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
+                    btnclose: true,
+                    type:'danger'
+                })
             }
         })
     }
-
 });
 
-function isValidForm() {
-    let isValid = true;
+// form validation
+function doValidate() {
+    let status     = true;
+    let emailRules = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-    $('.invalid-feedback').each(function(e) {
-        if ($(this).text() !== '') {
-            isValid = false;
-        }
-    });
-    return isValid;
+    // clear error message first
+    $('.form-control').removeClass('is-invalid');
+    $('.error-message').html('');
+
+    // name validation
+    if ($('#contact-name').val() == '') {
+        $('#contact-name').addClass('is-invalid');
+        $('#contact-name-error').html('*nama harus di isi');
+        status = false;
+    }
+    else if ($('#contact-name').val().length > 20) {
+        $('#contact-name').addClass('is-invalid');
+        $('#contact-name-error').html('*lebih dari 20 huruf');
+        status = false;
+    }
+    // email validation
+    if ($('#contact-email').val() == '') {
+        $('#contact-email').addClass('is-invalid');
+        $('#contact-email-error').html('*email harus di isi');
+        status = false;
+    }
+    else if ($('#contact-email').val().length > 40) {
+        $('#contact-email').addClass('is-invalid');
+        $('#contact-email-error').html('*ebih dari 40 huruf');
+        status = false;
+    }
+    else if (!emailRules.test(String($('#contact-email').val()).toLowerCase())) {
+        $('#contact-email').addClass('is-invalid');
+        $('#contact-email-error').html('*email tidak valid');
+        status = false;
+    }
+    // message validation
+    if ($('#contact-message').val() == '') {
+        $('#contact-message').addClass('is-invalid');
+        $('#contact-message-error').html('*pesan harus di isi');
+        status = false;
+    }
+
+    return status;
 }
-
-//Send Message Function (Bug : need twice click)
-// sendMssg = (e, event) => {
-//     event.preventDefault();
-//     $("form#contact").validate({
-//         errorElement: "small",
-//         rules: {
-//             name: {
-//                 required: true,
-//             },
-//             email: {
-//                 required: true,
-//                 email: true
-//             },
-//             message: {
-//                 required: true
-//             }
-//         },
-//         submitHandler: function(form) {
-//             let formKritik = new FormData(form);
-//             Swal.fire({
-//                 title : "Checking...",
-//                 text : "Please wait",
-//                 imageUrl : "assets/images/loader.gif",
-//                 showConfirmButton: false,
-//                 allowOutsideClick: false
-//             });
-//             console.log(formKritik.get('name'));
-//             axios.post(baseurl + '/nasabah/sendkritik', formKritik)
-//             .then(res => {
-//                 console.log(res);
-//                 // Buat Dialog Sukses
-//                 Swal.fire({
-//                     title : 'Success',
-//                     text : 'Pesan Telah Terkirim',
-//                     showConfirmButton: false, 
-//                     timer: 5000
-//                 });
-//             })
-//             .catch(res => {
-//                 console.log(res);
-//             });
-//         }
-//     });
-// }

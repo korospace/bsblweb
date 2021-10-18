@@ -29,11 +29,10 @@ const sessioncheck = () => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then((result) => {
+                        document.cookie = `token=null; path=/;`;
                         window.location.replace(`${BASEURL}/login`);
                     })
                 }
-                document.cookie = `token=null; path=/;`;
-                window.location.replace(`${BASEURL}/login`);
             }
             // server error
             else{

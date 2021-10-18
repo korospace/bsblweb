@@ -21,7 +21,7 @@ const sessioncheck = () => {
             if (error.response.status == 401) {
                 if (error.response.data.messages == 'token expired') {
                     showAlert({
-                        message: `<strong>session expired</strong> silahkan login kembali!`,
+                        message: `<strong>session expired...</strong> silahkan login kembali!`,
                         btnclose: true,
                         type:'info' 
                     })

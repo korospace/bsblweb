@@ -16,6 +16,7 @@ class Nasabah extends ResourceController
 
 	public function __construct()
     {
+        // date_default_timezone_set("Asia/Jakarta");
         $this->validation     = \Config\Services::validation();
         $this->baseController = new BaseController;
         $this->nasabahModel   = new NasabahModel;

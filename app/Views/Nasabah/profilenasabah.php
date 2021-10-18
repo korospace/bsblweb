@@ -303,7 +303,7 @@
 										<i class="fa fa-user text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control" id="nama-edit" name="nama_lengkap" autocomplete="off" placeholder="Masukan nama lengkap anda">
+								<input type="text" class="form-control px-2" id="nama-edit" name="nama_lengkap" autocomplete="off" placeholder="Masukan nama lengkap anda">
 							</div>
 							<small
 								id="nama-edit-error"
@@ -317,7 +317,7 @@
 										<i class="fa fa-user text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control" id="username-edit" name="username" autocomplete="off" placeholder="Masukan username anda">
+								<input type="text" class="form-control px-2" id="username-edit" name="username" autocomplete="off" placeholder="Masukan username anda">
 							</div>
 							<small
 								id="username-edit-error"
@@ -327,11 +327,11 @@
 						<div class="input-group col-lg-12 mb-4 form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<span class="input-group-text bg-gray border-md" style="padding: 1rem 1.55rem;">
+									<span class="input-group-text bg-gray px-4 border-md">
 										<i class="fas fa-calendar-alt"></i>
 									</span>
 								</div>
-								<input type="date" class="form-control h-100" id="tgllahir-edit" name="tgl_lahir">
+								<input type="date" class="form-control px-2 h-100" id="tgllahir-edit" name="tgl_lahir">
 							</div>
 							<small
 								id="tgllahir-edit-error"
@@ -363,7 +363,7 @@
 										<i class="fas fa-map-marker-alt"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control" id="alamat-edit" name="alamat" autocomplete="off" placeholder="Masukan alamat lengkap anda">
+								<input type="text" class="form-control px-2" id="alamat-edit" name="alamat" autocomplete="off" placeholder="Masukan alamat lengkap anda">
 							</div>
 							<small
 								id="alamat-edit-error"
@@ -377,11 +377,11 @@
 									<i class="fa fa-phone-square"></i>
 								</span>
 								</div>
-								<input type="text" class="form-control" id="notelp-edit" name="notelp" autocomplete="off" placeholder="Masukan no.telp anda">
+								<input type="text" class="form-control px-2" id="notelp-edit" name="notelp" autocomplete="off" placeholder="Masukan no.telp anda">
 							</div>
 							<small
 								id="notelp-edit-error"
-							class="text-danger"></small>
+								class="text-danger"></small>
 						</div>
 						<hr class="horizontal dark mt-2 mb-2">
 						<h6 class="font-italic opacity-8">Ubah password (opsionial)</h6>
@@ -393,7 +393,7 @@
 										<i class="fa fa-lock text-muted"></i>
 									</span>
 								</div>
-								<input type="password" class="form-control" id="newpass-edit" name="new_password" autocomplete="off" placeholder="password baru">
+								<input type="password" class="form-control px-2" id="newpass-edit" name="new_password" autocomplete="off" placeholder="password baru">
 							</div>
 							<small
 								id="newpass-edit-error"
@@ -406,7 +406,7 @@
 										<i class="fa fa-lock text-muted"></i>
 									</span>
 								</div>
-								<input type="password" class="form-control" id="oldpass-edit" name="old_password" autocomplete="off" placeholder="password lama">
+								<input type="password" class="form-control px-2" id="oldpass-edit" name="old_password" autocomplete="off" placeholder="password lama">
 							</div>
 							<small
 								id="oldpass-edit-error"

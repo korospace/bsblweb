@@ -22,10 +22,14 @@ const sessioncheck = () => {
             // 401 Unauthorized
             if (error.response.status == 401) {
                 if (error.response.data.messages == 'token expired') {
-                    showAlert({
-                        message: `<strong>session expired...</strong> silahkan login kembali!`,
-                        btnclose: true,
-                        type:'info' 
+                    Swal.fire({
+                        icon : 'error',
+                        title : '<strong>LOGIN EXPIRED</strong>',
+                        text: 'silahkan login ulang untuk perbaharui login anda',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    }).then((result) => {
+                        window.location.replace(`${BASEURL}/login`);
                     })
                 }
                 document.cookie = `token=null; path=/;`;
@@ -123,8 +127,11 @@ $('#btn-edit-profile').on('click', function(e) {
     let tglLahir = dataNasabah.tgl_lahir.split('-');
     $(`#formEditProfile input[name=tgl_lahir]`).val(`${tglLahir[2]}-${tglLahir[1]}-${tglLahir[0]}`);
     $(`#formEditProfile input#kelamin-${dataNasabah.kelamin}`).prop('checked',true);
+    $('#newpass-edit').val('');
+    $('#oldpass-edit').val('');
 });
 
+// change kelamin value
 $('#formEditProfile .form-check-input').on('click', function(e) {
     $(`#formEditProfile input[name=kelamin]`).val($(this).val());
     $('#formEditProfile .form-check-input').prop('checked',false);
@@ -135,11 +142,15 @@ $('#formEditProfile .form-check-input').on('click', function(e) {
 $('#formEditProfile').on('submit', function(e) {
     e.preventDefault();
     let form = new FormData(e.target);
-    console.log(form.get('kelamin'));
 
     if (validateFormEditProfile(form)) {
         let newTgl = form.get('tgl_lahir').split('-');
         form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`)
+
+        if (form.get('new_password') == '') {
+            form.delete('new_password');
+        }
+
         $('#formEditProfile button#submit #text').addClass('d-none');
         $('#formEditProfile button#submit #spinner').removeClass('d-none');
 
@@ -152,6 +163,8 @@ $('#formEditProfile').on('submit', function(e) {
         .then((response) => {
             $('#formEditProfile button#submit #text').removeClass('d-none');
             $('#formEditProfile button#submit #spinner').addClass('d-none');
+            $('#newpass-edit').val('');
+            $('#oldpass-edit').val('');
 
             let newDataProfile = {};
             for (var pair of form.entries()) {
@@ -178,15 +191,15 @@ $('#formEditProfile').on('submit', function(e) {
             if (error.response.status == 400) {
                 if (error.response.data.messages.username) {
                     $('#username-edit').addClass('is-invalid');
-                    $('#username-edit-error').text(error.response.data.messages.username);
+                    $('#username-edit-error').text('*'+error.response.data.messages.username);
                 }
                 if (error.response.data.messages.notelp) {
                     $('#notelp-edit').addClass('is-invalid');
-                    $('#notelp-edit-error').text(error.response.data.messages.notelp);
+                    $('#notelp-edit-error').text('*'+error.response.data.messages.notelp);
                 }
                 if (error.response.data.messages.old_password) {
                     $('#oldpass-edit').addClass('is-invalid');
-                    $('#oldpass-edit-error').text(error.response.data.messages.old_password);
+                    $('#oldpass-edit-error').text('*'+error.response.data.messages.old_password);
                 }
             }
             // error server

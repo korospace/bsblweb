@@ -23,6 +23,11 @@
 		height: 100% !important;
 	}
 
+	@media print
+	{
+		.noprint {display:none;}
+	}
+
 	@media (max-width:768px) {
 		.rowCardWraper {
 			height: auto !important;
@@ -34,8 +39,6 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/print.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/invoice-template.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -44,7 +47,6 @@
 <script src="<?= base_url('assets/js/plugins/smooth-scrollbar.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/print.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
@@ -56,11 +58,11 @@
 <!-- **** Alert Info **** -->
 <?= $this->include('Components/alertInfo'); ?>
 
-<section id="container" class="d-none">
+<section id="container" class="noprint d-none">
 
 	<body class="g-sidenav-show bg-gray-100">
 
-		<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+		<aside class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
 			id="sidenav-main">
 			<div class="sidenav-header">
 				<i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
@@ -155,7 +157,7 @@
 				</ul>
 			</div>
 		</aside>
-		<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
+		<main class="noprint main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
 			<!-- Navbar -->
 			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
 				navbar-scroll="true">
@@ -367,9 +369,6 @@
 									<div class="col-6 d-flex align-items-center">
 										<h6 class="mb-0">History</h6>
 									</div>
-									<!-- <div class="col-6 text-end">
-										<button class="btn btn-outline-primary btn-sm mb-0">View All</button>
-									</div> -->
 								</div>
 							</div>
 							<div class="card-body p-3 pb-0">
@@ -494,63 +493,64 @@
 					</footer>
 				</div>
 		</main>
+	</body>
 
-		<!-- print transaksi -->
-		<div class="modal fade" id="modalPrintTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div id="formEditProfile" class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Cetak bukti transaksi</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body w-100 position-relative" style="overflow: hidden;">
-					<!-- spinner -->
-					<div id="detil-transaksi-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-						<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 60px;" />
-					</div>
-					<!-- header -->
-					<div class="d-flex align-items-center justify-content-between py-2 px-4">
-						<img src="<?= base_url('assets/images/banksampah-logo.png');?>" style="width: 80px;" />
-						<h4>bukti transaksi</h4>
-					</div>
-					<hr class="horizontal dark mt-2">
-					<div class="px-4">
-						<table>
-							<tr>
-								<td>TANGGAL&nbsp;&nbsp;&nbsp;</td>
-								<td>: <span id="detil-transaksi-date"></span></td>
-							</tr>
-							<tr>
-								<td>NAMA&nbsp;&nbsp;&nbsp;</td>
-								<td>: <span id="detil-transaksi-nama" class="text-uppercase"></span></td>
-							</tr>
-							<tr>
-								<td>ID.NASABAH&nbsp;&nbsp;&nbsp;</td>
-								<td>: <span id="detil-transaksi-idnasabah"></span></td>
-							</tr>
-							<tr>
-								<td>ID.TRANSAKSI&nbsp;&nbsp;&nbsp;</td>
-								<td>: <span id="detil-transaksi-idtransaksi"></span></td>
-							</tr>
-						</table>
-					</div>
-					<hr class="horizontal dark mt-2">
-					<h6 id="detil-transaksi-type" class="font-italic px-4"></h6>
-					<div id="detil-transaksi-body" class="px-4 mt-2">
-						
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
-						<span id="text">Cetak</span>
-						<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
-					</button>
-				</div>
+</section>
+
+<!-- print transaksi -->
+<div class="modal fade noprint" id="modalPrintTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLongTitle">Cetak bukti transaksi</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div id="modalPrintTransaksiTarget" class="modal-body w-100 position-relative" style="overflow: hidden;">
+			<!-- spinner -->
+			<div id="detil-transaksi-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+				<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 60px;" />
 			</div>
+			<!-- header -->
+			<div class="d-flex align-items-center justify-content-between py-2 px-4">
+				<img src="<?= base_url('assets/images/banksampah-logo.png');?>" style="width: 80px;" />
+				<h4>bukti transaksi</h4>
+			</div>
+			<hr class="horizontal dark mt-2">
+			<div class="px-4">
+				<table>
+					<tr>
+						<td>TANGGAL&nbsp;&nbsp;&nbsp;</td>
+						<td>: <span id="detil-transaksi-date"></span></td>
+					</tr>
+					<tr>
+						<td>NAMA&nbsp;&nbsp;&nbsp;</td>
+						<td>: <span id="detil-transaksi-nama" class="text-uppercase"></span></td>
+					</tr>
+					<tr>
+						<td>ID.NASABAH&nbsp;&nbsp;&nbsp;</td>
+						<td>: <span id="detil-transaksi-idnasabah"></span></td>
+					</tr>
+					<tr>
+						<td>ID.TRANSAKSI&nbsp;&nbsp;&nbsp;</td>
+						<td>: <span id="detil-transaksi-idtransaksi"></span></td>
+					</tr>
+				</table>
+			</div>
+			<hr class="horizontal dark mt-2">
+			<h6 id="detil-transaksi-type" class="font-italic px-4"></h6>
+			<div id="detil-transaksi-body" class="px-4 mt-2">
+				
 			</div>
 		</div>
-	</body>
-</section>
+		<div class="modal-footer">
+			<button onclick="window.print();" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+				<span id="text">Cetak</span>
+				<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+			</button>
+		</div>
+	</div>
+	</div>
+</div>
 <?= $this->endSection(); ?>

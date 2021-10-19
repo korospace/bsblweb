@@ -266,9 +266,30 @@ const getDetailTransaksi = (id) => {
             }
             // setor sampah
             if (response.data.data.type == 'setor') {
-                // let jumlah = (response.data.data.jenis_saldo == 'uang')?'Rp '+modifUang(response.data.data.jumlah):response.data.data.jumlah+' gram';
+                let trBody = '';
+                let barang = response.data.data.barang;
+                barang.forEach((b,i) => {
+                    trBody += `<tr class="text-center">
+                        <th scope="row">${++i}</th>
+                        <td>${b.jenis}</td>
+                        <td>${b.jumlah}</td>
+                        <td>Rp ${modifUang(b.harga)}</td>
+                    </tr>`;
+                })
 
-                $('#detil-transaksi-body').html('tes');
+                $('#detil-transaksi-body').html(`<table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Jenis sampah</th>
+                            <th scope="col">Jumlah</th>
+                            <th scope="col">Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${trBody}
+                    </tbody>
+                </table>`);
             }
         })
         .catch((error) => {
@@ -282,6 +303,11 @@ const getDetailTransaksi = (id) => {
                 })
             }
         })
+};
+
+// cetak transaksi
+const cetakTransaksi = () => {
+    
 };
 
 // Get data profile

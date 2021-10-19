@@ -60,7 +60,7 @@ const sessioncheck = () => {
 sessioncheck();
 
 // modif saldo uang
-function modiUang(rHarga){
+function modifUang(rHarga){
     let j       = 1;
     let hargav2 = '';
     let hargav3 = '';
@@ -87,7 +87,7 @@ const getDataSaldo = () => {
             }
         })
         .then((response) => {
-            $('#saldo-uang').html(modiUang(response.data.data.uang));
+            $('#saldo-uang').html(modifUang(response.data.data.uang));
             $('#saldo-ubs').html(parseFloat(response.data.data.ubs).toFixed(4));
             $('#saldo-antam').html(parseFloat(response.data.data.antam).toFixed(4));
             $('#saldo-galery24').html(parseFloat(response.data.data.galery24).toFixed(4));
@@ -155,12 +155,12 @@ const getAllTransaksi = () => {
                 
                 if (type == 'setor') {
                     textClass = 'text-success';
-                    totalTransaksi = '+Rp'+modiUang(t[`total_${type}`]);
+                    totalTransaksi = '+Rp'+modifUang(t[`total_${type}`]);
                 } 
                 else if (type == 'tarik') {
                     textClass = 'text-danger';
                     if (jenisSaldo == 'uang') {
-                        totalTransaksi = '-Rp'+modiUang(t[`total_${type}`]);
+                        totalTransaksi = '-Rp'+modifUang(t[`total_${type}`]);
                     } else {
                         totalTransaksi = t[`total_${type}`]+'g';
                     }
@@ -168,7 +168,7 @@ const getAllTransaksi = () => {
                 else {
                     textClass = 'text-warning';
                     if (jenisSaldo == 'uang') {
-                        totalTransaksi = 'Rp'+modiUang(t[`total_${type}`]);
+                        totalTransaksi = 'Rp'+modifUang(t[`total_${type}`]);
                     } else {
                         totalTransaksi = t[`total_${type}`]+'g';
                     }
@@ -207,7 +207,9 @@ const getAllTransaksi = () => {
 
 // Get detail tranksaksi
 const getDetailTransaksi = (id) => {
-    console.log(id);
+    $('#detil-transaksi-body').html(' ');
+    $('#detil-transaksi-spinner').removeClass('d-none');
+    
     axios
         .get(`${APIURL}/transaksi/getdata?id_transaksi=${id}`,{
             headers: {
@@ -215,10 +217,62 @@ const getDetailTransaksi = (id) => {
             }
         })
         .then((response) => {
-            console.log(response);
-            $('#transaksi-spinner').hide();
+            $('#detil-transaksi-spinner').addClass('d-none');
+            let date = new Date(parseInt(response.data.data.date) * 1000);
+            
+            $('#detil-transaksi-date').html(`${date.toLocaleString("en-US",{day: "numeric"})}/${date.toLocaleString("en-US",{month: "numeric"})}/${date.toLocaleString("en-US",{year: "numeric"})}&nbsp;&nbsp;&nbsp;${date.toLocaleString("en-US",{hour: '2-digit', minute: '2-digit',second: '2-digit'})}`);
+            $('#detil-transaksi-nama').html(response.data.data.nama_lengkap);
+            $('#detil-transaksi-idnasabah').html(response.data.data.id_nasabah);
+            $('#detil-transaksi-idtransaksi').html(response.data.data.id_transaksi);
+            $('#detil-transaksi-type').html((response.data.data.type == 'setor')?response.data.data.type+' sampah':response.data.data.type+' saldo');
+
+            // tarik saldo
+            if (response.data.data.type == 'tarik') {
+                let jumlah = (response.data.data.jenis_saldo == 'uang')?'Rp '+modifUang(response.data.data.jumlah):response.data.data.jumlah+' gram';
+
+                $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
+                    <h4><strong>Jumlah</strong> : ${jumlah}</h4>
+                </div>`);
+            }
+            // pindah saldo
+            if (response.data.data.type == 'pindah') {
+                let jumlah = (response.data.data.jenis_saldo == 'uang')?'Rp '+modifUang(response.data.data.jumlah):response.data.data.jumlah+' gram';
+                let hasilKonversi = (response.data.data.asal !== 'uang')?'Rp '+modifUang(response.data.data.hasil_konversi):response.data.data.hasil_konversi+' gram';
+
+                $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
+                <table>
+                    <tr class="text-dark">
+                        <td>Saldo asal&nbsp;&nbsp;&nbsp;</td>
+                        <td>: ${response.data.data.asal}</td>
+                    </tr>
+                    <tr class="text-dark">
+                        <td>Saldo tujuan&nbsp;&nbsp;&nbsp;</td>
+                        <td>: ${response.data.data.tujuan}</td>
+                    </tr>
+                    <tr class="text-dark">
+                        <td>Jumlah&nbsp;&nbsp;&nbsp;</td>
+                        <td>: ${jumlah}</td>
+                    </tr>
+                    <tr class="text-dark">
+                        <td>Harga emas&nbsp;&nbsp;&nbsp;</td>
+                        <td>: Rp ${modifUang(response.data.data.harga_emas)}</td>
+                    </tr>
+                    <tr class="text-dark">
+                        <td>Hasil konversi&nbsp;&nbsp;&nbsp;</td>
+                        <td>: ${hasilKonversi}</td>
+                    </tr>
+                </table>
+                </div>`);
+            }
+            // setor sampah
+            if (response.data.data.type == 'setor') {
+                // let jumlah = (response.data.data.jenis_saldo == 'uang')?'Rp '+modifUang(response.data.data.jumlah):response.data.data.jumlah+' gram';
+
+                $('#detil-transaksi-body').html('tes');
+            }
         })
         .catch((error) => {
+            $('#detil-transaksi-spinner').addClass('d-none');
             // 500 server error
             if (error.response.status == 500) {
                 showAlert({

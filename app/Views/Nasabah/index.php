@@ -507,7 +507,7 @@
 				</div>
 				<div class="modal-body w-100 position-relative" style="overflow: hidden;">
 					<!-- spinner -->
-					<div id="transaksi-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+					<div id="detil-transaksi-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 						<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 60px;" />
 					</div>
 					<!-- header -->
@@ -520,27 +520,29 @@
 						<table>
 							<tr>
 								<td>TANGGAL&nbsp;&nbsp;&nbsp;</td>
-								<td>: <span id="transaksi-date"></span></td>
+								<td>: <span id="detil-transaksi-date"></span></td>
 							</tr>
 							<tr>
 								<td>NAMA&nbsp;&nbsp;&nbsp;</td>
-								<td>: <span id="transaksi-nama"></span></td>
+								<td>: <span id="detil-transaksi-nama" class="text-uppercase"></span></td>
 							</tr>
 							<tr>
 								<td>ID.NASABAH&nbsp;&nbsp;&nbsp;</td>
-								<td>: <span id="transaksi-idnasabah"></span></td>
+								<td>: <span id="detil-transaksi-idnasabah"></span></td>
 							</tr>
 							<tr>
 								<td>ID.TRANSAKSI&nbsp;&nbsp;&nbsp;</td>
-								<td>: <span id="transaksi-idtransaksi"></span></td>
+								<td>: <span id="detil-transaksi-idtransaksi"></span></td>
 							</tr>
 						</table>
 					</div>
 					<hr class="horizontal dark mt-2">
-					<h6 id="transaksi-type" class="font-italic px-4">setor sampah</h6>
+					<h6 id="detil-transaksi-type" class="font-italic px-4"></h6>
+					<div id="detil-transaksi-body" class="px-4 mt-2">
+						
+					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
 					<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
 						<span id="text">Cetak</span>
 						<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">

@@ -245,6 +245,8 @@ class TransaksiModel extends Model
             unset($d['id_transaksi']);
             unset($d['id_nasabah']);
             unset($d['nama_lengkap']);
+            unset($d['type']);
+            unset($d['type']);
             unset($d['date']);
             $barang[] = $d;
         }

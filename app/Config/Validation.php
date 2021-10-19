@@ -591,7 +591,7 @@ class Validation
             'errors' => [
                 'required'    => 'jenis is required',
                 'max_length'  => 'max 40 character',
-                'is_unique'   => 'jenis is exist',
+                'is_unique'   => 'jenis {value} sudah ada',
             ],
 		],
 		'harga' => [
@@ -671,9 +671,9 @@ class Validation
 		'jumlah' => [
             'rules'  => 'required|max_length[11]|numeric',
             'errors' => [
-                'required'           => 'jumlah is required',
-                'max_length'         => 'max 11 character',
-                'numeric' => 'only number allowed',
+                'required'   => 'jumlah is required',
+                'max_length' => 'max 11 character',
+                'numeric'    => 'only number allowed',
             ],
 		],
 	];
@@ -694,7 +694,7 @@ class Validation
             'rules'  => 'required|is_not_unique[nasabah.id]',
             'errors' => [
                 'required'      => 'id nasabah is required',
-                'is_not_unique' => 'id_nasabah with value ({value}) is not found',
+                'is_not_unique' => 'nasabah dengan id ({value}) tidak ditemukan',
             ],
 		],
 		'transaksi' => [
@@ -731,11 +731,11 @@ class Validation
                 'is_not_unique' => 'id_nasabah with value ({value}) is not found',
             ],
 		],
-		'jenis_dompet' => [
-            'rules'  => 'required|in_list[uang,emas]',
+		'jenis_saldo' => [
+            'rules'  => 'required|in_list[uang,ubs,antam,galery24]',
             'errors' => [
-                'required' => 'jenis dompet sampah is required',
-                'in_list'  => "value must be 'uang' or 'emas'",
+                'required' => 'jenis saldo sampah is required',
+                'in_list'  => "value must be 'uang/ubs/antam/galery24'",
             ],
 		],
 		'jumlah' => [
@@ -766,11 +766,18 @@ class Validation
                 'is_not_unique' => "nasabah with id ({value}) is not found",
             ],
 		],
-		'dompet_asal' => [
-            'rules'  => 'required|in_list[uang,emas]',
+		'asal' => [
+            'rules'  => 'required|in_list[uang,antam,ubs,galery24]',
             'errors' => [
-                'required'    => 'dompet_asal is required',
-                'in_list'     => "value must be 'uang' or 'emas'",
+                'required'    => 'saldo asal is required',
+                'in_list'     => "value must be 'uang/antam/ubs/galery24'",
+            ],
+		],
+		'tujuan' => [
+            'rules'  => 'required|in_list[uang,antam,ubs,galery24]',
+            'errors' => [
+                'required'    => 'saldo asal is required',
+                'in_list'     => "value must be 'uang/antam/ubs/galery24'",
             ],
 		],
 		'harga_emas' => [

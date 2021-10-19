@@ -14,6 +14,14 @@ const sessioncheck = () => {
         .then((response) => {
             hideLoadingSpinner();
             $('#container').removeClass('d-none');
+
+            if (pageTitle[1] == 'dashboard') {
+                getDataSaldo();
+                getTotalSampah();
+                getAllTransaksi();
+            }
+
+            getDataProfile();
         })
         .catch((error) => {
             hideLoadingSpinner();
@@ -21,6 +29,8 @@ const sessioncheck = () => {
     
             // 401 Unauthorized
             if (error.response.status == 401) {
+                document.cookie = `token=null; path=/;`;
+                
                 if (error.response.data.messages == 'token expired') {
                     Swal.fire({
                         icon : 'error',
@@ -29,9 +39,11 @@ const sessioncheck = () => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then((result) => {
-                        document.cookie = `token=null; path=/;`;
                         window.location.replace(`${BASEURL}/login`);
                     })
+                }
+                else{
+                    window.location.replace(`${BASEURL}/login`);
                 }
             }
             // server error
@@ -46,6 +58,151 @@ const sessioncheck = () => {
 };
 
 sessioncheck();
+
+// modif saldo uang
+function modiUang(rHarga){
+    let j       = 1;
+    let hargav2 = '';
+    let hargav3 = '';
+    for(let i = [...rHarga].length-1;i >= 0; i--){
+        if(j==4){
+            hargav2 += '.'+[...rHarga][i];j=1;
+        }else{
+            hargav2 += [...rHarga][i];
+        }
+        j++;
+    }
+    for(let i = hargav2.length-1;i >= 0; i--){
+        hargav3 += hargav2[i];
+    }
+    return hargav3;
+}
+
+// Get data saldo
+const getDataSaldo = () => {
+    axios
+        .get(`${APIURL}/nasabah/getsaldo`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            $('#saldo-uang').html(modiUang(response.data.data.uang));
+            $('#saldo-ubs').html(parseFloat(response.data.data.ubs).toFixed(4));
+            $('#saldo-antam').html(parseFloat(response.data.data.antam).toFixed(4));
+            $('#saldo-galery24').html(parseFloat(response.data.data.galery24).toFixed(4));
+        })
+        .catch((error) => {
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>server error...</strong> gagal mendapatkan data saldo, silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
+
+// get total sampah
+const getTotalSampah = () => {
+    axios
+        .get(`${APIURL}/sampah/totalitem`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            let dataSampah = response.data.data;
+            for (const name in dataSampah) {
+                $(`#sampah-${name}`).html(dataSampah[name].total+' Kg');
+            }
+        })
+        .catch((error) => {
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>server error...</strong> gagal mendapatkan data sampah, silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
+
+// get all transaksi
+const getAllTransaksi = () => {
+    axios
+        .get(`${APIURL}/transaksi/getdata`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            let elTransaksi  = '';
+            let allTransaksi = response.data.data;
+            
+            // console.log(allTransaksi);
+            allTransaksi.forEach(t => {
+                let type      = t.type;
+                let jenisSaldo= t.jenis_saldo;
+                let textClass = '';
+                let date      = new Date(parseInt(t.date) * 1000);
+                let day       = date.toLocaleString("en-US",{day: "numeric"});
+                let month     = date.toLocaleString("en-US",{month: "long"});
+                let year      = date.toLocaleString("en-US",{year: "numeric"});
+                let totalTransaksi = '';
+                
+                if (type == 'setor') {
+                    textClass = 'text-success';
+                    totalTransaksi = '+Rp'+modiUang(t[`total_${type}`]);
+                } 
+                else if (type == 'tarik') {
+                    textClass = 'text-danger';
+                    if (jenisSaldo == 'uang') {
+                        totalTransaksi = '-Rp'+modiUang(t[`total_${type}`]);
+                    } else {
+                        totalTransaksi = t[`total_${type}`]+'g';
+                    }
+                }
+                else {
+                    textClass = 'text-warning';
+                    if (jenisSaldo == 'uang') {
+                        totalTransaksi = 'Rp'+modiUang(t[`total_${type}`]);
+                    } else {
+                        totalTransaksi = t[`total_${type}`]+'g';
+                    }
+                }
+
+                elTransaksi  += `<li class="list-group-item border-0 ps-0 border-radius-lg">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                        <h6 class="mb-1 text-dark font-weight-bold text-sm">${month}, ${day}, ${year}</h6>
+                        <span class="text-xs">ID: ${t.id_transaksi}</span>
+                        <span class="${textClass} mt-2">${totalTransaksi}</span>
+                    </div>
+                    <div class="d-flex align-items-center text-sm">
+                        <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
+                                class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
+                    </div>
+                </div>
+                <hr class="horizontal dark mt-2">
+            </li>`;
+            });
+
+            $('#transaksi-wraper').html(elTransaksi);
+        })
+        .catch((error) => {
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>server error...</strong> gagal mendapatkan data transaksi, silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
 
 // Get data profile
 const getDataProfile = () => {
@@ -75,38 +232,6 @@ const getDataProfile = () => {
             }
         })
 };
-
-getDataProfile();
-
-// Get data saldo
-const getDataSaldo = () => {
-    axios
-        .get(`${APIURL}/nasabah/getsaldo`,{
-            headers: {
-                token: TOKEN
-            }
-        })
-        .then((response) => {
-            $('#saldo-uang').html(response.data.data.uang);
-            $('#saldo-ubs').html(response.data.data.ubs);
-            $('#saldo-antam').html(response.data.data.antam);
-            $('#saldo-galery24').html(response.data.data.galery24);
-        })
-        .catch((error) => {
-            // 500 server error
-            if (error.response.status == 500) {
-                showAlert({
-                    message: `<strong>server error...</strong> gagal mendapatkan data saldo, silahkan refresh halaman!`,
-                    btnclose: true,
-                    type:'danger' 
-                })
-            }
-        })
-};
-
-if (pageTitle[1] == 'dashboard') {
-    getDataSaldo();
-}
 
 // update card
 const updateDataCard = (data) => {

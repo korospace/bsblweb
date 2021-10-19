@@ -222,10 +222,10 @@ class AdminModel extends Model
     {
         try {
             if (isset($get['id'])) {
-                $nasabah = $this->db->table('nasabah')->select("nasabah.id,nasabah.email,nasabah.username,nasabah.nama_lengkap,nasabah.alamat,nasabah.notelp,nasabah.tgl_lahir,nasabah.kelamin,dompet_uang.jumlah AS saldo_uang,dompet_emas.jumlah AS saldo_emas,nasabah.is_verify,nasabah.created_at")->join('dompet_uang', 'dompet_uang.id_nasabah = nasabah.id')->join('dompet_emas', 'dompet_emas.id_nasabah = nasabah.id')->where("nasabah.id",$get['id'])->get()->getFirstRow();
+                $nasabah = $this->db->table('nasabah')->select("nasabah.id,nasabah.email,nasabah.username,nasabah.nama_lengkap,nasabah.alamat,nasabah.notelp,nasabah.tgl_lahir,nasabah.kelamin,dompet.uang AS saldo_uang,dompet.galery24 AS saldo_galery24,dompet.ubs AS saldo_ubs,dompet.antam AS saldo_antam,nasabah.is_verify,nasabah.created_at")->join('dompet', 'dompet.id_nasabah = nasabah.id')->where("nasabah.id",$get['id'])->get()->getFirstRow();
             } 
             else {
-                $nasabah = $this->db->table('nasabah')->select("nasabah.id,nasabah.nama_lengkap,dompet_uang.jumlah AS saldo_uang,dompet_emas.jumlah_galery24 AS emas_galery24,dompet_emas.jumlah_ubs AS emas_ubs,dompet_emas.jumlah_antam AS emas_antam,nasabah.created_at")->join('dompet_uang', 'dompet_uang.id_nasabah = nasabah.id')->join('dompet_emas', 'dompet_emas.id_nasabah = nasabah.id')->orderBy('created_at','DESC')->get()->getResultArray();
+                $nasabah = $this->db->table('nasabah')->select("nasabah.id,nasabah.nama_lengkap,nasabah.is_verify,nasabah.created_at")->orderBy('created_at','DESC')->get()->getResultArray();
             }
             
             if (empty($nasabah)) {    

@@ -18,6 +18,16 @@
 	section {
 		font-family: 'qc-medium';
 	}
+
+	.rowCardWraper {
+		height: 100% !important;
+	}
+
+	@media (max-width:768px) {
+		.rowCardWraper {
+			height: auto !important;
+		}
+	} 
 </style>
 <link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
@@ -255,8 +265,8 @@
 									<div class="col-8">
 										<div class="numbers">
 											<p class="text-sm mb-0 text-capitalize font-weight-bold">Kertas</p>
-											<h5 class="font-weight-bolder mb-0">
-												5 Kg
+											<h5 id="sampah-kertas" class="font-weight-bolder mb-0">
+												0 Kg
 											</h5>
 										</div>
 									</div>
@@ -276,8 +286,8 @@
 									<div class="col-8">
 										<div class="numbers">
 											<p class="text-sm mb-0 text-capitalize font-weight-bold">Logam</p>
-											<h5 class="font-weight-bolder mb-0">
-												2 Kg
+											<h5 id="sampah-logam" class="font-weight-bolder mb-0">
+												0 Kg
 											</h5>
 										</div>
 									</div>
@@ -297,8 +307,8 @@
 									<div class="col-8">
 										<div class="numbers">
 											<p class="text-sm mb-0 text-capitalize font-weight-bold">Plastik</p>
-											<h5 class="font-weight-bolder mb-0">
-												3 Kg
+											<h5 id="sampah-plastik" class="font-weight-bolder mb-0">
+												0 Kg
 											</h5>
 										</div>
 									</div>
@@ -318,8 +328,8 @@
 									<div class="col-8">
 										<div class="numbers">
 											<p class="text-sm mb-0 text-capitalize font-weight-bold">Lain-lain</p>
-											<h5 class="font-weight-bolder mb-0">
-												1 Kg
+											<h5 id="sampah-lain-lain" class="font-weight-bolder mb-0">
+												0 Kg
 											</h5>
 										</div>
 									</div>
@@ -348,86 +358,31 @@
 					</div>
 					<!-- Transaksi -->
 					<div class="col-lg-4">
-						<div class="card h-100">
+						<div class="card h-100" style="max-height: 461.3px;overflow: auto;">
 							<div class="card-header pb-0 p-3">
 								<div class="row" style="font-family: 'qc-semibold';">
 									<div class="col-6 d-flex align-items-center">
 										<h6 class="mb-0">History</h6>
 									</div>
-									<div class="col-6 text-end">
+									<!-- <div class="col-6 text-end">
 										<button class="btn btn-outline-primary btn-sm mb-0">View All</button>
-									</div>
+									</div> -->
 								</div>
 							</div>
 							<div class="card-body p-3 pb-0">
-								<ul class="list-group" style="font-family: 'qc-medium';">
-									<li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-										<div class="d-flex flex-column">
-											<h6 class="mb-1 text-dark font-weight-bold text-sm">March, 01, 2020</h6>
-											<span class="text-xs">#MS-415646</span>
-										</div>
-										<div class="d-flex align-items-center text-sm">
-											$180
-											<button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-													class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-										</div>
-									</li>
-									<li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-										<div class="d-flex flex-column">
-											<h6 class="text-dark mb-1 font-weight-bold text-sm">February, 10, 2021</h6>
-											<span class="text-xs">#RV-126749</span>
-										</div>
-										<div class="d-flex align-items-center text-sm">
-											$250
-											<button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-													class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-										</div>
-									</li>
-									<li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-										<div class="d-flex flex-column">
-											<h6 class="text-dark mb-1 font-weight-bold text-sm">April, 05, 2020</h6>
-											<span class="text-xs">#FB-212562</span>
-										</div>
-										<div class="d-flex align-items-center text-sm">
-											$560
-											<button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-													class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-										</div>
-									</li>
-									<li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-										<div class="d-flex flex-column">
-											<h6 class="text-dark mb-1 font-weight-bold text-sm">June, 25, 2019</h6>
-											<span class="text-xs">#QW-103578</span>
-										</div>
-										<div class="d-flex align-items-center text-sm">
-											$120
-											<button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-													class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-										</div>
-									</li>
-									<li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
-										<div class="d-flex flex-column">
-											<h6 class="text-dark mb-1 font-weight-bold text-sm">March, 01, 2019</h6>
-											<span class="text-xs">#AR-803481</span>
-										</div>
-										<div class="d-flex align-items-center text-sm">
-											$300
-											<button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-													class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
-										</div>
-									</li>
+								<ul id="transaksi-wraper" class="list-group" style="font-family: 'qc-medium';">
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="container-fluid mt-4 p-0">
-					<div class="row">
-						<div class="col-lg-12">
+					<div class="row px-4">
+						<div class="col-lg-12 p-0">
 							<div class="row">
-								<div class="col-xl-4 mb-xl-0 mb-4">
+								<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
 									<div class="card-id bg-transparent shadow-xl">
-										<div class="overflow-hidden position-relative border-radius-xl"
+										<div class="overflow-hidden position-relative border-radius-md"
 											style="background-image: url(<?= base_url('assets/images/curved-images/curved14.jpg'); ?>);">
 											<span class="mask bg-gradient-dark"></span>
 											<div class="card-body-id position-relative z-index-1 p-3">
@@ -454,11 +409,11 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-xs-6 col-md-4 p-2 h-100">
-									<div class="row d-flex justify-content-center">
-										<div class="col-md-6 h-100">
-											<div class="card">
-												<div class="card-header mx-4 p-3 text-center">
+								<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
+									<div class="row d-flex justify-content-center rowCardWraper">
+										<div class="col-sm-6 h-100 pr-sm-1">
+											<div class="card h-100 border-radius-md">
+												<div class="card-header p-3 text-center">
 													<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
 														<i class="fas fa-money-bill-wave-alt"></i>
 													</div>
@@ -470,9 +425,9 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-md-6 mt-md-0 mt-4">
-											<div class="card">
-												<div class="card-header mx-4 p-3 text-center">
+										<div class="col-sm-6 h-100 pl-sm-1 mt-sm-0 mt-4">
+											<div class="card h-100 border-radius-md">
+												<div class="card-header p-3 text-center">
 													<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
 														<i class="fas fa-coins"></i>
 													</div>
@@ -486,11 +441,11 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-xs-6 col-md-4 p-2">
-									<div class="row d-flex justify-content-center">
-										<div class="col-md-6">
-											<div class="card">
-												<div class="card-header mx-4 p-3 text-center">
+								<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
+									<div class="row d-flex justify-content-center rowCardWraper">
+										<div class="col-sm-6 pr-sm-1 h-100">
+											<div class="card h-100 border-radius-md">
+												<div class="card-header p-3 text-center">
 													<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
 														<i class="fas fa-coins"></i>
 													</div>
@@ -502,9 +457,9 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-md-6 mt-md-0 mt-4">
-											<div class="card">
-												<div class="card-header mx-4 p-3 text-center">
+										<div class="col-sm-6 pl-sm-1 h-100 mt-sm-0 mt-4">
+											<div class="card h-100 border-radius-md">
+												<div class="card-header p-3 text-center">
 													<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
 														<i class="fas fa-coins"></i>
 													</div>

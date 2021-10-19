@@ -38,7 +38,7 @@ class Sampah extends Migration
 
         $this->forge->addPrimaryKey('id');
         $this->forge->addUniqueKey('jenis');
-        $this->forge->addForeignKey('id_kategori','kategori_sampah','id','CASCADE','CASCADE');
+        $this->forge->addForeignKey('id_kategori','kategori_sampah','id','NO ACTION','NO ACTION');
         $this->forge->createTable('sampah');
     }
 

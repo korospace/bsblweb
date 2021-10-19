@@ -17,18 +17,18 @@ class PindahSaldo extends Migration
                 'type' => 'text',
                 'null' => false,
             ],
-            'dompet_asal' => [
+            'asal' => [
                 'type' => 'character varying',
-                'constraint' => 4,
+                'constraint' => 8,
                 'null' => false,
             ],
             'jumlah' => [
                 'type' => 'numeric',
                 'null' => false,
             ],
-            'dompet_tujuan' => [
+            'tujuan' => [
                 'type' => 'character varying',
-                'constraint' => 4,
+                'constraint' => 8,
                 'null' => false,
             ],
             'hasil_konversi' => [

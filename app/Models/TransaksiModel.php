@@ -168,16 +168,16 @@ class TransaksiModel extends Model
                 $code_transaksi = substr($get['id_transaksi'],0,3);
                 
                 if ($code_transaksi == 'TSS') {
-                    var_dump('haha '.$id_transaksi);die;
-                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,sampah.jenis,setor_sampah.jumlah,setor_sampah.harga,transaksi.date FROM transaksi JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi) JOIN sampah ON (setor_sampah.id_sampah = sampah.id) WHERE transaksi.id = '$id_transaksi';")->getResultArray();
+                    // var_dump('haha '.$id_transaksi);die;
+                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,sampah.jenis,setor_sampah.jumlah,setor_sampah.harga,transaksi.date FROM transaksi JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi) JOIN sampah ON (setor_sampah.id_sampah = sampah.id) WHERE transaksi.id = '$id_transaksi';")->getResultArray();
 
                     $transaction = $this->makeDetilTransaksi($transaction);
                 } 
                 else if ($code_transaksi == 'TTS') {
-                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,tarik_saldo.jenis_dompet,tarik_saldo.jumlah,transaksi.date FROM transaksi JOIN tarik_saldo ON (transaksi.id = tarik_saldo.id_transaksi) WHERE transaksi.id = '$id_transaksi';")->getResultArray()[0];
+                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,tarik_saldo.jenis,tarik_saldo.jumlah,transaksi.date FROM transaksi JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) JOIN tarik_saldo ON (transaksi.id = tarik_saldo.id_transaksi) WHERE transaksi.id = '$id_transaksi';")->getResultArray()[0];
                 }
                 else if ($code_transaksi == 'TPS') {
-                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,pindah_saldo.dompet_asal,pindah_saldo.jumlah,pindah_saldo.dompet_tujuan,pindah_saldo.hasil_konversi,pindah_saldo.harga_emas,transaksi.date FROM transaksi JOIN pindah_saldo ON (transaksi.id = pindah_saldo.id_transaksi) WHERE transaksi.id = '$id_transaksi';")->getResultArray()[0];
+                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,pindah_saldo.asal,pindah_saldo.jumlah,pindah_saldo.tujuan,pindah_saldo.hasil_konversi,pindah_saldo.harga_emas,transaksi.date FROM transaksi JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) JOIN pindah_saldo ON (transaksi.id = pindah_saldo.id_transaksi) WHERE transaksi.id = '$id_transaksi';")->getResultArray()[0];
                 }
                 else {
                     $transaction = false;
@@ -238,15 +238,22 @@ class TransaksiModel extends Model
         foreach ($data as $d) {
             $id_transaksi = $d['id_transaksi'];
             $id_nasabah   = $d['id_nasabah'];
+            $nama_lengkap = $d['nama_lengkap'];
+            $type         = $d['type'];
+            $jenis_saldo  = $d['jenis_saldo'];
             $date         = $d['date'];
             unset($d['id_transaksi']);
             unset($d['id_nasabah']);
+            unset($d['nama_lengkap']);
             unset($d['date']);
             $barang[] = $d;
         }
 
         $detil['id_transaksi'] = $id_transaksi;
         $detil['id_nasabah']   = $id_nasabah;
+        $detil['nama_lengkap'] = $nama_lengkap;
+        $detil['type']         = $type;
+        $detil['jenis_saldo']  = $jenis_saldo;
         $detil['date']         = $date;
         $detil['barang']       = $barang;
 

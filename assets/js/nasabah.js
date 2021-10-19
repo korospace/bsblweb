@@ -182,8 +182,9 @@ const getAllTransaksi = () => {
                         <span class="${textClass} mt-2">${totalTransaksi}</span>
                     </div>
                     <div class="d-flex align-items-center text-sm">
-                        <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-                                class="fas fa-file-pdf text-lg me-1"></i> PDF</button>
+                        <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksi('${t.id_transaksi}');">
+                            <i class="fas fa-file-pdf text-lg me-1"></i> PDF
+                        </button>
                     </div>
                 </div>
                 <hr class="horizontal dark mt-2">
@@ -197,6 +198,31 @@ const getAllTransaksi = () => {
             if (error.response.status == 500) {
                 showAlert({
                     message: `<strong>server error...</strong> gagal mendapatkan data transaksi, silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
+
+// Get detail tranksaksi
+const getDetailTransaksi = (id) => {
+    console.log(id);
+    axios
+        .get(`${APIURL}/transaksi/getdata?id_transaksi=${id}`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            $('#transaksi-spinner').hide();
+        })
+        .catch((error) => {
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>server error...</strong> gagal mendapatkan detail transaksi, silahkan refresh halaman!`,
                     btnclose: true,
                     type:'danger' 
                 })

@@ -34,6 +34,8 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/print.min.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/invoice-template.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -42,6 +44,7 @@
 <script src="<?= base_url('assets/js/plugins/smooth-scrollbar.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/print.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
@@ -357,9 +360,9 @@
 						</div>
 					</div>
 					<!-- Transaksi -->
-					<div class="col-lg-4">
-						<div class="card h-100" style="max-height: 461.3px;overflow: auto;">
-							<div class="card-header pb-0 p-3">
+					<div class="col-lg-4 mt-4 mt-lg-0">
+						<div class="card h-100" style="min-height: 461.3px;max-height: 461.3px;overflow: auto;">
+							<div class="card-header bg-white position-sticky p-3" style="z-index: 10;top: 0;">
 								<div class="row" style="font-family: 'qc-semibold';">
 									<div class="col-6 d-flex align-items-center">
 										<h6 class="mb-0">History</h6>
@@ -491,6 +494,61 @@
 					</footer>
 				</div>
 		</main>
+
+		<!-- print transaksi -->
+		<div class="modal fade" id="modalPrintTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div id="formEditProfile" class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Cetak bukti transaksi</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body w-100 position-relative" style="overflow: hidden;">
+					<!-- spinner -->
+					<div id="transaksi-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+						<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 60px;" />
+					</div>
+					<!-- header -->
+					<div class="d-flex align-items-center justify-content-between py-2 px-4">
+						<img src="<?= base_url('assets/images/banksampah-logo.png');?>" style="width: 80px;" />
+						<h4>bukti transaksi</h4>
+					</div>
+					<hr class="horizontal dark mt-2">
+					<div class="px-4">
+						<table>
+							<tr>
+								<td>TANGGAL&nbsp;&nbsp;&nbsp;</td>
+								<td>: <span id="transaksi-date"></span></td>
+							</tr>
+							<tr>
+								<td>NAMA&nbsp;&nbsp;&nbsp;</td>
+								<td>: <span id="transaksi-nama"></span></td>
+							</tr>
+							<tr>
+								<td>ID.NASABAH&nbsp;&nbsp;&nbsp;</td>
+								<td>: <span id="transaksi-idnasabah"></span></td>
+							</tr>
+							<tr>
+								<td>ID.TRANSAKSI&nbsp;&nbsp;&nbsp;</td>
+								<td>: <span id="transaksi-idtransaksi"></span></td>
+							</tr>
+						</table>
+					</div>
+					<hr class="horizontal dark mt-2">
+					<h6 id="transaksi-type" class="font-italic px-4">setor sampah</h6>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+					<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+						<span id="text">Cetak</span>
+						<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+					</button>
+				</div>
+			</div>
+			</div>
+		</div>
 	</body>
 </section>
 <?= $this->endSection(); ?>

@@ -19,11 +19,10 @@
 		font-family: 'qc-medium';
 	}
 </style>
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -51,7 +50,7 @@
 						aria-hidden="true" id="iconSidenav"></i>
 					<a class="navbar-brand m-0" href=""
 						target="_blank">
-						<img src="<?= base_url('assets/images/banksampah-logo.png');?>" class="navbar-brand-img h-100" alt="main_logo">
+						<img src="<?= base_url('assets/images/banksampah-logo.webp');?>" class="navbar-brand-img h-100" alt="main_logo">
 						<span class="ms-1 font-weight-bold">Profile Anda</span>
 					</a>
 				</div>

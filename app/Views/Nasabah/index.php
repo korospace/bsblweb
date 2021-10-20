@@ -3,29 +3,12 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 <style>
-	@font-face {
-		font-family: 'qc-medium';
-		src: url(<?= base_url('assets/fonts/Quicksand-Medium.ttf');
-		?>);
-	}
-
-	@font-face {
-		font-family: 'qc-semibold';
-		src: url(<?= base_url('assets/fonts/Quicksand-SemiBold.ttf');
-		?>);
-	}
-
 	section {
 		font-family: 'qc-medium';
 	}
 
 	.rowCardWraper {
 		height: 100% !important;
-	}
-
-	@media print
-	{
-		.noprint {display:none;}
 	}
 
 	@media (max-width:768px) {

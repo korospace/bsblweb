@@ -11,9 +11,27 @@
 
   <!-- Global Css -->
   <style>
-    .swal2-confirm {
-    background-color: #c1d966 !important;
+    @font-face {
+      font-family: 'qc-medium';
+      src: url(<?= base_url('assets/fonts/Quicksand-Medium.ttf');
+      ?>);
     }
+
+    @font-face {
+      font-family: 'qc-semibold';
+      src: url(<?= base_url('assets/fonts/Quicksand-SemiBold.ttf');
+      ?>);
+    }
+
+    .swal2-confirm {
+      background-color: #c1d966 !important;
+    }
+
+    @media (max-width:990px) {
+      body {
+        overflow: hidden;
+      }
+    } 
   </style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.min.css'); ?>">
@@ -39,7 +57,8 @@
   <script>
     const TOKEN   = '<?= (isset($token)) ? $token : null; ?>';
     const BASEURL = '<?= base_url(); ?>';
-    const APIURL  = 'https://t-gadgetcors.herokuapp.com/https://bsblbackend.herokuapp.com';
+    const APIURL  = BASEURL;
+    // const APIURL  = 'https://t-gadgetcors.herokuapp.com/https://bsblbackend.herokuapp.com';
   </script>
   
   <!-- Render Js -->

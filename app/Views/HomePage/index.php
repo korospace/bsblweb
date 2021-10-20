@@ -20,7 +20,7 @@
 <!-- Body -->
 <?= $this->section('content'); ?>
 
-  <body>
+  <body class="">
 
     <!-- **** Loading Spinner **** -->
     <?= $this->include('Components/loadingSpinner'); ?>

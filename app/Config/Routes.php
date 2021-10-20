@@ -112,6 +112,7 @@ $routes->add('/login',              'Login::index');
 $routes->add('/tables',             'Tables::tables');
 $routes->add('/info',               'UserInfo::info');
 $routes->add('/profile',            'ProfileAdmin::profileadmin');
+$routes->add('/otp',                'OTP::otp');
 $routes->add('/(:any)',             'Notfound::PageNotFound');
 
 /*

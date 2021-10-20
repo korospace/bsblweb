@@ -222,9 +222,10 @@ const updateGrafikSetor = (arrayId,arrayKg) => {
     new Chart(ctx2, {
         type: "bar",
         data: {
+            // labels: ['sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss'],
             labels: arrayId,
             datasets: [{
-                label: "",
+                label: "Kg",
                 tension: 0.4,
                 borderWidth: 0,
                 pointRadius: 0,
@@ -233,6 +234,7 @@ const updateGrafikSetor = (arrayId,arrayKg) => {
                 backgroundColor: gradientStroke1,
                 fill: true,
                 data: arrayKg,
+                // data: [20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],
                 maxBarThickness: 6
             },
             ],
@@ -277,7 +279,7 @@ const updateGrafikSetor = (arrayId,arrayKg) => {
                 ticks: {
                     display: true,
                     color: '#b2b9bf',
-                    padding: 20,
+                    padding: 0,
                     font: {
                         size: 11,
                         family: "Open Sans",

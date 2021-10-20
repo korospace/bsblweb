@@ -347,11 +347,11 @@
 			</div>
 			<div class="row mt-4">
 				<div class="col-lg-8">
-					<div class="card z-index-2" style="min-height: 461.3px;max-height: 461.3px;font-family: 'qc-semibold';">
+					<div class="card z-index-2" style="min-height: 400px;max-height: 400px;font-family: 'qc-semibold';">
 						<div class="card-header pb-0">
 							<h6>Grafik Penyetoran</h6>
 						</div>
-						<div class="card-body p-3 mt-6">
+						<div class="card-body p-3 mt-2">
 							<div class="chart">
 								<canvas id="chart-line" class="chart-canvas" height="300"></canvas>
 							</div>
@@ -360,7 +360,7 @@
 				</div>
 				<!-- Transaksi -->
 				<div class="col-lg-4 mt-4 mt-lg-0">
-					<div class="card h-100" style="min-height: 461.3px;max-height: 461.3px;overflow: auto;">
+					<div class="card h-100" style="min-height: 400px;max-height: 400px;overflow: auto;">
 						<div class="card-header bg-white position-sticky p-3" style="z-index: 10;top: 0;">
 							<div class="row" style="font-family: 'qc-semibold';">
 								<div class="col-6 d-flex align-items-center">

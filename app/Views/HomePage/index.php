@@ -2,6 +2,13 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
+  <style>
+    @media (max-width:990px) {
+        body {
+          overflow: hidden;
+        }
+      } 
+  </style>
   <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/homepage.min.css'); ?>">

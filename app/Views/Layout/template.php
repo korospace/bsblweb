@@ -26,12 +26,6 @@
     .swal2-confirm {
       background-color: #c1d966 !important;
     }
-
-    @media (max-width:990px) {
-      body {
-        overflow: hidden;
-      }
-    } 
   </style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.min.css'); ?>">

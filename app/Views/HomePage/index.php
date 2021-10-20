@@ -148,7 +148,7 @@
                 <img src="assets/images/features-icon-1.png" alt="">
                 <h4>WEBINAR</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-                <a href="" class="main-button">
+                <a href="<?= base_url('/');?>" class="main-button">
                   Read More
                 </a>
               </div>

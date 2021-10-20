@@ -199,6 +199,7 @@ class TransaksiModel extends Model
             else {
                 $transaction = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.type,transaksi.jenis_saldo,transaksi.date,
                 (SELECT SUM(harga) AS total_setor from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
+                (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
                 (SELECT jumlah AS total_tarik from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id),
                 (SELECT jumlah AS total_pindah from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id)
                 FROM transaksi
@@ -269,6 +270,9 @@ class TransaksiModel extends Model
         foreach ($data as $d) {
             if ($d['total_setor'] == null) {
                 unset($d['total_setor']);
+            }
+            if ($d['total_kg'] == null) {
+                unset($d['total_kg']);
             }
             if ($d['total_tarik'] == null) {
                 unset($d['total_tarik']);

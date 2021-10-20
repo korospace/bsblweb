@@ -17,9 +17,15 @@
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
+
+<!-- **** Loading Spinner **** -->
+<?= $this->include('Components/loadingSpinner'); ?>
+<!-- **** Alert Info **** -->
+<?= $this->include('Components/alertInfo'); ?>
 
 <body class="g-sidenav-show bg-gray-100">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
@@ -29,7 +35,7 @@
         aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href="https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.php"
         target="_blank">
-        <img src="assets/images/banksampah-logo.png" class="navbar-brand-img h-100" alt="main_logo">
+        <img src="<?= base_url('assets/images/banksampah-logo.webp');?>" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">Profile Anda</span>
       </a>
     </div>
@@ -37,7 +43,7 @@
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100 h-100" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('dashboard/admin');?>">
+          <a class="nav-link" href="<?= base_url('admin');?>">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +137,7 @@
           </div>
           <ul class="navbar-nav justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
+              <a href="" id="btn-logout" class="nav-link text-white font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
                 <span class="d-sm-inline d-none">Log Out</span>
               </a>

@@ -48,6 +48,8 @@ $routes->group("nasabah", function ($routes) {
 });
 
 $routes->group("admin", function ($routes) {
+    $routes->add('/',                'Dashboard::dashboardAdmin');
+    $routes->add('profile',          'Profile::profileAdmin');
     $routes->post("login",           "Admin::login");
     $routes->get("sessioncheck",     "Admin::sessionCheck");
     $routes->get("getprofile",       "Admin::getProfile");
@@ -107,7 +109,6 @@ $routes->group("transaksi", function ($routes) {
 $routes->add('/',                   'HomePage::index');
 $routes->add('/signup',             'SignUp::index');
 $routes->add('/login',              'Login::index');
-$routes->add('/dashboard/admin',    'Dashboard::dashboardAdmin');
 $routes->add('/tables',             'Tables::tables');
 $routes->add('/info',               'UserInfo::info');
 $routes->add('/profile',            'ProfileAdmin::profileadmin');

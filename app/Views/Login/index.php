@@ -54,7 +54,7 @@
 										<input type="text" name="email" id="nasabah-email" class="form-control" placeholder="Email" autocomplete="off" />
 										<small id="nasabah-email-error" class="position-absolute text-danger"></small>
 									</div>
-									<div class="form-group position-relative" style="margin-top: 36px;">
+									<div class="form-group position-relative" style="margin-top: 30px;">
 										<input type="password" name="password" id="nasabah-password" class="form-control" placeholder="Password" autocomplete="off" />
 										<small id="nasabah-password-error" class="position-absolute text-danger"></small>
 									</div>
@@ -68,25 +68,23 @@
 						<!-- Admin login -->
 						<div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 							<h3 class="register-heading">Masuk Sebagai Admin</h3>
-							<div class="row register-form">
-								<form id="formLoginAdmin">
+								<form id="formLoginAdmin" class="row register-form">
 									<div class="col-md-12">
 										<div class="form-group position-relative">
-											<input type="text" id="admin-username" class="form-control" name="username" placeholder="Masukan Username Anda" value="" />
+											<input type="text" id="admin-username" class="form-control" name="username" placeholder="Masukan Username Anda" value="" 
+											autocomplete="off" />
 											<small id="admin-username-error" class="position-absolute text-danger"></small>
-											<br>
 										</div>
-										<div class="form-group position-relative">
-											<input type="password" id="admin-password" class="form-control" name="password" placeholder="Masukan Password Anda" value="" />
+										<div class="form-group position-relative" style="margin-top: 30px;">
+											<input type="password" id="admin-password" class="form-control" name="password" placeholder="Masukan Password Anda" value="" 
+											autocomplete="off" />
 											<small id="admin-password-error" class="position-absolute text-danger"></small>
-											<br>
 										</div>
 									</div>
 									<div class="col d-flex justify-content-center">
 										<button type="submit" class="btnRegister" value="Login">Login</button>
 									</div>
 								</form>
-							</div>
 						</div>
 					</div>
 				</div>

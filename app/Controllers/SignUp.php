@@ -12,13 +12,32 @@ class SignUp extends BaseController
             'title' => 'Silahkan Daftarkan Diri Anda'
         ];
 
-        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $token = [
+            'value' => null
+        ];
+
+        if (isset($_COOKIE['token'])) {
+            $token = [
+                'value' => $_COOKIE['token'],
+                'type'  => 'nasabah'
+            ];
+        } 
+        else if (isset($_COOKIE['tokenAdmin'])){
+            $token = [
+                'value' => $_COOKIE['tokenAdmin'],
+                'type'  => 'admin'
+            ];
+        }
         
-        if ($token == null) {
+        if ($token['value'] == null) {
             return view('SignUp/index',$data);
         } 
         else {
-            return redirect()->to(base_url().'/nasabah');
+            if ($token['type'] == 'nasabah') {
+                return redirect()->to(base_url().'/nasabah');
+            } else {
+                return redirect()->to(base_url().'/admin');
+            }
         }
     }
 }

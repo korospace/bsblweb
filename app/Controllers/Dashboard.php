@@ -8,11 +8,21 @@ class Dashboard extends BaseController
 {
     public function dashboardAdmin()
     {
-        $data = [
-            'title' => 'Admin | dashboard'
+        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $result = $this->checkToken($token, false);
+        $data   = [
+            'title' => 'Admin | dashboard',
+            'token' => $token
         ];
-
-        return view('Admin/index',$data);
+        
+        if($result['success'] == false) {
+            setcookie('tokenAdmin', null, -1, '/');
+            unset($_COOKIE['tokenAdmin']);
+            return redirect()->to(base_url().'/login');
+        } 
+        else {
+            return view('Admin/index',$data);
+        }
     }
 
     public function dashboardNasabah()

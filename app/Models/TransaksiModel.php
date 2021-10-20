@@ -160,7 +160,7 @@ class TransaksiModel extends Model
         }
     }
 
-    public function getData(array $get,bool $isAdmin,?string $idNasabah): array
+    public function getData(array $get,?bool $isAdmin=null,?string $idNasabah=null): array
     {
         try {
             if (isset($get['id_transaksi']) && !isset($get['id_nasabah'])) {

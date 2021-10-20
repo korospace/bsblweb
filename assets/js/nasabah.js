@@ -185,9 +185,9 @@ const getAllTransaksi = () => {
                         <span class="${textClass} mt-2">${totalTransaksi}</span>
                     </div>
                     <div class="d-flex align-items-center text-sm">
-                        <button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksi('${t.id_transaksi}');">
+                        <a href='' class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksi('${t.id_transaksi}');">
                             <i class="fas fa-file-pdf text-lg me-1"></i> PDF
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <hr class="horizontal dark mt-2">
@@ -308,6 +308,7 @@ const getDetailTransaksi = (id) => {
             $('#detil-transaksi-spinner').addClass('d-none');
             let date = new Date(parseInt(response.data.data.date) * 1000);
             
+            $('#btn-cetak-transaksi').attr('href',`${BASEURL}/cetaktransaksi/${response.data.data.id_transaksi}`);
             $('#detil-transaksi-date').html(`${date.toLocaleString("en-US",{day: "numeric"})}/${date.toLocaleString("en-US",{month: "numeric"})}/${date.toLocaleString("en-US",{year: "numeric"})}&nbsp;&nbsp;&nbsp;${date.toLocaleString("en-US",{hour: '2-digit', minute: '2-digit',second: '2-digit'})}`);
             $('#detil-transaksi-nama').html(response.data.data.nama_lengkap);
             $('#detil-transaksi-idnasabah').html(response.data.data.id_nasabah);

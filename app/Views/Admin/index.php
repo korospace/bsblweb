@@ -16,9 +16,15 @@
 <script src="<?= base_url('assets/js/plugins/smooth-scrollbar.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
+
+<!-- **** Loading Spinner **** -->
+<?= $this->include('Components/loadingSpinner'); ?>
+<!-- **** Alert Info **** -->
+<?= $this->include('Components/alertInfo'); ?>
 
 <body class="g-sidenav-show  bg-gray-100">
 	<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
@@ -65,7 +71,7 @@
 					<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link  " href="<?= base_url('profile');?>">
+					<a class="nav-link  " href="<?= base_url('admin/profile');?>">
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +117,7 @@
 					<div class="ms-md-auto pe-md-3 d-flex align-items-center">
 						<ul class="navbar-nav  justify-content-end">
 							<li class="nav-item d-flex align-items-center">
-								<a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+								<a href="" id="btn-logout" class="nav-link text-body font-weight-bold px-0">
 									<i class="fa fa-user me-sm-1"></i>
 									<span class="d-sm-inline d-none">Log Out</span>
 								</a>

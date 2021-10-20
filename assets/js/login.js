@@ -170,8 +170,9 @@ $('#formLoginAdmin').on('submit', function(e) {
         })
         .then((response) => {
             hideLoadingSpinner();
-            document.cookie = `token=${response.data.token}; path=/;`;
-            window.location.replace(`${BASEURL}/dashboard/admin`);
+            // console.log(response.data);
+            document.cookie = `tokenAdmin=${response.data.token}; path=/;`;
+            window.location.replace(`${BASEURL}/admin`);
         })
         .catch((error) => {
             hideLoadingSpinner();

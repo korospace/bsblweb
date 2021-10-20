@@ -10,10 +10,27 @@
 	.rowCardWraper {
 		height: 100% !important;
 	}
+	
+	.detil-transaksi-logo img{
+		width: 80px;
+	}
 
 	@media (max-width:768px) {
 		.rowCardWraper {
 			height: auto !important;
+		}
+	} 
+	@media (max-width:422px) {
+		.detil-transaksi-logo h4{
+			font-size: 14px;
+		}
+		.detil-transaksi-logo img{
+			width: 60px;
+		}
+		.detil-transaksi-header,
+		#detil-transaksi-type ,
+		#detil-transaksi-body {
+			font-size: 8px;
 		}
 	} 
 </style>
@@ -492,12 +509,12 @@
 					<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 60px;" />
 				</div>
 				<!-- header -->
-				<div class="d-flex align-items-center justify-content-between py-2 px-4">
-					<img src="<?= base_url('assets/images/banksampah-logo.png');?>" style="width: 80px;" />
+				<div class="detil-transaksi-logo d-flex align-items-center justify-content-between py-2 px-4">
+					<img src="<?= base_url('assets/images/banksampah-logo.png');?>" />
 					<h4>bukti transaksi</h4>
 				</div>
 				<hr class="horizontal dark mt-2">
-				<div class="px-4">
+				<div class="px-4 detil-transaksi-header">
 					<table>
 						<tr>
 							<td>TANGGAL&nbsp;&nbsp;&nbsp;</td>
@@ -519,15 +536,15 @@
 				</div>
 				<hr class="horizontal dark mt-2">
 				<h6 id="detil-transaksi-type" class="font-italic px-4"></h6>
-				<div id="detil-transaksi-body" class="px-4 mt-2">
+				<div id="detil-transaksi-body" class="px-4 mt-2 table-responsive">
 					
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button onclick="window.print();" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+				<a id="btn-cetak-transaksi" href="" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
 					<span id="text">Cetak</span>
 					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
-				</button>
+				</a>
 			</div>
 		</div>
 	</div>

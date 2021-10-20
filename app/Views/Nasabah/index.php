@@ -347,7 +347,7 @@
 			</div>
 			<div class="row mt-4">
 				<div class="col-lg-8">
-					<div class="card z-index-2" style="font-family: 'qc-semibold';">
+					<div class="card z-index-2" style="min-height: 461.3px;max-height: 461.3px;font-family: 'qc-semibold';">
 						<div class="card-header pb-0">
 							<h6>Grafik Penyetoran</h6>
 						</div>
@@ -386,7 +386,7 @@
 										<span class="mask bg-gradient-dark"></span>
 										<div class="card-body-id position-relative z-index-1 p-3">
 											<i class="fas fa-wifi text-white p-2"></i>
-											<h5 id="card-id" class="text-white mt-4 mb-5 pb-2">_ _ _ _ _&nbsp;&nbsp;&nbsp;_ _ _
+											<h5 id="card-id" class="text-white mt-4 mb-5 pb-2" style="font-family: 'qc-medium';">_ _ _ _ _&nbsp;&nbsp;&nbsp;_ _ _
 												_&nbsp;&nbsp;&nbsp;_</h5>
 											<div class="d-flex">
 												<div class="d-flex">
@@ -400,7 +400,7 @@
 													</div>
 												</div>
 												<div class="ms-auto w-20 d-flex align-items-end justify-content-end">
-													<img class="w-60 mt-2" src="<?= base_url('assets/images/logos/banksampah-logo.webp'); ?>"
+													<img class="w-60 mt-2" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>"
 														alt="logo">
 												</div>
 											</div>

@@ -1,0 +1,222 @@
+CRITICAL - 2021-10-20 02:19:18 --> syntax error, unexpected '<<' (T_SL), expecting end of file
+#0 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(358): CodeIgniter\CodeIgniter->tryToRouteIt(NULL)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2021-10-20 03:22:52 --> Temporary files directory "/opt/lampp/htdocs/bsbl/vendor/mpdf/mpdf/src/Config/../../tmp/mpdf" is not writable
+#0 /opt/lampp/htdocs/bsbl/vendor/mpdf/mpdf/src/ServiceFactory.php(56): Mpdf\Cache->__construct('/opt/lampp/htdo...', 3600)
+#1 /opt/lampp/htdocs/bsbl/vendor/mpdf/mpdf/src/Mpdf.php(1066): Mpdf\ServiceFactory->getServices(Object(Mpdf\Mpdf), Object(Psr\Log\NullLogger), Array, 0, Object(Mpdf\Language\LanguageToFont), Object(Mpdf\Language\ScriptToLanguage), NULL, NULL, NULL, NULL)
+#2 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(11): Mpdf\Mpdf->__construct()
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-10-20 03:27:36 --> Invalid file: html_to_pdf.php
+#0 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/View/View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('html_to_pdf.php')
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Common.php(1092): CodeIgniter\View\View->render('html_to_pdf', Array, true)
+#2 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(12): view('html_to_pdf', Array)
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-10-20 03:52:19 --> Undefined index: cs
+#0 /opt/lampp/htdocs/bsbl/vendor/mpdf/mpdf/src/Tag/Input.php(230): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 230, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/mpdf/mpdf/src/Tag.php(240): Mpdf\Tag\Input->open(Array, Array, 873)
+#2 /opt/lampp/htdocs/bsbl/vendor/mpdf/mpdf/src/Mpdf.php(13812): Mpdf\Tag->OpenTag('INPUT', Array, Array, 873)
+#3 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(14): Mpdf\Mpdf->WriteHTML(' <h1><a name="t...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-20 03:52:46 --> Undefined index: cs
+#0 /opt/lampp/htdocs/bsbl/vendor/mpdf/mpdf/src/Tag/Input.php(230): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 230, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/mpdf/mpdf/src/Tag.php(240): Mpdf\Tag\Input->open(Array, Array, 873)
+#2 /opt/lampp/htdocs/bsbl/vendor/mpdf/mpdf/src/Mpdf.php(13812): Mpdf\Tag->OpenTag('INPUT', Array, Array, 873)
+#3 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(14): Mpdf\Mpdf->WriteHTML(' <h1><a name="t...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-20 03:56:57 --> Undefined variable: title
+#0 /opt/lampp/htdocs/bsbl/app/Views/Layout/template.php(10): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', '/opt/lampp/htdo...', 10, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/View/View.php(214): include('/opt/lampp/htdo...')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/View/View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/View/View.php(230): CodeIgniter\View\View->render('Layout/template', Array, true)
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Common.php(1092): CodeIgniter\View\View->render('CetakTransaksi/...', Array, true)
+#5 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(12): view('CetakTransaksi/...', Array)
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#7 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#8 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2021-10-20 06:38:07 --> Undefined property: App\Controllers\CetakTransaksi::$transaksiModel
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(49): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', '/opt/lampp/htdo...', 49, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 06:55:25 --> date() expects parameter 2 to be int, string given
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'date() expects ...', '/opt/lampp/htdo...', 86, Array)
+#1 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(86): date('d/m/y H:i:s', 'm. akbar bagas ...')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-20 07:37:12 --> Array to string conversion
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(161): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string...', '/opt/lampp/htdo...', 161, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TSS897389078')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 07:37:47 --> Array to string conversion
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(160): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Array to string...', '/opt/lampp/htdo...', 160, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TSS897389078')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 07:51:16 --> Undefined index: jenis
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(114): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 114, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TSS897389078')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 19:04:44 --> Undefined index: token
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(13): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 13, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 19:05:07 --> Undefined index: token
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(13): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 13, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 19:07:39 --> Undefined index: token
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(13): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 13, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TPS960104075')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 19:10:29 --> Undefined index: token
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(14): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 14, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TPS960104075')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 19:15:50 --> Illegal string offset 'value'
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(13): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Illegal string ...', '/opt/lampp/htdo...', 13, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 19:16:16 --> Illegal string offset 'value'
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(15): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Illegal string ...', '/opt/lampp/htdo...', 15, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 19:19:26 --> Undefined index: token
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(12): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 12, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-20 19:41:35 --> Only arrays and Traversables can be unpacked
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(15): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Only arrays and...', '/opt/lampp/htdo...', 15, Array)
+#1 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(53): App\Controllers\CetakTransaksi->modifUang('11140')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TTS005500337')
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-20 19:46:38 --> Undefined index: jumlah
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(30): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 30, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TSS897389078')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-10-20 20:03:26 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-10-20 20:03:26 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#2 /opt/lampp/htdocs/bsbl/app/Controllers/BaseController.php(210): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(13): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TSS897389078')
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-10-20 20:03:51 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-10-20 20:03:51 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#2 /opt/lampp/htdocs/bsbl/app/Controllers/BaseController.php(210): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(13): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TSS897389078')
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-10-20 20:03:54 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-10-20 20:03:54 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#2 /opt/lampp/htdocs/bsbl/app/Controllers/BaseController.php(210): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(13): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TSS897389078')
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-10-20 20:03:56 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-10-20 20:03:56 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#2 /opt/lampp/htdocs/bsbl/app/Controllers/BaseController.php(210): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(13): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TSS897389078')
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2021-10-20 20:03:57 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+CRITICAL - 2021-10-20 20:03:57 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not translate host name &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; to address: Name or service not known
+#0 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#2 /opt/lampp/htdocs/bsbl/app/Controllers/BaseController.php(210): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(13): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TSS897389078')
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-20 20:05:56 --> Undefined variable: bg
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/CetakTransaksi.php(84): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', '/opt/lampp/htdo...', 84, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\CetakTransaksi->index('TSS897389078')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CetakTransaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}

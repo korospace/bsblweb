@@ -12,6 +12,13 @@ const sessioncheck = () => {
             }
         })
         .then((response) => {
+            // update cookie
+            // const d = new Date();
+            // d.setTime(d.getTime() + response.data.data.expired);
+            // let token   = TOKEN;
+            // let expired = d.toUTCString();
+            // document.cookie = `token=${token}; expires=${expired}; path=/;`;
+
             hideLoadingSpinner();
             $('#container').removeClass('d-none');
 
@@ -29,7 +36,7 @@ const sessioncheck = () => {
     
             // 401 Unauthorized
             if (error.response.status == 401) {
-                document.cookie = `token=null; path=/;`;
+                document.cookie = `token=null;expires=;path=/;`;
                 
                 if (error.response.data.messages == 'token expired') {
                     Swal.fire({
@@ -61,21 +68,7 @@ sessioncheck();
 
 // modif saldo uang
 function modifUang(rHarga){
-    let j       = 1;
-    let hargav2 = '';
-    let hargav3 = '';
-    for(let i = [...rHarga].length-1;i >= 0; i--){
-        if(j==4){
-            hargav2 += '.'+[...rHarga][i];j=1;
-        }else{
-            hargav2 += [...rHarga][i];
-        }
-        j++;
-    }
-    for(let i = hargav2.length-1;i >= 0; i--){
-        hargav3 += hargav2[i];
-    }
-    return hargav3;
+    return rHarga.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
 }
 
 // Get data saldo
@@ -195,7 +188,15 @@ const getAllTransaksi = () => {
             });
 
             updateGrafikSetor(arrayId,arrayKg);
-            $('#transaksi-wraper').html(elTransaksi);
+            
+            if (allTransaksi.length == 0) {
+                $('#transaksi-wraper').html('<h6>belum ada transaksi</h6>');                
+            } 
+            else {
+                $('#transaksi-wraper').html(`<ul class="list-group w-100" style="font-family: 'qc-medium';">
+                    ${elTransaksi}
+                </ul>`);
+            }
         })
         .catch((error) => {
             // 500 server error
@@ -308,12 +309,12 @@ const getDetailTransaksi = (id) => {
             $('#detil-transaksi-spinner').addClass('d-none');
             let date = new Date(parseInt(response.data.data.date) * 1000);
             
-            $('#btn-cetak-transaksi').attr('href',`${BASEURL}/cetaktransaksi/${response.data.data.id_transaksi}`);
             $('#detil-transaksi-date').html(`${date.toLocaleString("en-US",{day: "numeric"})}/${date.toLocaleString("en-US",{month: "numeric"})}/${date.toLocaleString("en-US",{year: "numeric"})}&nbsp;&nbsp;&nbsp;${date.toLocaleString("en-US",{hour: '2-digit', minute: '2-digit',second: '2-digit'})}`);
             $('#detil-transaksi-nama').html(response.data.data.nama_lengkap);
             $('#detil-transaksi-idnasabah').html(response.data.data.id_nasabah);
             $('#detil-transaksi-idtransaksi').html(response.data.data.id_transaksi);
             $('#detil-transaksi-type').html((response.data.data.type == 'setor')?response.data.data.type+' sampah':response.data.data.type+' saldo');
+            $('#btn-cetak-transaksi').attr('href',`${BASEURL}/nasabah/cetaktransaksi/${response.data.data.id_transaksi}`);
 
             // tarik saldo
             if (response.data.data.type == 'tarik') {

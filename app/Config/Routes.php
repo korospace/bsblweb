@@ -32,7 +32,6 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-
 $routes->add('/',              'HomePage::index');
 $routes->add('/signup',        'SignUp::index');
 $routes->add('/login',         'Login::index');
@@ -40,11 +39,13 @@ $routes->add('/tables',        'Tables::tables');
 $routes->add('/info',          'UserInfo::info');
 $routes->add('/profile',       'ProfileAdmin::profileadmin');
 $routes->add('/otp',           'OTP::otp');
-$routes->add('/cetaktransaksi/(:any)','CetakTransaksi::index/$1');
 
 $routes->group("nasabah", function ($routes) {
+    // VIEWS
     $routes->add('/',             'Dashboard::dashboardNasabah');
     $routes->add('profile',       'Profile::profileNasabah');
+    $routes->add('cetaktransaksi/(:any)','CetakTransaksi::index/$1');
+    // API
     $routes->post("register",     "Nasabah::register");
     $routes->post("verification", "Nasabah::verification");
     $routes->post("login",        "Nasabah::login");
@@ -58,8 +59,10 @@ $routes->group("nasabah", function ($routes) {
 });
 
 $routes->group("admin", function ($routes) {
+    // VIEWS
     $routes->add('/',                'Dashboard::dashboardAdmin');
     $routes->add('profile',          'Profile::profileAdmin');
+    // API
     $routes->post("login",           "Admin::login");
     $routes->get("sessioncheck",     "Admin::sessionCheck");
     $routes->get("getprofile",       "Admin::getProfile");

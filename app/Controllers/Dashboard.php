@@ -21,6 +21,7 @@ class Dashboard extends BaseController
             return redirect()->to(base_url().'/login');
         } 
         else {
+            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/index',$data);
         }
     }
@@ -41,6 +42,7 @@ class Dashboard extends BaseController
             return redirect()->to(base_url().'/login');
         } 
         else {
+            setcookie('token',$token,time() + $result['expired'],'/');
             return view('Nasabah/index',$data);
         }
     }

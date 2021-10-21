@@ -368,9 +368,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="card-body p-3 pb-0">
-							<ul id="transaksi-wraper" class="list-group" style="font-family: 'qc-medium';">
-							</ul>
+						<div id="transaksi-wraper" class="card-body p-3 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
+							
 						</div>
 					</div>
 				</div>

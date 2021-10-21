@@ -7,43 +7,15 @@ use App\Controllers\BaseController;
 
 class CetakTransaksi extends BaseController
 {
-
-    public function __construct()
-    {
-        
-    }
-
     public function index(string $id)
     {
-        $token   = ['value' => null];
+        $token  = $_COOKIE['token'];
+        $result = $this->checkToken($token);
 
-        if (isset($_COOKIE['token'])) {
-            $token = [
-                'value' => $_COOKIE['token'],
-                'type'  => 'nasabah'
-            ];
-        } 
-        else if (isset($_COOKIE['tokenAdmin'])){
-            $token = [
-                'value' => $_COOKIE['tokenAdmin'],
-                'type'  => 'admin'
-            ];
-        }
-        
-        if ($token['value'] == null) {
+        if ($token == null || $result['success'] == false) {
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
-        }
-        else {
-            $result = $this->checkToken($token['value']);
-            
-            if($result['success'] == false) {
-                setcookie('token', null, -1, '/');
-                setcookie('tokenAdmin', null, -1, '/');
-                unset($_COOKIE['token']);
-                unset($_COOKIE['tokenAdmin']);
-
-                return redirect()->to(base_url().'/login');
-            }
         }
 
         $transaksiModel = new TransaksiModel;
@@ -53,20 +25,18 @@ class CetakTransaksi extends BaseController
             return redirect()->to(base_url().'/login');
         }
         
-        // dd($dbresponse['data']);
         $mpdf = new \Mpdf\Mpdf();
         $type = ($dbresponse['data']['type'] == 'setor')? $dbresponse['data']['type'].' sampah' : $dbresponse['data']['type'].' saldo';
-
+        
         if ($dbresponse['data']['type'] == 'tarik') {
-            $jumlah = ($dbresponse['data']['jenis_saldo'] == 'uang')? 'Rp '.$dbresponse['data']['jumlah'] : $dbresponse['data']['jumlah'].' gram';
-
+            $jumlah = ($dbresponse['data']['jenis_saldo'] == 'uang')? 'Rp '.number_format($dbresponse['data']['jumlah'] , 0, ',', '.') : $dbresponse['data']['jumlah'].' gram';
             $result = "<div style='padding: 20px;width: 100%;background-color: rgb(131, 146, 171);border-radius: 6px;'>
                 <h1 style='font-size: 2.5em;'><b>Jumlah</b> : ${jumlah}</h1>
             </div>";
         } 
         else if ($dbresponse['data']['type'] == 'pindah') {
-            $jumlah        = ($dbresponse['data']['jenis_saldo'] == 'uang')? 'Rp '.$dbresponse['data']['jumlah'] : $dbresponse['data']['jumlah'].' gram';
-            $hasilKonversi = ($dbresponse['data']['asal'] == 'uang')? $dbresponse['data']['hasil_konversi'].' gram' : 'Rp '.$dbresponse['data']['hasil_konversi'];
+            $jumlah = ($dbresponse['data']['jenis_saldo'] == 'uang')? 'Rp '.number_format($dbresponse['data']['jumlah'] , 0, ',', '.') : $dbresponse['data']['jumlah'].' gram';
+            $hasilKonversi = ($dbresponse['data']['asal'] == 'uang')? $dbresponse['data']['hasil_konversi'].' gram' : 'Rp '.number_format($dbresponse['data']['hasil_konversi'] , 0, ',', '.');
 
             $result = "<div style='padding: 20px;width: 100%;background-color: rgb(131, 146, 171);border-radius: 6px;'>
                 <table>
@@ -91,7 +61,7 @@ class CetakTransaksi extends BaseController
                     <tr>
                         <td style='font-size: 2em;'>Harga emas&nbsp;&nbsp;&nbsp;</td>
                         <td style='font-size: 2em;'>
-                            : Rp ".$dbresponse['data']['harga_emas']."
+                            : Rp ".number_format($dbresponse['data']['harga_emas'] , 0, ',', '.')."
                         </td>
                     </tr>
                     <tr>
@@ -109,21 +79,23 @@ class CetakTransaksi extends BaseController
             $no     = 1;
 
             foreach ($barang as $key) {
-                $trBody .= "<tr>
+                $bg     = ($no % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
+
+                $trBody .= "<tr $bg>
                     <th>".$no++."</th>
                     <th>".$key['jenis']."</th>
                     <th>".$key['jumlah']."</th>
-                    <th>Rp ".$key['harga']."</th>
+                    <th>Rp ".number_format($key['harga'] , 0, ',', '.')."</th>
                 </tr>";
             }
             
-            $result = "<table border='1' width='100%' cellpadding='5'>
+            $result = "<table border='0' width='100%' cellpadding='5'>
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Jenis sampah</th>
-                        <th>Kg</th>
-                        <th>Harga</th>
+                        <th style='border: 1px solid black;'>#</th>
+                        <th style='border: 1px solid black;'>Jenis sampah</th>
+                        <th style='border: 1px solid black;'>Kg</th>
+                        <th style='border: 1px solid black;'>Harga</th>
                     </tr>
                 <thead>
                 <tbody>
@@ -186,8 +158,8 @@ class CetakTransaksi extends BaseController
         </body>
         
         </html>");
-        $this->response->setHeader('Content-Type', 'application/pdf');
 
+        $this->response->setHeader('Content-Type', 'application/pdf');
         $mpdf->Output('transaksi#'.$id.".pdf", 'I');
     }
 }

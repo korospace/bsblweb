@@ -197,7 +197,10 @@ class BaseController extends Controller
             $table   = (isset($decoded['privilege'])) ? 'admin' : 'nasabah';
 
             if ($dbcheck == false) {
-                return ['success' => true,];
+                return [
+                    'success' => true,
+                    'expired' => $decoded['expired'] - time(),
+                ];
             }
             else if (time() < $decoded['expired']) {
                 if ($table == 'admin') {

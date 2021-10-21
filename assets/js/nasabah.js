@@ -20,7 +20,6 @@ const sessioncheck = () => {
             // document.cookie = `token=${token}; expires=${expired}; path=/;`;
 
             hideLoadingSpinner();
-            $('#container').removeClass('d-none');
 
             if (pageTitle[1] == 'dashboard') {
                 getDataSaldo();
@@ -32,7 +31,6 @@ const sessioncheck = () => {
         })
         .catch((error) => {
             hideLoadingSpinner();
-            $('#container').removeClass('d-none');
     
             // 401 Unauthorized
             if (error.response.status == 401) {

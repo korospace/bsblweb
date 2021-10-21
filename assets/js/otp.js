@@ -43,11 +43,39 @@ $('.digit-group').find('input').each(function() {
 							Swal.fire({
 								icon: 'success',
 								title: 'verifikasi success!',
-								text: 'silahkan lanjut ke halaman login',
 								confirmButtonText: 'ok',
 							})
 							.then(() => {
-								window.location.replace(`${BASEURL}/login`);
+								if (EMAIL == '' && PASSWORD == '') {
+									// console.log(EMAIL);
+									// console.log(PASSWORD);
+									
+									window.location.replace(`${BASEURL}/login`);
+								} 
+								else {
+									showLoadingSpinner();
+									
+									// Login
+									let formLogin = new FormData();
+									formLogin.append('email',EMAIL);
+									formLogin.append('password',PASSWORD);
+
+									axios
+									.post(`${APIURL}/nasabah/login`,formLogin, {
+										headers: {
+											// header options 
+										}
+									})
+									.then((response) => {
+										hideLoadingSpinner();
+										document.cookie = `token=${response.data.token}; path=/;`;
+										window.location.replace(`${BASEURL}/nasabah`);
+									})
+									.catch(() => {
+										hideLoadingSpinner();
+										window.location.replace(`${BASEURL}/login`);
+									})
+								}
 							})
 							
 						})

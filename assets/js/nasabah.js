@@ -186,17 +186,16 @@ const getAllTransaksi = () => {
             });
 
             updateGrafikSetor(arrayId,arrayKg);
-            
-            if (allTransaksi.length == 0) {
-                $('#transaksi-wraper').html('<h6>belum ada transaksi</h6>');                
-            } 
-            else {
-                $('#transaksi-wraper').html(`<ul class="list-group w-100" style="font-family: 'qc-medium';">
-                    ${elTransaksi}
-                </ul>`);
-            }
+            $('#transaksi-wraper').html(`<ul class="list-group w-100" style="font-family: 'qc-medium';">
+                ${elTransaksi}
+            </ul>`);
         })
         .catch((error) => {
+            // transaksi not found
+            if (error.response.status == 404) {
+                updateGrafikSetor([],[]);
+                $('#transaksi-wraper').html(`<h6 class='opacity-6'>belum ada transaksi</h6>`); 
+            }
             // 500 server error
             if (error.response.status == 500) {
                 showAlert({
@@ -589,6 +588,11 @@ function validateFormEditProfile(form) {
         $('#username-edit-error').html('*minimal 8 huruf dan maksimal 20 huruf');
         status = false;
     }
+    else if (/\s/.test($('#username-edit').val())) {
+        $('#username-edit').addClass('is-invalid');
+        $('#username-edit-error').html('*tidak boleh ada spasi');
+        status = false;
+    }
     // tgl lahir validation
     if ($('#tgllahir-edit').val() == '') {
         $('#tgllahir-edit').addClass('is-invalid');
@@ -632,6 +636,11 @@ function validateFormEditProfile(form) {
         if ($('#newpass-edit').val().length < 8 || $('#newpass-edit').val().length > 20) {
             $('#newpass-edit').addClass('is-invalid');
             $('#newpass-edit-error').html('*minimal 8 huruf dan maksimal 20 huruf');
+            status = false;
+        }
+        else if (/\s/.test($('#newpass-edit').val())) {
+            $('#newpass-edit').addClass('is-invalid');
+            $('#newpass-edit-error').html('*tidak boleh ada spasi');
             status = false;
         }
         if ($('#oldpass-edit').val() == '') {

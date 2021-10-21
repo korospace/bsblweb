@@ -32,6 +32,10 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
+	<script>
+		const EMAIL    = '<?= $email; ?>';
+		const PASSWORD = '<?= $password; ?>';
+	</script>
 	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/otp.js'); ?>"></script>
 <?= $this->endSection(); ?>

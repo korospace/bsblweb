@@ -27,7 +27,7 @@ class SetorSampah extends Migration
                 'null' => false,
             ],
             'harga' => [
-                'type' => 'integer',
+                'type' => 'numeric',
                 'null' => false,
             ],
         ]);

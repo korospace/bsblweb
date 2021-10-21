@@ -94,6 +94,16 @@ class BaseController extends Controller
         return $base64;
     }
 
+    public function encrypt(string $pass) 
+    { 
+        return openssl_encrypt(trim($pass), "AES-128-ECB", $this->getKey()); 
+    } 
+
+    public function decrypt(string $pass) 
+    { 
+        return openssl_decrypt($pass, "AES-128-ECB", $this->getKey()); 
+    } 
+
     /**
      * Send Email OTP.
      */
@@ -197,7 +207,10 @@ class BaseController extends Controller
             $table   = (isset($decoded['privilege'])) ? 'admin' : 'nasabah';
 
             if ($dbcheck == false) {
-                return ['success' => true,];
+                return [
+                    'success' => true,
+                    'expired' => $decoded['expired'] - time(),
+                ];
             }
             else if (time() < $decoded['expired']) {
                 if ($table == 'admin') {

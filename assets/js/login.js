@@ -10,10 +10,10 @@ $('#formLoginNasabah').on('submit', function(e) {
 
     if (doValidate()) {
         showLoadingSpinner();
-        let form = new FormData(e.target);
+        let formLogin = new FormData(e.target);
 
         axios
-        .post(`${APIURL}/nasabah/login`,form, {
+        .post(`${APIURL}/nasabah/login`,formLogin, {
             headers: {
                 // header options 
             }
@@ -39,7 +39,26 @@ $('#formLoginNasabah').on('submit', function(e) {
             }
             // account not verify
             else if (error.response.status == 401) {
-                showPopupOtp(form);
+                setTimeout(() => {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'LOGIN GAGAL!',
+                        text: 'akun anda belum ter-verifikasi. silahkan verifikasi akun terlebih dahulu',
+                        confirmButtonText: 'ok',
+                    })
+                    .then(() => {
+                        var url = BASEURL + '/otp';
+                        var form = $('<form action="' + url + '" method="post">' +
+                        '<input type="text" name="email" value="' + formLogin.get('email') + '" />' +
+                        '<input type="text" name="password" value="' + formLogin.get('password') + '" />' +
+                        '</form>');
+                        $('body').append(form);
+                        form.submit();
+
+                        // window.location.replace(`${BASEURL}/otp`);
+                    })
+                }, 300);
+                // showPopupOtp(form);
             }
             // server error
             else{
@@ -114,7 +133,8 @@ function showPopupOtp(formLogin) {
                 .then(() => {
                     Swal.fire({
                         icon: 'success',
-                        title: 'success!',
+                        title: 'verifikasi success!',
+                        showConfirmButton: false,
                     })
 
                     setTimeout(() => {
@@ -170,8 +190,9 @@ $('#formLoginAdmin').on('submit', function(e) {
         })
         .then((response) => {
             hideLoadingSpinner();
-            document.cookie = `token=${response.data.token}; path=/;`;
-            window.location.replace(`${BASEURL}/dashboard/admin`);
+            // console.log(response.data);
+            document.cookie = `tokenAdmin=${response.data.token}; path=/;`;
+            window.location.replace(`${BASEURL}/admin`);
         })
         .catch((error) => {
             hideLoadingSpinner();

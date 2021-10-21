@@ -1,0 +1,113 @@
+CRITICAL - 2021-10-19 02:15:33 --> Undefined index: dompet_asal
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/Transaksi.php(287): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', '/opt/lampp/htdo...', 287, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Transaksi->pindahSaldo()
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Transaksi))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-10-19 04:11:24 --> ErrorException: pg_query(): Query failed: ERROR:  subquery must return only one column
+LINE 1: ...ampah.id_transaksi = transaksi.id) AS total_setor,(SELECT ju...
+                                                             ^ in /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT transaks...')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT transaks...')
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT transaks...')
+#4 /opt/lampp/htdocs/bsbl/app/Models/TransaksiModel.php(200): CodeIgniter\Database\BaseConnection->query('SELECT transaks...')
+#5 /opt/lampp/htdocs/bsbl/app/Controllers/Transaksi.php(39): App\Models\TransaksiModel->getData(Array, false, '1541422111')
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Transaksi->getData()
+#7 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Transaksi))
+#8 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-10-19 04:12:47 --> ErrorException: pg_query(): Query failed: ERROR:  subquery must return only one column
+LINE 1: ...o WHERE pindah_saldo.id_transaksi = transaksi.id),(SELECT ju...
+                                                             ^ in /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT transaks...')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT transaks...')
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT transaks...')
+#4 /opt/lampp/htdocs/bsbl/app/Models/TransaksiModel.php(200): CodeIgniter\Database\BaseConnection->query('SELECT transaks...')
+#5 /opt/lampp/htdocs/bsbl/app/Controllers/Transaksi.php(39): App\Models\TransaksiModel->getData(Array, false, '1541422111')
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Transaksi->getData()
+#7 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Transaksi))
+#8 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-10-19 06:44:13 --> ErrorException: pg_query(): Query failed: ERROR:  column pindah_saldo.dompet_asal does not exist
+LINE 1: ...transaksi.id AS id_transaksi,transaksi.id_nasabah,pindah_sal...
+                                                             ^ in /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #131, 'SELECT transaks...')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('SELECT transaks...')
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT transaks...')
+#4 /opt/lampp/htdocs/bsbl/app/Models/TransaksiModel.php(180): CodeIgniter\Database\BaseConnection->query('SELECT transaks...')
+#5 /opt/lampp/htdocs/bsbl/app/Controllers/Transaksi.php(39): App\Models\TransaksiModel->getData(Array, false, '1541422111')
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Transaksi->getData()
+#7 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Transaksi))
+#8 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2021-10-19 06:52:32 --> Error connecting to the database: pg_connect(): Unable to connect to PostgreSQL server: could not connect to server: Network is unreachable
+	Is the server running on host &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; (35.171.250.21) and accepting
+	TCP/IP connections on port 5432?
+CRITICAL - 2021-10-19 06:52:32 --> Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: could not connect to server: Network is unreachable
+	Is the server running on host &quot;ec2-35-171-250-21.compute-1.amazonaws.com&quot; (35.171.250.21) and accepting
+	TCP/IP connections on port 5432?
+#0 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(570): CodeIgniter\Database\BaseConnection->initialize()
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT "token"\n...', Array, false)
+#2 /opt/lampp/htdocs/bsbl/app/Controllers/BaseController.php(207): CodeIgniter\Database\BaseBuilder->get()
+#3 /opt/lampp/htdocs/bsbl/app/Controllers/Transaksi.php(32): App\Controllers\BaseController->checkToken('eyJ0eXAiOiJKV1Q...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Transaksi->getData()
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Transaksi))
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2021-10-19 23:17:18 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-10-19 23:17:27 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-10-19 23:25:41 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-10-19 23:49:32 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2021-10-19 23:50:43 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}

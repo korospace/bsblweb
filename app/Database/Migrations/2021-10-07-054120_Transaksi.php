@@ -22,11 +22,15 @@ class Transaksi extends Migration
                 'constraint' => 6,
                 'null' => false,
             ],
+            'date' => [
+                'type' => 'bigint',
+                'null' => false,
+            ],
         ]);
 
         $this->forge->addPrimaryKey('id');
         $this->forge->addForeignKey('id_nasabah','nasabah','id','CASCADE','CASCADE');
-        $this->forge->addField("date TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+        // $this->forge->addField("date TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('transaksi');
     }
 

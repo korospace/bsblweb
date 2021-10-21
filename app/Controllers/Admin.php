@@ -83,7 +83,7 @@ class Admin extends ResourceController
                                 'status'   => 200,
                                 'error'    => false,
                                 'messages' => 'loggin success',
-                                'token   ' => $token
+                                'token'    => $token
                             ];
     
                             return $this->respond($response,200);
@@ -611,7 +611,7 @@ class Admin extends ResourceController
                     ];
     
                     if ($newpass != '') {
-                        $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
+                        $data['password'] = $this->baseController->encrypt($newpass);
                     }
     
                     $editNasabah  = $nasabahModel->editProfileNasabah($data);

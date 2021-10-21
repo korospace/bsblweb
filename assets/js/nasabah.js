@@ -12,15 +12,30 @@ const sessioncheck = () => {
             }
         })
         .then((response) => {
+            // update cookie
+            // const d = new Date();
+            // d.setTime(d.getTime() + response.data.data.expired);
+            // let token   = TOKEN;
+            // let expired = d.toUTCString();
+            // document.cookie = `token=${token}; expires=${expired}; path=/;`;
+
             hideLoadingSpinner();
-            $('#container').removeClass('d-none');
+
+            if (pageTitle[1] == 'dashboard') {
+                getDataSaldo();
+                getTotalSampah();
+                getAllTransaksi();
+            }
+
+            getDataProfile();
         })
         .catch((error) => {
             hideLoadingSpinner();
-            $('#container').removeClass('d-none');
     
             // 401 Unauthorized
             if (error.response.status == 401) {
+                document.cookie = `token=null;expires=;path=/;`;
+                
                 if (error.response.data.messages == 'token expired') {
                     Swal.fire({
                         icon : 'error',
@@ -29,9 +44,11 @@ const sessioncheck = () => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then((result) => {
-                        document.cookie = `token=null; path=/;`;
                         window.location.replace(`${BASEURL}/login`);
                     })
+                }
+                else{
+                    window.location.replace(`${BASEURL}/login`);
                 }
             }
             // server error
@@ -46,6 +63,334 @@ const sessioncheck = () => {
 };
 
 sessioncheck();
+
+// modif saldo uang
+function modifUang(rHarga){
+    return rHarga.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+}
+
+// Get data saldo
+const getDataSaldo = () => {
+    axios
+        .get(`${APIURL}/nasabah/getsaldo`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            $('#saldo-uang').html(modifUang(response.data.data.uang));
+            $('#saldo-ubs').html(parseFloat(response.data.data.ubs).toFixed(4));
+            $('#saldo-antam').html(parseFloat(response.data.data.antam).toFixed(4));
+            $('#saldo-galery24').html(parseFloat(response.data.data.galery24).toFixed(4));
+        })
+        .catch((error) => {
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>server error...</strong> gagal mendapatkan data saldo, silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
+
+// get total sampah
+const getTotalSampah = () => {
+    axios
+        .get(`${APIURL}/sampah/totalitem`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            let dataSampah = response.data.data;
+            for (const name in dataSampah) {
+                $(`#sampah-${name}`).html(dataSampah[name].total+' Kg');
+            }
+        })
+        .catch((error) => {
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>server error...</strong> gagal mendapatkan data sampah, silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
+
+// get all transaksi
+const getAllTransaksi = () => {
+    axios
+        .get(`${APIURL}/transaksi/getdata`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            let arrayId      = [];
+            let arrayKg      = [];
+            let elTransaksi  = '';
+            let allTransaksi = response.data.data;
+            
+            allTransaksi.forEach(t => {
+                let type      = t.type;
+                let jenisSaldo= t.jenis_saldo;
+                let textClass = '';
+                let date      = new Date(parseInt(t.date) * 1000);
+                let day       = date.toLocaleString("en-US",{day: "numeric"});
+                let month     = date.toLocaleString("en-US",{month: "long"});
+                let year      = date.toLocaleString("en-US",{year: "numeric"});
+                let totalTransaksi = '';
+                
+                if (type == 'setor') {
+                    textClass = 'text-success';
+                    totalTransaksi = '+Rp'+modifUang(t[`total_${type}`]);
+                    arrayId.push(t.id_transaksi);
+                    arrayKg.push(t.total_kg);
+                } 
+                else if (type == 'tarik') {
+                    textClass = 'text-danger';
+                    if (jenisSaldo == 'uang') {
+                        totalTransaksi = '-Rp'+modifUang(t[`total_${type}`]);
+                    } else {
+                        totalTransaksi = t[`total_${type}`]+'g';
+                    }
+                }
+                else {
+                    textClass = 'text-warning';
+                    if (jenisSaldo == 'uang') {
+                        totalTransaksi = 'Rp'+modifUang(t[`total_${type}`]);
+                    } else {
+                        totalTransaksi = t[`total_${type}`]+'g';
+                    }
+                }
+
+                elTransaksi  += `<li class="list-group-item border-0 ps-0 border-radius-lg">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                        <h6 class="mb-1 text-dark font-weight-bold text-sm">${month}, ${day}, ${year}</h6>
+                        <span class="text-xs">ID: ${t.id_transaksi}</span>
+                        <span class="${textClass} mt-2">${totalTransaksi}</span>
+                    </div>
+                    <div class="d-flex align-items-center text-sm">
+                        <a href='' class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksi('${t.id_transaksi}');">
+                            <i class="fas fa-file-pdf text-lg me-1"></i> PDF
+                        </a>
+                    </div>
+                </div>
+                <hr class="horizontal dark mt-2">
+            </li>`;
+            });
+
+            updateGrafikSetor(arrayId,arrayKg);
+            $('#transaksi-wraper').html(`<ul class="list-group w-100" style="font-family: 'qc-medium';">
+                ${elTransaksi}
+            </ul>`);
+        })
+        .catch((error) => {
+            // transaksi not found
+            if (error.response.status == 404) {
+                updateGrafikSetor([],[]);
+                $('#transaksi-wraper').html(`<h6 class='opacity-6'>belum ada transaksi</h6>`); 
+            }
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>server error...</strong> gagal mendapatkan data transaksi, silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
+
+// update grafik setor
+const updateGrafikSetor = (arrayId,arrayKg) => {
+    var ctx2 = document.getElementById("chart-line").getContext("2d");
+
+    var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
+    gradientStroke1.addColorStop(1, 'rgba(193,217,102,0.2)');
+
+    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+    gradientStroke2.addColorStop(1, 'rgba(193,217,102,0.2)');
+
+    new Chart(ctx2, {
+        type: "bar",
+        data: {
+            // labels: ['sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss','sssssssssss'],
+            labels: arrayId,
+            datasets: [{
+                label: "Kg",
+                tension: 0.4,
+                borderWidth: 0,
+                pointRadius: 0,
+                borderColor: "#c1d966",
+                borderWidth: 3,
+                backgroundColor: gradientStroke1,
+                fill: true,
+                data: arrayKg,
+                // data: [20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],
+                maxBarThickness: 6
+            },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            scales: {
+            y: {
+                grid: {
+                    drawBorder: false,
+                    display: true,
+                    drawOnChartArea: true,
+                    drawTicks: false,
+                    borderDash: [5, 5]
+                },
+                ticks: {
+                    display: true,
+                    padding: 10,
+                    color: '#b2b9bf',
+                    font: {
+                        size: 11,
+                        family: "Open Sans",
+                        style: 'normal',
+                        lineHeight: 2
+                    },
+                }
+            },
+            x: {
+                grid: {
+                    drawBorder: false,
+                    display: false,
+                    drawOnChartArea: false,
+                    drawTicks: false,
+                    borderDash: [5, 5]
+                },
+                ticks: {
+                    display: true,
+                    color: '#b2b9bf',
+                    padding: 0,
+                    font: {
+                        size: 11,
+                        family: "Open Sans",
+                        style: 'normal',
+                        lineHeight: 2
+                    },
+                }
+            },
+            },
+        },
+    });
+};
+
+// Get detail tranksaksi
+const getDetailTransaksi = (id) => {
+    $('#detil-transaksi-body').html(' ');
+    $('#detil-transaksi-spinner').removeClass('d-none');
+    
+    axios
+        .get(`${APIURL}/transaksi/getdata?id_transaksi=${id}`,{
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            $('#detil-transaksi-spinner').addClass('d-none');
+            let date = new Date(parseInt(response.data.data.date) * 1000);
+            
+            $('#detil-transaksi-date').html(`${date.toLocaleString("en-US",{day: "numeric"})}/${date.toLocaleString("en-US",{month: "numeric"})}/${date.toLocaleString("en-US",{year: "numeric"})}&nbsp;&nbsp;&nbsp;${date.toLocaleString("en-US",{hour: '2-digit', minute: '2-digit',second: '2-digit'})}`);
+            $('#detil-transaksi-nama').html(response.data.data.nama_lengkap);
+            $('#detil-transaksi-idnasabah').html(response.data.data.id_nasabah);
+            $('#detil-transaksi-idtransaksi').html(response.data.data.id_transaksi);
+            $('#detil-transaksi-type').html((response.data.data.type == 'setor')?response.data.data.type+' sampah':response.data.data.type+' saldo');
+            $('#btn-cetak-transaksi').attr('href',`${BASEURL}/nasabah/cetaktransaksi/${response.data.data.id_transaksi}`);
+
+            // tarik saldo
+            if (response.data.data.type == 'tarik') {
+                let jumlah = (response.data.data.jenis_saldo == 'uang')?'Rp '+modifUang(response.data.data.jumlah):response.data.data.jumlah+' gram';
+
+                $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
+                    <h4><strong>Jumlah</strong> : ${jumlah}</h4>
+                </div>`);
+            }
+            // pindah saldo
+            if (response.data.data.type == 'pindah') {
+                let jumlah = (response.data.data.jenis_saldo == 'uang')?'Rp '+modifUang(response.data.data.jumlah):response.data.data.jumlah+' gram';
+                let hasilKonversi = (response.data.data.asal !== 'uang')?'Rp '+modifUang(response.data.data.hasil_konversi):response.data.data.hasil_konversi+' gram';
+
+                $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
+                <table>
+                    <tr class="text-dark">
+                        <td>Saldo asal&nbsp;&nbsp;&nbsp;</td>
+                        <td>: ${response.data.data.asal}</td>
+                    </tr>
+                    <tr class="text-dark">
+                        <td>Saldo tujuan&nbsp;&nbsp;&nbsp;</td>
+                        <td>: ${response.data.data.tujuan}</td>
+                    </tr>
+                    <tr class="text-dark">
+                        <td>Jumlah&nbsp;&nbsp;&nbsp;</td>
+                        <td>: ${jumlah}</td>
+                    </tr>
+                    <tr class="text-dark">
+                        <td>Harga emas&nbsp;&nbsp;&nbsp;</td>
+                        <td>: Rp ${modifUang(response.data.data.harga_emas)}</td>
+                    </tr>
+                    <tr class="text-dark">
+                        <td>Hasil konversi&nbsp;&nbsp;&nbsp;</td>
+                        <td>: ${hasilKonversi}</td>
+                    </tr>
+                </table>
+                </div>`);
+            }
+            // setor sampah
+            if (response.data.data.type == 'setor') {
+                let trBody = '';
+                let barang = response.data.data.barang;
+                barang.forEach((b,i) => {
+                    trBody += `<tr class="text-center">
+                        <th scope="row">${++i}</th>
+                        <td>${b.jenis}</td>
+                        <td>${b.jumlah}</td>
+                        <td>Rp ${modifUang(b.harga)}</td>
+                    </tr>`;
+                })
+
+                $('#detil-transaksi-body').html(`<table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Jenis sampah</th>
+                            <th scope="col">Jumlah</th>
+                            <th scope="col">Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${trBody}
+                    </tbody>
+                </table>`);
+            }
+        })
+        .catch((error) => {
+            $('#detil-transaksi-spinner').addClass('d-none');
+            // 500 server error
+            if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>server error...</strong> gagal mendapatkan detail transaksi, silahkan refresh halaman!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+        })
+};
 
 // Get data profile
 const getDataProfile = () => {
@@ -75,8 +420,6 @@ const getDataProfile = () => {
             }
         })
 };
-
-getDataProfile();
 
 // update card
 const updateDataCard = (data) => {
@@ -245,6 +588,11 @@ function validateFormEditProfile(form) {
         $('#username-edit-error').html('*minimal 8 huruf dan maksimal 20 huruf');
         status = false;
     }
+    else if (/\s/.test($('#username-edit').val())) {
+        $('#username-edit').addClass('is-invalid');
+        $('#username-edit-error').html('*tidak boleh ada spasi');
+        status = false;
+    }
     // tgl lahir validation
     if ($('#tgllahir-edit').val() == '') {
         $('#tgllahir-edit').addClass('is-invalid');
@@ -290,6 +638,11 @@ function validateFormEditProfile(form) {
             $('#newpass-edit-error').html('*minimal 8 huruf dan maksimal 20 huruf');
             status = false;
         }
+        else if (/\s/.test($('#newpass-edit').val())) {
+            $('#newpass-edit').addClass('is-invalid');
+            $('#newpass-edit-error').html('*tidak boleh ada spasi');
+            status = false;
+        }
         if ($('#oldpass-edit').val() == '') {
             $('#oldpass-edit').addClass('is-invalid');
             $('#oldpass-edit-error').html('*password lama harus di isi');
@@ -298,36 +651,6 @@ function validateFormEditProfile(form) {
     }
 
     return status;
-}
-
-// Get data saldo
-const getDataSaldo = () => {
-    axios
-        .get(`${APIURL}/nasabah/getsaldo`,{
-            headers: {
-                token: TOKEN
-            }
-        })
-        .then((response) => {
-            $('#saldo-uang').html(response.data.data.uang);
-            $('#saldo-ubs').html(response.data.data.ubs);
-            $('#saldo-antam').html(response.data.data.antam);
-            $('#saldo-galery24').html(response.data.data.galery24);
-        })
-        .catch((error) => {
-            // 500 server error
-            if (error.response.status == 500) {
-                showAlert({
-                    message: `<strong>server error...</strong> gagal mendapatkan data saldo, silahkan refresh halaman!`,
-                    btnclose: true,
-                    type:'danger' 
-                })
-            }
-        })
-};
-
-if (pageTitle[1] == 'dashboard') {
-    getDataSaldo();
 }
 
 // logout

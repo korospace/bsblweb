@@ -31,10 +31,11 @@ $('#formRegister').on('submit', function(e) {
                       '<strong>CODE OTP</strong> ',
                     showCancelButton: false,
                     confirmButtonText: 'ok',
-                }).then((result) => {
-                    window.location.replace(`${BASEURL}/login`);
                 })
-            }, 500);
+                .then((result) => {
+                    window.location.replace(`${BASEURL}/otp`);
+                })
+            }, 300);
         })
         .catch((error) => {
             hideLoadingSpinner();
@@ -99,6 +100,11 @@ function doValidate(form) {
         $('#username-regist-error').html('*minimal 8 huruf dan maksimal 20 huruf');
         status = false;
     }
+    else if (/\s/.test($('#username-regist').val())) {
+        $('#username-regist').addClass('is-invalid');
+        $('#username-regist-error').html('*tidak boleh ada spasi');
+        status = false;
+    }
     // email validation
     if ($('#email-regist').val() == '') {
         $('#email-regist').addClass('is-invalid');
@@ -124,6 +130,11 @@ function doValidate(form) {
     else if ($('#password-regist').val().length < 8 || $('#password-regist').val().length > 20) {
         $('#password-regist').addClass('is-invalid');
         $('#password-regist-error').html('*minimal 8 huruf dan maksimal 20 huruf');
+        status = false;
+    }
+    else if (/\s/.test($('#password-regist').val())) {
+        $('#password-regist').addClass('is-invalid');
+        $('#password-regist-error').html('*tidak boleh ada spasi');
         status = false;
     }
     // tgl lahir validation

@@ -2,13 +2,15 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-  <link rel="stylesheet" href="assets/css/SignUp.css">
+  <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/signup.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-  <script src="assets/js/custom.js"></script>
-  <script src="assets/js/signup.js"></script>
+  	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
+	  <script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/signup.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -20,12 +22,16 @@
 
   <div class="container">
     <div class="row py-5 mt-4 align-items-center">
+
+      <!-- **** side left **** -->
       <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
-        <img src="assets/images/left-image.png" alt="" class="img-fluid mb-3 d-none d-md-block" />
+        <img src="<?= base_url('assets/images/left-image.webp'); ?>" alt="" class="img-fluid mb-3 d-none d-md-block" />
         <h1>Buat Akun Bank Sampah</h1>
         <p class="font-italic text-muted mb-0">Mari bergabung bersama kami demi lingkungan
           yang lebih baik</p>
       </div>
+
+      <!-- **** right left **** -->
       <div class="col-md-7 col-lg-6 ml-auto">
         <form id="formRegister">
           <div class="row">
@@ -99,6 +105,7 @@
                 id="tgllahir-regist-error"
                 class="text-danger"></small>
             </div>
+            <!-- **** kelamin laki **** -->
             <div class="input-group col-lg-6 mb-4 form-group">
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="kelamin" id="kelamin-laki" value="laki-laki" />
@@ -107,6 +114,7 @@
                 </label>
               </div>
             </div>
+            <!-- **** kelamin perempuan **** -->
             <div class="input-group col-lg-6 mb-4 form-group">
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="kelamin" id="kelamin-perempuan" value="perempuan" />
@@ -114,20 +122,6 @@
                   Perempuan
                 </label>
               </div>
-            </div>
-            <!-- **** RW **** -->
-            <div class="input-group col-lg-6 mb-4 form-group">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-gray px-4 border-md border-right-0">
-                    <i class="fas fa-home"></i>
-                  </span>
-                </div>
-                <input type="text" class="form-control" id="rw-regist" name="rw" autocomplete="off" placeholder="RW">
-              </div>
-              <small
-                id="rw-regist-error"
-                class="text-danger"></small>
             </div>
             <!-- **** RT **** -->
             <div class="input-group col-lg-6 mb-4 form-group">
@@ -141,6 +135,20 @@
               </div>
               <small
                 id="rt-regist-error"
+                class="text-danger"></small>
+            </div>
+            <!-- **** RW **** -->
+            <div class="input-group col-lg-6 mb-4 form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-gray px-4 border-md border-right-0">
+                    <i class="fas fa-home"></i>
+                  </span>
+                </div>
+                <input type="text" class="form-control" id="rw-regist" name="rw" autocomplete="off" placeholder="RW">
+              </div>
+              <small
+                id="rw-regist-error"
                 class="text-danger"></small>
             </div>
             <!-- **** CODE POS **** -->
@@ -185,6 +193,8 @@
                 id="notelp-regist-error"
                 class="text-danger"></small>
             </div>
+
+            <!-- **** BUTTON **** -->
             <div class="form-group col-lg-12 mx-auto mb-0">
               <button type="submit" class="btn btn-success btn-block py-2 btn-costum">
                 <span class="font-weight-bold">Buat Akun</span>

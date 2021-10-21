@@ -2,28 +2,37 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-  <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.css'); ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.css'); ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.css'); ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/css/index.css'); ?>">
+  <style>
+    @media (max-width:990px) {
+        body {
+          overflow: hidden;
+        }
+      } 
+  </style>
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/homepage.min.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
+  <script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/popper.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/scrollreveal.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/waypoints.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/owl-carousel.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/owl-carousel.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/imgfix.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/jquery.counterup.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/custom.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/homePage.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/homepage.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
 <?= $this->section('content'); ?>
 
-  <body>
+  <body class="">
 
     <!-- **** Loading Spinner **** -->
     <?= $this->include('Components/loadingSpinner'); ?>
@@ -37,25 +46,15 @@
           <div class="col-12">
             <nav class="main-nav">
               <!-- ***** Logo Start ***** -->
-
-              <a class="logo" href="<?= base_url('/');?>">
-                <img class="logo_nav" src="assets/images/banksampah-logo.png" alt="" width="65" height="55">
+              <a class="logo">
+                <img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt="" width="65" height="55">
               </a>
               <!-- ***** Logo End ***** -->
+
               <!-- ***** Menu Start ***** -->
               <ul class="nav">
                 <li class="scroll-to-section"><a href="#welcome" class="menu-item">Home</a></li>
-                <!-- <li class="submenu">
-                    <a href="javascript:;">Profile</a>
-                    <ul>
-                      <li><a href="" class="menu-item">About Us</a></li>
-                      <li><a href="" class="menu-item">Features</a></li>
-                      <li><a href="" class="menu-item">FAQ's</a></li>
-                      <li><a href="" class="menu-item">Blog</a></li>
-                    </ul>
-                  </li> -->
                 <li class="scroll-to-section"><a href="#activity" class="menu-item">Kegiatan</a></li>
-                <!-- <li class="scroll-to-section"><a href="#testimonials" class="menu-item">Testimonials</a></li> -->
                 <li class="scroll-to-section"><a href="#services" class="menu-item">Layanan</a></li>
                 <li class="scroll-to-section"><a href="#contact-us" class="menu-item">Contact Us</a></li>
               </ul>
@@ -70,9 +69,8 @@
     </header>
     <!-- ***** Header Area End ***** -->
 
-
     <!-- ***** Welcome Area Start ***** -->
-    <div class="welcome-area" id="welcome">
+    <div class="welcome-area" id="welcome" style="background-image: url(<?= base_url('assets/images/banner-bg.webp'); ?>);">
       <div class="header-text">
         <div class="container">
           <div class="row">
@@ -91,10 +89,10 @@
     </div>
     <!-- ***** Welcome Area End ***** -->
 
-      <!-- Info Data Rubbish -->
-      <section class="info rubbish">
+    <!-- Info Data Rubbish -->
+    <section class="info rubbish">
         <div class="container">
-          <h1 class="text-center">Data Sampah</h1>
+          <h1 class="text-center pt-5 mb-4">Data Sampah</h1>
           <div id="totalSampahWraper" class="row">
             <div class="col-md-3 col-sm-6">
               <div class="counter">
@@ -133,19 +131,17 @@
       </div>
     </section>
 
-    <!-- End Info Data Rubbish -->
-
     <!-- ***** Activity Start ***** -->
     <section class="section" id="activity">
       <div class="container">
-        <h1 class="text-center">Kegiatan Bank Sampah Budi Luhur</h1>
+        <h1 class="text-center mb-5">Kegiatan Bank Sampah Budi Luhur</h1>
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"
             data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
             <div class="features-item">
               <div class="features-icon">
                 <!-- <h2>01</h2> -->
-                <img src="assets/images/features-icon-1.png" alt="">
+                <img src="<?= base_url('assets/images/features-icon-1.png'); ?>" alt="">
                 <h4>WEBINAR</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
                 <a href="<?= base_url('/');?>" class="main-button">
@@ -159,7 +155,7 @@
             <div class="features-item">
               <div class="features-icon">
                 <!-- <h2>02</h2> -->
-                <img src="assets/images/features-icon-2.png" alt="">
+                <img src="<?= base_url('assets/images/features-icon-2.png'); ?>" alt="">
                 <h4>KKN</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
                 <a href="Card-info.php" class="main-button">
@@ -172,7 +168,7 @@
             data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
             <div class="features-item">
               <div class="features-icon">
-                <img src="assets/images/features-icon-3.png" alt="">
+                <img src="<?= base_url('assets/images/features-icon-3.png'); ?>" alt="">
                 <h4>PSL</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
                 <a href="dashboard/nasabah" class="main-button">
@@ -181,7 +177,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -195,7 +190,7 @@
         <div class="row">
           <div class="left-image col-lg-5 col-md-12 col-sm-12 mobile-bottom-fix-big"
             data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
-            <img src="assets/images/left-image.png" class="rounded img-fluid d-block mx-auto" alt="App">
+            <img src="<?= base_url('assets/images/left-image.webp'); ?>" class="rounded img-fluid d-block mx-auto" alt="App">
           </div>
           <div class="right-text offset-lg-1 col-lg-6 col-md-12 col-sm-12 mobile-bottom-fix">
             <ul>

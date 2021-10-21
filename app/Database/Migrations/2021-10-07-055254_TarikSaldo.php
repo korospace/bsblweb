@@ -17,9 +17,9 @@ class TarikSaldo extends Migration
                 'type' => 'text',
                 'null' => false,
             ],
-            'jenis_dompet' => [
+            'jenis' => [
                 'type' => 'character varying',
-                'constraint' => 4,
+                'constraint' => 8,
                 'null' => false,
             ],
             'jumlah' => [

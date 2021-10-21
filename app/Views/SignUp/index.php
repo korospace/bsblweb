@@ -2,12 +2,15 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
+  <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/signup.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-  <script src="<?= base_url('assets/js/signup.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
+	  <script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/signup.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -120,20 +123,6 @@
                 </label>
               </div>
             </div>
-            <!-- **** RW **** -->
-            <div class="input-group col-lg-6 mb-4 form-group">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text bg-gray px-4 border-md border-right-0">
-                    <i class="fas fa-home"></i>
-                  </span>
-                </div>
-                <input type="text" class="form-control" id="rw-regist" name="rw" autocomplete="off" placeholder="RW">
-              </div>
-              <small
-                id="rw-regist-error"
-                class="text-danger"></small>
-            </div>
             <!-- **** RT **** -->
             <div class="input-group col-lg-6 mb-4 form-group">
               <div class="input-group">
@@ -146,6 +135,20 @@
               </div>
               <small
                 id="rt-regist-error"
+                class="text-danger"></small>
+            </div>
+            <!-- **** RW **** -->
+            <div class="input-group col-lg-6 mb-4 form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-gray px-4 border-md border-right-0">
+                    <i class="fas fa-home"></i>
+                  </span>
+                </div>
+                <input type="text" class="form-control" id="rw-regist" name="rw" autocomplete="off" placeholder="RW">
+              </div>
+              <small
+                id="rw-regist-error"
                 class="text-danger"></small>
             </div>
             <!-- **** CODE POS **** -->

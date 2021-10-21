@@ -2,11 +2,14 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/login.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
+	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/login.js'); ?>"></script>
 <?= $this->endSection(); ?>
 

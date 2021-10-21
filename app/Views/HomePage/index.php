@@ -9,6 +9,7 @@
         }
       } 
   </style>
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/homepage.min.css'); ?>">
@@ -16,6 +17,10 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
+  <script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/popper.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/scrollreveal.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/waypoints.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/owl-carousel.min.js'); ?>"></script>

@@ -27,8 +27,6 @@
       background-color: #c1d966 !important;
     }
   </style>
-	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.min.css'); ?>">
   
   <!-- Render Css -->
   <?= $this->renderSection('contentCss'); ?>
@@ -42,10 +40,6 @@
   <?= $this->renderSection('content'); ?>
   
   <!-- Global Js -->
-  <script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/popper.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/axios.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/sweetalert2.min.js'); ?>"></script>
   <script>

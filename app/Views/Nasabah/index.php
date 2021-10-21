@@ -2,51 +2,51 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-<style>
-	section {
-		font-family: 'qc-medium';
-	}
+	<style>
+		section {
+			font-family: 'qc-medium';
+		}
 
-	.rowCardWraper {
-		height: 100% !important;
-	}
-	
-	.detil-transaksi-logo img{
-		width: 80px;
-	}
-
-	@media (max-width:768px) {
 		.rowCardWraper {
-			height: auto !important;
+			height: 100% !important;
 		}
-	} 
-	@media (max-width:422px) {
-		.detil-transaksi-logo h4{
-			font-size: 14px;
-		}
+		
 		.detil-transaksi-logo img{
-			width: 60px;
+			width: 80px;
 		}
-		.detil-transaksi-header,
-		#detil-transaksi-type ,
-		#detil-transaksi-body {
-			font-size: 8px;
-		}
-	} 
-</style>
-<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
+
+		@media (max-width:768px) {
+			.rowCardWraper {
+				height: auto !important;
+			}
+		} 
+		@media (max-width:422px) {
+			.detil-transaksi-logo h4{
+				font-size: 14px;
+			}
+			.detil-transaksi-logo img{
+				width: 60px;
+			}
+			.detil-transaksi-header,
+			#detil-transaksi-type ,
+			#detil-transaksi-body {
+				font-size: 8px;
+			}
+		} 
+	</style>
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/smooth-scrollbar.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Html -->
@@ -59,20 +59,18 @@
 
 <body class="g-sidenav-show bg-gray-100">
 
-	<aside class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
-		id="sidenav-main">
-		<div class="sidenav-header">
-			<i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-				aria-hidden="true" id="iconSidenav"></i>
-			<a class="navbar-brand m-0" href="https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.php"
+	<aside class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
+		<div class="sidenav-header" style="font-family: 'qc-semibold';">
+			<i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" id="iconSidenav"></i>
+			<span class="navbar-brand mt-3"
 				target="_blank">
 				<img src="<?= base_url('assets/images/banksampah-logo.webp');?>" class="navbar-brand-img h-100" alt="main_logo">
 				<span class="ms-1 font-weight-bold">Laporan BSBL</span>
-			</a>
+			</span>
 		</div>
 		<hr class="horizontal dark mt-0">
 		<div class="collapse navbar-collapse  w-auto  max-height-vh-100 h-100" id="sidenav-collapse-main">
-			<ul class="navbar-nav">
+			<ul class="navbar-nav" style="font-family: 'qc-semibold';">
 				<li class="nav-item">
 					<a class="nav-link active" href="<?= base_url('nasabah/');?>">
 						<div
@@ -157,7 +155,7 @@
 		<!-- Navbar -->
 		<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
 			navbar-scroll="true">
-			<div class="container-fluid py-1 px-3">
+			<div class="container-fluid py-1 px-3" style="font-family: 'qc-semibold';">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
 						<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>

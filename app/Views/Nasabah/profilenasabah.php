@@ -2,24 +2,23 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-<style>
-	section {
-		font-family: 'qc-medium';
-	}
-</style>
-<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
+	<style>
+		section {
+			font-family: 'qc-medium';
+		}
+	</style>
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/smooth-scrollbar.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
-    <script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -32,14 +31,13 @@
 	<body class="g-sidenav-show bg-gray-100">
 		<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
 			id="sidenav-main">
-			<div class="sidenav-header" style="font-family: 'qc-medium';">
-				<i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-					aria-hidden="true" id="iconSidenav"></i>
-				<a class="navbar-brand m-0" href=""
+			<div class="sidenav-header">
+				<i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" id="iconSidenav"></i>
+				<span class="navbar-brand mt-3"
 					target="_blank">
 					<img src="<?= base_url('assets/images/banksampah-logo.webp');?>" class="navbar-brand-img h-100" alt="main_logo">
-					<span class="ms-1 font-weight-bold">Profile Anda</span>
-				</a>
+					<span class="ms-1 font-weight-bold">Laporan BSBL</span>
+				</span>
 			</div>
 			<hr class="horizontal dark mt-0">
 			<div class="collapse navbar-collapse  w-auto  max-height-vh-100 h-100" id="sidenav-collapse-main" style="font-family: 'qc-medium';">
@@ -190,8 +188,7 @@
 									</div>
 									<div class="col-md-4 text-end">
 										<a id="btn-edit-profile" class="shadow p-2  border-radius-sm" href="" data-toggle="modal" data-target="#modalEditProfile">
-											<i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top"
-												title="Edit Profile"></i>
+											<i class="fas fa-user-edit text-secondary text-sm" title="Edit Profile"></i>
 										</a>
 									</div>
 								</div>

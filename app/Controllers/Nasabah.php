@@ -73,7 +73,8 @@ class Nasabah extends ResourceController
                 "id"           => $idNasabah,
                 "email"        => $email,
                 "username"     => trim($data['username']),
-                "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
+                // "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
+                "password"     => $this->baseController->encrypt($data['password']),
                 "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
                 "notelp"       => trim($data['notelp']),
                 "alamat"       => trim($data['alamat']),
@@ -193,10 +194,12 @@ class Nasabah extends ResourceController
             $nasabahData  = $this->nasabahModel->getNasabahByEmail($this->request->getPost("email"));
 
             if ($nasabahData['success'] == true) {
-                $login_pass    = $this->request->getPost("password");
+                // $login_pass    = $this->request->getPost("password");
+                $login_pass    = $this->baseController->decrypt($this->request->getPost("password"));
                 $database_pass = $nasabahData['message']['password'];
-
-                if (password_verify($login_pass,$database_pass)) {
+                
+                // if (password_verify($login_pass,$database_pass)) {
+                if ($login_pass === $database_pass) {
                     $is_verify = $nasabahData['message']['is_verify'];
 
                     if ($is_verify == 'f') {
@@ -450,8 +453,10 @@ class Nasabah extends ResourceController
                     ];
 
                     if ($newpass != '') {
-                        if (password_verify($oldpass,$dataNasabah[0]['password'])) {
-                            $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
+                        $dbPass = $this->baseController->decrypt($dataNasabah[0]['password']);
+                        
+                        if ($oldpass === $dbPass) {
+                            $data['password'] = $this->baseController->encrypt($newpass);
                             unset($data['new_password']);
                             unset($data['old_password']);
                         } 

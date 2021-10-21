@@ -114,7 +114,8 @@ function showPopupOtp(formLogin) {
                 .then(() => {
                     Swal.fire({
                         icon: 'success',
-                        title: 'success!',
+                        title: 'verifikasi success!',
+                        showConfirmButton: false,
                     })
 
                     setTimeout(() => {

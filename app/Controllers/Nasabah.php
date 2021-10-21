@@ -194,9 +194,8 @@ class Nasabah extends ResourceController
             $nasabahData  = $this->nasabahModel->getNasabahByEmail($this->request->getPost("email"));
 
             if ($nasabahData['success'] == true) {
-                // $login_pass    = $this->request->getPost("password");
-                $login_pass    = $this->baseController->decrypt($this->request->getPost("password"));
-                $database_pass = $nasabahData['message']['password'];
+                $login_pass    = $this->request->getPost("password");
+                $database_pass = $this->baseController->decrypt($nasabahData['message']['password']);
                 
                 // if (password_verify($login_pass,$database_pass)) {
                 if ($login_pass === $database_pass) {

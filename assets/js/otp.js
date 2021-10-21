@@ -43,12 +43,12 @@ $('.digit-group').find('input').each(function() {
 							Swal.fire({
 								icon: 'success',
 								title: 'verifikasi success!',
-								showConfirmButton: false,
+								text: 'silahkan lanjut ke halaman login',
+								confirmButtonText: 'ok',
 							})
-		
-							setTimeout(() => {
+							.then(() => {
 								window.location.replace(`${BASEURL}/login`);
-							}, 2000);
+							})
 							
 						})
 						.catch(error => {

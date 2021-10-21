@@ -1,0 +1,18 @@
+CRITICAL - 2021-10-21 05:30:52 --> Call to undefined function App\Controllers\mcrypt_encrypt()
+#0 /opt/lampp/htdocs/bsbl/app/Controllers/Nasabah.php(35): App\Controllers\BaseController->encrypt('haha')
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Nasabah->register()
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Nasabah))
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-21 08:46:59 --> Undefined variable: PASSWORD
+#0 /opt/lampp/htdocs/bsbl/app/Views/OTP/index.php(37): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', '/opt/lampp/htdo...', 37, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/View/View.php(214): include('/opt/lampp/htdo...')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/View/View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Common.php(1092): CodeIgniter\View\View->render('OTP/index', Array, true)
+#4 /opt/lampp/htdocs/bsbl/app/Controllers/OTP.php(22): view('OTP/index', Array)
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\OTP->otp()
+#6 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\OTP))
+#7 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#9 {main}

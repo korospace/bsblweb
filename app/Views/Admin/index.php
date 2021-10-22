@@ -2,21 +2,20 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/smooth-scrollbar.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>

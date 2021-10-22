@@ -562,12 +562,12 @@ class Nasabah extends ResourceController
 
         if($errors) {
             $response = [
-                'status'   => 400,
+                'status'   => 404,
                 'error'    => true,
                 'messages' => $errors['email'],
             ];
     
-            return $this->respond($response,400);
+            return $this->respond($response,404);
         } 
         else {
             $email         = $this->request->getPost("email");

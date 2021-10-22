@@ -58,7 +58,6 @@ $('#formLoginNasabah').on('submit', function(e) {
                         // window.location.replace(`${BASEURL}/otp`);
                     })
                 }, 300);
-                // showPopupOtp(form);
             }
             // server error
             else{
@@ -99,63 +98,42 @@ function doValidate(form) {
 /* 
 PopUp OTP
 */
-function showPopupOtp(formLogin) {
+$('#btn-forgotpass').on('click', function(e) {
+    e.preventDefault();
+
     Swal.fire({
-        title: 'CODE OTP',
+        title: 'LUPA PASSWORD?',
         input: 'text',
         inputAttributes: {
             autocapitalize: 'off'
         },
-        html:'akun belum ter-verifikasi. check email anda untuk melihat code OTP',
+        html:`<p class='mb-4'>masukan email yang terdaftar. kami akan mengirim password anda melalui email</p>`,
         footer: 'merasa kesulitan? <a href="">hubungi admin</a>',
         showCancelButton: true,
         confirmButtonText: 'submit',
         showLoaderOnConfirm: true,
-        preConfirm: (otp) => {
+        preConfirm: (email) => {
             let form = new FormData();
-            form.append('code_otp',otp);
+            form.append('email',email);
 
-            // Cek OTP
             return axios
-            .post(`${APIURL}/nasabah/verification`,form, {
+            .post(`${APIURL}/nasabah/forgotpass`,form, {
                 headers: {
                     // header options 
                 }
             })
             .then(() => {
-                // Login
-                return axios
-                .post(`${APIURL}/nasabah/login`,formLogin, {
-                    headers: {
-                        // header options 
-                    }
-                })
-                .then(() => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'verifikasi success!',
-                        showConfirmButton: false,
-                    })
-
-                    setTimeout(() => {
-                        document.cookie = `token=${response.data.token}; path=/;`;
-                        window.location.replace(`${BASEURL}/nasabah`);
-                    }, 2000);
-                })
-                .catch(() => {
-                    Swal.close();
-
-                    showAlert({
-                        message: `<strong>Ups . . .</strong> terjadi kesalahan, coba sekali lagi!`,
-                        btnclose: true,
-                        type:'danger' 
-                    })
+                Swal.fire({
+                    icon: 'success',
+                    title: 'success!',
+                    text: 'password sudah dikirim ke email anda. silahkan cek email',
+                    showConfirmButton: true,
                 })
             })
             .catch(error => {
                 if (error.response.status == 404) {
                     Swal.showValidationMessage(
-                        `code otp tidak valid`
+                        `email tidak terdaftar`
                     )
                 }
                 else if (error.response.status == 500) {
@@ -167,7 +145,7 @@ function showPopupOtp(formLogin) {
         },
         allowOutsideClick: () => !Swal.isLoading()
     })
-}
+})
 
 /* 
 -------------- 

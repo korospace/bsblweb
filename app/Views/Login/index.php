@@ -62,8 +62,9 @@
 										<small id="nasabah-password-error" class="position-absolute text-danger"></small>
 									</div>
 								</div>
-								<div class="col d-flex justify-content-center">
+								<div class="col d-flex justify-content-center align-items-center flex-column">
 									<button type="submit" class="btnRegister" value="Login">Login</button>
+									<a id="btn-forgotpass" class="mt-3 text-secondary" href="">lupa password?</a>
 								</div>
 							</form>
 						</div>

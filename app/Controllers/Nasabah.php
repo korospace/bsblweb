@@ -32,7 +32,7 @@ class Nasabah extends ResourceController
 		$data   = $this->request->getPost();
         $this->validation->run($data,'nasabahRegister');
         $errors = $this->validation->getErrors();
-        var_dump($this->baseController->encrypt('elkoro123'));die;
+        
         if($errors) {
             $response = [
                 'status' => 400,

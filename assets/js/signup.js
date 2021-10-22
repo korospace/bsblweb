@@ -6,15 +6,15 @@ Register Nasabah
 */
 $('#formRegister').on('submit', function(e) {
     e.preventDefault();
-    let form = new FormData(e.target);
+    let formRegister = new FormData(e.target);
     
-    if (doValidate(form)) {
+    if (doValidate(formRegister)) {
         showLoadingSpinner();
-        let newTgl = form.get('tgl_lahir').split('-');
-        form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`)
+        let newTgl = formRegister.get('tgl_lahir').split('-');
+        formRegister.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`)
 
         axios
-        .post(`${APIURL}/nasabah/register`,form, {
+        .post(`${APIURL}/nasabah/register`,formRegister, {
             headers: {
                 // header options 
             }
@@ -32,8 +32,14 @@ $('#formRegister').on('submit', function(e) {
                     showCancelButton: false,
                     confirmButtonText: 'ok',
                 })
-                .then((result) => {
-                    window.location.replace(`${BASEURL}/otp`);
+                .then(() => {
+                    var url = BASEURL + '/otp';
+                    var form = $('<form action="' + url + '" method="post">' +
+                    '<input type="text" name="email" value="' + formRegister.get('email') + '" />' +
+                    '<input type="text" name="password" value="' + formRegister.get('password') + '" />' +
+                    '</form>');
+                    $('body').append(form);
+                    form.submit();
                 })
             }, 300);
         })

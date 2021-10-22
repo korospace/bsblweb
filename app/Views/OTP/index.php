@@ -13,7 +13,7 @@
 		}
 
 		.digit-group input {
-			width: 35px;
+			width: 38px;
 			height: 50px;
 			background-color: lighten(#0f0f1a, 5%);
 			border: none;
@@ -50,7 +50,7 @@
 
 	<section class="" style="height: 100vh;display: flex;justify-content: center;align-items: center;flex-direction: column;">
 		<div class="text-white text-center mb-4">
-			<h2 style="font-family: 'qc-semibold';font-size: 36px;">VERIFIKASI AKUN</h2>
+			<h2 style="font-family: 'qc-semibold';font-size: 28px;">VERIFIKASI AKUN</h2>
 			<p>masukan kode OTP yang anda terima <br> dari email</p>
 		</div>
 

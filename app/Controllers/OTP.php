@@ -8,19 +8,17 @@ class OTP extends BaseController
 {
     public function otp()
     {
-        $data = [
-            'title' => 'Verivikasi Akun',
-            'email' => false,
-            'password' => false
-        ];
-
         if (isset($_POST['email']) && isset($_POST['password'])) {
-            $data['email']    = $_POST['email'];
-            $data['password'] = $_POST['password'];
+            $data = [
+                'title'    => 'Verivikasi Akun',
+                'email'    => $_POST['email'],
+                'password' => $_POST['password']
+            ];
+
+            return view('OTP/index',$data);
         }
-
-        // dd($data);
-
-        return view('OTP/index',$data);
+        else {
+            return redirect()->to(base_url().'/login');
+        }
     }
 }

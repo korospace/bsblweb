@@ -55,6 +55,7 @@ $routes->group("nasabah", function ($routes) {
     $routes->delete("logout",     "Nasabah::logout");
     $routes->get("getsaldo",      "Nasabah::getSaldo");
     $routes->post("sendkritik",   "Nasabah::sendKritik");
+    $routes->post("forgotpass",   "Nasabah::forgotPassword");
     $routes->add("(:any)",        "Notfound::PageNotFound");
 });
 

@@ -388,6 +388,16 @@ class Validation
 		],
 	];
 
+    public $forgotPassword = [
+		'email' => [
+            'rules'  => 'required|is_not_unique[nasabah.email]',
+            'errors' => [
+                'required'      => 'email is required',
+                'is_not_unique' => 'email tidak terdaftar',
+            ],
+		],
+	];
+
     public $adminLogin = [
 		'username' => [
             'rules'  => 'required',

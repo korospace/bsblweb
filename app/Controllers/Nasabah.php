@@ -551,6 +551,53 @@ class Nasabah extends ResourceController
     }
 
     /**
+     * Forgot password
+     *   url    : domain.com/nasabah/forgotpass
+     *   method : POST
+     */
+    public function forgotPassword(): object
+    {
+        $this->validation->run($_POST,'forgotPassword');
+        $errors = $this->validation->getErrors();
+
+        if($errors) {
+            $response = [
+                'status'   => 400,
+                'error'    => true,
+                'messages' => $errors['email'],
+            ];
+    
+            return $this->respond($response,400);
+        } 
+        else {
+            $email         = $this->request->getPost("email");
+            $nasabahData   = $this->nasabahModel->getNasabahByEmail($email);
+            $database_pass = $this->baseController->decrypt($nasabahData['message']['password']);
+            $sendEmail     = $this->baseController->sendForgotPass($email,$database_pass);
+
+            if ($sendEmail == true) {
+                $response = [
+                    'status'   => 200,
+                    "error"    => false,
+                    'messages' => 'password telah terkirim',
+                ];
+
+                return $this->respond($response,200);
+            } 
+            else {
+                $response = [
+                    'status'   => 500,
+                    'error'    => true,
+                    'messages' => $sendEmail,
+                ];
+        
+                return $this->respond($response,500);
+            }
+        }
+        
+    }
+
+    /**
      * Send kritik
      *   url    : domain.com/nasabah/sendkritik
      *   method : POST

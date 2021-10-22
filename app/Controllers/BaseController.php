@@ -174,6 +174,39 @@ class BaseController extends Controller
     }
 
     /**
+     * Send Forgot Password
+     */
+    public function sendForgotPass(String $userEmail,String $password)
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();                          
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->Port       = 465;
+            $mail->SMTPAuth   = true;
+            $mail->SMTPSecure = 'ssl';
+            // $mail->Username   = 'banksampahbudiluhur@gmail.com';
+            // $mail->Password   = 'latxapaiejnamadl';
+            $mail->Username   = 'bsublservice@gmail.com';
+            $mail->Password   = 'cibqkqfbrvoaxvwt';
+            $mail->Subject    = 'Lupa Password';
+            $mail->Body       = "<u>password anda:</u><h1>$password</h1>";
+
+            $mail->setFrom('bsublservice@gmail.com', 'Bank Sampah UBL');
+            $mail->addAddress($userEmail);
+            $mail->isHTML(true);
+
+            if($mail->send()) {
+                return true;
+            }
+        } 
+        catch (Exception $e) {
+            return $e;
+        }
+    }
+
+    /**
      * Generate New Token 
      */
     public function generateToken(String $id,bool $rememberme,?String $privilege = null): string

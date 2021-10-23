@@ -20,6 +20,9 @@ class Admin extends ResourceController
         $this->adminModel     = new AdminModel;
     }
 
+    /**
+     * View list nasabah
+     */
     public function listNasabahView()
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
@@ -36,6 +39,50 @@ class Admin extends ResourceController
         } else {
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/listNasabah',$data);
+        }
+    }
+
+    /**
+     * View list artikel
+     */
+    public function listArtikelView()
+    {
+        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $result = $this->baseController->checkToken($token, false);
+        $data   = [
+            'title' => 'Admin | list artikel',
+            'token' => $token
+        ];
+        
+        if($result['success'] == false) {
+            setcookie('tokenAdmin', null, -1, '/');
+            unset($_COOKIE['tokenAdmin']);
+            return redirect()->to(base_url().'/login');
+        } else {
+            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+            return view('Admin/listArtikel',$data);
+        }
+    }
+
+    /**
+     * View add artikel
+     */
+    public function addArtikelView()
+    {
+        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $result = $this->baseController->checkToken($token, false);
+        $data   = [
+            'title' => 'Admin | tambah artikel',
+            'token' => $token
+        ];
+        
+        if($result['success'] == false) {
+            setcookie('tokenAdmin', null, -1, '/');
+            unset($_COOKIE['tokenAdmin']);
+            return redirect()->to(base_url().'/login');
+        } else {
+            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+            return view('Admin/addArtikel',$data);
         }
     }
 

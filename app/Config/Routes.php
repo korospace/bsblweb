@@ -62,7 +62,7 @@ $routes->group("admin", function ($routes) {
     // VIEWS
     $routes->add('/',                'Dashboard::dashboardAdmin');
     $routes->add('profile',          'Profile::profileAdmin');
-    $routes->add('/listnasabah',     'Admin::listNasabahView');
+    $routes->add('listnasabah',     'Admin::listNasabahView');
     // API
     $routes->post("login",           "Admin::login");
     $routes->get("sessioncheck",     "Admin::sessionCheck");

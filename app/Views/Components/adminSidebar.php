@@ -1,5 +1,4 @@
-<aside class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
-		id="sidenav-main">
+<aside class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main"  style="font-family: 'qc-semibold';">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" id="iconSidenav"></i>
         <span class="navbar-brand mt-3"
@@ -13,7 +12,7 @@
         <ul class="navbar-nav">
             <!-- dashboard -->
             <li class="nav-item">
-                <a class="nav-link <?= ($title=='Admin | dashboard') ? 'active' : ''?> active" href="<?= base_url('admin/');?>">
+                <a class="nav-link <?= ($title=='Admin | dashboard') ? 'active' : ''?>" href="<?= base_url('admin/');?>">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg"

@@ -275,7 +275,7 @@ class Admin extends ResourceController
                             unset($data['old_password']);
                         } 
                         else {
-                            return $this->fail(['old_password' => 'wrong old password'],401,true);
+                            return $this->fail(['old_password' => 'wrong old password'],400,true);
                         }
                     }
 

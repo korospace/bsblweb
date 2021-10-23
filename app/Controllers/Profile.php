@@ -19,10 +19,10 @@ class Profile extends BaseController
         if ($result['success'] == false) {
             setcookie('token', null, -1, '/'); 
             unset($_COOKIE['token']); 
-
             return redirect()->to(base_url().'/login');
         } 
         else {
+            setcookie('token',$token,time() + $result['expired'],'/');
             return view('Nasabah/profilenasabah',$data);
         }
 
@@ -43,6 +43,7 @@ class Profile extends BaseController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
+            setcookie('token',$token,time() + $result['expired'],'/');
             return view('Admin/profile',$data);
         }
     }

@@ -1,28 +1,25 @@
 let pageTitle   = document.title.replace(/\s/g,'').split('|');
 
-// Session check
-const sessioncheck = () => {
-    showLoadingSpinner();
+/**
+ * API REQUEST GET
+ */
+const httpRequestGet = (url) => {
 
-    axios
-        .get(`${APIURL}/admin/sessioncheck`,{
+    return axios
+        .get(url,{
             headers: {
                 token: TOKEN
             }
         })
         .then((response) => {
-            hideLoadingSpinner();
-            $('#container').removeClass('d-none');
-
+            return {
+                'status':200,
+                'data':response.data
+            };
         })
         .catch((error) => {
-            hideLoadingSpinner();
-            $('#container').removeClass('d-none');
-    
             // 401 Unauthorized
             if (error.response.status == 401) {
-                document.cookie = `tokenAdmin=null; path=/;`;
-                
                 if (error.response.data.messages == 'token expired') {
                     Swal.fire({
                         icon : 'error',
@@ -30,29 +27,71 @@ const sessioncheck = () => {
                         text: 'silahkan login ulang untuk perbaharui login anda',
                         showCancelButton: false,
                         confirmButtonText: 'ok',
-                    }).then((result) => {
+                    }).then(() => {
                         window.location.replace(`${BASEURL}/login`);
+                        document.cookie = `token=null;expires=;path=/;`;
                     })
                 }
                 else{
                     window.location.replace(`${BASEURL}/login`);
+                    document.cookie = `token=null;expires=;path=/;`;
                 }
+            }
+            else if (error.response.status == 404) {
+                return {'status':404};
             }
             // server error
             else{
                 showAlert({
-                    message: `<strong>server error...</strong> silahkan refresh halaman!`,
+                    message: `<strong>Ups...</strong> terjadi kesalahan pada server, silahkan refresh halaman.`,
                     btnclose: true,
                     type:'danger' 
                 })
             }
+
         })
+};
+
+/**
+ * SESSION CHECK
+ */
+ const sessioncheck = async () => {
+    showLoadingSpinner();
+    let httpResponse = await httpRequestGet(`${APIURL}/admin/sessioncheck`);
+    hideLoadingSpinner();
+    
+    if (httpResponse.status === 200) {
+        if (pageTitle[1] === 'dashboard') {
+            getTotalSampah();
+        }
+        if (pageTitle[1] === 'profile') {
+            getDataProfile();
+        }
+    }
+
 };
 
 sessioncheck();
 
+/**
+ * GET TOTAL SAMPAH
+ */
+const getTotalSampah = async () => {
 
-// Admin Logout
+    let httpResponse = await httpRequestGet(`${APIURL}/sampah/totalitem`);
+
+    if (httpResponse.status === 200) {
+        let dataSampah = httpResponse.data.data;
+
+        for (const name in dataSampah) {
+            $(`#sampah-${name}`).html(dataSampah[name].total+' Kg');
+        }   
+    }
+};
+
+/**
+ * LOGOUT
+ */
 $('#btn-logout').on('click', function(e) {
     e.preventDefault();
       

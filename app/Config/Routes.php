@@ -35,7 +35,6 @@ $routes->setAutoRoute(true);
 $routes->add('/',              'HomePage::index');
 $routes->add('/signup',        'SignUp::index');
 $routes->add('/login',         'Login::index');
-$routes->add('/tables',        'Tables::tables');
 $routes->add('/info',          'UserInfo::info');
 $routes->add('/profile',       'ProfileAdmin::profileadmin');
 $routes->add('/otp',           'OTP::otp');
@@ -63,6 +62,7 @@ $routes->group("admin", function ($routes) {
     // VIEWS
     $routes->add('/',                'Dashboard::dashboardAdmin');
     $routes->add('profile',          'Profile::profileAdmin');
+    $routes->add('/listnasabah',     'Admin::listNasabahView');
     // API
     $routes->post("login",           "Admin::login");
     $routes->get("sessioncheck",     "Admin::sessionCheck");

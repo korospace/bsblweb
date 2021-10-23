@@ -20,6 +20,15 @@ class Admin extends ResourceController
         $this->adminModel     = new AdminModel;
     }
 
+    public function listNasabahView()
+    {
+        $data = [
+            'title' => 'Admin | list nasabah'
+        ];
+
+        return view('Admin/listNasabah',$data);
+    }
+
     /**
      * Login
      *   url    : domain.com/admin/login
@@ -167,7 +176,7 @@ class Admin extends ResourceController
                 $response = [
                     'status' => 200,
                     'error'  => false,
-                    'data '  => $dataAdmin['message']
+                    'data'   => $dataAdmin['message']
                 ];
 
                 return $this->respond($response,200);

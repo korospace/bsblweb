@@ -3,10 +3,6 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
-		section {
-			font-family: 'qc-medium';
-		}
-
 		.rowCardWraper {
 			height: 100% !important;
 		}

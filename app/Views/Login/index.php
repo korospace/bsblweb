@@ -75,18 +75,19 @@
 								<form id="formLoginAdmin" class="row register-form">
 									<div class="col-md-12">
 										<div class="form-group position-relative">
-											<input type="text" id="admin-username" class="form-control" name="username" placeholder="Masukan Username Anda" value="" 
+											<input type="text" id="admin-username" class="form-control" name="username" placeholder="Username" value="" 
 											autocomplete="off" />
 											<small id="admin-username-error" class="position-absolute text-danger"></small>
 										</div>
 										<div class="form-group position-relative" style="margin-top: 30px;">
-											<input type="password" id="admin-password" class="form-control" name="password" placeholder="Masukan Password Anda" value="" 
+											<input type="password" id="admin-password" class="form-control" name="password" placeholder="Password" value="" 
 											autocomplete="off" />
 											<small id="admin-password-error" class="position-absolute text-danger"></small>
 										</div>
 									</div>
-									<div class="col d-flex justify-content-center">
+									<div class="col d-flex justify-content-center align-items-center flex-column">
 										<button type="submit" class="btnRegister" value="Login">Login</button>
+										<span class="mt-3 text-secondary" style="opacity: 0;cursor: context-menu;" href="">lupa password?</span>
 									</div>
 								</form>
 						</div>

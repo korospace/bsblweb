@@ -30,12 +30,12 @@ let dataAdmin = '';
                         confirmButtonText: 'ok',
                     }).then(() => {
                         window.location.replace(`${BASEURL}/login`);
-                        document.cookie = `token=null;expires=;path=/;`;
+                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
                     })
                 }
                 else{
                     window.location.replace(`${BASEURL}/login`);
-                    document.cookie = `token=null;expires=;path=/;`;
+                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
                 }
             }
             else if (error.response.status == 404) {

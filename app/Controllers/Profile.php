@@ -43,7 +43,7 @@ class Profile extends BaseController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
-            setcookie('token',$token,time() + $result['expired'],'/');
+            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/profile',$data);
         }
     }

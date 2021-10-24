@@ -184,8 +184,8 @@ class TransaksiModel extends Model
                 }
             } 
             else if ($isAdmin) {
-                if (isset($get['id_nasabah'])) {
-                    $id_nasabah  = $get['id_nasabah'];
+                if (isset($get['idnasabah'])) {
+                    $id_nasabah  = $get['idnasabah'];
                     $transaction = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.type,transaksi.jenis_saldo,transaksi.date,
                     (SELECT SUM(harga) AS total_setor from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
                     (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),

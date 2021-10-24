@@ -93,7 +93,7 @@ sessioncheck();
  */
 const getAllTransaksi = async () => {
 
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata`);
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}`);
     
     if (httpResponse.status === 404) {
         updateGrafikSetor([],[]);

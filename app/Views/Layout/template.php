@@ -44,9 +44,9 @@
   <script src="<?= base_url('assets/js/sweetalert2.min.js'); ?>"></script>
   <script>
     const TOKEN   = '<?= (isset($token)) ? $token : null; ?>';
-    // const BASEURL = '<?= base_url(); ?>';
+    const BASEURL = '<?= base_url(); ?>';
     const APIURL  = BASEURL;
-    const APIURL  = 'https://t-gadgetcors.herokuapp.com/https://bsblbackend.herokuapp.com';
+    // const APIURL  = 'https://t-gadgetcors.herokuapp.com/https://bsblbackend.herokuapp.com';
   </script>
   
   <!-- Render Js -->

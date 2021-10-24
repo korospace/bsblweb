@@ -153,7 +153,12 @@ class Sampah extends ResourceController
             $result = $this->baseController->checkToken($token);
         
             if ($result['success'] == true) {
-                if (!isset($result['message']['data']['privilege'])) {
+                if (isset($result['message']['data']['privilege'])) {
+                    if ($this->request->getGet('idnasabah')) {
+                        $id = $this->request->getGet('idnasabah');
+                    }
+                }
+                else {
                     $id = $result['message']['data']['id'];
                 }
             } 
@@ -166,9 +171,6 @@ class Sampah extends ResourceController
         
                 return $this->respond($response,$result['code']);
             }
-        }
-        if (is_null($token) && $this->request->getGet('idnasabah')) {
-            $id = $this->request->getGet('idnasabah');
         }
 
         $dbResponse = $this->sampahModel->totalItem($id);

@@ -47,13 +47,24 @@ class Admin extends ResourceController
      */
     public function detilNasabahView()
     {
+        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $result = $this->baseController->checkToken($token, false);
+
         if (isset($_POST['idnasabah'])) {
             $data = [
                 'title'    => 'Admin | detil nasabah',
                 'idnasabah'=> $_POST['idnasabah'],
+                'token' => $token
             ];
 
-            return view('Admin/detilNasabah',$data);
+            if($result['success'] == false) {
+                setcookie('tokenAdmin', null, -1, '/');
+                unset($_COOKIE['tokenAdmin']);
+                return redirect()->to(base_url().'/login');
+            } else {
+                setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+                return view('Admin/detilNasabah',$data);
+            }
         }
         else {
             return redirect()->to(base_url().'/admin/listnasabah');

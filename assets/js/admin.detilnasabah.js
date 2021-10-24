@@ -68,7 +68,6 @@ let pageTitle = webTitle[1].replace(/\s/,'');
 
 sessioncheck();
 
-
 /**
  * GET TOTAL SAMPAH NASABAH
  */

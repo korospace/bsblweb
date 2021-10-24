@@ -1,4 +1,5 @@
-let pageTitle   = document.title.replace(/\s/g,'').split('|');
+let webTitle  = document.title.split('|');
+let pageTitle = webTitle[1].replace(/\s/,'');
 let dataAdmin = '';
 
 /**
@@ -62,11 +63,14 @@ let dataAdmin = '';
     hideLoadingSpinner();
     
     if (httpResponse.status === 200) {
-        if (pageTitle[1] === 'dashboard') {
+        if (pageTitle === 'dashboard') {
             getTotalSampah();
         }
-        if (pageTitle[1] === 'profile') {
+        if (pageTitle === 'profile') {
             getDataProfile();
+        }
+        if (pageTitle === 'list nasabah') {
+            getAllNasabah();
         }
     }
 };
@@ -87,6 +91,110 @@ const getTotalSampah = async () => {
             $(`#sampah-${name}`).html(dataSampah[name].total+' Kg');
         }   
     }
+};
+
+/**
+ * GET ALL NASABAH
+ */
+let arrayNasabah = [];
+const getAllNasabah = async () => {
+
+    $('#list-nasabah-spinner').removeClass('d-none'); 
+    let httpResponse = await httpRequestGet(`${APIURL}/admin/getnasabah`);
+    $('#list-nasabah-spinner').addClass('d-none'); 
+    
+    if (httpResponse.status === 404) {
+        $('#list-nasabah-notfound').removeClass('d-none'); 
+        $('#list-nasabah-notfound #text-notfound').html(`belum ada nasabah`); 
+    }
+    else if (httpResponse.status === 200) {
+        let trNasabah  = '';
+        let allNasabah = httpResponse.data.data;
+        arrayNasabah   = httpResponse.data.data;
+
+        allNasabah.forEach((n,i) => {
+
+            trNasabah += `<tr class="text-xs">
+                <td class="align-middle text-center py-3">
+                    <span class="font-weight-bold"> ${++i} </span>
+                </td>
+                <td class="align-middle text-center py-3">
+                    <span class="font-weight-bold"> ${n.id} </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_verify === 't')? 'yes' : 'no'} </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer">hapus</span>
+                    <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer">edit</span>
+                    <span id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" onclick="goToDetilNasabah('${n.id}')">detil</span>
+                </td>
+            </tr>`;
+        });
+
+        $('#table-nasabah tbody').html(trNasabah);
+    }
+};
+
+// Search nasabah
+$('#search-nasabah').on('keyup', function() {
+    let elSugetion      = '';
+    let nasabahFiltered = [];
+    
+    if ($(this).val() === "") {
+        nasabahFiltered = arrayNasabah;
+    } 
+    else {
+        nasabahFiltered = arrayNasabah.filter((n) => {
+            return n.nama_lengkap.includes($(this).val()) || n.id.includes($(this).val());
+        });
+    }
+
+    if (nasabahFiltered.length == 0) {
+        $('#list-nasabah-notfound').removeClass('d-none'); 
+        $('#list-nasabah-notfound #text-notfound').html(`nasabah tidak ditemukan`); 
+    } 
+    else {
+        $('#list-nasabah-notfound').addClass('d-none'); 
+        $('#list-nasabah-notfound #text-notfound').html(` `); 
+
+        nasabahFiltered.forEach((n,i) => {
+            elSugetion += `<tr class="text-xs">
+                <td class="align-middle text-center py-3">
+                    <span class="font-weight-bold"> ${++i} </span>
+                </td>
+                <td class="align-middle text-center py-3">
+                    <span class="font-weight-bold"> ${n.id} </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_verify === 't')? 'yes' : 'no'} </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer">hapus</span>
+                    <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer">edit</span>
+                    <span id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer">detil</span>
+                </td>
+            </tr>`;
+        });    
+    }
+
+    $('#table-nasabah tbody').html(elSugetion);
+});
+
+// Go to detil nasabah
+const goToDetilNasabah = (idnasabah) => {
+    var url = BASEURL + '/admin/detilnasabah';
+    var form = $('<form action="' + url + '" method="post">' +
+    '<input type="text" name="idnasabah" value="' + idnasabah + '" />' +
+    '</form>');
+    $('body').append(form);
+    form.submit();
 };
 
 /**

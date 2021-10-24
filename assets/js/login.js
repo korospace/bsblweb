@@ -96,7 +96,7 @@ function doValidate(form) {
 }
 
 /* 
-PopUp OTP
+Lupa password
 */
 $('#btn-forgotpass').on('click', function(e) {
     e.preventDefault();
@@ -174,8 +174,6 @@ $('#formLoginAdmin').on('submit', function(e) {
         })
         .catch((error) => {
             hideLoadingSpinner();
-            console.log(error.response);
-            console.log(error);
 
             // error email/password
             if (error.response.status == 404) {

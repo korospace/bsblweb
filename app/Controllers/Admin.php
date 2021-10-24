@@ -43,6 +43,24 @@ class Admin extends ResourceController
     }
 
     /**
+     * View detil nasabah
+     */
+    public function detilNasabahView()
+    {
+        if (isset($_POST['idnasabah'])) {
+            $data = [
+                'title'    => 'Admin | detil nasabah',
+                'idnasabah'=> $_POST['idnasabah'],
+            ];
+
+            return view('Admin/detilNasabah',$data);
+        }
+        else {
+            return redirect()->to(base_url().'/admin/listnasabah');
+        }
+    }
+
+    /**
      * View list artikel
      */
     public function listArtikelView()

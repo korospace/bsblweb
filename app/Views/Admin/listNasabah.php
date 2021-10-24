@@ -59,245 +59,49 @@
 			<div class="container-fluid py-4">
 				<div class="row">
 					<div class="col-12">
-						<div class="card mb-4">
-							<div class="card-header pb-0">
-								<h6>List Nasabah</h6>
-								<div class="input-group">
-									<span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" placeholder="Cari Nasabah">
-								</div>
+						<div class="card mb-4" style="font-family: 'qc-semibold';">
+							<!-- search input -->
+							<div class="card-header pb-0 d-flex" style="font-family: 'qc-semibold';">
+								<input id="search-nasabah" type="text" class="form-control h-100 mr-2" placeholder="ketik nama lengkap / id nasabah">
+								<button class="btn btn-success">tambah</button>
 							</div>
-							<div class="card-body px-0 pt-0 pb-2">
-								<div class="table-responsive p-0">
-									<table class="table align-items-center mb-0">
-										<thead>
+							<!-- container table -->
+							<div class="card-body px-0 pb-2">
+								<div class="table-responsive p-0 position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
+									<!-- spinner -->
+									<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+										<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 50px;" />
+									</div>
+									<!-- message not found -->
+									<div id="list-nasabah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+										<h6 id="text-notfound" class='opacity-6'></h6>
+									</div>
+									<!-- table -->
+									<table id="table-nasabah" class="table table-striped text-center mb-0">
+										<thead class="position-sticky bg-white" style="top: 0;">
 											<tr>
-												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID
-													Number
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+													#
 												</th>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													Address</th>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Join
-													Date</th>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action
+													ID Nasabah
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+													Nama lengkap
+												</th>
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+													Ter-verifikasi
+												</th>
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+													Action
 												</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020001 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Jl. Ciledug Raya, RT.10/RW.2, Petukangan Utara, Kec.
-														Pesanggrahan, Kota Jakarta Selatan </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 07/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="info" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="../pages/form-timbang.php" class="text-secondary font-weight-bold text-xs"
-														data-toggle="tooltip" data-original-title="Edit user">
-														Sampah
-													</a>
-												</td>
-											</tr>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Rilo Anggoro Saputra </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020002 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Komplek Lippo Karawaci 1200, Jl. Boulevard Diponegoro,
-														Bencongan, Kec. Klp. Dua, Tangerang, Banten </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 13/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-											</tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Jl. Ciledug Raya, RT.10/RW.2, Petukangan Utara, Kec.
-													Pesanggrahan, Kota Jakarta Selatan </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 07/11/2021 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-													data-original-title="Edit user">
-													Detil
-												</a>
-											</td>
-											</tr>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Rilo Anggoro Saputra </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020002 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Komplek Lippo Karawaci 1200, Jl. Boulevard Diponegoro,
-														Bencongan, Kec. Klp. Dua, Tangerang, Banten </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 13/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-											</tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Jl. Ciledug Raya, RT.10/RW.2, Petukangan Utara, Kec.
-													Pesanggrahan, Kota Jakarta Selatan </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 07/11/2021 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-													data-original-title="Edit user">
-													Detil
-												</a>
-											</td>
-											</tr>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Rilo Anggoro Saputra </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020002 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Komplek Lippo Karawaci 1200, Jl. Boulevard Diponegoro,
-														Bencongan, Kec. Klp. Dua, Tangerang, Banten </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 13/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-											</tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Jl. Ciledug Raya, RT.10/RW.2, Petukangan Utara, Kec.
-													Pesanggrahan, Kota Jakarta Selatan </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 07/11/2021 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-													data-original-title="Edit user">
-													Detil
-												</a>
-											</td>
-											</tr>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Rilo Anggoro Saputra </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020002 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Komplek Lippo Karawaci 1200, Jl. Boulevard Diponegoro,
-														Bencongan, Kec. Klp. Dua, Tangerang, Banten </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 13/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-											</tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Jl. Ciledug Raya, RT.10/RW.2, Petukangan Utara, Kec.
-													Pesanggrahan, Kota Jakarta Selatan </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 07/11/2021 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-													data-original-title="Edit user">
-													Detil
-												</a>
-											</td>
-											</tr>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Rilo Anggoro Saputra </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020002 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Komplek Lippo Karawaci 1200, Jl. Boulevard Diponegoro,
-														Bencongan, Kec. Klp. Dua, Tangerang, Banten </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 13/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-											</tr>
+											
 										</tbody>
+										<?php for ($i=0; $i < 0; $i++) { ?>
+										<?php } ?>
 									</table>
 								</div>
 							</div>

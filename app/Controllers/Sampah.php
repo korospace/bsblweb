@@ -167,6 +167,9 @@ class Sampah extends ResourceController
                 return $this->respond($response,$result['code']);
             }
         }
+        if (is_null($token) && $this->request->getGet('idnasabah')) {
+            $id = $this->request->getGet('idnasabah');
+        }
 
         $dbResponse = $this->sampahModel->totalItem($id);
     

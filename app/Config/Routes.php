@@ -63,6 +63,7 @@ $routes->group("admin", function ($routes) {
     $routes->add('/',                'Dashboard::dashboardAdmin');
     $routes->add('profile',          'Profile::profileAdmin');
     $routes->add('listnasabah',      'Admin::listNasabahView');
+    $routes->add('detilnasabah',     'Admin::detilNasabahView');
     $routes->add('listartikel',      'Admin::listArtikelView');
     $routes->add('addartikel',       'Admin::addArtikelView');
     // API

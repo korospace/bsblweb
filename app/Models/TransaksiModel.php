@@ -186,8 +186,14 @@ class TransaksiModel extends Model
             else if ($isAdmin) {
                 if (isset($get['id_nasabah'])) {
                     $id_nasabah  = $get['id_nasabah'];
-                    $transaction = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,(SELECT SUM(harga) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_setor,(SELECT SUM(jumlah) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS total_tarik,(SELECT SUM(jumlah) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS total_pindah,transaksi.date FROM transaksi WHERE transaksi.id_nasabah = '$id_nasabah' ORDER BY transaksi.date DESC;")->getResultArray();
-
+                    $transaction = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.type,transaksi.jenis_saldo,transaksi.date,
+                    (SELECT SUM(harga) AS total_setor from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
+                    (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
+                    (SELECT jumlah AS total_tarik from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id),
+                    (SELECT jumlah AS total_pindah from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id)
+                    FROM transaksi
+                    WHERE transaksi.id_nasabah = '$id_nasabah' ORDER BY transaksi.date DESC;")->getResultArray();
+    
                     $transaction = $this->filterData($transaction);
                 } 
                 else {

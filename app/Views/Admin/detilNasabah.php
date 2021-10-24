@@ -230,7 +230,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="container-fluid mt-4 p-0">
+			<div class="container-fluid mt-5 p-0">
+				<!-- card AND saldo -->
 				<div class="row px-4">
 					<div class="col-lg-12 p-0">
 						<div class="row">
@@ -326,6 +327,85 @@
 										</div>
 									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Personal info -->
+				<div id='personal-info' class="row mt-4">
+					<div class="col-12">
+						<div class="card h-100">
+							<div class="card-header pb-0 p-3">
+								<div class="row">
+									<div class="opacity-8 col-md-8 d-flex align-items-center">
+										<h4 style="font-family: 'qc-medium';">Personoal information</h4 >
+									</div>
+								</div>
+							</div>
+							<div class="card-body mt-4 p-3">
+								<table style="font-family: 'qc-medium';">
+									<tr>
+										<td class="py-2" style="font-family: 'qc-semibold';">
+											<strong>email</strong>
+											&nbsp;&nbsp;&nbsp;
+										</td>
+										<td>: 
+											&nbsp;&nbsp;&nbsp;
+											<span id="email">_ _ _ _ _</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="py-2" style="font-family: 'qc-semibold';">
+											<strong>Nama lengkap</strong>
+											&nbsp;&nbsp;&nbsp;
+										</td>
+										<td>: 
+											&nbsp;&nbsp;&nbsp;
+											<span id="nama-lengkap" class="text-capitalize">_ _ _ _ _</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="py-2" style="font-family: 'qc-semibold';">
+											<strong>Tanggal lahir</strong>
+											&nbsp;&nbsp;&nbsp;
+										</td>
+										<td>: 
+											&nbsp;&nbsp;&nbsp;
+											<span id="tgl-lahir">_ _ _ _ _</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="py-2" style="font-family: 'qc-semibold';">
+											<strong>Jenis kelamin</strong>
+											&nbsp;&nbsp;&nbsp;
+										</td>
+										<td>: 
+											&nbsp;&nbsp;&nbsp;
+											<span id="kelamin">_ _ _ _ _</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="py-2" style="font-family: 'qc-semibold';">
+											<strong>Alamat</strong>
+											&nbsp;&nbsp;&nbsp;
+										</td>
+										<td>: 
+											&nbsp;&nbsp;&nbsp;
+											<span id="alamat">_ _ _ _ _</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="py-2" style="font-family: 'qc-semibold';">
+											<strong>No.telepon</strong>
+											&nbsp;&nbsp;&nbsp;
+										</td>
+										<td>: 
+											&nbsp;&nbsp;&nbsp;
+											<span id="notelp">_ _ _ _ _</span>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 					</div>

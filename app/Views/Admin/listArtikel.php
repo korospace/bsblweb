@@ -11,7 +11,8 @@
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
 	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>  
+	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 <?= $this->endSection(); ?>
@@ -58,8 +59,21 @@
 			
 			<!-- End Navbar -->
 			<div class="container-fluid py-4">
-				<a href="<?= base_url('admin/addartikel');?>"><u>add artikel</u></a>
+				<a href="<?= base_url('admin/addartikel');?>" class="btn btn-success">Tambahkan Artikel</a>
 				
+				<!-- Card List Article  -->
+				<div class="card mb-3">
+					<img class="card-img-top" src="">
+					<div class="card-body">
+						<h5 class="card-title">Article Title</h5>
+						<p class="card-text">
+							This is caption that we create for the end of the world.
+						</p>
+						<a href="" class="btn btn-warning">Edit</a>
+						<a href="" class="btn btn-danger">Delete</a>
+					</div>
+				</div>
+
 				<!-- FOOTER -->
 				<footer class="footer pt-3  ">
 					<div class="container-fluid">

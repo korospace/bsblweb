@@ -26,6 +26,18 @@
     .swal2-confirm {
       background-color: #c1d966 !important;
     }
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #ffffff;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #5cb85c;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #5cb85c;
+    }
   </style>
   
   <!-- Render Css -->

@@ -1,0 +1,10 @@
+CRITICAL - 2021-10-23 09:03:23 --> file_get_contents(): Read of 8192 bytes failed with errno=13 Permission denied
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(8, 'file_get_conten...', 'C:\\xampp\\htdocs...', 80)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Collectors\History.php(80): file_get_contents('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(399): CodeIgniter\Debug\Toolbar\Collectors\History->setFiles(1634997802, 20)
+#3 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#4 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#6 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#7 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}

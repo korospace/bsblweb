@@ -68,6 +68,7 @@ const sessioncheck = async () => {
         if (pageTitle === 'dashboard') {
             getTotalSampah();
             getAllKatSampah();
+            getAllJenisSampah();
         }
         if (pageTitle === 'profile') {
             getDataProfile();

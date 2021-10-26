@@ -70,7 +70,7 @@ class Sampah extends ResourceController
 
                 $data = [
                     "id"          => $idSampah,
-                    "id_kategori" => trim($data['id_kategori']),
+                    "kategori"    => trim($data['kategori']),
                     "jenis"       => strtolower(trim($data['jenis'])),
                     "harga"       => trim($data['harga']),
                 ];

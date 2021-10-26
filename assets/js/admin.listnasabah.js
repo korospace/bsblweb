@@ -225,7 +225,7 @@ const addNasabah = (el,event) => {
 };
 
 /**
- * ADD NASABAH
+ * EDIT NASABAH
  */
 const editNasabah = (el,event) => {
     event.preventDefault();

@@ -6,6 +6,14 @@
 		.kategori-list:hover{
 			background-color: #E9ECEF !important;
 		}
+
+		.kategori-list .checklist{
+			display: none !important;
+		}
+
+		.kategori-list.active .checklist{
+			display: inherit !important;
+		}
 	</style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
@@ -538,7 +546,7 @@
 							<i class="fas fa-clipboard-list text-muted"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control px-2" id="kategori" name="kategori" autocomplete="off" placeholder="Pilihi kategori dibawah" disabled>
+					<input type="text" class="form-control px-2" id="kategori" name="kategori" autocomplete="off" placeholder="Pilihi kategori dibawah">
 				</div>
 				<small
 					id="kategori-error"
@@ -565,7 +573,7 @@
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-			<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+			<button id="btn-add-edit-sampah" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
 				<span id="text">Simpan</span>
 				<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
 			</button>

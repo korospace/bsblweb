@@ -108,11 +108,13 @@ class SampahModel extends Model
             $totalSampah = [];
             $kategori    = $this->db->table('kategori_sampah')->get()->getResultArray();
 
+            // var_dump($kategori);die;
+
             if ($idnasabah) {
-                $setorSampah = $this->db->table('setor_sampah')->select('kategori_sampah.name AS kategori,sampah.jenis AS jenis,SUM(setor_sampah.jumlah) AS jumlah')->join('sampah', 'setor_sampah.id_sampah = sampah.id')->join('transaksi', 'setor_sampah.id_transaksi = transaksi.id')->join('kategori_sampah', 'sampah.id_kategori = kategori_sampah.id')->where('transaksi.id_nasabah=',$idnasabah)->groupBy(["kategori_sampah.name", "sampah.jenis"])->get()->getResultArray();
+                $setorSampah = $this->db->table('setor_sampah')->select('kategori_sampah.name AS kategori,sampah.jenis AS jenis,SUM(setor_sampah.jumlah) AS jumlah')->join('sampah', 'setor_sampah.jenis_sampah = sampah.jenis')->join('transaksi', 'setor_sampah.id_transaksi = transaksi.id')->join('kategori_sampah', 'sampah.kategori = kategori_sampah.name')->where('transaksi.id_nasabah=',$idnasabah)->groupBy(["kategori_sampah.name", "sampah.jenis"])->get()->getResultArray();
             } 
             else {
-                $setorSampah = $this->db->table('setor_sampah')->select('kategori_sampah.name AS kategori,sampah.jenis AS jenis,SUM(setor_sampah.jumlah) AS jumlah')->join('sampah', 'setor_sampah.id_sampah = sampah.id')->join('kategori_sampah', 'sampah.id_kategori = kategori_sampah.id')->groupBy(["kategori_sampah.name", "sampah.jenis"])->get()->getResultArray();
+                $setorSampah = $this->db->table('setor_sampah')->select('kategori_sampah.name AS kategori,sampah.jenis AS jenis,SUM(setor_sampah.jumlah) AS jumlah')->join('sampah', 'setor_sampah.jenis_sampah = sampah.jenis')->join('kategori_sampah', 'sampah.kategori = kategori_sampah.name')->groupBy(["kategori_sampah.name", "sampah.jenis"])->get()->getResultArray();
             }
             
             foreach ($kategori as $k) {

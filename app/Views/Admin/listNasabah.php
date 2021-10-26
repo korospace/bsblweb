@@ -184,7 +184,7 @@
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-gray px-4 border-md">
-							<i class="fas fa-at text-muted"></i>
+								<i class="fas fa-at text-muted"></i>
 							</span>
 						</div>
 						<input type="text" class="form-control px-2" id="username" name="username" autocomplete="off" placeholder="Masukan username">

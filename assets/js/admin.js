@@ -15,14 +15,12 @@ const httpRequestGet = (url) => {
             }
         })
         .then((response) => {
-            hideLoadingSpinner();
             return {
                 'status':200,
                 'data':response.data
             };
         })
         .catch((error) => {
-            hideLoadingSpinner();
             // 401 Unauthorized
             if (error.response.status == 401) {
                 if (error.response.data.messages == 'token expired') {
@@ -58,11 +56,130 @@ const httpRequestGet = (url) => {
 };
 
 /**
+ * API REQUEST POST
+ */
+const httpRequestPost = (url,form) => {
+    let newForm = new FormData();
+
+    for (var pair of form.entries()) {
+        newForm.set(pair[0], pair[1].trim());
+    }
+
+    return axios
+        .post(url,newForm, {
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then(() => {
+            return {
+                'status':201,
+            };
+        })
+        .catch((error) => {
+            // bad request
+            if (error.response.status == 400) {
+                return {
+                    'status':400,
+                    'message':error.response.data.messages
+                };
+            }
+            // unauthorized
+            else if (error.response.status == 401) {
+                if (error.response.data.messages == 'token expired') {
+                    Swal.fire({
+                        icon : 'error',
+                        title : '<strong>LOGIN EXPIRED</strong>',
+                        text: 'silahkan login ulang untuk perbaharui login anda',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    }).then(() => {
+                        window.location.replace(`${BASEURL}/login`);
+                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                    })
+                }
+                else{
+                    window.location.replace(`${BASEURL}/login`);
+                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                }
+            }
+            // error server
+            else {
+                showAlert({
+                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
+                    btnclose: true,
+                    type:'danger'
+                })
+            }
+        })
+};
+
+/**
+ * API REQUEST PUT
+ */
+const httpRequestPut = (url,form) => {
+    let newForm = new FormData();
+
+    for (var pair of form.entries()) {
+        newForm.set(pair[0], pair[1].trim());
+    }
+
+    return axios
+        .put(url,newForm, {
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then(() => {
+            return {
+                'status':201,
+            };
+        })
+        .catch((error) => {
+            // bad request
+            if (error.response.status == 400) {
+                return {
+                    'status':400,
+                    'message':error.response.data.messages
+                };
+            }
+            // unauthorized
+            else if (error.response.status == 401) {
+                if (error.response.data.messages == 'token expired') {
+                    Swal.fire({
+                        icon : 'error',
+                        title : '<strong>LOGIN EXPIRED</strong>',
+                        text: 'silahkan login ulang untuk perbaharui login anda',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    }).then(() => {
+                        window.location.replace(`${BASEURL}/login`);
+                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                    })
+                }
+                else{
+                    window.location.replace(`${BASEURL}/login`);
+                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                }
+            }
+            // error server
+            else {
+                showAlert({
+                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
+                    btnclose: true,
+                    type:'danger'
+                })
+            }
+        })
+};
+
+/**
 * SESSION CHECK
 */
 const sessioncheck = async () => {
     showLoadingSpinner();
     let httpResponse = await httpRequestGet(`${APIURL}/admin/sessioncheck`);
+    hideLoadingSpinner();
     
     if (httpResponse.status === 200) {
         if (pageTitle === 'dashboard') {

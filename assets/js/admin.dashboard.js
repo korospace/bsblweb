@@ -66,59 +66,33 @@ const changeKatSampahVal = (el,kategoriName) => {
 /**
 * ADD KATEGORI SAMPAH
 */
-$('#btnAddKategoriSampah').on('click', function(e) {
+$('#btnAddKategoriSampah').on('click', async function(e) {
     e.preventDefault();
     
     if (validateAddKategori()) {
+
         let form = new FormData();
         form.append('kategori_name',$('input#NewkategoriSampah').val());
 
         $('#btnAddKategoriSampah #text').addClass('d-none');
         $('#btnAddKategoriSampah #spinner').removeClass('d-none');
+        let httpResponse = await httpRequestPost(`${APIURL}/kategori_sampah/additem`,form);
+        $('#btnAddKategoriSampah #text').removeClass('d-none');
+        $('#btnAddKategoriSampah #spinner').addClass('d-none');
 
-        axios
-        .post(`${APIURL}/kategori_sampah/additem`,form, {
-            headers: {
-                token: TOKEN
-            }
-        })
-        .then((response) => {
-                $('#btnAddKategoriSampah #text').removeClass('d-none');
-                $('#btnAddKategoriSampah #spinner').addClass('d-none');
-                $('input#NewkategoriSampah').val('');
-                getAllKatSampah();
-        })
-        .catch((error) => {
-                $('#btnAddKategoriSampah #text').removeClass('d-none');
-                $('#btnAddKategoriSampah #spinner').addClass('d-none');
-                // unauthorized
-                if (error.response.status == 401) {
-                    if (error.response.data.messages == 'token expired') {
-                        Swal.fire({
-                            icon : 'error',
-                            title : '<strong>LOGIN EXPIRED</strong>',
-                            text: 'silahkan login ulang untuk perbaharui login anda',
-                            showCancelButton: false,
-                            confirmButtonText: 'ok',
-                        }).then(() => {
-                            window.location.replace(`${BASEURL}/login`);
-                            document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                        })
-                    }
-                    else{
-                        window.location.replace(`${BASEURL}/login`);
-                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                    }
-                }
-                // error server
-                else if (error.response.status == 500) {
-                    showAlert({
-                        message: `<strong>Ups...</strong> terjadi kesalahan pada server, silahkan refresh halaman.`,
-                        btnclose: true,
-                        type:'danger' 
-                    })
-                }
-        })
+        if (httpResponse.status === 201) {
+            $('input#NewkategoriSampah').val('');
+            getAllKatSampah();
+
+           showAlert({
+               message: `<strong>Success...</strong> kategori berhasil ditambah!`,
+               btnclose: false,
+               type:'success'
+           })
+           setTimeout(() => {
+               hideAlert();
+           }, 3000);
+        }
     }
 });
 
@@ -352,149 +326,75 @@ const clearInputForm = () => {
  /**
   * ADD SAMPAH
   */
- const addSampah = (el,event) => {
+ const addSampah = async (el,event) => {
      event.preventDefault();
      
      if (doValidateAddSmp()) {
          let form = new FormData(el);
+         form.set('kategori',$('#formAddEditSampah input#kategori').val())
+
          $('#formAddEditSampah #btn-add-edit-sampah #text').addClass('d-none');
          $('#formAddEditSampah #btn-add-edit-sampah #spinner').removeClass('d-none');
- 
-         axios
-         .post(`${APIURL}/sampah/additem`,form, {
-             headers: {
-                 token: TOKEN
-             }
-         })
-         .then(() => {
-             $('#formAddEditSampah #btn-add-edit-sampah #text').removeClass('d-none');
-             $('#formAddEditSampah #btn-add-edit-sampah #spinner').addClass('d-none');
-             getAllJenisSampah();
-             clearInputForm();
- 
-             showAlert({
-                 message: `<strong>Success...</strong> sampah berhasil ditambah!`,
-                 btnclose: false,
-                 type:'success'
-             })
-             setTimeout(() => {
-                 hideAlert();
-             }, 3000);
-         })
-         .catch((error) => {
-             $('#formAddEditSampah #btn-add-edit-sampah #text').removeClass('d-none');
-             $('#formAddEditSampah #btn-add-edit-sampah #spinner').addClass('d-none');
- 
-             // bad request
-             if (error.response.status == 400) {
-                 if (error.response.data.messages.jenis) {
-                     $('#formAddEditSampah #jenis').addClass('is-invalid');
-                     $('#formAddEditSampah #jenis-error').text(error.response.data.messages.jenis);
-                 }
-             }
-             // unauthorized
-             else if (error.response.status == 401) {
-                 if (error.response.data.messages == 'token expired') {
-                     Swal.fire({
-                         icon : 'error',
-                         title : '<strong>LOGIN EXPIRED</strong>',
-                         text: 'silahkan login ulang untuk perbaharui login anda',
-                         showCancelButton: false,
-                         confirmButtonText: 'ok',
-                     }).then(() => {
-                         window.location.replace(`${BASEURL}/login`);
-                         document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                     })
-                 }
-                 else{
-                     window.location.replace(`${BASEURL}/login`);
-                     document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                 }
-             }
-             // error server
-             else {
-                 showAlert({
-                     message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
-                     btnclose: true,
-                     type:'danger'
-                 })
-             }
-         })
-         
-     }
- }
+         let httpResponse = await httpRequestPost(`${APIURL}/sampah/additem`,form);
+         $('#formAddEditSampah #btn-add-edit-sampah #text').removeClass('d-none');
+         $('#formAddEditSampah #btn-add-edit-sampah #spinner').addClass('d-none');
 
-/**
- * EDIT SAMPAH
- */
-const editSampah = (el,event) => {
-    event.preventDefault();
-    
-    if (doValidateAddSmp()) {
-        let form = new FormData(el);
-        $('#formAddEditSampah #btn-add-edit-sampah #text').addClass('d-none');
-        $('#formAddEditSampah #btn-add-edit-sampah #spinner').removeClass('d-none');
-
-        axios
-        .put(`${APIURL}/sampah/edititem`,form, {
-            headers: {
-                token: TOKEN
-            }
-        })
-        .then((response) => {
-            $('#formAddEditSampah #btn-add-edit-sampah #text').removeClass('d-none');
-            $('#formAddEditSampah #btn-add-edit-sampah #spinner').addClass('d-none');
+         if (httpResponse.status === 201) {
             getAllJenisSampah();
+            clearInputForm();
 
             showAlert({
-                message: `<strong>Success...</strong> sampah berhasil diubah!`,
+                message: `<strong>Success...</strong> sampah berhasil ditambah!`,
                 btnclose: false,
                 type:'success'
             })
             setTimeout(() => {
                 hideAlert();
             }, 3000);
-        })
-        .catch((error) => {
-            $('#formAddEditSampah #btn-add-edit-sampah #text').removeClass('d-none');
-            $('#formAddEditSampah #btn-add-edit-sampah #spinner').addClass('d-none');
+         }
+         else if (httpResponse.status === 400) {
+            if (httpResponse.message.jenis) {
+                $('#formAddEditSampah #jenis').addClass('is-invalid');
+                $('#formAddEditSampah #jenis-error').text(httpResponse.message.jenis);
+            }
+         }
+     }
+ }
 
-            // bad request
-            if (error.response.status == 400) {
-                if (error.response.data.messages.jenis) {
-                    $('#formAddEditSampah #jenis').addClass('is-invalid');
-                    $('#formAddEditSampah #jenis-error').text(error.response.data.messages.jenis);
-                }
-            }
-            // unauthorized
-            else if (error.response.status == 401) {
-                if (error.response.data.messages == 'token expired') {
-                    Swal.fire({
-                        icon : 'error',
-                        title : '<strong>LOGIN EXPIRED</strong>',
-                        text: 'silahkan login ulang untuk perbaharui login anda',
-                        showCancelButton: false,
-                        confirmButtonText: 'ok',
-                    }).then(() => {
-                        window.location.replace(`${BASEURL}/login`);
-                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                    })
-                }
-                else{
-                    window.location.replace(`${BASEURL}/login`);
-                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                }
-            }
-            // error server
-            else {
-                showAlert({
-                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
-                    btnclose: true,
-                    type:'danger'
-                })
-            }
-        })
-        
+/**
+ * EDIT SAMPAH
+ */
+const editSampah = async (el,event) => {
+    event.preventDefault();
+    
+    if (doValidateAddSmp()) {
+        let form = new FormData(el);
+        form.set('kategori',$('#formAddEditSampah input#kategori').val())
+
+        $('#formAddEditSampah #btn-add-edit-sampah #text').addClass('d-none');
+        $('#formAddEditSampah #btn-add-edit-sampah #spinner').removeClass('d-none');
+        let httpResponse = await httpRequestPut(`${APIURL}/sampah/edititem`,form);
+        $('#formAddEditSampah #btn-add-edit-sampah #text').removeClass('d-none');
+        $('#formAddEditSampah #btn-add-edit-sampah #spinner').addClass('d-none');
+
+        if (httpResponse.status === 201) {
+           getAllJenisSampah();
+
+           showAlert({
+               message: `<strong>Success...</strong> sampah berhasil diubah!`,
+               btnclose: false,
+               type:'success'
+           })
+           setTimeout(() => {
+               hideAlert();
+           }, 3000);
+        }
+        else if (httpResponse.status === 400) {
+           if (httpResponse.message.jenis) {
+               $('#formAddEditSampah #jenis').addClass('is-invalid');
+               $('#formAddEditSampah #jenis-error').text(httpResponse.message.jenis);
+           }
+        }
     }
 }
 
@@ -581,20 +481,22 @@ const doValidateAddSmp = () => {
         status = false;
     }
     // jumlah validation
-    if ($('#formAddEditSampah #jumlah').val() == '') {
-        $('#formAddEditSampah #jumlah').addClass('is-invalid');
-        $('#formAddEditSampah #jumlah-error').html('*jumlah harus di isi');
-        status = false;
-    }
-    else if ($('#formAddEditSampah #jumlah').val().length > 11) {
-        $('#formAddEditSampah #jumlah').addClass('is-invalid');
-        $('#formAddEditSampah #jumlah-error').html('*maksimal 11 angka');
-        status = false;
-    }
-    else if (!/^\d+$/.test($('#formAddEditSampah #jumlah').val())) {
-        $('#formAddEditNasabah #jumlah').addClass('is-invalid');
-        $('#formAddEditNasabah #jumlah-error').html('*hanya boleh angka');
-        status = false;
+    if (!$('#formAddEditSampah .edit-item').hasClass('d-none')) {
+        if ($('#formAddEditSampah #jumlah').val() == '') {
+            $('#formAddEditSampah #jumlah').addClass('is-invalid');
+            $('#formAddEditSampah #jumlah-error').html('*jumlah harus di isi');
+            status = false;
+        }
+        else if ($('#formAddEditSampah #jumlah').val().length > 11) {
+            $('#formAddEditSampah #jumlah').addClass('is-invalid');
+            $('#formAddEditSampah #jumlah-error').html('*maksimal 11 angka');
+            status = false;
+        }
+        else if (!/^\d+$/.test($('#formAddEditSampah #jumlah').val())) {
+            $('#formAddEditNasabah #jumlah').addClass('is-invalid');
+            $('#formAddEditNasabah #jumlah-error').html('*hanya boleh angka');
+            status = false;
+        }
     }
     // kategori validation
     if ($('#formAddEditSampah #kategori').val() == '') {

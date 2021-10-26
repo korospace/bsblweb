@@ -554,7 +554,7 @@
 							<i class="fas fa-clipboard-list text-muted"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control px-2" id="kategori" name="kategori" autocomplete="off" placeholder="Pilihi kategori dibawah">
+					<input type="text" class="form-control px-2" id="kategori" name="kategori" autocomplete="off" placeholder="Pilihi kategori dibawah" disabled>
 				</div>
 				<small
 					id="kategori-error"

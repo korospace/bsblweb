@@ -18,18 +18,18 @@ class TransaksiModel extends Model
             $idtransaksi = $data['idtransaksi'];
             $idnasabah   = $data['id_nasabah'];
             $totalHarga  = 0;
-            $queryDetilSetor   = "INSERT INTO setor_sampah (id_transaksi,id_sampah,jumlah,harga) VALUES";
+            $queryDetilSetor   = "INSERT INTO setor_sampah (id_transaksi,jenis_sampah,jumlah,harga) VALUES";
             $queryJumlahSampah = '';
 
             foreach ($data['transaksi'] as $t) {
-                $idsampah   = $t['id_sampah'];
+                $jenisSmp   = $t['jenis_sampah'];
                 $jumlah     = $t['jumlah'];
-                $hargaAsli  = $this->db->table('sampah')->select("harga")->where("id",$idsampah)->get()->getResultArray();
+                $hargaAsli  = $this->db->table('sampah')->select("harga")->where("jenis_sampah",$jenisSmp)->get()->getResultArray();
                 $harga      = (int)$hargaAsli[0]['harga']*(float)$jumlah;
                 $totalHarga = $totalHarga+$harga;
 
-                $queryDetilSetor   .= "('$idtransaksi','$idsampah',$jumlah,$harga),";
-                $queryJumlahSampah .= "UPDATE sampah SET jumlah=jumlah+$jumlah WHERE id = '$idsampah';";
+                $queryDetilSetor   .= "('$idtransaksi','$jenisSmp',$jumlah,$harga),";
+                $queryJumlahSampah .= "UPDATE sampah SET jumlah=jumlah+$jumlah WHERE jenis_sampah = '$jenisSmp';";
             }
 
             $queryDetilSetor  = rtrim($queryDetilSetor, ",");
@@ -163,13 +163,12 @@ class TransaksiModel extends Model
     public function getData(array $get,?bool $isAdmin=null,?string $idNasabah=null): array
     {
         try {
-            if (isset($get['id_transaksi']) && !isset($get['id_nasabah'])) {
+            if (isset($get['id_transaksi']) && !isset($get['idnasabah'])) {
                 $id_transaksi   = $get['id_transaksi'];
                 $code_transaksi = substr($get['id_transaksi'],0,3);
                 
                 if ($code_transaksi == 'TSS') {
-                    // var_dump('haha '.$id_transaksi);die;
-                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,sampah.jenis,setor_sampah.jumlah,setor_sampah.harga,transaksi.date FROM transaksi JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi) JOIN sampah ON (setor_sampah.id_sampah = sampah.id) WHERE transaksi.id = '$id_transaksi';")->getResultArray();
+                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,setor_sampah.jenis_sampah,setor_sampah.jumlah,setor_sampah.harga,transaksi.date FROM transaksi JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi) WHERE transaksi.id = '$id_transaksi';")->getResultArray();
 
                     $transaction = $this->makeDetilTransaksi($transaction);
                 } 

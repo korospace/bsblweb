@@ -8,6 +8,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\RESTful\ResourceController;
 use Exception;
 
+use function PHPUnit\Framework\isNull;
+
 class Admin extends ResourceController
 {
     public $basecontroller;
@@ -45,15 +47,16 @@ class Admin extends ResourceController
     /**
      * View detil nasabah
      */
-    public function detilNasabahView()
+    public function detilNasabahView(?string $id=null)
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
 
-        if (isset($_POST['idnasabah'])) {
+        if ($id!=null) {
             $data = [
                 'title'    => 'Admin | detil nasabah',
-                'idnasabah'=> $_POST['idnasabah'],
+                // 'idnasabah'=> $_POST['idnasabah'],
+                'idnasabah'=> $id,
                 'token' => $token
             ];
 

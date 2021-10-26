@@ -68,7 +68,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text bg-gray px-4 border-md border-right-0">
-                    <i class="fa fa-envelope text-muted"></i>
+                  <i class="fas fa-at text-muted"></i>
                   </span>
                 </div>
                 <input type="text" class="form-control" id="email-regist" name="email" autocomplete="off" placeholder="Masukan email anda">

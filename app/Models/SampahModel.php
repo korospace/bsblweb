@@ -9,7 +9,7 @@ class SampahModel extends Model
 {
     protected $table         = 'sampah';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','id_kategori','jenis','harga'];
+    protected $allowedFields = ['id','kategori','jenis','harga'];
 
     public function getLastSampah(): array
     {
@@ -73,10 +73,10 @@ class SampahModel extends Model
     {
         try {
             if (isset($get['kategori'])) {
-                $sampah = $this->db->table($this->table)->select("sampah.id,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah")->join('kategori_sampah','sampah.id_kategori = kategori_sampah.id')->where("sampah.id_kategori",$get['kategori'])->orderBy('id','ASC')->get()->getResultArray();
+                $sampah = $this->db->table($this->table)->select("id,kategori,jenis,harga,jumlah")->where("kategori",$get['kategori'])->orderBy('id','ASC')->get()->getResultArray();
             } 
             else {
-                $sampah = $this->db->table($this->table)->select('sampah.id,sampah.id_kategori,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah')->join('kategori_sampah','sampah.id_kategori = kategori_sampah.id')->orderBy('id','ASC')->get()->getResultArray();
+                $sampah = $this->db->table($this->table)->select('id,kategori,kategori_name AS kategori,jenis,harga,jumlah')->orderBy('id','ASC')->get()->getResultArray();
             }
             
             if (empty($sampah)) {    
@@ -176,8 +176,8 @@ class SampahModel extends Model
     public function deleteItem(string $id): array
     {
         try {
-            $this->db->table($this->table)->where('id', $id)->delete();
-            
+            $result = $this->db->table($this->table)->where('id', $id)->delete();
+
             if ($this->db->affectedRows() > 0) {
                 return [
                     "success"  => true,

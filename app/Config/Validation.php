@@ -589,11 +589,11 @@ class Validation
 	];
 
 	public $addSampah = [
-		'id_kategori' => [
-            'rules'  => 'required|is_not_unique[kategori_sampah.id]',
+		'kategori' => [
+            'rules'  => 'required|is_not_unique[kategori_sampah.name]',
             'errors' => [
-                'required'      => 'id kategori is required',
-                'is_not_unique' => 'id_kategori with value ({value}) is not found',
+                'required'      => 'kategori is required',
+                'is_not_unique' => 'kategori with value ({value}) is not found',
             ],
 		],
 		'jenis' => [
@@ -716,11 +716,11 @@ class Validation
 	];
 
 	public $setorSampah2 = [
-		'id_sampah' => [
-            'rules'  => 'required|is_not_unique[sampah.id]',
+		'jenis_sampah' => [
+            'rules'  => 'required|is_not_unique[sampah.jenis]',
             'errors' => [
-                'required'      => 'id sampah is required',
-                'is_not_unique' => 'id_sampah with value ({value}) is not found',
+                'required'      => 'jenis_sampah is required',
+                'is_not_unique' => 'jenis_sampah with value ({value}) is not found',
             ],
 		],
 		'jumlah' => [

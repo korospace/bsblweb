@@ -17,7 +17,7 @@
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	
+	<script src="<?= base_url('assets/js/admin.profile.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>

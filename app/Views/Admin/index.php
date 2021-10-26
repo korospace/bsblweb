@@ -16,6 +16,7 @@
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.dashboard.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -389,6 +390,62 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="col-12">
+					<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
+						<!-- search input -->
+						<div class="card-header form-row pb-0 d-flex justify-content-between" style="font-family: 'qc-semibold';">
+							<input id="search-sampah" type="text" class="form-control h-100 col-12 col-sm-6" placeholder="kategori/jenis sampah" style="">
+							<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('addsampah')">tambah</button>
+						</div>
+						<!-- container table -->
+						<div class="card-body px-0 pb-2">
+							<div class="table-responsive p-0 position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
+								<!-- spinner -->
+								<div id="list-sampah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+								</div>
+								<!-- message not found -->
+								<div id="list-sampah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<h6 id="text-notfound" class='opacity-6'></h6>
+								</div>
+								<!-- table -->
+								<table id="table-jenis-sampah" class="table table-striped text-center mb-0">
+									<thead class="position-sticky bg-white" style="top: 0;">
+										<tr>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												#
+											</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Kategori
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Jenis
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Harga
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Jumlah(Kg)
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Action
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										
+									</tbody>
+									<?php for ($i=0; $i < 0; $i++) { ?>
+									<?php } ?>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<footer class="footer pt-3  ">
 				<div class="container-fluid">
 					<div class="row align-items-center justify-content-lg-between">

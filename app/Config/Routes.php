@@ -43,7 +43,7 @@ $routes->group("nasabah", function ($routes) {
     // VIEWS
     $routes->add('/',             'Dashboard::dashboardNasabah');
     $routes->add('profile',       'Profile::profileNasabah');
-    $routes->add('cetaktransaksi/(:any)','CetakTransaksi::index/$1');
+    $routes->add('cetaktransaksi/(:any)','Nasabah::cetakTransaksi/$1');
     // API
     $routes->post("register",     "Nasabah::register");
     $routes->post("verification", "Nasabah::verification");
@@ -60,12 +60,12 @@ $routes->group("nasabah", function ($routes) {
 
 $routes->group("admin", function ($routes) {
     // VIEWS
-    $routes->add('/',                'Dashboard::dashboardAdmin');
-    $routes->add('profile',          'Profile::profileAdmin');
-    $routes->add('listnasabah',      'Admin::listNasabahView');
-    $routes->add('detilnasabah',     'Admin::detilNasabahView');
-    $routes->add('listartikel',      'Admin::listArtikelView');
-    $routes->add('addartikel',       'Admin::addArtikelView');
+    $routes->add('/',                  'Dashboard::dashboardAdmin');
+    $routes->add('profile',            'Profile::profileAdmin');
+    $routes->add('listnasabah',        'Admin::listNasabahView');
+    $routes->add('detilnasabah/(:any)','Admin::detilNasabahView/$1');
+    $routes->add('listartikel',        'Admin::listArtikelView');
+    $routes->add('addartikel',         'Admin::addArtikelView');
     // API
     $routes->post("login",           "Admin::login");
     $routes->get("sessioncheck",     "Admin::sessionCheck");

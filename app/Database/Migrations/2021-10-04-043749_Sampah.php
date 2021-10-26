@@ -14,7 +14,7 @@ class Sampah extends Migration
                 'constraint' => 10,
                 'null' => false,
             ],
-            'id_kategori' => [
+            'kategori' => [
                 'type' => 'character varying',
                 'constraint' => 20,
                 'null' => false,
@@ -38,7 +38,7 @@ class Sampah extends Migration
 
         $this->forge->addPrimaryKey('id');
         $this->forge->addUniqueKey('jenis');
-        $this->forge->addForeignKey('id_kategori','kategori_sampah','id','NO ACTION','NO ACTION');
+        $this->forge->addForeignKey('kategori','kategori_sampah','name','CASCADE','CASCADE');
         $this->forge->createTable('sampah');
     }
 

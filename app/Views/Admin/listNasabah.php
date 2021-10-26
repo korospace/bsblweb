@@ -277,7 +277,7 @@
 						class="text-danger"></small>
 				</div>
 				<!-- **** RT RW KODEPOS **** -->
-				<div class="addnasabah-item form-row align-items-center mb-4" style="padding-right: 2px;">
+				<div class="addnasabah-item form-row mb-4" style="padding-right: 2px;">
 					<div class="col-6">
 						<div class="input-group">
 							<div class="input-group-prepend">

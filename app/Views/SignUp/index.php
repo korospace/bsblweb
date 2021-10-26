@@ -127,7 +127,7 @@
             <div class="input-group col-lg-6 mb-4 form-group">
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text bg-gray px-4 border-md border-right-0">
+                  <span class="input-group-text bg-gray px-4 border-md border-right-0" style="max-height: 50px;">
                     <i class="fas fa-home"></i>
                   </span>
                 </div>
@@ -141,7 +141,7 @@
             <div class="input-group col-lg-6 mb-4 form-group">
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text bg-gray px-4 border-md border-right-0">
+                  <span class="input-group-text bg-gray px-4 border-md border-right-0" style="max-height: 50px;">
                     <i class="fas fa-home"></i>
                   </span>
                 </div>

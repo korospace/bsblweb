@@ -219,6 +219,7 @@ function validateAddKategori() {
  const getAllJenisSampah = async () => {
  
      $('#search-sampah').val('');
+     $('#list-sampah-notfound').addClass('d-none'); 
      $('#list-sampah-spinner').removeClass('d-none'); 
      let httpResponse = await httpRequestGet(`${APIURL}/sampah/getitem`);
      $('#list-sampah-spinner').addClass('d-none'); 
@@ -239,7 +240,7 @@ function validateAddKategori() {
                      <span class="font-weight-bold"> ${++i} </span>
                  </td>
                  <td class="align-middle text-center">
-                     <span class="font-weight-bold text-capitalize"> ${n.kategori} </span>
+                     <span class="font-weight-bold"> ${n.kategori} </span>
                  </td>
                  <td class="align-middle text-center">
                     ${n.jenis}
@@ -252,7 +253,7 @@ function validateAddKategori() {
                  </td>
                  <td class="align-middle text-center">
                      <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah('${n.id}')">hapus</span>
-                     <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')">edit</span>
+                     <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('editasampah','${n.id}')">edit</span>
                  </td>
              </tr>`;
          });
@@ -261,13 +262,63 @@ function validateAddKategori() {
      }
  };
 
+// Search sampah
+$('#search-sampah').on('keyup', function() {
+    let elSugetion     = '';
+    let sampahFiltered = [];
+    
+    if ($(this).val() === "") {
+        sampahFiltered = arrayJenisSampah;
+    } 
+    else {
+        sampahFiltered = arrayJenisSampah.filter((n) => {
+            return n.kategori.includes($(this).val()) || n.jenis.includes($(this).val());
+        });
+    }
+
+    if (sampahFiltered.length == 0) {
+        $('#list-sampah-notfound').removeClass('d-none'); 
+        $('#list-sampah-notfound #text-notfound').html(`sampah tidak ditemukan`); 
+    } 
+    else {
+        $('#list-sampah-notfound').addClass('d-none'); 
+        $('#list-sampah-notfound #text-notfound').html(` `); 
+
+        sampahFiltered.forEach((n,i) => {
+            elSugetion += `<tr class="text-xs">
+            <td class="align-middle text-center py-3">
+                <span class="font-weight-bold"> ${++i} </span>
+            </td>
+            <td class="align-middle text-center">
+                <span class="font-weight-bold"> ${n.kategori} </span>
+            </td>
+            <td class="align-middle text-center">
+               ${n.jenis}
+            </td>
+            <td class="align-middle text-center py-3">
+                <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
+            </td>
+            <td class="align-middle text-center py-3">
+                <span class="font-weight-bold"> ${n.jumlah} </span>
+            </td>
+            <td class="align-middle text-center">
+                <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah('${n.id}')">hapus</span>
+                <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('editasampah','${n.id}')">edit</span>
+            </td>
+        </tr>`;
+        });    
+    }
+
+    $('#table-jenis-sampah tbody').html(elSugetion);
+});
+
 // clear input form
 const clearInputForm = () => {
     $(`#formAddEditSampah .form-control`).val('');
 }
 
  // Edit modal when open
- const openModalAddEditSmp = (modalName,idsampah=null) => {
+ const openModalAddEditSmp = (modalName,idSampah=null) => {
      let modalTitle = (modalName=='addsampah') ? 'tambah sampah' : 'edit sampah' ;
      
      $('#modalAddEditSampah .modal-title').html(modalTitle);
@@ -278,17 +329,23 @@ const clearInputForm = () => {
      if (modalName == 'addsampah') {
         $('.kategori-list').removeClass('active');
         $('#formAddEditSampah').attr('onsubmit','addSampah(this,event);');
-        //  $('#modalAddEditSampah .addnasabah-item').removeClass('d-none');
-        //  $('#modalAddEditSampah .editnasabah-item').addClass('d-none');        
+        $('#modalAddEditSampah .edit-item').addClass('d-none');
 
         clearInputForm();
      } 
      else {
         $('#formAddEditSampah').attr('onsubmit','editSampah(this,event);');
-        //  $('#modalAddEditSampah .addnasabah-item').addClass('d-none');
-        //  $('#modalAddEditSampah .editnasabah-item').removeClass('d-none');        
+        $('#modalAddEditSampah .edit-item').removeClass('d-none');        
          
-        $('#modalAddEditSampah #list-sampah-spinner').removeClass('d-none');
+        let selectedSampah = arrayJenisSampah.filter((n) => {
+            return n.id == idSampah;
+        });
+        
+        $('#formAddEditSampah #id').val(selectedSampah[0].id);
+        $('#formAddEditSampah #jenis').val(selectedSampah[0].jenis);
+        $('#formAddEditSampah #harga').val(selectedSampah[0].harga);
+        $('#formAddEditSampah #jumlah').val(selectedSampah[0].jumlah);
+        $('#formAddEditSampah #kategori').val(selectedSampah[0].kategori);
      }
  }
 
@@ -309,11 +366,11 @@ const clearInputForm = () => {
                  token: TOKEN
              }
          })
-         .then((response) => {
+         .then(() => {
              $('#formAddEditSampah #btn-add-edit-sampah #text').removeClass('d-none');
              $('#formAddEditSampah #btn-add-edit-sampah #spinner').addClass('d-none');
-             clearInputForm();
              getAllJenisSampah();
+             clearInputForm();
  
              showAlert({
                  message: `<strong>Success...</strong> sampah berhasil ditambah!`,
@@ -332,11 +389,11 @@ const clearInputForm = () => {
              if (error.response.status == 400) {
                  if (error.response.data.messages.jenis) {
                      $('#formAddEditSampah #jenis').addClass('is-invalid');
-                     $('#formAddEditSampah #jenis-error').text(error.response.data.messages.email);
+                     $('#formAddEditSampah #jenis-error').text(error.response.data.messages.jenis);
                  }
              }
              // unauthorized
-             if (error.response.status == 401) {
+             else if (error.response.status == 401) {
                  if (error.response.data.messages == 'token expired') {
                      Swal.fire({
                          icon : 'error',
@@ -366,6 +423,80 @@ const clearInputForm = () => {
          
      }
  }
+
+/**
+ * EDIT SAMPAH
+ */
+const editSampah = (el,event) => {
+    event.preventDefault();
+    
+    if (doValidateAddSmp()) {
+        let form = new FormData(el);
+        $('#formAddEditSampah #btn-add-edit-sampah #text').addClass('d-none');
+        $('#formAddEditSampah #btn-add-edit-sampah #spinner').removeClass('d-none');
+
+        axios
+        .put(`${APIURL}/sampah/edititem`,form, {
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then((response) => {
+            $('#formAddEditSampah #btn-add-edit-sampah #text').removeClass('d-none');
+            $('#formAddEditSampah #btn-add-edit-sampah #spinner').addClass('d-none');
+            getAllJenisSampah();
+
+            showAlert({
+                message: `<strong>Success...</strong> sampah berhasil diubah!`,
+                btnclose: false,
+                type:'success'
+            })
+            setTimeout(() => {
+                hideAlert();
+            }, 3000);
+        })
+        .catch((error) => {
+            $('#formAddEditSampah #btn-add-edit-sampah #text').removeClass('d-none');
+            $('#formAddEditSampah #btn-add-edit-sampah #spinner').addClass('d-none');
+
+            // bad request
+            if (error.response.status == 400) {
+                if (error.response.data.messages.jenis) {
+                    $('#formAddEditSampah #jenis').addClass('is-invalid');
+                    $('#formAddEditSampah #jenis-error').text(error.response.data.messages.jenis);
+                }
+            }
+            // unauthorized
+            else if (error.response.status == 401) {
+                if (error.response.data.messages == 'token expired') {
+                    Swal.fire({
+                        icon : 'error',
+                        title : '<strong>LOGIN EXPIRED</strong>',
+                        text: 'silahkan login ulang untuk perbaharui login anda',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    }).then(() => {
+                        window.location.replace(`${BASEURL}/login`);
+                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                    })
+                }
+                else{
+                    window.location.replace(`${BASEURL}/login`);
+                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                }
+            }
+            // error server
+            else {
+                showAlert({
+                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
+                    btnclose: true,
+                    type:'danger'
+                })
+            }
+        })
+        
+    }
+}
 
  /**
   * HAPUS JENIS SAMPAH
@@ -439,7 +570,7 @@ const doValidateAddSmp = () => {
         $('#formAddEditSampah #harga-error').html('*harga harus di isi');
         status = false;
     }
-    else if ($('#formAddEditSampah #harga').val().length > 40) {
+    else if ($('#formAddEditSampah #harga').val().length > 11) {
         $('#formAddEditSampah #harga').addClass('is-invalid');
         $('#formAddEditSampah #harga-error').html('*maksimal 11 angka');
         status = false;
@@ -447,6 +578,22 @@ const doValidateAddSmp = () => {
     else if (!/^\d+$/.test($('#formAddEditSampah #harga').val())) {
         $('#formAddEditNasabah #harga').addClass('is-invalid');
         $('#formAddEditNasabah #harga-error').html('*hanya boleh angka');
+        status = false;
+    }
+    // jumlah validation
+    if ($('#formAddEditSampah #jumlah').val() == '') {
+        $('#formAddEditSampah #jumlah').addClass('is-invalid');
+        $('#formAddEditSampah #jumlah-error').html('*jumlah harus di isi');
+        status = false;
+    }
+    else if ($('#formAddEditSampah #jumlah').val().length > 11) {
+        $('#formAddEditSampah #jumlah').addClass('is-invalid');
+        $('#formAddEditSampah #jumlah-error').html('*maksimal 11 angka');
+        status = false;
+    }
+    else if (!/^\d+$/.test($('#formAddEditSampah #jumlah').val())) {
+        $('#formAddEditNasabah #jumlah').addClass('is-invalid');
+        $('#formAddEditNasabah #jumlah-error').html('*hanya boleh angka');
         status = false;
     }
     // kategori validation

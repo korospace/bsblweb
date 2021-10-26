@@ -655,11 +655,11 @@ class Validation
                 'is_not_unique' => 'sampah with id ({value}) is not found',
             ],
 		],
-		'id_kategori' => [
-            'rules'  => 'required|is_not_unique[kategori_sampah.id]',
+		'kategori' => [
+            'rules'  => 'required|is_not_unique[kategori_sampah.name]',
             'errors' => [
-                'required'      => 'id kategori is required',
-                'is_not_unique' => 'id_kategori with value ({value}) is not found',
+                'required'      => 'kategori is required',
+                'is_not_unique' => 'kategori with value ({value}) is not found',
             ],
 		],
 		'jenis' => [

@@ -111,7 +111,7 @@ class Sampah extends ResourceController
     /**
      * Get item
      *   url    : - domain.com/sampah/
-     *            - domain.com/sampah/getitem?kategori=:id_kategori
+     *            - domain.com/sampah/getitem?kategori=:kategori
      *   method : GET
      */
     public function getItem(): object

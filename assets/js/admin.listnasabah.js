@@ -5,6 +5,7 @@ let arrayNasabah = [];
 const getAllNasabah = async () => {
 
     $('#search-nasabah').val('');
+    $('#list-nasabah-notfound').addClass('d-none'); 
     $('#list-nasabah-spinner').removeClass('d-none'); 
     let httpResponse = await httpRequestGet(`${APIURL}/admin/getnasabah`);
     $('#list-nasabah-spinner').addClass('d-none'); 

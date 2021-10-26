@@ -502,29 +502,24 @@
 
 		<!-- modal body -->
 		<div class="modal-body row position-relative">
-
-			<!-- spinner -->
-			<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-				<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-			</div>
-
-			<input type="hidden" name="id">
-			<!-- **** JENIS,HARGA **** -->
-			<div class="addnasabah-item form-row align-items-center mb-4" style="padding-right: 2px;">
-				<div class="col-6">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray px-4 border-md border-right-0">
-								<i class="fas fa-recycle text-muted"></i>
-							</span>
-						</div>
-						<input type="text" class="form-control px-2" id="jenis" name="jenis" autocomplete="off" placeholder="Jenis sampah">
+			<input type="hidden" name="id" id="id">
+			<!-- **** JENIS **** -->
+			<div class="input-group col-lg-12 mb-4 form-group">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text bg-gray px-4 border-md border-right-0">
+							<i class="fas fa-recycle text-muted"></i>
+						</span>
 					</div>
-					<small
-						id="jenis-error"
-						class="text-danger"></small>
+					<input type="text" class="form-control px-2" id="jenis" name="jenis" autocomplete="off" placeholder="Jenis sampah">
 				</div>
-				<div class="col-6">
+				<small
+					id="jenis-error"
+					class="text-danger"></small>
+			</div>
+			<!-- **** Harga,Jumlah **** -->
+			<div class="addnasabah-item form-row mb-4" style="padding-right: 2px;">
+				<div class="col">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-gray px-4 border-md border-right-0">
@@ -535,6 +530,19 @@
 					</div>
 					<small
 						id="harga-error"
+						class="text-danger"></small>
+				</div>
+				<div class="edit-item col-6">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md border-right-0">
+								<i class="fas fa-balance-scale text-muted"></i>
+							</span>
+						</div>
+						<input type="number" class="form-control px-2" id="jumlah" name="jumlah" autocomplete="off" placeholder="Jumlah(Kg)">
+					</div>
+					<small
+						id="jumlah-error"
 						class="text-danger"></small>
 				</div>
 			</div>

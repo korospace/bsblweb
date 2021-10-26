@@ -225,7 +225,7 @@ class Sampah extends ResourceController
             else {
                 $data = [
                     "id"          => $data['id'],
-                    "id_kategori" => trim($data['id_kategori']),
+                    "kategori"    => trim($data['kategori']),
                     "jenis"       => strtolower(trim($data['jenis'])),
                     "harga"       => trim($data['harga']),
                     "jumlah"      => trim($data['jumlah']),

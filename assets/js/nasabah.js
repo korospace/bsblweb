@@ -64,6 +64,9 @@ const sessioncheck = async () => {
     if (httpResponse.status === 200) {
         if (pageTitle[1] === 'dashboard') {
             getTotalSampah();
+            getAllTransaksi();
+            getDataSaldo();
+            getDataProfile();
         }
         if (pageTitle[1] === 'profile') {
             getDataProfile();
@@ -87,8 +90,6 @@ const getTotalSampah = async () => {
         for (const name in dataSampah) {
             $(`#sampah-${name}`).html(dataSampah[name].total+' Kg');
         }   
-
-        getAllTransaksi();
     }
 };
 
@@ -98,6 +99,8 @@ const getTotalSampah = async () => {
 const getAllTransaksi = async () => {
 
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata`);
+
+    $('.spinner-wraper').addClass('d-none');
     
     if (httpResponse.status === 404) {
         updateGrafikSetor([],[]);
@@ -108,7 +111,6 @@ const getAllTransaksi = async () => {
         let arrayKg      = [];
         let elTransaksi  = '';
         let allTransaksi = httpResponse.data.data;
-        getDataSaldo();
         
         allTransaksi.forEach(t => {
             let type      = t.type;
@@ -350,7 +352,6 @@ const getDataSaldo = async () => {
     let httpResponse = await httpRequestGet(`${APIURL}/nasabah/getsaldo`);
 
     if (httpResponse.status === 200) {
-        getDataProfile();
         $('#saldo-uang').html(modifUang(httpResponse.data.data.uang));
         $('#saldo-ubs').html(parseFloat(httpResponse.data.data.ubs).toFixed(4));
         $('#saldo-antam').html(parseFloat(httpResponse.data.data.antam).toFixed(4));

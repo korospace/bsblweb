@@ -8,7 +8,7 @@ Login Nasabah
 $('#formLoginNasabah').on('submit', function(e) {
     e.preventDefault();
 
-    if (doValidate()) {
+    if (doValidateNasabah()) {
         showLoadingSpinner();
         let formLogin = new FormData(e.target);
 
@@ -72,8 +72,9 @@ $('#formLoginNasabah').on('submit', function(e) {
 })
 
 // form validation
-function doValidate(form) {
+function doValidateNasabah(form) {
     let status     = true;
+    let emailRules = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
     // clear error message first
     $('.form-control').removeClass('is-invalid');
@@ -83,6 +84,11 @@ function doValidate(form) {
     if ($('#nasabah-email').val() == '') {
         $('#nasabah-email').addClass('is-invalid');
         $('#nasabah-email-error').html('*email harus di isi');
+        status = false;
+    }
+    else if (!emailRules.test(String($('#nasabah-email').val()).toLowerCase())) {
+        $('#nasabah-email').addClass('is-invalid');
+        $('#nasabah-email-error').html('*email tidak valid');
         status = false;
     }
     // password validation

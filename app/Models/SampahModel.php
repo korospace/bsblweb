@@ -76,7 +76,7 @@ class SampahModel extends Model
                 $sampah = $this->db->table($this->table)->select("id,kategori,jenis,harga,jumlah")->where("kategori",$get['kategori'])->orderBy('id','ASC')->get()->getResultArray();
             } 
             else {
-                $sampah = $this->db->table($this->table)->select('id,kategori,kategori_name AS kategori,jenis,harga,jumlah')->orderBy('id','ASC')->get()->getResultArray();
+                $sampah = $this->db->table($this->table)->select('id,kategori,jenis,harga,jumlah')->orderBy('id','ASC')->get()->getResultArray();
             }
             
             if (empty($sampah)) {    
@@ -133,7 +133,7 @@ class SampahModel extends Model
                 ];
             }
             
-            // var_dump($totalSampah);die; 
+            var_dump($totalSampah);die; 
             return [
                 'success' => true,
                 'message' => $totalSampah

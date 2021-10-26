@@ -22,6 +22,11 @@ class Transaksi extends Migration
                 'constraint' => 6,
                 'null' => false,
             ],
+            'jenis_saldo' => [
+                'type' => 'character varying',
+                'constraint' => 8,
+                'null' => false,
+            ],
             'date' => [
                 'type' => 'bigint',
                 'null' => false,

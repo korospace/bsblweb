@@ -77,8 +77,17 @@
 						<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
 							<!-- search input -->
 							<div class="card-header form-row pb-0 d-flex justify-content-between" style="font-family: 'qc-semibold';">
-								<input id="search-nasabah" type="text" class="form-control h-100 col-12 col-sm-6" placeholder="nama lengkap/id nasabah" style="">
-								<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('addnasabah')">tambah</button>
+								<div class="input-group col-12 col-sm-6">
+									<div class="input-group-prepend">
+										<span class="input-group-text bg-gray px-4 border-md border-right-0" style="max-height: 39px;">
+											<i class="fas fa-search text-muted"></i>
+										</span>
+									</div>
+									<input id="search-nasabah" type="text" class="form-control h-100 px-2" placeholder="nama lengkap/id nasabah" style="max-height: 39px;">
+								</div>
+								<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
+									<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('addnasabah')" style="width: 100%;">tambah</button>
+								</div>
 							</div>
 							<!-- container table -->
 							<div class="card-body px-0 pb-2">
@@ -268,7 +277,7 @@
 						class="text-danger"></small>
 				</div>
 				<!-- **** RT RW KODEPOS **** -->
-				<div class="addnasabah-item form-row align-items-center mb-4">
+				<div class="addnasabah-item form-row align-items-center mb-4" style="padding-right: 2px;">
 					<div class="col-6">
 						<div class="input-group">
 							<div class="input-group-prepend">

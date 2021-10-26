@@ -2,6 +2,11 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
+	<style>
+		.kategori-list:hover{
+			background-color: #E9ECEF !important;
+		}
+	</style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
@@ -396,8 +401,17 @@
 					<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
 						<!-- search input -->
 						<div class="card-header form-row pb-0 d-flex justify-content-between" style="font-family: 'qc-semibold';">
-							<input id="search-sampah" type="text" class="form-control h-100 col-12 col-sm-6" placeholder="kategori/jenis sampah" style="">
-							<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('addsampah')">tambah</button>
+							<div class="input-group col-12 col-sm-6">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray px-4 border-md border-right-0" style="max-height: 39px;">
+										<i class="fas fa-search text-muted"></i>
+									</span>
+								</div>
+								<input id="search-sampah" type="text" class="form-control h-100 px-2" placeholder="kategori/jenis sampah" style="max-height: 39px;">
+							</div>
+							<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
+								<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('addsampah')" style="width: 100%;">tambah</button>
+							</div>
 						</div>
 						<!-- container table -->
 						<div class="card-body px-0 pb-2">
@@ -463,4 +477,100 @@
 		</div>
 	</main>
 </body>
+
+<!-- modals Add / Edit sampah -->
+<div class="modal fade show" id="modalAddEditSampah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<form id="formAddEditSampah" class="modal-dialog modal-dialog-centered" role="document">
+	<input type="hidden" name="id">
+	<div class="modal-content" style="overflow: hidden;">
+
+		<!-- modal header -->
+		<div class="modal-header">
+			<h5 class="modal-title"></h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<!-- modal body -->
+		<div class="modal-body row position-relative">
+
+			<!-- spinner -->
+			<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+				<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+			</div>
+
+			<input type="hidden" name="id">
+			<!-- **** JENIS,HARGA **** -->
+			<div class="addnasabah-item form-row align-items-center mb-4" style="padding-right: 2px;">
+				<div class="col-6">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md border-right-0">
+								<i class="fas fa-recycle text-muted"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control px-2" id="jenis" name="jenis" autocomplete="off" placeholder="Jenis sampah">
+					</div>
+					<small
+						id="jenis-error"
+						class="text-danger"></small>
+				</div>
+				<div class="col-6">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md border-right-0">
+								<i class="fas fa-money-bill-wave-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="number" class="form-control px-2" id="harga" name="harga" autocomplete="off" placeholder="Harga">
+					</div>
+					<small
+						id="harga-error"
+						class="text-danger"></small>
+				</div>
+			</div>
+			<!-- **** KATEGORI **** -->
+			<div class="input-group col-lg-12 mb-4 form-group">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text bg-gray px-4 border-md">
+							<i class="fas fa-clipboard-list text-muted"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control px-2" id="kategori" name="kategori" autocomplete="off" placeholder="Pilihi kategori dibawah" disabled>
+				</div>
+				<small
+					id="kategori-error"
+					class="text-danger"></small>
+			</div>
+
+			<!-- LIST KATEGORI -->
+			<div class="input-group col-lg-12 mb-4 form-group">
+				<div class="container-fluid border-radius-sm p-2" style="border: 0.5px solid #D2D6DA;">
+					<!-- header -->
+					<div class="container-fluid d-flex p-0">
+						<input id="NewkategoriSampah" type="text" class="form-control px-2 text-xxs border-radius-sm" placeholder="ketik kategori baru" style="max-width: 150px;max-height: 30px;border: 0.5px solid #D2D6DA;" autocomplete="off">
+						<button id="btnAddKategoriSampah" class="badge badge-success border-0 border-radius-sm text-xxs text-lowercase ml-2">
+							<span id="text">Simpan</span>
+							<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 14px;">
+						</button>
+					</div>
+					<!-- body -->
+					<div id="kategori-sampah-wraper" class="container-fluid border-radius-sm p-0 mt-2 position-relative" style="min-height: 150px;max-height: 150px;overflow: auto;border: 0.5px solid #D2D6DA;">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+			<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+				<span id="text">Simpan</span>
+				<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+			</button>
+		</div>
+	</div>
+	</form>
+</div>
 <?= $this->endSection(); ?>

@@ -72,7 +72,7 @@ class KategoriSampahModel extends Model
     public function getItem(): array
     {
         try {
-            $kategori = $this->db->table($this->table)->get()->getResultArray();
+            $kategori = $this->db->table($this->table)->orderBy('id','DESC')->get()->getResultArray();
             
             if (empty($kategori)) {    
                 return [

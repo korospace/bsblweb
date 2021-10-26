@@ -67,7 +67,7 @@ const sessioncheck = async () => {
     if (httpResponse.status === 200) {
         if (pageTitle === 'dashboard') {
             getTotalSampah();
-            getAllJenisSampah();
+            getAllKatSampah();
         }
         if (pageTitle === 'profile') {
             getDataProfile();

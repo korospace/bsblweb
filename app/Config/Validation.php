@@ -601,7 +601,7 @@ class Validation
             'errors' => [
                 'required'    => 'jenis is required',
                 'max_length'  => 'max 40 character',
-                'is_unique'   => 'jenis {value} sudah ada',
+                'is_unique'   => "jenis '{value}' sudah ada",
             ],
 		],
 		'harga' => [
@@ -667,7 +667,7 @@ class Validation
             'errors' => [
                 'required'    => 'jenis is required',
                 'max_length'  => 'max 40 character',
-                'is_unique'   => 'jenis {value} sudah ada',
+                'is_unique'   => "jenis '{value}' sudah ada",
             ],
 		],
 		'harga' => [

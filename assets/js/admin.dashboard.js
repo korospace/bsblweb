@@ -36,10 +36,11 @@ const getAllKatSampah = async () => {
        arrayKatSampah  = httpResponse.data.data;
 
        allKategori.forEach(k => {
+           let makeId = k.name.replace(/\s/g,'-');
 
            elKategori += `
            <div class="w-100">
-               <div class="kategori-list w-100 d-flex justify-content-between align-items-center px-3 py-2 cursor-pointer">
+               <div id="${makeId}" class="kategori-list w-100 d-flex justify-content-between align-items-center px-3 py-2 cursor-pointer">
                    <div class="d-flex align-items-center text-md" onclick="changeKatSampahVal(this,'${k.name}')" style="flex: 1;">
                        ${k.name} <i class="checklist fas fa-check-circle text-muted ml-2"></i>
                    </div>
@@ -72,7 +73,7 @@ $('#btnAddKategoriSampah').on('click', async function(e) {
     if (validateAddKategori()) {
 
         let form = new FormData();
-        form.append('kategori_name',$('input#NewkategoriSampah').val());
+        form.append('kategori_name',$('input#NewkategoriSampah').val().trim().toLowerCase());
 
         $('#btnAddKategoriSampah #text').addClass('d-none');
         $('#btnAddKategoriSampah #spinner').removeClass('d-none');
@@ -100,11 +101,25 @@ $('#btnAddKategoriSampah').on('click', async function(e) {
   * HAPUS KATEGORI SAMPAH
   */
 const deleteKatSampahVal = (el,id,katName) => {
-    el.parentElement.parentElement.remove();
     
     if ($('#formAddEditSampah input[name=kategori]').val() == katName) {
-        $('#formAddEditSampah input[name=kategori]').val('');
+        if ($('#modalAddEditSampah .modal-title').html() == 'edit sampah') {
+            showAlert({
+                message: `<strong>Gagal...</strong> kategori sedang dipakai!`,
+                btnclose: false,
+                type:'danger'
+            })
+            setTimeout(() => {
+                hideAlert();
+            }, 3000);
+            return 0
+        } 
+        else {
+            $('#formAddEditSampah input[name=kategori]').val('');    
+        }
     }
+
+    el.parentElement.parentElement.remove();
 
     axios
     .delete(`${APIURL}/kategori_sampah/deleteitem?id=${id}`, {
@@ -113,9 +128,10 @@ const deleteKatSampahVal = (el,id,katName) => {
         }
     })
     .then(() => {
+        getAllJenisSampah();
     })
     .catch(error => {
-        getAllJenisSampah();
+        getAllKatSampah();
 
         // unauthorized
         if (error.response.status == 401) {
@@ -169,7 +185,7 @@ function validateAddKategori() {
    }
    // check kategori is exist
    arrayKatSampah.forEach(ks => {
-       if (ks.name == $('input#NewkategoriSampah').val().toLowerCase().trim()) {
+       if (ks.name.toLowerCase() == $('input#NewkategoriSampah').val().toLowerCase().trim()) {
            showAlert({
                message: `<strong>Kategori sudah tersedia !</strong>`,
                btnclose: false,
@@ -320,6 +336,9 @@ const clearInputForm = () => {
         $('#formAddEditSampah #harga').val(selectedSampah[0].harga);
         $('#formAddEditSampah #jumlah').val(selectedSampah[0].jumlah);
         $('#formAddEditSampah #kategori').val(selectedSampah[0].kategori);
+
+        let makeId = selectedSampah[0].kategori.replace(/\s/g,'-');
+        $(`#kategori-sampah-wraper #${makeId}`).addClass('active');
      }
  }
 
@@ -331,7 +350,10 @@ const clearInputForm = () => {
      
      if (doValidateAddSmp()) {
          let form = new FormData(el);
-         form.set('kategori',$('#formAddEditSampah input#kategori').val())
+         form.set('kategori',$('#formAddEditSampah input#kategori').val());
+         for (var pair of form.entries()) {
+            form.set(pair[0], pair[1].trim().toLowerCase());
+         }
 
          $('#formAddEditSampah #btn-add-edit-sampah #text').addClass('d-none');
          $('#formAddEditSampah #btn-add-edit-sampah #spinner').removeClass('d-none');
@@ -369,7 +391,10 @@ const editSampah = async (el,event) => {
     
     if (doValidateAddSmp()) {
         let form = new FormData(el);
-        form.set('kategori',$('#formAddEditSampah input#kategori').val())
+        form.set('kategori',$('#formAddEditSampah input#kategori').val());
+        for (var pair of form.entries()) {
+            form.set(pair[0], pair[1].trim().toLowerCase());
+        }
 
         $('#formAddEditSampah #btn-add-edit-sampah #text').addClass('d-none');
         $('#formAddEditSampah #btn-add-edit-sampah #spinner').removeClass('d-none');

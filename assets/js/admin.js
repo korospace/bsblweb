@@ -118,14 +118,8 @@ const httpRequestPost = (url,form) => {
  * API REQUEST PUT
  */
 const httpRequestPut = (url,form) => {
-    let newForm = new FormData();
-
-    for (var pair of form.entries()) {
-        newForm.set(pair[0], pair[1].trim());
-    }
-
     return axios
-        .put(url,newForm, {
+        .put(url,form, {
             headers: {
                 token: TOKEN
             }

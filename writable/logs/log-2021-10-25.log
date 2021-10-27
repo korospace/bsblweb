@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ERROR - 2021-10-25 22:41:32 --> ErrorException: pg_query(): Query failed: ERROR:  update or delete on table &quot;sampah&quot; violates foreign key constraint &quot;setor_sampah_id_sampah_foreign&quot; on table &quot;setor_sampah&quot;
 DETAIL:  Key (id)=(S001) is still referenced from table &quot;setor_sampah&quot;. in /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
 Stack trace:
@@ -62,3 +63,14 @@ Stack trace:
 #10 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
 #11 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
 #12 {main}
+=======
+CRITICAL - 2021-10-25 01:16:43 --> Undefined variable $totalTime
+#0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
+#1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\xampp\htdocs\bsbl\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+>>>>>>> a5389ca824db9442c74f6971e938dd4aaa9f8e81

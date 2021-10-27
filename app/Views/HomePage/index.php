@@ -98,7 +98,7 @@
               <div class="counter">
                 <span class="counter-value">0</span>
                 <div class="counter-content">
-                  <h3>KG<br>Kertas</br></h3>
+                  <h3 id="sampah-kertas">KG<br>Kertas</br></h3>
                 </div>
               </div>
             </div>
@@ -106,7 +106,7 @@
               <div class="counter">
                 <span class="counter-value">0</span>
                 <div class="counter-content">
-                  <h3>KG<br>Plastik</br></h3>
+                  <h3 id="sampah-plastik">KG<br>Plastik</br></h3>
                 </div>
               </div>
             </div>
@@ -114,7 +114,7 @@
               <div class="counter">
                 <span class="counter-value">0</span>
                 <div class="counter-content">
-                  <h3>KG<br>Logam</br></h3>
+                  <h3 id="sampah-logam">KG<br>Logam</br></h3>
                 </div>
               </div>
             </div>
@@ -122,7 +122,7 @@
               <div class="counter">
                 <span class="counter-value">0</span>
                 <div class="counter-content">
-                  <h3>KG<br>Lain-Lain</br></h3>
+                  <h3 id="sampah-lain-lain">KG<br>Lain-Lain</br></h3>
                 </div>
               </div>
             </div>

@@ -6,8 +6,10 @@ const getAllNasabah = async () => {
 
     $('#search-nasabah').val('');
     $('#list-nasabah-notfound').addClass('d-none'); 
+    $('#table-nasabah').addClass('d-none'); 
     $('#list-nasabah-spinner').removeClass('d-none'); 
     let httpResponse = await httpRequestGet(`${APIURL}/admin/getnasabah`);
+    $('#table-nasabah').removeClass('d-none'); 
     $('#list-nasabah-spinner').addClass('d-none'); 
     
     if (httpResponse.status === 404) {

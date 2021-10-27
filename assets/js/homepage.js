@@ -273,26 +273,16 @@
 	*/
 	axios.get(APIURL+'/sampah/totalitem')
 	.then(res => {
-		let elTotalSampah = '';
 		let totalSampah   = res.data.data;
 
-		for (const ts in totalSampah) {
-			elTotalSampah += `<div class="col-md-3 col-sm-6">
-			<div class="counter">
-				<span class="counter-value">${kFormatter(totalSampah[ts].total)}</span>
-				<div class="counter-content">
-				<h3>KG<br>${totalSampah[ts].title}</br></h3>
-				</div>
-			</div>
-			</div>`;
-		}
+        for (const name in totalSampah) {
+            $(`#sampah-${name}`).html(kFormatter(dataSampah[name].total)+' Kg');
+        }   
 
 		// modif number
 		function kFormatter(num) {
 			return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'K' : Math.sign(num)*Math.abs(num)
 		}
-
-		document.getElementById('totalSampahWraper').innerHTML = elTotalSampah;
 	}) 
 	.catch(res => {
 	})

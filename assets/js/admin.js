@@ -1,4 +1,3 @@
-
 let webTitle  = document.title.split('|');
 let pageTitle = webTitle[1].replace(/\s/,'');
 let dataAdmin = '';
@@ -62,7 +61,9 @@ const httpRequestPost = (url,form) => {
     let newForm = new FormData();
 
     for (var pair of form.entries()) {
-        newForm.set(pair[0], pair[1].trim());
+        if (pair[0] !== 'id' || pair[0] !== 'username' || pair[0] !== 'password' || pair[0] !== 'new_password' || pair[0] !== 'old_password') {
+            newForm.set(pair[0], pair[1].trim().toLowerCase());
+        }
     }
 
     return axios
@@ -168,6 +169,56 @@ const httpRequestPut = (url,form) => {
 };
 
 /**
+ * API REQUEST DELETE
+ */
+const httpRequestDelete = (url) => {
+    return axios
+        .delete(url, {
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then(() => {
+            return {
+                'status':201,
+            };
+        })
+        .catch((error) => {
+            // unauthorized
+            if (error.response.status == 401) {
+                if (error.response.data.messages == 'token expired') {
+                    Swal.fire({
+                        icon : 'error',
+                        title : '<strong>LOGIN EXPIRED</strong>',
+                        text: 'silahkan login ulang untuk perbaharui login anda',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    }).then(() => {
+                        window.location.replace(`${BASEURL}/login`);
+                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                    })
+                }
+                else{
+                    window.location.replace(`${BASEURL}/login`);
+                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                }
+            }
+            // error server
+            else if (error.response.status == 500) {
+                showAlert({
+                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
+                    btnclose: true,
+                    type:'danger'
+                })
+            }
+            
+            return {
+                'status':error.response.status,
+            };
+        })
+};
+
+/**
 * SESSION CHECK
 */
 const sessioncheck = async () => {
@@ -191,6 +242,9 @@ const sessioncheck = async () => {
             getTotalSampahNasabah();
             getDataProfileNasabah();
             getAllTransaksiNasabah();
+        }
+        if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
+            getAllKatBerita();
         }
     }
 };

@@ -539,7 +539,7 @@
 								<i class="fas fa-balance-scale text-muted"></i>
 							</span>
 						</div>
-						<input type="number" class="form-control px-2" id="jumlah" name="jumlah" autocomplete="off" placeholder="Jumlah(Kg)">
+						<input type="text" class="form-control px-2" id="jumlah" name="jumlah" autocomplete="off" placeholder="Jumlah(Kg)">
 					</div>
 					<small
 						id="jumlah-error"

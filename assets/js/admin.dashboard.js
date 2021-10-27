@@ -106,12 +106,9 @@ const deleteKatSampahVal = (el,id,katName) => {
         if ($('#modalAddEditSampah .modal-title').html() == 'edit sampah') {
             showAlert({
                 message: `<strong>Gagal...</strong> kategori sedang dipakai!`,
-                btnclose: false,
+                btnclose: true,
                 type:'danger'
-            })
-            setTimeout(() => {
-                hideAlert();
-            }, 3000);
+            });
             return 0
         } 
         else {
@@ -170,7 +167,7 @@ function validateAddKategori() {
    if ($('input#NewkategoriSampah').val() == '') {
        showAlert({
            message: `<strong>Masukan kategori baru !</strong>`,
-           btnclose: false,
+           btnclose: true,
            type:'danger'
        })
        status = false;
@@ -178,7 +175,7 @@ function validateAddKategori() {
    else if ($('input#NewkategoriSampah').val().length > 40) {
        showAlert({
            message: `<strong>Kategori baru maximal 20 huruf !</strong>`,
-           btnclose: false,
+           btnclose: true,
            type:'danger'
        })
        status = false;
@@ -188,16 +185,12 @@ function validateAddKategori() {
        if (ks.name.toLowerCase() == $('input#NewkategoriSampah').val().toLowerCase().trim()) {
            showAlert({
                message: `<strong>Kategori sudah tersedia !</strong>`,
-               btnclose: false,
+               btnclose: true,
                type:'danger'
            })
            status = false;
        }
    });
-
-   setTimeout(() => {
-       hideAlert();
-   }, 3000);
 
    return status;
 }
@@ -393,7 +386,9 @@ const editSampah = async (el,event) => {
         let form = new FormData(el);
         form.set('kategori',$('#formAddEditSampah input#kategori').val());
         for (var pair of form.entries()) {
-            form.set(pair[0], pair[1].trim().toLowerCase());
+            if (pair[0] !== 'id') {
+                form.set(pair[0], pair[1].trim().toLowerCase());
+            }
         }
 
         $('#formAddEditSampah #btn-add-edit-sampah #text').addClass('d-none');
@@ -517,9 +512,9 @@ const doValidateAddSmp = () => {
             $('#formAddEditSampah #jumlah-error').html('*maksimal 11 angka');
             status = false;
         }
-        else if (!/^\d+$/.test($('#formAddEditSampah #jumlah').val())) {
-            $('#formAddEditNasabah #jumlah').addClass('is-invalid');
-            $('#formAddEditNasabah #jumlah-error').html('*hanya boleh angka');
+        else if (/[^0-9\.]/g.test($('#formAddEditSampah #jumlah').val())) {
+            $('#formAddEditSampah #jumlah').addClass('is-invalid');
+            $('#formAddEditSampah #jumlah-error').html('*hanya boleh angka');
             status = false;
         }
     }

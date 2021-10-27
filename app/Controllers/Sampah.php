@@ -139,8 +139,9 @@ class Sampah extends ResourceController
     }
 
     /**
-     * Get item
-     *   url    : domain.com/sampah/totalitem
+     * Total item
+     *   url    : - domain.com/sampah/totalitem
+     *		  - domain.com/sampah/totalitem?idnasabah=:idnasabah (only admin)
      *   method : GET
      */
     public function totalItem(): object

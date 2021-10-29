@@ -33,6 +33,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 
 $routes->add('/',              'HomePage::index');
+$routes->add('artikel/(:any)', 'Artikel::index/$1');
 $routes->add('/signup',        'SignUp::index');
 $routes->add('/login',         'Login::index');
 $routes->add('/info',          'UserInfo::info');
@@ -43,7 +44,7 @@ $routes->group("nasabah", function ($routes) {
     // VIEWS
     $routes->add('/',             'Dashboard::dashboardNasabah');
     $routes->add('profile',       'Profile::profileNasabah');
-    $routes->add('cetaktransaksi/(:any)','CetakTransaksi::index/$1');
+    $routes->add('cetaktransaksi/(:any)', 'CetakTransaksi::index/$1');
     // API
     $routes->post("register",     "Nasabah::register");
     $routes->post("verification", "Nasabah::verification");

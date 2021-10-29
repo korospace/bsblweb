@@ -123,7 +123,7 @@ class Nasabah extends ResourceController
 
                 $trBody .= "<tr $bg>
                     <th>".$no++."</th>
-                    <th>".$key['jenis']."</th>
+                    <th>".$key['jenis_sampah']."</th>
                     <th>".$key['jumlah']."</th>
                     <th>Rp ".number_format($key['harga'] , 0, ',', '.')."</th>
                 </tr>";

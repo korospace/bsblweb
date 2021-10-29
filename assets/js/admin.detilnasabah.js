@@ -85,7 +85,7 @@ const getAllTransaksiNasabah = async () => {
         });
 
         updateGrafikSetorNasabah(arrayId,arrayKg);
-        $('#transaksi-wraper').html(`<ul class="list-group w-100" style="font-family: 'qc-medium';">
+        $('#transaksi-wraper').html(`<ul class="list-group h-100 w-100" style="font-family: 'qc-medium';">
             ${elTransaksi}
         </ul>`);
     }
@@ -238,7 +238,7 @@ const getDetailTransaksiNasabah = async (id) => {
             barang.forEach((b,i) => {
                 trBody += `<tr class="text-center">
                     <th scope="row">${++i}</th>
-                    <td>${b.jenis}</td>
+                    <td>${b.jenis_sampah}</td>
                     <td>${b.jumlah}</td>
                     <td>Rp ${modifUang(b.harga)}</td>
                 </tr>`;

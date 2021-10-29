@@ -135,7 +135,6 @@ class SampahModel extends Model
                 ];
             }
             
-            var_dump($totalSampah);die; 
             return [
                 'success' => true,
                 'message' => $totalSampah

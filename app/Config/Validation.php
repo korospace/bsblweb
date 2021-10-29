@@ -777,17 +777,17 @@ class Validation
             ],
 		],
 		'asal' => [
-            'rules'  => 'required|in_list[uang,antam,ubs,galery24]',
+            'rules'  => 'required|in_list[uang]',
             'errors' => [
                 'required'    => 'saldo asal is required',
-                'in_list'     => "value must be 'uang/antam/ubs/galery24'",
+                'in_list'     => "value must be 'uang'",
             ],
 		],
 		'tujuan' => [
-            'rules'  => 'required|in_list[uang,antam,ubs,galery24]',
+            'rules'  => 'required|in_list[antam,ubs,galery24]',
             'errors' => [
-                'required'    => 'saldo asal is required',
-                'in_list'     => "value must be 'uang/antam/ubs/galery24'",
+                'required'    => 'saldo tujuan is required',
+                'in_list'     => "value must be 'antam/ubs/galery24'",
             ],
 		],
 		'harga_emas' => [

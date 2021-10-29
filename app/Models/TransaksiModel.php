@@ -24,12 +24,12 @@ class TransaksiModel extends Model
             foreach ($data['transaksi'] as $t) {
                 $jenisSmp   = $t['jenis_sampah'];
                 $jumlah     = $t['jumlah'];
-                $hargaAsli  = $this->db->table('sampah')->select("harga")->where("jenis_sampah",$jenisSmp)->get()->getResultArray();
+                $hargaAsli  = $this->db->table('sampah')->select("harga")->where("jenis",$jenisSmp)->get()->getResultArray();
                 $harga      = (int)$hargaAsli[0]['harga']*(float)$jumlah;
                 $totalHarga = $totalHarga+$harga;
 
                 $queryDetilSetor   .= "('$idtransaksi','$jenisSmp',$jumlah,$harga),";
-                $queryJumlahSampah .= "UPDATE sampah SET jumlah=jumlah+$jumlah WHERE jenis_sampah = '$jenisSmp';";
+                $queryJumlahSampah .= "UPDATE sampah SET jumlah=jumlah+$jumlah WHERE jenis = '$jenisSmp';";
             }
 
             $queryDetilSetor  = rtrim($queryDetilSetor, ",");
@@ -113,6 +113,13 @@ class TransaksiModel extends Model
                 'code'    => 500
             ];
         }
+    }
+
+    public function jumlahTps(string $idNasabah): int
+    {
+        $transaction = $this->db->table($this->table)->select('count(id) AS jumlah')->where('id_nasabah',$idNasabah)->where('type','pindah')->get()->getResultArray();
+
+        return (int)$transaction[0]['jumlah'];
     }
 
     public function pindahSaldo(array $data): array

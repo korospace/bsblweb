@@ -287,29 +287,48 @@ class Transaksi extends ResourceController
                     ];
                 }
                 else {
-                    if ($asal == 'uang' && in_array($tujuan,['antam','ubs','galery24'])) {
+                    $jumlahTps = $this->transaksiModel->JumlahTps($data['id_nasabah']);
+
+                    if ($jumlahTps == 0) {
+                        if ((float)$data['jumlah'] < 50000) {
+                            $valid = false;
+                            $msg   = [
+                                'jumlah' => 'minimal pindah pada transaksi pertama adalah Rp50.000'
+                            ];
+                        }
+                    } 
+                    else {
                         if ((float)$data['jumlah'] < 10000) {
                             $valid = false;
                             $msg   = [
                                 'jumlah' => 'minimal pindah Rp10.000'
                             ];
                         }
-                    } 
-                    else if (in_array($asal,['antam','ubs','galery24']) && $tujuan == 'uang') {
-                        if ((float)$data['jumlah'] < 1) {
-                            $valid = false;
-                            $msg   = [
-                                'jumlah' => 'minimal pindah 1gram'
-                            ];
-                        }
-                    } 
-                    else {
-                        $valid = false;
-                        $msg   = [
-                            'asal'   => 'kombinasi tidak dizinkan!',
-                            'tujuan' => 'kombinasi tidak dizinkan!',
-                        ];
                     }
+
+                    // if ($asal == 'uang' && in_array($tujuan,['antam','ubs','galery24'])) {
+                    //     if ((float)$data['jumlah'] < 10000) {
+                    //         $valid = false;
+                    //         $msg   = [
+                    //             'jumlah' => 'minimal pindah Rp10.000'
+                    //         ];
+                    //     }
+                    // } 
+                    // else if (in_array($asal,['antam','ubs','galery24']) && $tujuan == 'uang') {
+                    //     if ((float)$data['jumlah'] < 1) {
+                    //         $valid = false;
+                    //         $msg   = [
+                    //             'jumlah' => 'minimal pindah 1gram'
+                    //         ];
+                    //     }
+                    // } 
+                    // else {
+                    //     $valid = false;
+                    //     $msg   = [
+                    //         'asal'   => 'hanya dompet uang yang dizinkan',
+                    //         'tujuan' => 'hanya dompet antam/ubs/galery24 yang diizinkan',
+                    //     ];
+                    // }
                 }
 
                 if (!$valid) {
@@ -323,7 +342,6 @@ class Transaksi extends ResourceController
                 }
 
                 $konversiSaldo = $this->konversiSaldo($data);
-                // var_dump($konversiSaldo);die;
 
                 $newdata = [
                     'idnasabah'           => $data['id_nasabah'],
@@ -375,9 +393,9 @@ class Transaksi extends ResourceController
         if ($data['asal'] == 'uang') {
             return (float)$data['jumlah']/$data['harga_emas'];
         } 
-        else {
-            return round((float)$data['jumlah']*$data['harga_emas']);
-        }
+        // else {
+        //     return round((float)$data['jumlah']*$data['harga_emas']);
+        // }
     }
 
     public function getHargaEmas(): float

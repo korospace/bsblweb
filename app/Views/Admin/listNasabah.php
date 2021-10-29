@@ -2,6 +2,19 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
+	<style>
+		#btn-toggle{
+			left: 0;
+			transition: all 0.3s;
+			transform: translateX(0px);
+		}
+
+		#btn-toggle.active{
+			/* left: auto !important;
+			right: 0 !important; */
+			transform: translateX(25px);
+		}
+	</style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
@@ -10,10 +23,12 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
+	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>	
 	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.listnasabah.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -59,245 +74,58 @@
 			<div class="container-fluid py-4">
 				<div class="row">
 					<div class="col-12">
-						<div class="card mb-4">
-							<div class="card-header pb-0">
-								<h6>List Nasabah</h6>
-								<div class="input-group">
-									<span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" placeholder="Cari Nasabah">
+						<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
+							<!-- search input -->
+							<div class="card-header form-row pb-0 d-flex justify-content-between" style="font-family: 'qc-semibold';">
+								<div class="input-group col-12 col-sm-6">
+									<div class="input-group-prepend">
+										<span class="input-group-text bg-gray px-4 border-md border-right-0" style="max-height: 39px;">
+											<i class="fas fa-search text-muted"></i>
+										</span>
+									</div>
+									<input id="search-nasabah" type="text" class="form-control h-100 px-2" placeholder="nama lengkap/id nasabah" style="max-height: 39px;">
+								</div>
+								<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
+									<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('addnasabah')" style="width: 100%;">tambah</button>
 								</div>
 							</div>
-							<div class="card-body px-0 pt-0 pb-2">
-								<div class="table-responsive p-0">
-									<table class="table align-items-center mb-0">
-										<thead>
+							<!-- container table -->
+							<div class="card-body px-0 pb-2">
+								<div class="table-responsive p-0 position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
+									<!-- spinner -->
+									<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+										<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+									</div>
+									<!-- message not found -->
+									<div id="list-nasabah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+										<h6 id="text-notfound" class='opacity-6'></h6>
+									</div>
+									<!-- table -->
+									<table id="table-nasabah" class="table table-striped text-center mb-0">
+										<thead class="position-sticky bg-white" style="top: 0;">
 											<tr>
-												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID
-													Number
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+													#
 												</th>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													Address</th>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Join
-													Date</th>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action
+													ID Nasabah
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+													Nama lengkap
+												</th>
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+													Ter-verifikasi
+												</th>
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+													Action
 												</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020001 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Jl. Ciledug Raya, RT.10/RW.2, Petukangan Utara, Kec.
-														Pesanggrahan, Kota Jakarta Selatan </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 07/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="info" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="../pages/form-timbang.php" class="text-secondary font-weight-bold text-xs"
-														data-toggle="tooltip" data-original-title="Edit user">
-														Sampah
-													</a>
-												</td>
-											</tr>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Rilo Anggoro Saputra </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020002 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Komplek Lippo Karawaci 1200, Jl. Boulevard Diponegoro,
-														Bencongan, Kec. Klp. Dua, Tangerang, Banten </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 13/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-											</tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Jl. Ciledug Raya, RT.10/RW.2, Petukangan Utara, Kec.
-													Pesanggrahan, Kota Jakarta Selatan </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 07/11/2021 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-													data-original-title="Edit user">
-													Detil
-												</a>
-											</td>
-											</tr>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Rilo Anggoro Saputra </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020002 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Komplek Lippo Karawaci 1200, Jl. Boulevard Diponegoro,
-														Bencongan, Kec. Klp. Dua, Tangerang, Banten </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 13/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-											</tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Jl. Ciledug Raya, RT.10/RW.2, Petukangan Utara, Kec.
-													Pesanggrahan, Kota Jakarta Selatan </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 07/11/2021 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-													data-original-title="Edit user">
-													Detil
-												</a>
-											</td>
-											</tr>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Rilo Anggoro Saputra </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020002 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Komplek Lippo Karawaci 1200, Jl. Boulevard Diponegoro,
-														Bencongan, Kec. Klp. Dua, Tangerang, Banten </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 13/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-											</tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Jl. Ciledug Raya, RT.10/RW.2, Petukangan Utara, Kec.
-													Pesanggrahan, Kota Jakarta Selatan </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 07/11/2021 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-													data-original-title="Edit user">
-													Detil
-												</a>
-											</td>
-											</tr>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Rilo Anggoro Saputra </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020002 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Komplek Lippo Karawaci 1200, Jl. Boulevard Diponegoro,
-														Bencongan, Kec. Klp. Dua, Tangerang, Banten </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 13/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-											</tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Jl. Ciledug Raya, RT.10/RW.2, Petukangan Utara, Kec.
-													Pesanggrahan, Kota Jakarta Selatan </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 07/11/2021 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-													data-original-title="Edit user">
-													Detil
-												</a>
-											</td>
-											</tr>
-											<tr>
-												<td class="align-middle text-sm">
-													<span class="text-xs text-name font-weight-bold"> Rilo Anggoro Saputra </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 06020002 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> Komplek Lippo Karawaci 1200, Jl. Boulevard Diponegoro,
-														Bencongan, Kec. Klp. Dua, Tangerang, Banten </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<span class="text-xs font-weight-bold"> 13/11/2021 </span>
-												</td>
-												<td class="align-middle text-center text-sm">
-													<a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-														data-original-title="Edit user">
-														Detil
-													</a>
-												</td>
-											</tr>
+											
 										</tbody>
+										<?php for ($i=0; $i < 0; $i++) { ?>
+										<?php } ?>
 									</table>
 								</div>
 							</div>
@@ -322,4 +150,224 @@
 			</div>
 		</main>
 	</body>
+
+	<!-- modals Add / Edit nasabah -->
+	<div class="modal fade" id="modalAddEditNasabah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<form id="formAddEditNasabah" class="modal-dialog modal-dialog-centered" role="document">
+		<input type="hidden" name="id">
+		<div class="modal-content" style="overflow: hidden;">
+
+			<!-- modal header -->
+			<div class="modal-header">
+				<h5 class="modal-title"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal body -->
+			<div class="modal-body row position-relative">
+
+				<!-- spinner -->
+				<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+					<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+				</div>
+
+				<input type="hidden" name="id">
+				<!-- **** nama lengkap **** -->
+				<div class="input-group col-lg-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fa fa-user text-muted"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control px-2" id="nama" name="nama_lengkap" autocomplete="off" placeholder="Masukan nama lengkap">
+					</div>
+					<small
+						id="nama-error"
+						class="text-danger"></small>
+				</div>
+				<!-- **** username **** -->
+				<div class="input-group col-lg-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-at text-muted"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control px-2" id="username" name="username" autocomplete="off" placeholder="Masukan username">
+					</div>
+					<small
+						id="username-error"
+						class="text-danger"></small>
+				</div>
+				<!-- **** email **** -->
+				<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+						<span class="input-group-text bg-gray px-4 border-md border-right-0">
+							<i class="fa fa-envelope text-muted"></i>
+						</span>
+						</div>
+						<input type="text" class="form-control px-2" id="email" name="email" autocomplete="off" placeholder="Masukan email">
+					</div>
+					<small
+						id="email-error"
+						class="text-danger"></small>
+				</div>
+				<!-- **** password **** -->
+				<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+								<i class="fa fa-lock text-muted"></i>
+							</span>
+						</div>
+						<input type="password" class="form-control px-2" id="password" name="password" autocomplete="off" placeholder="masukan password">
+					</div>
+					<small
+						id="password-error"
+						class="text-danger"></small>
+				</div>
+				<!-- **** tgl lahir **** -->
+				<div class="input-group col-lg-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="date" class="form-control px-2 h-100" id="tgllahir" name="tgl_lahir">
+					</div>
+					<small
+						id="tgllahir-error"
+						class="text-danger"></small>
+				</div>
+				<!-- kelamin -->
+				<input type="hidden" name="kelamin">
+				<div class="input-group col-lg-6 mb-2 form-group">
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="kelamin-laki-laki" value="laki-laki" />
+						<label class="form-check-label" for="kelamin-laki-laki">
+						Laki Laki
+						</label>
+					</div>
+				</div>
+				<div class="input-group col-lg-6 mb-4 form-group">
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="kelamin-perempuan" value="perempuan" />
+						<label class="form-check-label" for="kelamin-perempuan">
+						Perempuan
+						</label>
+					</div>
+				</div>
+				<!-- **** alamat **** -->
+				<div class="input-group col-lg-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+								<i class="fas fa-map-marker-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control px-2" id="alamat" name="alamat" autocomplete="off" placeholder="Masukan alamat lengkap">
+					</div>
+					<small
+						id="alamat-error"
+						class="text-danger"></small>
+				</div>
+				<!-- **** RT RW KODEPOS **** -->
+				<div class="addnasabah-item form-row mb-4" style="padding-right: 2px;">
+					<div class="col-6">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md border-right-0">
+									<i class="fas fa-home text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control" id="rt" name="rt" autocomplete="off" placeholder="RT">
+						</div>
+						<small
+							id="rt-error"
+							class="text-danger"></small>
+					</div>
+					<div class="col-6">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md border-right-0">
+									<i class="fas fa-home text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control" id="rw" name="rw" autocomplete="off" placeholder="RW">
+						</div>
+						<small
+							id="rw-error"
+							class="text-danger"></small>
+					</div>
+					<div class="col-12 mt-4">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md border-right-0">
+									<i class="fas fa-mail-bulk text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control" id="kodepos" name="kodepos" autocomplete="off" placeholder="KODE POS">
+						</div>
+						<small
+							id="kodepos-error"
+							class="text-danger"></small>
+					</div>
+				</div>
+				<!-- **** no telp **** -->
+				<div class="input-group col-lg-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+								<i class="fa fa-phone-square text-muted"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control px-2" id="notelp" name="notelp" autocomplete="off" placeholder="Masukan no.telp">
+					</div>
+					<small
+						id="notelp-error"
+						class="text-danger"></small>
+				</div>
+				<!-- **** is verify **** -->
+				<div class="editnasabah-item mb-3">
+					<label class="form-check-label">
+						verifikasi akun
+					</label>
+					<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
+						<div id="btn-toggle" class="bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
+							<input type="checkbox" name="is_verify" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
+						</div>
+					</div>
+				</div>
+				<hr class="editnasabah-item horizontal dark mt-2 mb-2">
+				<h6 class="editnasabah-item font-italic opacity-8">Ubah password (opsionial)</h6>
+				<!-- **** change password **** -->
+				<div class="editnasabah-item input-group col-lg-12 mt-2 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+								<i class="fa fa-lock text-muted"></i>
+							</span>
+						</div>
+						<input type="password" class="form-control px-2" id="newpass" name="new_password" autocomplete="off" placeholder="password baru">
+					</div>
+					<small
+						id="newpass-error"
+						class="text-danger"></small>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+					<span id="text">Simpan</span>
+					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+				</button>
+			</div>
+		</div>
+		</form>
+	</div>
 <?= $this->endSection(); ?>

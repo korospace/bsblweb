@@ -1,10 +1,11 @@
-let pageTitle   = document.title.replace(/\s/g,'').split('|');
+let webTitle  = document.title.split('|');
+let pageTitle = webTitle[1].replace(/\s/,'');
 let dataAdmin = '';
 
 /**
  * API REQUEST GET
  */
- const httpRequestGet = (url) => {
+const httpRequestGet = (url) => {
 
     return axios
         .get(url,{
@@ -54,174 +55,152 @@ let dataAdmin = '';
 };
 
 /**
- * SESSION CHECK
+ * API REQUEST POST
  */
- const sessioncheck = async () => {
-    showLoadingSpinner();
-    let httpResponse = await httpRequestGet(`${APIURL}/admin/sessioncheck`);
-    hideLoadingSpinner();
-    
-    if (httpResponse.status === 200) {
-        if (pageTitle[1] === 'dashboard') {
-            getTotalSampah();
-        }
-        if (pageTitle[1] === 'profile') {
-            getDataProfile();
+const httpRequestPost = (url,form) => {
+    let newForm = new FormData();
+
+    for (var pair of form.entries()) {
+        if (pair[0] !== 'id' || pair[0] !== 'username' || pair[0] !== 'password' || pair[0] !== 'new_password' || pair[0] !== 'old_password') {
+            newForm.set(pair[0], pair[1].trim().toLowerCase());
         }
     }
-};
 
-sessioncheck();
-
-/**
- * GET TOTAL SAMPAH
- */
-const getTotalSampah = async () => {
-
-    let httpResponse = await httpRequestGet(`${APIURL}/sampah/totalitem`);
-
-    if (httpResponse.status === 200) {
-        let dataSampah = httpResponse.data.data;
-
-        for (const name in dataSampah) {
-            $(`#sampah-${name}`).html(dataSampah[name].total+' Kg');
-        }   
-    }
-};
-
-/**
- * Get Admin Profile
- */
-const getDataProfile = async () => {
-
-    let httpResponse = await httpRequestGet(`${APIURL}/admin/getprofile`);
-    
-    if (httpResponse.status === 200) {
-        dataAdmin = httpResponse.data.data;
-        
-        if (pageTitle[1] == 'dashboard') {
-            
-        }
-        else if (pageTitle[1] == 'profile') {
-            updatePersonalInfo(dataAdmin);
-        }
-    }
-};
- 
-/** 
- * update personal info
-*/
-const updatePersonalInfo = (data) => {
-    console.log(data);
-    // id admin
-    $('#idadmin').html(data.id);
-    // nama lengkap
-    $('#nama-lengkap').html(data.nama_lengkap);
-    // username
-    $('#username').html(data.username);
-    // tgl lahir
-    $('#tgl-lahir').html(data.tgl_lahir);
-    // kelamin
-    $('#kelamin').html(data.kelamin);
-    // alamat
-    $('#alamat').html(data.alamat);
-    // No Telp
-    $('#notelp').html(data.notelp);
-};
-
-/**
- * Open modal edit profile
- */
-$('#btn-edit-profile').on('click', function(e) {
-    e.preventDefault();
-
-    // clear error message first
-    $('#formEditProfile .form-control').removeClass('is-invalid');
-    $('#formEditProfile .form-check-input').removeClass('is-invalid');
-    $('#formEditProfile .text-danger').html('');
-
-    for (const name in dataAdmin) {
-        $(`#formEditProfile input[name=${name}]`).val(dataAdmin[name]);
-    }
-
-    let tglLahir = dataAdmin.tgl_lahir.split('-');
-    $(`#formEditProfile input[name=tgl_lahir]`).val(`${tglLahir[2]}-${tglLahir[1]}-${tglLahir[0]}`);
-    $(`#formEditProfile input#kelamin-${dataAdmin.kelamin}`).prop('checked',true);
-    $('#newpass-edit').val('');
-    $('#oldpass-edit').val('');
-});
-
-// change kelamin value
-$('#formEditProfile .form-check-input').on('click', function(e) {
-    $(`#formEditProfile input[name=kelamin]`).val($(this).val());
-    $('#formEditProfile .form-check-input').prop('checked',false);
-    $(this).prop('checked',true);
-});
-
-/**
- * EDIT PROFILE PROFILE
- */
-$('#formEditProfile').on('submit', function(e) {
-    e.preventDefault();
-    let form = new FormData(e.target);
-
-    if (validateFormEditProfile(form)) {
-        let newTgl = form.get('tgl_lahir').split('-');
-        form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`)
-
-        if (form.get('new_password') == '') {
-            form.delete('new_password');
-        }
-
-        $('#formEditProfile button#submit #text').addClass('d-none');
-        $('#formEditProfile button#submit #spinner').removeClass('d-none');
-
-        axios
-        .put(`${APIURL}/admin/editprofile`,form, {
+    return axios
+        .post(url,newForm, {
             headers: {
                 token: TOKEN
             }
         })
-        .then((response) => {
-            $('#formEditProfile button#submit #text').removeClass('d-none');
-            $('#formEditProfile button#submit #spinner').addClass('d-none');
-            $('#newpass-edit').val('');
-            $('#oldpass-edit').val('');
-
-            let newDataProfile = {};
-            for (var pair of form.entries()) {
-                newDataProfile[pair[0]] = pair[1];
-            }
-
-            dataAdmin = newDataProfile;
-            updatePersonalInfo(newDataProfile);
-
-            showAlert({
-                message: `<strong>Success...</strong> edit profile berhasil!`,
-                btnclose: false,
-                type:'success'
-            })
-            setTimeout(() => {
-                hideAlert();
-            }, 3000);
+        .then(() => {
+            return {
+                'status':201,
+            };
         })
         .catch((error) => {
-            $('#formEditProfile button#submit #text').removeClass('d-none');
-            $('#formEditProfile button#submit #spinner').addClass('d-none');
-
             // bad request
             if (error.response.status == 400) {
-                if (error.response.data.messages.username) {
-                    $('#username-edit').addClass('is-invalid');
-                    $('#username-edit-error').text('*'+error.response.data.messages.username);
+                return {
+                    'status':400,
+                    'message':error.response.data.messages
+                };
+            }
+            // unauthorized
+            else if (error.response.status == 401) {
+                if (error.response.data.messages == 'token expired') {
+                    Swal.fire({
+                        icon : 'error',
+                        title : '<strong>LOGIN EXPIRED</strong>',
+                        text: 'silahkan login ulang untuk perbaharui login anda',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    }).then(() => {
+                        window.location.replace(`${BASEURL}/login`);
+                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                    })
                 }
-                if (error.response.data.messages.notelp) {
-                    $('#notelp-edit').addClass('is-invalid');
-                    $('#notelp-edit-error').text('*'+error.response.data.messages.notelp);
+                else{
+                    window.location.replace(`${BASEURL}/login`);
+                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
                 }
-                if (error.response.data.messages.old_password) {
-                    $('#oldpass-edit').addClass('is-invalid');
-                    $('#oldpass-edit-error').text('*'+error.response.data.messages.old_password);
+            }
+            // error server
+            else {
+                showAlert({
+                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
+                    btnclose: true,
+                    type:'danger'
+                })
+            }
+        })
+};
+
+/**
+ * API REQUEST PUT
+ */
+const httpRequestPut = (url,form) => {
+    return axios
+        .put(url,form, {
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then(() => {
+            return {
+                'status':201,
+            };
+        })
+        .catch((error) => {
+            // bad request
+            if (error.response.status == 400) {
+                return {
+                    'status':400,
+                    'message':error.response.data.messages
+                };
+            }
+            // unauthorized
+            else if (error.response.status == 401) {
+                if (error.response.data.messages == 'token expired') {
+                    Swal.fire({
+                        icon : 'error',
+                        title : '<strong>LOGIN EXPIRED</strong>',
+                        text: 'silahkan login ulang untuk perbaharui login anda',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    }).then(() => {
+                        window.location.replace(`${BASEURL}/login`);
+                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                    })
+                }
+                else{
+                    window.location.replace(`${BASEURL}/login`);
+                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                }
+            }
+            // error server
+            else {
+                showAlert({
+                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
+                    btnclose: true,
+                    type:'danger'
+                })
+            }
+        })
+};
+
+/**
+ * API REQUEST DELETE
+ */
+const httpRequestDelete = (url) => {
+    return axios
+        .delete(url, {
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then(() => {
+            return {
+                'status':201,
+            };
+        })
+        .catch((error) => {
+            // unauthorized
+            if (error.response.status == 401) {
+                if (error.response.data.messages == 'token expired') {
+                    Swal.fire({
+                        icon : 'error',
+                        title : '<strong>LOGIN EXPIRED</strong>',
+                        text: 'silahkan login ulang untuk perbaharui login anda',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    }).then(() => {
+                        window.location.replace(`${BASEURL}/login`);
+                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
+                    })
+                }
+                else{
+                    window.location.replace(`${BASEURL}/login`);
+                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
                 }
             }
             // error server
@@ -232,113 +211,57 @@ $('#formEditProfile').on('submit', function(e) {
                     type:'danger'
                 })
             }
+            
+            return {
+                'status':error.response.status,
+            };
         })
-    }
-});
+};
 
-// form edit profile validation
-function validateFormEditProfile(form) {
-    let status     = true;
-    let kelamin    = form.get('kelamin');
-
-    // clear error message first
-    $('#formEditProfile .form-control').removeClass('is-invalid');
-    $('#formEditProfile .form-check-input').removeClass('is-invalid');
-    $('#formEditProfile .text-danger').html('');
-
-    // name validation
-    if ($('#nama-edit').val() == '') {
-        $('#nama-edit').addClass('is-invalid');
-        $('#nama-edit-error').html('*nama lengkap harus di isi');
-        status = false;
-    }
-    else if ($('#nama-edit').val().length > 40) {
-        $('#nama-edit').addClass('is-invalid');
-        $('#nama-edit-error').html('*maksimal 40 huruf');
-        status = false;
-    }
-    // username validation
-    if ($('#username-edit').val() == '') {
-        $('#username-edit').addClass('is-invalid');
-        $('#username-edit-error').html('*username harus di isi');
-        status = false;
-    }
-    else if ($('#username-edit').val().length < 8 || $('#username-edit').val().length > 20) {
-        $('#username-edit').addClass('is-invalid');
-        $('#username-edit-error').html('*minimal 8 huruf dan maksimal 20 huruf');
-        status = false;
-    }
-    else if (/\s/.test($('#username-edit').val())) {
-        $('#username-edit').addClass('is-invalid');
-        $('#username-edit-error').html('*tidak boleh ada spasi');
-        status = false;
-    }
-    // tgl lahir validation
-    if ($('#tgllahir-edit').val() == '') {
-        $('#tgllahir-edit').addClass('is-invalid');
-        $('#tgllahir-edit-error').html('*tgl lahir harus di isi');
-        status = false;
-    }
-    // kelamin validation
-    if (kelamin == null) {
-        $('#formEditProfile .form-check-input').addClass('is-invalid');
-        status = false;
-    }
-    // alamat validation
-    if ($('#alamat-edit').val() == '') {
-        $('#alamat-edit').addClass('is-invalid');
-        $('#alamat-edit-error').html('*alamat harus di isi');
-        status = false;
-    }
-    else if ($('#alamat-edit').val().length > 255) {
-        $('#alamat-edit').addClass('is-invalid');
-        $('#alamat-edit-error').html('*maksimal 255 huruf');
-        status = false;
-    }
-    // notelp validation
-    if ($('#notelp-edit').val() == '') {
-        $('#notelp-edit').addClass('is-invalid');
-        $('#notelp-edit-error').html('*no.telp harus di isi');
-        status = false;
-    }
-    else if ($('#notelp-edit').val().length > 14) {
-        $('#notelp-edit').addClass('is-invalid');
-        $('#notelp-edit-error').html('*maksimal 14 huruf');
-        status = false;
-    }
-    else if (!/^\d+$/.test($('#notelp-edit').val())) {
-        $('#notelp-edit').addClass('is-invalid');
-        $('#notelp-edit-error').html('*hanya boleh angka');
-        status = false;
-    }
-    // pass validation
-    if ($('#newpass-edit').val() !== '') {   
-        if ($('#newpass-edit').val().length < 8 || $('#newpass-edit').val().length > 20) {
-            $('#newpass-edit').addClass('is-invalid');
-            $('#newpass-edit-error').html('*minimal 8 huruf dan maksimal 20 huruf');
-            status = false;
+/**
+* SESSION CHECK
+*/
+const sessioncheck = async () => {
+    showLoadingSpinner();
+    let httpResponse = await httpRequestGet(`${APIURL}/admin/sessioncheck`);
+    hideLoadingSpinner();
+    
+    if (httpResponse.status === 200) {
+        if (pageTitle === 'dashboard') {
+            getTotalSampah();
+            getAllKatSampah();
+            getAllJenisSampah();
         }
-        else if (/\s/.test($('#newpass-edit').val())) {
-            $('#newpass-edit').addClass('is-invalid');
-            $('#newpass-edit-error').html('*tidak boleh ada spasi');
-            status = false;
+        if (pageTitle === 'profile') {
+            getDataProfile();
         }
-        if ($('#oldpass-edit').val() == '') {
-            $('#oldpass-edit').addClass('is-invalid');
-            $('#oldpass-edit-error').html('*password lama harus di isi');
-            status = false;
+        if (pageTitle === 'list nasabah') {
+            getAllNasabah();
+        }
+        if (pageTitle === 'detil nasabah') {
+            getTotalSampahNasabah();
+            getDataProfileNasabah();
+            getAllTransaksiNasabah();
+        }
+        if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
+            getAllKatBerita();
         }
     }
+};
 
-    return status;
+sessioncheck();
+
+// modif saldo uang
+const modifUang = (rHarga) => {
+    return rHarga.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
 }
 
 /**
- * LOGOUT
- */
+* LOGOUT
+*/
 $('#btn-logout').on('click', function(e) {
     e.preventDefault();
-      
+    
     Swal.fire({
         title: 'LOGOUT',
         text: "Anda yakin ingin keluar dari dashboad?",
@@ -361,10 +284,9 @@ $('#btn-logout').on('click', function(e) {
                 window.location.replace(`${BASEURL}/login`);
             })
             .catch(error => {
-                Swal.close();
-
                 // unauthorized
                 if (error.response.status == 401) {
+                    Swal.close();
                     document.cookie = `tokenAdmin=null; path=/;`;
                     window.location.replace(`${BASEURL}/login`);
                 }

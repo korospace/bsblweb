@@ -3,17 +3,15 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
-	#standalone-container {
-		margin: 5px 20px;
-		max-width: 90%;
-	}
 	#editor-container {
 		height: 450px;
 		border-radius : 10px;
+		border: 0.5px solid #D2D6DA;
 	}
 	#toolbar-container {
 		border-radius : 10px;
-		margin-top: 70px;
+		margin-top: 40px;
+		margin-bottom: 20px;
 	}
 	</style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
@@ -30,23 +28,25 @@
 	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
-	  <script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/image-resize.min.js'); ?>"></script> -->
 	<script src="<?= base_url('assets/js/katex.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/highlight.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/quill.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/image-resize.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
 	<script>
 		var quill = new Quill('#editor-container', {
 			modules: {
-			//	Masih error -> Sourcenya : image-resize.min.js
-			// 	imageResize: {
-            // 	displaySize: true
-			// },
-			formula: true,
-			syntax: true,
-			toolbar: '#toolbar-container'
+				//	Masih error -> Sourcenya : image-resize.min.js
+				imageResize: {
+					displaySize: true
+				},
+				formula: true,
+				syntax: true,
+				toolbar: '#toolbar-container'
 			},
 			placeholder: '...',
 			theme: 'snow'
@@ -68,18 +68,15 @@
 				<a class="nav-link mt-4" href="<?= base_url('admin/listartikel');?>" style="display: flex;align-items: center;">
 					<div
 						class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-						<svg width='12px' height='12px' version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 30.143 30.143"
-							style="enable-background:new 0 0 30.143 30.143;" xml:space="preserve">
-							<g>
-								<path class="opacity-6" fill="#00000"
-									d="M20.034,2.357v3.824c3.482,1.798,5.869,5.427,5.869,9.619c0,5.98-4.848,10.83-10.828,10.83
-										c-5.982,0-10.832-4.85-10.832-10.83c0-3.844,2.012-7.215,5.029-9.136V2.689C4.245,4.918,0.731,9.945,0.731,15.801
-										c0,7.921,6.42,14.342,14.34,14.342c7.924,0,14.342-6.421,14.342-14.342C29.412,9.624,25.501,4.379,20.034,2.357z" />
-								<path class="opacity-6" fill="#00000"
-									d="M14.795,17.652c1.576,0,1.736-0.931,1.736-2.076V2.08c0-1.148-0.16-2.08-1.736-2.08
-										c-1.57,0-1.732,0.932-1.732,2.08v13.496C13.062,16.722,13.225,17.652,14.795,17.652z" />
-							</g>
+						<svg width="8" height="11" viewBox="0 0 8 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<g clip-path="url(#clip0_302:4)">
+						<path d="M6.50489 8.41773L3.20258 5.11542L6.50489 1.81312C6.79641 1.51129 6.79224 1.03151 6.49552 0.734794C6.1988 0.438075 5.71903 0.433906 5.4172 0.725423L1.57104 4.57158C1.27075 4.87196 1.27075 5.35889 1.57104 5.65927L5.4172 9.50542C5.61033 9.70539 5.89633 9.78559 6.16528 9.71519C6.43423 9.6448 6.64426 9.43476 6.71466 9.16582C6.78505 8.89687 6.70486 8.61087 6.50489 8.41773Z" fill="#252F40"/>
+						</g>
+						<defs>
+						<clipPath id="clip0_302:4">
+						<rect width="10" height="7" fill="white" transform="translate(7.49951 0.500031) rotate(90)"/>
+						</clipPath>
+						</defs>
 						</svg>
 					</div>
 					<span class="nav-link-text ms-1">kembali</span>
@@ -92,12 +89,6 @@
 			<!-- navbar -->
 			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="false">
 				<div class="container-fluid py-1 px-3">
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-							<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-							<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tambah artikel</li>
-						</ol>
-					</nav>
 					<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 						<div class="ms-auto pe-md-3 d-flex align-items-center">
 							<ul class="navbar-nav justify-content-end">
@@ -117,33 +108,32 @@
 			</nav>
 			
 			<!-- table -->
-				<!-- Ini buat apa? -->
-			<div>
-				<a href="<?= base_url('admin/addartikel');?>"></a>
-			</div>
-			<h3 style="margin: 10px 15px;">Artikel Baru</h3>
-			<hr>
-			<form id="addNewArticle" style="margin: 10px 15px;>
+			<form id="addNewArticle" class="pl-4 pr-5 pt-3 mt-3" style="font-family: 'qc-medium';">
+				<div style="font-family: 'qc-medium';" class="row">
+					<h2 class="col">
+						<?= ($title == 'Admin | tambah artikel') ? 'Artikel baru' : 'Edit artikel' ?></h2>
+					<button type="" class="mt-1 btn btn-success col-12 col-sm-2" style="min-width:170px;letter-spacing: 1px;">
+						<i class="far fa-paper-plane mr-1"></i>
+						Publikasikan 
+					</button>
+				</div>
+				
+				<hr>
 				<!-- Text Area Quill -->
 				<div id="standalone-container">
 					<div class="form-group">
-						<i class="fas fa-pencil-alt"></i>
-						<h5 style="display:inline;">Judul Artikel</h5>
-						<input type="text" class="form-control" placeholder="Judul">
+						<i class="fas fa-pencil-alt mr-1"></i>
+						<h6 style="display:inline;">Judul Artikel</h6>
+						<input type="text" class="form-control mt-1" placeholder="Judul">
 					</div>
 					<div class="form-group">
-						<i class="fas fa-list-ul"></i>
-						<h5 style="display:inline;">Kategori</h5>
-						<select class="form-control">
-							<option value="">Kategori</option>
-							<option value="">Kategori</option>
-							<option value="">Kategori</option>
+						<i class="fas fa-list-ul mr-1"></i>
+						<h6 style="display:inline;">Kategori</h6>
+						<select id="kategori-berita-wraper" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
+							
 						</select>
+						<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm"><u>manage kategori</u></a>
 					</div>
-					<button type="submit" class="btn btn-success" style="min-width:100px;float:right;">
-						<i class="far fa-paper-plane"></i>
-						Publikasikan 
-					</button>
 					<div id="toolbar-container">
 						<span class="ql-formats">
 							<select class="ql-font"></select>
@@ -195,4 +185,63 @@
 
 		</main>
 	</body>
+
+	<!-- Modal -->
+	<div class="modal fade"  id="modalAddKategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form id="formAddKategoriBerita" class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Manage kategori</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="input-group col-lg-12 px-0 form-group table-responsive rounded-0" style="max-height: 186px;overflow: auto;border: 0.5px solid #D2D6DA;">
+						<table id="table-kategori-berita" class="table table-hover text-center mb-0" style="">
+							<thead class="position-sticky bg-white" style="top: 0;">
+								<tr>
+									<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+										#
+									</th>
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+										Nama Kategori
+									</th>
+									<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+										Action
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+							<?php for ($i=0; $i < 0; $i++) { ?>
+							<?php } ?>
+						</table>
+					</div>
+					<hr class="horizontal dark mt-2 mb-2">
+					<h6 class="font-italic opacity-8">Tambah kategori</h6>
+					<div class="input-group col-lg-12 px-0 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-clipboard-list text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="kategori_name" name="kategori_name" autocomplete="off" placeholder="masukan kategori baru">
+						</div>
+						<small
+							id="kategori_name-error"
+							class="text-danger"></small>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+						<span id="text">Simpan</span>
+						<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 <?= $this->endSection(); ?>

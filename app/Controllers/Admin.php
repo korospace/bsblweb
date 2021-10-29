@@ -8,6 +8,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\RESTful\ResourceController;
 use Exception;
 
+use function PHPUnit\Framework\isNull;
+
 class Admin extends ResourceController
 {
     public $basecontroller;
@@ -39,6 +41,36 @@ class Admin extends ResourceController
         } else {
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/listNasabah',$data);
+        }
+    }
+
+    /**
+     * View detil nasabah
+     */
+    public function detilNasabahView(?string $id=null)
+    {
+        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $result = $this->baseController->checkToken($token, false);
+
+        if ($id!=null) {
+            $data = [
+                'title'    => 'Admin | detil nasabah',
+                // 'idnasabah'=> $_POST['idnasabah'],
+                'idnasabah'=> $id,
+                'token' => $token
+            ];
+
+            if($result['success'] == false) {
+                setcookie('tokenAdmin', null, -1, '/');
+                unset($_COOKIE['tokenAdmin']);
+                return redirect()->to(base_url().'/login');
+            } else {
+                setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+                return view('Admin/detilNasabah',$data);
+            }
+        }
+        else {
+            return redirect()->to(base_url().'/admin/listnasabah');
         }
     }
 
@@ -82,7 +114,29 @@ class Admin extends ResourceController
             return redirect()->to(base_url().'/login');
         } else {
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
-            return view('Admin/addArtikel',$data);
+            return view('Admin/crudArtikel',$data);
+        }
+    }
+
+    /**
+     * View edit artikel
+     */
+    public function editArtikelView()
+    {
+        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $result = $this->baseController->checkToken($token, false);
+        $data   = [
+            'title' => 'Admin | edit artikel',
+            'token' => $token
+        ];
+        
+        if($result['success'] == false) {
+            setcookie('tokenAdmin', null, -1, '/');
+            unset($_COOKIE['tokenAdmin']);
+            return redirect()->to(base_url().'/login');
+        } else {
+            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+            return view('Admin/crudArtikel',$data);
         }
     }
 

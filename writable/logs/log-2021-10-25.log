@@ -1,3 +1,69 @@
+<<<<<<< HEAD
+ERROR - 2021-10-25 22:41:32 --> ErrorException: pg_query(): Query failed: ERROR:  update or delete on table &quot;sampah&quot; violates foreign key constraint &quot;setor_sampah_id_sampah_foreign&quot; on table &quot;setor_sampah&quot;
+DETAIL:  Key (id)=(S001) is still referenced from table &quot;setor_sampah&quot;. in /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #121, 'DELETE FROM "sa...')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('DELETE FROM "sa...')
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM "sa...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(2175): CodeIgniter\Database\BaseConnection->query('DELETE FROM "sa...', Array, false)
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Builder.php(199): CodeIgniter\Database\BaseBuilder->delete('', NULL, true)
+#6 /opt/lampp/htdocs/bsbl/app/Models/SampahModel.php(179): CodeIgniter\Database\Postgre\Builder->delete()
+#7 /opt/lampp/htdocs/bsbl/app/Controllers/Sampah.php(292): App\Models\SampahModel->deleteItem('S001')
+#8 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Sampah->deleteItem()
+#9 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sampah))
+#10 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#12 {main}
+ERROR - 2021-10-25 22:48:18 --> ErrorException: pg_query(): Query failed: ERROR:  update or delete on table &quot;sampah&quot; violates foreign key constraint &quot;setor_sampah_id_sampah_foreign&quot; on table &quot;setor_sampah&quot;
+DETAIL:  Key (id)=(S001) is still referenced from table &quot;setor_sampah&quot;. in /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #121, 'DELETE FROM "sa...')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('DELETE FROM "sa...')
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM "sa...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(2175): CodeIgniter\Database\BaseConnection->query('DELETE FROM "sa...', Array, false)
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Builder.php(199): CodeIgniter\Database\BaseBuilder->delete('', NULL, true)
+#6 /opt/lampp/htdocs/bsbl/app/Models/SampahModel.php(179): CodeIgniter\Database\Postgre\Builder->delete()
+#7 /opt/lampp/htdocs/bsbl/app/Controllers/Sampah.php(292): App\Models\SampahModel->deleteItem('S001')
+#8 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Sampah->deleteItem()
+#9 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sampah))
+#10 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#12 {main}
+ERROR - 2021-10-25 22:49:17 --> ErrorException: pg_query(): Query failed: ERROR:  update or delete on table &quot;sampah&quot; violates foreign key constraint &quot;setor_sampah_id_sampah_foreign&quot; on table &quot;setor_sampah&quot;
+DETAIL:  Key (id)=(S001) is still referenced from table &quot;setor_sampah&quot;. in /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #121, 'DELETE FROM "sa...')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('DELETE FROM "sa...')
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM "sa...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(2175): CodeIgniter\Database\BaseConnection->query('DELETE FROM "sa...', Array, false)
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Builder.php(199): CodeIgniter\Database\BaseBuilder->delete('', NULL, true)
+#6 /opt/lampp/htdocs/bsbl/app/Models/SampahModel.php(179): CodeIgniter\Database\Postgre\Builder->delete()
+#7 /opt/lampp/htdocs/bsbl/app/Controllers/Sampah.php(292): App\Models\SampahModel->deleteItem('S001')
+#8 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Sampah->deleteItem()
+#9 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sampah))
+#10 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#12 {main}
+ERROR - 2021-10-25 22:50:21 --> ErrorException: pg_query(): Query failed: ERROR:  update or delete on table &quot;sampah&quot; violates foreign key constraint &quot;setor_sampah_id_sampah_foreign&quot; on table &quot;setor_sampah&quot;
+DETAIL:  Key (id)=(S001) is still referenced from table &quot;setor_sampah&quot;. in /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php:136
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Que...', '/opt/lampp/htdo...', 136, Array)
+#1 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Connection.php(136): pg_query(Resource id #121, 'DELETE FROM "sa...')
+#2 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(663): CodeIgniter\Database\Postgre\Connection->execute('DELETE FROM "sa...')
+#3 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM "sa...')
+#4 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/BaseBuilder.php(2175): CodeIgniter\Database\BaseConnection->query('DELETE FROM "sa...', Array, false)
+#5 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/Database/Postgre/Builder.php(199): CodeIgniter\Database\BaseBuilder->delete('', NULL, true)
+#6 /opt/lampp/htdocs/bsbl/app/Models/SampahModel.php(179): CodeIgniter\Database\Postgre\Builder->delete()
+#7 /opt/lampp/htdocs/bsbl/app/Controllers/Sampah.php(292): App\Models\SampahModel->deleteItem('S001')
+#8 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(802): App\Controllers\Sampah->deleteItem()
+#9 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Sampah))
+#10 /opt/lampp/htdocs/bsbl/vendor/codeigniter4/framework/system/CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 /opt/lampp/htdocs/bsbl/index.php(37): CodeIgniter\CodeIgniter->run()
+#12 {main}
+=======
 CRITICAL - 2021-10-25 01:16:43 --> Undefined variable $totalTime
 #0 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 40)
 #1 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\xampp\\htdocs...')
@@ -7,3 +73,4 @@ CRITICAL - 2021-10-25 01:16:43 --> Undefined variable $totalTime
 #5 C:\xampp\htdocs\bsbl\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
 #6 C:\xampp\htdocs\bsbl\index.php(37): CodeIgniter\CodeIgniter->run()
 #7 {main}
+>>>>>>> a5389ca824db9442c74f6971e938dd4aaa9f8e81

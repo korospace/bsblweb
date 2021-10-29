@@ -52,6 +52,7 @@
   <?= $this->renderSection('content'); ?>
   
   <!-- Global Js -->
+  <script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/axios.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/sweetalert2.min.js'); ?>"></script>
   <script>

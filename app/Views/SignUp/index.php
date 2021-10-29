@@ -54,7 +54,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text bg-gray px-4 border-md border-right-0">
-                    <i class="fa fa-user text-muted"></i>
+                    <i class="fas fa-at text-muted"></i>
                   </span>
                 </div>
                 <input type="text" class="form-control" id="username-regist" name="username" autocomplete="off" placeholder="Masukan username anda">
@@ -127,7 +127,7 @@
             <div class="input-group col-lg-6 mb-4 form-group">
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text bg-gray px-4 border-md border-right-0">
+                  <span class="input-group-text bg-gray px-4 border-md border-right-0" style="max-height: 50px;">
                     <i class="fas fa-home"></i>
                   </span>
                 </div>
@@ -141,7 +141,7 @@
             <div class="input-group col-lg-6 mb-4 form-group">
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text bg-gray px-4 border-md border-right-0">
+                  <span class="input-group-text bg-gray px-4 border-md border-right-0" style="max-height: 50px;">
                     <i class="fas fa-home"></i>
                   </span>
                 </div>
@@ -156,7 +156,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text bg-gray px-4 border-md border-right-0">
-                    <i class="fas fa-home"></i>
+                    <i class="fas fa-mail-bulk text-muted"></i>
                   </span>
                 </div>
                 <input type="text" class="form-control" id="kodepos-regist" name="kodepos" autocomplete="off" placeholder="KODE POS">

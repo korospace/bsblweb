@@ -9,7 +9,7 @@ class SampahModel extends Model
 {
     protected $table         = 'sampah';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','id_kategori','jenis','harga'];
+    protected $allowedFields = ['id','kategori','jenis','harga'];
 
     public function getLastSampah(): array
     {
@@ -73,10 +73,10 @@ class SampahModel extends Model
     {
         try {
             if (isset($get['kategori'])) {
-                $sampah = $this->db->table($this->table)->select("sampah.id,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah")->join('kategori_sampah','sampah.id_kategori = kategori_sampah.id')->where("sampah.id_kategori",$get['kategori'])->orderBy('id','ASC')->get()->getResultArray();
+                $sampah = $this->db->table($this->table)->select("id,kategori,jenis,harga,jumlah")->where("kategori",$get['kategori'])->orderBy('id','ASC')->get()->getResultArray();
             } 
             else {
-                $sampah = $this->db->table($this->table)->select('sampah.id,sampah.id_kategori,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah')->join('kategori_sampah','sampah.id_kategori = kategori_sampah.id')->orderBy('id','ASC')->get()->getResultArray();
+                $sampah = $this->db->table($this->table)->select('id,kategori,jenis,harga,jumlah')->orderBy('id','ASC')->get()->getResultArray();
             }
             
             if (empty($sampah)) {    
@@ -108,11 +108,13 @@ class SampahModel extends Model
             $totalSampah = [];
             $kategori    = $this->db->table('kategori_sampah')->get()->getResultArray();
 
+            // var_dump($kategori);die;
+
             if ($idnasabah) {
-                $setorSampah = $this->db->table('setor_sampah')->select('kategori_sampah.name AS kategori,sampah.jenis AS jenis,SUM(setor_sampah.jumlah) AS jumlah')->join('sampah', 'setor_sampah.id_sampah = sampah.id')->join('transaksi', 'setor_sampah.id_transaksi = transaksi.id')->join('kategori_sampah', 'sampah.id_kategori = kategori_sampah.id')->where('transaksi.id_nasabah=',$idnasabah)->groupBy(["kategori_sampah.name", "sampah.jenis"])->get()->getResultArray();
+                $setorSampah = $this->db->table('setor_sampah')->select('kategori_sampah.name AS kategori,sampah.jenis AS jenis,SUM(setor_sampah.jumlah) AS jumlah')->join('sampah', 'setor_sampah.jenis_sampah = sampah.jenis')->join('transaksi', 'setor_sampah.id_transaksi = transaksi.id')->join('kategori_sampah', 'sampah.kategori = kategori_sampah.name')->where('transaksi.id_nasabah=',$idnasabah)->groupBy(["kategori_sampah.name", "sampah.jenis"])->get()->getResultArray();
             } 
             else {
-                $setorSampah = $this->db->table('setor_sampah')->select('kategori_sampah.name AS kategori,sampah.jenis AS jenis,SUM(setor_sampah.jumlah) AS jumlah')->join('sampah', 'setor_sampah.id_sampah = sampah.id')->join('kategori_sampah', 'sampah.id_kategori = kategori_sampah.id')->groupBy(["kategori_sampah.name", "sampah.jenis"])->get()->getResultArray();
+                $setorSampah = $this->db->table('setor_sampah')->select('kategori_sampah.name AS kategori,sampah.jenis AS jenis,SUM(setor_sampah.jumlah) AS jumlah')->join('sampah', 'setor_sampah.jenis_sampah = sampah.jenis')->join('kategori_sampah', 'sampah.kategori = kategori_sampah.name')->groupBy(["kategori_sampah.name", "sampah.jenis"])->get()->getResultArray();
             }
             
             foreach ($kategori as $k) {
@@ -131,7 +133,7 @@ class SampahModel extends Model
                 ];
             }
             
-            // var_dump($totalSampah);die; 
+            var_dump($totalSampah);die; 
             return [
                 'success' => true,
                 'message' => $totalSampah
@@ -176,8 +178,8 @@ class SampahModel extends Model
     public function deleteItem(string $id): array
     {
         try {
-            $this->db->table($this->table)->where('id', $id)->delete();
-            
+            $result = $this->db->table($this->table)->where('id', $id)->delete();
+
             if ($this->db->affectedRows() > 0) {
                 return [
                     "success"  => true,

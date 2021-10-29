@@ -9,15 +9,25 @@
 <?= $this->section('jsComponent'); ?>
     <script>
         function showAlert(data) {
-            $('#alert #message').html(data.message);
-            $('#alert #close').addClass(`${(data.btnclose == true) ? '' : 'd-none'}`);
-            $('#alert').addClass(`alert-${data.type} show`);
+            if ($('#alert').hasClass(`show`)) {
+                hideAlert()
+                setTimeout(() => {
+                    $('#alert #message').html(data.message);
+                    $('#alert #close').addClass(`${(data.btnclose == true) ? '' : 'd-none'}`);
+                    $('#alert').addClass(`alert-${data.type} show`);
+                }, 500);                
+            } 
+            else {
+                $('#alert #message').html(data.message);
+                $('#alert #close').addClass(`${(data.btnclose == true) ? '' : 'd-none'}`);
+                $('#alert').addClass(`alert-${data.type} show`);
+            }
         }
 
         function hideAlert() {
             $('#alert #message').html('custom text');
             $('#alert #close').removeClass('d-none');
-            $('#alert').removeClass('show');
+            $('#alert').removeClass('show alert-success alert-danger alert-warning alert-info');
         }
         
         if(!navigator.onLine){

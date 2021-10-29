@@ -70,7 +70,7 @@ class Sampah extends ResourceController
 
                 $data = [
                     "id"          => $idSampah,
-                    "id_kategori" => trim($data['id_kategori']),
+                    "kategori"    => trim($data['kategori']),
                     "jenis"       => strtolower(trim($data['jenis'])),
                     "harga"       => trim($data['harga']),
                 ];
@@ -111,7 +111,7 @@ class Sampah extends ResourceController
     /**
      * Get item
      *   url    : - domain.com/sampah/
-     *            - domain.com/sampah/getitem?kategori=:id_kategori
+     *            - domain.com/sampah/getitem?kategori=:kategori
      *   method : GET
      */
     public function getItem(): object
@@ -139,8 +139,9 @@ class Sampah extends ResourceController
     }
 
     /**
-     * Get item
-     *   url    : domain.com/sampah/totalitem
+     * Total item
+     *   url    : - domain.com/sampah/totalitem
+     *		  - domain.com/sampah/totalitem?idnasabah=:idnasabah (only admin)
      *   method : GET
      */
     public function totalItem(): object
@@ -153,7 +154,12 @@ class Sampah extends ResourceController
             $result = $this->baseController->checkToken($token);
         
             if ($result['success'] == true) {
-                if (!isset($result['message']['data']['privilege'])) {
+                if (isset($result['message']['data']['privilege'])) {
+                    if ($this->request->getGet('idnasabah')) {
+                        $id = $this->request->getGet('idnasabah');
+                    }
+                }
+                else {
                     $id = $result['message']['data']['id'];
                 }
             } 
@@ -220,7 +226,7 @@ class Sampah extends ResourceController
             else {
                 $data = [
                     "id"          => $data['id'],
-                    "id_kategori" => trim($data['id_kategori']),
+                    "kategori"    => trim($data['kategori']),
                     "jenis"       => strtolower(trim($data['jenis'])),
                     "harga"       => trim($data['harga']),
                     "jumlah"      => trim($data['jumlah']),

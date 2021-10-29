@@ -110,13 +110,24 @@ class Sampah extends ResourceController
 
     /**
      * Get item
-     *   url    : - domain.com/sampah/
-     *            - domain.com/sampah/getitem?kategori=:kategori
+     *   url    : domain.com/sampah/getitem
      *   method : GET
      */
     public function getItem(): object
     {
-        $dbResponse = $this->sampahModel->getItem($this->request->getGet());
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $isAdmin    = false;
+
+        if (!is_null($token)) {
+            $result = $this->baseController->checkToken($token);
+        
+            if (isset($result['message']['data']['privilege'])) {
+                $isAdmin = true;
+            }
+        }
+
+        $dbResponse = $this->sampahModel->getItem($isAdmin);
     
         if ($dbResponse['success'] == true) {
             $response = [
@@ -141,7 +152,7 @@ class Sampah extends ResourceController
     /**
      * Total item
      *   url    : - domain.com/sampah/totalitem
-     *		  - domain.com/sampah/totalitem?idnasabah=:idnasabah (only admin)
+     *		      - domain.com/sampah/totalitem?idnasabah=:idnasabah (only admin)
      *   method : GET
      */
     public function totalItem(): object

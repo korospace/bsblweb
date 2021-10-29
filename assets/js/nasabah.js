@@ -67,6 +67,7 @@ const sessioncheck = async () => {
             getAllTransaksi();
             getDataSaldo();
             getDataProfile();
+            getAllJenisSampah();
         }
         if (pageTitle[1] === 'profile') {
             getDataProfile();
@@ -358,6 +359,78 @@ const getDataSaldo = async () => {
         $('#saldo-galery24').html(parseFloat(httpResponse.data.data.galery24).toFixed(4));
     }
 };
+
+/**
+ * GET ALL JENIS SAMPAH
+ */
+ const getAllJenisSampah = async () => {
+ 
+     $('#search-sampah').val('');
+     $('#list-sampah-notfound').addClass('d-none'); 
+     $('#table-jenis-sampah').addClass('d-none'); 
+     $('#list-sampah-spinner').removeClass('d-none'); 
+     let httpResponse = await httpRequestGet(`${APIURL}/sampah/getitem`);
+     $('#table-jenis-sampah').removeClass('d-none'); 
+     $('#list-sampah-spinner').addClass('d-none'); 
+     
+     if (httpResponse.status === 404) {
+         $('#list-sampah-notfound').removeClass('d-none'); 
+         $('#list-sampah-notfound #text-notfound').html(`jenis sampah belum ditambah`); 
+     }
+     else if (httpResponse.status === 200) {
+         let trJenisSampah  = '';
+         let allJenisSampah = sortingSampah(httpResponse.data.data);
+         arrayJenisSampah   = allJenisSampah;
+        
+         allJenisSampah.forEach((n,i) => {
+ 
+             trJenisSampah += `<tr class="text-xs">
+                 <td class="align-middle text-center py-3">
+                     <span class="font-weight-bold"> ${++i} </span>
+                 </td>
+                 <td class="align-middle text-center">
+                     <span class="font-weight-bold"> ${n.kategori} </span>
+                 </td>
+                 <td class="align-middle text-center">
+                    ${n.jenis}
+                 </td>
+                 <td class="align-middle text-center py-3">
+                     <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
+                 </td>
+             </tr>`;
+         });
+ 
+         $('#table-jenis-sampah tbody').html(trJenisSampah);
+     }
+ };
+
+// sorting sampah
+const sortingSampah = (data) => {
+    let arrKategori = [];
+    let objSampah   = {};
+    let newArrSampah= [];
+    
+    // create array kategori
+    data.forEach(d => {
+        if (!arrKategori.includes(d.kategori)) {
+            arrKategori.push(d.kategori.replace(/\s/g,'_'));
+        }
+    });
+
+    arrKategori.forEach(aK => {
+        objSampah[aK] = data.filter((d) => {
+            return d.kategori == aK.replace(/_/g,' ');
+        })
+    });
+
+    for (let key in objSampah) {
+        objSampah[key].forEach(x => {
+            newArrSampah.push(x);
+        });
+    }
+
+    return newArrSampah;
+}
 
 /**
  * GET DATA PROFILE

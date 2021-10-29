@@ -69,15 +69,17 @@ class SampahModel extends Model
         }
     }
 
-    public function getItem(array $get): array
+    public function getItem(bool $isAdmin): array
     {
         try {
-            if (isset($get['kategori'])) {
-                $sampah = $this->db->table($this->table)->select("id,kategori,jenis,harga,jumlah")->where("kategori",$get['kategori'])->orderBy('id','ASC')->get()->getResultArray();
-            } 
-            else {
-                $sampah = $this->db->table($this->table)->select('id,kategori,jenis,harga,jumlah')->orderBy('id','ASC')->get()->getResultArray();
+            if ($isAdmin) {
+                $select = "id,kategori,jenis,harga,jumlah";
             }
+            else {
+                $select = "kategori,jenis,harga";
+            }
+
+            $sampah = $this->db->table($this->table)->select($select)->orderBy('id','ASC')->get()->getResultArray();
             
             if (empty($sampah)) {    
                 return [

@@ -211,6 +211,54 @@
 					</div>
 				</div>
 			</div>
+			<div class="row mt-4">
+				<div class="col-12">
+					<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
+						<!-- search input -->
+						<div class="card-header form-row pb-0 d-flex flex-column" style="font-family: 'qc-semibold';">
+							<h6 style="line-height: 8px;">Jenis-jenis sampah</h6>
+							<p class="font-italic text-muted text-xs">*harga dapat berubah sewaktu-waktu</p>
+						</div>
+						<!-- container table -->
+						<div class="card-body px-0 pb-2">
+							<div class="table-responsive p-0 position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
+								<!-- spinner -->
+								<div id="list-sampah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+								</div>
+								<!-- message not found -->
+								<div id="list-sampah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<h6 id="text-notfound" class='opacity-6'></h6>
+								</div>
+								<!-- table -->
+								<table id="table-jenis-sampah" class="table table-striped text-center mb-0">
+									<thead class="position-sticky bg-white" style="top: 0;">
+										<tr>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												#
+											</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Kategori
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Jenis
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Harga
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										
+									</tbody>
+									<?php for ($i=0; $i < 0; $i++) { ?>
+									<?php } ?>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="container-fluid mt-4 p-0">
 				<div class="row px-4">
 					<div class="col-lg-12 p-0">

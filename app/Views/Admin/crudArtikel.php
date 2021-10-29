@@ -10,7 +10,6 @@
 	}
 	#toolbar-container {
 		border-radius : 10px;
-		margin-top: 40px;
 		margin-bottom: 20px;
 	}
 	</style>
@@ -121,18 +120,29 @@
 				<hr>
 				<!-- Text Area Quill -->
 				<div id="standalone-container">
-					<div class="form-group">
-						<i class="fas fa-pencil-alt mr-1"></i>
-						<h6 style="display:inline;">Judul Artikel</h6>
-						<input type="text" class="form-control mt-1" placeholder="Judul">
+					<div class="form-row mb-4 d-flex flex-column">
+						<img src="<?= base_url('assets/images/default-poster.jpg'); ?>" alt="poster" class="img-thumbnail col-12 col-sm-6 mb-2" style="">
+						<div class="input-group mt-2 col-12 col-sm-6">
+							<input type="file" class="form-control " id="poster-regist" name="poster" autocomplete="off" placeholder="poster" style="min-height: 38px">
+						</div>
+						<small
+							id="poster-regist-error"
+							class="text-danger"></small>
 					</div>
-					<div class="form-group">
-						<i class="fas fa-list-ul mr-1"></i>
-						<h6 style="display:inline;">Kategori</h6>
-						<select id="kategori-berita-wraper" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
-							
-						</select>
-						<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm"><u>manage kategori</u></a>
+					<div class="form-row">
+						<div class="col-12 col-sm-6 form-group">
+							<i class="fas fa-pencil-alt mr-1"></i>
+							<h6 style="display:inline;">Judul Artikel</h6>
+							<input type="text" class="form-control mt-1" placeholder="Judul">
+						</div>
+						<div class="col-12 col-sm-6 form-group">
+							<i class="fas fa-list-ul mr-1"></i>
+							<h6 style="display:inline;">Kategori</h6>
+							<select id="kategori-berita-wraper" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
+								
+							</select>
+							<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm"><u>manage kategori</u></a>
+						</div>
 					</div>
 					<div id="toolbar-container">
 						<span class="ql-formats">

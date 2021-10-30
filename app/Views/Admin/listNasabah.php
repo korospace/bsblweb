@@ -124,8 +124,6 @@
 										<tbody>
 											
 										</tbody>
-										<?php for ($i=0; $i < 0; $i++) { ?>
-										<?php } ?>
 									</table>
 								</div>
 							</div>

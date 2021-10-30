@@ -67,7 +67,12 @@ const httpRequestPost = (url,form) => {
             newForm.set(pair[0], pair[1].trim().toLowerCase());
         }
         else{
-            newForm.set(pair[0], pair[1]);
+            if (pair[1].type) {
+                newForm.set(pair[0], pair[1], pair[1].name);
+            } 
+            else {
+                newForm.set(pair[0], pair[1]);                
+            }
         }
     }
 
@@ -247,6 +252,9 @@ const sessioncheck = async () => {
             getTotalSampahNasabah();
             getDataProfileNasabah();
             getAllTransaksiNasabah();
+        }
+        if (pageTitle === 'list artikel') {
+            getAllBerita();
         }
         if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
             getAllKatBerita();

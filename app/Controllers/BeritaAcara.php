@@ -122,7 +122,7 @@ class BeritaAcara extends ResourceController
 
     /**
      * Get item
-     *   url    : - domain.com/berita_acara
+     *   url    : - domain.com/berita_acara/getitem
      *            - domain.com/berita_acara/getitem?kategori=:id_kategori
      *            - domain.com/berita_acara/getitem?id_berita=:id
      *   method : GET

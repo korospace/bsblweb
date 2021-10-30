@@ -1,16 +1,63 @@
 
 // Quil editor initialization
-var quill = new Quill('#editor-container', {
-    modules: {
-        imageResize: {
-            displaySize: true
+if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
+    var quill = new Quill('#editor-container', {
+        modules: {
+            imageResize: {
+                displaySize: true
+            },
+            formula: true,
+            syntax: true,
+            toolbar: '#toolbar-container'
         },
-        formula: true,
-        syntax: true,
-        toolbar: '#toolbar-container'
-    },
-    theme: 'snow'
-});
+        theme: 'snow'
+    });
+}
+
+/**
+ * GET ALL BERITA
+ */
+ let arrayBerita    = [];
+ const getAllBerita = async () => {
+ 
+     $('#search-berita').val('');
+     $('#list-berita-notfound').addClass('d-none'); 
+     $('#container-list-berita').addClass('d-none'); 
+     $('#list-berita-spinner').removeClass('d-none'); 
+     let httpResponse = await httpRequestGet(`${APIURL}/berita_acara/getitem`);
+     $('#container-list-berita').removeClass('d-none'); 
+     $('#list-berita-spinner').addClass('d-none'); 
+     
+     if (httpResponse.status === 404) {
+         $('#list-berita-notfound').removeClass('d-none'); 
+         $('#list-berita-notfound #text-notfound').html(`jenis berita belum ditambah`); 
+     }
+     else if (httpResponse.status === 200) {
+         let elBerita  = '';
+         let allBerita = httpResponse.data.data;
+         arrayBerita   = allBerita;
+        
+         allBerita.forEach(b => {
+ 
+             elBerita += `<div class="col-12 col-sm-6 col-lg-4 h-100">
+                <div class="card mb-3" style="border: 0.5px solid #D2D6DA;">
+                    <img class="card-img-top border-radius-0" src="${b.thumbnail}">
+                    <div class="card-body" style="font-family: 'qc-semibold';">
+                        <h5 class="card-title">${b.title}</h5>
+                        <a href="" class="btn btn-warning p-2 border-radius-sm" style="width: 34px;height: 34px;">
+                            <i class="far fa-edit"></i>
+                        </a>
+                        <a href="" class="btn btn-danger p-2 border-radius-sm" style="width: 34px;height: 34px;">
+                            <i class="fas fa-trash text-white"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>`;
+         });
+ 
+         $('#container-list-berita').html(elBerita);
+     }
+ };
 
 /**
  * GET ALL KATEGORI BERITA
@@ -72,7 +119,7 @@ $('#formCrudArticle').on('submit', async (e) => {
                     confirmButtonText: 'ok',
                 })
                 .then(() => {
-                    window.location.replace(`${BASEURL}/listartikel`);
+                    window.location.replace(`${BASEURL}/admin/listartikel`);
                 })
             }, 300);
         }

@@ -32,7 +32,22 @@ class Transaksi extends ResourceController
         $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
+            if ($this->request->getGet('start')) {
+                $dataGet= $this->request->getGet();
+                $this->validation->run($dataGet,'getDataTransaksi');
+                $errors = $this->validation->getErrors();
 
+                if($errors) {
+                    $response = [
+                        'status'   => 400,
+                        'error'    => true,
+                        'messages' => $errors,
+                    ];
+            
+                    return $this->respond($response,400);
+                } 
+            }
+            
             $isAdmin    = isset($result['message']['data']['privilege']);
             $idNasabah  = $result['message']['data']['id'];
 
@@ -112,6 +127,7 @@ class Transaksi extends ResourceController
 
                 $data['idtransaksi'] = 'TSS'.$this->baseController->generateOTP(9);
                 $dbresponse          = $this->transaksiModel->setorSampah($data);
+                // var_dump((int)strtotime($data['date']));die;
     
                 if ($dbresponse['success'] == true) {
                     $response = [
@@ -194,8 +210,11 @@ class Transaksi extends ResourceController
                         if ((float)$data['jumlah'] < 1) {
                             $valid = false;
                             $msg   = [
-                                'jumlah' => 'minimal penarikan 1gram'
+                                'jumlah' => 'minimal penarikan 1.1 gram'
                             ];
+                        }
+                        else {
+                            $data['jumlah'] = (float)$data['jumlah']-0.1;
                         }
                     }
                 }
@@ -345,6 +364,7 @@ class Transaksi extends ResourceController
 
                 $newdata = [
                     'idnasabah'           => $data['id_nasabah'],
+                    'date'                => $data['date'],
                     'idtransaksi'         => 'TPS'.$this->baseController->generateOTP(9),
                     'jumlahPindah'        => $jumlahPindah,
                     'hasilKonversi'       => $konversiSaldo,
@@ -390,9 +410,11 @@ class Transaksi extends ResourceController
 
     public function konversiSaldo(array $data): float
     {
-        if ($data['asal'] == 'uang') {
-            return (float)$data['jumlah']/$data['harga_emas'];
-        } 
+        return (float)$data['jumlah']/$data['harga_emas'];
+
+        // if ($data['asal'] == 'uang') {
+        //     return (float)$data['jumlah']/$data['harga_emas'];
+        // } 
         // else {
         //     return round((float)$data['jumlah']*$data['harga_emas']);
         // }

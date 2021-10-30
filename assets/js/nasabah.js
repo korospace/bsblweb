@@ -164,7 +164,7 @@ const getAllTransaksi = async () => {
         });
 
         updateGrafikSetor(arrayId,arrayKg);
-        $('#transaksi-wraper').html(`<ul class="list-group w-100" style="font-family: 'qc-medium';">
+        $('#transaksi-wraper').html(`<ul class="list-group h-100 w-100" style="font-family: 'qc-medium';">
             ${elTransaksi}
         </ul>`);
     }
@@ -178,12 +178,19 @@ const modifUang = (rHarga) => {
 // update grafik setor
 const updateGrafikSetor = (arrayId,arrayKg) => {
     var ctx2 = document.getElementById("chart-line").getContext("2d");
+    // let chartWidth = arrayId.length*160;
+    document.querySelector("#chart-line").style.width    = '100%';
+    // document.querySelector("#chart-line").style.minWidth = `${chartWidth}px`;
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
     gradientStroke1.addColorStop(1, 'rgba(193,217,102,0.2)');
 
     var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
     gradientStroke2.addColorStop(1, 'rgba(193,217,102,0.2)');
+
+    for (let i = arrayId.length; i <10; i++) {
+        arrayId.push(' ');
+    }
 
     new Chart(ctx2, {
         type: "bar",
@@ -322,7 +329,7 @@ const getDetailTransaksi = async (id) => {
             barang.forEach((b,i) => {
                 trBody += `<tr class="text-center">
                     <th scope="row">${++i}</th>
-                    <td>${b.jenis}</td>
+                    <td>${b.jenis_sampah}</td>
                     <td>${b.jumlah}</td>
                     <td>Rp ${modifUang(b.harga)}</td>
                 </tr>`;

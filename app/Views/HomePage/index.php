@@ -96,33 +96,33 @@
           <div id="totalSampahWraper" class="row">
             <div class="col-md-3 col-sm-6">
               <div class="counter">
-                <span class="counter-value">0</span>
+                <span id="sampah-kertas" class="counter-value">0</span>
                 <div class="counter-content">
-                  <h3 id="sampah-kertas">KG<br>Kertas</br></h3>
+                  <h3>KG<br>Kertas</br></h3>
                 </div>
               </div>
             </div>
             <div class="col-md-3 col-sm-6">
               <div class="counter">
-                <span class="counter-value">0</span>
+                <span id="sampah-plastik" class="counter-value">0</span>
                 <div class="counter-content">
-                  <h3 id="sampah-plastik">KG<br>Plastik</br></h3>
+                  <h3>KG<br>Plastik</br></h3>
                 </div>
               </div>
             </div>
             <div class="col-md-3 col-sm-6">
               <div class="counter">
-                <span class="counter-value">0</span>
+                <span id="sampah-logam" class="counter-value">0</span>
                 <div class="counter-content">
-                  <h3 id="sampah-logam">KG<br>Logam</br></h3>
+                  <h3>KG<br>Logam</br></h3>
                 </div>
               </div>
             </div>
             <div class="col-md-3 col-sm-6">
               <div class="counter">
-                <span class="counter-value">0</span>
+                <span id="sampah-lain-lain" class="counter-value">0</span>
                 <div class="counter-content">
-                  <h3 id="sampah-lain-lain">KG<br>Lain-Lain</br></h3>
+                  <h3>KG<br>Lain-Lain</br></h3>
                 </div>
               </div>
             </div>

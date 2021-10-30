@@ -81,7 +81,7 @@ class BeritaAcara extends ResourceController
                     "thumbnail"   => $this->baseController->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
                     // "thumbnail"  => $dbFileName,
                     "content"     => trim($data['content']),
-                    "id_kategori" => trim($data['id_kategori']),
+                    "kategori"    => trim($data['kategori']),
                     "created_by"  => $result['message']['data']['id'],
                 ];
 
@@ -182,7 +182,7 @@ class BeritaAcara extends ResourceController
                     "id"         => trim($data['id']),
                     "title"      => strtolower(trim($data['title'])),
                     "content"    => trim($data['content']),
-                    "id_kategori"   => trim($data['id_kategori']),
+                    "kategori"   => trim($data['kategori']),
                     "created_by" => $result['message']['data']['id'],
                 ];
 

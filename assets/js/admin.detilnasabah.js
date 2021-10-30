@@ -93,13 +93,20 @@ const getAllTransaksiNasabah = async () => {
 
 // update grafik setor
 const updateGrafikSetorNasabah = (arrayId,arrayKg) => {
-    var ctx2 = document.getElementById("chart-line").getContext("2d");
+    var ctx2       = document.getElementById("chart-line").getContext("2d");
+    // let chartWidth = arrayId.length*160;
+    document.querySelector("#chart-line").style.width    = '100%';
+    // document.querySelector("#chart-line").style.minWidth = `${chartWidth}px`;
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
     gradientStroke1.addColorStop(1, 'rgba(193,217,102,0.2)');
 
     var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
     gradientStroke2.addColorStop(1, 'rgba(193,217,102,0.2)');
+
+    for (let i = arrayId.length; i <10; i++) {
+        arrayId.push(' ');
+    }
 
     new Chart(ctx2, {
         type: "bar",
@@ -116,7 +123,8 @@ const updateGrafikSetorNasabah = (arrayId,arrayKg) => {
                     backgroundColor: gradientStroke1,
                     fill: true,
                     data: arrayKg,
-                    maxBarThickness: 6
+                    maxBarThickness: 6,
+                    minBarLength: 6,
                 },
             ],
         },
@@ -141,6 +149,7 @@ const updateGrafikSetorNasabah = (arrayId,arrayKg) => {
                     display: true,
                     padding: 10,
                     color: '#b2b9bf',
+                    beginAtZero: true,
                     font: {
                         size: 11,
                         family: "Open Sans",
@@ -195,10 +204,21 @@ const getDetailTransaksiNasabah = async (id) => {
 
         // tarik saldo
         if (httpResponse.data.data.type == 'tarik') {
-            let jumlah = (httpResponse.data.data.jenis_saldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah):httpResponse.data.data.jumlah+' gram';
+            let jenisSaldo = httpResponse.data.data.jenis_saldo;
+            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah):httpResponse.data.data.jumlah+' gram';
+
 
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
-                <h4><strong>Jumlah</strong> : ${jumlah}</h4>
+                <table>
+                    <tr class="text-dark">
+                        <td><h4>Jenis saldo&nbsp;</h4></td>
+                        <td><h4>: &nbsp;&nbsp;${(jenisSaldo == 'uang') ? jenisSaldo : 'emas '+jenisSaldo}</h4></td>
+                    </tr>
+                    <tr class="text-dark">
+                        <td><h4>Jumlah</h4></td>
+                        <td><h4>: &nbsp;&nbsp;${jumlah}</h4></td>
+                    </tr>
+                </table>
             </div>`);
         }
         // pindah saldo
@@ -209,24 +229,24 @@ const getDetailTransaksiNasabah = async (id) => {
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
             <table>
                 <tr class="text-dark">
-                    <td>Saldo asal&nbsp;&nbsp;&nbsp;</td>
-                    <td>: ${httpResponse.data.data.asal}</td>
+                    <td>Saldo asal</td>
+                    <td>: &nbsp;&nbsp;${httpResponse.data.data.asal}</td>
                 </tr>
                 <tr class="text-dark">
-                    <td>Saldo tujuan&nbsp;&nbsp;&nbsp;</td>
-                    <td>: ${httpResponse.data.data.tujuan}</td>
+                    <td>Saldo tujuan</td>
+                    <td>: &nbsp;&nbsp;${httpResponse.data.data.tujuan}</td>
                 </tr>
                 <tr class="text-dark">
-                    <td>Jumlah&nbsp;&nbsp;&nbsp;</td>
-                    <td>: ${jumlah}</td>
+                    <td>Jumlah</td>
+                    <td>: &nbsp;&nbsp;${jumlah}</td>
                 </tr>
                 <tr class="text-dark">
-                    <td>Harga emas&nbsp;&nbsp;&nbsp;</td>
-                    <td>: Rp ${modifUang(httpResponse.data.data.harga_emas)}</td>
+                    <td>Harga emas</td>
+                    <td>: &nbsp;&nbsp;Rp ${modifUang(httpResponse.data.data.harga_emas)}</td>
                 </tr>
                 <tr class="text-dark">
-                    <td>Hasil konversi&nbsp;&nbsp;&nbsp;</td>
-                    <td>: ${hasilKonversi}</td>
+                    <td>Hasil konversi&nbsp;</td>
+                    <td>: &nbsp;&nbsp;${hasilKonversi}</td>
                 </tr>
             </table>
             </div>`);

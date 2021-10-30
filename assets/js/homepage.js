@@ -241,21 +241,6 @@
 		});
 	}
 
-	// Info Data Rubbish
-	$(document).ready(function () {
-		$('.counter-value').each(function () {
-			$(this).prop('Counter', 0).animate({
-				Counter: $(this).text()
-			}, {
-				duration: 3500,
-				easing: 'swing',
-				step: function (now) {
-					$(this).text(Math.ceil(now));
-				}
-			});
-		});
-	});
-
 	//SIGN UP
 	$(function () {
 		$('input, select').on('focus', function () {
@@ -275,17 +260,34 @@
 	.then(res => {
 		let totalSampah   = res.data.data;
 
-        for (const name in totalSampah) {
-            $(`#sampah-${name}`).html(kFormatter(dataSampah[name].total)+' Kg');
+        for (let name in totalSampah) {
+            $(`#sampah-${name}`).html(kFormatter(totalSampah[name].total));
         }   
 
 		// modif number
 		function kFormatter(num) {
 			return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'K' : Math.sign(num)*Math.abs(num)
 		}
+
+		counterUp();
 	}) 
 	.catch(res => {
 	})
+
+	// Counter Up Data Rubbish
+	let counterUp = () => {
+		$('.counter-value').each(function () {
+			$(this).prop('Counter', 0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3500,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				}
+			});
+		});
+	}
 
 	/* 
 	-------------- 

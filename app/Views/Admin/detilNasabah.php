@@ -3,6 +3,22 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
+		.chartWrapper {
+			position: relative !important;
+		}
+
+		.chartWrapper > canvas {
+			position: absolute !important;
+			left: 0 !important;
+			top: 0 !important;
+			pointer-events: none !important;
+		}
+
+		.chartAreaWrapper {
+			width: 100% !important;
+			overflow-x: scroll !important;
+		}
+
 		.rowCardWraper {
 			height: 100% !important;
 		}
@@ -60,7 +76,7 @@
 
 <body class="g-sidenav-show bg-gray-100">
 
-	<aside class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main"  style="font-family: 'qc-semibold';">
+	<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main"  style="font-family: 'qc-semibold';">
 		<div class="sidenav-header">
 			<i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" id="iconSidenav"></i>
 			<a class="nav-link mt-4" href="<?= base_url('admin/listnasabah');?>" style="display: flex;align-items: center;">
@@ -82,7 +98,7 @@
 			<hr class="horizontal dark mt-2">
 		</div>
 	</aside>
-	<main class="noprint main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
+	<main class= main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
 		<!-- Navbar -->
 		<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
 			navbar-scroll="true">
@@ -205,13 +221,16 @@
 						<div class="card-header pb-0">
 							<h6>Grafik Penyetoran</h6>
 						</div>
-						<div class="card-body p-3 mt-2 position-relative">
+						<div class="card-body chartWrapper p-3 mt-2">
 							<!-- spinner -->
 							<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 							</div>
-							<div class="chart">
-								<canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+							<!-- chart -->
+							<div class="chartAreaWrapper">
+								<div class="chartAreaWrapper2">
+									<canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -325,7 +344,7 @@
 												</div>
 											</div>
 											<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-												<h6 class="text-center mb-0">Gallery 24</h6>
+												<h6 class="text-center mb-0">Galery24</h6>
 												<hr class="horizontal dark my-3">
 												<h5 class="mb-0"><span id="saldo-galery24">0</span> g</h5>
 											</div>
@@ -434,7 +453,7 @@
 </body>
 
 <!-- **** Modal print transaksi **** -->
-<div class="modal fade noprint" id="modalPrintTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalPrintTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">

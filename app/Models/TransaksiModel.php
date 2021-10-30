@@ -14,7 +14,7 @@ class TransaksiModel extends Model
     public function setorSampah(array $data): array
     {
         try {
-            $date        = (int)time();
+            $date        = (int)strtotime($data['date']);
             $idtransaksi = $data['idtransaksi'];
             $idnasabah   = $data['id_nasabah'];
             $totalHarga  = 0;
@@ -78,11 +78,11 @@ class TransaksiModel extends Model
     public function tarikSaldo(array $data): array
     {
         try {
+            $date        = (int)strtotime($data['date']);
             $idtransaksi = $data['idtransaksi'];
             $idnasabah   = $data['id_nasabah'];
             $jenisSaldo  = $data['jenis_saldo'];
             $jumlahTarik = $data['jumlah'];
-            $date        = (int)time();
 
             $this->db->transBegin();
             $this->db->query("INSERT INTO transaksi (id,id_nasabah,type,jenis_saldo,date) VALUES('$idtransaksi','$idnasabah','tarik','$jenisSaldo',$date);");
@@ -125,6 +125,7 @@ class TransaksiModel extends Model
     public function pindahSaldo(array $data): array
     {
         try {
+            $date              = (int)strtotime($data['date']);
             $idnasabah         = $data['idnasabah'];
             $idtransaksi       = $data['idtransaksi'];
             $jumlahPindah      = $data['jumlahPindah'];
@@ -134,7 +135,6 @@ class TransaksiModel extends Model
             $tujuan            = $data['tujuan'];
             $saldoDompetAsal   = $data['saldo_dompet_asal'];
             $saldoDompetTujuan = $data['saldo_dompet_tujuan'];
-            $date              = time();
 
             $this->db->transBegin();
             $this->db->query("INSERT INTO transaksi (id,id_nasabah,type,jenis_saldo,date) VALUES('$idtransaksi','$idnasabah','pindah','$asal',$date);");
@@ -175,38 +175,47 @@ class TransaksiModel extends Model
                 $code_transaksi = substr($get['id_transaksi'],0,3);
                 
                 if ($code_transaksi == 'TSS') {
-                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,setor_sampah.jenis_sampah,setor_sampah.jumlah,setor_sampah.harga,transaksi.date FROM transaksi JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi) WHERE transaksi.id = '$id_transaksi';")->getResultArray();
+                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,setor_sampah.jenis_sampah,setor_sampah.jumlah,setor_sampah.harga,transaksi.date 
+                    FROM transaksi 
+                    JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) 
+                    JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi) 
+                    WHERE transaksi.id = '$id_transaksi';")->getResultArray();
 
                     $transaction = $this->makeDetilTransaksi($transaction);
                 } 
                 else if ($code_transaksi == 'TTS') {
-                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,tarik_saldo.jenis,tarik_saldo.jumlah,transaksi.date FROM transaksi JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) JOIN tarik_saldo ON (transaksi.id = tarik_saldo.id_transaksi) WHERE transaksi.id = '$id_transaksi';")->getResultArray()[0];
+                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,tarik_saldo.jenis,tarik_saldo.jumlah,transaksi.date 
+                    FROM transaksi 
+                    JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) 
+                    JOIN tarik_saldo ON (transaksi.id = tarik_saldo.id_transaksi) 
+                    WHERE transaksi.id = '$id_transaksi';")->getResultArray()[0];
                 }
                 else if ($code_transaksi == 'TPS') {
-                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,pindah_saldo.asal,pindah_saldo.jumlah,pindah_saldo.tujuan,pindah_saldo.hasil_konversi,pindah_saldo.harga_emas,transaksi.date FROM transaksi JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) JOIN pindah_saldo ON (transaksi.id = pindah_saldo.id_transaksi) WHERE transaksi.id = '$id_transaksi';")->getResultArray()[0];
+                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,pindah_saldo.asal,pindah_saldo.jumlah,pindah_saldo.tujuan,pindah_saldo.hasil_konversi,pindah_saldo.harga_emas,transaksi.date 
+                    FROM transaksi 
+                    JOIN nasabah ON (transaksi.id_nasabah = nasabah.id) 
+                    JOIN pindah_saldo ON (transaksi.id = pindah_saldo.id_transaksi) 
+                    WHERE transaksi.id = '$id_transaksi';")->getResultArray()[0];
                 }
                 else {
                     $transaction = false;
                 }
             } 
             else if ($isAdmin) {
+                $query  = 'SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.date,
+                (SELECT SUM(harga) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_setor,
+                (SELECT SUM(jumlah) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS total_tarik,
+                (SELECT SUM(jumlah) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS total_pindah 
+                FROM transaksi';
+
                 if (isset($get['idnasabah'])) {
                     $id_nasabah  = $get['idnasabah'];
-                    $transaction = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.type,transaksi.jenis_saldo,transaksi.date,
-                    (SELECT SUM(harga) AS total_setor from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
-                    (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
-                    (SELECT jumlah AS total_tarik from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id),
-                    (SELECT jumlah AS total_pindah from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id)
-                    FROM transaksi
-                    WHERE transaksi.id_nasabah = '$id_nasabah' ORDER BY transaksi.date DESC;")->getResultArray();
-    
-                    $transaction = $this->filterData($transaction);
+                    $query      .= ' WHERE transaksi.id_nasabah = '.$id_nasabah;
                 } 
-                else {
-                    $transaction = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,(SELECT SUM(harga) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_setor,(SELECT SUM(jumlah) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS total_tarik,(SELECT SUM(jumlah) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS total_pindah,transaksi.date FROM transaksi ORDER BY transaksi.date DESC;")->getResultArray();
-
-                    $transaction = $this->filterData($transaction);
-                }
+                
+                $query      .= ' ORDER BY transaksi.date ASC;';
+                $transaction = $this->db->query($query)->getResultArray();
+                $transaction = $this->filterData($transaction);
             } 
             else {
                 $transaction = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.type,transaksi.jenis_saldo,transaksi.date,
@@ -215,7 +224,7 @@ class TransaksiModel extends Model
                 (SELECT jumlah AS total_tarik from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id),
                 (SELECT jumlah AS total_pindah from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id)
                 FROM transaksi
-                WHERE transaksi.id_nasabah = '$idNasabah' ORDER BY transaksi.date DESC;")->getResultArray();
+                WHERE transaksi.id_nasabah = '$idNasabah' ORDER BY transaksi.date ASC;")->getResultArray();
 
                 $transaction = $this->filterData($transaction);
             }

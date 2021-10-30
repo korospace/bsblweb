@@ -556,10 +556,10 @@ class Validation
 
 	public $addBeritaAcara = [
 		'title' => [
-            'rules'  => 'required|max_length[100]|is_unique[berita_acara.title]',
+            'rules'  => 'required|max_length[250]|is_unique[berita_acara.title]',
             'errors' => [
                 'required'    => 'title is required',
-                'max_length'  => 'max 100 character',
+                'max_length'  => 'max 250 character',
                 'is_unique'   => 'title is exist',
             ],
 		],
@@ -579,11 +579,11 @@ class Validation
                 'max_length'  => 'max 10.000 character',
             ],
 		],
-		'id_kategori' => [
-            'rules'  => 'required|is_not_unique[kategori_berita.id]',
+		'kategori' => [
+            'rules'  => 'required|is_not_unique[kategori_berita.name]',
             'errors' => [
-                'required'      => 'title is required',
-                'is_not_unique' => 'id_kategori with value ({value}) is not found',
+                'required'      => 'kategori is required',
+                'is_not_unique' => 'kategori with value ({value}) is not found',
             ],
 		]
 	];
@@ -623,26 +623,26 @@ class Validation
             ],
 		],
 		'title' => [
-            'rules'  => 'required|max_length[100]|is_unique[berita_acara.title,berita_acara.id,{id}]',
+            'rules'  => 'required|max_length[250]|is_unique[berita_acara.title,berita_acara.id,{id}]',
             'errors' => [
                 'required'    => 'title is required',
-                'max_length'  => 'max 100 character',
+                'max_length'  => 'max 250 character',
                 'is_unique'   => 'title is exist',
             ],
 		],
 		'content' => [
             'rules'  => 'required|max_length[9980]',
             'errors' => [
-                'required'    => 'title is required',
+                'required'    => 'content is required',
                 'max_length'  => 'max 10.000 character',
             ],
 		],
-		'id_kategori' => [
-            'rules'  => 'required|max_length[20]|is_not_unique[kategori_berita.id]',
+		'kategori' => [
+            'rules'  => 'required|max_length[20]|is_not_unique[kategori_berita.name]',
             'errors' => [
-                'required'      => 'title is required',
+                'required'      => 'kategori is required',
                 'max_length'    => 'max 20 character',
-                'is_not_unique' => 'id_kategori with value ({value}) is not found',
+                'is_not_unique' => 'kategori with value ({value}) is not found',
             ],
 		]
 	];
@@ -699,6 +699,22 @@ class Validation
         ],
 	];
 
+	public $getDataTransaksi = [
+		'start' => [
+            'rules'  => 'regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'regex_match' => 'format must be dd-mm-yyyy',
+            ],
+		],
+		'end' => [
+            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => "parameter 'end' is required",
+                'regex_match' => 'format must be dd-mm-yyyy',
+            ],
+		],
+	];
+
 	public $setorSampah1 = [
 		'id_nasabah' => [
             'rules'  => 'required|is_not_unique[nasabah.id]',
@@ -711,6 +727,13 @@ class Validation
             'rules'  => 'required',
             'errors' => [
                 'required' => 'transaksi is required',
+            ],
+		],
+		'date' => [
+            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'date is required',
+                'regex_match' => 'format must be dd-mm-yyyy',
             ],
 		],
 	];
@@ -754,6 +777,13 @@ class Validation
                 'required'   => 'jumlah is required',
                 'max_length' => 'max 11 character',
                 'numeric'    => 'only number allowed',
+            ],
+		],
+		'date' => [
+            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'date is required',
+                'regex_match' => 'format must be dd-mm-yyyy',
             ],
 		],
 	];
@@ -802,6 +832,13 @@ class Validation
             'errors' => [
                 'required' => 'jumlah is required',
                 'numeric'  => 'value must be number',
+            ],
+		],
+		'date' => [
+            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'date is required',
+                'regex_match' => 'format must be dd-mm-yyyy',
             ],
 		],
 	];

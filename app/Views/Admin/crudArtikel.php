@@ -29,28 +29,12 @@
   	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/katex.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/highlight.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/quill.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/image-resize.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
-	<script>
-		var quill = new Quill('#editor-container', {
-			modules: {
-				//	Masih error -> Sourcenya : image-resize.min.js
-				imageResize: {
-					displaySize: true
-				},
-				formula: true,
-				syntax: true,
-				toolbar: '#toolbar-container'
-			},
-			placeholder: '...',
-			theme: 'snow'
-		});
-	</script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -87,7 +71,15 @@
 		<main class="main-content position-relative h-100 mt-1 border-radius-lg"">
 			<!-- navbar -->
 			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="false">
-				<div class="container-fluid py-1 px-3">
+				<div class="container-fluid py-1 px-0">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+							<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+							<li class="breadcrumb-item text-sm text-dark active" aria-current="page">
+								<?= ($title == 'Admin | tambah artikel') ? 'Artikel baru' : 'Edit artikel' ?>
+							</li>
+						</ol>
+					</nav>
 					<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 						<div class="ms-auto pe-md-3 d-flex align-items-center">
 							<ul class="navbar-nav justify-content-end">
@@ -107,10 +99,9 @@
 			</nav>
 			
 			<!-- table -->
-			<form id="addNewArticle" class="pl-4 pr-5 pt-3 mt-3" style="font-family: 'qc-medium';">
+			<form id="formCrudArticle" class="pl-4 pr-5 pb-5 mt-2" style="font-family: 'qc-medium';">
 				<div style="font-family: 'qc-medium';" class="row">
-					<h2 class="col">
-						<?= ($title == 'Admin | tambah artikel') ? 'Artikel baru' : 'Edit artikel' ?></h2>
+					<h2 class="col">Artikel</h2>
 					<button type="" class="mt-1 btn btn-success col-12 col-sm-2" style="min-width:170px;letter-spacing: 1px;">
 						<i class="far fa-paper-plane mr-1"></i>
 						Publikasikan 
@@ -120,31 +111,41 @@
 				<hr>
 				<!-- Text Area Quill -->
 				<div id="standalone-container">
-					<div class="form-row mb-4 d-flex flex-column">
-						<img src="<?= base_url('assets/images/default-poster.jpg'); ?>" alt="poster" class="img-thumbnail col-12 col-sm-6 mb-2" style="">
+					<div class="form-row mt-4 d-flex flex-column">
+						<div class="px-1">
+							<i class="far fa-image text-muted"></i>
+							<h6 class="text-muted" style="display:inline;">Thumbnail</h6>
+						</div>
+						<div class="position-relative col-12 col-sm-6 mt-1 mb-2">
+							<img src="<?= base_url('assets/images/default-thumbnail.jpg'); ?>" alt="thumbnail" id="preview-thumbnail" class="img-thumbnail position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;;min-height: 100%;">
+							<img src="<?= base_url('assets/images/default-thumbnail.jpg'); ?>" class="w-100" style="opacity: 0;">
+						</div>
 						<div class="input-group mt-2 col-12 col-sm-6">
-							<input type="file" class="form-control " id="poster-regist" name="poster" autocomplete="off" placeholder="poster" style="min-height: 38px">
+							<input type="file" class="form-control" id="thumbnail" name="thumbnail" autocomplete="off" placeholder="thumbnail" style="min-height: 38px" onchange="changeThumbPreview(this);">
 						</div>
 						<small
-							id="poster-regist-error"
+							id="thumbnail-error"
 							class="text-danger"></small>
 					</div>
-					<div class="form-row">
+					<div class="form-row mt-5">
 						<div class="col-12 col-sm-6 form-group">
-							<i class="fas fa-pencil-alt mr-1"></i>
-							<h6 style="display:inline;">Judul Artikel</h6>
-							<input type="text" class="form-control mt-1" placeholder="Judul">
+							<i class="fas fa-pencil-alt mr-1 text-muted"></i>
+							<h6 class="text-muted" style="display:inline;">Judul Artikel</h6>
+							<input type="text" class="form-control mt-1" id="title" name="title" placeholder="Title" style="min-height: 38px">
+							<small
+								id="title-error"
+								class="text-danger"></small>
 						</div>
 						<div class="col-12 col-sm-6 form-group">
-							<i class="fas fa-list-ul mr-1"></i>
-							<h6 style="display:inline;">Kategori</h6>
-							<select id="kategori-berita-wraper" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
+							<i class="fas fa-list-ul mr-1 text-muted"></i>
+							<h6 class="text-muted" style="display:inline;">Kategori</h6>
+							<select id="kategori-berita-wraper" name="kategori" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
 								
 							</select>
-							<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm"><u>manage kategori</u></a>
+							<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm d-block text-right"><u>manage kategori</u></a>
 						</div>
 					</div>
-					<div id="toolbar-container">
+					<div id="toolbar-container" class="mt-4">
 						<span class="ql-formats">
 							<select class="ql-font"></select>
 							<select class="ql-size"></select>
@@ -197,7 +198,7 @@
 	</body>
 
 	<!-- Modal -->
-	<div class="modal fade"  id="modalAddKategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="modalAddKategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<form id="formAddKategoriBerita" class="modal-content">
 				<div class="modal-header">

@@ -573,10 +573,9 @@ class Validation
             ],
 		],
 		'content' => [
-            'rules'  => 'required|max_length[9980]',
+            'rules'  => 'required',
             'errors' => [
                 'required'    => 'content is required',
-                'max_length'  => 'max 10.000 character',
             ],
 		],
 		'kategori' => [

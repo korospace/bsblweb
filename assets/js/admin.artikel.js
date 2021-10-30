@@ -1,3 +1,17 @@
+
+// Quil editor initialization
+var quill = new Quill('#editor-container', {
+    modules: {
+        imageResize: {
+            displaySize: true
+        },
+        formula: true,
+        syntax: true,
+        toolbar: '#toolbar-container'
+    },
+    theme: 'snow'
+});
+
 /**
  * GET ALL KATEGORI BERITA
  */
@@ -6,7 +20,7 @@
     let httpResponse = await httpRequestGet(`${APIURL}/kategori_berita/getitem`);
     
     if (httpResponse.status === 200) {
-        let elKategori  = '<option>-- pilih kategori --</option>';
+        let elKategori  = `<option value='' selected>-- pilih kategori --</option>`;
         let trKategori  = '';
         let allKategori = httpResponse.data.data;
         arrayKatBerita  = httpResponse.data.data;
@@ -14,7 +28,7 @@
         allKategori.forEach((k,i)=> {
             let makeId = k.name.replace(/\s/g,'-');
  
-            elKategori += `<option id="${makeId}" value="${k.id}">${k.name}</option>`;
+            elKategori += `<option id="${makeId}" value="${k.name}">${k.name}</option>`;
             trKategori += `<tr class="text-xs">
                  <td class="align-middle text-center py-3">
                      <span class="font-weight-bold"> ${++i} </span>
@@ -36,69 +50,101 @@
 /**
  * ADD KATEGORI BERITA
  */
-$('#formAddKategoriBerita').on('submit', async (e) => {
+$('#formCrudArticle').on('submit', async (e) => {
     e.preventDefault();
-
-    if (validateAddKategoriBerita()) {
+    
+    if (validateCrudArtikel()) {
         let form = new FormData(e.target);
+        form.append('content',$('.ql-editor').html());
     
-        $('#formAddKategoriBerita #submit #text').addClass('d-none');
-        $('#formAddKategoriBerita #submit #spinner').removeClass('d-none');
-        let httpResponse = await httpRequestPost(`${APIURL}/kategori_berita/additem`,form);
-        $('#formAddKategoriBerita #submit #text').removeClass('d-none');
-        $('#formAddKategoriBerita #submit #spinner').addClass('d-none');
-    
+        showLoadingSpinner();
+        let httpResponse = await httpRequestPost(`${APIURL}/berita_acara/additem`,form);
+        hideLoadingSpinner();
+
         if (httpResponse.status === 201) {
-            $('#formAddKategoriBerita input').val('');
-            getAllKatBerita();
-    
-            showAlert({
-                message: `<strong>Success...</strong> kategori berhasil ditambah!`,
-                btnclose: false,
-                type:'success'
-            })
             setTimeout(() => {
-                hideAlert();
-            }, 3000);
+                Swal.fire({
+                    icon : 'success',
+                    title : '<strong>SUCCESS</strong>',
+                    html:
+                      'artikel berhasil ditambah!',
+                    showCancelButton: false,
+                    confirmButtonText: 'ok',
+                })
+                .then(() => {
+                    window.location.replace(`${BASEURL}/listartikel`);
+                })
+            }, 300);
         }
         else if (httpResponse.status === 400) {
-           if (httpResponse.message.kategori_name) {
-               $('#formAddKategoriBerita #kategori_name').addClass('is-invalid');
-               $('#formAddKategoriBerita #kategori_name-error').text(httpResponse.message.kategori_name);
+           if (httpResponse.message.title) {
+               $('#title').addClass('is-invalid');
+               $('#title-error').text(httpResponse.message.title);
            }
         }
     }
 })
 
 // validate add kategori sampah
-function validateAddKategoriBerita() {
+function validateCrudArtikel() {
     let status = true;
 
     // clear error message first
     $('.form-control').removeClass('is-invalid');
     $('.text-danger').html('');
  
-    if ($('#formAddKategoriBerita #kategori_name').val() == '') {
-        $('#formAddKategoriBerita #kategori_name').addClass('is-invalid');
-        $('#formAddKategoriBerita #kategori_name-error').html('*kategori harus di isi');
+    // thumbnail
+    if ($('#thumbnail').val() == '') {
+        $('#thumbnail').addClass('is-invalid');
         status = false;
     }
-    else if ($('#formAddKategoriBerita #kategori_name').val().length > 20) {
-        $('#formAddKategoriBerita #kategori_name').addClass('is-invalid');
-        $('#formAddKategoriBerita #kategori_name-error').html('*maximal 20 character');
+    // title
+    if ($('#title').val() == '') {
+        $('#title').addClass('is-invalid');
         status = false;
     }
-    // check kategori is exist
-    arrayKatBerita.forEach(ks => {
-        if (ks.name.toLowerCase() == $('#formAddKategoriBerita #kategori_name').val().toLowerCase().trim()) {
-            $('#formAddKategoriBerita #kategori_name').addClass('is-invalid');
-            $('#formAddKategoriBerita #kategori_name-error').html('*kategori sudah tersedia');
-            status = false;
-        }
-    });
- 
+    else if ($('#title').val().length > 250) {
+        $('#title').addClass('is-invalid');
+        $('#title-error').html('*maximal 250 character');
+        status = false;
+    }
+    // kategori
+    if ($('#kategori-berita-wraper').val() == '') {
+        $('#kategori-berita-wraper').addClass('is-invalid');
+        status = false;
+    }
+
     return status;
  }
+
+// Thumbnail Preview
+const changeThumbPreview = (el) => {
+    // If file is not image
+    if(!/image/.test(el.files[0].type)){
+        showAlert({
+            message: `<strong>File yang anda upload bukan gambar!</strong>`,
+            btnclose: true,
+            type:'danger'
+        });
+
+        el.value = "";
+        return false;
+    }
+    // If file size more than 200kb
+    else if(el.files[0].size > 200000){
+        showAlert({
+            message: `<strong>Ukuran maximal 200kb!</strong>`,
+            btnclose: true,
+            type:'danger'
+        });
+
+        el.value = "";
+        return false;
+    }
+    else{
+      document.querySelector('#preview-thumbnail').src = URL.createObjectURL(el.files[0]);
+    }
+}
 
  /**
    * HAPUS KATEGORI SAMPAH

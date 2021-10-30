@@ -9,7 +9,7 @@ class BeritaAcaraModel extends Model
 {
     protected $table         = 'berita_acara';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','title','thumbnail','content','id_kategori','created_by'];
+    protected $allowedFields = ['id','title','thumbnail','content','kategori','created_by','created_at'];
 
     public function getLastBerita(): array
     {

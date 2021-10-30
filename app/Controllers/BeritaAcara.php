@@ -83,6 +83,7 @@ class BeritaAcara extends ResourceController
                     "content"     => trim($data['content']),
                     "kategori"    => trim($data['kategori']),
                     "created_by"  => $result['message']['data']['id'],
+                    "created_at"  => time(),
                 ];
 
                 $dbresponse = $this->beritaModel->addItem($data);
@@ -184,6 +185,7 @@ class BeritaAcara extends ResourceController
                     "content"    => trim($data['content']),
                     "kategori"   => trim($data['kategori']),
                     "created_by" => $result['message']['data']['id'],
+                    "created_at"  => time(),
                 ];
 
                 if ($this->request->getFile('new_thumbnail')) {

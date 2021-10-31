@@ -145,7 +145,7 @@
 							<select id="kategori-berita-wraper" name="kategori" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
 								
 							</select>
-							<?php if ($title !== 'Admin | tambah artikel') { ?>
+							<?php if ($title !== 'Admin | edit artikel') { ?>
 								<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm d-block text-right"><u>manage kategori</u></a>
 							<?php } ?>
 						</div>

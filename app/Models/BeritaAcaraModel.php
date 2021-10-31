@@ -73,7 +73,7 @@ class BeritaAcaraModel extends Model
     {
         try {
             if (isset($get['id']) && !isset($get['kategori'])) {
-                $berita = $this->db->table($this->table)->select("id,title,created_at,content,thumbnail")->where("id",$get['id'])->get()->getFirstRow();
+                $berita = $this->db->table($this->table)->select("id,title,kategori,created_at,content,thumbnail")->where("id",$get['id'])->get()->getFirstRow();
             } 
             else if (isset($get['kategori']) && !isset($get['id'])) {
                 $berita = $this->db->table($this->table)->select('id,title,kategori,created_at,thumbnail')->where("kategori",$get['kategori'])->orderBy('created_at','DESC')->get()->getResultArray();

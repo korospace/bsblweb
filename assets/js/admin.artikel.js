@@ -165,7 +165,12 @@ const getDetailBerita = async () => {
     }
     if (httpResponse.status === 200) {
         let dataArtikel = httpResponse.data.data;
-        console.log(dataArtikel);
+        let makeId      = dataArtikel.kategori.replace(/\s/g,'-');
+
+        document.querySelector('#preview-thumbnail').src = dataArtikel.thumbnail;
+        $('#title').val(dataArtikel.title);
+        $(`#${makeId}`).attr('selected','selected');
+        $('.ql-editor').html(dataArtikel.content);
     }
 };
 

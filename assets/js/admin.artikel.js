@@ -61,7 +61,7 @@ if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <a href="" class="w-100 btn btn-warning p-2 border-radius-sm" style="height: 34px;">
+                                <a href="${BASEURL}/admin/editartikel/${b.id}" class="w-100 btn btn-warning p-2 border-radius-sm" style="height: 34px;">
                                     <i class="far fa-edit"></i>
                                 </a>
                             </div>
@@ -124,7 +124,7 @@ $('#search-artikel').on('keyup', function() {
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <a href="" class="w-100 btn btn-warning p-2 border-radius-sm" style="height: 34px;">
+                            <a href="${BASEURL}/admin/editartikel/${b.id}" class="w-100 btn btn-warning p-2 border-radius-sm" style="height: 34px;">
                                 <i class="far fa-edit"></i>
                             </a>
                         </div>
@@ -146,7 +146,7 @@ $('#search-artikel').on('keyup', function() {
 /**
  * GET DETAIL ARTIKEL
  */
-const getDetailArtikel = async () => {
+const getDetailBerita = async () => {
 
     let httpResponse = await httpRequestGet(`${APIURL}/berita_acara/getitem?id=${IDARTIKEL}`);
     
@@ -162,28 +162,8 @@ const getDetailArtikel = async () => {
         })
     }
     if (httpResponse.status === 200) {
-        let dataNasabah = httpResponse.data.data;
-        let date        = new Date(parseInt(dataNasabah.created_at) * 1000);
-
-        // -- nasabah card --
-        $('#card-id').html(`${dataNasabah.id.slice(0, 5)}&nbsp;&nbsp;&nbsp;${dataNasabah.id.slice(5, 9)}&nbsp;&nbsp;&nbsp;${dataNasabah.id.slice(9,99999999)}`);
-        $('#card-username').html(dataNasabah.username);
-        $('#card-date').html(`${date.toLocaleString("en-US",{day: "numeric"})}/${date.toLocaleString("en-US",{month: "numeric"})}/${date.toLocaleString("en-US",{year: "numeric"})}`);
-
-        // -- saldo --
-        $('#saldo-uang').html(modifUang(dataNasabah.saldo_uang));
-        $('#saldo-ubs').html(parseFloat(dataNasabah.saldo_ubs).toFixed(4));
-        $('#saldo-antam').html(parseFloat(dataNasabah.saldo_antam).toFixed(4));
-        $('#saldo-galery24').html(parseFloat(dataNasabah.saldo_galery24).toFixed(4));
-
-        // -- personal info --
-        $('#personal-info #email').html(dataNasabah.email);
-        $('#personal-info #nama-lengkap').html(dataNasabah.nama_lengkap);
-        $('#personal-info #username').html(dataNasabah.username);
-        $('#personal-info #tgl-lahir').html(dataNasabah.tgl_lahir);
-        $('#personal-info #kelamin').html(dataNasabah.kelamin);
-        $('#personal-info #alamat').html(dataNasabah.alamat);
-        $('#personal-info #notelp').html(dataNasabah.notelp);
+        let dataArtikel = httpResponse.data.data;
+        console.log(dataArtikel);
     }
 };
 

@@ -73,7 +73,7 @@ class BeritaAcaraModel extends Model
     {
         try {
             if (isset($get['id']) && !isset($get['kategori'])) {
-                $berita = $this->db->table($this->table)->select("berita_acara.id,berita_acara.title,admin.nama_lengkap AS author,berita_acara.created_at,berita_acara.content")->join('admin', 'berita_acara.created_by = admin.id')->where("berita_acara.id",$get['id_berita'])->get()->getFirstRow();
+                $berita = $this->db->table($this->table)->select("berita_acara.id,berita_acara.title,admin.nama_lengkap AS author,berita_acara.created_at,berita_acara.content")->join('admin', 'berita_acara.created_by = admin.id')->where("berita_acara.id",$get['id'])->get()->getFirstRow();
             } 
             else if (isset($get['kategori']) && !isset($get['id_berita'])) {
                 $berita = $this->db->table($this->table)->select('id,title,kategori,created_at,thumbnail')->where("kategori",$get['kategori'])->orderBy('created_at','DESC')->get()->getResultArray();

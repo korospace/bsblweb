@@ -148,7 +148,9 @@ $('#search-artikel').on('keyup', function() {
  */
 const getDetailBerita = async () => {
 
+    showLoadingSpinner();
     let httpResponse = await httpRequestGet(`${APIURL}/berita_acara/getitem?id=${IDARTIKEL}`);
+    hideLoadingSpinner();
     
     if (httpResponse.status == 404) {
         Swal.fire({

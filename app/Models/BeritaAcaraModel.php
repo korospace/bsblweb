@@ -72,7 +72,7 @@ class BeritaAcaraModel extends Model
     public function getItem(array $get): array
     {
         try {
-            if (isset($get['id_berita']) && !isset($get['kategori'])) {
+            if (isset($get['id']) && !isset($get['kategori'])) {
                 $berita = $this->db->table($this->table)->select("berita_acara.id,berita_acara.title,admin.nama_lengkap AS author,berita_acara.created_at,berita_acara.content")->join('admin', 'berita_acara.created_by = admin.id')->where("berita_acara.id",$get['id_berita'])->get()->getFirstRow();
             } 
             else if (isset($get['kategori']) && !isset($get['id_berita'])) {

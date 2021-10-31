@@ -259,6 +259,9 @@ const sessioncheck = async () => {
         if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
             getAllKatBerita();
         }
+        if (pageTitle === 'edit artikel') {
+            getDetailBerita();
+        }
     }
 };
 

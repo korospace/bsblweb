@@ -560,7 +560,7 @@ class Validation
             'errors' => [
                 'required'    => 'title is required',
                 'max_length'  => 'max 250 character',
-                'is_unique'   => 'title is exist',
+                'is_unique'   => 'judul ({value}) sudah ada',
             ],
 		],
 		'thumbnail' => [
@@ -626,7 +626,7 @@ class Validation
             'errors' => [
                 'required'    => 'title is required',
                 'max_length'  => 'max 250 character',
-                'is_unique'   => 'title is exist',
+                'is_unique'   => 'judul ({value}) sudah ada',
             ],
 		],
 		'content' => [

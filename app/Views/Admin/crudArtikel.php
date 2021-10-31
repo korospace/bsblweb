@@ -131,7 +131,7 @@
 						<div class="col-12 col-sm-6 form-group">
 							<i class="fas fa-pencil-alt mr-1 text-muted"></i>
 							<h6 class="text-muted" style="display:inline;">Judul Artikel</h6>
-							<input type="text" class="form-control mt-1" id="title" name="title" placeholder="Title" style="min-height: 38px">
+							<input type="text" class="form-control mt-1" id="title" name="title" placeholder="Title" style="min-height: 38px" autocomplete="off">
 							<small
 								id="title-error"
 								class="text-danger"></small>
@@ -142,7 +142,9 @@
 							<select id="kategori-berita-wraper" name="kategori" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
 								
 							</select>
-							<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm d-block text-right"><u>manage kategori</u></a>
+							<?php if ($title !== 'Admin | tambah artikel') { ?>
+								<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm d-block text-right"><u>manage kategori</u></a>
+							<?php } ?>
 						</div>
 					</div>
 					<div id="toolbar-container" class="mt-4">

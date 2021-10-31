@@ -67,7 +67,7 @@ $routes->group("admin", function ($routes) {
     $routes->add('detilnasabah/(:any)','Admin::detilNasabahView/$1');
     $routes->add('listartikel',        'Admin::listArtikelView');
     $routes->add('addartikel',         'Admin::addArtikelView');
-    $routes->add('editartikel',        'Admin::editArtikelView');
+    $routes->add('editartikel/(:any)', 'Admin::editArtikelView/$1');
     // API
     $routes->post("login",           "Admin::login");
     $routes->get("sessioncheck",     "Admin::sessionCheck");

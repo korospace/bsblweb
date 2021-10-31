@@ -10,6 +10,9 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
+	<script>
+		const IDARTIKEL = '<?= $idartikel; ?>';
+	</script>
 	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>	
 	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
@@ -71,7 +74,7 @@
 											<i class="fas fa-search text-muted"></i>
 										</span>
 									</div>
-									<input id="search-berita" type="text" class="form-control h-100 px-2" placeholder="judul artikel" style="max-height: 39px;">
+									<input id="search-artikel" type="text" class="form-control h-100 px-2" placeholder="judul artikel/kategori artikel" style="max-height: 39px;">
 								</div>
 								<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
 									<a class="btn btn-success mt-4 mt-sm-0 text-xxs" href="<?= base_url('admin/addartikel');?>" style="width: 100%;">tambah</a>
@@ -81,15 +84,15 @@
 							<div class="card-body pl-4 pr-3 pb-2">
 								<div class="p-0 position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
 									<!-- spinner -->
-									<div id="list-berita-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<div id="list-artikel-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 										<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 									</div>
 									<!-- message not found -->
-									<div id="list-berita-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<div id="list-artikel-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 										<h6 id="text-notfound" class='opacity-6'></h6>
 									</div>
 									<!-- Card List Article  -->
-									<div id="container-list-berita" class="container-fluid p-0 row">
+									<div id="container-list-artikel" class="container-fluid p-0 row">
 										<?php for ($i=0; $i < 10; $i++) { ?>
 										
 										<?php } ?>

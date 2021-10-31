@@ -15,22 +15,22 @@ if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
 }
 
 /**
- * GET ALL BERITA
+ * GET ALL ARTIKEL
  */
  let arrayBerita    = [];
  const getAllBerita = async () => {
  
-     $('#search-berita').val('');
-     $('#list-berita-notfound').addClass('d-none'); 
-     $('#container-list-berita').addClass('d-none'); 
-     $('#list-berita-spinner').removeClass('d-none'); 
+     $('#search-artikel').val('');
+     $('#list-artikel-notfound').addClass('d-none'); 
+     $('#container-list-artikel').addClass('d-none'); 
+     $('#list-artikel-spinner').removeClass('d-none'); 
      let httpResponse = await httpRequestGet(`${APIURL}/berita_acara/getitem`);
-     $('#container-list-berita').removeClass('d-none'); 
-     $('#list-berita-spinner').addClass('d-none'); 
+     $('#container-list-artikel').removeClass('d-none'); 
+     $('#list-artikel-spinner').addClass('d-none'); 
      
      if (httpResponse.status === 404) {
-         $('#list-berita-notfound').removeClass('d-none'); 
-         $('#list-berita-notfound #text-notfound').html(`jenis berita belum ditambah`); 
+         $('#list-artikel-notfound').removeClass('d-none'); 
+         $('#list-artikel-notfound #text-notfound').html(`artikel belum ditambah`); 
      }
      else if (httpResponse.status === 200) {
          let elBerita  = '';
@@ -38,29 +38,157 @@ if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
          arrayBerita   = allBerita;
         
          allBerita.forEach(b => {
+
+            let date      = new Date(parseInt(b.created_at) * 1000);
+            let day       = date.toLocaleString("en-US",{day: "numeric"});
+            let month     = date.toLocaleString("en-US",{month: "long"});
+            let year      = date.toLocaleString("en-US",{year: "numeric"});
  
-             elBerita += `<div class="col-12 col-sm-6 col-lg-4 h-100">
-                <div class="card mb-3" style="border: 0.5px solid #D2D6DA;">
+             elBerita += `<div class="col-12 col-sm-6 col-lg-4" style="min-height: 100%;">
+                <div class="card mb-3" style="border: 0.5px solid #D2D6DA;min-height: 100%;">
                     <img class="card-img-top border-radius-0" src="${b.thumbnail}">
-                    <div class="card-body" style="font-family: 'qc-semibold';">
-                        <h5 class="card-title">${b.title}</h5>
-                        <a href="" class="btn btn-warning p-2 border-radius-sm" style="width: 34px;height: 34px;">
-                            <i class="far fa-edit"></i>
-                        </a>
-                        <a href="" class="btn btn-danger p-2 border-radius-sm" style="width: 34px;height: 34px;">
-                            <i class="fas fa-trash text-white"></i>
-                        </a>
+                    <div class="card-body pb-0 d-flex flex-column justify-content-between" style="font-family: 'qc-semibold';">
+                        <div class="row">
+                            <h4 class="card-title text-capitalize" style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">${b.title}</h4>
+                            <h6 class="card-subtitle mb-2 text-muted text-sm">
+                                <i class="fas fa-list-ul mr-1 text-muted text-xs"></i>
+                                ${b.kategori}
+                            </h6>
+                            <h6 class="card-subtitle mb-2 text-muted text-sm">
+                                <i class="far fa-clock mr-1 text-muted text-xs"></i>
+                                ${month}, ${day}, ${year}
+                            </h6>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <a href="" class="w-100 btn btn-warning p-2 border-radius-sm" style="height: 34px;">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <span class="w-100 btn btn-danger p-2 border-radius-sm" style="height: 34px;" onclick="hapusArtikel('${b.id}');">
+                                    <i class="fas fa-trash text-white"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>`;
          });
  
-         $('#container-list-berita').html(elBerita);
+         $('#container-list-artikel').html(elBerita);
      }
  };
 
+ // Search artikel
+$('#search-artikel').on('keyup', function() {
+    let elSugetion     = '';
+    let beritaFiltered = [];
+    
+    if ($(this).val() === "") {
+        beritaFiltered = arrayBerita;
+    } 
+    else {
+        beritaFiltered = arrayBerita.filter((n) => {
+            return n.title.includes($(this).val()) || n.kategori.includes($(this).val());
+        });
+    }
+
+    if (beritaFiltered.length == 0) {
+        $('#list-artikel-notfound').removeClass('d-none'); 
+        $('#list-artikel-notfound #text-notfound').html(`artikel tidak ditemukan`); 
+    } 
+    else {
+        $('#list-artikel-notfound').addClass('d-none'); 
+        $('#list-artikel-notfound #text-notfound').html(` `); 
+
+        beritaFiltered.forEach(b => {
+            let date      = new Date(parseInt(b.created_at) * 1000);
+            let day       = date.toLocaleString("en-US",{day: "numeric"});
+            let month     = date.toLocaleString("en-US",{month: "long"});
+            let year      = date.toLocaleString("en-US",{year: "numeric"});
+            elSugetion += `<div class="col-12 col-sm-6 col-lg-4" style="min-height: 100%;">
+            <div class="card mb-3" style="border: 0.5px solid #D2D6DA;min-height: 100%;">
+                <img class="card-img-top border-radius-0" src="${b.thumbnail}">
+                <div class="card-body pb-0 d-flex flex-column justify-content-between" style="font-family: 'qc-semibold';">
+                    <div class="row">
+                        <h4 class="card-title text-capitalize" style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">${b.title}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted text-sm">
+                            <i class="fas fa-list-ul mr-1 text-muted text-xs"></i>
+                            ${b.kategori}
+                        </h6>
+                        <h6 class="card-subtitle mb-2 text-muted text-sm">
+                            <i class="far fa-clock mr-1 text-muted text-xs"></i>
+                            ${month}, ${day}, ${year}
+                        </h6>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="" class="w-100 btn btn-warning p-2 border-radius-sm" style="height: 34px;">
+                                <i class="far fa-edit"></i>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <span class="w-100 btn btn-danger p-2 border-radius-sm" style="height: 34px;" onclick="hapusArtikel('${b.id}');">
+                                <i class="fas fa-trash text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+        });    
+    }
+
+    $('#container-list-artikel').html(elSugetion);
+});
+
 /**
- * GET ALL KATEGORI BERITA
+ * GET DETAIL ARTIKEL
+ */
+const getDetailArtikel = async () => {
+
+    let httpResponse = await httpRequestGet(`${APIURL}/berita_acara/getitem?id=${IDARTIKEL}`);
+    
+    if (httpResponse.status == 404) {
+        Swal.fire({
+            icon : 'error',
+            title : '<strong>NOT FOUND</strong>',
+            text: `artikel dengan id '${IDARTIKEL}' tidak ditemukan!`,
+            showCancelButton: false,
+            confirmButtonText: 'ok',
+        }).then(() => {
+            window.location.replace(`${BASEURL}/admin/listartikel`);
+        })
+    }
+    if (httpResponse.status === 200) {
+        let dataNasabah = httpResponse.data.data;
+        let date        = new Date(parseInt(dataNasabah.created_at) * 1000);
+
+        // -- nasabah card --
+        $('#card-id').html(`${dataNasabah.id.slice(0, 5)}&nbsp;&nbsp;&nbsp;${dataNasabah.id.slice(5, 9)}&nbsp;&nbsp;&nbsp;${dataNasabah.id.slice(9,99999999)}`);
+        $('#card-username').html(dataNasabah.username);
+        $('#card-date').html(`${date.toLocaleString("en-US",{day: "numeric"})}/${date.toLocaleString("en-US",{month: "numeric"})}/${date.toLocaleString("en-US",{year: "numeric"})}`);
+
+        // -- saldo --
+        $('#saldo-uang').html(modifUang(dataNasabah.saldo_uang));
+        $('#saldo-ubs').html(parseFloat(dataNasabah.saldo_ubs).toFixed(4));
+        $('#saldo-antam').html(parseFloat(dataNasabah.saldo_antam).toFixed(4));
+        $('#saldo-galery24').html(parseFloat(dataNasabah.saldo_galery24).toFixed(4));
+
+        // -- personal info --
+        $('#personal-info #email').html(dataNasabah.email);
+        $('#personal-info #nama-lengkap').html(dataNasabah.nama_lengkap);
+        $('#personal-info #username').html(dataNasabah.username);
+        $('#personal-info #tgl-lahir').html(dataNasabah.tgl_lahir);
+        $('#personal-info #kelamin').html(dataNasabah.kelamin);
+        $('#personal-info #alamat').html(dataNasabah.alamat);
+        $('#personal-info #notelp').html(dataNasabah.notelp);
+    }
+};
+
+/**
+ * GET ALL KATEGORI ARTIKEL
  */
  let arrayKatBerita = [];
  const getAllKatBerita = async () => {
@@ -95,7 +223,7 @@ if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
  };
 
 /**
- * ADD KATEGORI BERITA
+ * ADD KATEGORI ARTIKEL
  */
 $('#formCrudArticle').on('submit', async (e) => {
     e.preventDefault();
@@ -132,7 +260,7 @@ $('#formCrudArticle').on('submit', async (e) => {
     }
 })
 
-// validate add kategori sampah
+// validate add kategori artikel
 function validateCrudArtikel() {
     let status = true;
 
@@ -194,7 +322,7 @@ const changeThumbPreview = (el) => {
 }
 
  /**
-   * HAPUS KATEGORI SAMPAH
+   * HAPUS KATEGORI ARTIKEL
    */
  const hapusKategori = (el,id,katName) => {
      Swal.fire({
@@ -220,3 +348,27 @@ const changeThumbPreview = (el) => {
          allowOutsideClick: () => !Swal.isLoading()
      })
  };
+
+ /**
+  * HAPUS ARTIKEL
+  */
+ const hapusArtikel = (id) => {
+     Swal.fire({
+         title: 'ANDA YAKIN?',
+         text: "Data akan terhapus permanen",
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonText: 'iya',
+         cancelButtonText: 'tidak',
+         showLoaderOnConfirm: true,
+         preConfirm: async () => {
+            return httpRequestDelete(`${APIURL}/berita_acara/deleteitem?id=${id}`)
+            .then((e) => {
+                if (e.status == 201) {
+                    getAllBerita();
+                }
+            })
+         },
+         allowOutsideClick: () => !Swal.isLoading()
+     })
+ }

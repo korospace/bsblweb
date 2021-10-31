@@ -121,22 +121,29 @@ class Admin extends ResourceController
     /**
      * View edit artikel
      */
-    public function editArtikelView()
+    public function editArtikelView(?string $id=null)
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
-        $data   = [
-            'title' => 'Admin | edit artikel',
-            'token' => $token
-        ];
-        
-        if($result['success'] == false) {
-            setcookie('tokenAdmin', null, -1, '/');
-            unset($_COOKIE['tokenAdmin']);
-            return redirect()->to(base_url().'/login');
-        } else {
-            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
-            return view('Admin/crudArtikel',$data);
+
+        if ($id!=null) {
+            $data   = [
+                'title'    => 'Admin | edit artikel',
+                'idartikel'=> $id,
+                'token'    => $token
+            ];
+            
+            if($result['success'] == false) {
+                setcookie('tokenAdmin', null, -1, '/');
+                unset($_COOKIE['tokenAdmin']);
+                return redirect()->to(base_url().'/login');
+            } else {
+                setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+                return view('Admin/crudArtikel',$data);
+            }
+        } 
+        else {
+            return redirect()->to(base_url().'/admin/listartikel');
         }
     }
 

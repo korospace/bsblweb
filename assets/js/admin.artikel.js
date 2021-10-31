@@ -46,7 +46,10 @@ if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
  
              elBerita += `<div class="col-12 col-sm-6 col-lg-4" style="min-height: 100%;">
                 <div class="card mb-3" style="border: 0.5px solid #D2D6DA;min-height: 100%;">
-                    <img class="card-img-top border-radius-0" src="${b.thumbnail}">
+                    <div class="position-relative">
+                        <img class="card-img-top border-radius-0 position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;;min-height: 100%;" src="${b.thumbnail}" style="opacity: 0;">
+                        <img class="card-img-top border-radius-0" src="${BASEURL}/assets/images/default-thumbnail.jpg" style="opacity: 0;">
+                    </div>
                     <div class="card-body pb-0 d-flex flex-column justify-content-between" style="font-family: 'qc-semibold';">
                         <div class="row">
                             <h4 class="card-title text-capitalize" style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">${b.title}</h4>
@@ -109,7 +112,10 @@ $('#search-artikel').on('keyup', function() {
             let year      = date.toLocaleString("en-US",{year: "numeric"});
             elSugetion += `<div class="col-12 col-sm-6 col-lg-4" style="min-height: 100%;">
             <div class="card mb-3" style="border: 0.5px solid #D2D6DA;min-height: 100%;">
-                <img class="card-img-top border-radius-0" src="${b.thumbnail}">
+                <div class="position-relative">
+                    <img class="card-img-top border-radius-0 position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;;min-height: 100%;" src="${b.thumbnail}" style="opacity: 0;">
+                    <img class="card-img-top border-radius-0" src="${BASEURL}/assets/images/default-thumbnail.jpg" style="opacity: 0;">
+                </div>
                 <div class="card-body pb-0 d-flex flex-column justify-content-between" style="font-family: 'qc-semibold';">
                     <div class="row">
                         <h4 class="card-title text-capitalize" style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">${b.title}</h4>
@@ -167,6 +173,7 @@ const getDetailBerita = async () => {
         let dataArtikel = httpResponse.data.data;
         let makeId      = dataArtikel.kategori.replace(/\s/g,'-');
 
+        $('#idartikel').val(dataArtikel.id);
         document.querySelector('#preview-thumbnail').src = dataArtikel.thumbnail;
         $('#title').val(dataArtikel.title);
         $(`#${makeId}`).attr('selected','selected');
@@ -210,17 +217,23 @@ const getDetailBerita = async () => {
  };
 
 /**
- * ADD KATEGORI ARTIKEL
+ * ADD/EDIT ARTIKEL
  */
 $('#formCrudArticle').on('submit', async (e) => {
     e.preventDefault();
     
     if (validateCrudArtikel()) {
-        let form = new FormData(e.target);
+        let httpResponse = '';
+        let form         = new FormData(e.target);
         form.append('content',$('.ql-editor').html());
     
         showLoadingSpinner();
-        let httpResponse = await httpRequestPost(`${APIURL}/berita_acara/additem`,form);
+        if (IDARTIKEL !== '') {
+            httpResponse = await httpRequestPut(`${APIURL}/berita_acara/edititem`,form);    
+        } 
+        else {
+            httpResponse = await httpRequestPost(`${APIURL}/berita_acara/additem`,form);    
+        }
         hideLoadingSpinner();
 
         if (httpResponse.status === 201) {
@@ -228,8 +241,7 @@ $('#formCrudArticle').on('submit', async (e) => {
                 Swal.fire({
                     icon : 'success',
                     title : '<strong>SUCCESS</strong>',
-                    html:
-                      'artikel berhasil ditambah!',
+                    html: `artikel berhasil ${(IDARTIKEL == '') ? 'dipublish' : 'diedit' }!`,
                     showCancelButton: false,
                     confirmButtonText: 'ok',
                 })
@@ -256,9 +268,11 @@ function validateCrudArtikel() {
     $('.text-danger').html('');
  
     // thumbnail
-    if ($('#thumbnail').val() == '') {
-        $('#thumbnail').addClass('is-invalid');
-        status = false;
+    if (IDARTIKEL == '') {
+        if ($('#thumbnail').val() == '') {
+            $('#thumbnail').addClass('is-invalid');
+            status = false;
+        }
     }
     // title
     if ($('#title').val() == '') {
@@ -285,9 +299,11 @@ const changeThumbPreview = (el) => {
     if(!/image/.test(el.files[0].type)){
         showAlert({
             message: `<strong>File yang anda upload bukan gambar!</strong>`,
-            btnclose: true,
+            btnclose: false,
             type:'danger'
-        });
+        });setTimeout(() => {
+            hideAlert();
+        }, 3000);
 
         el.value = "";
         return false;
@@ -296,9 +312,11 @@ const changeThumbPreview = (el) => {
     else if(el.files[0].size > 200000){
         showAlert({
             message: `<strong>Ukuran maximal 200kb!</strong>`,
-            btnclose: true,
+            btnclose: false,
             type:'danger'
-        });
+        });setTimeout(() => {
+            hideAlert();
+        }, 3000);
 
         el.value = "";
         return false;

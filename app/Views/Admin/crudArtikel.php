@@ -101,13 +101,13 @@
 				</div>
 			</nav>
 			
-			<!-- table -->
+			<!-- form -->
 			<form id="formCrudArticle" class="pl-4 pr-5 pb-5 mt-2" style="font-family: 'qc-medium';">
 				<div style="font-family: 'qc-medium';" class="row">
 					<h2 class="col">Artikel</h2>
 					<button type="" class="mt-1 btn btn-success col-12 col-sm-2" style="min-width:170px;letter-spacing: 1px;">
 						<i class="far fa-paper-plane mr-1"></i>
-						Publikasikan 
+						<?= (isset($idartikel)) ? 'Edit' : 'Publikasikan' ; ?> 
 					</button>
 				</div>
 				
@@ -115,6 +115,7 @@
 				<!-- Text Area Quill -->
 				<div id="standalone-container">
 					<div class="form-row mt-4 d-flex flex-column">
+						<input type="hidden" name="id" id="idartikel">
 						<div class="px-1">
 							<i class="far fa-image text-muted"></i>
 							<h6 class="text-muted" style="display:inline;">Thumbnail</h6>
@@ -124,7 +125,7 @@
 							<img src="<?= base_url('assets/images/default-thumbnail.jpg'); ?>" class="w-100" style="opacity: 0;">
 						</div>
 						<div class="input-group mt-2 col-12 col-sm-6">
-							<input type="file" class="form-control" id="thumbnail" name="thumbnail" autocomplete="off" placeholder="thumbnail" style="min-height: 38px" onchange="changeThumbPreview(this);">
+							<input type="file" class="form-control" id="thumbnail" name="<?= (isset($idartikel)) ? 'new_thumbnail' : 'thumbnail' ; ?>" autocomplete="off" placeholder="thumbnail" style="min-height: 38px" onchange="changeThumbPreview(this);">
 						</div>
 						<small
 							id="thumbnail-error"

@@ -129,8 +129,26 @@ const httpRequestPost = (url,form) => {
  * API REQUEST PUT
  */
 const httpRequestPut = (url,form) => {
+    let newForm = new FormData();
+
+    for (var pair of form.entries()) {
+        let noPair = ['id','username','password','new_password','old_password','thumbnail','new_thumbnail','content'];
+
+        if (noPair.includes(pair[0]) == false) {
+            newForm.set(pair[0], pair[1].trim().toLowerCase());
+        }
+        else{
+            if (pair[1].type) {
+                newForm.set(pair[0], pair[1], pair[1].name);
+            } 
+            else {
+                newForm.set(pair[0], pair[1]);                
+            }
+        }
+    }
+
     return axios
-        .put(url,form, {
+        .put(url,newForm, {
             headers: {
                 token: TOKEN
             }

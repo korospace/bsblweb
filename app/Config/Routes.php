@@ -60,12 +60,13 @@ $routes->group("nasabah", function ($routes) {
 $routes->group("admin", function ($routes) {
     // VIEWS
     $routes->add('/',                  'Admin::dashboardAdmin');
-    $routes->add('profile',            'Admin::profileAdmin');
+    $routes->add('listadmin',          'Admin::listAdminView');
     $routes->add('listnasabah',        'Admin::listNasabahView');
     $routes->add('detilnasabah/(:any)','Admin::detilNasabahView/$1');
     $routes->add('listartikel',        'Admin::listArtikelView');
     $routes->add('addartikel',         'Admin::addArtikelView');
     $routes->add('editartikel/(:any)', 'Admin::editArtikelView/$1');
+    $routes->add('profile',            'Admin::profileAdmin');
     // API
     $routes->post("login",           "Admin::login");
     $routes->get("sessioncheck",     "Admin::sessionCheck");

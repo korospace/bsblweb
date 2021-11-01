@@ -46,14 +46,14 @@ class Admin extends ResourceController
     }
 
     /**
-     * Profile admin
+     * View list admin
      */
-    public function profileAdmin()
+    public function listAdminView()
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
         $data   = [
-            'title' => 'Admin | profile',
+            'title' => 'Admin | list admin',
             'token' => $token
         ];
         
@@ -63,7 +63,7 @@ class Admin extends ResourceController
             return redirect()->to(base_url().'/login');
         } else {
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
-            return view('Admin/profile',$data);
+            return view('Admin/listAdmin',$data);
         }
     }
 
@@ -189,6 +189,28 @@ class Admin extends ResourceController
         } 
         else {
             return redirect()->to(base_url().'/admin/listartikel');
+        }
+    }
+
+    /**
+     * Profile admin
+     */
+    public function profileAdmin()
+    {
+        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $result = $this->baseController->checkToken($token, false);
+        $data   = [
+            'title' => 'Admin | profile',
+            'token' => $token
+        ];
+        
+        if($result['success'] == false) {
+            setcookie('tokenAdmin', null, -1, '/');
+            unset($_COOKIE['tokenAdmin']);
+            return redirect()->to(base_url().'/login');
+        } else {
+            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+            return view('Admin/profile',$data);
         }
     }
 

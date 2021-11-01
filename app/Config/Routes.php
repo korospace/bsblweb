@@ -69,6 +69,7 @@ $routes->group("admin", function ($routes) {
     $routes->add('profile',            'Admin::profileAdmin');
     // API
     $routes->post("login",           "Admin::login");
+    $routes->post("confirmdelete",   "Admin::confirmDelete");
     $routes->get("sessioncheck",     "Admin::sessionCheck");
     $routes->get("getprofile",       "Admin::getProfile");
     $routes->put("editprofile",      "Admin::editProfile");

@@ -160,7 +160,7 @@ const crudAdmin = async (el,event) => {
             } 
 
             showAlert({
-                message: `<strong>Success...</strong> admin berhasil ditambah!`,
+                message: `<strong>Success...</strong> admin berhasil ${(modalTitle == 'tambah admin') ? 'ditambah' : 'diedit' }!`,
                 btnclose: false,
                 type:'success'
             })
@@ -224,74 +224,6 @@ const crudAdmin = async (el,event) => {
         $('#newpass').val('');
     }
 };
-
-/**
- * EDIT ADMIN
- */
-const editAdmin = (el,event) => {
-    event.preventDefault();
-    let form = new FormData(el);
-
-    if (doValidate(form)) {
-        $('#formAddEditAdmin button#submit #text').addClass('d-none');
-        $('#formAddEditAdmin button#submit #spinner').removeClass('d-none');
-
-        let newTgl = form.get('tgl_lahir').split('-');
-        form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`);
-        form.set('is_verify',$('#formAddEditAdmin input[name=is_verify]').val());
-        
-        if (form.get('new_password') == '') {
-            form.delete('new_password');
-        }
-
-        axios
-        .put(`${APIURL}/admin/editadmin`,form, {
-            headers: {
-                token: TOKEN
-            }
-        })
-        .then((response) => {
-            $('#formAddEditAdmin button#submit #text').removeClass('d-none');
-            $('#formAddEditAdmin button#submit #spinner').addClass('d-none');
-            getAllAdmin();
-            $('#newpass-edit').val('');
-
-            showAlert({
-                message: `<strong>Success...</strong> edit admin berhasil!`,
-                btnclose: false,
-                type:'success'
-            })
-            setTimeout(() => {
-                hideAlert();
-            }, 3000);
-        })
-        .catch((error) => {
-            $('#formAddEditAdmin button#submit #text').removeClass('d-none');
-            $('#formAddEditAdmin button#submit #spinner').addClass('d-none');
-
-            // bad request
-            if (error.response.status == 400) {
-                if (error.response.data.messages.username) {
-                    $('#formAddEditAdmin #username').addClass('is-invalid');
-                    $('#formAddEditAdmin #username-error').text(error.response.data.messages.username);
-                }
-                if (error.response.data.messages.notelp) {
-                    $('#formAddEditAdmin #notelp').addClass('is-invalid');
-                    $('#formAddEditAdmin #notelp-error').text(error.response.data.messages.notelp);
-                }
-            }
-            // error server
-            else {
-                showAlert({
-                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
-                    btnclose: true,
-                    type:'danger'
-                })
-            }
-        })
-        
-    }
-}
 
 // clear input form
 const clearInputForm = () => {

@@ -40,7 +40,9 @@ class Admin extends ResourceController
             return redirect()->to(base_url().'/login');
         } 
         else {
+            $username          = $_COOKIE['username'];
             $data['privilege'] = $result['privilege'];
+            setcookie('username',$username,time() + $result['expired'],'/');
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/index',$data);
         }
@@ -63,7 +65,9 @@ class Admin extends ResourceController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
+            $username          = $_COOKIE['username'];
             $data['privilege'] = $result['privilege'];
+            setcookie('username',$username,time() + $result['expired'],'/');
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/listAdmin',$data);
         }
@@ -86,7 +90,9 @@ class Admin extends ResourceController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
+            $username          = $_COOKIE['username'];
             $data['privilege'] = $result['privilege'];
+            setcookie('username',$username,time() + $result['expired'],'/');
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/listNasabah',$data);
         }
@@ -139,7 +145,9 @@ class Admin extends ResourceController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
+            $username          = $_COOKIE['username'];
             $data['privilege'] = $result['privilege'];
+            setcookie('username',$username,time() + $result['expired'],'/');
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/listArtikel',$data);
         }
@@ -299,6 +307,69 @@ class Admin extends ResourceController
                             return $this->respond($response,$editAdmin['code']);
                         }
                     } 
+                } 
+                else {
+                    $response = [
+                        'status'   => 404,
+                        'error'    => true,
+                        'messages' => [
+                            'password' => "password not match",
+                        ],
+                    ];
+            
+                    return $this->respond($response,404);
+                }
+            } 
+            else {
+                $response = [
+                    'status'   => $adminData['code'],
+                    'error'    => true,
+                    'messages' => $adminData['message'],
+                ];
+        
+                return $this->respond($response,$adminData['code']);
+            }
+        }
+    }
+
+    /**
+     * Login
+     *   url    : domain.com/admin/confirmdelete
+     *   method : POST
+     */
+    public function confirmDelete(): object
+    {
+        $data   = $this->request->getPost();
+        $this->validation->run($data,'adminLogin');
+        $errors = $this->validation->getErrors();
+
+        if($errors) {
+            $response = [
+                'status'   => 400,
+                'error'    => true,
+                'messages' => $errors,
+            ];
+    
+            return $this->respond($response,400);
+        } 
+        else {
+            // get admin data from DB by username
+            $adminData  = $this->adminModel->getAdminByUsername($this->request->getPost("username"));
+
+            if ($adminData['success'] == true) {
+                $login_pass    = $this->request->getPost("password");
+                $database_pass = $adminData['message']['password'];
+
+                // verify password
+                if (password_verify($login_pass,$database_pass)) {
+
+                    $response = [
+                        'status'   => 200,
+                        'error'    => false,
+                        'messages' => 'confirm success',
+                    ];
+
+                    return $this->respond($response,200);
                 } 
                 else {
                     $response = [

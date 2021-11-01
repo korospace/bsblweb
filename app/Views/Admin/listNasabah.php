@@ -25,6 +25,7 @@
 <?= $this->section('contentJs'); ?>
 	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>	
 	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/jquery.cookie.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
@@ -151,221 +152,221 @@
 
 	<!-- modals Add / Edit nasabah -->
 	<div class="modal fade" id="modalAddEditNasabah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<form id="formAddEditNasabah" class="modal-dialog modal-dialog-centered" role="document">
-		<input type="hidden" name="id">
-		<div class="modal-content" style="overflow: hidden;">
+		<form id="formAddEditNasabah" class="modal-dialog modal-dialog-centered" role="document" onsubmit="crudNasabah(this,event);">
+			<input type="hidden" name="id">
+			<div class="modal-content" style="overflow: hidden;">
 
-			<!-- modal header -->
-			<div class="modal-header">
-				<h5 class="modal-title"></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-
-			<!-- modal body -->
-			<div class="modal-body row position-relative">
-
-				<!-- spinner -->
-				<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-					<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+				<!-- modal header -->
+				<div class="modal-header">
+					<h5 class="modal-title"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 
-				<input type="hidden" name="id">
-				<!-- **** nama lengkap **** -->
-				<div class="input-group col-lg-12 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray px-4 border-md">
-								<i class="fa fa-user text-muted"></i>
+				<!-- modal body -->
+				<div class="modal-body row position-relative">
+
+					<!-- spinner -->
+					<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+						<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+					</div>
+
+					<input type="hidden" name="id">
+					<!-- **** nama lengkap **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fa fa-user text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="nama" name="nama_lengkap" autocomplete="off" placeholder="Masukan nama lengkap">
+						</div>
+						<small
+							id="nama-error"
+							class="text-danger"></small>
+					</div>
+					<!-- **** username **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-at text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="username" name="username" autocomplete="off" placeholder="Masukan username">
+						</div>
+						<small
+							id="username-error"
+							class="text-danger"></small>
+					</div>
+					<!-- **** email **** -->
+					<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md border-right-0">
+								<i class="fa fa-envelope text-muted"></i>
 							</span>
+							</div>
+							<input type="text" class="form-control px-2" id="email" name="email" autocomplete="off" placeholder="Masukan email">
 						</div>
-						<input type="text" class="form-control px-2" id="nama" name="nama_lengkap" autocomplete="off" placeholder="Masukan nama lengkap">
+						<small
+							id="email-error"
+							class="text-danger"></small>
 					</div>
-					<small
-						id="nama-error"
-						class="text-danger"></small>
-				</div>
-				<!-- **** username **** -->
-				<div class="input-group col-lg-12 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray px-4 border-md">
-								<i class="fas fa-at text-muted"></i>
-							</span>
+					<!-- **** password **** -->
+					<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fa fa-lock text-muted"></i>
+								</span>
+							</div>
+							<input type="password" class="form-control px-2" id="password" name="password" autocomplete="off" placeholder="masukan password">
 						</div>
-						<input type="text" class="form-control px-2" id="username" name="username" autocomplete="off" placeholder="Masukan username">
+						<small
+							id="password-error"
+							class="text-danger"></small>
 					</div>
-					<small
-						id="username-error"
-						class="text-danger"></small>
-				</div>
-				<!-- **** email **** -->
-				<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-						<span class="input-group-text bg-gray px-4 border-md border-right-0">
-							<i class="fa fa-envelope text-muted"></i>
-						</span>
+					<!-- **** tgl lahir **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-calendar-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="date" class="form-control px-2 h-100" id="tgllahir" name="tgl_lahir">
 						</div>
-						<input type="text" class="form-control px-2" id="email" name="email" autocomplete="off" placeholder="Masukan email">
+						<small
+							id="tgllahir-error"
+							class="text-danger"></small>
 					</div>
-					<small
-						id="email-error"
-						class="text-danger"></small>
-				</div>
-				<!-- **** password **** -->
-				<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-								<i class="fa fa-lock text-muted"></i>
-							</span>
+					<!-- kelamin -->
+					<input type="hidden" name="kelamin">
+					<div class="input-group col-lg-6 mb-2 form-group">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" id="kelamin-laki-laki" value="laki-laki" />
+							<label class="form-check-label" for="kelamin-laki-laki">
+							Laki Laki
+							</label>
 						</div>
-						<input type="password" class="form-control px-2" id="password" name="password" autocomplete="off" placeholder="masukan password">
 					</div>
-					<small
-						id="password-error"
-						class="text-danger"></small>
-				</div>
-				<!-- **** tgl lahir **** -->
-				<div class="input-group col-lg-12 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray px-4 border-md">
-								<i class="fas fa-calendar-alt text-muted"></i>
-							</span>
+					<div class="input-group col-lg-6 mb-4 form-group">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" id="kelamin-perempuan" value="perempuan" />
+							<label class="form-check-label" for="kelamin-perempuan">
+							Perempuan
+							</label>
 						</div>
-						<input type="date" class="form-control px-2 h-100" id="tgllahir" name="tgl_lahir">
 					</div>
-					<small
-						id="tgllahir-error"
-						class="text-danger"></small>
-				</div>
-				<!-- kelamin -->
-				<input type="hidden" name="kelamin">
-				<div class="input-group col-lg-6 mb-2 form-group">
-					<div class="form-check">
-						<input class="form-check-input" type="radio" id="kelamin-laki-laki" value="laki-laki" />
-						<label class="form-check-label" for="kelamin-laki-laki">
-						Laki Laki
+					<!-- **** alamat **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fas fa-map-marker-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="alamat" name="alamat" autocomplete="off" placeholder="Masukan alamat lengkap">
+						</div>
+						<small
+							id="alamat-error"
+							class="text-danger"></small>
+					</div>
+					<!-- **** RT RW KODEPOS **** -->
+					<div class="addnasabah-item form-row mb-4" style="padding-right: 2px;">
+						<div class="col-6">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray px-4 border-md border-right-0">
+										<i class="fas fa-home text-muted"></i>
+									</span>
+								</div>
+								<input type="text" class="form-control" id="rt" name="rt" autocomplete="off" placeholder="RT">
+							</div>
+							<small
+								id="rt-error"
+								class="text-danger"></small>
+						</div>
+						<div class="col-6">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray px-4 border-md border-right-0">
+										<i class="fas fa-home text-muted"></i>
+									</span>
+								</div>
+								<input type="text" class="form-control" id="rw" name="rw" autocomplete="off" placeholder="RW">
+							</div>
+							<small
+								id="rw-error"
+								class="text-danger"></small>
+						</div>
+						<div class="col-12 mt-4">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray px-4 border-md border-right-0">
+										<i class="fas fa-mail-bulk text-muted"></i>
+									</span>
+								</div>
+								<input type="text" class="form-control" id="kodepos" name="kodepos" autocomplete="off" placeholder="KODE POS">
+							</div>
+							<small
+								id="kodepos-error"
+								class="text-danger"></small>
+						</div>
+					</div>
+					<!-- **** no telp **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fa fa-phone-square text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="notelp" name="notelp" autocomplete="off" placeholder="Masukan no.telp">
+						</div>
+						<small
+							id="notelp-error"
+							class="text-danger"></small>
+					</div>
+					<!-- **** is verify **** -->
+					<div class="editnasabah-item mb-3">
+						<label class="form-check-label">
+							verifikasi akun
 						</label>
-					</div>
-				</div>
-				<div class="input-group col-lg-6 mb-4 form-group">
-					<div class="form-check">
-						<input class="form-check-input" type="radio" id="kelamin-perempuan" value="perempuan" />
-						<label class="form-check-label" for="kelamin-perempuan">
-						Perempuan
-						</label>
-					</div>
-				</div>
-				<!-- **** alamat **** -->
-				<div class="input-group col-lg-12 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-								<i class="fas fa-map-marker-alt text-muted"></i>
-							</span>
+						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
+							<div id="btn-toggle" class="bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
+								<input type="checkbox" name="is_verify" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
+							</div>
 						</div>
-						<input type="text" class="form-control px-2" id="alamat" name="alamat" autocomplete="off" placeholder="Masukan alamat lengkap">
 					</div>
-					<small
-						id="alamat-error"
-						class="text-danger"></small>
-				</div>
-				<!-- **** RT RW KODEPOS **** -->
-				<div class="addnasabah-item form-row mb-4" style="padding-right: 2px;">
-					<div class="col-6">
+					<hr class="editnasabah-item horizontal dark mt-2 mb-2">
+					<h6 class="editnasabah-item font-italic opacity-8">Ubah password (opsionial)</h6>
+					<!-- **** change password **** -->
+					<div class="editnasabah-item input-group col-lg-12 mt-2 mb-4 form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray px-4 border-md border-right-0">
-									<i class="fas fa-home text-muted"></i>
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fa fa-lock text-muted"></i>
 								</span>
 							</div>
-							<input type="text" class="form-control" id="rt" name="rt" autocomplete="off" placeholder="RT">
+							<input type="password" class="form-control px-2" id="newpass" name="new_password" autocomplete="off" placeholder="password baru">
 						</div>
 						<small
-							id="rt-error"
-							class="text-danger"></small>
-					</div>
-					<div class="col-6">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray px-4 border-md border-right-0">
-									<i class="fas fa-home text-muted"></i>
-								</span>
-							</div>
-							<input type="text" class="form-control" id="rw" name="rw" autocomplete="off" placeholder="RW">
-						</div>
-						<small
-							id="rw-error"
-							class="text-danger"></small>
-					</div>
-					<div class="col-12 mt-4">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray px-4 border-md border-right-0">
-									<i class="fas fa-mail-bulk text-muted"></i>
-								</span>
-							</div>
-							<input type="text" class="form-control" id="kodepos" name="kodepos" autocomplete="off" placeholder="KODE POS">
-						</div>
-						<small
-							id="kodepos-error"
+							id="newpass-error"
 							class="text-danger"></small>
 					</div>
 				</div>
-				<!-- **** no telp **** -->
-				<div class="input-group col-lg-12 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-								<i class="fa fa-phone-square text-muted"></i>
-							</span>
-						</div>
-						<input type="text" class="form-control px-2" id="notelp" name="notelp" autocomplete="off" placeholder="Masukan no.telp">
-					</div>
-					<small
-						id="notelp-error"
-						class="text-danger"></small>
-				</div>
-				<!-- **** is verify **** -->
-				<div class="editnasabah-item mb-3">
-					<label class="form-check-label">
-						verifikasi akun
-					</label>
-					<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
-						<div id="btn-toggle" class="bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
-							<input type="checkbox" name="is_verify" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
-						</div>
-					</div>
-				</div>
-				<hr class="editnasabah-item horizontal dark mt-2 mb-2">
-				<h6 class="editnasabah-item font-italic opacity-8">Ubah password (opsionial)</h6>
-				<!-- **** change password **** -->
-				<div class="editnasabah-item input-group col-lg-12 mt-2 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-								<i class="fa fa-lock text-muted"></i>
-							</span>
-						</div>
-						<input type="password" class="form-control px-2" id="newpass" name="new_password" autocomplete="off" placeholder="password baru">
-					</div>
-					<small
-						id="newpass-error"
-						class="text-danger"></small>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
+					<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+						<span id="text">Simpan</span>
+						<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+					</button>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
-				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
-					<span id="text">Simpan</span>
-					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
-				</button>
-			</div>
-		</div>
 		</form>
 	</div>
 <?= $this->endSection(); ?>

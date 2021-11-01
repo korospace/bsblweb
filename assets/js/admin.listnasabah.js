@@ -110,14 +110,12 @@ const openModalAddEditNsb = (modalName,idnasabah=null) => {
     $('#formAddEditNasabah .text-danger').html('');
 
     if (modalName == 'addnasabah') {
-        $('#formAddEditNasabah').attr('onsubmit','addNasabah(this,event);');
         $('#modalAddEditNasabah .addnasabah-item').removeClass('d-none');
         $('#modalAddEditNasabah .editnasabah-item').addClass('d-none');        
         
         clearInputForm();
     } 
     else {
-        $('#formAddEditNasabah').attr('onsubmit','editNasabah(this,event);');
         $('#modalAddEditNasabah .addnasabah-item').addClass('d-none');
         $('#modalAddEditNasabah .editnasabah-item').removeClass('d-none');        
         
@@ -127,69 +125,56 @@ const openModalAddEditNsb = (modalName,idnasabah=null) => {
 }
 
 /**
- * ADD NASABAH
+ * CRUD NASABAH
  */
-const addNasabah = (el,event) => {
+const crudNasabah = async (el,event) => {
     event.preventDefault();
     let form = new FormData(el);
 
     if (doValidate(form)) {
+        let httpResponse = '';
+        let modalTitle   = $('#modalAddEditNasabah .modal-title').html();
+        let newTgl       = form.get('tgl_lahir').split('-');
+        form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`);
+
         $('#formAddEditNasabah button#submit #text').addClass('d-none');
         $('#formAddEditNasabah button#submit #spinner').removeClass('d-none');
+        if (modalTitle == 'edit nasabah') {
+            httpResponse = await httpRequestPut(`${APIURL}/admin/editnasabah`,form);    
+        } 
+        else {
+            httpResponse = await httpRequestPost(`${APIURL}/admin/addnasabah`,form);    
+        }
+        $('#formAddEditNasabah button#submit #text').removeClass('d-none');
+        $('#formAddEditNasabah button#submit #spinner').addClass('d-none');
 
-        let newTgl = form.get('tgl_lahir').split('-');
-        form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`)
-
-        axios
-        .post(`${APIURL}/admin/addnasabah`,form, {
-            headers: {
-                token: TOKEN
-            }
-        })
-        .then((response) => {
-            $('#formAddEditNasabah button#submit #text').removeClass('d-none');
-            $('#formAddEditNasabah button#submit #spinner').addClass('d-none');
+        if (httpResponse.status === 201) {
             getAllNasabah();
             clearInputForm();
 
             showAlert({
-                message: `<strong>Success...</strong> nasabah berhasil ditambah!`,
+                message: `<strong>Success...</strong> nasabah berhasil ${(modalTitle == 'tambah nasabah') ? 'ditambah' : 'diedit' }!`,
                 btnclose: false,
                 type:'success'
             })
             setTimeout(() => {
                 hideAlert();
             }, 3000);
-        })
-        .catch((error) => {
-            $('#formAddEditNasabah button#submit #text').removeClass('d-none');
-            $('#formAddEditNasabah button#submit #spinner').addClass('d-none');
-
-            // bad request
-            if (error.response.status == 400) {
-                if (error.response.data.messages.email) {
-                    $('#formAddEditNasabah #email').addClass('is-invalid');
-                    $('#formAddEditNasabah #email-error').text(error.response.data.messages.email);
-                }
-                if (error.response.data.messages.username) {
-                    $('#formAddEditNasabah #username').addClass('is-invalid');
-                    $('#formAddEditNasabah #username-error').text(error.response.data.messages.username);
-                }
-                if (error.response.data.messages.notelp) {
-                    $('#formAddEditNasabah #notelp').addClass('is-invalid');
-                    $('#formAddEditNasabah #notelp-error').text(error.response.data.messages.notelp);
-                }
+        }
+        else if (httpResponse.status === 400) {
+            if (httpResponse.message.email) {
+                $('#formAddEditNasabah #email').addClass('is-invalid');
+                $('#formAddEditNasabah #email-error').text(httpResponse.message.email);
             }
-            // error server
-            else {
-                showAlert({
-                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
-                    btnclose: true,
-                    type:'danger'
-                })
+            if (httpResponse.message.username) {
+                $('#formAddEditNasabah #username').addClass('is-invalid');
+                $('#formAddEditNasabah #username-error').text(httpResponse.message.username);
             }
-        })
-        
+            if (httpResponse.message.notelp) {
+                $('#formAddEditNasabah #notelp').addClass('is-invalid');
+                $('#formAddEditNasabah #notelp-error').text(httpResponse.message.notelp);
+            }
+        }
     }
 }
 
@@ -508,39 +493,51 @@ const hapusNasabah = (id) => {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'iya',
-        cancelButtonText: 'tidak',
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-            return axios
-            .delete(`${APIURL}/admin/deletenasabah?id=${id}`, {
-                headers: {
-                    token: TOKEN
-                }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                html:`<small class='mb-4'>password</small>`,
+                showCancelButton: true,
+                confirmButtonText: 'submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    let form = new FormData();
+                    form.append('username',$.cookie("username"));
+                    form.append('password',password);
+        
+                    return axios
+                    .post(`${APIURL}/admin/confirmdelete`,form, {
+                        headers: {
+                            // header options 
+                        }
+                    })
+                    .then((response) => {
+                        return httpRequestDelete(`${APIURL}/admin/deletenasabah?id=${id}`)
+                        .then((e) => {
+                            if (e.status == 201) {
+                                getAllNasabah();
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        if (error.response.status == 404) {
+                            Swal.showValidationMessage(
+                                `password salah`
+                            )
+                        }
+                        else if (error.response.status == 500) {
+                            Swal.showValidationMessage(
+                                `terjadi kesalahan, coba sekali lagi`
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
             })
-            .then(() => {
-                Swal.close();
-                getAllNasabah();
-            })
-            .catch(error => {
-                // unauthorized
-                if (error.response.status == 401) {
-                    Swal.showValidationMessage(
-                        `waktu login anda sudah habis!`
-                    )
-                    
-                    setTimeout(() => {
-                        document.cookie = `tokenAdmin=null; path=/;`;
-                        window.location.replace(`${BASEURL}/login`);
-                    }, 3000);
-                }
-                // error server
-                else if (error.response.status == 500) {
-                    Swal.showValidationMessage(
-                        `server error: coba sekali lagi!`
-                    )
-                }
-            })
-        },
-        allowOutsideClick: () => !Swal.isLoading()
+        }
     })
 }

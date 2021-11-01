@@ -21,6 +21,7 @@
                 </a>
             </li>
             <!-- list admin -->
+            <?php if ($privilege == 'super') { ?>
             <li class="nav-item mt-2">
                 <a class="nav-link <?= ($title=='Admin | list admin') ? 'active' : ''?>" href="<?= base_url('admin/listadmin');?>">
                     <div
@@ -30,6 +31,7 @@
                     <span class="nav-link-text ms-1">Admin</span>
                 </a>
             </li>
+            <?php } ?>
             <!-- list nasabah -->
             <li class="nav-item mt-2">
                 <a class="nav-link <?= ($title=='Admin | list nasabah') ? 'active' : ''?>" href="<?= base_url('admin/listnasabah');?>">

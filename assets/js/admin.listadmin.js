@@ -112,14 +112,12 @@ const openModalAddEditAdm = (modalName,idadmin=null) => {
     $('#formAddEditAdmin .text-danger').html('');
 
     if (modalName == 'addadmin') {
-        $('#formAddEditAdmin').attr('onsubmit','addAdmin(this,event);');
         $('#modalAddEditAdmin .addadmin-item').removeClass('d-none');
         $('#modalAddEditAdmin .editadmin-item').addClass('d-none');        
         
         clearInputForm();
     } 
     else {
-        $('#formAddEditAdmin').attr('onsubmit','editAdmin(this,event);');
         $('#modalAddEditAdmin .addadmin-item').addClass('d-none');
         $('#modalAddEditAdmin .editadmin-item').removeClass('d-none');        
         
@@ -129,33 +127,36 @@ const openModalAddEditAdm = (modalName,idadmin=null) => {
 }
 
 /**
- * ADD ADMIN
+ * CRUD ADMIN
  */
-const addAdmin = (el,event) => {
+const crudAdmin = async (el,event) => {
     event.preventDefault();
     let form = new FormData(el);
 
     if (doValidate(form)) {
-        $('#formAddEditAdmin button#submit #text').addClass('d-none');
-        $('#formAddEditAdmin button#submit #spinner').removeClass('d-none');
-
-        let newTgl = form.get('tgl_lahir').split('-');
-        form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`);
-
+        let httpResponse = '';
+        let modalTitle   = $('#modalAddEditAdmin .modal-title').html();
+        let newTgl       = form.get('tgl_lahir').split('-');
         let isSuperAdmin = form.get('privilege');
+        form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`);
         form.set('privilege',`${(isSuperAdmin == '1') ? 'super' : 'admin' }`);
 
-        axios
-        .post(`${APIURL}/admin/addadmin`,form, {
-            headers: {
-                token: TOKEN
-            }
-        })
-        .then((response) => {
-            $('#formAddEditAdmin button#submit #text').removeClass('d-none');
-            $('#formAddEditAdmin button#submit #spinner').addClass('d-none');
+        $('#formAddEditAdmin button#submit #text').addClass('d-none');
+        $('#formAddEditAdmin button#submit #spinner').removeClass('d-none');
+        if (modalTitle == 'edit admin') {
+            httpResponse = await httpRequestPut(`${APIURL}/admin/editadmin`,form);    
+        } 
+        else {
+            httpResponse = await httpRequestPost(`${APIURL}/admin/addadmin`,form);    
+        }
+        $('#formAddEditAdmin button#submit #text').removeClass('d-none');
+        $('#formAddEditAdmin button#submit #spinner').addClass('d-none');
+
+        if (httpResponse.status === 201) {
             getAllAdmin();
-            clearInputForm();
+            if (modalTitle == 'tambah admin') {
+                clearInputForm();
+            } 
 
             showAlert({
                 message: `<strong>Success...</strong> admin berhasil ditambah!`,
@@ -165,32 +166,17 @@ const addAdmin = (el,event) => {
             setTimeout(() => {
                 hideAlert();
             }, 3000);
-        })
-        .catch((error) => {
-            $('#formAddEditAdmin button#submit #text').removeClass('d-none');
-            $('#formAddEditAdmin button#submit #spinner').addClass('d-none');
-
-            // bad request
-            if (error.response.status == 400) {
-                if (error.response.data.messages.username) {
-                    $('#formAddEditAdmin #username').addClass('is-invalid');
-                    $('#formAddEditAdmin #username-error').text(error.response.data.messages.username);
-                }
-                if (error.response.data.messages.notelp) {
-                    $('#formAddEditAdmin #notelp').addClass('is-invalid');
-                    $('#formAddEditAdmin #notelp-error').text(error.response.data.messages.notelp);
-                }
+        }
+        else if (httpResponse.status === 400) {
+            if (httpResponse.message.username) {
+                $('#formAddEditAdmin #username').addClass('is-invalid');
+                $('#formAddEditAdmin #username-error').text(httpResponse.message.username);
             }
-            // error server
-            else {
-                showAlert({
-                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
-                    btnclose: true,
-                    type:'danger'
-                })
+            if (httpResponse.message.notelp) {
+                $('#formAddEditAdmin #notelp').addClass('is-invalid');
+                $('#formAddEditAdmin #notelp-error').text(httpResponse.message.notelp);
             }
-        })
-        
+        }
     }
 }
 
@@ -214,14 +200,24 @@ const addAdmin = (el,event) => {
         $(`#formAddEditAdmin input[name=tgl_lahir]`).val(`${tglLahir[2]}-${tglLahir[1]}-${tglLahir[0]}`);
         // kelamin
         $(`#formAddEditAdmin input#kelamin-${dataAdmin.kelamin}`).prop('checked',true);
-        // is verify
-        if (dataAdmin.is_verify == 't') {
-            $(`#formAddEditAdmin input[name=is_verify]`).val('1');
-            $(`#formAddEditAdmin #btn-toggle`).removeClass('bg-secondary').addClass('active bg-success');
+        // admin privilege
+        if (dataAdmin.privilege == 'super') {
+            $(`#formAddEditAdmin input[name=privilege]`).val('1');
+            $(`#formAddEditAdmin .toggle-privilege`).removeClass('bg-secondary').addClass('active bg-success');
         } 
         else {
-            $(`#formAddEditAdmin input[name=is_verify]`).val('0');
-            $(`#formAddEditAdmin #btn-toggle`).removeClass('active bg-success').addClass('bg-secondary');
+            $(`#formAddEditAdmin input[name=privilege]`).val('0');
+            $(`#formAddEditAdmin .toggle-privilege`).removeClass('active bg-success').addClass('bg-secondary');
+        }
+        
+        // is account active
+        if (dataAdmin.active == 't') {
+            $(`#formAddEditAdmin input[name=active]`).val('1');
+            $(`#formAddEditAdmin .toggle-akunaktif`).removeClass('bg-secondary').addClass('active bg-success');
+        } 
+        else {
+            $(`#formAddEditAdmin input[name=active]`).val('0');
+            $(`#formAddEditAdmin .toggle-akunaktif`).removeClass('active bg-success').addClass('bg-secondary');
         }
 
         $('#newpass').val('');
@@ -310,7 +306,7 @@ $('#formAddEditAdmin .form-check-input').on('click', function(e) {
     $(this).prop('checked',true);
 });
 
-// change isverify value
+// change superadmin/account activate value
 $('#formAddEditAdmin input[type=checkbox]').on('click', function(e) {
     if ($(this).val() == '1') {
         $(this).val('0');
@@ -450,33 +446,10 @@ const hapusAdmin = (id) => {
         cancelButtonText: 'tidak',
         showLoaderOnConfirm: true,
         preConfirm: () => {
-            return axios
-            .delete(`${APIURL}/admin/deleteadmin?id=${id}`, {
-                headers: {
-                    token: TOKEN
-                }
-            })
-            .then(() => {
-                Swal.close();
-                getAllAdmin();
-            })
-            .catch(error => {
-                // unauthorized
-                if (error.response.status == 401) {
-                    Swal.showValidationMessage(
-                        `waktu login anda sudah habis!`
-                    )
-                    
-                    setTimeout(() => {
-                        document.cookie = `tokenAdmin=null; path=/;`;
-                        window.location.replace(`${BASEURL}/login`);
-                    }, 3000);
-                }
-                // error server
-                else if (error.response.status == 500) {
-                    Swal.showValidationMessage(
-                        `server error: coba sekali lagi!`
-                    )
+            return httpRequestDelete(`${APIURL}/admin/deleteadmin?id=${id}`)
+            .then((e) => {
+                if (e.status == 201) {
+                    getAllAdmin();
                 }
             })
         },

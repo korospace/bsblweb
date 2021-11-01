@@ -241,8 +241,9 @@ class BaseController extends Controller
 
             if ($dbcheck == false) {
                 return [
-                    'success' => true,
-                    'expired' => $decoded['expired'] - time(),
+                    'success'   => true,
+                    'privilege' => (isset($decoded['privilege'])) ? $decoded['privilege'] : '',
+                    'expired'   => $decoded['expired'] - time(),
                 ];
             }
             else if (time() < $decoded['expired']) {

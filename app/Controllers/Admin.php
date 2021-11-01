@@ -40,6 +40,7 @@ class Admin extends ResourceController
             return redirect()->to(base_url().'/login');
         } 
         else {
+            $data['privilege'] = $result['privilege'];
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/index',$data);
         }
@@ -62,6 +63,7 @@ class Admin extends ResourceController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
+            $data['privilege'] = $result['privilege'];
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/listAdmin',$data);
         }
@@ -84,6 +86,7 @@ class Admin extends ResourceController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
+            $data['privilege'] = $result['privilege'];
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/listNasabah',$data);
         }
@@ -136,6 +139,7 @@ class Admin extends ResourceController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
+            $data['privilege'] = $result['privilege'];
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/listArtikel',$data);
         }
@@ -209,6 +213,7 @@ class Admin extends ResourceController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
+            $data['privilege'] = $result['privilege'];
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/profile',$data);
         }

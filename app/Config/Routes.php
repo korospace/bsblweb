@@ -32,18 +32,16 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-$routes->add('/',              'HomePage::index');
-$routes->add('artikel/(:any)', 'Artikel::index/$1');
-$routes->add('/signup',        'SignUp::index');
-$routes->add('/login',         'Login::index');
-$routes->add('/info',          'UserInfo::info');
-$routes->add('/profile',       'ProfileAdmin::profileadmin');
-$routes->add('/otp',           'OTP::otp');
+$routes->add('/',               'HomePage::index');
+$routes->add('/artikel/(:any)', 'HomePage::listArtikel/$1');
+$routes->add('/signup',         'SignUp::index');
+$routes->add('/login',          'Login::index');
+$routes->add('/otp',            'OTP::otp');
 
 $routes->group("nasabah", function ($routes) {
     // VIEWS
-    $routes->add('/',             'Dashboard::dashboardNasabah');
-    $routes->add('profile',       'Profile::profileNasabah');
+    $routes->add('/',                    'Nasabah::dashboardNasabah');
+    $routes->add('profile',              'Nasabah::profileNasabah');
     $routes->add('cetaktransaksi/(:any)','Nasabah::cetakTransaksi/$1');
     // API
     $routes->post("register",     "Nasabah::register");
@@ -61,8 +59,8 @@ $routes->group("nasabah", function ($routes) {
 
 $routes->group("admin", function ($routes) {
     // VIEWS
-    $routes->add('/',                  'Dashboard::dashboardAdmin');
-    $routes->add('profile',            'Profile::profileAdmin');
+    $routes->add('/',                  'Admin::dashboardAdmin');
+    $routes->add('profile',            'Admin::profileAdmin');
     $routes->add('listnasabah',        'Admin::listNasabahView');
     $routes->add('detilnasabah/(:any)','Admin::detilNasabahView/$1');
     $routes->add('listartikel',        'Admin::listArtikelView');

@@ -15,4 +15,13 @@ class HomePage extends BaseController
 
         return view('HomePage/index',$data);
     }
+
+    public function listArtikel(string $kategori)
+    {
+        $data = [
+            'title' => 'Artikel | ' . $kategori,
+        ];
+
+        return view('HomePage/listArtikel', $data);
+    }
 }

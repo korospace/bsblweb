@@ -23,6 +23,54 @@ class Nasabah extends ResourceController
         $this->nasabahModel   = new NasabahModel;
     }
 
+    /**
+     * Dashboaard nasabah
+     */
+    public function dashboardNasabah()
+    {
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result = $this->baseController->checkToken($token,false);
+        $data   = [
+            'title' => 'Nasabah | dashboard',
+            'token' => $token,
+        ];
+
+        if ($result['success'] == false) {
+            setcookie('token', null, -1, '/'); 
+            unset($_COOKIE['token']); 
+
+            return redirect()->to(base_url().'/login');
+        } 
+        else {
+            setcookie('token',$token,time() + $result['expired'],'/');
+            return view('Nasabah/index',$data);
+        }
+    }
+    
+    /**
+     * Profile nasabah
+     */
+    public function profileNasabah()
+    {
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result = $this->baseController->checkToken($token,false);
+        $data = [
+            'title' => 'Nasabah | profile',
+            'token' => $token,
+        ];
+
+        if ($result['success'] == false) {
+            setcookie('token', null, -1, '/'); 
+            unset($_COOKIE['token']); 
+            return redirect()->to(base_url().'/login');
+        } 
+        else {
+            setcookie('token',$token,time() + $result['expired'],'/');
+            return view('Nasabah/profilenasabah',$data);
+        }
+
+    }
+
     public function cetakTransaksi(string $id)
     {
         $token  = [

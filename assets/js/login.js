@@ -4,7 +4,6 @@ Login Nasabah
 --------------
 */
 
-// form on submit
 $('#formLoginNasabah').on('submit', function(e) {
     e.preventDefault();
 
@@ -71,7 +70,6 @@ $('#formLoginNasabah').on('submit', function(e) {
     }
 })
 
-// form validation
 function doValidateNasabah(form) {
     let status     = true;
     let emailRules = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;

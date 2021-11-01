@@ -259,7 +259,7 @@ class Admin extends ResourceController
                         $response = [
                             'status'   => 401,
                             'error'    => true,
-                            'messages' => 'account is no longer active',
+                            'messages' => 'akun tidak aktif',
                         ];
                 
                         return $this->respond($response,401);

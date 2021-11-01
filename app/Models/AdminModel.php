@@ -373,7 +373,8 @@ class AdminModel extends Model
     {
         try {
             $timeNow    = time();
-            $rangeTotal = (3600*24)*30;
+            // $rangeTotal = (3600*24)*30;
+            $rangeTotal = (3600*24)*1;
             $builder    = $this->db;
             $admins     = $builder->query("SELECT id FROM admin WHERE $timeNow-last_active >= $rangeTotal")->getResultArray();
             

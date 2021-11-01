@@ -137,13 +137,14 @@ const crudAdmin = async (el,event) => {
         let httpResponse = '';
         let modalTitle   = $('#modalAddEditAdmin .modal-title').html();
         let newTgl       = form.get('tgl_lahir').split('-');
-        let isSuperAdmin = form.get('privilege');
+        let isSuperAdmin = $('#formAddEditAdmin input[name=privilege]').val();
         form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`);
         form.set('privilege',`${(isSuperAdmin == '1') ? 'super' : 'admin' }`);
 
         $('#formAddEditAdmin button#submit #text').addClass('d-none');
         $('#formAddEditAdmin button#submit #spinner').removeClass('d-none');
         if (modalTitle == 'edit admin') {
+            form.set('active',$('#formAddEditAdmin input[name=active]').val());
             httpResponse = await httpRequestPut(`${APIURL}/admin/editadmin`,form);    
         } 
         else {

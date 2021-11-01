@@ -285,7 +285,7 @@ class AdminModel extends Model
                 $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,active,last_active,created_at")->where("id",$get['id'])->where("id !=",$id_admin)->get()->getFirstRow();
             } 
             else {
-                $admin = $this->db->table($this->table)->select("id,nama_lengkap,active,privilege")->where("id !=",$id_admin)->get()->getResultArray();
+                $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,active,privilege")->where("id !=",$id_admin)->get()->getResultArray();
             }
             
             if (empty($admin)) {    

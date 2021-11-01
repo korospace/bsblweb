@@ -3,13 +3,13 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
-		#btn-toggle{
+		.btn-toggle{
 			left: 0;
 			transition: all 0.3s;
 			transform: translateX(0px);
 		}
 
-		#btn-toggle.active{
+		.btn-toggle.active{
 			/* left: auto !important;
 			right: 0 !important; */
 			transform: translateX(25px);
@@ -49,9 +49,9 @@
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
 							<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-							<li class="breadcrumb-item text-sm text-dark active" aria-current="page">List nasabah</li>
+							<li class="breadcrumb-item text-sm text-dark active" aria-current="page">List admin</li>
 						</ol>
-						<h6 class="font-weight-bolder mb-0">List nasabah</h6>
+						<h6 class="font-weight-bolder mb-0">List admin</h6>
 					</nav>
 					<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 						<div class="ms-auto pe-md-3 d-flex align-items-center">
@@ -203,22 +203,8 @@
 						id="username-error"
 						class="text-danger"></small>
 				</div>
-				<!-- **** email **** -->
-				<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-						<span class="input-group-text bg-gray px-4 border-md border-right-0">
-							<i class="fa fa-envelope text-muted"></i>
-						</span>
-						</div>
-						<input type="text" class="form-control px-2" id="email" name="email" autocomplete="off" placeholder="Masukan email">
-					</div>
-					<small
-						id="email-error"
-						class="text-danger"></small>
-				</div>
 				<!-- **** password **** -->
-				<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
+				<div class="addadmin-item input-group col-lg-12 mb-4 form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
@@ -277,48 +263,6 @@
 						id="alamat-error"
 						class="text-danger"></small>
 				</div>
-				<!-- **** RT RW KODEPOS **** -->
-				<div class="addnasabah-item form-row mb-4" style="padding-right: 2px;">
-					<div class="col-6">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray px-4 border-md border-right-0">
-									<i class="fas fa-home text-muted"></i>
-								</span>
-							</div>
-							<input type="text" class="form-control" id="rt" name="rt" autocomplete="off" placeholder="RT">
-						</div>
-						<small
-							id="rt-error"
-							class="text-danger"></small>
-					</div>
-					<div class="col-6">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray px-4 border-md border-right-0">
-									<i class="fas fa-home text-muted"></i>
-								</span>
-							</div>
-							<input type="text" class="form-control" id="rw" name="rw" autocomplete="off" placeholder="RW">
-						</div>
-						<small
-							id="rw-error"
-							class="text-danger"></small>
-					</div>
-					<div class="col-12 mt-4">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray px-4 border-md border-right-0">
-									<i class="fas fa-mail-bulk text-muted"></i>
-								</span>
-							</div>
-							<input type="text" class="form-control" id="kodepos" name="kodepos" autocomplete="off" placeholder="KODE POS">
-						</div>
-						<small
-							id="kodepos-error"
-							class="text-danger"></small>
-					</div>
-				</div>
 				<!-- **** no telp **** -->
 				<div class="input-group col-lg-12 mb-4 form-group">
 					<div class="input-group">
@@ -333,21 +277,21 @@
 						id="notelp-error"
 						class="text-danger"></small>
 				</div>
-				<!-- **** is verify **** -->
-				<div class="editnasabah-item mb-3">
+				<!-- **** superadmin **** -->
+				<div class="mb-3">
 					<label class="form-check-label">
-						verifikasi akun
+						super admin
 					</label>
 					<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
-						<div id="btn-toggle" class="bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
-							<input type="checkbox" name="is_verify" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
+						<div class="btn-toggle toggle-privilege bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
+							<input type="checkbox" name="privilege" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
 						</div>
 					</div>
 				</div>
-				<hr class="editnasabah-item horizontal dark mt-2 mb-2">
-				<h6 class="editnasabah-item font-italic opacity-8">Ubah password (opsionial)</h6>
+				<hr class="editadmin-item horizontal dark mt-2 mb-2">
+				<h6 class="editadmin-item font-italic opacity-8">Ubah password (opsionial)</h6>
 				<!-- **** change password **** -->
-				<div class="editnasabah-item input-group col-lg-12 mt-2 mb-4 form-group">
+				<div class="editadmin-item input-group col-lg-12 mt-2 mb-4 form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">

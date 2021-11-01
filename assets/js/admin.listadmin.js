@@ -37,7 +37,7 @@ const getAllAdmin = async () => {
                     <span class="font-weight-bold badge border ${(n.active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.active === 't')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.privilege === 'super')? 'text-info border-info' : 'text-muted border-muted'} pb-1 rounded-sm"> ${(n.privilege === 'super')? 'superadmin' : 'admin'} </span>
+                    <span class="font-weight-bold badge border ${(n.privilege === 'super')? 'text-primary border-primary' : 'text-info border-info'} pb-1 rounded-sm"> ${(n.privilege === 'super')? 'superadmin' : 'admin'} </span>
                 </td>
                 <td class="align-middle text-center">
                     <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin('${n.id}')">hapus</span>
@@ -60,7 +60,7 @@ $('#search-admin').on('keyup', function() {
     } 
     else {
         adminFiltered = arrayAdmin.filter((n) => {
-            return n.nama_lengkap.includes($(this).val()) || n.id.includes($(this).val());
+            return n.nama_lengkap.includes($(this).val()) || n.username.includes($(this).val());
         });
     }
 
@@ -87,7 +87,7 @@ $('#search-admin').on('keyup', function() {
                     <span class="font-weight-bold badge border ${(n.active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.active === 't')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.privilege === 'super')? 'text-info border-info' : 'text-muted border-muted'} pb-1 rounded-sm"> ${(n.privilege === 'super')? 'superadmin' : 'admin'} </span>
+                    <span class="font-weight-bold badge border ${(n.privilege === 'super')? 'text-primary border-primary' : 'text-info border-info'} pb-1 rounded-sm"> ${(n.privilege === 'super')? 'superadmin' : 'admin'} </span>
                 </td>
                 <td class="align-middle text-center">
                     <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin('${n.id}')">hapus</span>
@@ -131,7 +131,7 @@ const openModalAddEditAdm = (modalName,idadmin=null) => {
 /**
  * ADD ADMIN
  */
-const addadmin = (el,event) => {
+const addAdmin = (el,event) => {
     event.preventDefault();
     let form = new FormData(el);
 
@@ -140,7 +140,10 @@ const addadmin = (el,event) => {
         $('#formAddEditAdmin button#submit #spinner').removeClass('d-none');
 
         let newTgl = form.get('tgl_lahir').split('-');
-        form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`)
+        form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`);
+
+        let isSuperAdmin = form.get('privilege');
+        form.set('privilege',`${(isSuperAdmin == '1') ? 'super' : 'admin' }`);
 
         axios
         .post(`${APIURL}/admin/addadmin`,form, {
@@ -295,6 +298,8 @@ const editAdmin = (el,event) => {
 
 // clear input form
 const clearInputForm = () => {
+    $(`#formAddEditAdmin input[name=privilege]`).val('');
+    $('.toggle-privilege').removeClass('active bg-success').addClass('bg-secondary');
     $(`#formAddEditAdmin .form-control`).val('');
 }
 
@@ -306,7 +311,7 @@ $('#formAddEditAdmin .form-check-input').on('click', function(e) {
 });
 
 // change isverify value
-$('#formAddEditAdmin input[name=is_verify]').on('click', function(e) {
+$('#formAddEditAdmin input[type=checkbox]').on('click', function(e) {
     if ($(this).val() == '1') {
         $(this).val('0');
         $(this).parent().removeClass('active bg-success').addClass('bg-secondary');
@@ -357,22 +362,6 @@ const doValidate = (form) => {
 
     // add nasabah
     if (!$('#modalAddEditAdmin .addadmin-item').hasClass('d-none')) {
-        // email validation
-        if ($('#formAddEditAdmin #email').val() == '') {
-            $('#formAddEditAdmin #email').addClass('is-invalid');
-            $('#formAddEditAdmin #email-error').html('*email harus di isi');
-            status = false;
-        }
-        else if ($('#formAddEditAdmin #email').val().length > 40) {
-            $('#formAddEditAdmin #email').addClass('is-invalid');
-            $('#formAddEditAdmin #email-error').html('*maksimal 40 huruf');
-            status = false;
-        }
-        else if (!emailRules.test(String($('#formAddEditAdmin #email').val()).toLowerCase())) {
-            $('#formAddEditAdmin #email').addClass('is-invalid');
-            $('#formAddEditAdmin #email-error').html('*email tidak valid');
-            status = false;
-        }
         // password validation
         if ($('#formAddEditAdmin #password').val() == '') {
             $('#formAddEditAdmin #password').addClass('is-invalid');
@@ -387,54 +376,6 @@ const doValidate = (form) => {
         else if (/\s/.test($('#formAddEditAdmin #password').val())) {
             $('#formAddEditAdmin #password').addClass('is-invalid');
             $('#formAddEditAdmin #password-error').html('*tidak boleh ada spasi');
-            status = false;
-        }
-        // rw validation
-        if ($('#formAddEditAdmin #rw').val() == '') {
-            $('#formAddEditAdmin #rw').addClass('is-invalid');
-            $('#formAddEditAdmin #rw-error').html('*rw harus di isi');
-            status = false;
-        }
-        else if ($('#formAddEditAdmin #rw').val().length < 2 || $('#formAddEditAdmin #rw').val().length > 2) {
-            $('#formAddEditAdmin #rw').addClass('is-invalid');
-            $('#formAddEditAdmin #rw-error').html('*minimal 2 huruf dan maksimal 2 huruf');
-            status = false;
-        }
-        else if (!/^\d+$/.test($('#formAddEditAdmin #rw').val())) {
-            $('#formAddEditAdmin #rw').addClass('is-invalid');
-            $('#formAddEditAdmin #rw-error').html('*hanya boleh angka');
-            status = false;
-        }
-        // rt validation
-        if ($('#formAddEditAdmin #rt').val() == '') {
-            $('#formAddEditAdmin #rt').addClass('is-invalid');
-            $('#formAddEditAdmin #rt-error').html('*rt harus di isi');
-            status = false;
-        }
-        else if ($('#formAddEditAdmin #rt').val().length < 2 || $('#formAddEditAdmin #rt').val().length > 2) {
-            $('#formAddEditAdmin #rt').addClass('is-invalid');
-            $('#formAddEditAdmin #rt-error').html('*minimal 2 huruf dan maksimal 2 huruf');
-            status = false;
-        }
-        else if (!/^\d+$/.test($('#formAddEditAdmin #rt').val())) {
-            $('#formAddEditAdmin #rt').addClass('is-invalid');
-            $('#formAddEditAdmin #rt-error').html('*hanya boleh angka');
-            status = false;
-        }
-        // kodepos validation
-        if ($('#formAddEditAdmin #kodepos').val() == '') {
-            $('#formAddEditAdmin #kodepos').addClass('is-invalid');
-            $('#formAddEditAdmin #kodepos-error').html('*kodepos harus di isi');
-            status = false;
-        }
-        else if ($('#formAddEditAdmin #kodepos').val().length < 5 || $('#formAddEditAdmin #kodepos').val().length > 5) {
-            $('#formAddEditAdmin #kodepos').addClass('is-invalid');
-            $('#formAddEditAdmin #kodepos-error').html('*minimal 5 huruf dan maksimal 5 huruf');
-            status = false;
-        }
-        else if (!/^\d+$/.test($('#formAddEditAdmin #kodepos').val())) {
-            $('#formAddEditAdmin #kodepos').addClass('is-invalid');
-            $('#formAddEditAdmin #kodepos-error').html('*hanya boleh angka');
             status = false;
         }
     }

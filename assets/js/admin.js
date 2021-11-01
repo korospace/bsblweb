@@ -263,6 +263,9 @@ const sessioncheck = async () => {
         if (pageTitle === 'profile') {
             getDataProfile();
         }
+        if (pageTitle === 'list admin') {
+            getAllAdmin();
+        }
         if (pageTitle === 'list nasabah') {
             getAllNasabah();
         }

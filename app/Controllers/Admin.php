@@ -251,11 +251,13 @@ class Admin extends ResourceController
                 if (password_verify($login_pass,$database_pass)) {
 
                     // is admin active or not
+                    $active      = $adminData['message']['active'];
                     $last_active = $adminData['message']['last_active'];
-                    $rangeTotal  = (3600*24)*30;
+                    // $rangeTotal  = (3600*24)*30;
+                    $rangeTotal  = (3600*24)*1;
                     $privilege   = $adminData['message']['privilege'];
 
-                    if (time()-$last_active >= $rangeTotal && $privilege != 'super') {
+                    if (time()-$last_active >= $rangeTotal && $privilege != 'super' || $active == 'false') {
                         $response = [
                             'status'   => 401,
                             'error'    => true,

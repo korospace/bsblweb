@@ -179,8 +179,16 @@ $('#formLoginAdmin').on('submit', function(e) {
         .catch((error) => {
             hideLoadingSpinner();
 
-            // error email/password
-            if (error.response.status == 404) {
+            // akun tidak aktif
+            if (error.response.status == 401) {
+                showAlert({
+                    message: `<strong>Maaf . . .</strong> akun anda sudah tidak aktif!`,
+                    btnclose: true,
+                    type:'danger' 
+                })
+            }
+            // error username/password
+            else if (error.response.status == 404) {
                 if (error.response.data.messages.username) {
                     $('#admin-username').addClass('is-invalid');
                     $('#admin-username-error').text(error.response.data.messages.username);

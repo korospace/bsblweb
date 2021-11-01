@@ -257,7 +257,7 @@ class Admin extends ResourceController
                     $rangeTotal  = (3600*24)*1;
                     $privilege   = $adminData['message']['privilege'];
 
-                    if (time()-$last_active >= $rangeTotal && $privilege != 'super' || $active == 'false') {
+                    if (time()-$last_active >= $rangeTotal && $privilege != 'super' || $active == 'f') {
                         $response = [
                             'status'   => 401,
                             'error'    => true,

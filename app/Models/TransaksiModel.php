@@ -201,7 +201,7 @@ class TransaksiModel extends Model
                     $transaction = false;
                 }
             } 
-            else if ($isAdmin) {
+            else {
                 $query  = 'SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.date,
                 (SELECT SUM(harga) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_setor,
                 (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
@@ -213,6 +213,10 @@ class TransaksiModel extends Model
                     $id_nasabah  = $get['idnasabah'];
                     $query      .= " WHERE transaksi.id_nasabah = '$id_nasabah'";
                 } 
+                else if (!$isAdmin) {
+                    $query      .= " WHERE transaksi.id_nasabah = '$idNasabah'";
+                }
+
                 if (isset($get['date'])) {
                     $start       = (int)strtotime('01-'.$get['date']);
                     $end         = $start+(86400*30);

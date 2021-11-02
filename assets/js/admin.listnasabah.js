@@ -500,7 +500,7 @@ const hapusNasabah = (id) => {
                 inputAttributes: {
                     autocapitalize: 'off'
                 },
-                html:`<small class='mb-4'>password</small>`,
+                html:`<h5 class='mb-4'>Password</h5>`,
                 showCancelButton: true,
                 confirmButtonText: 'submit',
                 showLoaderOnConfirm: true,

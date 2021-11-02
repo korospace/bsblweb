@@ -212,7 +212,12 @@ class TransaksiModel extends Model
                     $id_nasabah  = $get['idnasabah'];
                     $query      .= ' WHERE transaksi.id_nasabah = '.$id_nasabah;
                 } 
-                
+                if (isset($get['date'])) {
+                    $start       = (int)strtotime('01-'.$get['date']);
+                    $end         = $start+(86400*30);
+                    $query      .= ' WHERE transaksi.date BETWEEN '.$start.' AND '.$end;
+                }
+
                 $query      .= ' ORDER BY transaksi.date ASC;';
                 $transaction = $this->db->query($query)->getResultArray();
                 $transaction = $this->filterData($transaction);
@@ -292,9 +297,9 @@ class TransaksiModel extends Model
             if ($d['total_setor'] == null) {
                 unset($d['total_setor']);
             }
-            if ($d['total_kg'] == null) {
-                unset($d['total_kg']);
-            }
+            // if ($d['total_kg'] == null) {
+            //     unset($d['total_kg']);
+            // }
             if ($d['total_tarik'] == null) {
                 unset($d['total_tarik']);
             }

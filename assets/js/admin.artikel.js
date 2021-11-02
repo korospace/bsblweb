@@ -329,51 +329,121 @@ const changeThumbPreview = (el) => {
  /**
    * HAPUS KATEGORI ARTIKEL
    */
- const hapusKategori = (el,id,katName) => {
-     Swal.fire({
-         title: 'ANDA YAKIN?',
-         text: `semua berita dengan kategori '${katName}' akan ikut terhapus `,
-         icon: 'warning',
-         showCancelButton: true,
-         confirmButtonText: 'iya',
-         cancelButtonText: 'tidak',
-         showLoaderOnConfirm: true,
-         preConfirm: async () => {
-             if ($('#formAddEditSampah input[name=kategori]').val() == katName) {
-                 $('#formAddEditSampah input[name=kategori]').val('');    
-             }
-         
-             el.parentElement.parentElement.remove();
- 
-             return httpRequestDelete(`${APIURL}/kategori_berita/deleteitem?id=${id}`)
-             .then(e => {
-                getAllKatBerita();
-             })
-         },
-         allowOutsideClick: () => !Swal.isLoading()
-     })
- };
+const hapusKategori = (el,id,katName) => {
+    Swal.fire({
+        title: 'ANDA YAKIN?',
+        text: `semua berita dengan kategori '${katName}' akan ikut terhapus`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'iya',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                html:`<h5 class='mb-4'>Password</h5>`,
+                showCancelButton: true,
+                confirmButtonText: 'submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    let form = new FormData();
+                    form.append('username',$.cookie("username"));
+                    form.append('password',password);
+        
+                    return axios
+                    .post(`${APIURL}/admin/confirmdelete`,form, {
+                        headers: {
+                            // header options 
+                        }
+                    })
+                    .then((response) => {
+                        if ($('#formAddEditSampah input[name=kategori]').val() == katName) {
+                            $('#formAddEditSampah input[name=kategori]').val('');    
+                        }
+                    
+                        el.parentElement.parentElement.remove();
+            
+                        return httpRequestDelete(`${APIURL}/kategori_berita/deleteitem?id=${id}`)
+                        .then(e => {
+                           getAllKatBerita();
+                        })
+                    })
+                    .catch(error => {
+                        if (error.response.status == 404) {
+                            Swal.showValidationMessage(
+                                `password salah`
+                            )
+                        }
+                        else if (error.response.status == 500) {
+                            Swal.showValidationMessage(
+                                `terjadi kesalahan, coba sekali lagi`
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        }
+    })
+};
 
  /**
   * HAPUS ARTIKEL
   */
- const hapusArtikel = (id) => {
-     Swal.fire({
-         title: 'ANDA YAKIN?',
-         text: "Data akan terhapus permanen",
-         icon: 'warning',
-         showCancelButton: true,
-         confirmButtonText: 'iya',
-         cancelButtonText: 'tidak',
-         showLoaderOnConfirm: true,
-         preConfirm: async () => {
-            return httpRequestDelete(`${APIURL}/berita_acara/deleteitem?id=${id}`)
-            .then((e) => {
-                if (e.status == 201) {
-                    getAllBerita();
-                }
+const hapusArtikel = (id) => {
+    Swal.fire({
+        title: 'ANDA YAKIN?',
+        text: "Data akan terhapus permanen",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'iya',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                html:`<h5 class='mb-4'>Password</h5>`,
+                showCancelButton: true,
+                confirmButtonText: 'submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    let form = new FormData();
+                    form.append('username',$.cookie("username"));
+                    form.append('password',password);
+        
+                    return axios
+                    .post(`${APIURL}/admin/confirmdelete`,form, {
+                        headers: {
+                            // header options 
+                        }
+                    })
+                    .then((response) => {
+                        return httpRequestDelete(`${APIURL}/berita_acara/deleteitem?id=${id}`)
+                        .then((e) => {
+                            if (e.status == 201) {
+                                getAllBerita();
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        if (error.response.status == 404) {
+                            Swal.showValidationMessage(
+                                `password salah`
+                            )
+                        }
+                        else if (error.response.status == 500) {
+                            Swal.showValidationMessage(
+                                `terjadi kesalahan, coba sekali lagi`
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
             })
-         },
-         allowOutsideClick: () => !Swal.isLoading()
-     })
- }
+        }
+    })
+}

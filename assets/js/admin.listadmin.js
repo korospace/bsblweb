@@ -376,16 +376,51 @@ const hapusAdmin = (id) => {
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'iya',
-        cancelButtonText: 'tidak',
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-            return httpRequestDelete(`${APIURL}/admin/deleteadmin?id=${id}`)
-            .then((e) => {
-                if (e.status == 201) {
-                    getAllAdmin();
-                }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                html:`<h5 class='mb-4'>Password</h5>`,
+                showCancelButton: true,
+                confirmButtonText: 'submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    let form = new FormData();
+                    form.append('username',$.cookie("username"));
+                    form.append('password',password);
+        
+                    return axios
+                    .post(`${APIURL}/admin/confirmdelete`,form, {
+                        headers: {
+                            // header options 
+                        }
+                    })
+                    .then((response) => {
+                        return httpRequestDelete(`${APIURL}/admin/deleteadmin?id=${id}`)
+                        .then((e) => {
+                            if (e.status == 201) {
+                                getAllAdmin();
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        if (error.response.status == 404) {
+                            Swal.showValidationMessage(
+                                `password salah`
+                            )
+                        }
+                        else if (error.response.status == 500) {
+                            Swal.showValidationMessage(
+                                `terjadi kesalahan, coba sekali lagi`
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
             })
-        },
-        allowOutsideClick: () => !Swal.isLoading()
+        }
     })
 }

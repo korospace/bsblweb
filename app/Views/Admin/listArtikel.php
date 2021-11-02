@@ -12,6 +12,7 @@
 <?= $this->section('contentJs'); ?>
 	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>	
 	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/jquery.cookie.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>

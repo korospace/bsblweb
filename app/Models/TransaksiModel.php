@@ -210,7 +210,7 @@ class TransaksiModel extends Model
 
                 if (isset($get['idnasabah'])) {
                     $id_nasabah  = $get['idnasabah'];
-                    $query      .= ' WHERE transaksi.id_nasabah = '.$id_nasabah;
+                    $query      .= " WHERE transaksi.id_nasabah = '$id_nasabah'";
                 } 
                 if (isset($get['date'])) {
                     $start       = (int)strtotime('01-'.$get['date']);

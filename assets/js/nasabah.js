@@ -60,11 +60,17 @@ const sessioncheck = async () => {
     showLoadingSpinner();
     let httpResponse = await httpRequestGet(`${APIURL}/nasabah/sessioncheck`);
     hideLoadingSpinner();
-    
+
+    // update value filter transkasi
+    let currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
+    let currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
+    $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
+    $(`#filter-year`).val(currentYear);
+
     if (httpResponse.status === 200) {
         if (pageTitle[1] === 'dashboard') {
             getTotalSampah();
-            getAllTransaksi('11-2021');
+            getAllTransaksi(`${currentMonth}-${currentYear}`);
             getDataSaldo();
             getDataProfile();
             getAllJenisSampah();
@@ -94,13 +100,20 @@ const getTotalSampah = async () => {
     }
 };
 
+// filter transaksi on change
+$('.filter-transaksi').on('input', function(e) {
+    if ($(`#filter-year`).val().length == 4) {
+        chartGrafik.destroy();
+        getAllTransaksi(`${$(`#filter-month`).val()}-${$(`#filter-year`).val()}`);
+    }
+});
+
 /**
  * GET ALL TRANSAKSI
  */
 const getAllTransaksi = async (date) => {
-
+    $('.spinner-wraper').removeClass('d-none');
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?date=${date}`);
-
     $('.spinner-wraper').addClass('d-none');
     
     if (httpResponse.status === 404) {
@@ -176,10 +189,12 @@ const modifUang = (rHarga) => {
 }
 
 // update grafik setor
+let chartGrafik = '';
 const updateGrafikSetor = (arrayId,arrayKg) => {
     var ctx2 = document.getElementById("chart-line").getContext("2d");
     // let chartWidth = arrayId.length*160;
     document.querySelector("#chart-line").style.width    = '100%';
+    document.querySelector("#chart-line").style.maxHeight= '300px';
     // document.querySelector("#chart-line").style.minWidth = `${chartWidth}px`;
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
@@ -192,7 +207,7 @@ const updateGrafikSetor = (arrayId,arrayKg) => {
         arrayId.push(' ');
     }
 
-    new Chart(ctx2, {
+    chartGrafik = new Chart(ctx2, {
         type: "bar",
         data: {
             labels: arrayId,

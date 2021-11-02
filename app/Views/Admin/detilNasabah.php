@@ -216,40 +216,62 @@
 				</div>
 			</div>
 			<div class="row mt-4">
+				<!-- grafik -->
 				<div class="col-lg-8">
-					<div class="card z-index-2" style="min-height: 400px;max-height: 400px;font-family: 'qc-semibold';overflow: hidden;">
-						<div class="card-header pb-0">
+					<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
+						<!-- header -->
+						<div class="card-header pb-0" style="z-index: 11;">
 							<h6>Grafik Penyetoran</h6>
-						</div>
-						<div class="card-body chartWrapper p-3 mt-2">
-							<!-- spinner -->
-							<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-							</div>
-							<!-- chart -->
-							<div class="chartAreaWrapper">
-								<div class="chartAreaWrapper2">
-									<canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+							<div class="mt-3 form-row">
+								<div class="col-6 pl-0">
+									<select id="filter-month" class="filter-transaksi custom-select custom-select-sm" style="max-height: 31px;">
+										<option value="01">Januari</option>
+										<option value="02">Februari</option>
+										<option value="03">Maret</option>
+										<option value="04">April</option>
+										<option value="05">Mei</option>
+										<option value="06">Juni</option>
+										<option value="07">Juli</option>
+										<option value="08">Agustus</option>
+										<option value="09">September</option>
+										<option value="10">Oktober</option>
+										<option value="11">November</option>
+										<option value="12">Desember</option>
+									</select>
 								</div>
+								<div class="col-6 pr-0">
+									<input id="filter-year" type="number" class="filter-transaksi form-control form-control-sm w-100 h-100 border-radius-sm" placeholder="tahun" style="max-height: 31px;">
+								</div>
+							</div>
+						</div>
+						<!-- spinner -->
+						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+						</div>
+						<div class="card-body p-3 mt-2">
+							<div class="chart">
+								<canvas id="chart-line" class="chart-canvas"></canvas>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- Transaksi -->
 				<div class="col-lg-4 mt-4 mt-lg-0">
-					<div class="card h-100" style="min-height: 400px;max-height: 400px;overflow: auto;">
-						<div class="card-header bg-white position-sticky p-3" style="z-index: 10;top: 0;">
+					<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
+						<!-- header -->
+						<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
 							<div class="row" style="font-family: 'qc-semibold';">
 								<div class="col-6 d-flex align-items-center">
 									<h6 class="mb-0">History</h6>
 								</div>
 							</div>
 						</div>
-						<div id="transaksi-wraper" class="card-body p-3 pb-0 d-flex justify-content-center align-items-center position-relative" style="font-family: 'qc-semibold';">
-							<!-- spinner -->
-							<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-							</div>
+						<!-- spinner -->
+						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+						</div>
+						<div id="transaksi-wraper" class="card-body pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
+
 						</div>
 					</div>
 				</div>
@@ -357,7 +379,7 @@
 				</div>
 				
 				<!-- Personal info -->
-				<div id='personal-info' class="row mt-4">
+				<div id='personal-info' class="row mt-5">
 					<div class="col-12">
 						<div class="card h-100">
 							<div class="card-header pb-0 p-3">
@@ -434,6 +456,7 @@
 						</div>
 					</div>
 				</div>
+
 				<!-- Footer -->
 				<footer class="footer mt-5">
 					<div class="container-fluid p-0">

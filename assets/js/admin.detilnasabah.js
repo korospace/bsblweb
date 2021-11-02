@@ -15,13 +15,20 @@
     }
 };
 
+// filter transaksi on change
+$('.filter-transaksi').on('input', function(e) {
+    if ($(`#filter-year`).val().length == 4) {
+        chartGrafik.destroy();
+        getAllTransaksiNasabah(`${$(`#filter-month`).val()}-${$(`#filter-year`).val()}`);
+    }
+});
+
 /**
  * GET ALL TRANSAKSI NASABAH
  */
-const getAllTransaksiNasabah = async () => {
-
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}`);
-
+const getAllTransaksiNasabah = async (date) => {
+    $('.spinner-wraper').removeClass('d-none');
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&date=${date}`);
     $('.spinner-wraper').addClass('d-none'); 
     
     if (httpResponse.status === 404) {
@@ -92,10 +99,12 @@ const getAllTransaksiNasabah = async () => {
 };
 
 // update grafik setor
+let chartGrafik = '';
 const updateGrafikSetorNasabah = (arrayId,arrayKg) => {
     var ctx2       = document.getElementById("chart-line").getContext("2d");
     // let chartWidth = arrayId.length*160;
     document.querySelector("#chart-line").style.width    = '100%';
+    document.querySelector("#chart-line").style.maxHeight= '300px';
     // document.querySelector("#chart-line").style.minWidth = `${chartWidth}px`;
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
@@ -108,7 +117,7 @@ const updateGrafikSetorNasabah = (arrayId,arrayKg) => {
         arrayId.push(' ');
     }
 
-    new Chart(ctx2, {
+    chartGrafik = new Chart(ctx2, {
         type: "bar",
         data: {
             labels: arrayId,

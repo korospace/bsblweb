@@ -335,7 +335,7 @@
     <!-- footer section starts  -->
 
     <footer class="deneb_footer">
-      <div class="widget_wrapper" style="background-image: url(assets/images/footer-bg.png);">
+      <div class="widget_wrapper" style="background-image: url(assets/images/footer-bg.webp);">
         <div class="container">
           <div class="row">
             <div class="col-lg-4 col-md-6 col-12">

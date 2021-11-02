@@ -201,9 +201,10 @@ class TransaksiModel extends Model
                     $transaction = false;
                 }
             } 
-            else {
+            else if ($isAdmin) {
                 $query  = 'SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.date,
                 (SELECT SUM(harga) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_setor,
+                (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
                 (SELECT SUM(jumlah) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS total_tarik,
                 (SELECT SUM(jumlah) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS total_pindah 
                 FROM transaksi';
@@ -287,9 +288,9 @@ class TransaksiModel extends Model
             if ($d['total_setor'] == null) {
                 unset($d['total_setor']);
             }
-            // if ($d['total_kg'] == null) {
-            //     unset($d['total_kg']);
-            // }
+            if ($d['total_kg'] == null) {
+                unset($d['total_kg']);
+            }
             if ($d['total_tarik'] == null) {
                 unset($d['total_tarik']);
             }

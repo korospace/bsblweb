@@ -49,7 +49,7 @@ class Transaksi extends ResourceController
             }
             
             $isAdmin    = isset($result['message']['data']['privilege']);
-            $idNasabah  = $result['message']['data']['id'];
+            $idNasabah  = ($isAdmin) ? false : $result['message']['data']['id'];
 
             $dbresponse = $this->transaksiModel->getData($this->request->getGet(),$isAdmin,$idNasabah);
 

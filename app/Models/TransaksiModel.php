@@ -213,14 +213,14 @@ class TransaksiModel extends Model
                     $id_nasabah  = $get['idnasabah'];
                     $query      .= " WHERE transaksi.id_nasabah = '$id_nasabah'";
                 } 
-                else if (!$isAdmin) {
+                else if (!$isAdmin && $idNasabah) {
                     $query      .= " WHERE transaksi.id_nasabah = '$idNasabah'";
                 }
 
                 if (isset($get['date'])) {
                     $start       = (int)strtotime('01-'.$get['date']);
                     $end         = $start+(86400*30);
-                    $query      .= (isset($get['idnasabah'])) ? ' AND' : ' WHERE' ;
+                    $query      .= ($idNasabah || isset($get['idnasabah'])) ? ' AND' : ' WHERE' ;
                     $query      .= " transaksi.date BETWEEN '$start' AND '$end'";
                 }
 

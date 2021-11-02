@@ -64,7 +64,7 @@ const sessioncheck = async () => {
     if (httpResponse.status === 200) {
         if (pageTitle[1] === 'dashboard') {
             getTotalSampah();
-            getAllTransaksi();
+            getAllTransaksi('11-2021');
             getDataSaldo();
             getDataProfile();
             getAllJenisSampah();
@@ -97,9 +97,9 @@ const getTotalSampah = async () => {
 /**
  * GET ALL TRANSAKSI
  */
-const getAllTransaksi = async () => {
+const getAllTransaksi = async (date) => {
 
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata`);
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?date=${date}`);
 
     $('.spinner-wraper').addClass('d-none');
     

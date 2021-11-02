@@ -43,7 +43,7 @@
   	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/nasabah.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Html -->
@@ -177,9 +177,30 @@
 			</div>
 			<div class="row mt-4">
 				<div class="col-lg-8">
-					<div class="card z-index-2" style="min-height: 400px;max-height: 400px;font-family: 'qc-semibold';">
+					<div class="card z-index-2" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
 						<div class="card-header pb-0">
 							<h6>Grafik Penyetoran</h6>
+							<div id="grafik" class="form-row">
+								<div class="col-6 pl-0">
+									<select id="filter-month" class="custom-select custom-select-sm" style="max-height: 31px;">
+										<option value="01">Januari</option>
+										<option value="02">Februari</option>
+										<option value="03">Maret</option>
+										<option value="04">April</option>
+										<option value="05">Mei</option>
+										<option value="06">Juni</option>
+										<option value="07">Juli</option>
+										<option value="08">Agustus</option>
+										<option value="09">September</option>
+										<option value="10">Oktober</option>
+										<option value="11">November</option>
+										<option value="12">Desember</option>
+									</select>
+								</div>
+								<div id="filter-year" class="col-6 pr-0">
+									<input type="number" class="form-control form-control-sm w-100 h-100 border-radius-sm" placeholder="tahun" style="max-height: 31px;">
+								</div>
+							</div>
 						</div>
 						<div class="card-body p-3 mt-2">
 							<!-- spinner -->
@@ -194,7 +215,7 @@
 				</div>
 				<!-- Transaksi -->
 				<div class="col-lg-4 mt-4 mt-lg-0">
-					<div class="card h-100" style="min-height: 400px;max-height: 400px;overflow: auto;">
+					<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
 						<div class="card-header bg-white position-sticky p-3" style="z-index: 10;top: 0;">
 							<div class="row" style="font-family: 'qc-semibold';">
 								<div class="col-6 d-flex align-items-center">

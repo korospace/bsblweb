@@ -57,11 +57,12 @@
 	<script>
 		const IDNASABAH = '<?= $idnasabah; ?>';
 	</script>
-  	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.detilnasabah.js'); ?>"></script>
 <?= $this->endSection(); ?>

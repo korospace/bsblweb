@@ -260,24 +260,33 @@ const httpRequestDelete = (url) => {
 const sessioncheck = async () => {
     showLoadingSpinner();
     let httpResponse = await httpRequestGet(`${APIURL}/admin/sessioncheck`);
-    hideLoadingSpinner();
     
     if (httpResponse.status === 200) {
         if (pageTitle === 'dashboard') {
+            hideLoadingSpinner();
+
             getTotalSampah();
             getAllKatSampah();
             getAllJenisSampah();
         }
         if (pageTitle === 'profile') {
+            hideLoadingSpinner();
+            
             getDataProfile();
         }
         if (pageTitle === 'list admin') {
+            hideLoadingSpinner();            
+
             getAllAdmin();
         }
         if (pageTitle === 'list nasabah') {
+            hideLoadingSpinner();
+
             getAllNasabah();
         }
         if (pageTitle === 'detil nasabah') {
+            hideLoadingSpinner();
+
             // update value filter transkasi
             let currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
             let currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
@@ -289,10 +298,12 @@ const sessioncheck = async () => {
             getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
         }
         if (pageTitle === 'list artikel') {
+            hideLoadingSpinner();
+
             getAllBerita();
         }
-        if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
-            getAllKatBerita();
+        if (pageTitle === 'tambah artikel') {
+            hideLoadingSpinner();
         }
         if (pageTitle === 'edit artikel') {
             getDetailBerita();

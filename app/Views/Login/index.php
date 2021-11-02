@@ -2,14 +2,15 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  	<!-- ** develoment ** -->
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css'); ?>"> -->
+	<!-- ** production ** -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/login.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/login.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/login.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
@@ -27,8 +28,10 @@
 				<!-- side left -->
 				<div class="col-md-3 register-left">
 					<img src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt="" />
-					<h3>Selamat Datang Kembali</h3>
-					<p>Silahkan Login Untuk Ketampilan Dashboard</p>
+					<div>
+						<h3>Selamat Datang Kembali</h3>
+						<p>Silahkan Login Untuk Ketampilan Dashboard</p>
+					</div>
 					<p>Belum Memiliki Akun? <br> <a class="text-link" href="<?= base_url('signup');?>">Daftar</a> | <a class="text-link" href="<?= base_url('/');?>">Home</a></p>
 				</div>
 

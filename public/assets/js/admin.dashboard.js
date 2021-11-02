@@ -177,7 +177,7 @@ function validateAddKategori() {
        })
        status = false;
    }
-   else if ($('input#NewkategoriSampah').val().length > 40) {
+   else if ($('input#NewkategoriSampah').val().length > 20) {
        showAlert({
            message: `<strong>Kategori baru maximal 20 huruf !</strong>`,
            btnclose: true,

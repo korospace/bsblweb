@@ -310,6 +310,9 @@
 			})
 			.then((response) => {
 				hideLoadingSpinner();
+				$('#contact-name').val('');
+				$('#contact-emai').val('');
+				$('#contact-message').val('')
 
 				setTimeout(() => {
 					Swal.fire({

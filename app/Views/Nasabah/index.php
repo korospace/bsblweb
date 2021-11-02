@@ -30,7 +30,10 @@
 			}
 		} 
 	</style>
-	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  	<!-- ** develoment ** -->
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css'); ?>"> -->
+	<!-- ** production ** -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/nasabah.dashboard.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -38,12 +41,12 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-  	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/nasabah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Html -->

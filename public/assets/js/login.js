@@ -185,7 +185,7 @@ $('#formLoginAdmin').on('submit', function(e) {
                 showAlert({
                     message: `<strong>Maaf . . .</strong> akun anda sudah tidak aktif!`,
                     btnclose: true,
-                    type:'danger' 
+                    type:'warning' 
                 })
             }
             // error username/password

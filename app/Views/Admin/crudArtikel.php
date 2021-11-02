@@ -27,16 +27,16 @@
 	<script>
 		const IDARTIKEL = '<?= (isset($idartikel)) ? $idartikel : '' ; ?>';
 	</script>
-	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/jquery.cookie.min.js'); ?>"></script>
-  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/jquery.cookie.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/katex.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/highlight.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/quill.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/image-resize.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/katex.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/highlight.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/quill.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/image-resize.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
 <?= $this->endSection(); ?>
@@ -148,7 +148,11 @@
 								
 							</select>
 							<?php if ($title !== 'Admin | edit artikel') { ?>
-								<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm d-block text-right"><u>manage kategori</u></a>
+								<div class="d-flex justify-content-end">
+									<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm" style="width: max-content;">
+										<u>manage kategori</u>
+									</a>
+								</div>
 							<?php } ?>
 						</div>
 					</div>
@@ -238,15 +242,12 @@
 									<i class="fas fa-clipboard-list text-muted"></i>
 								</span>
 							</div>
-							<input type="text" class="form-control px-2" id="kategori_name" name="kategori_name" autocomplete="off" placeholder="masukan kategori baru">
+							<input type="text" class="form-control px-2" id="NewKategoriArtikel" autocomplete="off" placeholder="masukan kategori baru">
 						</div>
-						<small
-							id="kategori_name-error"
-							class="text-danger"></small>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+					<button id="btnAddKategoriBerita" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
 						<span id="text">Simpan</span>
 						<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
 					</button>

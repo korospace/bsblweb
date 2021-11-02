@@ -153,3 +153,20 @@
     letter-spacing: 1px;
     /* color: rgb(230, 230, 230); */
 }
+
+@media (max-width:768px) {
+    .register-left div {
+        display: none;
+    }
+    .register-right {
+        margin-top: 10%;
+    }
+    .register-left img {
+        margin-top: 12%;
+        margin-bottom: 0px;
+    }
+    .register-left p {
+        padding: 0;
+        margin-top: 0;
+    }
+} 

@@ -154,7 +154,6 @@ $('#search-artikel').on('keyup', function() {
  */
 const getDetailBerita = async () => {
 
-    showLoadingSpinner();
     let httpResponse = await httpRequestGet(`${APIURL}/berita_acara/getitem?id=${IDARTIKEL}`);
     hideLoadingSpinner();
     
@@ -188,8 +187,8 @@ const getDetailBerita = async () => {
  const getAllKatBerita = async () => {
     let httpResponse = await httpRequestGet(`${APIURL}/kategori_berita/getitem`);
     
+    let elKategori  = `<option value='' selected>-- pilih kategori --</option>`;
     if (httpResponse.status === 200) {
-        let elKategori  = `<option value='' selected>-- pilih kategori --</option>`;
         let trKategori  = '';
         let allKategori = httpResponse.data.data;
         arrayKatBerita  = httpResponse.data.data;
@@ -211,10 +210,44 @@ const getDetailBerita = async () => {
              </tr>`;
         });
  
-        $('#kategori-berita-wraper').html(elKategori);
         $('#table-kategori-berita tbody').html(trKategori);
     }
+    $('#kategori-berita-wraper').html(elKategori);
  };
+ getAllKatBerita();
+
+ /**
+ * ADD KATEGORI ARTIKEL
+ */
+ $('#formAddKategoriBerita').on('submit', async function(e) {
+     e.preventDefault();
+     
+     if (validateAddKategori()) {
+ 
+         let form = new FormData();
+         form.append('kategori_name',$('input#NewKategoriArtikel').val().trim().toLowerCase());
+ 
+         $('#btnAddKategoriBerita #text').addClass('d-none');
+         $('#btnAddKategoriBerita #spinner').removeClass('d-none');
+         let httpResponse = await httpRequestPost(`${APIURL}/kategori_berita/additem`,form);
+         $('#btnAddKategoriBerita #text').removeClass('d-none');
+         $('#btnAddKategoriBerita #spinner').addClass('d-none');
+ 
+         if (httpResponse.status === 201) {
+             $('input#NewKategoriArtikel').val('');
+             getAllKatBerita();
+ 
+            showAlert({
+                message: `<strong>Success...</strong> kategori berhasil ditambah!`,
+                btnclose: false,
+                type:'success'
+            })
+            setTimeout(() => {
+                hideAlert();
+            }, 3000);
+         }
+     }
+ });
 
 /**
  * ADD/EDIT ARTIKEL
@@ -259,7 +292,42 @@ $('#formCrudArticle').on('submit', async (e) => {
     }
 })
 
-// validate add kategori artikel
+// validate add kategori berita
+function validateAddKategori() {
+   let status = true;
+
+   if ($('input#NewKategoriArtikel').val() == '') {
+       showAlert({
+           message: `<strong>Masukan kategori baru !</strong>`,
+           btnclose: true,
+           type:'danger'
+       })
+       status = false;
+   }
+   else if ($('input#NewKategoriArtikel').val().length > 20) {
+       showAlert({
+           message: `<strong>Kategori baru maximal 20 huruf !</strong>`,
+           btnclose: true,
+           type:'danger'
+       })
+       status = false;
+   }
+   // check kategori is exist
+   arrayKatBerita.forEach(b => {
+       if (b.name.toLowerCase() == $('input#NewKategoriArtikel').val().toLowerCase().trim()) {
+           showAlert({
+               message: `<strong>Kategori sudah tersedia !</strong>`,
+               btnclose: true,
+               type:'danger'
+           })
+           status = false;
+       }
+   });
+
+   return status;
+}
+
+// validate crud artikel
 function validateCrudArtikel() {
     let status = true;
 

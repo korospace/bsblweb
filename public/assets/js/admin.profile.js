@@ -90,6 +90,8 @@ $('#formEditProfile').on('submit', function(e) {
             $('#formEditProfile button#submit #spinner').addClass('d-none');
             $('#newpass-edit').val('');
             $('#oldpass-edit').val('');
+            console.log(form.get('username'));
+            document.cookie = `username=${form.get('username')}; path=/;`;
 
             let newDataProfile = {};
             for (var pair of form.entries()) {

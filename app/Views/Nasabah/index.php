@@ -30,7 +30,10 @@
 			}
 		} 
 	</style>
-	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  	<!-- ** develoment ** -->
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css'); ?>"> -->
+	<!-- ** production ** -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/nasabah.dashboard.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -38,11 +41,11 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-  	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/nasabah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
@@ -176,90 +179,65 @@
 				</div>
 			</div>
 			<div class="row mt-4">
+				<!-- grafik -->
 				<div class="col-lg-8">
-					<div class="card z-index-2" style="min-height: 400px;max-height: 400px;font-family: 'qc-semibold';">
-						<div class="card-header pb-0">
+					<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
+						<!-- header -->
+						<div class="card-header pb-0" style="z-index: 11;">
 							<h6>Grafik Penyetoran</h6>
+							<div class="mt-3 form-row">
+								<div class="col-6 pl-0">
+									<select id="filter-month" class="filter-transaksi custom-select custom-select-sm" style="max-height: 31px;">
+										<option value="01">Januari</option>
+										<option value="02">Februari</option>
+										<option value="03">Maret</option>
+										<option value="04">April</option>
+										<option value="05">Mei</option>
+										<option value="06">Juni</option>
+										<option value="07">Juli</option>
+										<option value="08">Agustus</option>
+										<option value="09">September</option>
+										<option value="10">Oktober</option>
+										<option value="11">November</option>
+										<option value="12">Desember</option>
+									</select>
+								</div>
+								<div class="col-6 pr-0">
+									<input id="filter-year" type="number" class="filter-transaksi form-control form-control-sm w-100 h-100 border-radius-sm" placeholder="tahun" style="max-height: 31px;">
+								</div>
+							</div>
+						</div>
+						<!-- spinner -->
+						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 						</div>
 						<div class="card-body p-3 mt-2">
-							<!-- spinner -->
-							<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-							</div>
-							<div class="chart">
-								<canvas id="chart-line" class="chart-canvas" height="300"></canvas>
-							</div>
+							<canvas id="chart-line" class="chart-canvas"></canvas>
 						</div>
 					</div>
 				</div>
 				<!-- Transaksi -->
 				<div class="col-lg-4 mt-4 mt-lg-0">
-					<div class="card h-100" style="min-height: 400px;max-height: 400px;overflow: auto;">
-						<div class="card-header bg-white position-sticky p-3" style="z-index: 10;top: 0;">
+					<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
+						<!-- header -->
+						<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
 							<div class="row" style="font-family: 'qc-semibold';">
 								<div class="col-6 d-flex align-items-center">
 									<h6 class="mb-0">History</h6>
 								</div>
 							</div>
 						</div>
-						<div id="transaksi-wraper" class="card-body p-3 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
-							<!-- spinner -->
-							<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-							</div>
+						<!-- spinner -->
+						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+						</div>
+						<div id="transaksi-wraper" class="card-body pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
+
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row mt-4">
-				<div class="col-12">
-					<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
-						<!-- search input -->
-						<div class="card-header form-row pb-0 d-flex flex-column" style="font-family: 'qc-semibold';">
-							<h6 style="line-height: 8px;">Jenis-jenis sampah</h6>
-							<p class="font-italic text-muted text-xs">*harga dapat berubah sewaktu-waktu</p>
-						</div>
-						<!-- container table -->
-						<div class="card-body px-0 pb-2">
-							<div class="table-responsive p-0 position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
-								<!-- spinner -->
-								<div id="list-sampah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-								</div>
-								<!-- message not found -->
-								<div id="list-sampah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-									<h6 id="text-notfound" class='opacity-6'></h6>
-								</div>
-								<!-- table -->
-								<table id="table-jenis-sampah" class="table table-striped text-center mb-0">
-									<thead class="position-sticky bg-white" style="top: 0;">
-										<tr>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												#
-											</th>
-											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Kategori
-											</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Jenis
-											</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Harga
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										
-									</tbody>
-									<?php for ($i=0; $i < 0; $i++) { ?>
-									<?php } ?>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="container-fluid mt-4 p-0">
+			<div class="container-fluid mt-5 p-0">
 				<div class="row px-4">
 					<div class="col-lg-12 p-0">
 						<div class="row">
@@ -359,8 +337,56 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="row mt-5">
+				<div class="col-12">
+					<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
+						<!-- header -->
+						<div class="card-header form-row pb-0 d-flex flex-column" style="font-family: 'qc-semibold';">
+							<h6 style="line-height: 8px;">Jenis-jenis sampah</h6>
+							<p class="font-italic text-muted text-xs">*harga dapat berubah sewaktu-waktu</p>
+						</div>
+						<!-- container table -->
+						<div class="card-body px-0 pb-2">
+							<div class="table-responsive p-0 position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
+								<!-- spinner -->
+								<div id="list-sampah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+								</div>
+								<!-- message not found -->
+								<div id="list-sampah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<h6 id="text-notfound" class='opacity-6'></h6>
+								</div>
+								<!-- table -->
+								<table id="table-jenis-sampah" class="table table-striped text-center mb-0">
+									<thead class="position-sticky bg-white" style="top: 0;">
+										<tr>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												#
+											</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Kategori
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Jenis
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Harga
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										
+									</tbody>
+									<?php for ($i=0; $i < 0; $i++) { ?>
+									<?php } ?>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
 				<!-- Footer -->
-				<footer class="footer mt-5">
+				<footer class="footer mt-4">
 					<div class="container-fluid p-0">
 						<div class="mb-2">
 							<div class="copyright text-center text-sm text-muted text-lg-start">

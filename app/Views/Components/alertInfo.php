@@ -2,7 +2,7 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-    <style></style>
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/alertinfo.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->

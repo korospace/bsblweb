@@ -42,7 +42,7 @@ class AdminModel extends Model
     public function getAdminByUsername(string $username): array
     {
         try {
-            $dataAdmin = $this->db->table($this->table)->select("id,password,privilege,last_active")->where("username",$username)->get()->getResultArray();
+            $dataAdmin = $this->db->table($this->table)->select("id,password,privilege,active,last_active")->where("username",$username)->get()->getResultArray();
 
             if (empty($dataAdmin)) {    
                 return [
@@ -285,7 +285,7 @@ class AdminModel extends Model
                 $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,active,last_active,created_at")->where("id",$get['id'])->where("id !=",$id_admin)->get()->getFirstRow();
             } 
             else {
-                $admin = $this->db->table($this->table)->select("id,nama_lengkap,privilege")->where("id !=",$id_admin)->get()->getResultArray();
+                $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,active,privilege")->where("id !=",$id_admin)->orderBy('created_at','DESC')->get()->getResultArray();
             }
             
             if (empty($admin)) {    
@@ -373,7 +373,8 @@ class AdminModel extends Model
     {
         try {
             $timeNow    = time();
-            $rangeTotal = (3600*24)*30;
+            // $rangeTotal = (3600*24)*30;
+            $rangeTotal = (3600*24)*1;
             $builder    = $this->db;
             $admins     = $builder->query("SELECT id FROM admin WHERE $timeNow-last_active >= $rangeTotal")->getResultArray();
             

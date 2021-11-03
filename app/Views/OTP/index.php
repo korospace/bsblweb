@@ -27,7 +27,10 @@
 			border-radius: 4px;
 		}
 	</style>
-  	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  	<!-- ** develoment ** -->
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+    <!-- ** production ** -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/otp.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -36,7 +39,6 @@
 		const EMAIL    = '<?= $email; ?>';
 		const PASSWORD = '<?= $password; ?>';
 	</script>
-	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/otp.js'); ?>"></script>
 <?= $this->endSection(); ?>
 

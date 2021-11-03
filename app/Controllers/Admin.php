@@ -29,9 +29,12 @@ class Admin extends ResourceController
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
+        // dd($result);
         $data   = [
-            'title' => 'Admin | dashboard',
-            'token' => $token
+            'title'     => 'Admin | dashboard',
+            'token'     => $token,
+            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -46,15 +49,17 @@ class Admin extends ResourceController
     }
 
     /**
-     * Profile admin
+     * View list admin
      */
-    public function profileAdmin()
+    public function listAdminView()
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
         $data   = [
-            'title' => 'Admin | profile',
-            'token' => $token
+            'title'     => 'Admin | list admin',
+            'token'     => $token,
+            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -63,7 +68,11 @@ class Admin extends ResourceController
             return redirect()->to(base_url().'/login');
         } else {
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
-            return view('Admin/profile',$data);
+            if ($data['privilege'] != 'super') {
+                return redirect()->to(base_url().'/admin');
+            } else {
+                return view('Admin/listAdmin',$data);
+            }
         }
     }
 
@@ -75,8 +84,10 @@ class Admin extends ResourceController
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
         $data   = [
-            'title' => 'Admin | list nasabah',
-            'token' => $token
+            'title'     => 'Admin | list nasabah',
+            'token'     => $token,
+            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -127,8 +138,10 @@ class Admin extends ResourceController
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
         $data   = [
-            'title' => 'Admin | list artikel',
-            'token' => $token
+            'title'     => 'Admin | list artikel',
+            'token'     => $token,
+            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -149,8 +162,9 @@ class Admin extends ResourceController
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
         $data   = [
-            'title' => 'Admin | tambah artikel',
-            'token' => $token
+            'title'    => 'Admin | tambah artikel',
+            'token'    => $token,
+            'username' => (isset($result['username']))  ? $result['username']  : null,
         ];
         
         if($result['success'] == false) {
@@ -173,9 +187,10 @@ class Admin extends ResourceController
 
         if ($id!=null) {
             $data   = [
-                'title'    => 'Admin | edit artikel',
-                'idartikel'=> $id,
-                'token'    => $token
+                'title'     => 'Admin | edit artikel',
+                'idartikel' => $id,
+                'token'     => $token,
+                'username'  => (isset($result['username']))  ? $result['username']  : null,
             ];
             
             if($result['success'] == false) {
@@ -198,6 +213,29 @@ class Admin extends ResourceController
             'title' => 'Admin | FormTranskasi'
         ];
             return view('/Admin/transaksi',$data);
+    }
+
+    /**
+     * Profile admin
+     */
+    public function profileAdmin()
+    {
+        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $result = $this->baseController->checkToken($token, false);
+        $data   = [
+            'title'     => 'Admin | profile',
+            'token'     => $token,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
+        ];
+        
+        if($result['success'] == false) {
+            setcookie('tokenAdmin', null, -1, '/');
+            unset($_COOKIE['tokenAdmin']);
+            return redirect()->to(base_url().'/login');
+        } else {
+            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+            return view('Admin/profile',$data);
+        }
     }
 
     /**
@@ -232,15 +270,17 @@ class Admin extends ResourceController
                 if (password_verify($login_pass,$database_pass)) {
 
                     // is admin active or not
+                    $active      = $adminData['message']['active'];
                     $last_active = $adminData['message']['last_active'];
-                    $rangeTotal  = (3600*24)*30;
+                    // $rangeTotal  = (3600*24)*30;
+                    $rangeTotal  = (3600*24)*1;
                     $privilege   = $adminData['message']['privilege'];
 
-                    if (time()-$last_active >= $rangeTotal && $privilege != 'super') {
+                    if (time()-$last_active >= $rangeTotal && $privilege != 'super' || $active == 'f') {
                         $response = [
                             'status'   => 401,
                             'error'    => true,
-                            'messages' => 'account is no longer active',
+                            'messages' => 'akun tidak aktif',
                         ];
                 
                         return $this->respond($response,401);
@@ -249,9 +289,11 @@ class Admin extends ResourceController
                         // database row id
                         $id           = $adminData['message']['id'];
                         // generate new token
+                        // var_dump($this->request->getPost("username"));die;
                         $token        = $this->baseController->generateToken(
                             $id,
                             false,
+                            $this->request->getPost("username"),
                             $privilege,
                         );
 
@@ -278,6 +320,69 @@ class Admin extends ResourceController
                             return $this->respond($response,$editAdmin['code']);
                         }
                     } 
+                } 
+                else {
+                    $response = [
+                        'status'   => 404,
+                        'error'    => true,
+                        'messages' => [
+                            'password' => "password not match",
+                        ],
+                    ];
+            
+                    return $this->respond($response,404);
+                }
+            } 
+            else {
+                $response = [
+                    'status'   => $adminData['code'],
+                    'error'    => true,
+                    'messages' => $adminData['message'],
+                ];
+        
+                return $this->respond($response,$adminData['code']);
+            }
+        }
+    }
+
+    /**
+     * Login
+     *   url    : domain.com/admin/confirmdelete
+     *   method : POST
+     */
+    public function confirmDelete(): object
+    {
+        $data   = $this->request->getPost();
+        $this->validation->run($data,'adminLogin');
+        $errors = $this->validation->getErrors();
+
+        if($errors) {
+            $response = [
+                'status'   => 400,
+                'error'    => true,
+                'messages' => $errors,
+            ];
+    
+            return $this->respond($response,400);
+        } 
+        else {
+            // get admin data from DB by username
+            $adminData  = $this->adminModel->getAdminByUsername($this->request->getPost("username"));
+
+            if ($adminData['success'] == true) {
+                $login_pass    = $this->request->getPost("password");
+                $database_pass = $adminData['message']['password'];
+
+                // verify password
+                if (password_verify($login_pass,$database_pass)) {
+
+                    $response = [
+                        'status'   => 200,
+                        'error'    => false,
+                        'messages' => 'confirm success',
+                    ];
+
+                    return $this->respond($response,200);
                 } 
                 else {
                     $response = [

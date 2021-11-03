@@ -52,9 +52,12 @@
   <?= $this->renderSection('content'); ?>
   
   <!-- Global Js -->
+  <script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/core/popper.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/axios.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/sweetalert2.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/plugins/axios.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/plugins/sweetalert2.min.js'); ?>"></script>
   <script>
     const TOKEN   = '<?= (isset($token)) ? $token : null; ?>';
     const BASEURL = '<?= base_url(); ?>';

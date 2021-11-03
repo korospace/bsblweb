@@ -32,13 +32,11 @@ const httpRequestGet = (url) => {
                     }).then(() => {
                         window.location.replace(`${BASEURL}/login`);
                         document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                        document.cookie = `username=null; path=/;`;
                     })
                 }
                 else{
                     window.location.replace(`${BASEURL}/login`);
                     document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                    document.cookie = `username=null; path=/;`;
                 }
             }
             else if (error.response.status == 404) {
@@ -109,13 +107,11 @@ const httpRequestPost = (url,form) => {
                     }).then(() => {
                         window.location.replace(`${BASEURL}/login`);
                         document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                        document.cookie = `username=null; path=/;`;
                     })
                 }
                 else{
                     window.location.replace(`${BASEURL}/login`);
                     document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                    document.cookie = `username=null; path=/;`;
                 }
             }
             // error server
@@ -182,13 +178,11 @@ const httpRequestPut = (url,form) => {
                     }).then(() => {
                         window.location.replace(`${BASEURL}/login`);
                         document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                        document.cookie = `username=null; path=/;`;
                     })
                 }
                 else{
                     window.location.replace(`${BASEURL}/login`);
                     document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                    document.cookie = `username=null; path=/;`;
                 }
             }
             // error server
@@ -230,13 +224,11 @@ const httpRequestDelete = (url) => {
                     }).then(() => {
                         window.location.replace(`${BASEURL}/login`);
                         document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                        document.cookie = `username=null; path=/;`;
                     })
                 }
                 else{
                     window.location.replace(`${BASEURL}/login`);
                     document.cookie = `tokenAdmin=null;expires=;path=/;`;
-                    document.cookie = `username=null; path=/;`;
                 }
             }
             // error server
@@ -343,7 +335,6 @@ $('#btn-logout').on('click', function(e) {
                 Swal.close();
                 
                 document.cookie = `tokenAdmin=null; path=/;`;
-                document.cookie = `username=null; path=/;`;
                 window.location.replace(`${BASEURL}/login`);
             })
             .catch(error => {
@@ -351,7 +342,6 @@ $('#btn-logout').on('click', function(e) {
                 if (error.response.status == 401) {
                     Swal.close();
                     document.cookie = `tokenAdmin=null; path=/;`;
-                    document.cookie = `username=null; path=/;`;
                     window.location.replace(`${BASEURL}/login`);
                 }
                 // error server

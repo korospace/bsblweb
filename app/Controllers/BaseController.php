@@ -224,7 +224,6 @@ class BaseController extends Controller
 
         ($username)  ? $payload['username']  = $username  : '' ;
         ($privilege) ? $payload['privilege'] = $privilege : '' ;
-
         // var_dump($payload);die;
 
         return JWT::encode($payload, $this->getKey());
@@ -245,6 +244,7 @@ class BaseController extends Controller
             if ($dbcheck == false) {
                 return [
                     'success'   => true,
+                    'username'  => (isset($decoded['username' ])) ? $decoded['username' ] : '',
                     'privilege' => (isset($decoded['privilege'])) ? $decoded['privilege'] : '',
                     'expired'   => $decoded['expired'] - time(),
                 ];

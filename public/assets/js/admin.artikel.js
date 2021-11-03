@@ -432,6 +432,14 @@ const hapusKategori = (el,id,katName) => {
                         }
                     
                         el.parentElement.parentElement.remove();
+                        showAlert({
+                            message: `<strong>Success...</strong> kategori berhasil dihapus!`,
+                            btnclose: false,
+                            type:'success'
+                        })
+                        setTimeout(() => {
+                            hideAlert();
+                        }, 3000);
             
                         return httpRequestDelete(`${APIURL}/kategori_berita/deleteitem?id=${id}`)
                         .then(e => {

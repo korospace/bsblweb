@@ -162,8 +162,9 @@ class Admin extends ResourceController
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
         $data   = [
-            'title' => 'Admin | tambah artikel',
-            'token' => $token
+            'title'    => 'Admin | tambah artikel',
+            'token'    => $token,
+            'username' => (isset($result['username']))  ? $result['username']  : null,
         ];
         
         if($result['success'] == false) {
@@ -186,9 +187,10 @@ class Admin extends ResourceController
 
         if ($id!=null) {
             $data   = [
-                'title'    => 'Admin | edit artikel',
-                'idartikel'=> $id,
-                'token'    => $token
+                'title'     => 'Admin | edit artikel',
+                'idartikel' => $id,
+                'token'     => $token,
+                'username'  => (isset($result['username']))  ? $result['username']  : null,
             ];
             
             if($result['success'] == false) {
@@ -215,7 +217,6 @@ class Admin extends ResourceController
         $data   = [
             'title'     => 'Admin | profile',
             'token'     => $token,
-            'username'  => (isset($result['username']))  ? $result['username']  : null,
             'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
@@ -280,6 +281,7 @@ class Admin extends ResourceController
                         // database row id
                         $id           = $adminData['message']['id'];
                         // generate new token
+                        // var_dump($this->request->getPost("username"));die;
                         $token        = $this->baseController->generateToken(
                             $id,
                             false,

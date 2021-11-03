@@ -192,6 +192,14 @@ class Admin extends ResourceController
         }
     }
 
+    public function formTransaksi()
+    {
+        $data = [
+            'title' => 'Admin | FormTranskasi'
+        ];
+            return view('/Admin/transaksi',$data);
+    }
+
     /**
      * Login
      *   url    : domain.com/admin/login

@@ -400,8 +400,8 @@
                       <i class="fas fa-phone-alt"></i>
                     </div>
                     <div class="info">
-                      <p><a>1800-121-3637</a></p>
-                      <p><a>+91 924-614-7999</a></p>
+                      <p><a>+62 813-8562-4543</a></p>
+                      <p><a>+62 878-7191-1407</a></p>
                     </div>
                   </div>
                   <div class="single_info">
@@ -418,7 +418,7 @@
                       <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div class="info">
-                      <p>125, Park street aven, Brocklyn,<span>Newyork.</span></p>
+                      <p><a>Jl. H. Gaim No.50, RT.10/RW.2, Petukangan Utara, Kec. Pesanggrahan, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta.</a></p>
                     </div>
                   </div>
                 </div>

@@ -29,6 +29,7 @@ class Admin extends ResourceController
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
+        dd($result);
         $data   = [
             'title'     => 'Admin | dashboard',
             'token'     => $token,
@@ -282,8 +283,8 @@ class Admin extends ResourceController
                         $token        = $this->baseController->generateToken(
                             $id,
                             false,
+                            $this->request->getPost("username"),
                             $privilege,
-                            $this->request->getPost("username")
                         );
 
                         // edit admin in database

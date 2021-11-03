@@ -225,6 +225,8 @@ class BaseController extends Controller
         ($username)  ? $payload['username']  = $username  : '' ;
         ($privilege) ? $payload['privilege'] = $privilege : '' ;
 
+        // var_dump($payload);die;
+
         return JWT::encode($payload, $this->getKey());
     }
 

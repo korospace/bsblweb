@@ -29,7 +29,7 @@ class Admin extends ResourceController
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
-        dd($result);
+        // dd($result);
         $data   = [
             'title'     => 'Admin | dashboard',
             'token'     => $token,

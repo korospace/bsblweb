@@ -389,7 +389,7 @@ const hapusAdmin = (id) => {
                 showLoaderOnConfirm: true,
                 preConfirm: (password) => {
                     let form = new FormData();
-                    form.append('username',$.cookie("username"));
+                    form.append('username',USERNAME);
                     form.append('password',password);
         
                     return axios

@@ -26,12 +26,12 @@
 <?= $this->section('contentJs'); ?>
 	<script>
 		const IDARTIKEL = '<?= (isset($idartikel)) ? $idartikel : '' ; ?>';
+		const USERNAME  = '<?= $username; ?>';
 	</script>
 	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/jquery.cookie.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/katex.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/highlight.min.js'); ?>"></script>

@@ -174,7 +174,6 @@ $('#formLoginAdmin').on('submit', function(e) {
             hideLoadingSpinner();
             // console.log(response.data);
             document.cookie = `tokenAdmin=${response.data.token}; path=/;`;
-            document.cookie = `username=${form.get('username')}; path=/;`;
             window.location.replace(`${BASEURL}/admin`);
         })
         .catch((error) => {

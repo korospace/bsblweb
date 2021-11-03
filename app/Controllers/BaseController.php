@@ -209,7 +209,7 @@ class BaseController extends Controller
     /**
      * Generate New Token 
      */
-    public function generateToken(String $id,bool $rememberme,?String $privilege = null): string
+    public function generateToken(String $id,bool $rememberme,?String $username = null,?String $privilege = null): string
     {
         // $iat = time(); // current timestamp value
         // $nbf = $iat + 10;
@@ -222,6 +222,7 @@ class BaseController extends Controller
             "expired"    => ($rememberme == true) ? time()+2592000 : time()+3600, 
         );
 
+        ($username)  ? $payload['username']  = $username  : '' ;
         ($privilege) ? $payload['privilege'] = $privilege : '' ;
 
         return JWT::encode($payload, $this->getKey());

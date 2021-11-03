@@ -212,9 +212,7 @@
 							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 						</div>
 						<div class="card-body p-3 mt-2">
-							<div class="chart">
-								<canvas id="chart-line" class="chart-canvas"></canvas>
-							</div>
+							<canvas id="chart-line" class="chart-canvas"></canvas>
 						</div>
 					</div>
 				</div>

@@ -193,9 +193,10 @@ let chartGrafik = '';
 const updateGrafikSetor = (arrayId,arrayKg) => {
     var ctx2 = document.getElementById("chart-line").getContext("2d");
     // let chartWidth = arrayId.length*160;
-    document.querySelector("#chart-line").style.width    = '100%';
-    document.querySelector("#chart-line").style.maxHeight= '300px';
     // document.querySelector("#chart-line").style.minWidth = `${chartWidth}px`;
+    document.querySelector("#chart-line").style.width    = '100%';
+    document.querySelector("#chart-line").style.minHeight= '100%';
+    document.querySelector("#chart-line").style.maxHeight= '300px';
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
     gradientStroke1.addColorStop(1, 'rgba(193,217,102,0.2)');
@@ -487,6 +488,8 @@ const updateNasabahCard = (data) => {
 
 // update personal info
 const updatePersonalInfo = (data) => {
+    $('#profile-spinner').addClass('d-none');
+
     // email
     $('#email').html(data.email);
     // id nasabah

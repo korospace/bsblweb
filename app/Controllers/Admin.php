@@ -29,11 +29,11 @@ class Admin extends ResourceController
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
-        $privilege = (isset($result['privilege'])) ? $result['privilege'] : null;
         $data   = [
             'title'     => 'Admin | dashboard',
             'token'     => $token,
-            'privilege' => $privilege,
+            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -42,8 +42,6 @@ class Admin extends ResourceController
             return redirect()->to(base_url().'/login');
         } 
         else {
-            $username = $_COOKIE['username'];
-            setcookie('username',$username,time() + $result['expired'],'/');
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/index',$data);
         }
@@ -54,13 +52,13 @@ class Admin extends ResourceController
      */
     public function listAdminView()
     {
-        $token     = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
-        $result    = $this->baseController->checkToken($token, false);
-        $privilege = (isset($result['privilege'])) ? $result['privilege'] : null;
+        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $result = $this->baseController->checkToken($token, false);
         $data   = [
             'title'     => 'Admin | list admin',
             'token'     => $token,
-            'privilege' => $privilege,
+            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -68,10 +66,8 @@ class Admin extends ResourceController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
-            $username = $_COOKIE['username'];
-            setcookie('username',$username,time() + $result['expired'],'/');
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
-            if ($privilege != 'super') {
+            if ($data['privilege'] != 'super') {
                 return redirect()->to(base_url().'/admin');
             } else {
                 return view('Admin/listAdmin',$data);
@@ -86,11 +82,11 @@ class Admin extends ResourceController
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
-        $privilege = (isset($result['privilege'])) ? $result['privilege'] : null;
         $data   = [
             'title'     => 'Admin | list nasabah',
             'token'     => $token,
-            'privilege' => $privilege
+            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -98,8 +94,6 @@ class Admin extends ResourceController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
-            $username = $_COOKIE['username'];
-            setcookie('username',$username,time() + $result['expired'],'/');
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/listNasabah',$data);
         }
@@ -142,11 +136,11 @@ class Admin extends ResourceController
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
-        $privilege = (isset($result['privilege'])) ? $result['privilege'] : null;
         $data   = [
             'title'     => 'Admin | list artikel',
             'token'     => $token,
-            'privilege' => $privilege,
+            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -154,8 +148,6 @@ class Admin extends ResourceController
             unset($_COOKIE['tokenAdmin']);
             return redirect()->to(base_url().'/login');
         } else {
-            $username          = $_COOKIE['username'];
-            setcookie('username',$username,time() + $result['expired'],'/');
             setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
             return view('Admin/listArtikel',$data);
         }
@@ -219,11 +211,11 @@ class Admin extends ResourceController
     {
         $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
         $result = $this->baseController->checkToken($token, false);
-        $privilege = (isset($result['privilege'])) ? $result['privilege'] : null;
         $data   = [
             'title'     => 'Admin | profile',
             'token'     => $token,
-            'privilege' => $privilege,
+            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -291,6 +283,7 @@ class Admin extends ResourceController
                             $id,
                             false,
                             $privilege,
+                            $this->request->getPost("username")
                         );
 
                         // edit admin in database

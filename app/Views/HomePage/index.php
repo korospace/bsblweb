@@ -182,6 +182,31 @@
     </section>
     <!-- ***** Features Big Item End ***** -->
 
+    <!-- ***** Article Start ***** -->
+    <section class="section"id="activity">
+      <div class="container">
+        <h1 class="text-center mb-5">Artikel Bank Sampah Budi Luhur</h1>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"
+            data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
+            <div class="features-item">
+              <div class="features-icon">
+                <!-- <h2>01</h2> -->
+                <img id="img-of-article" alt="">
+                <h4 id="title-of-article"></h4>
+                <p id="paragraph-artikel"></p>
+                <a href="<?= base_url('/');?>" class="main-button">
+                  Read More
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ***** Article End ***** -->
+
     <div class="left-image-decor"></div>
 
     <!-- ***** Features Big Item Start ***** -->

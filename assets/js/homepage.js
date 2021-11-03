@@ -274,6 +274,19 @@
 	.catch(res => {
 	})
 
+	/**
+	 * Get Artikel Homepage
+	 */
+	
+	axios.get(APIURL+'/berita_acara/getitem')
+	.then(res => {
+		let judulArtikel	= res.data.data[0].title;
+		let imgArtikel		= res.data.data[0].thumbnail;
+
+		$('#title-of-article').html(judulArtikel);
+		$('#imgArtikel').attr('src', imgArtikel);
+	})
+
 	// Counter Up Data Rubbish
 	let counterUp = () => {
 		$('.counter-value').each(function () {

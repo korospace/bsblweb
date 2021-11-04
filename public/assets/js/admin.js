@@ -20,7 +20,7 @@ const httpRequestGet = (url) => {
             };
         })
         .catch((error) => {
-            // 401 Unauthorized
+            // unauthorized
             if (error.response.status == 401) {
                 if (error.response.data.messages == 'token expired') {
                     Swal.fire({
@@ -39,18 +39,18 @@ const httpRequestGet = (url) => {
                     document.cookie = `tokenAdmin=null;expires=;path=/;`;
                 }
             }
-            else if (error.response.status == 404) {
-                return {'status':404};
-            }
             // server error
-            else{
+            else if (error.response.status == 500){
                 showAlert({
                     message: `<strong>Ups...</strong> terjadi kesalahan pada server, silahkan refresh halaman.`,
                     btnclose: true,
                     type:'danger' 
                 })
             }
-
+            
+            return {
+                'status':error.response.status,
+            };
         })
 };
 
@@ -88,15 +88,8 @@ const httpRequestPost = (url,form) => {
             };
         })
         .catch((error) => {
-            // bad request
-            if (error.response.status == 400) {
-                return {
-                    'status':400,
-                    'message':error.response.data.messages
-                };
-            }
             // unauthorized
-            else if (error.response.status == 401) {
+            if (error.response.status == 401) {
                 if (error.response.data.messages == 'token expired') {
                     Swal.fire({
                         icon : 'error',
@@ -115,13 +108,18 @@ const httpRequestPost = (url,form) => {
                 }
             }
             // error server
-            else {
+            else if (error.response.status == 500){
                 showAlert({
                     message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
                     btnclose: true,
                     type:'danger'
                 })
             }
+            
+            return {
+                'status':error.response.status,
+                'message':error.response.data.messages
+            };
         })
 };
 
@@ -159,15 +157,8 @@ const httpRequestPut = (url,form) => {
             };
         })
         .catch((error) => {
-            // bad request
-            if (error.response.status == 400) {
-                return {
-                    'status':400,
-                    'message':error.response.data.messages
-                };
-            }
             // unauthorized
-            else if (error.response.status == 401) {
+            if (error.response.status == 401) {
                 if (error.response.data.messages == 'token expired') {
                     Swal.fire({
                         icon : 'error',
@@ -186,13 +177,18 @@ const httpRequestPut = (url,form) => {
                 }
             }
             // error server
-            else {
+            else if (error.response.status == 500){
                 showAlert({
                     message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
                     btnclose: true,
                     type:'danger'
                 })
             }
+            
+            return {
+                'status':error.response.status,
+                'message':error.response.data.messages
+            };
         })
 };
 
@@ -252,33 +248,24 @@ const httpRequestDelete = (url) => {
 const sessioncheck = async () => {
     showLoadingSpinner();
     let httpResponse = await httpRequestGet(`${APIURL}/admin/sessioncheck`);
+    hideLoadingSpinner();
     
     if (httpResponse.status === 200) {
         if (pageTitle === 'dashboard') {
-            hideLoadingSpinner();
-
             getTotalSampah();
             getAllKatSampah();
             getAllJenisSampah();
         }
         if (pageTitle === 'profile') {
-            hideLoadingSpinner();
-            
             getDataProfile();
         }
         if (pageTitle === 'list admin') {
-            hideLoadingSpinner();            
-
             getAllAdmin();
         }
         if (pageTitle === 'list nasabah') {
-            hideLoadingSpinner();
-
             getAllNasabah();
         }
         if (pageTitle === 'detil nasabah') {
-            hideLoadingSpinner();
-
             // update value filter transkasi
             let currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
             let currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
@@ -290,15 +277,12 @@ const sessioncheck = async () => {
             getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
         }
         if (pageTitle === 'list artikel') {
-            hideLoadingSpinner();
-
             getAllBerita();
         }
-        if (pageTitle === 'tambah artikel') {
-            hideLoadingSpinner();
-        }
         if (pageTitle === 'edit artikel') {
-            getDetailBerita();
+            setTimeout(() => {
+                getDetailBerita();
+            }, 50);
         }
     }
 };

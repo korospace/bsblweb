@@ -144,7 +144,7 @@
                 <img src="<?= base_url('assets/images/features-icon-1.png'); ?>" alt="">
                 <h4>WEBINAR</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-                <a href="<?= base_url('/artikel/webinar');?>" class="main-button">
+                <a href="<?= base_url('/homepage/webinar');?>" class="main-button">
                   Read More
                 </a>
               </div>
@@ -158,7 +158,7 @@
                 <img src="<?= base_url('assets/images/features-icon-2.png'); ?>" alt="">
                 <h4>KKN</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-                <a href="<?= base_url('/artikel/kkn');?>" class="main-button">
+                <a href="<?= base_url('/homepage/kkn');?>" class="main-button">
                   Read More
                 </a>
               </div>
@@ -169,9 +169,9 @@
             <div class="features-item">
               <div class="features-icon">
                 <img src="<?= base_url('assets/images/features-icon-3.png'); ?>" alt="">
-                <h4>Sosialisasi & Edukasi</h4>
+                <h4>KMMI</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-                <a href="<?= base_url('/artikel/psl');?>" class="main-button">
+                <a href="<?= base_url('/homepage/kmmi');?>" class="main-button">
                   Read More
                 </a>
               </div>
@@ -182,6 +182,7 @@
     </section>
     <!-- ***** Features Big Item End ***** -->
 
+    <!-- This tag is so bad kill other tag -->
     <div class="left-image-decor"></div>
 
     <!-- ***** Features Big Item Start ***** -->

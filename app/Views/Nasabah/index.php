@@ -208,7 +208,7 @@
 							</div>
 						</div>
 						<!-- spinner -->
-						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 						</div>
 						<div class="card-body p-3 mt-2">
@@ -228,7 +228,7 @@
 							</div>
 						</div>
 						<!-- spinner -->
-						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 						</div>
 						<div id="transaksi-wraper" class="card-body pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">

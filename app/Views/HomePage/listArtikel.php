@@ -3,6 +3,12 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 <style>
+	body {
+	}
+	section.wrapper {
+		margin: 0 !important;
+		min-height : 490px;
+	}
 	@media (max-width:990px) {
 		body {
 			overflow: hidden;
@@ -20,19 +26,19 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/scrollreveal.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
-<!-- <script src="<?= base_url('assets/js/dropdown/bootstrap.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/jquery-3.3.1.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/main.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/popper.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/owl.carousel.min.js'); ?>"></script> -->
-<script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
+<script>
+	const KATEGORI = '<?= $kategori; ?>';
+</script>
+<script src="<?= base_url('assets/js/artikel.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
 <?= $this->section('content'); ?>
+
+<!-- **** Loading Spinner **** -->
+<?= $this->include('Components/loadingSpinner'); ?>
+<!-- **** Alert Info **** -->
+<?= $this->include('Components/alertInfo'); ?>
 
 <body class="">
 
@@ -77,160 +83,10 @@
 	<!-- ***** Header Area End ***** -->
 
 	<!-- CARDS -->
-	<section class="wrapper">
-		<div class="header-text">
-			<h1 class="text-center">Kegiatan Webinar</h1>
-		</div>
-
-		<div class="content">
-			<div class="container">
-				<div class="row justify-content-center text-center">
-					<div class="col-md-5">
-						<div class="dropdown custom-dropdown">
-							<a href="#" data-toggle="dropdown" class="dropdown-link" aria-haspopup="true" aria-expanded="false">
-								<span class="icon-file-text-o mr-2"></span>Filetype
-							</a>
-
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<a href="#" class="dropdown-item"><span class="icon-html5 mr-3"></span>Markup HTML</a>
-								<a href="#" class="dropdown-item"><span class="icon-file-pdf-o mr-3"></span>Photoshop PDF</a>
-								<a href="#" class="dropdown-item"><span class="icon-glass mr-3"></span>Illustrator AI</a>
-								<a href="#" class="dropdown-item"><span class="icon-flag mr-3"></span>Sketch</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 pt-5">
-					<div class="card text-white card-has-bg click-col position-relative">
-						<img src="<?= base_url('assets/images/Picture42.jpg'); ?>" class="position-absolute h-100"
-							style="width:130%; opacity:0.5">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit
-										Amet Consectetur
-										dipisi?</a></h4>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-										<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 pt-5">
-					<div class="card text-white card-has-bg click-col position-relative">
-						<img src="<?= base_url('assets/images/Picture48.jpg'); ?>" class="position-absolute h-100"
-							style="width:130%; opacity:0.5">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit
-										Amet Consectetur
-										dipisi?</a></h4>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-										<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 pt-5">
-					<div class="card text-white card-has-bg click-col position-relative">
-						<img src="<?= base_url('assets/images/Picture301.jpg'); ?>" class="position-absolute h-100"
-							style="width:130%; opacity:0.5">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit
-										Amet Consectetur
-										dipisi?</a></h4>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-										<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 pt-4">
-					<div class="card text-white card-has-bg click-col position-relative">
-						<img src="<?= base_url('assets/images/Picture42.jpg'); ?>" class="position-absolute h-100"
-							style="width:130%; opacity:0.5">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit
-										Amet Consectetur
-										dipisi?</a></h4>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-										<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 pt-4">
-					<div class="card text-white card-has-bg click-col position-relative">
-						<img src="<?= base_url('assets/images/Picture48.jpg'); ?>" class="position-absolute h-100"
-							style="width:130%; opacity:0.5">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit
-										Amet Consectetur
-										dipisi?</a></h4>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-										<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 pt-4">
-					<div class="card text-white card-has-bg click-col position-relative">
-						<img src="<?= base_url('assets/images/Picture301.jpg'); ?>" class="position-absolute h-100"
-							style="width:130%; opacity:0.5">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit
-										Amet Consectetur
-										dipisi?</a></h4>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-										<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+	<section class="wrapper d-flex justify-content-center align-items-center">
+		<div class="row" id="container-article">
+			<div class="col-12 d-none" id="img-404">
+				<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
 			</div>
 		</div>
 	</section>

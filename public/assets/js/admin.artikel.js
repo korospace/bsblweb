@@ -1,13 +1,14 @@
 
 // Quil editor initialization
+Quill.register("modules/imageCompressor", imageCompressor);
 if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
     var quill = new Quill('#editor-container', {
         modules: {
             imageResize: {
                 displaySize: true
             },
-            imageCompress: {
-                quality: 0.1, // default
+            imageCompressor: {
+                quality: 0.8, // default
                 imageType: 'image/jpeg', // default
                 debug: true, // default
             },

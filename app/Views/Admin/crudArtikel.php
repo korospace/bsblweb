@@ -35,9 +35,9 @@
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/katex.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/highlight.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/quill.imageCompressor.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/quill.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/image-resize.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/quill.imageCompressor.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
 <?= $this->endSection(); ?>

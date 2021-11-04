@@ -274,49 +274,6 @@
 	.catch(res => {
 	})
 
-	/**
-	 * GET ALL ARTIKEL
-	 */
-	let arrayBerita    = [];
-	$('#container-list-artikel').addClass('d-none');
-	$('#container-list-artikel').removeClass('d-none');
-
-	 axios.get(`${APIURL}/berita_acara/getitem`)
-	 .then(res => {
-			let elBerita  = '';
-			let allBerita = res.data.data;
-			arrayBerita   = allBerita;
-		   
-			allBerita.forEach(b => {
-   
-			   let date      = new Date(parseInt(b.created_at) * 1000);
-			   let day       = date.toLocaleString("en-US",{day: "numeric"});
-			   let month     = date.toLocaleString("en-US",{month: "long"});
-			   let year      = date.toLocaleString("en-US",{year: "numeric"});
-	
-				elBerita += `<div class="col-12 col-sm-6 col-lg-4 mb-2" style="min-height: 100%;">
-				   <div class="card mb-3" style="border: 0.5px solid #D2D6DA;min-height: 100%;">
-					   <div class="position-relative">
-						   <img class="card-img-top border-radius-0 position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;;min-height: 100%;" src="${b.thumbnail}" style="opacity: 0;">
-						   <img class="card-img-top border-radius-0" src="${BASEURL}/assets/images/default-thumbnail.jpg" style="opacity: 0;">
-					   </div>
-					   <div class="card-body pb-0 d-flex flex-column justify-content-between" style="font-family: 'qc-semibold';">
-							<h4 class="card-title text-capitalize mx-1">${b.title}</h4>
-							<div class="row mb-2 mx-1">
-							   <h6 class="card-subtitle text-muted text-sm">
-							   ${day} ${month} ${year}
-							   <br>
-							   <a href="${BASEURL}/artikel/${b.kategori}"> ${b.kategori} </a>
-							   </h6>
-						   </div>
-					   </div>
-				   </div>
-			   </div>`;
-			});
-	
-			$('#container-list-artikel').html(elBerita);
-	 }).catch();
-
 	// Counter Up Data Rubbish
 	let counterUp = () => {
 		$('.counter-value').each(function () {

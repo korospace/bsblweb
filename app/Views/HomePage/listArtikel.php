@@ -3,6 +3,12 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 <style>
+	body {
+	}
+	section.wrapper {
+		margin: 0 !important;
+		min-height : 490px;
+	}
 	@media (max-width:990px) {
 		body {
 			overflow: hidden;
@@ -25,6 +31,11 @@
 
 <!-- Body -->
 <?= $this->section('content'); ?>
+
+<!-- **** Loading Spinner **** -->
+<?= $this->include('Components/loadingSpinner'); ?>
+<!-- **** Alert Info **** -->
+<?= $this->include('Components/alertInfo'); ?>
 
 <body class="">
 
@@ -65,127 +76,10 @@
 	<!-- ***** Header Area End ***** -->
 
 	<!-- CARDS -->
-	<section class="wrapper">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 pt-5">
-					<div class="card text-white card-has-bg click-col"
-						style="background-image:url('<?= base_url('assets/images/Picture42.jpg'); ?>'); object-fit: contain;">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit Amet Consectetur
-										dipisi?</a></h4>
-								<small><i class="far fa-clock"></i> October 15, 2020</small>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-									<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 pt-5">
-					<div class="card text-white card-has-bg click-col"
-					style="background-image:url('<?= base_url('assets/images/Picture48.jpg'); ?>');">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit Amet Consectetur
-										dipisi?</a></h4>
-								<small><i class="far fa-clock"></i> October 15, 2020</small>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-									<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 pt-5">
-					<div class="card text-white card-has-bg click-col"
-					style="background-image:url('<?= base_url('assets/images/Picture301.jpg'); ?>');">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit Amet Consectetur
-										dipisi?</a></h4>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-									<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 pt-4">
-					<div class="card text-white card-has-bg click-col"
-						style="background-image:url('<?= base_url('assets/images/Picture42.jpg'); ?>');">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit Amet Consectetur
-										dipisi?</a></h4>
-								<small><i class="far fa-clock"></i> October 15, 2020</small>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-									<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 pt-4">
-					<div class="card text-white card-has-bg click-col"
-					style="background-image:url('<?= base_url('assets/images/Picture48.jpg'); ?>');">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit Amet Consectetur
-										dipisi?</a></h4>
-								<small><i class="far fa-clock"></i> October 15, 2020</small>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-									<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 pt-4">
-					<div class="card text-white card-has-bg click-col"
-					style="background-image:url('<?= base_url('assets/images/Picture301.jpg'); ?>');">
-						<div class="card-img-overlay d-flex flex-column">
-							<div class="card-body">
-								<small class="card-meta mb-2">Thought Leadership</small>
-								<h4 class="card-title mt-0 "><a class="text-white" herf="#">Goverment Lorem Ipsum Sit Amet Consectetur
-										dipisi?</a></h4>
-							</div>
-							<div class="card-footer">
-								<div class="media">
-									<div class="media-body">
-									<small><i class="far fa-clock"></i> October 15, 2020</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+	<section class="wrapper d-flex justify-content-center align-items-center">
+		<div class="row" id="container-article">
+			<div class="col-12 d-none" id="img-404">
+				<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
 			</div>
 		</div>
 	</section>

@@ -16,6 +16,8 @@
  * update personal info
 */
 const updatePersonalInfo = (data) => {
+    $('#profile-spinner').addClass('d-none');
+    
     // id admin
     $('#idadmin').html(data.id);
     // nama lengkap

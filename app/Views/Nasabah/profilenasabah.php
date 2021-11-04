@@ -3,9 +3,10 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
-		section {
-			font-family: 'qc-medium';
+		td.max60-sm{
+			max-width: 100px !important;
 		}
+
 		@media (max-width: 640px) {
 			h4.text-responsive{
 				font-size: 18px;
@@ -20,7 +21,7 @@
 				font-size: 12px;
 			}
 			td.max60-sm{
-				max-width: 60px !important;
+				max-width: 52px !important;
 			}
 		} 
 	</style>
@@ -112,7 +113,7 @@
 			<div class="container-fluid py-4">
 				<div class="row">
 					<div class="col-12">
-						<div class="card h-100 position-relative">
+						<div class="card px-2 h-100 position-relative">
 							<!-- header -->
 							<div class="card-header pb-0 p-3 position-relative" style="z-index: 11;">
 								<div class="row">
@@ -127,7 +128,7 @@
 								</div>
 							</div>
 							<!-- spinner -->
-							<div id="profile-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<div id="profile-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center border-radius-lg" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 							</div>
 							<div class="table-responsive card-body mt-4 p-3">

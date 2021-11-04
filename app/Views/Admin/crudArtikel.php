@@ -211,9 +211,17 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="input-group col-lg-12 px-0 form-group table-responsive rounded-0" style="max-height: 186px;overflow: auto;border: 0.5px solid #D2D6DA;">
+					<div class="input-group col-lg-12 px-0 form-group table-responsive rounded-0 d-flex flex-column justify-content-start" style="max-height: 186px;min-height: 186px;overflow: auto;border: 0.5px solid #D2D6DA;">
+						<!-- spinner -->
+						<div id="list-kategori-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+						</div>
+						<!-- message not found -->
+						<div id="list-kategori-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<h6 id="text-notfound" class='opacity-6 text-sm'>kategori belum ditambah</h6>
+						</div>
 						<table id="table-kategori-berita" class="table table-hover text-center mb-0" style="">
-							<thead class="position-sticky bg-white" style="top: 0;">
+							<thead class="position-sticky bg-white" style="z-index: 11;top: 0;">
 								<tr>
 									<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 										#
@@ -229,8 +237,6 @@
 							<tbody>
 								
 							</tbody>
-							<?php for ($i=0; $i < 0; $i++) { ?>
-							<?php } ?>
 						</table>
 					</div>
 					<hr class="horizontal dark mt-2 mb-2">

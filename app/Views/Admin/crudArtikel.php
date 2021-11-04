@@ -36,6 +36,7 @@
 	<script src="<?= base_url('assets/js/highlight.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/quill.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/image-resize.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/quill.imageCompressor.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
 <?= $this->endSection(); ?>

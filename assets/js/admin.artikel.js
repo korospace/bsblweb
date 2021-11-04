@@ -6,6 +6,11 @@ if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
             imageResize: {
                 displaySize: true
             },
+            imageCompress: {
+                quality: 0.1, // default
+                imageType: 'image/jpeg', // default
+                debug: true, // default
+            },
             formula: true,
             syntax: true,
             toolbar: '#toolbar-container'

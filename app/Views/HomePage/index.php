@@ -169,7 +169,7 @@
             <div class="features-item">
               <div class="features-icon">
                 <img src="<?= base_url('assets/images/features-icon-3.png'); ?>" alt="">
-                <h4>PSL</h4>
+                <h4>Sosialisasi & Edukasi</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
                 <a href="<?= base_url('/artikel/psl');?>" class="main-button">
                   Read More

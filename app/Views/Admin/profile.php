@@ -2,11 +2,33 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
+	<style>
+		td.max60-sm{
+			max-width: 54px !important;
+		}
+
+		@media (max-width: 640px) {
+			h4.text-responsive{
+				font-size: 18px;
+			}
+			h5.text-responsive{
+				font-size: 16px !important;
+			}
+			p.text-responsive{
+				font-size: 12px !important;
+			}
+			tr.text-responsive{
+				font-size: 12px;
+			}
+			td.max60-sm{
+				max-width: 28px !important;
+			}
+		} 
+	</style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
-
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -67,18 +89,14 @@
 					<span class="mask bg-gradient-primary opacity-6"></span>
 				</div>
 				<div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
-					<div class="row gx-4">
-						<div class="col-auto">
+					<div class="gx-4" style="width: max-content;">
+						<div class="text-center">
 							<div class="avatar avatar-xl position-relative">
 								<img src="<?= base_url('assets/images/bruce-mars.jpg');?>" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
 							</div>
-						</div>
-						<div class="col-auto my-auto">
-							<div class="h-100">
-								<p class="mb-0 font-weight-bold text-sm" style="font-family: 'qc-medium';">
-									id: <span id="idadmin">_ _ _ _ _</span>
-								</p>
-							</div>
+							<p class="mt-2 mb-0 font-weight-bold text-sm" style="font-family: 'qc-medium';">
+								id: <span id="idadmin">_ _ _ _</span>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -86,81 +104,88 @@
 			<div class="container-fluid py-4">
 				<div class="row">
 					<div class="col-12">
-						<div class="card h-100">
-							<div class="card-header pb-0 p-3">
+						<div class="card h-100 px-2 position-relative">
+							<!-- header -->
+							<div class="card-header pb-0 p-3 position-relative" style="z-index: 11;">
 								<div class="row">
-									<div class="opacity-8 col-md-8 d-flex align-items-center">
-										<h4 style="font-family: 'qc-medium';">Personal information</h4 >
+									<div class="opacity-8 col-9 mt-1">
+										<h4 class="text-responsive" style="font-family: 'qc-medium';">Personoal information</h4 >
 									</div>
-									<div class="col-md-4 text-end">
-										<a id="btn-edit-profile" href="" class="shadow p-2 border-radius-sm" data-toggle="modal" data-target="#modalEditProfile">
+									<div class="col-3 text-end">
+										<a id="btn-edit-profile" class="shadow p-2  border-radius-sm" href="" data-toggle="modal" data-target="#modalEditProfile">
 											<i class="fas fa-user-edit text-secondary text-sm" title="Edit Profile"></i>
 										</a>
 									</div>
 								</div>
 							</div>
-							<div class="card-body mt-4 p-3">
-								<table style="font-family: 'qc-medium';">
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
+							<!-- spinner -->
+							<div id="profile-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center border-radius-lg" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+							</div>
+							<div class="table-responsive card-body mt-4 p-3">
+								<table class="" style="font-family: 'qc-medium';min-width: 490px;">
+									<tr class='text-responsive'>
+										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
 											<strong>Nama lengkap</strong>
-											&nbsp;&nbsp;&nbsp;
+
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
 											<span id="nama-lengkap" class="text-capitalize">_ _ _ _ _</span>
 										</td>
 									</tr>
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
+									<tr class='text-responsive'>
+										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
 											<strong>Username</strong>
-											&nbsp;&nbsp;&nbsp;
+
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
 											<span id="username">_ _ _ _ _</span>
 										</td>
 									</tr>
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
+									<tr class='text-responsive'>
+										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
 											<strong>Tanggal lahir</strong>
-											&nbsp;&nbsp;&nbsp;
+
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
 											<span id="tgl-lahir">_ _ _ _ _</span>
 										</td>
 									</tr>
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
+									<tr class='text-responsive'>
+										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
 											<strong>Jenis kelamin</strong>
-											&nbsp;&nbsp;&nbsp;
+
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
 											<span id="kelamin">_ _ _ _ _</span>
 										</td>
 									</tr>
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
+									<tr class='text-responsive'>
+										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
 											<strong>Alamat</strong>
-											&nbsp;&nbsp;&nbsp;
+
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
 											<span id="alamat">_ _ _ _ _</span>
 										</td>
 									</tr>
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
+									<tr class='text-responsive'>
+										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
 											<strong>No.telepon</strong>
-											&nbsp;&nbsp;&nbsp;
+
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
 											<span id="notelp">_ _ _ _ _</span>
 										</td>
 									</tr>
+									<!-- <tbody> -->
+									<!-- </tbody> -->
 								</table>
 							</div>
 						</div>

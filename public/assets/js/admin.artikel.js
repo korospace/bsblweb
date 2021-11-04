@@ -160,6 +160,7 @@ $('#search-artikel').on('keyup', function() {
  */
 const getDetailBerita = async () => {
 
+    showLoadingSpinner();
     let httpResponse = await httpRequestGet(`${APIURL}/berita_acara/getitem?id=${IDARTIKEL}`);
     hideLoadingSpinner();
     
@@ -191,9 +192,16 @@ const getDetailBerita = async () => {
  */
  let arrayKatBerita = [];
  const getAllKatBerita = async () => {
+
+    $('#list-kategori-spinner').removeClass('d-none');
     let httpResponse = await httpRequestGet(`${APIURL}/kategori_berita/getitem`);
+    $('#list-kategori-spinner').addClass('d-none');
     
     let elKategori  = `<option value='' selected>-- pilih kategori --</option>`;
+    
+    if (httpResponse.status == 404) {
+        $('#list-kategori-notfound').removeClass('d-none');
+    }
     if (httpResponse.status === 200) {
         let trKategori  = '';
         let allKategori = httpResponse.data.data;

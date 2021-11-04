@@ -19,9 +19,20 @@ class HomePage extends BaseController
     public function listArtikel(string $kategori)
     {
         $data = [
-            'title' => 'Artikel | ' . $kategori,
+            'title'    => 'Artikel | ' . $kategori,
+            'kategori' => $kategori,
         ];
 
         return view('HomePage/listArtikel', $data);
+    }
+
+    public function detilArtikel(string $id)
+    {
+        $data = [
+            'title'     => 'Artikel',
+            'idArtikel' => $id,
+        ];
+
+        return view('HomePage/detilArtikel', $data);
     }
 }

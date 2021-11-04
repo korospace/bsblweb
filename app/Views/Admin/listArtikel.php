@@ -94,9 +94,7 @@
 									</div>
 									<!-- Card List Article  -->
 									<div id="container-list-artikel" class="container-fluid p-0 row">
-										<?php for ($i=0; $i < 10; $i++) { ?>
 										
-										<?php } ?>
 									</div>
 								</div>
 							</div>

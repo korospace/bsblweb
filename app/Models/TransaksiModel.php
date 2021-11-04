@@ -201,33 +201,33 @@ class TransaksiModel extends Model
                     $transaction = false;
                 }
             } 
-            else if ($isAdmin) {
+            else {
                 $query  = 'SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.date,
                 (SELECT SUM(harga) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_setor,
+                (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
                 (SELECT SUM(jumlah) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS total_tarik,
                 (SELECT SUM(jumlah) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS total_pindah 
                 FROM transaksi';
 
-                if (isset($get['idnasabah'])) {
+                if ($isAdmin && isset($get['idnasabah'])) {
                     $id_nasabah  = $get['idnasabah'];
-                    $query      .= ' WHERE transaksi.id_nasabah = '.$id_nasabah;
+                    $query      .= " WHERE transaksi.id_nasabah = '$id_nasabah'";
                 } 
-                
+                else if (!$isAdmin && $idNasabah) {
+                    $query      .= " WHERE transaksi.id_nasabah = '$idNasabah'";
+                }
+
+                if (isset($get['date'])) {
+                    $start       = (int)strtotime('01-'.$get['date']);
+                    $end         = $start+(86400*30);
+                    $query      .= ($idNasabah || isset($get['idnasabah'])) ? ' AND' : ' WHERE' ;
+                    $query      .= " transaksi.date BETWEEN '$start' AND '$end'";
+                }
+
                 $query      .= ' ORDER BY transaksi.date ASC;';
                 $transaction = $this->db->query($query)->getResultArray();
                 $transaction = $this->filterData($transaction);
             } 
-            else {
-                $transaction = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.type,transaksi.jenis_saldo,transaksi.date,
-                (SELECT SUM(harga) AS total_setor from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
-                (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
-                (SELECT jumlah AS total_tarik from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id),
-                (SELECT jumlah AS total_pindah from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id)
-                FROM transaksi
-                WHERE transaksi.id_nasabah = '$idNasabah' ORDER BY transaksi.date ASC;")->getResultArray();
-
-                $transaction = $this->filterData($transaction);
-            }
 
             if (empty($transaction)) {    
                 return [

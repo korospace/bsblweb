@@ -26,17 +26,18 @@
 <?= $this->section('contentJs'); ?>
 	<script>
 		const IDARTIKEL = '<?= (isset($idartikel)) ? $idartikel : '' ; ?>';
+		const USERNAME  = '<?= $username; ?>';
 	</script>
-	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/katex.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/highlight.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/quill.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/image-resize.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/quill.imageCompressor.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/katex.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/highlight.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/quill.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/image-resize.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/quill.imageCompressor.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
 <?= $this->endSection(); ?>
@@ -148,7 +149,11 @@
 								
 							</select>
 							<?php if ($title !== 'Admin | edit artikel') { ?>
-								<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm d-block text-right"><u>manage kategori</u></a>
+								<div class="d-flex justify-content-end">
+									<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm" style="width: max-content;">
+										<u>manage kategori</u>
+									</a>
+								</div>
 							<?php } ?>
 						</div>
 					</div>
@@ -162,40 +167,32 @@
 							<button class="ql-italic"></button>
 							<button class="ql-underline"></button>
 							<button class="ql-strike"></button>
-						</span>
-						<span class="ql-formats">
 							<select class="ql-color"></select>
 							<select class="ql-background"></select>
-						</span>
-						<span class="ql-formats">
 							<button class="ql-script" value="sub"></button>
 							<button class="ql-script" value="super"></button>
-						</span>
-						<span class="ql-formats">
-							<button class="ql-header" value="1"></button>
-							<button class="ql-header" value="2"></button>
 							<button class="ql-blockquote"></button>
-							<button class="ql-code-block"></button>
+							<!-- <button class="ql-header" value="2"></button> -->
+							<!-- <button class="ql-header" value="1"></button> -->
+							<!-- <button class="ql-code-block"></button> -->
 						</span>
 						<span class="ql-formats">
 							<button class="ql-list" value="ordered"></button>
 							<button class="ql-list" value="bullet"></button>
 							<button class="ql-indent" value="-1"></button>
 							<button class="ql-indent" value="+1"></button>
-						</span>
-						<span class="ql-formats">
-							<button class="ql-direction" value="rtl"></button>
 							<select class="ql-align"></select>
+							<button class="ql-direction" value="rtl"></button>
 						</span>
 						<span class="ql-formats">
 							<button class="ql-link"></button>
 							<button class="ql-image"></button>
 							<button class="ql-video"></button>
-							<button class="ql-formula"></button>
+							<!-- <button class="ql-formula"></button> -->
 						</span>
-						<span class="ql-formats">
+						<!-- <span class="ql-formats">
 							<button class="ql-clean"></button>
-						</span>
+						</span> -->
 					</div>
 					<div id="editor-container"></div>
 				</div>
@@ -246,15 +243,12 @@
 									<i class="fas fa-clipboard-list text-muted"></i>
 								</span>
 							</div>
-							<input type="text" class="form-control px-2" id="kategori_name" name="kategori_name" autocomplete="off" placeholder="masukan kategori baru">
+							<input type="text" class="form-control px-2" id="NewKategoriArtikel" autocomplete="off" placeholder="masukan kategori baru">
 						</div>
-						<small
-							id="kategori_name-error"
-							class="text-danger"></small>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+					<button id="btnAddKategoriBerita" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
 						<span id="text">Simpan</span>
 						<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
 					</button>

@@ -23,11 +23,16 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-  	<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-  	<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/soft-ui-dashboard.min.js'); ?>"></script>
+	<script>
+		const USERNAME = '<?= $username; ?>';
+		console.log(USERNAME);
+	</script>
+	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
+  	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script> -->
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.dashboard.js'); ?>"></script>
 <?= $this->endSection(); ?>
@@ -565,7 +570,7 @@
 			<div class="input-group col-lg-12 mb-4 form-group">
 				<div class="container-fluid border-radius-sm p-2" style="border: 0.5px solid #D2D6DA;">
 					<!-- header -->
-					<div class="container-fluid d-flex p-0">
+					<div class="add-item container-fluid mb-2 d-flex p-0">
 						<input id="NewkategoriSampah" type="text" class="form-control px-2 text-xxs border-radius-sm" placeholder="ketik kategori baru" style="max-width: 150px;max-height: 30px;border: 0.5px solid #D2D6DA;" autocomplete="off">
 						<button id="btnAddKategoriSampah" class="badge badge-success border-0 border-radius-sm text-xxs text-lowercase ml-2">
 							<span id="text">Simpan</span>
@@ -573,7 +578,7 @@
 						</button>
 					</div>
 					<!-- body -->
-					<div id="kategori-sampah-wraper" class="container-fluid border-radius-sm p-0 mt-2 position-relative" style="min-height: 150px;max-height: 150px;overflow: auto;border: 0.5px solid #D2D6DA;">
+					<div id="kategori-sampah-wraper" class="container-fluid border-radius-sm p-0 position-relative" style="min-height: 150px;max-height: 150px;overflow: auto;border: 0.5px solid #D2D6DA;">
 						
 					</div>
 				</div>

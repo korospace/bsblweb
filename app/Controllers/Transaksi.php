@@ -32,9 +32,9 @@ class Transaksi extends ResourceController
         $result     = $this->baseController->checkToken($token);
 
         if ($result['success'] == true) {
-            if ($this->request->getGet('start')) {
+            if ($this->request->getGet('date')) {
                 $dataGet= $this->request->getGet();
-                $this->validation->run($dataGet,'getDataTransaksi');
+                $this->validation->run($dataGet,'transaksiDate');
                 $errors = $this->validation->getErrors();
 
                 if($errors) {
@@ -49,7 +49,7 @@ class Transaksi extends ResourceController
             }
             
             $isAdmin    = isset($result['message']['data']['privilege']);
-            $idNasabah  = $result['message']['data']['id'];
+            $idNasabah  = ($isAdmin) ? false : $result['message']['data']['id'];
 
             $dbresponse = $this->transaksiModel->getData($this->request->getGet(),$isAdmin,$idNasabah);
 

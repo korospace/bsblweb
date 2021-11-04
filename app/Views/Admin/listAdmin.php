@@ -3,13 +3,13 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
-		#btn-toggle{
+		.btn-toggle{
 			left: 0;
 			transition: all 0.3s;
 			transform: translateX(0px);
 		}
 
-		#btn-toggle.active{
+		.btn-toggle.active{
 			/* left: auto !important;
 			right: 0 !important; */
 			transform: translateX(25px);
@@ -32,7 +32,7 @@
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.listnasabah.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.listadmin.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -53,9 +53,9 @@
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
 							<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-							<li class="breadcrumb-item text-sm text-dark active" aria-current="page">List nasabah</li>
+							<li class="breadcrumb-item text-sm text-dark active" aria-current="page">List admin</li>
 						</ol>
-						<h6 class="font-weight-bolder mb-0">List nasabah</h6>
+						<h6 class="font-weight-bolder mb-0">List admin</h6>
 					</nav>
 					<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 						<div class="ms-auto pe-md-3 d-flex align-items-center">
@@ -87,38 +87,41 @@
 											<i class="fas fa-search text-muted"></i>
 										</span>
 									</div>
-									<input id="search-nasabah" type="text" class="form-control h-100 px-2" placeholder="nama lengkap/id nasabah" style="max-height: 39px;">
+									<input id="search-admin" type="text" class="form-control h-100 px-2" placeholder="nama lengkap/username admin" style="max-height: 39px;">
 								</div>
 								<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
-									<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('addnasabah')" style="width: 100%;">tambah</button>
+									<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="openModalAddEditAdm('addadmin')" style="width: 100%;">tambah</button>
 								</div>
 							</div>
 							<!-- container table -->
 							<div class="card-body px-0 pb-2">
 								<div class="table-responsive p-0 position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
 									<!-- spinner -->
-									<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<div id="list-admin-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 										<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 									</div>
 									<!-- message not found -->
-									<div id="list-nasabah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<div id="list-admin-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 										<h6 id="text-notfound" class='opacity-6'></h6>
 									</div>
 									<!-- table -->
-									<table id="table-nasabah" class="table table-striped text-center mb-0">
+									<table id="table-admin" class="table table-striped text-center mb-0">
 										<thead class="position-sticky bg-white" style="top: 0;">
 											<tr>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 													#
 												</th>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													ID Nasabah
+													ID ADMIN
 												</th>
 												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 													Nama lengkap
 												</th>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													Ter-verifikasi
+													Akun aktif
+												</th>
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+													Type admin
 												</th>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 													Action
@@ -154,8 +157,8 @@
 	</body>
 
 	<!-- modals Add / Edit nasabah -->
-	<div class="modal fade" id="modalAddEditNasabah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<form id="formAddEditNasabah" class="modal-dialog modal-dialog-centered" role="document" onsubmit="crudNasabah(this,event);">
+	<div class="modal fade" id="modalAddEditAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<form id="formAddEditAdmin" class="modal-dialog modal-dialog-centered" role="document" onsubmit="crudAdmin(this,event);">
 			<input type="hidden" name="id">
 			<div class="modal-content" style="overflow: hidden;">
 
@@ -171,7 +174,7 @@
 				<div class="modal-body row position-relative">
 
 					<!-- spinner -->
-					<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+					<div id="list-admin-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 						<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 					</div>
 
@@ -204,22 +207,8 @@
 							id="username-error"
 							class="text-danger"></small>
 					</div>
-					<!-- **** email **** -->
-					<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-							<span class="input-group-text bg-gray px-4 border-md border-right-0">
-								<i class="fa fa-envelope text-muted"></i>
-							</span>
-							</div>
-							<input type="text" class="form-control px-2" id="email" name="email" autocomplete="off" placeholder="Masukan email">
-						</div>
-						<small
-							id="email-error"
-							class="text-danger"></small>
-					</div>
 					<!-- **** password **** -->
-					<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
+					<div class="addadmin-item input-group col-lg-12 mb-4 form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
@@ -278,48 +267,6 @@
 							id="alamat-error"
 							class="text-danger"></small>
 					</div>
-					<!-- **** RT RW KODEPOS **** -->
-					<div class="addnasabah-item form-row mb-4" style="padding-right: 2px;">
-						<div class="col-6">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text bg-gray px-4 border-md border-right-0">
-										<i class="fas fa-home text-muted"></i>
-									</span>
-								</div>
-								<input type="text" class="form-control" id="rt" name="rt" autocomplete="off" placeholder="RT">
-							</div>
-							<small
-								id="rt-error"
-								class="text-danger"></small>
-						</div>
-						<div class="col-6">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text bg-gray px-4 border-md border-right-0">
-										<i class="fas fa-home text-muted"></i>
-									</span>
-								</div>
-								<input type="text" class="form-control" id="rw" name="rw" autocomplete="off" placeholder="RW">
-							</div>
-							<small
-								id="rw-error"
-								class="text-danger"></small>
-						</div>
-						<div class="col-12 mt-4">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text bg-gray px-4 border-md border-right-0">
-										<i class="fas fa-mail-bulk text-muted"></i>
-									</span>
-								</div>
-								<input type="text" class="form-control" id="kodepos" name="kodepos" autocomplete="off" placeholder="KODE POS">
-							</div>
-							<small
-								id="kodepos-error"
-								class="text-danger"></small>
-						</div>
-					</div>
 					<!-- **** no telp **** -->
 					<div class="input-group col-lg-12 mb-4 form-group">
 						<div class="input-group">
@@ -334,21 +281,32 @@
 							id="notelp-error"
 							class="text-danger"></small>
 					</div>
-					<!-- **** is verify **** -->
-					<div class="editnasabah-item mb-3">
+					<!-- **** superadmin **** -->
+					<div class="mb-3">
 						<label class="form-check-label">
-							verifikasi akun
+							super admin
 						</label>
 						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
-							<div id="btn-toggle" class="bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
-								<input type="checkbox" name="is_verify" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
+							<div class="btn-toggle toggle-privilege bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
+								<input type="checkbox" name="privilege" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
 							</div>
 						</div>
 					</div>
-					<hr class="editnasabah-item horizontal dark mt-2 mb-2">
-					<h6 class="editnasabah-item font-italic opacity-8">Ubah password (opsionial)</h6>
+					<!-- **** akun aktif **** -->
+					<div class="editadmin-item mb-3">
+						<label class="form-check-label">
+							akun aktif
+						</label>
+						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
+							<div class="btn-toggle toggle-akunaktif bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
+								<input type="checkbox" name="active" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
+							</div>
+						</div>
+					</div>
+					<hr class="editadmin-item horizontal dark mt-2 mb-2">
+					<h6 class="editadmin-item font-italic opacity-8">Ubah password (opsionial)</h6>
 					<!-- **** change password **** -->
-					<div class="editnasabah-item input-group col-lg-12 mt-2 mb-4 form-group">
+					<div class="editadmin-item input-group col-lg-12 mt-2 mb-4 form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">

@@ -9,7 +9,10 @@
         }
       } 
   </style>
-	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  <!-- ** develoment ** -->
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css'); ?>"> -->
+	<!-- ** production ** -->
+  <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/homepage.min.css'); ?>">
@@ -17,16 +20,13 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-  <script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/popper.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/scrollreveal.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/waypoints.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/owl-carousel.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/imgfix.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/jquery.counterup.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/js/homepage.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/plugins/scrollreveal.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/plugins/jquery.counterup.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
@@ -144,7 +144,7 @@
                 <img src="<?= base_url('assets/images/features-icon-1.png'); ?>" alt="">
                 <h4>WEBINAR</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-                <a href="<?= base_url('/');?>" class="main-button">
+                <a href="<?= base_url('/artikel/webinar');?>" class="main-button">
                   Read More
                 </a>
               </div>
@@ -158,7 +158,7 @@
                 <img src="<?= base_url('assets/images/features-icon-2.png'); ?>" alt="">
                 <h4>KKN</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-                <a href="Card-info.php" class="main-button">
+                <a href="<?= base_url('/artikel/kkn');?>" class="main-button">
                   Read More
                 </a>
               </div>
@@ -171,7 +171,7 @@
                 <img src="<?= base_url('assets/images/features-icon-3.png'); ?>" alt="">
                 <h4>PSL</h4>
                 <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-                <a href="" class="main-button">
+                <a href="<?= base_url('/artikel/psl');?>" class="main-button">
                   Read More
                 </a>
               </div>
@@ -182,31 +182,8 @@
     </section>
     <!-- ***** Features Big Item End ***** -->
 
-    <!-- ***** Article Start ***** -->
-    <section class="section" id="article">
-      <div class="container">
-        <h1 class="text-center mb-5">Artikel Bank Sampah Budi Luhur</h1>
-        <div class="card-body pb-2">
-          <div class="p-0 position-relative" style="font-family: 'qc-semibold';">
-            <!-- Card List Article  -->
-            <div id="container-list-artikel" class="container-fluid p-0 row">
-              <?php for ($i=0; $i < 3; $i++) { ?>
-              
-              <?php } ?>
-            </div>
-          </div>
-        </div>
-        <div class="d-flex justify-content-center">
-          <a href="" class="btn btn-success">Semua Artikel</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ***** Article End ***** -->
-
     <!-- This tag is so bad kill other tag -->
-      <!-- <div class="left-image-decor"></div> -->
-
+    <div class="left-image-decor"></div>
 
     <!-- ***** Features Big Item Start ***** -->
     <section class="section" id="promotion">
@@ -359,7 +336,7 @@
     <!-- footer section starts  -->
 
     <footer class="deneb_footer">
-      <div class="widget_wrapper" style="background-image: url(assets/images/footer-bg.png);">
+      <div class="widget_wrapper" style="background-image: url(assets/images/footer-bg.webp);">
         <div class="container">
           <div class="row">
             <div class="col-lg-4 col-md-6 col-12">

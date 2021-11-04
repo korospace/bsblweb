@@ -698,18 +698,11 @@ class Validation
         ],
 	];
 
-	public $getDataTransaksi = [
-		'start' => [
-            'rules'  => 'regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+	public $transaksiDate = [
+		'date' => [
+            'rules'  => 'regex_match[/^(0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
             'errors' => [
-                'regex_match' => 'format must be dd-mm-yyyy',
-            ],
-		],
-		'end' => [
-            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
-            'errors' => [
-                'required'    => "parameter 'end' is required",
-                'regex_match' => 'format must be dd-mm-yyyy',
+                'regex_match' => 'format must be mm-yyyy',
             ],
 		],
 	];

@@ -17,16 +17,10 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-<script src="<?= base_url('assets/js/font-awesome.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/jquery-2.1.0.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/popper.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/bootstrap.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/scrollreveal.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/waypoints.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/owl-carousel.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/imgfix.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/jquery.counterup.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/homepage.js'); ?>"></script>
+<script>
+	const KATEGORI = '<?= $kategori; ?>';
+</script>
+<script src="<?= base_url('assets/js/artikel.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->

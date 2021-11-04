@@ -38,6 +38,7 @@
 	<script src="<?= base_url('assets/js/plugins/quill.imageCompressor.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/quill.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/image-resize.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/compress.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
 <?= $this->endSection(); ?>
@@ -122,9 +123,9 @@
 							<i class="far fa-image text-muted"></i>
 							<h6 class="text-muted" style="display:inline;">Thumbnail</h6>
 						</div>
-						<div class="position-relative col-12 col-sm-6 mt-1 mb-2">
-							<img src="<?= base_url('assets/images/default-thumbnail.jpg'); ?>" alt="thumbnail" id="preview-thumbnail" class="img-thumbnail position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;;min-height: 100%;">
+						<div id="thumbnail-wraper" class="position-relative col-12 col-sm-6 mt-1 mb-2">
 							<img src="<?= base_url('assets/images/default-thumbnail.jpg'); ?>" class="w-100" style="opacity: 0;">
+							<img src="<?= base_url('assets/images/default-thumbnail.jpg'); ?>" alt="thumbnail" id="preview-thumbnail" class="img-thumbnail position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;;min-height: 100%;left:0;">
 						</div>
 						<div class="input-group mt-2 col-12 col-sm-6">
 							<input type="file" class="form-control" id="thumbnail" name="<?= (isset($idartikel)) ? 'new_thumbnail' : 'thumbnail' ; ?>" autocomplete="off" placeholder="thumbnail" style="min-height: 38px" onchange="changeThumbPreview(this);">

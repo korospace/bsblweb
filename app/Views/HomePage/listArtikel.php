@@ -3,12 +3,13 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 <style>
-	body {
-	}
+	body {}
+
 	section.wrapper {
 		margin: 0 !important;
-		min-height : 490px;
+		min-height: 490px;
 	}
+
 	@media (max-width:990px) {
 		body {
 			overflow: hidden;
@@ -19,9 +20,9 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>">
-<!-- <link rel="stylesheet" href="<?= base_url('assets/css/dropdown/bootstrap.dropdown.min.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/dropdown/bootstrap.dropdown.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/dropdown/owl.carousel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/dropdown/style.css'); ?>"> -->
+<link rel="stylesheet" href="<?= base_url('assets/css/dropdown/style.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -30,6 +31,11 @@
 	const KATEGORI = '<?= $kategori; ?>';
 </script>
 <script src="<?= base_url('assets/js/artikel.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dropdown/bootstrap.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dropdown/jquery-3.3.1.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dropdown/owl.carousel.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dropdown/main.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dropdown/popper.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
@@ -55,8 +61,8 @@
 					<nav class="main-nav">
 						<!-- ***** Logo Start ***** -->
 						<a class="logo" href="<?= base_url('/'); ?> ">
-							<img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt="" width="65"
-								height="55">
+							<img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt=""
+								width="65" height="55">
 						</a>
 						<!-- ***** Logo End ***** -->
 
@@ -84,6 +90,26 @@
 
 	<!-- CARDS -->
 	<section class="wrapper d-flex justify-content-center align-items-center">
+		<div class="content">
+			<div class="container">
+				<div class="row justify-content-center text-center">
+					<div class="col-md-12">
+						<div class="dropdown custom-dropdown">
+							<a href="#" data-toggle="dropdown" class="dropdown-link" aria-haspopup="true"
+								aria-expanded="false">
+								<span class="icon-file-text-o mr-2"></span>Artikel Lainnya
+							</a>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a href="#" class="dropdown-item">Webinar</a>
+								<a href="#" class="dropdown-item">KKN</a>
+								<a href="#" class="dropdown-item">NDSJN</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="row" id="container-article">
 			<div class="col-12 d-none" id="img-404">
 				<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">

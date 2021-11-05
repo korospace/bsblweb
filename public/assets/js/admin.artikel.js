@@ -1,10 +1,16 @@
 
 // Quil editor initialization
 if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
+    Quill.register("modules/imageCompressor", imageCompressor);
     var quill = new Quill('#editor-container', {
         modules: {
             imageResize: {
                 displaySize: true
+            },
+            imageCompressor: {
+                quality: 0.8, // default
+                imageType: 'image/jpeg', // default
+                debug: true, // default
             },
             formula: true,
             syntax: true,
@@ -266,6 +272,7 @@ $('#formCrudArticle').on('submit', async (e) => {
     if (validateCrudArtikel()) {
         let httpResponse = '';
         let form         = new FormData(e.target);
+        form.set('thumbnail', fileThumbnail, fileThumbnail.name);
         form.append('content',$('.ql-editor').html());
     
         showLoadingSpinner();
@@ -370,6 +377,7 @@ function validateCrudArtikel() {
  }
 
 // Thumbnail Preview
+let fileThumbnail = '';
 const changeThumbPreview = (el) => {
     // If file is not image
     if(!/image/.test(el.files[0].type)){
@@ -385,20 +393,107 @@ const changeThumbPreview = (el) => {
         return false;
     }
     // If file size more than 200kb
-    else if(el.files[0].size > 200000){
-        showAlert({
-            message: `<strong>Ukuran maximal 200kb!</strong>`,
-            btnclose: false,
-            type:'danger'
-        });setTimeout(() => {
-            hideAlert();
-        }, 3000);
+    // else if(el.files[0].size > 200000){
+    //     showAlert({
+    //         message: `<strong>Ukuran maximal 200kb!</strong>`,
+    //         btnclose: false,
+    //         type:'danger'
+    //     });setTimeout(() => {
+    //         hideAlert();
+    //     }, 3000);
 
-        el.value = "";
-        return false;
-    }
+    //     el.value = "";
+    //     return false;
+    // }
     else{
-      document.querySelector('#preview-thumbnail').src = URL.createObjectURL(el.files[0]);
+        const MAX_WIDTH  = 320;
+        const MAX_HEIGHT = 180;
+        const MIME_TYPE  = "image/webp";
+        const QUALITY    = 0.8;
+
+        const file    = el.files[0]; // get the file
+        const blobURL = URL.createObjectURL(file);
+        const img     = new Image();
+
+        img.src = blobURL;
+        img.onerror = function () {
+            URL.revokeObjectURL(this.src);
+            showAlert({
+                message: `<strong>Ups terjadi kesalahan, coba sekali lagi!</strong>`,
+                btnclose: false,
+                type:'danger'
+            });setTimeout(() => {
+                hideAlert();
+            }, 3000);
+        };
+
+        img.onload = function () {
+            URL.revokeObjectURL(this.src);
+            const [newWidth, newHeight] = calculateSize(img, MAX_WIDTH, MAX_HEIGHT);
+            const canvas = document.createElement("canvas");
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, newWidth, newHeight);
+            canvas.toBlob(
+                (blob) => {
+                    // Handle the compressed image. es. upload or save in local state
+                },
+                MIME_TYPE,
+                QUALITY
+            );
+
+            fileThumbnail = dataURLtoFile(canvas.toDataURL(),'thumbnail.webp');
+
+            if(fileThumbnail.size > 200000){
+                showAlert({
+                    message: `<strong>Ukuran file anda terlalu besar!</strong>`,
+                    btnclose: false,
+                    type:'danger'
+                });setTimeout(() => {
+                    hideAlert();
+                }, 3000);
+        
+                el.value = "";
+                return false;
+            }
+
+            document.querySelector('#preview-thumbnail').src = URL.createObjectURL(el.files[0]);
+        }
+
+        function calculateSize(img, maxWidth, maxHeight) {
+            let width = img.width;
+            let height = img.height;
+          
+            // calculate the width and height, constraining the proportions
+            if (width > height) {
+                if (width > maxWidth) {
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                }
+            } else {
+                if (height > maxHeight) {
+                    width = Math.round((width * maxHeight) / height);
+                    height = maxHeight;
+                }
+            }
+            return [width, height];
+        }
+
+        function dataURLtoFile(dataurl, filename) {
+ 
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), 
+                n = bstr.length, 
+                u8arr = new Uint8Array(n);
+                
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            
+            return new File([u8arr], filename, {type:mime});
+        }
     }
 }
 

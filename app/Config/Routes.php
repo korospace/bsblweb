@@ -32,11 +32,12 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-$routes->add('/',               'HomePage::index');
-$routes->add('/artikel/(:any)', 'HomePage::listArtikel/$1');
-$routes->add('/signup',         'SignUp::index');
-$routes->add('/login',          'Login::index');
-$routes->add('/otp',            'OTP::otp');
+$routes->add('/',                'HomePage::index');
+$routes->add('/homepage/(:any)', 'HomePage::listArtikel/$1');
+$routes->add('/artikel/(:any)',  'HomePage::detilArtikel/$1');
+$routes->add('/signup',          'SignUp::index');
+$routes->add('/login',           'Login::index');
+$routes->add('/otp',             'OTP::otp');
 
 $routes->group("nasabah", function ($routes) {
     // VIEWS
@@ -66,6 +67,7 @@ $routes->group("admin", function ($routes) {
     $routes->add('listartikel',        'Admin::listArtikelView');
     $routes->add('addartikel',         'Admin::addArtikelView');
     $routes->add('editartikel/(:any)', 'Admin::editArtikelView/$1');
+    $routes->add('transaksi',          'Admin::formTransaksi');
     $routes->add('profile',            'Admin::profileAdmin');
     // API
     $routes->post("login",           "Admin::login");
@@ -118,7 +120,12 @@ $routes->group("sampah", function ($routes) {
     $routes->add("(:any)",        "Notfound::PageNotFound");
 });
 
+
 $routes->group("transaksi", function ($routes) {
+    //VIEW
+    
+
+    //API
     $routes->post("setorsampah", "Transaksi::setorSampah");
     $routes->post("tariksaldo",  "Transaksi::tarikSaldo");
     $routes->get("getdata",      "Transaksi::getData");

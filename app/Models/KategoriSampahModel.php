@@ -14,7 +14,7 @@ class KategoriSampahModel extends Model
     public function getLastKategori(): array
     {
         try {
-            $lastKategori = $this->db->table($this->table)->select('id')->orderBy('id','DESC')->get()->getResultArray();
+            $lastKategori = $this->db->table($this->table)->select('id')->limit(1)->orderBy('id','DESC')->get()->getResultArray();
 
             if (!empty($lastKategori)) { 
                 return [

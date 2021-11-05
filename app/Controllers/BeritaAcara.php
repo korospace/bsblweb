@@ -152,6 +152,49 @@ class BeritaAcara extends ResourceController
     }
 
     /**
+     * Next Previous item
+     *   url    : domain.com/berita_acara/otheritem?id=:id
+     *   method : GET
+     */
+    public function getOtherItem(): object
+    {
+        $this->validation->run($this->request->getGet(),'getOtherItem');
+        $errors = $this->validation->getErrors();
+
+        if($errors) {
+            $response = [
+                'status'   => 400,
+                'error'    => true,
+                'messages' => $errors['id'],
+            ];
+        
+            return $this->respond($response,400);
+        }
+
+        $id         = $this->request->getGet('id');
+        $dbResponse = $this->beritaModel->getOtherItem($id);
+
+        if ($dbResponse['success'] == true) {
+            $response = [
+                'status' => 200,
+                'error'  => false,
+                'data'   => $dbResponse['message'],
+            ];
+
+            return $this->respond($response,200);
+        } 
+        else {
+            $response = [
+                'status'   => $dbResponse['code'],
+                'error'    => true,
+                'messages' => $dbResponse['message'],
+            ];
+    
+            return $this->respond($response,$dbResponse['code']);
+        }
+    }
+
+    /**
      * Update item
      *   url    : domain.com/berita_acara/edititem
      *   method : PUT

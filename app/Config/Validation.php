@@ -554,6 +554,16 @@ class Validation
 		],
 	];
 
+    public $getOtherItem = [
+		'id' => [
+            'rules'  => 'required|is_not_unique[berita_acara.id]',
+            'errors' => [
+                'required'      => 'id is required',
+                'is_not_unique' => 'berita with id ({value}) is not found',
+            ],
+		]
+	];
+
 	public $addBeritaAcara = [
 		'title' => [
             'rules'  => 'required|max_length[250]|is_unique[berita_acara.title]',

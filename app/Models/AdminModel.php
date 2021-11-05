@@ -14,7 +14,7 @@ class AdminModel extends Model
     public function getLastAdmin(): array
     {
         try {
-            $lastAdmin = $this->db->table($this->table)->select('id')->orderBy('created_at','DESC')->get()->getResultArray();
+            $lastAdmin = $this->db->table($this->table)->select('id')->limit(1)->orderBy('created_at','DESC')->get()->getResultArray();
 
             if (!empty($lastAdmin)) { 
                 return [

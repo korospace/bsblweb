@@ -14,7 +14,7 @@ class SampahModel extends Model
     public function getLastSampah(): array
     {
         try {
-            $lastSampah = $this->db->table($this->table)->select('id')->orderBy('id','DESC')->get()->getResultArray();
+            $lastSampah = $this->db->table($this->table)->select('id')->limit(1)->orderBy('id','DESC')->get()->getResultArray();
 
             if (!empty($lastSampah)) { 
                 return [

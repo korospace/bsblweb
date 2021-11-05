@@ -14,7 +14,7 @@ class BeritaAcaraModel extends Model
     public function getLastBerita(): array
     {
         try {
-            $lastBerita = $this->db->table($this->table)->select('id')->orderBy('id','DESC')->get()->getResultArray();
+            $lastBerita = $this->db->table($this->table)->select('id')->limit(1)->orderBy('id','DESC')->get()->getResultArray();
 
             if (!empty($lastBerita)) { 
                 return [
@@ -92,6 +92,78 @@ class BeritaAcaraModel extends Model
                 return [
                     'success' => true,
                     'message' => $berita
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
+    public function getOtherItem(string $id): array
+    {
+        try {
+            $allBerita = [];
+            $kategori  = $this->db->table($this->table)->select("kategori")->where("id",$id)->get()->getResultArray()[0]['kategori'];
+
+            $firstId   = $this->db->table($this->table)->select('id')->where("kategori",$kategori)->limit(1)->orderBy('id','ASC')->get()->getResultArray()[0]['id'];
+            $lastId    = $this->db->table($this->table)->select('id')->where("kategori",$kategori)->limit(1)->orderBy('id','DESC')->get()->getResultArray()[0]['id'];
+            
+            $prev       = 2;
+            $prevBerita = $this->db->query("SELECT id,title,kategori,created_at FROM berita_acara WHERE kategori = '$kategori' AND id BETWEEN '$firstId' AND '$id' ORDER BY id DESC LIMIT $prev OFFSET 1")->getResultArray();
+            
+            $next       = 2 + ($prev-count($prevBerita));
+            $nextBerita = $this->db->query("SELECT id,title,kategori,created_at FROM berita_acara WHERE kategori = '$kategori' AND id BETWEEN '$id' AND '$lastId' ORDER BY id ASC LIMIT $next OFFSET 1")->getResultArray();
+
+            if (count($nextBerita) < 2 && count($prevBerita) == 2) {
+                $limitNewNextB = 2-count($nextBerita);
+                $newNextBerita = $this->db->query("SELECT id,title,kategori,created_at FROM berita_acara WHERE kategori = '$kategori' AND id BETWEEN '$firstId' AND '".$prevBerita[1]['id']."' ORDER BY id DESC LIMIT $limitNewNextB OFFSET 1")->getResultArray();
+                
+                foreach ($newNextBerita as $key) {
+                    $nextBerita[] = $key;
+                }
+            }
+
+            if (count($prevBerita) + count($nextBerita) < 4) {
+                if (count($prevBerita) < 2) {
+                    $limitNewPrevB = 2-count($prevBerita);
+                    $newPrevBerita = $this->db->query("SELECT id,title,kategori,created_at FROM berita_acara WHERE kategori != '$kategori' ORDER BY id DESC LIMIT $limitNewPrevB")->getResultArray();
+    
+                    foreach ($newPrevBerita as $key) {
+                        $prevBerita[] = $key;
+                    }
+                }
+                if (count($nextBerita) < 2) {
+                    $limitNewNextB = 2-count($nextBerita);
+                    $newNextBerita = $this->db->query("SELECT id,title,kategori,created_at FROM berita_acara WHERE kategori != '$kategori' ORDER BY id ASC LIMIT $limitNewNextB")->getResultArray();
+    
+                    foreach ($newNextBerita as $key) {
+                        $nextBerita[] = $key;
+                    }
+                }
+            }
+
+            foreach ($prevBerita as $key) {
+                $allBerita[] = $key;
+            }
+            foreach ($nextBerita as $key) {
+                $allBerita[] = $key;
+            }
+
+            if (empty($allBerita)) {    
+                return [
+                    'success' => false,
+                    'message' => "berita notfound",
+                    'code'    => 404
+                ];
+            } else {   
+                return [
+                    'success' => true,
+                    'message' => $allBerita
                 ];
             }
         } 

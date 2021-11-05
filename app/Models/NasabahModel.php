@@ -14,7 +14,7 @@ class NasabahModel extends Model
     public function getLastNasabah(string $codepos): array
     {
         try {
-            $lastNasabah = $this->db->table($this->table)->select('id')->like('id', $codepos)->orderBy('created_at','DESC')->get()->getResultArray();
+            $lastNasabah = $this->db->table($this->table)->select('id')->like('id', $codepos)->limit(1)->orderBy('created_at','DESC')->get()->getResultArray();
 
             if (empty($lastNasabah)) {    
                 return [

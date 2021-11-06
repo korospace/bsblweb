@@ -227,11 +227,13 @@ class NasabahModel extends Model
     {
         try {
             $this->db->transBegin();
-            $this->db->table($this->table)->where('id',$data['id'])->update($data);
-            
+
             if (isset($data['saldo'])) {
                 $this->db->table('dompet')->where('id',$data['id'])->update($data['saldo']);
             } 
+
+            unset($data['saldo']);
+            $this->db->table($this->table)->where('id',$data['id'])->update($data);
 
             if ($this->db->transStatus() === true) {
                 $this->db->transCommit();

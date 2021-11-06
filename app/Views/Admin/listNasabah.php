@@ -345,12 +345,12 @@
 							</div>
 						</div>
 					</div>
-					<hr class="editnasabah-item horizontal dark mt-2 mb-2">
-					<h6 class="editnasabah-item font-italic opacity-8">Edit saldo</h6>
 
 					<!-- **** Uang, Antam, Ubs, Galery24 **** -->
+					<hr class="editnasabah-item horizontal dark mt-2 mb-2">
+					<h6 class="editnasabah-item font-italic opacity-8">Edit saldo</h6>
 					<div class="editnasabah-item form-row mt-2 mb-4" style="padding-right: 2px;">
-						<div class="col-3">
+						<div class="col-6">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text bg-gray border-md border-right-0" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
@@ -363,7 +363,7 @@
 								id="saldo_uang-error"
 								class="text-danger"></small>
 						</div>
-						<div class="col-3">
+						<div class="col-6">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text bg-gray border-md border-right-0 text-xxs" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
@@ -376,7 +376,7 @@
 								id="saldo_antam-error"
 								class="text-danger"></small>
 						</div>
-						<div class="col-3">
+						<div class="col-6 mt-3">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text bg-gray border-md border-right-0 text-xxs" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
@@ -389,7 +389,7 @@
 								id="saldo_ubs-error"
 								class="text-danger"></small>
 						</div>
-						<div class="col-3">
+						<div class="col-6 mt-3">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text bg-gray border-md border-right-0 text-xxs" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">

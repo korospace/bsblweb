@@ -140,6 +140,8 @@ const crudNasabah = async (el,event) => {
         $('#formAddEditNasabah button#submit #text').addClass('d-none');
         $('#formAddEditNasabah button#submit #spinner').removeClass('d-none');
         if (modalTitle == 'edit nasabah') {
+            form.set('is_verify',$('#formAddEditNasabah input[name=is_verify]').val());
+            
             httpResponse = await httpRequestPut(`${APIURL}/admin/editnasabah`,form);    
         } 
         else {
@@ -229,6 +231,10 @@ const editNasabah = (el,event) => {
         
         if (form.get('new_password') == '') {
             form.delete('new_password');
+        }
+
+        for (var pair of form.entries()) {
+            console.log(pair[0],pair[1]);
         }
 
         axios

@@ -272,9 +272,9 @@ const sessioncheck = async () => {
             $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
             $(`#filter-year`).val(currentYear);
 
+            getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
             getTotalSampahNasabah();
             getDataProfileNasabah();
-            getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
         }
         if (pageTitle === 'list artikel') {
             getAllBerita();

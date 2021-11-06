@@ -453,4 +453,60 @@ class Transaksi extends ResourceController
         // menampilkan hasil curl
         return $output;
     }
+
+    /**
+     * Delete nasabah
+     *   url    : domain.com/transaksi/deleteitem?id=:id
+     *   method : DELETE
+     */
+	public function deleteItem(): object
+    {
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $result     = $this->baseController->checkToken($token);
+
+        if ($result['success'] == true) {
+
+            if($this->request->getGet('id') == null) {
+                $response = [
+                    'status'   => 400,
+                    'error'    => true,
+                    'messages' => 'required parameter id',
+                ];
+        
+                return $this->respond($response,400);
+            } 
+            else {
+                $dbresponse = $this->transaksiModel->deleteItem($this->request->getGet('id'));
+
+                if ($dbresponse['success'] == true) {
+                    $response = [
+                        'status' => 201,
+                        'error' => false,
+                        'messages' => $dbresponse['message'],
+                    ];
+
+                    return $this->respond($response,201);
+                } 
+                else {
+                    $response = [
+                        'status'   => $dbresponse['code'],
+                        'error'    => true,
+                        'messages' => $dbresponse['message'],
+                    ];
+            
+                    return $this->respond($response,$dbresponse['code']);
+                }
+            }
+        } 
+        else {
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
+        }
+    }
 }

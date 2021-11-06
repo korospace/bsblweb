@@ -82,8 +82,11 @@ const getAllTransaksiNasabah = async (date) => {
                     <span class="${textClass} mt-2">${totalTransaksi}</span>
                 </div>
                 <div class="d-flex align-items-center text-sm">
-                    <a href='' class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
-                        <i class="fas fa-file-pdf text-lg me-1"></i> PDF
+                    <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 text-sm bg-info border-radius-sm"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
+                        <i class="fas fa-file-pdf text-xs text-white"></i>
+                    </a>
+                    <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 ml-1 text-sm bg-danger border-radius-sm" onclick="deleteTransaksiNasabah('${t.id_transaksi}');">
+                        <i class="fas fa-trash text-xs text-white"></i>
                     </a>
                 </div>
             </div>
@@ -333,3 +336,68 @@ const getDataProfileNasabah = async () => {
         $('#personal-info #notelp').html(dataNasabah.notelp);
     }
 };
+
+/**
+ * HAPUS TRANSAKSI
+ */
+const deleteTransaksiNasabah = (id) => {
+   Swal.fire({
+       title: 'ANDA YAKIN?',
+       text: "Data akan terhapus permanen",
+       icon: 'warning',
+       showCancelButton: true,
+       confirmButtonText: 'iya',
+   }).then((result) => {
+       if (result.isConfirmed) {
+           Swal.fire({
+               input: 'password',
+               inputAttributes: {
+                   autocapitalize: 'off'
+               },
+               html:`<h5 class='mb-4'>Password</h5>`,
+               showCancelButton: true,
+               confirmButtonText: 'submit',
+               showLoaderOnConfirm: true,
+               preConfirm: (password) => {
+                   let form = new FormData();
+                   form.append('username',USERNAME);
+                   form.append('password',password);
+       
+                   return axios
+                   .post(`${APIURL}/admin/confirmdelete`,form, {
+                       headers: {
+                           // header options 
+                       }
+                   })
+                   .then((response) => {
+                       return httpRequestDelete(`${APIURL}/transaksi/deleteitem?id=${id}`)
+                       .then((e) => {
+                           if (e.status == 201) {
+                                // update value filter transkasi
+                                let currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
+                                let currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
+                                $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
+                                $(`#filter-year`).val(currentYear);
+                    
+                                getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
+                           }
+                       })
+                   })
+                   .catch(error => {
+                       if (error.response.status == 404) {
+                           Swal.showValidationMessage(
+                               `password salah`
+                           )
+                       }
+                       else if (error.response.status == 500) {
+                           Swal.showValidationMessage(
+                               `terjadi kesalahan, coba sekali lagi`
+                           )
+                       }
+                   })
+               },
+               allowOutsideClick: () => !Swal.isLoading()
+           })
+       }
+   })
+}

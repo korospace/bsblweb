@@ -126,10 +126,11 @@ $routes->group("transaksi", function ($routes) {
     
 
     //API
-    $routes->post("setorsampah", "Transaksi::setorSampah");
-    $routes->post("tariksaldo",  "Transaksi::tarikSaldo");
-    $routes->get("getdata",      "Transaksi::getData");
-    $routes->post("pindahsaldo", "Transaksi::pindahSaldo");
+    $routes->post("setorsampah",  "Transaksi::setorSampah");
+    $routes->post("tariksaldo",   "Transaksi::tarikSaldo");
+    $routes->get("getdata",       "Transaksi::getData");
+    $routes->post("pindahsaldo",  "Transaksi::pindahSaldo");
+    $routes->delete("deleteitem", "Transaksi::deleteItem");
     $routes->add("(:any)",       "Notfound::PageNotFound");
 });
 

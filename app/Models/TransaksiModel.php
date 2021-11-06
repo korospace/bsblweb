@@ -308,4 +308,32 @@ class TransaksiModel extends Model
         return $transaction;
     }
 
+    public function deleteItem(string $id): array
+    {
+        try {
+            $this->db->table($this->table)->where('id', $id)->delete();
+            
+            if ($this->db->affectedRows() > 0) {
+                return [
+                    "success"  => true,
+                    'message' => "delete transaksi with id $id is success",
+                ];
+            } 
+            else {   
+                return [
+                    'success' => false,
+                    'message' => "transaksi with id '$id' is not found",
+                    'code'    => 404
+                ];
+            }     
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
 }

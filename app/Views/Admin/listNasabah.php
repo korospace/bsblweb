@@ -396,7 +396,7 @@
 										G24
 									</span>
 								</div>
-								<input type="text" class="form-control pl-2" id="saldo_galery24" name="saldo_galery24">
+								<input type="text" class="form-control pl-2" id="saldo_galery24" name="saldo_galery24" autocomplete="off">
 							</div>
 							<small
 								id="saldo_galery24-error"

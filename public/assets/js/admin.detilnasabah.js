@@ -62,7 +62,7 @@ const getAllTransaksiNasabah = async (date) => {
                 if (jenisSaldo == 'uang') {
                     totalTransaksi = '-Rp'+modifUang(t[`total_${type}`]);
                 } else {
-                    totalTransaksi = t[`total_${type}`]+'g';
+                    totalTransaksi = '-'+t[`total_${type}`]+'g';
                 }
             }
             else {
@@ -85,7 +85,7 @@ const getAllTransaksiNasabah = async (date) => {
                     <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 text-sm bg-info border-radius-sm"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
                         <i class="fas fa-file-pdf text-xs text-white"></i>
                     </a>
-                    <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 ml-1 text-sm bg-danger border-radius-sm" onclick="deleteTransaksiNasabah('${t.id_transaksi}');">
+                    <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 ml-1 text-sm bg-danger border-radius-sm" onclick="deleteTransaksiNasabah('${t.id_transaksi}',event);">
                         <i class="fas fa-trash text-xs text-white"></i>
                     </a>
                 </div>
@@ -340,39 +340,42 @@ const getDataProfileNasabah = async () => {
 /**
  * HAPUS TRANSAKSI
  */
-const deleteTransaksiNasabah = (id) => {
-   Swal.fire({
-       title: 'ANDA YAKIN?',
-       text: "Data akan terhapus permanen",
-       icon: 'warning',
-       showCancelButton: true,
-       confirmButtonText: 'iya',
-   }).then((result) => {
-       if (result.isConfirmed) {
-           Swal.fire({
-               input: 'password',
-               inputAttributes: {
-                   autocapitalize: 'off'
-               },
-               html:`<h5 class='mb-4'>Password</h5>`,
-               showCancelButton: true,
-               confirmButtonText: 'submit',
-               showLoaderOnConfirm: true,
-               preConfirm: (password) => {
-                   let form = new FormData();
-                   form.append('username',USERNAME);
-                   form.append('password',password);
-       
-                   return axios
-                   .post(`${APIURL}/admin/confirmdelete`,form, {
-                       headers: {
-                           // header options 
-                       }
-                   })
-                   .then((response) => {
-                       return httpRequestDelete(`${APIURL}/transaksi/deleteitem?id=${id}`)
-                       .then((e) => {
-                           if (e.status == 201) {
+const deleteTransaksiNasabah = (id,event) => {
+    event.preventDefault();
+
+    Swal.fire({
+        title: 'ANDA YAKIN?',
+        text: "Data akan terhapus permanen",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'iya',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                html:`<h5 class='mb-4'>Password</h5>`,
+                showCancelButton: true,
+                confirmButtonText: 'submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    let form = new FormData();
+                    form.append('username',USERNAME);
+                    form.append('password',password);
+        
+                    return axios
+                    .post(`${APIURL}/admin/confirmdelete`,form, {
+                        headers: {
+                            // header options 
+                        }
+                    })
+                    .then((response) => {
+                        return httpRequestDelete(`${APIURL}/transaksi/deleteitem?id=${id}`)
+                        .then((e) => {
+                            if (e.status == 201) {
+                                chartGrafik.destroy();
                                 // update value filter transkasi
                                 let currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
                                 let currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
@@ -380,24 +383,24 @@ const deleteTransaksiNasabah = (id) => {
                                 $(`#filter-year`).val(currentYear);
                     
                                 getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
-                           }
-                       })
-                   })
-                   .catch(error => {
-                       if (error.response.status == 404) {
-                           Swal.showValidationMessage(
-                               `password salah`
-                           )
-                       }
-                       else if (error.response.status == 500) {
-                           Swal.showValidationMessage(
-                               `terjadi kesalahan, coba sekali lagi`
-                           )
-                       }
-                   })
-               },
-               allowOutsideClick: () => !Swal.isLoading()
-           })
-       }
-   })
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        if (error.response.status == 404) {
+                            Swal.showValidationMessage(
+                                `password salah`
+                            )
+                        }
+                        else if (error.response.status == 500) {
+                            Swal.showValidationMessage(
+                                `terjadi kesalahan, coba sekali lagi`
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        }
+    })
 }

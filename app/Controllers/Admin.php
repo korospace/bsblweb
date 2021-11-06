@@ -113,7 +113,8 @@ class Admin extends ResourceController
                 'title'    => 'Admin | detil nasabah',
                 // 'idnasabah'=> $_POST['idnasabah'],
                 'idnasabah'=> $id,
-                'token' => $token
+                'token'    => $token,
+                'username' => (isset($result['username']))  ? $result['username']  : null,
             ];
 
             if($result['success'] == false) {

@@ -202,7 +202,7 @@ class TransaksiModel extends Model
                 }
             } 
             else {
-                $query  = 'SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.date,
+                $query  = 'SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.date,transaksi.jenis_saldo,
                 (SELECT SUM(harga) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_setor,
                 (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
                 (SELECT SUM(jumlah) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS total_tarik,

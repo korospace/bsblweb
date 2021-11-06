@@ -55,6 +55,7 @@
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
 	<script>
+		const USERNAME  = '<?= $username; ?>';
 		const IDNASABAH = '<?= $idnasabah; ?>';
 	</script>
 	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>

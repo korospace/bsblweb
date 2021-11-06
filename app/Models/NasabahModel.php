@@ -229,7 +229,7 @@ class NasabahModel extends Model
             $this->db->transBegin();
 
             if (isset($data['saldo'])) {
-                $this->db->table('dompet')->where('id',$data['id'])->update($data['saldo']);
+                $this->db->table('dompet')->where('id_nasabah',$data['id'])->update($data['saldo']);
             } 
 
             unset($data['saldo']);

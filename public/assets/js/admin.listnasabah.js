@@ -141,7 +141,7 @@ const crudNasabah = async (el,event) => {
         $('#formAddEditNasabah button#submit #spinner').removeClass('d-none');
         if (modalTitle == 'edit nasabah') {
             form.set('is_verify',$('#formAddEditNasabah input[name=is_verify]').val());
-            
+
             httpResponse = await httpRequestPut(`${APIURL}/admin/editnasabah`,form);    
         } 
         else {
@@ -152,7 +152,9 @@ const crudNasabah = async (el,event) => {
 
         if (httpResponse.status === 201) {
             getAllNasabah();
-            clearInputForm();
+            if (modalTitle == 'tambah nasabah') {
+                clearInputForm();
+            } 
 
             showAlert({
                 message: `<strong>Success...</strong> nasabah berhasil ${(modalTitle == 'tambah nasabah') ? 'ditambah' : 'diedit' }!`,

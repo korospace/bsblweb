@@ -893,6 +893,12 @@ class Admin extends ResourceController
                         "tgl_lahir"    => trim($data['tgl_lahir']),
                         "kelamin"      => $data['kelamin'],
                         "is_verify"    => (trim($data['is_verify']) == '1') ?true:false,
+                        "saldo"        => [
+                            "uang"     => trim($data['saldo_uang']),
+                            "antam"    => trim($data['saldo_antam']),
+                            "ubs"      => trim($data['saldo_ubs']),
+                            "galery24" => trim($data['saldo_galery24']),
+                        ]
                     ];
     
                     if ($newpass != '') {

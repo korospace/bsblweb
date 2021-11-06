@@ -335,7 +335,35 @@ class Validation
                 'required'    => 'is_verify is required',
                 'in_list'     => "value must be '1' or '0'",
             ],
-		]
+		],
+		'saldo_uang' => [
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required'   => 'saldo_uang is required',
+                'numeric'    => 'only number allowed',
+            ],
+		],
+		'saldo_antam' => [
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required'   => 'saldo_antam is required',
+                'numeric'    => 'only number allowed',
+            ],
+		],
+		'saldo_ubs' => [
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required'   => 'saldo_ubs is required',
+                'numeric'    => 'only number allowed',
+            ],
+		],
+		'saldo_galery24' => [
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required'   => 'saldo_galery24 is required',
+                'numeric'    => 'only number allowed',
+            ],
+		],
 	];
 
 	public $editNewPassword = [

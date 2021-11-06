@@ -346,6 +346,64 @@
 						</div>
 					</div>
 					<hr class="editnasabah-item horizontal dark mt-2 mb-2">
+					<h6 class="editnasabah-item font-italic opacity-8">Edit saldo</h6>
+
+					<!-- **** Uang, Antam, Ubs, Galery24 **** -->
+					<div class="editnasabah-item form-row mt-2 mb-4" style="padding-right: 2px;">
+						<div class="col-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray border-md border-right-0" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
+										<i class="fas fa-money-bill-wave-alt text-muted"></i>
+									</span>
+								</div>
+								<input type="text" class="form-control pl-2" id="saldo_uang" name="saldo_uang" autocomplete="off">
+							</div>
+							<small
+								id="saldo_uang-error"
+								class="text-danger"></small>
+						</div>
+						<div class="col-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray border-md border-right-0 text-xxs" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
+										ANT
+									</span>
+								</div>
+								<input type="text" class="form-control pl-2" id="saldo_antam" name="saldo_antam" autocomplete="off">
+							</div>
+							<small
+								id="saldo_antam-error"
+								class="text-danger"></small>
+						</div>
+						<div class="col-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray border-md border-right-0 text-xxs" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
+										UBS
+									</span>
+								</div>
+								<input type="text" class="form-control pl-2" id="saldo_ubs" name="saldo_ubs" autocomplete="off">
+							</div>
+							<small
+								id="saldo_ubs-error"
+								class="text-danger"></small>
+						</div>
+						<div class="col-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray border-md border-right-0 text-xxs" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
+										G24
+									</span>
+								</div>
+								<input type="text" class="form-control pl-2" id="saldo_galery24" name="saldo_galery24">
+							</div>
+							<small
+								id="saldo_galery24-error"
+								class="text-danger"></small>
+						</div>
+					</div>
+					<hr class="editnasabah-item horizontal dark mt-2 mb-2">
 					<h6 class="editnasabah-item font-italic opacity-8">Ubah password (opsionial)</h6>
 					<!-- **** change password **** -->
 					<div class="editnasabah-item input-group col-lg-12 mt-2 mb-4 form-group">

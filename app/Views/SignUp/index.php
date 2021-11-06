@@ -84,7 +84,7 @@
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text bg-gray border-md border-right-0" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-                  <i class="fa fa-lock text-muted"></i>
+                    <i class="fa fa-lock text-muted"></i>
                   </span>
                 </div>
                 <input type="password" class="form-control" id="password-regist" name="password" autocomplete="off" placeholder="Masukan password">

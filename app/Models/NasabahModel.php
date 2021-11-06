@@ -226,22 +226,23 @@ class NasabahModel extends Model
     public function editProfileNasabah(array $data): array
     {
         try {
+            $this->db->transBegin();
             $this->db->table($this->table)->where('id',$data['id'])->update($data);
             
-            if ($this->db->affectedRows() > 0) {
+            if (isset($data['saldo'])) {
+                $this->db->table('dompet')->where('id',$data['id'])->update($data['saldo']);
+            } 
+
+            if ($this->db->transStatus() === true) {
+                $this->db->transCommit();
                 return [
                     "success"  => true,
                     'message' => 'edit profile is success',
                 ];
-            } 
-            else {   
-                return [
-                    'success' => true,
-                    'message' => "nothing updated",
-                ];
-            }  
+            }
         } 
         catch (Exception $e) {
+            $this->db->transRollback();
             return [
                 'success' => false,
                 'message' => $e->getMessage(),

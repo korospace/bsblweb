@@ -440,6 +440,75 @@ const doValidate = (form) => {
         }
     }
 
+    // saldo uang validation
+    if ($('#formAddEditNasabah #saldo_uang').val() == '') {
+        $('#formAddEditNasabah #saldo_uang').addClass('is-invalid');
+        status = false;
+    }
+    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_uang').val())) {
+        $('#formAddEditNasabah #saldo_uang').addClass('is-invalid');
+        showAlert({
+            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
+            btnclose: false,
+            type:'danger'
+        })
+        setTimeout(() => {
+            hideAlert();
+        }, 3000);
+        status = false;
+    }
+    // saldo antam validation
+    if ($('#formAddEditNasabah #saldo_antam').val() == '') {
+        $('#formAddEditNasabah #saldo_antam').addClass('is-invalid');
+        status = false;
+    }
+    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_antam').val())) {
+        $('#formAddEditNasabah #saldo_antam').addClass('is-invalid');
+        showAlert({
+            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
+            btnclose: false,
+            type:'danger'
+        })
+        setTimeout(() => {
+            hideAlert();
+        }, 3000);
+        status = false;
+    }
+    // saldo ubs validation
+    if ($('#formAddEditNasabah #saldo_ubs').val() == '') {
+        $('#formAddEditNasabah #saldo_ubs').addClass('is-invalid');
+        status = false;
+    }
+    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_ubs').val())) {
+        $('#formAddEditNasabah #saldo_ubs').addClass('is-invalid');
+        showAlert({
+            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
+            btnclose: false,
+            type:'danger'
+        })
+        setTimeout(() => {
+            hideAlert();
+        }, 3000);
+        status = false;
+    }
+    // saldo g24 validation
+    if ($('#formAddEditNasabah #saldo_galery24').val() == '') {
+        $('#formAddEditNasabah #saldo_galery24').addClass('is-invalid');
+        status = false;
+    }
+    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_galery24').val())) {
+        $('#formAddEditNasabah #saldo_galery24').addClass('is-invalid');
+        showAlert({
+            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
+            btnclose: false,
+            type:'danger'
+        })
+        setTimeout(() => {
+            hideAlert();
+        }, 3000);
+        status = false;
+    }
+
     // tgl lahir validation
     if ($('#formAddEditNasabah #tgllahir').val() == '') {
         $('#formAddEditNasabah #tgllahir').addClass('is-invalid');

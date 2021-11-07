@@ -40,7 +40,7 @@ const getAllAdmin = async () => {
                     <span class="font-weight-bold badge border ${(n.privilege === 'super')? 'text-primary border-primary' : 'text-info border-info'} pb-1 rounded-sm"> ${(n.privilege === 'super')? 'superadmin' : 'admin'} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin('${n.id}')">hapus</span>
+                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin(this,'${n.id}')">hapus</span>
                     <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="openModalAddEditAdm('editadmin','${n.id}')">edit</span>
                 </td>
             </tr>`;
@@ -251,6 +251,66 @@ $('#formAddEditAdmin input[type=checkbox]').on('click', function(e) {
     }
 });
 
+/**
+ * HAPUS ADMIN
+ */
+const hapusAdmin = (el,id) => {
+    Swal.fire({
+        title: 'ANDA YAKIN?',
+        text: "Data akan terhapus permanen",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'iya',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                html:`<h5 class='mb-4'>Password</h5>`,
+                showCancelButton: true,
+                confirmButtonText: 'submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    let form = new FormData();
+                    form.append('username',USERNAME);
+                    form.append('password',password);
+        
+                    return axios
+                    .post(`${APIURL}/admin/confirmdelete`,form, {
+                        headers: {
+                            // header options 
+                        }
+                    })
+                    .then((response) => {
+                        return httpRequestDelete(`${APIURL}/admin/deleteadmin?id=${id}`)
+                        .then((e) => {
+                            if (e.status == 201) {
+                                el.parentElement.parentElement.remove();
+                                arrayAdmin = arrayAdmin.filter(e => e.id != id);
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        if (error.response.status == 404) {
+                            Swal.showValidationMessage(
+                                `password salah`
+                            )
+                        }
+                        else if (error.response.status == 500) {
+                            Swal.showValidationMessage(
+                                `terjadi kesalahan, coba sekali lagi`
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        }
+    })
+}
+
 // form validation
 const doValidate = (form) => {
     let status     = true;
@@ -288,6 +348,14 @@ const doValidate = (form) => {
         $('#formAddEditAdmin #username-error').html('*tidak boleh ada spasi');
         status = false;
     }
+    // check username is exist
+    arrayAdmin.forEach(a => {
+        if (a.username.toLowerCase() == $('#formAddEditAdmin #username').val().toLowerCase().trim()) {
+            $('#formAddEditAdmin #username').addClass('is-invalid');
+            $('#formAddEditAdmin #username-error').html('*username sudah dipakai');
+            status = false;
+        }
+    });
 
     // add nasabah
     if (!$('#modalAddEditAdmin .addadmin-item').hasClass('d-none')) {
@@ -362,65 +430,14 @@ const doValidate = (form) => {
         $('#formAddEditAdmin #notelp-error').html('*hanya boleh angka');
         status = false;
     }
+    // check notelp is exist
+    arrayAdmin.forEach(a => {
+        if (a.notelp.toLowerCase() == $('#formAddEditAdmin #notelp').val().toLowerCase().trim()) {
+            $('#formAddEditAdmin #notelp').addClass('is-invalid');
+            $('#formAddEditAdmin #notelp-error').html('*nomor sudah dipakai');
+            status = false;
+        }
+    });
 
     return status;
-}
-
-/**
- * HAPUS ADMIN
- */
-const hapusAdmin = (id) => {
-    Swal.fire({
-        title: 'ANDA YAKIN?',
-        text: "Data akan terhapus permanen",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'iya',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                input: 'password',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                html:`<h5 class='mb-4'>Password</h5>`,
-                showCancelButton: true,
-                confirmButtonText: 'submit',
-                showLoaderOnConfirm: true,
-                preConfirm: (password) => {
-                    let form = new FormData();
-                    form.append('username',USERNAME);
-                    form.append('password',password);
-        
-                    return axios
-                    .post(`${APIURL}/admin/confirmdelete`,form, {
-                        headers: {
-                            // header options 
-                        }
-                    })
-                    .then((response) => {
-                        return httpRequestDelete(`${APIURL}/admin/deleteadmin?id=${id}`)
-                        .then((e) => {
-                            if (e.status == 201) {
-                                getAllAdmin();
-                            }
-                        })
-                    })
-                    .catch(error => {
-                        if (error.response.status == 404) {
-                            Swal.showValidationMessage(
-                                `password salah`
-                            )
-                        }
-                        else if (error.response.status == 500) {
-                            Swal.showValidationMessage(
-                                `terjadi kesalahan, coba sekali lagi`
-                            )
-                        }
-                    })
-                },
-                allowOutsideClick: () => !Swal.isLoading()
-            })
-        }
-    })
 }

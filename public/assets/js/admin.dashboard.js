@@ -44,7 +44,7 @@ const getAllKatSampah = async () => {
                    <div class="d-flex align-items-center text-md" onclick="changeKatSampahVal(this,'${k.name}')" style="flex: 1;">
                        ${k.name} <i class="checklist fas fa-check-circle text-muted ml-2"></i>
                    </div>
-                   <span class="add-item badge badge-danger border-radius-sm cursor-pointer"  onclick="deleteKatSampahVal(this,'${k.id}','${k.name}')">
+                   <span class="add-item badge badge-danger border-radius-sm cursor-pointer"  onclick="hapusKatSampahVal(this,'${k.id}','${k.name}')">
                        <i class="fas fa-trash text-white"></i>
                    </span>
                </div>
@@ -97,41 +97,6 @@ $('#btnAddKategoriSampah').on('click', async function(e) {
     }
 });
 
-// validate add kategori sampah
-function validateAddKategori() {
-   let status = true;
-
-   if ($('input#NewkategoriSampah').val() == '') {
-       showAlert({
-           message: `<strong>Masukan kategori baru !</strong>`,
-           btnclose: true,
-           type:'danger'
-       })
-       status = false;
-   }
-   else if ($('input#NewkategoriSampah').val().length > 20) {
-       showAlert({
-           message: `<strong>Kategori baru maximal 20 huruf !</strong>`,
-           btnclose: true,
-           type:'danger'
-       })
-       status = false;
-   }
-   // check kategori is exist
-   arrayKatSampah.forEach(ks => {
-       if (ks.name.toLowerCase() == $('input#NewkategoriSampah').val().toLowerCase().trim()) {
-           showAlert({
-               message: `<strong>Kategori sudah tersedia !</strong>`,
-               btnclose: true,
-               type:'danger'
-           })
-           status = false;
-       }
-   });
-
-   return status;
-}
-
 /**
  * GET ALL JENIS SAMPAH
  */
@@ -174,7 +139,7 @@ function validateAddKategori() {
                      <span class="font-weight-bold"> ${n.jumlah} </span>
                  </td>
                  <td class="align-middle text-center">
-                     <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah('${n.id}')">hapus</span>
+                     <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah(this,'${n.id}')">hapus</span>
                      <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('editasampah','${n.id}')">edit</span>
                  </td>
              </tr>`;
@@ -384,7 +349,7 @@ const editSampah = async (el,event) => {
 /**
   * HAPUS KATEGORI SAMPAH
   */
-const deleteKatSampahVal = (el,id,katName) => {
+const hapusKatSampahVal = (el,id,katName) => {
     Swal.fire({
         title: 'ANDA YAKIN?',
         text: `semua sampah dengan kategori '${katName}' akan ikut terhapus`,
@@ -418,15 +383,12 @@ const deleteKatSampahVal = (el,id,katName) => {
                             $('#formAddEditSampah input[name=kategori]').val('');    
                         }
                     
-                        el.parentElement.parentElement.remove();
-            
                         return httpRequestDelete(`${APIURL}/kategori_sampah/deleteitem?id=${id}`)
                         .then(e => {
                             if (e.status == 201) {
+                                el.parentElement.parentElement.remove();
+                                arrayKatSampah = arrayKatSampah.filter(e => e.id != id);
                                 getAllJenisSampah();
-                            }
-                            else if (e.status == 500) {
-                                getAllKatSampah();
                             }
                         })
                     })
@@ -452,7 +414,7 @@ const deleteKatSampahVal = (el,id,katName) => {
  /**
   * HAPUS JENIS SAMPAH
   */
-const hapusSampah = (id) => {
+const hapusSampah = (el,id) => {
     Swal.fire({
         title: 'ANDA YAKIN?',
         text: "Data akan terhapus permanen",
@@ -485,7 +447,8 @@ const hapusSampah = (id) => {
                         return httpRequestDelete(`${APIURL}/sampah/deleteitem?id=${id}`)
                         .then((e) => {
                             if (e.status == 201) {
-                                getAllJenisSampah();
+                                el.parentElement.parentElement.remove();
+                                arrayJenisSampah = arrayJenisSampah.filter(e => e.id != id);
                             }
                         })
                     })
@@ -508,6 +471,41 @@ const hapusSampah = (id) => {
     })
 }
 
+// validate add kategori sampah
+function validateAddKategori() {
+   let status = true;
+
+   if ($('input#NewkategoriSampah').val() == '') {
+       showAlert({
+           message: `<strong>Masukan kategori baru !</strong>`,
+           btnclose: true,
+           type:'danger'
+       })
+       status = false;
+   }
+   else if ($('input#NewkategoriSampah').val().length > 20) {
+       showAlert({
+           message: `<strong>Kategori baru maximal 20 huruf !</strong>`,
+           btnclose: true,
+           type:'danger'
+       })
+       status = false;
+   }
+   // check kategori is exist
+   arrayKatSampah.forEach(ks => {
+       if (ks.name.toLowerCase() == $('input#NewkategoriSampah').val().toLowerCase().trim()) {
+           showAlert({
+               message: `<strong>Kategori sudah tersedia !</strong>`,
+               btnclose: true,
+               type:'danger'
+           })
+           status = false;
+       }
+   });
+
+   return status;
+}
+
 // validate add sampah
 const doValidateAddSmp = () => {
     let status = true;
@@ -527,6 +525,14 @@ const doValidateAddSmp = () => {
         $('#formAddEditSampah #jenis-error').html('*maksimal 40 huruf');
         status = false;
     }
+    // check jenis is exist
+    arrayJenisSampah.forEach(s => {
+        if (s.jenis.toLowerCase() == $('#formAddEditSampah #jenis').val().toLowerCase().trim()) {
+            $('#formAddEditSampah #jenis').addClass('is-invalid');
+            $('#formAddEditSampah #jenis-error').html('*jenis sudah tersedia');
+            status = false;
+        }
+    });
     // harga validation
     if ($('#formAddEditSampah #harga').val() == '') {
         $('#formAddEditSampah #harga').addClass('is-invalid');

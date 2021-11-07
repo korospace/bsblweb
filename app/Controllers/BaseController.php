@@ -210,7 +210,7 @@ class BaseController extends ResourceController
     /**
      * Privilege check
      */
-    public function checkPrivilege(array $resultCheckToken): array
+    public function checkPrivilege(array $resultCheckToken): object
     {
         $privilege  = (isset($resultCheckToken['message']['data']['privilege']) ) ? $resultCheckToken['message']['data']['privilege'] : 'nasabah';
 

@@ -348,7 +348,7 @@ class Admin extends BaseController
     public function confirmDelete(): object
     {
         $data   = $this->request->getPost();
-        $this->validation->run($data,'adminLogin');
+        $this->validation->run($data,'confirmDelete');
         $errors = $this->validation->getErrors();
 
         if($errors) {
@@ -361,44 +361,27 @@ class Admin extends BaseController
             return $this->respond($response,400);
         } 
         else {
-            // get admin data from DB by username
-            $adminData  = $this->adminModel->getAdminByUsername($this->request->getPost("username"));
+            // verify password
+            if (password_verify($data['password'],$data['hashedpass'])) {
 
-            if ($adminData['success'] == true) {
-                $login_pass    = $this->request->getPost("password");
-                $database_pass = $adminData['message']['password'];
+                $response = [
+                    'status'   => 200,
+                    'error'    => false,
+                    'messages' => 'confirm success',
+                ];
 
-                // verify password
-                if (password_verify($login_pass,$database_pass)) {
-
-                    $response = [
-                        'status'   => 200,
-                        'error'    => false,
-                        'messages' => 'confirm success',
-                    ];
-
-                    return $this->respond($response,200);
-                } 
-                else {
-                    $response = [
-                        'status'   => 404,
-                        'error'    => true,
-                        'messages' => [
-                            'password' => "password not match",
-                        ],
-                    ];
-            
-                    return $this->respond($response,404);
-                }
+                return $this->respond($response,200);
             } 
             else {
                 $response = [
-                    'status'   => $adminData['code'],
+                    'status'   => 404,
                     'error'    => true,
-                    'messages' => $adminData['message'],
+                    'messages' => [
+                        'password' => "password not match",
+                    ],
                 ];
         
-                return $this->respond($response,$adminData['code']);
+                return $this->respond($response,404);
             }
         }
     }

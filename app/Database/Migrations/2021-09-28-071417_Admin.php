@@ -72,8 +72,7 @@ class Admin extends Migration
                 'null' => false,
             ],
             'token' => [
-                'type' => 'character varying',
-                'constraint' => 255,
+                'type' => 'text',
                 'null' => true,
             ]
         ]);

@@ -440,6 +440,21 @@ class Validation
             ],
 		],
 	];
+
+    public $confirmDelete = [
+		'hashedpass' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'hashed password is required',
+            ],
+		],
+		'password' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'password is required',
+            ],
+		],
+	];
     
 	public $editProfileAdmin = [
 		'username' => [

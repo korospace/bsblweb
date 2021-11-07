@@ -90,7 +90,7 @@ $('#search-admin').on('keyup', function() {
                     <span class="font-weight-bold badge border ${(n.privilege === 'super')? 'text-primary border-primary' : 'text-info border-info'} pb-1 rounded-sm"> ${(n.privilege === 'super')? 'superadmin' : 'admin'} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin('${n.id}')">hapus</span>
+                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin(this,'${n.id}')">hapus</span>
                     <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="openModalAddEditAdm('editadmin','${n.id}')">edit</span>
                 </td>
             </tr>`;
@@ -289,6 +289,10 @@ const hapusAdmin = (el,id) => {
                             if (e.status == 201) {
                                 el.parentElement.parentElement.remove();
                                 arrayAdmin = arrayAdmin.filter(e => e.id != id);
+                                if (arrayAdmin.length == 0) {
+                                    $('#list-admin-notfound').removeClass('d-none'); 
+                                    $('#list-admin-notfound #text-notfound').html(`admin belum ditambah`); 
+                                } 
                             }
                         })
                     })
@@ -348,14 +352,6 @@ const doValidate = (form) => {
         $('#formAddEditAdmin #username-error').html('*tidak boleh ada spasi');
         status = false;
     }
-    // check username is exist
-    arrayAdmin.forEach(a => {
-        if (a.username.toLowerCase() == $('#formAddEditAdmin #username').val().toLowerCase().trim()) {
-            $('#formAddEditAdmin #username').addClass('is-invalid');
-            $('#formAddEditAdmin #username-error').html('*username sudah dipakai');
-            status = false;
-        }
-    });
 
     // add nasabah
     if (!$('#modalAddEditAdmin .addadmin-item').hasClass('d-none')) {
@@ -430,14 +426,6 @@ const doValidate = (form) => {
         $('#formAddEditAdmin #notelp-error').html('*hanya boleh angka');
         status = false;
     }
-    // check notelp is exist
-    arrayAdmin.forEach(a => {
-        if (a.notelp.toLowerCase() == $('#formAddEditAdmin #notelp').val().toLowerCase().trim()) {
-            $('#formAddEditAdmin #notelp').addClass('is-invalid');
-            $('#formAddEditAdmin #notelp-error').html('*nomor sudah dipakai');
-            status = false;
-        }
-    });
 
     return status;
 }

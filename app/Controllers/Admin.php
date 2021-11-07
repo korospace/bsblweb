@@ -27,7 +27,7 @@ class Admin extends BaseController
         $data   = [
             'title'     => 'Admin | dashboard',
             'token'     => $token,
-            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'password'  => (isset($result['password']))  ? $result['password']  : null,
             'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
@@ -52,7 +52,7 @@ class Admin extends BaseController
         $data   = [
             'title'     => 'Admin | list admin',
             'token'     => $token,
-            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'password'  => (isset($result['password']))  ? $result['password']  : null,
             'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
@@ -80,7 +80,7 @@ class Admin extends BaseController
         $data   = [
             'title'     => 'Admin | list nasabah',
             'token'     => $token,
-            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'password'  => (isset($result['password']))  ? $result['password']  : null,
             'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
@@ -108,7 +108,7 @@ class Admin extends BaseController
                 // 'idnasabah'=> $_POST['idnasabah'],
                 'idnasabah'=> $id,
                 'token'    => $token,
-                'username' => (isset($result['username']))  ? $result['username']  : null,
+                'password' => (isset($result['password']))  ? $result['password']  : null,
             ];
 
             if($result['success'] == false) {
@@ -135,7 +135,7 @@ class Admin extends BaseController
         $data   = [
             'title'     => 'Admin | list artikel',
             'token'     => $token,
-            'username'  => (isset($result['username']))  ? $result['username']  : null,
+            'password'  => (isset($result['password']))  ? $result['password']  : null,
             'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
@@ -159,7 +159,7 @@ class Admin extends BaseController
         $data   = [
             'title'    => 'Admin | tambah artikel',
             'token'    => $token,
-            'username' => (isset($result['username']))  ? $result['username']  : null,
+            'password' => (isset($result['password']))  ? $result['password']  : null,
         ];
         
         if($result['success'] == false) {
@@ -288,7 +288,7 @@ class Admin extends BaseController
                         $token        = $this->generateToken(
                             $id,
                             false,
-                            $this->request->getPost("username"),
+                            $database_pass,
                             $privilege,
                         );
 

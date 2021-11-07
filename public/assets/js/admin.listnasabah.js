@@ -37,7 +37,7 @@ const getAllNasabah = async () => {
                     <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_verify === 't')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah('${n.id}')">hapus</span>
+                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah(this,'${n.id}')">hapus</span>
                     <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')">edit</span>
                     <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer">detil</a>
                     <span id="btn-detil" class="d-none badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" onclick="goToDetilNasabah('${n.id}')">detil</span>
@@ -86,7 +86,7 @@ $('#search-nasabah').on('keyup', function() {
                     <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_verify === 't')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah('${n.id}')">hapus</span>
+                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah(this,'${n.id}')">hapus</span>
                     <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')">edit</span>
                     <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer">detil</a>
                     <span id="btn-detil" class="d-none badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" onclick="goToDetilNasabah('${n.id}')">detil</span>
@@ -563,7 +563,7 @@ const doValidate = (form) => {
 /**
  * HAPUS NASABAH
  */
-const hapusNasabah = (id) => {
+const hapusNasabah = (el,id) => {
     Swal.fire({
         title: 'ANDA YAKIN?',
         text: "Semua data transaksi dan saldo nasabah akan ikut terhapus",
@@ -596,7 +596,12 @@ const hapusNasabah = (id) => {
                         return httpRequestDelete(`${APIURL}/admin/deletenasabah?id=${id}`)
                         .then((e) => {
                             if (e.status == 201) {
-                                getAllNasabah();
+                                el.parentElement.parentElement.remove();
+                                arrayNasabah = arrayNasabah.filter(e => e.id != id);
+                                if (arrayNasabah.length == 0) {
+                                    $('#list-nasabah-notfound').removeClass('d-none'); 
+                                    $('#list-nasabah-notfound #text-notfound').html(`nasabah belum ditambah`); 
+                                } 
                             }
                         })
                     })

@@ -141,7 +141,7 @@ $('#search-artikel').on('keyup', function() {
                             </a>
                         </div>
                         <div class="col-6">
-                            <span class="w-100 btn btn-danger p-2 border-radius-sm" style="height: 34px;" onclick="hapusArtikel('${b.id}');">
+                            <span class="w-100 btn btn-danger p-2 border-radius-sm" style="height: 34px;" onclick="hapusArtikel(this,'${b.id}');">
                                 <i class="fas fa-trash text-white"></i>
                             </span>
                         </div>
@@ -610,6 +610,11 @@ const hapusArtikel = (el,id) => {
                         .then((e) => {
                             if (e.status == 201) {
                                 el.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+                                arrayBerita = arrayBerita.filter(e => e.id != id);
+                                if (arrayBerita.length == 0) {
+                                    $('#list-artikel-notfound').removeClass('d-none'); 
+                                    $('#list-artikel-notfound #text-notfound').html(`artikel belum ditambah`); 
+                                } 
                             }
                         })
                     })

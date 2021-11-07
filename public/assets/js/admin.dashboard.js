@@ -217,7 +217,7 @@ $('#search-sampah').on('keyup', function() {
                 <span class="font-weight-bold"> ${n.jumlah} </span>
             </td>
             <td class="align-middle text-center">
-                <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah('${n.id}')">hapus</span>
+                <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah(this,'${n.id}')">hapus</span>
                 <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('editasampah','${n.id}')">edit</span>
             </td>
         </tr>`;
@@ -449,6 +449,10 @@ const hapusSampah = (el,id) => {
                             if (e.status == 201) {
                                 el.parentElement.parentElement.remove();
                                 arrayJenisSampah = arrayJenisSampah.filter(e => e.id != id);
+                                if (arrayJenisSampah.length == 0) {
+                                    $('#list-sampah-notfound').removeClass('d-none'); 
+                                    $('#list-sampah-notfound #text-notfound').html(`sampah belum ditambah`); 
+                                } 
                             }
                         })
                     })
@@ -525,14 +529,6 @@ const doValidateAddSmp = () => {
         $('#formAddEditSampah #jenis-error').html('*maksimal 40 huruf');
         status = false;
     }
-    // check jenis is exist
-    arrayJenisSampah.forEach(s => {
-        if (s.jenis.toLowerCase() == $('#formAddEditSampah #jenis').val().toLowerCase().trim()) {
-            $('#formAddEditSampah #jenis').addClass('is-invalid');
-            $('#formAddEditSampah #jenis-error').html('*jenis sudah tersedia');
-            status = false;
-        }
-    });
     // harga validation
     if ($('#formAddEditSampah #harga').val() == '') {
         $('#formAddEditSampah #harga').addClass('is-invalid');

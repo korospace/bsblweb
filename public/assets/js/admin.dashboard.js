@@ -97,74 +97,6 @@ $('#btnAddKategoriSampah').on('click', async function(e) {
     }
 });
 
-/**
-  * HAPUS KATEGORI SAMPAH
-  */
-const deleteKatSampahVal = (el,id,katName) => {
-    Swal.fire({
-        title: 'ANDA YAKIN?',
-        text: `semua sampah dengan kategori '${katName}' akan ikut terhapus`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'iya',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                input: 'password',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                html:`<h5 class='mb-4'>Password</h5>`,
-                showCancelButton: true,
-                confirmButtonText: 'submit',
-                showLoaderOnConfirm: true,
-                preConfirm: (password) => {
-                    let form = new FormData();
-                    form.append('username',USERNAME);
-                    form.append('password',password);
-        
-                    return axios
-                    .post(`${APIURL}/admin/confirmdelete`,form, {
-                        headers: {
-                            // header options 
-                        }
-                    })
-                    .then((response) => {
-                        if ($('#formAddEditSampah input[name=kategori]').val() == katName) {
-                            $('#formAddEditSampah input[name=kategori]').val('');    
-                        }
-                    
-                        el.parentElement.parentElement.remove();
-            
-                        return httpRequestDelete(`${APIURL}/kategori_sampah/deleteitem?id=${id}`)
-                        .then(e => {
-                            if (e.status == 201) {
-                                getAllJenisSampah();
-                            }
-                            else if (e.status == 500) {
-                                getAllKatSampah();
-                            }
-                        })
-                    })
-                    .catch(error => {
-                        if (error.response.status == 404) {
-                            Swal.showValidationMessage(
-                                `password salah`
-                            )
-                        }
-                        else if (error.response.status == 500) {
-                            Swal.showValidationMessage(
-                                `terjadi kesalahan, coba sekali lagi`
-                            )
-                        }
-                    })
-                },
-                allowOutsideClick: () => !Swal.isLoading()
-            })
-        }
-    })
-};
-
 // validate add kategori sampah
 function validateAddKategori() {
    let status = true;
@@ -448,6 +380,74 @@ const editSampah = async (el,event) => {
         }
     }
 }
+
+/**
+  * HAPUS KATEGORI SAMPAH
+  */
+const deleteKatSampahVal = (el,id,katName) => {
+    Swal.fire({
+        title: 'ANDA YAKIN?',
+        text: `semua sampah dengan kategori '${katName}' akan ikut terhapus`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'iya',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                html:`<h5 class='mb-4'>Password</h5>`,
+                showCancelButton: true,
+                confirmButtonText: 'submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    let form = new FormData();
+                    form.append('username',USERNAME);
+                    form.append('password',password);
+        
+                    return axios
+                    .post(`${APIURL}/admin/confirmdelete`,form, {
+                        headers: {
+                            // header options 
+                        }
+                    })
+                    .then((response) => {
+                        if ($('#formAddEditSampah input[name=kategori]').val() == katName) {
+                            $('#formAddEditSampah input[name=kategori]').val('');    
+                        }
+                    
+                        el.parentElement.parentElement.remove();
+            
+                        return httpRequestDelete(`${APIURL}/kategori_sampah/deleteitem?id=${id}`)
+                        .then(e => {
+                            if (e.status == 201) {
+                                getAllJenisSampah();
+                            }
+                            else if (e.status == 500) {
+                                getAllKatSampah();
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        if (error.response.status == 404) {
+                            Swal.showValidationMessage(
+                                `password salah`
+                            )
+                        }
+                        else if (error.response.status == 500) {
+                            Swal.showValidationMessage(
+                                `terjadi kesalahan, coba sekali lagi`
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        }
+    })
+};
 
  /**
   * HAPUS JENIS SAMPAH

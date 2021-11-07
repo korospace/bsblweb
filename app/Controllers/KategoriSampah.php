@@ -1,21 +1,17 @@
 <?php
 
 namespace App\Controllers;
+use App\Controllers\BaseController;
 
 use App\Models\KategoriSampahModel;
-use App\Controllers\BaseController;
-use CodeIgniter\RESTful\ResourceController;
-use Exception;
 
-class KategoriSampah extends ResourceController
+class KategoriSampah extends BaseController
 {
-    public $basecontroller;
     public $kategoriModel;
 
 	public function __construct()
     {
         $this->validation     = \Config\Services::validation();
-        $this->baseController = new BaseController;
         $this->kategoriModel  = new KategoriSampahModel;
     }
 
@@ -28,7 +24,8 @@ class KategoriSampah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
             $data = $this->request->getPost(); 
@@ -145,7 +142,8 @@ class KategoriSampah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
             $this->validation->run($this->request->getGet(),'idForDeleteCheck');

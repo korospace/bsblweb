@@ -1,22 +1,18 @@
 <?php
 
 namespace App\Controllers;
+use App\Controllers\BaseController;
 
 use App\Models\SampahModel;
-use App\Controllers\BaseController;
-use CodeIgniter\RESTful\ResourceController;
-use Exception;
 
-class Sampah extends ResourceController
+class Sampah extends BaseController
 {
-    public $baseController;
     public $sampahModel;
 
 	public function __construct()
     {
-        $this->validation     = \Config\Services::validation();
-        $this->baseController = new BaseController;
-        $this->sampahModel    = new SampahModel;
+        $this->validation  = \Config\Services::validation();
+        $this->sampahModel = new SampahModel;
     }
 
     /**
@@ -28,7 +24,8 @@ class Sampah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
             $data = $this->request->getPost(); 
@@ -120,7 +117,7 @@ class Sampah extends ResourceController
         $isAdmin    = false;
 
         if (!is_null($token)) {
-            $result = $this->baseController->checkToken($token);
+            $result = $this->checkToken($token);
         
             if (isset($result['message']['data']['privilege'])) {
                 $isAdmin = true;
@@ -162,7 +159,7 @@ class Sampah extends ResourceController
         $id         = null;
 
         if (!is_null($token)) {
-            $result = $this->baseController->checkToken($token);
+            $result = $this->checkToken($token);
         
             if ($result['success'] == true) {
                 if (isset($result['message']['data']['privilege'])) {
@@ -216,10 +213,11 @@ class Sampah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
-            $this->baseController->_methodParser('data');
+            $this->_methodParser('data');
             global $data;
 
             $this->validation->run($data,'updateSampah');
@@ -285,7 +283,8 @@ class Sampah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
             $this->validation->run($this->request->getGet(),'idForDeleteCheck');

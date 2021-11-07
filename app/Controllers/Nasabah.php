@@ -1,26 +1,19 @@
 <?php
 
 namespace App\Controllers;
+use App\Controllers\BaseController;
 
 use App\Models\NasabahModel;
-use App\Models\SampahModel;
 use App\Models\TransaksiModel;
-use App\Controllers\BaseController;
-use CodeIgniter\Model;
-use CodeIgniter\RESTful\ResourceController;
-use Exception;
 
-class Nasabah extends ResourceController
+class Nasabah extends BaseController
 {
-    public $basecontroller;
     public $nasabahModel;
 
 	public function __construct()
     {
-        // date_default_timezone_set("Asia/Jakarta");
-        $this->validation     = \Config\Services::validation();
-        $this->baseController = new BaseController;
-        $this->nasabahModel   = new NasabahModel;
+        $this->validation   = \Config\Services::validation();
+        $this->nasabahModel = new NasabahModel;
     }
 
     /**
@@ -29,7 +22,7 @@ class Nasabah extends ResourceController
     public function dashboardNasabah()
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
-        $result = $this->baseController->checkToken($token,false);
+        $result = $this->checkToken($token,false);
         $data   = [
             'title' => 'Nasabah | dashboard',
             'token' => $token,
@@ -53,7 +46,7 @@ class Nasabah extends ResourceController
     public function profileNasabah()
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
-        $result = $this->baseController->checkToken($token,false);
+        $result = $this->checkToken($token,false);
         $data = [
             'title' => 'Nasabah | profile',
             'token' => $token,
@@ -91,7 +84,7 @@ class Nasabah extends ResourceController
             ];
         }
         
-        $result = $this->baseController->checkToken($token['value']);
+        $result = $this->checkToken($token['value']);
 
         if ($token['value'] == null || $result['success'] == false) {
             if ($token['user'] == 'nasabah') {
@@ -273,7 +266,7 @@ class Nasabah extends ResourceController
         } 
         else {
             $email        = trim($data['email']);
-            $otp          = $this->baseController->generateOTP(6);
+            $otp          = $this->generateOTP(6);
 
             $lastNasabah  = $this->nasabahModel->getLastNasabah($data['kodepos']);
             $idNasabah    = '';
@@ -303,7 +296,7 @@ class Nasabah extends ResourceController
                 "email"        => $email,
                 "username"     => trim($data['username']),
                 // "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
-                "password"     => $this->baseController->encrypt($data['password']),
+                "password"     => $this->encrypt($data['password']),
                 "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
                 "notelp"       => trim($data['notelp']),
                 "alamat"       => trim($data['alamat']),
@@ -316,7 +309,7 @@ class Nasabah extends ResourceController
             $addNasabah = $this->nasabahModel->addNasabah($data);
 
             if ($addNasabah['success'] == true) {
-                $sendEmail = $this->baseController->sendVerification($email,$otp);
+                $sendEmail = $this->sendVerification($email,$otp);
 
                 if ($sendEmail == true) {
                     $response = [
@@ -424,7 +417,7 @@ class Nasabah extends ResourceController
 
             if ($nasabahData['success'] == true) {
                 $login_pass    = $this->request->getPost("password");
-                $database_pass = $this->baseController->decrypt($nasabahData['message']['password']);
+                $database_pass = $this->decrypt($nasabahData['message']['password']);
                 
                 // if (password_verify($login_pass,$database_pass)) {
                 if ($login_pass === $database_pass) {
@@ -445,7 +438,7 @@ class Nasabah extends ResourceController
                         // rememberMe check
                         $rememberme   = ($this->request->getPost("rememberme") == '1') ? true : false;
                         // generate new token
-                        $token        = $this->baseController->generateToken(
+                        $token        = $this->generateToken(
                             $id,
                             $rememberme
                         );
@@ -507,7 +500,7 @@ class Nasabah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
 
         if ($result['success'] == true) {
             return $this->respond($result['message'],200);
@@ -532,7 +525,7 @@ class Nasabah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
 
         if ($result['success'] == true) {
             
@@ -578,7 +571,7 @@ class Nasabah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
 
         if ($result['success'] == true) {
             
@@ -624,10 +617,10 @@ class Nasabah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
 
         if ($result['success'] == true) {
-            $this->baseController->_methodParser('data');
+            $this->_methodParser('data');
             global $data;
             $data['id'] = $result['message']['data']['id']; 
 
@@ -681,10 +674,10 @@ class Nasabah extends ResourceController
                     ];
 
                     if ($newpass != '') {
-                        $dbPass = $this->baseController->decrypt($dataNasabah[0]['password']);
+                        $dbPass = $this->decrypt($dataNasabah[0]['password']);
                         
                         if ($oldpass === $dbPass) {
-                            $data['password'] = $this->baseController->encrypt($newpass);
+                            $data['password'] = $this->encrypt($newpass);
                             unset($data['new_password']);
                             unset($data['old_password']);
                         } 
@@ -741,7 +734,7 @@ class Nasabah extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
 
         if ($result['success'] == true) {
             
@@ -801,8 +794,8 @@ class Nasabah extends ResourceController
         else {
             $email         = $this->request->getPost("email");
             $nasabahData   = $this->nasabahModel->getNasabahByEmail($email);
-            $database_pass = $this->baseController->decrypt($nasabahData['message']['password']);
-            $sendEmail     = $this->baseController->sendForgotPass($email,$database_pass);
+            $database_pass = $this->decrypt($nasabahData['message']['password']);
+            $sendEmail     = $this->sendForgotPass($email,$database_pass);
 
             if ($sendEmail == true) {
                 $response = [
@@ -846,7 +839,7 @@ class Nasabah extends ResourceController
             return $this->respond($response,400);
         } 
         else {
-            $sendEmail = $this->baseController->sendKritikSaran($_POST['name'],$_POST['email'],$_POST['message']);
+            $sendEmail = $this->sendKritikSaran($_POST['name'],$_POST['email'],$_POST['message']);
 
             if ($sendEmail == true) {
                 $response = [

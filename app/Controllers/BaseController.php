@@ -9,6 +9,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+use CodeIgniter\RESTful\ResourceController;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -26,7 +27,7 @@ use Exception as phpException;
  *
  * For security be sure to declare any new methods as protected or private.
  */
-class BaseController extends Controller
+class BaseController extends ResourceController
 {
     /**
      * Instance of the main Request object.
@@ -204,6 +205,24 @@ class BaseController extends Controller
         catch (Exception $e) {
             return $e;
         }
+    }
+
+    /**
+     * Privilege check
+     */
+    public function checkPrivilege(array $resultCheckToken): array
+    {
+        $privilege  = (isset($resultCheckToken['message']['data']['privilege']) ) ? $resultCheckToken['message']['data']['privilege'] : 'nasabah';
+
+        if (!in_array($privilege,['admin','super'])) {
+            $response = [
+                'status'   => 401,
+                'error'    => true,
+                'messages' => 'access denied',
+            ];
+    
+            return $this->respond($response,401);
+        } 
     }
 
     /**

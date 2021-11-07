@@ -16,10 +16,14 @@
 };
 
 // filter transaksi on change
+let currentYear  = '';
+let currentMonth = '';
 $('.filter-transaksi').on('input', function(e) {
     if ($(`#filter-year`).val().length == 4) {
         chartGrafik.destroy();
-        getAllTransaksiNasabah(`${$(`#filter-month`).val()}-${$(`#filter-year`).val()}`);
+        currentYear  = $(`#filter-year`).val();
+        currentMonth = $(`#filter-month`).val();
+        getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
     }
 });
 
@@ -376,11 +380,6 @@ const deleteTransaksiNasabah = (id,event) => {
                         .then((e) => {
                             if (e.status == 201) {
                                 chartGrafik.destroy();
-                                // update value filter transkasi
-                                let currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
-                                let currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
-                                $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
-                                $(`#filter-year`).val(currentYear);
                     
                                 getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
                             }

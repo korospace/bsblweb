@@ -50,8 +50,8 @@ if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
             let month     = date.toLocaleString("en-US",{month: "long"});
             let year      = date.toLocaleString("en-US",{year: "numeric"});
  
-             elBerita += `<div class="col-12 col-sm-6 col-lg-4" style="min-height: 100%;">
-                <div class="card mb-3" style="border: 0.5px solid #D2D6DA;min-height: 100%;">
+             elBerita += `<div class="col-12 col-sm-6 col-lg-4 mb-4" style="min-height: 100%;">
+                <div class="card" style="border: 0.5px solid #D2D6DA;min-height: 100%;">
                     <div class="position-relative">
                         <img class="card-img-top border-radius-0 position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;;min-height: 100%;" src="${b.thumbnail}" style="opacity: 0;">
                         <img class="card-img-top border-radius-0" src="${BASEURL}/assets/images/default-thumbnail.jpg" style="opacity: 0;">
@@ -75,7 +75,7 @@ if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
                                 </a>
                             </div>
                             <div class="col-6">
-                                <span class="w-100 btn btn-danger p-2 border-radius-sm" style="height: 34px;" onclick="hapusArtikel('${b.id}');">
+                                <span class="w-100 btn btn-danger p-2 border-radius-sm" style="height: 34px;" onclick="hapusArtikel(this,'${b.id}');">
                                     <i class="fas fa-trash text-white"></i>
                                 </span>
                             </div>
@@ -194,8 +194,10 @@ const getDetailBerita = async () => {
  const getAllKatBerita = async () => {
 
     $('#list-kategori-spinner').removeClass('d-none');
+    $('#table-kategori-berita tbody').addClass('d-none');
     let httpResponse = await httpRequestGet(`${APIURL}/kategori_berita/getitem`);
     $('#list-kategori-spinner').addClass('d-none');
+    $('#table-kategori-berita tbody').removeClass('d-none');
     
     let elKategori  = `<option value='' selected>-- pilih kategori --</option>`;
     
@@ -272,14 +274,23 @@ $('#formCrudArticle').on('submit', async (e) => {
     if (validateCrudArtikel()) {
         let httpResponse = '';
         let form         = new FormData(e.target);
-        form.set('thumbnail', fileThumbnail, fileThumbnail.name);
+
+        if (fileThumbnail !== '') {
+            form.set('thumbnail', fileThumbnail, fileThumbnail.name);
+        }
         form.append('content',$('.ql-editor').html());
+
+        console.log(form.get('thumbnail'));
     
         showLoadingSpinner();
         if (IDARTIKEL !== '') {
+            if (fileThumbnail !== '') {
+                form.set('new_thumbnail', fileThumbnail, fileThumbnail.name);
+            }
             httpResponse = await httpRequestPut(`${APIURL}/berita_acara/edititem`,form);    
         } 
         else {
+            form.set('thumbnail', fileThumbnail, fileThumbnail.name);
             httpResponse = await httpRequestPost(`${APIURL}/berita_acara/additem`,form);    
         }
         hideLoadingSpinner();
@@ -410,13 +421,16 @@ const changeThumbPreview = (el) => {
         const MAX_HEIGHT = 180;
         const MIME_TYPE  = "image/webp";
         const QUALITY    = 0.8;
+        const file       = el.files[0]; // get the file
+        const blobURL    = URL.createObjectURL(file);
+        const img        = new Image();
 
-        const file    = el.files[0]; // get the file
-        const blobURL = URL.createObjectURL(file);
-        const img     = new Image();
+        document.querySelector('#preview-thumbnail').src = '';
+        $('#thumbnail-spinner').removeClass('d-none');
 
         img.src = blobURL;
         img.onerror = function () {
+            $('#thumbnail-spinner').addClass('d-none');
             URL.revokeObjectURL(this.src);
             showAlert({
                 message: `<strong>Ups terjadi kesalahan, coba sekali lagi!</strong>`,
@@ -444,6 +458,7 @@ const changeThumbPreview = (el) => {
             );
 
             fileThumbnail = dataURLtoFile(canvas.toDataURL(),'thumbnail.webp');
+            console.log(fileThumbnail.size);
 
             if(fileThumbnail.size > 200000){
                 showAlert({
@@ -458,7 +473,8 @@ const changeThumbPreview = (el) => {
                 return false;
             }
 
-            document.querySelector('#preview-thumbnail').src = URL.createObjectURL(el.files[0]);
+            document.querySelector('#preview-thumbnail').src = canvas.toDataURL();
+            $('#thumbnail-spinner').addClass('d-none');
         }
 
         function calculateSize(img, maxWidth, maxHeight) {
@@ -530,23 +546,12 @@ const hapusKategori = (el,id,katName) => {
                         }
                     })
                     .then((response) => {
-                        if ($('#formAddEditSampah input[name=kategori]').val() == katName) {
-                            $('#formAddEditSampah input[name=kategori]').val('');    
-                        }
-                    
-                        el.parentElement.parentElement.remove();
-                        showAlert({
-                            message: `<strong>Success...</strong> kategori berhasil dihapus!`,
-                            btnclose: false,
-                            type:'success'
-                        })
-                        setTimeout(() => {
-                            hideAlert();
-                        }, 3000);
-            
                         return httpRequestDelete(`${APIURL}/kategori_berita/deleteitem?id=${id}`)
                         .then(e => {
-                           getAllKatBerita();
+                            if (e.status == 201) {
+                                el.parentElement.parentElement.remove();
+                                document.querySelector(`#kategori-berita-wraper option#${katName.replace(/\s/g,'-')}`).remove();
+                            }
                         })
                     })
                     .catch(error => {
@@ -571,7 +576,7 @@ const hapusKategori = (el,id,katName) => {
  /**
   * HAPUS ARTIKEL
   */
-const hapusArtikel = (id) => {
+const hapusArtikel = (el,id) => {
     Swal.fire({
         title: 'ANDA YAKIN?',
         text: "Data akan terhapus permanen",
@@ -604,7 +609,7 @@ const hapusArtikel = (id) => {
                         return httpRequestDelete(`${APIURL}/berita_acara/deleteitem?id=${id}`)
                         .then((e) => {
                             if (e.status == 201) {
-                                getAllBerita();
+                                el.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
                             }
                         })
                     })

@@ -1,22 +1,18 @@
 <?php
 
 namespace App\Controllers;
+use App\Controllers\BaseController;
 
 use App\Models\BeritaAcaraModel;
-use App\Controllers\BaseController;
-use CodeIgniter\RESTful\ResourceController;
-use Exception;
 
-class BeritaAcara extends ResourceController
+class BeritaAcara extends BaseController
 {
-    public $baseController;
     public $beritaModel;
 
 	public function __construct()
     {
-        $this->validation     = \Config\Services::validation();
-        $this->baseController = new BaseController;
-        $this->beritaModel    = new BeritaAcaraModel;
+        $this->validation  = \Config\Services::validation();
+        $this->beritaModel = new BeritaAcaraModel;
     }
 
     /**
@@ -28,7 +24,8 @@ class BeritaAcara extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
             $data = $this->request->getPost(); 
@@ -78,7 +75,7 @@ class BeritaAcara extends ResourceController
                 $data = [
                     "id"          => $idBerita,
                     "title"       => strtolower(trim($data['title'])),
-                    "thumbnail"   => $this->baseController->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
+                    "thumbnail"   => $this->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
                     // "thumbnail"  => $dbFileName,
                     "content"     => trim($data['content']),
                     "kategori"    => trim($data['kategori']),
@@ -203,10 +200,11 @@ class BeritaAcara extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
-            $this->baseController->_methodParser('data');
+            $this->_methodParser('data');
             global $data;
 
             $this->validation->run($data,'updateBeritaAcara');
@@ -255,7 +253,7 @@ class BeritaAcara extends ResourceController
                     // $old_thumbnail = end($old_thumbnail);
                     // $realPath      = $_SERVER["DOCUMENT_ROOT"].'/bsblapi/assets/img/thumbnail/';
 
-                    $data['thumbnail'] = $this->baseController->base64Decode($_FILES['new_thumbnail']['tmp_name'],$_FILES['new_thumbnail']['type']);
+                    $data['thumbnail'] = $this->base64Decode($_FILES['new_thumbnail']['tmp_name'],$_FILES['new_thumbnail']['type']);
                     // $data['thumbnail'] = $dbFileName;
                 }
 
@@ -306,7 +304,8 @@ class BeritaAcara extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = $authHeader->getValue();
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
             $this->validation->run($this->request->getGet(),'idForDeleteCheck');

@@ -124,11 +124,15 @@
 							<h6 class="text-muted" style="display:inline;">Thumbnail</h6>
 						</div>
 						<div id="thumbnail-wraper" class="position-relative col-12 col-sm-6 mt-1 mb-2">
-							<img src="<?= base_url('assets/images/default-thumbnail.jpg'); ?>" class="w-100" style="opacity: 0;">
-							<img src="<?= base_url('assets/images/default-thumbnail.jpg'); ?>" alt="thumbnail" id="preview-thumbnail" class="img-thumbnail position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;;min-height: 100%;left:0;">
+							<!-- spinner -->
+							<div id="thumbnail-spinner" class="img-thumbnail d-none position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 11;top: 0;bottom: 0;left: 0;right: 0;">
+								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 20px;" />
+							</div>
+							<img src="<?= base_url('assets/images/default-thumbnail.webp'); ?>" class="w-100" style="opacity: 0;">
+							<img src="<?= base_url('assets/images/default-thumbnail.webp'); ?>" alt="thumbnail" id="preview-thumbnail" class="img-thumbnail position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;min-height: 100%;left:0;">
 						</div>
 						<div class="input-group mt-2 col-12 col-sm-6">
-							<input type="file" class="form-control" id="thumbnail" name="<?= (isset($idartikel)) ? 'new_thumbnail' : 'thumbnail' ; ?>" autocomplete="off" placeholder="thumbnail" style="min-height: 38px" onchange="changeThumbPreview(this);">
+							<input type="file" class="form-control" id="thumbnail" autocomplete="off" placeholder="thumbnail" style="min-height: 38px" onchange="changeThumbPreview(this);">
 						</div>
 						<small
 							id="thumbnail-error"

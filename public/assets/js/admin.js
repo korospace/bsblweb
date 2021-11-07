@@ -267,8 +267,8 @@ const sessioncheck = async () => {
         }
         if (pageTitle === 'detil nasabah') {
             // update value filter transkasi
-            let currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
-            let currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
+            currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
+            currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
             $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
             $(`#filter-year`).val(currentYear);
 

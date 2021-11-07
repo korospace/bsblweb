@@ -1,22 +1,18 @@
 <?php
 
 namespace App\Controllers;
+use App\Controllers\BaseController;
 
 use App\Models\NasabahModel;
 use App\Models\TransaksiModel;
-use App\Controllers\BaseController;
-use CodeIgniter\RESTful\ResourceController;
-use Exception;
 
-class Transaksi extends ResourceController
+class Transaksi extends BaseController
 {
-    public $basecontroller;
     public $transaksiModel;
 
 	public function __construct()
     {
         $this->validation     = \Config\Services::validation();
-        $this->baseController = new BaseController;
         $this->transaksiModel = new TransaksiModel;
     }
 
@@ -29,7 +25,7 @@ class Transaksi extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
 
         if ($result['success'] == true) {
             if ($this->request->getGet('date')) {
@@ -92,7 +88,8 @@ class Transaksi extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
             $data  = $this->request->getPost();
@@ -125,7 +122,7 @@ class Transaksi extends ResourceController
                     } 
                 }
 
-                $data['idtransaksi'] = 'TSS'.$this->baseController->generateOTP(9);
+                $data['idtransaksi'] = 'TSS'.$this->generateOTP(9);
                 $dbresponse          = $this->transaksiModel->setorSampah($data);
                 // var_dump((int)strtotime($data['date']));die;
     
@@ -169,7 +166,8 @@ class Transaksi extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
             $data  = $this->request->getPost();
@@ -229,7 +227,7 @@ class Transaksi extends ResourceController
                     return $this->respond($response,400);
                 }
 
-                $data['idtransaksi'] = 'TTS'.$this->baseController->generateOTP(9);
+                $data['idtransaksi'] = 'TTS'.$this->generateOTP(9);
                 $dbresponse          = $this->transaksiModel->tarikSaldo($data);
     
                 if ($dbresponse['success'] == true) {
@@ -272,7 +270,8 @@ class Transaksi extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
             $data   = $this->request->getPost();
@@ -365,7 +364,7 @@ class Transaksi extends ResourceController
                 $newdata = [
                     'idnasabah'           => $data['id_nasabah'],
                     'date'                => $data['date'],
-                    'idtransaksi'         => 'TPS'.$this->baseController->generateOTP(9),
+                    'idtransaksi'         => 'TPS'.$this->generateOTP(9),
                     'jumlahPindah'        => $jumlahPindah,
                     'hasilKonversi'       => $konversiSaldo,
                     'hargaemas'           => $data['harga_emas'],
@@ -463,7 +462,8 @@ class Transaksi extends ResourceController
     {
         $authHeader = $this->request->getHeader('token');
         $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->baseController->checkToken($token);
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
 

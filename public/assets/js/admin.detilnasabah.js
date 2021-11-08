@@ -604,6 +604,7 @@ const validateSetorSampah = () => {
 const openModalPindahSaldo = () => {
     $('#formPindahSaldo .form-check-input').removeClass('is-invalid');
     $('#formPindahSaldo .form-control').removeClass('is-invalid');
+    $('#formPindahSaldo .form-check-input').prop('checked',false);
     $('#formPindahSaldo .text-danger').html('');
     $(`#formPindahSaldo .form-control`).val('');
 }
@@ -611,7 +612,6 @@ const openModalPindahSaldo = () => {
 // Validate Pindah Saldo
 const validatePindahSaldo = () => {
     let status = true;
-    let msg    = '';
     let form   = new FormData(document.querySelector('#formPindahSaldo'));
 
     $('#formPindahSaldo .form-check-input').removeClass('is-invalid');
@@ -660,6 +660,63 @@ const validatePindahSaldo = () => {
     return status;
 }
 
+/**
+ * TRANSAKSI TARIK SALDO
+ * =============================================
+ */
+
+// Edit modal when open
+const openModalTarikSaldo = () => {
+    $('#formTarikSaldo .form-check-input').removeClass('is-invalid');
+    $('#formTarikSaldo .form-control').removeClass('is-invalid');
+    $('#formTarikSaldo .form-check-input').prop('checked',false);
+    $('#formTarikSaldo .text-danger').html('');
+    $(`#formTarikSaldo .form-control`).val('');
+}
+
+// Validate Tarik Saldo
+const validateTarikSaldo = () => {
+    let status = true;
+    let form   = new FormData(document.querySelector('#formTarikSaldo'));
+
+    $('#formTarikSaldo .form-check-input').removeClass('is-invalid');
+    $('#formTarikSaldo .form-control').removeClass('is-invalid');
+    $('#formTarikSaldo .text-danger').html('');
+
+    // tgl transaksi
+    if ($('#formTarikSaldo #date').val() == '') {
+        $('#formTarikSaldo #date').addClass('is-invalid');
+        $('#formTarikSaldo #date-error').html('*tanggal harus di isi');
+        status = false;
+    }
+    // saldo tujuan
+    if (form.get('jenis_saldo') == null) {
+        $('#formTarikSaldo .form-check-input').addClass('is-invalid');
+        status = false;
+    }
+    // jumlah pindah
+    if ($('#formTarikSaldo #jumlah').val() == '') {
+        $('#formTarikSaldo #jumlah').addClass('is-invalid');
+        $('#formTarikSaldo #jumlah-error').html('*jumlah saldo harus di isi');
+        status = false;
+    }
+    else if (/[^0-9\.]/g.test($('#formTarikSaldo #jumlah').val())) {
+        $('#formTarikSaldo #jumlah').addClass('is-invalid');
+        $('#formTarikSaldo #jumlah-error').html('*hanya boleh berupa angka positif dan titik!');
+        status = false;
+    }
+    // minimal tarik
+    if (form.get('jenis_saldo') !== 'uang') {
+        if (parseFloat($('#formTarikSaldo #jumlah').val()) < 1.1) {
+            $('#formTarikSaldo #jenis_saldo').addClass('is-invalid');
+            $('#formTarikSaldo #jenis_saldo-error').html('*minimal 1.1 gram');
+            status = false;
+        }
+    } 
+
+    return status;
+}
+
 // Send Transaksi to API
 const doTransaksi = async (el,event,method) => {
     event.preventDefault();
@@ -674,6 +731,10 @@ const doTransaksi = async (el,event,method) => {
     else if (method == 'pindahsaldo') {
         validate = validatePindahSaldo;
         transaksiName = 'pindah saldo';
+    }
+    else if (method == 'tariksaldo') {
+        validate = validateTarikSaldo;
+        transaksiName = 'tarik saldo';
     }
 
     if (validate()) {
@@ -741,6 +802,9 @@ const doTransaksi = async (el,event,method) => {
                     getTotalSampahNasabah();
                     countTotalHarga();
                 } 
+
+                $(`.form-control`).val('');
+                $('.form-check-input').prop('checked',false);
     
                 showAlert({
                     message: `<strong>Success...</strong> ${transaksiName} berhasil!`,
@@ -753,8 +817,14 @@ const doTransaksi = async (el,event,method) => {
             }
             else if (httpResponse.status === 400) {
                 if (httpResponse.message.jumlah) {
-                    $('#formPindahSaldo #jumlah').addClass('is-invalid');
-                    $('#formPindahSaldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
+                    if (method == 'pindahsaldo') {
+                        $('#formPindahSaldo #jumlah').addClass('is-invalid');
+                        $('#formPindahSaldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
+                    } 
+                    else {
+                        $('#formTarikSaldo #jumlah').addClass('is-invalid');
+                        $('#formTarikSaldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
+                    }
                 }
             }
         }

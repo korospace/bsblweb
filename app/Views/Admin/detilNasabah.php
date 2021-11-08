@@ -123,7 +123,7 @@
 				</li>
 				<!-- tarik saldo -->
 				<li class="nav-item">
-					<a class="nav-link cursor-pointer">
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalTarikSaldo" onclick="openModalTarikSaldo()">
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<i class="fas fa-hand-holding-usd text-muted" style="font-size: 15px;transform: translateY(-1px);"></i>
@@ -134,7 +134,7 @@
 			</ul>
 		</div>
 	</aside>
-	<main class= main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
+	<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
 		<!-- Navbar -->
 		<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
 			navbar-scroll="true">
@@ -728,7 +728,7 @@
 				<div class="input-group col-12 mb-4 form-group form-row">
 					<div class="input-group col-4">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="tujuan" id="antam" value="antam">
+							<input class="form-check-input" type="radio" name="tujuan" id="antam" value="antam" checked>
 							<label class="form-check-label" for="antam">
 								Antam
 							</label>
@@ -756,6 +756,107 @@
 			<!-- modal footer -->
 			<div class="modal-footer">
 				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event,'pindahsaldo');">
+					<span id="text">Submit</span>
+					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- **** Modal Tarik Saldo **** -->
+<div class="modal fade" id="modalTarikSaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<form id="formTarikSaldo" class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<!-- modal header -->
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Transaksi tarik saldo</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal body -->
+			<div class="modal-body form-row">
+				<input type="hidden" name="id_nasabah" value="<?= $idnasabah; ?>">
+				
+				<!-- **** tgl transaksi **** -->
+				<h6 class="font-italic opacity-8 col-12 text-sm">Tanggal transaksi</h6>
+				<div class="input-group col-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="date" class="form-control form-control-sm px-2 h-100" id="date" name="date">
+					</div>
+					<small
+						id="date-error"
+						class="text-danger"></small>
+				</div>
+
+				<!-- **** jenis saldo **** -->
+				<h6 class="font-italic opacity-8 col-12 text-sm">
+					Jenis saldo
+				</h6>
+				<div class="input-group col-12 mb-4 form-group form-row">
+					<div class="input-group col-3">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="uang" value="uang" checked>
+							<label class="form-check-label" for="uang">
+								Uang
+							</label>
+						</div>
+					</div>
+					<div class="input-group col-3">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="antam" value="antam">
+							<label class="form-check-label" for="antam">
+								Antam
+							</label>
+						</div>
+					</div>
+					<div class="input-group col-3">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="ubs" value="ubs">
+							<label class="form-check-label" for="ubs">
+								Ubs
+							</label>
+						</div>
+					</div>
+					<div class="input-group col-3">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="galery24" value="galery24">
+							<label class="form-check-label" for="galery24">
+								Galery24
+							</label>
+						</div>
+					</div>
+				</div>
+				
+				<!-- **** jumlah **** -->
+				<h6 class="font-italic opacity-8 col-12 text-sm">
+					Jumlah saldo
+				</h6>
+				<div class="input-group col-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+							<i class="fas fa-money-bill-wave-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control form-control-sm px-2 h-100" id="jumlah" name="jumlah" placeholder="contoh: 1.1" autocomplete="off">
+					</div>
+					<small
+						id="jumlah-error"
+						class="text-danger"></small>
+				</div>
+			</div>
+
+			<!-- modal footer -->
+			<div class="modal-footer">
+				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event,'tariksaldo');">
 					<span id="text">Submit</span>
 					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
 				</button>

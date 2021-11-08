@@ -197,14 +197,11 @@ class Transaksi extends BaseController
                 }
                 else {
                     if ($data['jenis_saldo'] !== 'uang') {
-                        if ((float)$data['jumlah'] < 1) {
+                        if ((float)$saldo-(float)$data['jumlah'] < 0.1) {
                             $valid = false;
                             $msg   = [
-                                'jumlah' => 'minimal penarikan 1.1 gram'
+                                'jumlah' => 'minimal saldo yang mengendap adalah 0.1 gram'
                             ];
-                        }
-                        else {
-                            $data['jumlah'] = (float)$data['jumlah']-0.1;
                         }
                     }
                 }

@@ -6,7 +6,8 @@
 	body {
 	}
 	section.wrapper {
-		margin: 0 !important;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
 		min-height : 490px;
 	}
 	@media (max-width:990px) {
@@ -77,9 +78,11 @@
 
 	<!-- CARDS -->
 	<section class="wrapper d-flex justify-content-center align-items-center">
-		<div class="row" id="container-article">
-			<div class="col-12 d-none" id="img-404">
-				<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
+		<div class="container">
+			<div class="row" id="container-article">
+				<div class="col-12 d-none" id="img-404">
+					<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
+				</div>
 			</div>
 		</div>
 	</section>

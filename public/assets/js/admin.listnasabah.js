@@ -583,7 +583,7 @@ const hapusNasabah = (el,id) => {
                 showLoaderOnConfirm: true,
                 preConfirm: (password) => {
                     let form = new FormData();
-                    form.append('username',USERNAME);
+                    form.append('hashedpass',PASSADMIN);
                     form.append('password',password);
         
                     return axios

@@ -290,7 +290,8 @@ class Transaksi extends BaseController
             else {
                 $valid  = true;
                 $msg    = '';
-                $asal   = $data['asal'];
+                // $asal   = $data['asal'];
+                $asal   = 'uang';
                 $tujuan = $data['tujuan'];
                 $nasabahModel      = new NasabahModel;
                 $dataSaldo         = $nasabahModel->getSaldoNasabah($data['id_nasabah']);

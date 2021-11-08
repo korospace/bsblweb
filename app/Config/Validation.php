@@ -792,10 +792,9 @@ class Validation
             ],
 		],
 		'jumlah' => [
-            'rules'  => 'required|max_length[11]|numeric',
+            'rules'  => 'required|numeric',
             'errors' => [
                 'required'   => 'jumlah is required',
-                'max_length' => 'max 11 character',
                 'numeric'    => 'only number allowed',
             ],
 		],
@@ -851,13 +850,13 @@ class Validation
                 'is_not_unique' => "nasabah with id ({value}) is not found",
             ],
 		],
-		'asal' => [
-            'rules'  => 'required|in_list[uang]',
-            'errors' => [
-                'required'    => 'saldo asal is required',
-                'in_list'     => "value must be 'uang'",
-            ],
-		],
+		// 'asal' => [
+        //     'rules'  => 'required|in_list[uang]',
+        //     'errors' => [
+        //         'required'    => 'saldo asal is required',
+        //         'in_list'     => "value must be 'uang'",
+        //     ],
+		// ],
 		'tujuan' => [
             'rules'  => 'required|in_list[antam,ubs,galery24]',
             'errors' => [

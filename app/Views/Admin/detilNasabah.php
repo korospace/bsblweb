@@ -55,7 +55,7 @@
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
 	<script>
-		const USERNAME  = '<?= $username; ?>';
+		const PASSADMIN = '<?= $password; ?>';
 		const IDNASABAH = '<?= $idnasabah; ?>';
 	</script>
 	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
@@ -95,9 +95,43 @@
 					</defs>
 					</svg>
 				</div>
-				<span class="nav-link-text ms-1">kembali</span>
+				<span class="nav-link-text ms-1">list nasabah</span>
 			</a>
 			<hr class="horizontal dark mt-2">
+		</div>
+		<div class="collapse navbar-collapse  w-auto  max-height-vh-100 h-100" id="sidenav-collapse-main">
+			<ul class="navbar-nav">
+				<!-- setor sampah -->
+				<li class="nav-item">
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalSetorSaldo" onclick="openModalSetorSaldo()" >
+						<div
+							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="fas fa-trash-restore text-muted" style="font-size: 13px;transform: translateY(-1px);"></i>
+						</div>
+						<span class="nav-link-text ms-1">Setor sampah</span>
+					</a>
+				</li>
+				<!-- pindah saldo -->
+				<li class="nav-item">
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalPindahSaldo" onclick="openModalPindahSaldo()">
+						<div
+							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="fas fa-exchange-alt text-muted" style="font-size: 13px;transform: translateY(-1px);"></i>
+						</div>
+						<span class="nav-link-text ms-1">Pindah saldo</span>
+					</a>
+				</li>
+				<!-- tarik saldo -->
+				<li class="nav-item">
+					<a class="nav-link cursor-pointer">
+						<div
+							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="fas fa-hand-holding-usd text-muted" style="font-size: 15px;transform: translateY(-1px);"></i>
+						</div>
+						<span class="nav-link-text ms-1">Tarik saldo</span>
+					</a>
+				</li>
+			</ul>
 		</div>
 	</aside>
 	<main class= main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
@@ -110,7 +144,7 @@
 						<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
 						<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
 					</ol>
-					<h6 class="font-weight-bolder mb-0">Dashboard</h6>
+					<h6 class="font-weight-bolder mb-0">Dashboard nasabah</h6>
 				</nav>
 				<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 					<div class="ms-auto pe-md-3 d-flex align-items-center">
@@ -490,7 +524,7 @@
 			<div id="modalPrintTransaksiTarget" class="modal-body w-100 position-relative" style="overflow: hidden;">
 				<!-- spinner -->
 				<div id="detil-transaksi-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-					<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 60px;" />
+					<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 40px;" />
 				</div>
 				<!-- header -->
 				<div class="detil-transaksi-logo d-flex align-items-center justify-content-between py-2 px-4">
@@ -498,7 +532,7 @@
 					<h4>bukti transaksi</h4>
 				</div>
 				<hr class="horizontal dark mt-2">
-				<div class="px-4 detil-transaksi-header">
+				<div class="px-4 detil-transaksi-header text-xs">
 					<table>
 						<tr>
 							<td>TANGGAL&nbsp;&nbsp;&nbsp;</td>
@@ -519,7 +553,7 @@
 					</table>
 				</div>
 				<hr class="horizontal dark mt-2">
-				<h6 id="detil-transaksi-type" class="font-italic px-4"></h6>
+				<h6 id="detil-transaksi-type" class="font-italic px-4 text-xs"></h6>
 				<div id="detil-transaksi-body" class="px-4 mt-2 table-responsive">
 					
 				</div>
@@ -531,6 +565,135 @@
 				</a>
 			</div>
 		</div>
+	</div>
+</div>
+
+<!-- **** Modal Setor **** -->
+<div class="modal fade" id="modalSetorSaldo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  	<form id="formSetorSampah" class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<!-- modal header -->
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Setor sampah</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal body -->
+			<div class="modal-body form-row">
+				<input type="hidden" name="id_nasabah" value="<?= $idnasabah; ?>">
+				
+				<!-- **** tgl transaksi **** -->
+				<h6 class="font-italic opacity-8 col-12 text-sm">Tanggal transaksi</h6>
+				<div class="input-group col-6 col-sm-4 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="date" class="form-control form-control-sm px-2 h-100" id="date" name="date">
+					</div>
+					<small
+						id="date-error"
+						class="text-danger"></small>
+				</div>
+
+				<!-- **** table **** -->
+				<!-- <hr class="editnasabah-item horizontal col-12 dark mt-0 mb-4"> -->
+				<div class="table-responsive col-12 mb-4" style="overflow: auto;font-family: 'qc-semibold';">
+					<table id="table-setor-sampah" class="table table-sm text-center mb-0">
+						<thead class="bg-white" style="border: 0.5px solid #E9ECEF;">
+							<tr>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									#
+								</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									jenis
+								</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									jumlah(kg)
+								</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+									harga
+								</th>
+							</tr>
+						</thead>
+						<tbody style="border: 0.5px solid #E9ECEF;">
+							<tr id="special-tr">
+								<td colspan="3" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+									Total harga
+								</td>
+								<td colspan="4" class="p-2 text-left">
+									Rp. <span id="total-harga"></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<!-- tambah baris -->
+				<div class="input-group col-12">
+					<a href="" class="btn btn-info w-100" onclick="tambahBaris(event);">
+						tambah baris
+					</a>
+				</div>
+			</div>
+
+			<!-- modal footer -->
+			<div class="modal-footer">
+				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event,'setorsampah');">
+					<span id="text">Submit</span>
+					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- **** Modal Pindah Saldo **** -->
+<div class="modal fade" id="modalPindahSaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<form id="formPindahSaldo" class="modal-content">
+			<!-- modal header -->
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Transaksi pindah saldo</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal body -->
+			<div class="modal-body form-row">
+				<input type="hidden" name="id_nasabah" value="<?= $idnasabah; ?>">
+				
+				<!-- **** tgl transaksi **** -->
+				<h6 class="font-italic opacity-8 col-12 text-sm">Tanggal transaksi</h6>
+				<div class="input-group col-6 col-sm-4 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="date" class="form-control form-control-sm px-2 h-100" id="date" name="date">
+					</div>
+					<small
+						id="date-error"
+						class="text-danger"></small>
+				</div>
+			</div>
+
+			<!-- modal footer -->
+			<div class="modal-footer">
+				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event,'setorsampah');">
+					<span id="text">Submit</span>
+					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+				</button>
+			</div>
+		</form>
 	</div>
 </div>
 <?= $this->endSection(); ?>

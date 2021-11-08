@@ -366,7 +366,7 @@ const deleteTransaksiNasabah = (id,event) => {
                 showLoaderOnConfirm: true,
                 preConfirm: (password) => {
                     let form = new FormData();
-                    form.append('username',USERNAME);
+                    form.append('hashedpass',PASSADMIN);
                     form.append('password',password);
         
                     return axios
@@ -380,8 +380,8 @@ const deleteTransaksiNasabah = (id,event) => {
                         .then((e) => {
                             if (e.status == 201) {
                                 chartGrafik.destroy();
-                    
                                 getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
+                                getTotalSampahNasabah();
                             }
                         })
                     })
@@ -402,4 +402,298 @@ const deleteTransaksiNasabah = (id,event) => {
             })
         }
     })
+}
+
+/**
+ * TRANSAKSI SETOR SAMPAH
+ * =============================================
+ */
+
+// Edit modal when open
+const openModalSetorSaldo = () => {
+    $('#formSetorSampah .form-control').removeClass('is-invalid');
+    $('#formSetorSampah .text-danger').html('');
+    $(`#formSetorSampah .form-control`).val('');
+    $('.barisSetorSampah').remove();
+    tambahBaris();
+}
+
+// GET ALL JENIS SAMPAH
+let arrayJenisSampah = [];
+const getAllJenisSampah = async () => {
+    let httpResponse = await httpRequestGet(`${APIURL}/sampah/getitem`);
+
+    if (httpResponse.status === 200) {
+        arrayJenisSampah = sortingSampah(httpResponse.data.data);
+    }
+
+    tambahBaris();
+};
+getAllJenisSampah();
+
+// sorting sampah
+const sortingSampah = (data) => {
+    let arrKategori = [];
+    let objSampah   = {};
+    let newArrSampah= [];
+    
+    // create array kategori
+    data.forEach(d => {
+        if (!arrKategori.includes(d.kategori)) {
+            arrKategori.push(d.kategori.replace(/\s/g,'_'));
+        }
+    });
+
+    arrKategori.forEach(aK => {
+        objSampah[aK] = data.filter((d) => {
+            return d.kategori == aK.replace(/_/g,' ');
+        })
+    });
+
+    for (let key in objSampah) {
+        objSampah[key].forEach(x => {
+            newArrSampah.push(x);
+        });
+    }
+
+    return newArrSampah;
+}
+
+// tambah baris
+const tambahBaris = (event = false) => {
+    if (event) {
+        event.preventDefault();
+    }
+
+    let elJenisSampah = `<option value='' data-harga='0' selected>-- pilih jenis sampah  --</option>`;
+
+    if (arrayJenisSampah.length !== 0) {
+        arrayJenisSampah.forEach(s=> {
+            elJenisSampah += `<option value="${s.jenis}" data-harga="${s.harga}">${s.kategori} - ${s.jenis}</option>`;
+        });
+    }
+
+    let totalBaris = $('.barisSetorSampah').size();
+    let elementRow = ` <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <span class="w-100 btn btn-danger d-flex justify-content-center align-items-center border-radius-sm" style="height: 38px;margin: 0;" onclick="hapusBaris(this);">
+            <i class="fas fa-times text-white"></i>
+        </span>
+    </td>
+    <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <select id="kategori-berita-wraper" class="inputJenisSampah form-control form-control-sm py-1 pl-2 border-radius-sm" name="transaksi[slot${totalBaris+1}][jenis_sampah]" style="min-height: 38px" onchange="getHargaInOption(this,event);">
+            ${elJenisSampah}
+        </select>
+    </td>
+    <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <input type="text" class="inputJumlahSampah form-control form-control-sm pl-2 border-radius-sm" value="0" name="transaksi[slot${totalBaris+1}][jumlah]" style="min-height: 38px" onkeyup="countHargaXjumlah(this);">
+    </td>
+    <td class="py-2">
+        <input type="text" class="inputHargaSampah form-control form-control-sm pl-2 border-radius-sm" style="min-height: 38px" data-harga="0" value="0" disabled>
+    </td>`
+
+    let tr = document.createElement('tr');
+    tr.classList.add('barisSetorSampah');
+    
+    tr.innerHTML=elementRow;
+    document.querySelector('#table-setor-sampah tbody').insertBefore(tr,document.querySelector('#special-tr'));
+}
+
+// tambah baris
+const hapusBaris = (el) => {
+    el.parentElement.parentElement.remove();
+    countTotalHarga();
+}
+
+// get harga in option
+const getHargaInOption = (el,event) =>{
+    var harga = event.target.options[event.target.selectedIndex].dataset.harga;
+
+    let elInputJumlah   = el.parentElement.nextElementSibling.children[0];
+    elInputJumlah.value = 1;
+
+    let elInputHarga   = el.parentElement.nextElementSibling.nextElementSibling.children[0];
+    // elInputHarga.value = modifUang(harga);
+    elInputHarga.value = harga;
+    elInputHarga.setAttribute('data-harga',harga);
+
+    countTotalHarga();
+};
+
+// count harga*jumlah
+const countHargaXjumlah = (el) =>{
+    var jumlahKg = el.value;
+    let elInputJenis = el.parentElement.previousElementSibling.children[0];
+    
+    if (elInputJenis.value !== '') {
+        if (jumlahKg !== '') {
+            let elInputHarga = el.parentElement.nextElementSibling.children[0];
+            let harga        = elInputHarga.getAttribute('data-harga');
+            
+            elInputHarga.value = parseFloat(jumlahKg)*parseFloat(harga);
+            countTotalHarga();
+        }
+    }
+};
+
+// count total harga sampah
+const countTotalHarga = () =>{
+    let total = 0;
+    $(`.inputHargaSampah`).each(function() {
+        total = total + parseFloat($(this).val());
+    });
+
+    $('#special-tr #total-harga').html(modifUang(total.toString()));
+};
+
+// Send Transaksi to API
+const doTransaksi = async (el,event,method) => {
+    event.preventDefault();
+    let validate  = '';
+    let elForm    = el.parentElement.parentElement.parentElement;
+    let transaksiName = ''
+
+    if (method == 'setorsampah') {
+        validate = validateSetorSampah;
+        transaksiName = 'setor sampah';
+    }
+
+    if (validate()) {
+        Swal.fire({
+            input: 'password',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            html:`<h5 class='mb-4'>Password</h5>`,
+            showCancelButton: true,
+            confirmButtonText: 'submit',
+            showLoaderOnConfirm: true,
+            preConfirm: (password) => {
+                let form = new FormData();
+                form.append('hashedpass',PASSADMIN);
+                form.append('password',password);
+    
+                return axios
+                .post(`${APIURL}/admin/confirmdelete`,form, {
+                    headers: {
+                        // header options 
+                    }
+                })
+                .then((response) => {
+                    doTransaksiInner();
+                })
+                .catch(error => {
+                    if (error.response.status == 404) {
+                        Swal.showValidationMessage(
+                            `password salah`
+                        )
+                    }
+                    else if (error.response.status == 500) {
+                        Swal.showValidationMessage(
+                            `terjadi kesalahan, coba sekali lagi`
+                        )
+                    }
+                })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+        
+        let doTransaksiInner = async () => {
+            let form         = new FormData(elForm);
+            let tglTransaksi = form.get('date').split('-');
+            form.set('date',`${tglTransaksi[2]}-${tglTransaksi[1]}-${tglTransaksi[0]}`);
+    
+            showLoadingSpinner();
+            httpResponse = await httpRequestPost(`${APIURL}/transaksi/${method}`,form);    
+            hideLoadingSpinner();
+    
+            if (httpResponse.status === 201) {
+                chartGrafik.destroy();
+                currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
+                currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
+                $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
+                $(`#filter-year`).val(currentYear);
+    
+                getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
+                getDataProfileNasabah();
+    
+                if (method == 'setorsampah') {
+                    $('.barisSetorSampah').remove();
+                    getTotalSampahNasabah();
+                    tambahBaris();
+                } 
+    
+                showAlert({
+                    message: `<strong>Success...</strong> ${transaksiName} berhasil!`,
+                    btnclose: false,
+                    type:'success'
+                })
+                setTimeout(() => {
+                    hideAlert();
+                }, 3000);
+            }
+        }
+    }
+
+}
+
+// Validate Setor sampah
+const validateSetorSampah = () => {
+    let status = true;
+    let msg    = '';
+    $('#formSetorSampah .form-control').removeClass('is-invalid');
+    $('#formSetorSampah .text-danger').html('');
+
+    // tgl transaksi
+    if ($('#formSetorSampah #date').val() == '') {
+        $('#formSetorSampah #date').addClass('is-invalid');
+        $('#formSetorSampah #date-error').html('*tanggal harus di isi');
+        status = false;
+    }
+
+    // jenis sampah
+    $(`.inputJenisSampah`).each(function() {
+        if ($(this).val() == '') {
+            $(this).addClass('is-invalid');
+            status = false;
+            msg    = 'input tidak boleh kosong!';
+        }
+    });
+    // jumlah sampah
+    $(`.inputJumlahSampah`).each(function() {
+        if ($(this).val() == '') {
+            $(this).addClass('is-invalid');
+            status = false;
+            msg    = 'input tidak boleh kosong!';
+        }
+        if (/[^0-9\.]/g.test($(this).val())) {
+            $(this).addClass('is-invalid');
+            status = false;
+            msg    = 'jumlah hanya boleh berupa angka positif dan titik!';
+        }
+    });
+
+    if (status == false && msg !== "") {
+        showAlert({
+            message: `<strong>${msg}</strong>`,
+            btnclose: false,
+            type:'danger'
+        })
+        setTimeout(() => {
+            hideAlert();
+        }, 3000);
+    }
+
+    return status;
+}
+
+/**
+ * TRANSAKSI PINDAH SALDO
+ * =============================================
+ */
+
+// Edit modal when open
+const openModalPindahSaldo = () => {
+    $('#formPindahSaldo .form-control').removeClass('is-invalid');
+    $('#formPindahSaldo .text-danger').html('');
+    $(`#formPindahSaldo .form-control`).val('');
 }

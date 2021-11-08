@@ -61,7 +61,7 @@ const httpRequestPost = (url,form) => {
     let newForm = new FormData();
 
     for (var pair of form.entries()) {
-        let noPair = ['id','username','password','new_password','old_password','thumbnail','content'];
+        let noPair = ['id','id_nasabah','transaksi','username','password','new_password','old_password','thumbnail','content'];
 
         if (noPair.includes(pair[0]) == false) {
             newForm.set(pair[0], pair[1].trim().toLowerCase());

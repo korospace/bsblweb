@@ -564,17 +564,16 @@
 					id="kategori-error"
 					class="text-danger"></small>
 			</div>
-
 			<!-- LIST KATEGORI -->
 			<div class="input-group col-lg-12 mb-4 form-group">
 				<div class="container-fluid border-radius-sm p-2" style="border: 0.5px solid #D2D6DA;">
 					<!-- header -->
 					<div class="add-item container-fluid mb-2 d-flex p-0">
 						<input id="NewkategoriSampah" type="text" class="form-control px-2 text-xxs border-radius-sm" placeholder="ketik kategori baru" style="max-width: 150px;max-height: 30px;border: 0.5px solid #D2D6DA;" autocomplete="off">
-						<button id="btnAddKategoriSampah" class="badge badge-success border-0 border-radius-sm text-xxs text-lowercase ml-2">
+						<a href="" id="btnAddKategoriSampah" class="badge badge-success border-0 border-radius-sm text-xxs text-lowercase ml-2 d-flex justify-conten-center align-items-center">
 							<span id="text">Simpan</span>
 							<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 14px;">
-						</button>
+						</a>
 					</div>
 					<!-- body -->
 					<div id="kategori-sampah-wraper" class="container-fluid border-radius-sm p-0 position-relative" style="min-height: 150px;max-height: 150px;overflow: auto;border: 0.5px solid #D2D6DA;">
@@ -583,6 +582,8 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- modal footer -->
 		<div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
 			<button id="btn-add-edit-sampah" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">

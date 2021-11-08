@@ -26,7 +26,7 @@
 <?= $this->section('contentJs'); ?>
 	<script>
 		const IDARTIKEL = '<?= (isset($idartikel)) ? $idartikel : '' ; ?>';
-		const USERNAME  = '<?= $username; ?>';
+		const PASSADMIN = '<?= $password; ?>';
 	</script>
 	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>

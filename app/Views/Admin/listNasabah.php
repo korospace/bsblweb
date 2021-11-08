@@ -24,7 +24,7 @@
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
 	<script>
-		const USERNAME = '<?= $username; ?>';
+		const PASSADMIN = '<?= $password; ?>';
 	</script>
 	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
@@ -403,9 +403,9 @@
 								class="text-danger"></small>
 						</div>
 					</div>
+					<!-- **** change password **** -->
 					<hr class="editnasabah-item horizontal dark mt-2 mb-2">
 					<h6 class="editnasabah-item font-italic opacity-8">Ubah password (opsionial)</h6>
-					<!-- **** change password **** -->
 					<div class="editnasabah-item input-group col-lg-12 mt-2 mb-4 form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
@@ -420,6 +420,8 @@
 							class="text-danger"></small>
 					</div>
 				</div>
+
+				<!-- modal footer -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Keluar</button>
 					<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">

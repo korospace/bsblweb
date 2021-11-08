@@ -3,13 +3,14 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 <style>
-	body {
-	}
+	body {}
+
 	section.wrapper {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
 		min-height : 490px;
 	}
+
 	@media (max-width:990px) {
 		body {
 			overflow: hidden;
@@ -20,6 +21,9 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/dropdown/bootstrap.dropdown.min.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/dropdown/owl.carousel.min.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/dropdown/style.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -28,6 +32,11 @@
 	const KATEGORI = '<?= $kategori; ?>';
 </script>
 <script src="<?= base_url('assets/js/artikel.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dropdown/bootstrap.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dropdown/jquery-3.3.1.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dropdown/owl.carousel.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dropdown/main.js'); ?>"></script>
+<script src="<?= base_url('assets/js/dropdown/popper.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
@@ -52,19 +61,23 @@
 				<div class="col-12">
 					<nav class="main-nav">
 						<!-- ***** Logo Start ***** -->
-						<a class="logo">
-							<img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt="" width="65"
-								height="55">
+						<a class="logo" href="<?= base_url('/'); ?> ">
+							<img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt=""
+								width="65" height="55">
 						</a>
 						<!-- ***** Logo End ***** -->
 
 						<!-- ***** Menu Start ***** -->
-						<ul class="nav">
-							<li class="scroll-to-section"><a href="#welcome" class="menu-item">Home</a></li>
-							<li class="scroll-to-section"><a href="#activity" class="menu-item">Kegiatan</a></li>
-							<li class="scroll-to-section"><a href="#services" class="menu-item">Layanan</a></li>
-							<li class="scroll-to-section"><a href="#contact-us" class="menu-item">Contact Us</a></li>
-						</ul>
+						<!-- <ul class="nav">
+							<li class="submenu">
+								<a href="javascript:;">Artikel Lainnya</a>
+								<ul>
+									<li><a href="" class="menu-item">Webinar</a></li>
+									<li><a href="" class="menu-item">KKN</a></li>
+									<li><a href="" class="menu-item">Sosialisasi & Edukasi</a></li>
+								</ul>
+							</li>
+						</ul> -->
 						<a class='menu-trigger'>
 							<span>Menu</span>
 						</a>
@@ -98,7 +111,8 @@
 						<div class="widget widegt_about">
 							<div class="widget_title">
 								<img src="assets/images/logo_1.png" class="img-fluid" alt="">
-								<p>Quisque orci nisl, viverra et sem ac, tincidunt egestas massa. Morbi est arcu, hendrerit ac vehicula
+								<p>Quisque orci nisl, viverra et sem ac, tincidunt egestas massa. Morbi est arcu,
+									hendrerit ac vehicula
 									condimentum, euismod nec tortor praesent consequat urna.</p>
 							</div>
 							<ul class="social">

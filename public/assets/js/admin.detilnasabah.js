@@ -72,7 +72,7 @@ const getAllTransaksiNasabah = async (date) => {
             else {
                 textClass = 'text-warning';
                 if (jenisSaldo == 'uang') {
-                    totalTransaksi = 'Rp'+modifUang(t[`total_${type}`]);
+                    totalTransaksi = '<i class="fas fa-exchange-alt"></i> Rp'+modifUang(t[`total_${type}`]);
                 } else {
                     totalTransaksi = t[`total_${type}`]+'g';
                 }
@@ -545,6 +545,121 @@ const countTotalHarga = () =>{
     $('#special-tr #total-harga').html(modifUang(total.toString()));
 };
 
+// Validate Setor sampah
+const validateSetorSampah = () => {
+    let status = true;
+    let msg    = '';
+    $('#formSetorSampah .form-control').removeClass('is-invalid');
+    $('#formSetorSampah .text-danger').html('');
+
+    // tgl transaksi
+    if ($('#formSetorSampah #date').val() == '') {
+        $('#formSetorSampah #date').addClass('is-invalid');
+        $('#formSetorSampah #date-error').html('*tanggal harus di isi');
+        status = false;
+    }
+
+    // jenis sampah
+    $(`.inputJenisSampah`).each(function() {
+        if ($(this).val() == '') {
+            $(this).addClass('is-invalid');
+            status = false;
+            msg    = 'input tidak boleh kosong!';
+        }
+    });
+    // jumlah sampah
+    $(`.inputJumlahSampah`).each(function() {
+        if ($(this).val() == '') {
+            $(this).addClass('is-invalid');
+            status = false;
+            msg    = 'input tidak boleh kosong!';
+        }
+        if (/[^0-9\.]/g.test($(this).val())) {
+            $(this).addClass('is-invalid');
+            status = false;
+            msg    = 'jumlah hanya boleh berupa angka positif dan titik!';
+        }
+    });
+
+    if (status == false && msg !== "") {
+        showAlert({
+            message: `<strong>${msg}</strong>`,
+            btnclose: false,
+            type:'danger'
+        })
+        setTimeout(() => {
+            hideAlert();
+        }, 3000);
+    }
+
+    return status;
+}
+
+/**
+ * TRANSAKSI PINDAH SALDO
+ * =============================================
+ */
+
+// Edit modal when open
+const openModalPindahSaldo = () => {
+    $('#formPindahSaldo .form-check-input').removeClass('is-invalid');
+    $('#formPindahSaldo .form-control').removeClass('is-invalid');
+    $('#formPindahSaldo .text-danger').html('');
+    $(`#formPindahSaldo .form-control`).val('');
+}
+
+// Validate Pindah Saldo
+const validatePindahSaldo = () => {
+    let status = true;
+    let msg    = '';
+    let form   = new FormData(document.querySelector('#formPindahSaldo'));
+
+    $('#formPindahSaldo .form-check-input').removeClass('is-invalid');
+    $('#formPindahSaldo .form-control').removeClass('is-invalid');
+    $('#formPindahSaldo .text-danger').html('');
+
+    // tgl transaksi
+    if ($('#formPindahSaldo #date').val() == '') {
+        $('#formPindahSaldo #date').addClass('is-invalid');
+        $('#formPindahSaldo #date-error').html('*tanggal harus di isi');
+        status = false;
+    }
+    // harga emas
+    if ($('#formPindahSaldo #harga_emas').val() == '') {
+        $('#formPindahSaldo #harga_emas').addClass('is-invalid');
+        $('#formPindahSaldo #harga_emas-error').html('*harga emas harus di isi');
+        status = false;
+    }
+    else if (/[^0-9\.]/g.test($('#formPindahSaldo #harga_emas').val())) {
+        $('#formPindahSaldo #harga_emas').addClass('is-invalid');
+        $('#formPindahSaldo #harga_emas-error').html('*hanya boleh berupa angka positif dan titik!');
+        status = false;
+    }
+    // jumlah pindah
+    if ($('#formPindahSaldo #jumlah').val() == '') {
+        $('#formPindahSaldo #jumlah').addClass('is-invalid');
+        $('#formPindahSaldo #jumlah-error').html('*jumlah saldo harus di isi');
+        status = false;
+    }
+    else if (/[^0-9\.]/g.test($('#formPindahSaldo #jumlah').val())) {
+        $('#formPindahSaldo #jumlah').addClass('is-invalid');
+        $('#formPindahSaldo #jumlah-error').html('*hanya boleh berupa angka positif dan titik!');
+        status = false;
+    }
+    else if (parseFloat($('#formPindahSaldo #jumlah').val()) < 10000) {
+        $('#formPindahSaldo #jumlah').addClass('is-invalid');
+        $('#formPindahSaldo #jumlah-error').html('*minimal Rp.10,000');
+        status = false;
+    }
+    // saldo tujuan
+    if (form.get('tujuan') == null) {
+        $('#formPindahSaldo .form-check-input').addClass('is-invalid');
+        status = false;
+    }
+
+    return status;
+}
+
 // Send Transaksi to API
 const doTransaksi = async (el,event,method) => {
     event.preventDefault();
@@ -555,6 +670,10 @@ const doTransaksi = async (el,event,method) => {
     if (method == 'setorsampah') {
         validate = validateSetorSampah;
         transaksiName = 'setor sampah';
+    }
+    else if (method == 'pindahsaldo') {
+        validate = validatePindahSaldo;
+        transaksiName = 'pindah saldo';
     }
 
     if (validate()) {
@@ -618,8 +737,9 @@ const doTransaksi = async (el,event,method) => {
     
                 if (method == 'setorsampah') {
                     $('.barisSetorSampah').remove();
-                    getTotalSampahNasabah();
                     tambahBaris();
+                    getTotalSampahNasabah();
+                    countTotalHarga();
                 } 
     
                 showAlert({
@@ -631,69 +751,13 @@ const doTransaksi = async (el,event,method) => {
                     hideAlert();
                 }, 3000);
             }
+            else if (httpResponse.status === 400) {
+                if (httpResponse.message.jumlah) {
+                    $('#formPindahSaldo #jumlah').addClass('is-invalid');
+                    $('#formPindahSaldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
+                }
+            }
         }
     }
 
-}
-
-// Validate Setor sampah
-const validateSetorSampah = () => {
-    let status = true;
-    let msg    = '';
-    $('#formSetorSampah .form-control').removeClass('is-invalid');
-    $('#formSetorSampah .text-danger').html('');
-
-    // tgl transaksi
-    if ($('#formSetorSampah #date').val() == '') {
-        $('#formSetorSampah #date').addClass('is-invalid');
-        $('#formSetorSampah #date-error').html('*tanggal harus di isi');
-        status = false;
-    }
-
-    // jenis sampah
-    $(`.inputJenisSampah`).each(function() {
-        if ($(this).val() == '') {
-            $(this).addClass('is-invalid');
-            status = false;
-            msg    = 'input tidak boleh kosong!';
-        }
-    });
-    // jumlah sampah
-    $(`.inputJumlahSampah`).each(function() {
-        if ($(this).val() == '') {
-            $(this).addClass('is-invalid');
-            status = false;
-            msg    = 'input tidak boleh kosong!';
-        }
-        if (/[^0-9\.]/g.test($(this).val())) {
-            $(this).addClass('is-invalid');
-            status = false;
-            msg    = 'jumlah hanya boleh berupa angka positif dan titik!';
-        }
-    });
-
-    if (status == false && msg !== "") {
-        showAlert({
-            message: `<strong>${msg}</strong>`,
-            btnclose: false,
-            type:'danger'
-        })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
-    }
-
-    return status;
-}
-
-/**
- * TRANSAKSI PINDAH SALDO
- * =============================================
- */
-
-// Edit modal when open
-const openModalPindahSaldo = () => {
-    $('#formPindahSaldo .form-control').removeClass('is-invalid');
-    $('#formPindahSaldo .text-danger').html('');
-    $(`#formPindahSaldo .form-control`).val('');
 }

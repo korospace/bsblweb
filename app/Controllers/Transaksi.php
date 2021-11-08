@@ -196,15 +196,7 @@ class Transaksi extends BaseController
                     ];
                 }
                 else {
-                    if ($data['jenis_saldo'] == 'uang') {
-                        if ((float)$data['jumlah'] < 10000) {
-                            $valid = false;
-                            $msg   = [
-                                'jumlah' => 'minimal penarikan Rp10.000'
-                            ];
-                        }
-                    }
-                    else  {
+                    if ($data['jenis_saldo'] !== 'uang') {
                         if ((float)$data['jumlah'] < 1) {
                             $valid = false;
                             $msg   = [

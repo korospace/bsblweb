@@ -153,7 +153,7 @@ const getAllTransaksi = async (date) => {
             else {
                 textClass = 'text-warning';
                 if (jenisSaldo == 'uang') {
-                    totalTransaksi = 'Rp'+modifUang(t[`total_${type}`]);
+                    totalTransaksi = '<i class="fas fa-exchange-alt"></i> Rp'+modifUang(t[`total_${type}`]);
                 } else {
                     totalTransaksi = t[`total_${type}`]+'g';
                 }

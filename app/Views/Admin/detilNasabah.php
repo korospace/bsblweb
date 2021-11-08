@@ -637,7 +637,7 @@
 				<!-- tambah baris -->
 				<div class="input-group col-12">
 					<a href="" class="btn btn-info w-100" onclick="tambahBaris(event);">
-						tambah baris
+						<i class="fas fa-plus text-white"></i>
 					</a>
 				</div>
 			</div>
@@ -655,8 +655,8 @@
 
 <!-- **** Modal Pindah Saldo **** -->
 <div class="modal fade" id="modalPindahSaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<form id="formPindahSaldo" class="modal-content">
+	<form id="formPindahSaldo" class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
 			<!-- modal header -->
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Transaksi pindah saldo</h5>
@@ -671,7 +671,7 @@
 				
 				<!-- **** tgl transaksi **** -->
 				<h6 class="font-italic opacity-8 col-12 text-sm">Tanggal transaksi</h6>
-				<div class="input-group col-6 col-sm-4 mb-4 form-group">
+				<div class="input-group col-12 mb-4 form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-gray px-4 border-md">
@@ -684,16 +684,83 @@
 						id="date-error"
 						class="text-danger"></small>
 				</div>
+
+				<!-- **** harga emas **** -->
+				<h6 class="font-italic opacity-8 col-12 text-sm">
+					Harga emas <small>(saat ini)</small>
+				</h6>
+				<div class="input-group col-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-coins text-muted"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control form-control-sm px-2 h-100" id="harga_emas" name="harga_emas" placeholder="contoh: 900000" autocomplete="off">
+					</div>
+					<small
+						id="harga_emas-error"
+						class="text-danger"></small>
+				</div>
+				
+				<!-- **** jumlah **** -->
+				<h6 class="font-italic opacity-8 col-12 text-sm">
+					Jumlah uang
+				</h6>
+				<div class="input-group col-12 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+							<i class="fas fa-money-bill-wave-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="text" class="form-control form-control-sm px-2 h-100" id="jumlah" name="jumlah" placeholder="contoh: 10000" autocomplete="off">
+					</div>
+					<small
+						id="jumlah-error"
+						class="text-danger"></small>
+				</div>
+
+				<!-- **** saldo tujuan **** -->
+				<h6 class="font-italic opacity-8 col-12 text-sm">
+					Saldo tujuan
+				</h6>
+				<div class="input-group col-12 mb-4 form-group form-row">
+					<div class="input-group col-4">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="tujuan" id="antam" value="antam">
+							<label class="form-check-label" for="antam">
+								Antam
+							</label>
+						</div>
+					</div>
+					<div class="input-group col-4">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="tujuan" id="ubs" value="ubs">
+							<label class="form-check-label" for="ubs">
+								Ubs
+							</label>
+						</div>
+					</div>
+					<div class="input-group col-4">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="tujuan" id="galery24" value="galery24">
+							<label class="form-check-label" for="galery24">
+								Galery24
+							</label>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<!-- modal footer -->
 			<div class="modal-footer">
-				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event,'setorsampah');">
+				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event,'pindahsaldo');">
 					<span id="text">Submit</span>
 					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
 				</button>
 			</div>
-		</form>
-	</div>
+		</div>
+	</form>
 </div>
 <?= $this->endSection(); ?>

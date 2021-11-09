@@ -11,6 +11,9 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
+	<script>
+		const LASTURL = '<?= $lasturl; ?>';
+	</script>
 	<script src="<?= base_url('assets/js/login.js'); ?>"></script>
 <?= $this->endSection(); ?>
 

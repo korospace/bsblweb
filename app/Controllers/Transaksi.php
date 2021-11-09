@@ -158,6 +158,83 @@ class Transaksi extends BaseController
     }
 
     /**
+     * Jual sampah
+     *   url    : domain.com/transaksi/jualsampah
+     *   method : POST
+     */
+    public function jualSampah()
+    {
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
+
+        if ($result['success'] == true) {
+            $data  = $this->request->getPost();
+
+            $this->validation->run($data,'jualSampah');
+            $errors = $this->validation->getErrors();
+
+            if($errors) {
+                $response = [
+                    'status'   => 400,
+                    'error'    => true,
+                    'messages' => $errors,
+                ];
+        
+                return $this->respond($response,400);
+            } 
+            else {
+                foreach ($data['transaksi'] as $t) {
+                    $this->validation->run($t,'setorSampah2');
+                    $errors = $this->validation->getErrors();
+        
+                    if($errors) {
+                        $response = [
+                            'status'   => 400,
+                            'error'    => true,
+                            'messages' => $errors,
+                        ];
+                
+                        return $this->respond($response,400);
+                    } 
+                }
+
+                $data['idtransaksi'] = 'TJS'.$this->generateOTP(9);
+                $dbresponse          = $this->transaksiModel->jualSampah($data);
+    
+                if ($dbresponse['success'] == true) {
+                    $response = [
+                        'status'   => 201,
+                        "error"    => false,
+                        'messages' => $dbresponse['message'],
+                    ];
+
+                    return $this->respond($response,201);
+                } 
+                else {
+                    $response = [
+                        'status'   => $dbresponse['code'],
+                        'error'    => true,
+                        'messages' => $dbresponse['message'],
+                    ];
+            
+                    return $this->respond($response,$dbresponse['code']);
+                }
+            }
+        } 
+        else {
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
+        }
+    }
+
+    /**
      * Tarik saldo
      *   url    : domain.com/transaksi/tariksaldo
      *   method : POST
@@ -203,6 +280,13 @@ class Transaksi extends BaseController
                                 'jumlah' => 'minimal saldo yang mengendap adalah 0.1 gram'
                             ];
                         }
+
+                        // var_dump(0.1);
+                        
+                        // $xx = (float)$saldo-(float)$data['jumlah'];
+                        // var_dump($xx);
+
+                        // var_dump($xx === 0.1);die;
                     }
                 }
                 

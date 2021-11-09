@@ -172,9 +172,14 @@ $('#formLoginAdmin').on('submit', function(e) {
         })
         .then((response) => {
             hideLoadingSpinner();
-            // console.log(response.data);
-            document.cookie = `tokenAdmin=${response.data.token}; path=/;`;
-            window.location.replace(`${BASEURL}/admin`);
+            
+            let url = `${BASEURL}/admin`;
+            if (LASTURL != '') {
+                url = LASTURL;
+            }
+
+            document.cookie = `token=${response.data.token}; path=/;`;
+            window.location.replace(url);
         })
         .catch((error) => {
             hideLoadingSpinner();

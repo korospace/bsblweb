@@ -30,10 +30,12 @@ $('.filter-transaksi').on('input', function(e) {
 /**
  * GET ALL TRANSAKSI NASABAH
  */
-const getAllTransaksiNasabah = async (date) => {
+const getAllTransaksiNasabah = async (dateFilter) => {
     $('.spinner-wraper').removeClass('d-none');
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&date=${date}`);
+    $('#transaksi-wraper').addClass('d-none');
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&date=${dateFilter}`);
     $('.spinner-wraper').addClass('d-none'); 
+    $('#transaksi-wraper').removeClass('d-none');
     
     if (httpResponse.status === 404) {
         updateGrafikSetorNasabah([],[]);
@@ -54,12 +56,19 @@ const getAllTransaksiNasabah = async (date) => {
             let month     = date.toLocaleString("en-US",{month: "long"});
             let year      = date.toLocaleString("en-US",{year: "numeric"});
             let totalTransaksi = '';
+
+            const zeroPad = (num, places) => String(num).padStart(places, '0');
+            const xMonth  = zeroPad(date.toLocaleString("en-US",{month: "numeric"}), 2);
+            const yMonth  = dateFilter.split('-');
             
             if (type == 'setor') {
-                textClass = 'text-success';
+                textClass      = 'text-success';
                 totalTransaksi = '+Rp'+modifUang(t[`total_${type}`]);
-                arrayId.push(t.id_transaksi);
-                arrayKg.push(t.total_kg);
+                
+                if (xMonth == yMonth[0]) {
+                    arrayId.push(t.id_transaksi);
+                    arrayKg.push(t.total_kg);
+                }
             } 
             else if (type == 'tarik') {
                 textClass = 'text-danger';
@@ -78,24 +87,26 @@ const getAllTransaksiNasabah = async (date) => {
                 }
             }
 
-            elTransaksi  += `<li class="list-group-item border-0 ps-0 border-radius-lg">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex flex-column">
-                    <h6 class="mb-1 text-dark font-weight-bold text-sm">${month}, ${day}, ${year}</h6>
-                    <span class="text-xs">ID: ${t.id_transaksi}</span>
-                    <span class="${textClass} mt-2">${totalTransaksi}</span>
+            if (xMonth == yMonth[0]) {
+                elTransaksi  += `<li class="list-group-item border-0 ps-0 border-radius-lg">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                        <h6 class="mb-1 text-dark font-weight-bold text-sm">${month}, ${day}, ${year}</h6>
+                        <span class="text-xs">ID: ${t.id_transaksi}</span>
+                        <span class="${textClass} mt-2">${totalTransaksi}</span>
+                    </div>
+                    <div class="d-flex align-items-center text-sm">
+                        <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 text-sm bg-info border-radius-sm"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
+                            <i class="fas fa-file-pdf text-xs text-white"></i>
+                        </a>
+                        <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 ml-1 text-sm bg-danger border-radius-sm" onclick="deleteTransaksiNasabah('${t.id_transaksi}',event);">
+                            <i class="fas fa-trash text-xs text-white"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="d-flex align-items-center text-sm">
-                    <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 text-sm bg-info border-radius-sm"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
-                        <i class="fas fa-file-pdf text-xs text-white"></i>
-                    </a>
-                    <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 ml-1 text-sm bg-danger border-radius-sm" onclick="deleteTransaksiNasabah('${t.id_transaksi}',event);">
-                        <i class="fas fa-trash text-xs text-white"></i>
-                    </a>
-                </div>
-            </div>
-            <hr class="horizontal dark mt-2">
-        </li>`;
+                <hr class="horizontal dark mt-2">
+            </li>`;
+            }
         });
 
         updateGrafikSetorNasabah(arrayId,arrayKg);
@@ -341,68 +352,6 @@ const getDataProfileNasabah = async () => {
     }
 };
 
-/**
- * HAPUS TRANSAKSI
- */
-const deleteTransaksiNasabah = (id,event) => {
-    event.preventDefault();
-
-    Swal.fire({
-        title: 'ANDA YAKIN?',
-        text: "Data akan terhapus permanen",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'iya',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                input: 'password',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                html:`<h5 class='mb-4'>Password</h5>`,
-                showCancelButton: true,
-                confirmButtonText: 'submit',
-                showLoaderOnConfirm: true,
-                preConfirm: (password) => {
-                    let form = new FormData();
-                    form.append('hashedpass',PASSADMIN);
-                    form.append('password',password);
-        
-                    return axios
-                    .post(`${APIURL}/admin/confirmdelete`,form, {
-                        headers: {
-                            // header options 
-                        }
-                    })
-                    .then((response) => {
-                        return httpRequestDelete(`${APIURL}/transaksi/deleteitem?id=${id}`)
-                        .then((e) => {
-                            if (e.status == 201) {
-                                chartGrafik.destroy();
-                                getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
-                                getTotalSampahNasabah();
-                            }
-                        })
-                    })
-                    .catch(error => {
-                        if (error.response.status == 404) {
-                            Swal.showValidationMessage(
-                                `password salah`
-                            )
-                        }
-                        else if (error.response.status == 500) {
-                            Swal.showValidationMessage(
-                                `terjadi kesalahan, coba sekali lagi`
-                            )
-                        }
-                    })
-                },
-                allowOutsideClick: () => !Swal.isLoading()
-            })
-        }
-    })
-}
 
 /**
  * TRANSAKSI SETOR SAMPAH
@@ -416,6 +365,7 @@ const openModalSetorSaldo = () => {
     $(`#formSetorSampah .form-control`).val('');
     $('.barisSetorSampah').remove();
     tambahBaris();
+    countTotalHarga();
 }
 
 // GET ALL JENIS SAMPAH
@@ -705,14 +655,6 @@ const validateTarikSaldo = () => {
         $('#formTarikSaldo #jumlah-error').html('*hanya boleh berupa angka positif dan titik!');
         status = false;
     }
-    // minimal tarik
-    if (form.get('jenis_saldo') !== 'uang') {
-        if (parseFloat($('#formTarikSaldo #jumlah').val()) < 1.1) {
-            $('#formTarikSaldo #jenis_saldo').addClass('is-invalid');
-            $('#formTarikSaldo #jenis_saldo-error').html('*minimal 1.1 gram');
-            status = false;
-        }
-    } 
 
     return status;
 }
@@ -788,12 +730,11 @@ const doTransaksi = async (el,event,method) => {
     
             if (httpResponse.status === 201) {
                 chartGrafik.destroy();
-                currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
-                currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
-                $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
-                $(`#filter-year`).val(currentYear);
-    
-                getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
+                $(`.form-control`).val('');
+                $('.form-check-input').prop('checked',false);
+                $(`#filter-month`).val(tglTransaksi[1]);
+                $(`#filter-year`).val(tglTransaksi[0]);
+                getAllTransaksiNasabah(`${tglTransaksi[1]}-${tglTransaksi[0]}`);
                 getDataProfileNasabah();
     
                 if (method == 'setorsampah') {
@@ -802,9 +743,6 @@ const doTransaksi = async (el,event,method) => {
                     getTotalSampahNasabah();
                     countTotalHarga();
                 } 
-
-                $(`.form-control`).val('');
-                $('.form-check-input').prop('checked',false);
     
                 showAlert({
                     message: `<strong>Success...</strong> ${transaksiName} berhasil!`,
@@ -830,4 +768,67 @@ const doTransaksi = async (el,event,method) => {
         }
     }
 
+}
+
+/**
+ * HAPUS TRANSAKSI
+ */
+ const deleteTransaksiNasabah = (id,event) => {
+    event.preventDefault();
+
+    Swal.fire({
+        title: 'ANDA YAKIN?',
+        text: "Data akan terhapus permanen",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'iya',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                html:`<h5 class='mb-4'>Password</h5>`,
+                showCancelButton: true,
+                confirmButtonText: 'submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    let form = new FormData();
+                    form.append('hashedpass',PASSADMIN);
+                    form.append('password',password);
+        
+                    return axios
+                    .post(`${APIURL}/admin/confirmdelete`,form, {
+                        headers: {
+                            // header options 
+                        }
+                    })
+                    .then((response) => {
+                        return httpRequestDelete(`${APIURL}/transaksi/deleteitem?id=${id}`)
+                        .then((e) => {
+                            if (e.status == 201) {
+                                chartGrafik.destroy();
+                                getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
+                                getTotalSampahNasabah();
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        if (error.response.status == 404) {
+                            Swal.showValidationMessage(
+                                `password salah`
+                            )
+                        }
+                        else if (error.response.status == 500) {
+                            Swal.showValidationMessage(
+                                `terjadi kesalahan, coba sekali lagi`
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        }
+    })
 }

@@ -15,7 +15,10 @@
 			display: inherit !important;
 		}
 	</style>
+  	<!-- ** develoment ** -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+	<!-- ** production ** -->
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.dashboard.css'); ?>"> -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -34,6 +37,7 @@
 	<!-- <script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script> -->
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.dashboard.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.dashboard.min.js'); ?>"></script> -->
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -421,8 +425,9 @@
 								</div>
 								<input id="search-sampah" type="text" class="form-control h-100 px-2" placeholder="kategori/jenis sampah" style="max-height: 39px;">
 							</div>
-							<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
-								<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('addsampah')" style="width: 100%;">tambah</button>
+							<div class="input-group col-12 col-sm-5 col-md-4 col-lg-3 p-0 d-flex" style="">
+								<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('addsampah')" style="width: 50%;">tambah</button>
+								<button class="btn btn-info mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalJualSampah" onclick="openModalJualSampah()" style="width: 50%;">jual</button>
 							</div>
 						</div>
 						<!-- container table -->
@@ -592,6 +597,91 @@
 			</button>
 		</div>
 	</div>
+	</form>
+</div>
+
+
+<!-- **** Modal Jual Sampah **** -->
+<div class="modal fade" id="modalJualSampah" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  	<form id="formJualSampah" class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<!-- modal header -->
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Jual sampah</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal body -->
+			<div class="modal-body form-row">
+				
+				<!-- **** tgl transaksi **** -->
+				<h6 class="font-italic opacity-8 col-12 text-sm">Tanggal transaksi</h6>
+				<div class="input-group col-6 col-sm-4 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="date" class="form-control form-control-sm px-2 h-100" id="date" name="date">
+					</div>
+					<small
+						id="date-error"
+						class="text-danger"></small>
+				</div>
+
+				<!-- **** table **** -->
+				<!-- <hr class="editnasabah-item horizontal col-12 dark mt-0 mb-4"> -->
+				<div class="table-responsive col-12 mb-0" style="overflow: auto;font-family: 'qc-semibold';">
+					<table id="table-jual-sampah" class="table table-sm text-center mb-0">
+						<thead class="bg-white" style="border: 0.5px solid #E9ECEF;">
+							<tr>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									#
+								</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									jenis
+								</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									jumlah(kg)
+								</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+									harga
+								</th>
+							</tr>
+						</thead>
+						<tbody style="border: 0.5px solid #E9ECEF;">
+							<tr id="special-tr">
+								<td colspan="3" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+									Total harga
+								</td>
+								<td colspan="4" class="p-2 text-left">
+									Rp. <span id="total-harga"></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<!-- tambah baris -->
+				<div class="input-group col-12 mt-2">
+					<a href="" class="badge badge-info w-100 border-radius-sm" onclick="tambahBaris(event);">
+						<i class="fas fa-plus text-white"></i>
+					</a>
+				</div>
+			</div>
+
+			<!-- modal footer -->
+			<div class="modal-footer">
+				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event);">
+					<span id="text">Submit</span>
+					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+				</button>
+			</div>
+		</div>
 	</form>
 </div>
 <?= $this->endSection(); ?>

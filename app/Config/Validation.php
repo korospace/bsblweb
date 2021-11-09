@@ -800,6 +800,22 @@ class Validation
 		],
 	];
 
+	public $jualSampah = [
+		'transaksi' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'transaksi is required',
+            ],
+		],
+		'date' => [
+            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'date is required',
+                'regex_match' => 'format must be dd-mm-yyyy',
+            ],
+		],
+	];
+
 	public $tarikSaldo = [
 		'id_nasabah' => [
             'rules'  => 'required|is_not_unique[nasabah.id]',

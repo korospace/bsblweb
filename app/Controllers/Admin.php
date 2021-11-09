@@ -14,6 +14,9 @@ class Admin extends BaseController
     {
         $this->validation = \Config\Services::validation();
         $this->adminModel = new AdminModel;
+        if (isset($_COOKIE['lasturl'])) {
+            unset($_COOKIE['lasturl']);
+        }
     }
 
     /**
@@ -21,9 +24,9 @@ class Admin extends BaseController
      */
     public function dashboardAdmin()
     {
-        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
-        // dd($result);
+        
         $data   = [
             'title'     => 'Admin | dashboard',
             'token'     => $token,
@@ -32,12 +35,15 @@ class Admin extends BaseController
         ];
         
         if($result['success'] == false) {
-            setcookie('tokenAdmin', null, -1, '/');
-            unset($_COOKIE['tokenAdmin']);
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
         } 
+        else if($data['privilege'] == 'nasabah') {
+            return redirect()->to(base_url().'/nasabah');
+        } 
         else {
-            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+            setcookie('token',$token,time() + $result['expired'],'/');
             return view('Admin/index',$data);
         }
     }
@@ -47,8 +53,9 @@ class Admin extends BaseController
      */
     public function listAdminView()
     {
-        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
+
         $data   = [
             'title'     => 'Admin | list admin',
             'token'     => $token,
@@ -57,14 +64,19 @@ class Admin extends BaseController
         ];
         
         if($result['success'] == false) {
-            setcookie('tokenAdmin', null, -1, '/');
-            unset($_COOKIE['tokenAdmin']);
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
-        } else {
-            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+        } 
+        else if($data['privilege'] == 'nasabah') {
+            return redirect()->to(base_url().'/nasabah');
+        } 
+        else {
+            setcookie('token',$token,time() + $result['expired'],'/');
             if ($data['privilege'] != 'super') {
                 return redirect()->to(base_url().'/admin');
-            } else {
+            } 
+            else {
                 return view('Admin/listAdmin',$data);
             }
         }
@@ -75,8 +87,9 @@ class Admin extends BaseController
      */
     public function listNasabahView()
     {
-        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
+
         $data   = [
             'title'     => 'Admin | list nasabah',
             'token'     => $token,
@@ -85,11 +98,15 @@ class Admin extends BaseController
         ];
         
         if($result['success'] == false) {
-            setcookie('tokenAdmin', null, -1, '/');
-            unset($_COOKIE['tokenAdmin']);
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
-        } else {
-            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+        } 
+        else if($data['privilege'] == 'nasabah') {
+            return redirect()->to(base_url().'/nasabah');
+        } 
+        else {
+            setcookie('token',$token,time() + $result['expired'],'/');
             return view('Admin/listNasabah',$data);
         }
     }
@@ -99,24 +116,28 @@ class Admin extends BaseController
      */
     public function detilNasabahView(?string $id=null)
     {
-        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
 
         if ($id!=null) {
             $data = [
-                'title'    => 'Admin | detil nasabah',
-                // 'idnasabah'=> $_POST['idnasabah'],
-                'idnasabah'=> $id,
-                'token'    => $token,
-                'password' => (isset($result['password']))  ? $result['password']  : null,
+                'title'     => 'Admin | detil nasabah',
+                'idnasabah' => $id,
+                'token'     => $token,
+                'password'  => (isset($result['password']))  ? $result['password']  : null,
+                'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
             ];
 
             if($result['success'] == false) {
-                setcookie('tokenAdmin', null, -1, '/');
-                unset($_COOKIE['tokenAdmin']);
+                setcookie('token', null, -1, '/');
+                unset($_COOKIE['token']);
                 return redirect()->to(base_url().'/login');
-            } else {
-                setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+            } 
+            else if($data['privilege'] == 'nasabah') {
+                return redirect()->to(base_url().'/nasabah');
+            } 
+            else {
+                setcookie('token',$token,time() + $result['expired'],'/');
                 return view('Admin/detilNasabah',$data);
             }
         }
@@ -130,8 +151,9 @@ class Admin extends BaseController
      */
     public function listArtikelView()
     {
-        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
+
         $data   = [
             'title'     => 'Admin | list artikel',
             'token'     => $token,
@@ -140,11 +162,15 @@ class Admin extends BaseController
         ];
         
         if($result['success'] == false) {
-            setcookie('tokenAdmin', null, -1, '/');
-            unset($_COOKIE['tokenAdmin']);
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
-        } else {
-            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+        } 
+        else if($data['privilege'] == 'nasabah') {
+            return redirect()->to(base_url().'/nasabah');
+        } 
+        else {
+            setcookie('token',$token,time() + $result['expired'],'/');
             return view('Admin/listArtikel',$data);
         }
     }
@@ -154,20 +180,26 @@ class Admin extends BaseController
      */
     public function addArtikelView()
     {
-        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
+
         $data   = [
-            'title'    => 'Admin | tambah artikel',
-            'token'    => $token,
-            'password' => (isset($result['password']))  ? $result['password']  : null,
+            'title'     => 'Admin | tambah artikel',
+            'token'     => $token,
+            'password'  => (isset($result['password']))  ? $result['password']  : null,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
-            setcookie('tokenAdmin', null, -1, '/');
-            unset($_COOKIE['tokenAdmin']);
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
-        } else {
-            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+        }  
+        else if($data['privilege'] == 'nasabah') {
+            return redirect()->to(base_url().'/nasabah');
+        } 
+        else {
+            setcookie('token',$token,time() + $result['expired'],'/');
             return view('Admin/crudArtikel',$data);
         }
     }
@@ -177,7 +209,7 @@ class Admin extends BaseController
      */
     public function editArtikelView(?string $id=null)
     {
-        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
 
         if ($id!=null) {
@@ -185,15 +217,20 @@ class Admin extends BaseController
                 'title'     => 'Admin | edit artikel',
                 'idartikel' => $id,
                 'token'     => $token,
-                'username'  => (isset($result['username']))  ? $result['username']  : null,
+                'password'  => (isset($result['password']))  ? $result['password']  : null,
+                'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
             ];
             
             if($result['success'] == false) {
-                setcookie('tokenAdmin', null, -1, '/');
-                unset($_COOKIE['tokenAdmin']);
+                setcookie('token', null, -1, '/');
+                unset($_COOKIE['token']);
                 return redirect()->to(base_url().'/login');
-            } else {
-                setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+            } 
+            else if($data['privilege'] == 'nasabah') {
+                return redirect()->to(base_url().'/nasabah');
+            } 
+            else {
+                setcookie('token',$token,time() + $result['expired'],'/');
                 return view('Admin/crudArtikel',$data);
             }
         } 
@@ -215,20 +252,25 @@ class Admin extends BaseController
      */
     public function profileAdmin()
     {
-        $token  = (isset($_COOKIE['tokenAdmin'])) ? $_COOKIE['tokenAdmin'] : null;
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
         $data   = [
             'title'     => 'Admin | profile',
             'token'     => $token,
+            'password'  => (isset($result['password']))  ? $result['password']  : null,
             'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
-            setcookie('tokenAdmin', null, -1, '/');
-            unset($_COOKIE['tokenAdmin']);
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
-        } else {
-            setcookie('tokenAdmin',$token,time() + $result['expired'],'/');
+        } 
+        else if($data['privilege'] == 'nasabah') {
+            return redirect()->to(base_url().'/nasabah');
+        } 
+        else {
+            setcookie('token',$token,time() + $result['expired'],'/');
             return view('Admin/profile',$data);
         }
     }

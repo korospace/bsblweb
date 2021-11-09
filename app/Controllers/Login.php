@@ -9,33 +9,22 @@ class Login extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'Silahkan Login'
+            'title'   => 'Silahkan Login',
+            'lasturl' => (isset($_COOKIE['lasturl'])) ? $_COOKIE['lasturl'] : '',
         ];
 
-        $token = [
-            'value' => null
-        ];
-
-        if (isset($_COOKIE['token'])) {
-            $token = [
-                'value' => $_COOKIE['token'],
-                'type'  => 'nasabah'
-            ];
-        } 
-        else if (isset($_COOKIE['tokenAdmin'])){
-            $token = [
-                'value' => $_COOKIE['tokenAdmin'],
-                'type'  => 'admin'
-            ];
-        }
+        $token     = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result    = $this->checkToken($token, false);
+        $privilege = (isset($result['privilege'])) ? $result['privilege'] : null;
         
-        if ($token['value'] == null) {
+        if ($token == null) {
             return view('Login/index',$data);
         } 
         else {
-            if ($token['type'] == 'nasabah') {
+            if ($privilege == 'nasabah') {
                 return redirect()->to(base_url().'/nasabah');
-            } else {
+            } 
+            else {
                 return redirect()->to(base_url().'/admin');
             }
         }

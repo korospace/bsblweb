@@ -68,7 +68,8 @@ $('#formEditProfile .form-check-input').on('click', function(e) {
  */
 $('#formEditProfile').on('submit', function(e) {
     e.preventDefault();
-    let form = new FormData(e.target);
+    let updatePass = false;
+    let form       = new FormData(e.target);
 
     if (validateFormEditProfile(form)) {
         let newTgl = form.get('tgl_lahir').split('-');
@@ -76,6 +77,9 @@ $('#formEditProfile').on('submit', function(e) {
 
         if (form.get('new_password') == '') {
             form.delete('new_password');
+        }
+        else {
+            updatePass = true;
         }
 
         $('#formEditProfile button#submit #text').addClass('d-none');
@@ -92,8 +96,6 @@ $('#formEditProfile').on('submit', function(e) {
             $('#formEditProfile button#submit #spinner').addClass('d-none');
             $('#newpass-edit').val('');
             $('#oldpass-edit').val('');
-            console.log(form.get('username'));
-            document.cookie = `username=${form.get('username')}; path=/;`;
 
             let newDataProfile = {};
             for (var pair of form.entries()) {
@@ -110,6 +112,19 @@ $('#formEditProfile').on('submit', function(e) {
             })
             setTimeout(() => {
                 hideAlert();
+
+                if (updatePass) {
+                    Swal.fire({
+                        icon  : 'info',
+                        title : '<strong>INFO</strong>',
+                        html  : 'Password telah diupdate, silahkan login ulang',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    })
+                    .then(() => {
+                        doLogout();
+                    })
+                }
             }, 3000);
         })
         .catch((error) => {
@@ -129,6 +144,25 @@ $('#formEditProfile').on('submit', function(e) {
                 if (error.response.data.messages.old_password) {
                     $('#oldpass-edit').addClass('is-invalid');
                     $('#oldpass-edit-error').text('*'+error.response.data.messages.old_password);
+                }
+            }
+            // unauthorized
+            else if (error.response.status == 401) {
+                if (error.response.data.messages == 'token expired') {
+                    Swal.fire({
+                        icon : 'error',
+                        title : '<strong>LOGIN EXPIRED</strong>',
+                        text: 'silahkan login ulang untuk perbaharui login anda',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    }).then(() => {
+                        document.cookie = `token=null;expires=;path=/;`;
+                        window.location.replace(`${BASEURL}/login`);
+                    })
+                }
+                else{
+                    document.cookie = `token=null;expires=;path=/;`;
+                    window.location.replace(`${BASEURL}/login`);
                 }
             }
             // error server
@@ -238,4 +272,27 @@ function validateFormEditProfile(form) {
     }
 
     return status;
+}
+
+// logout
+function doLogout() {
+    showLoadingSpinner();
+    axios
+        .delete(`${APIURL}/admin/logout`, {
+            headers: {
+                token: TOKEN
+            }
+        })
+        .then(() => {
+            hideLoadingSpinner();
+            document.cookie = `token=null; path=/;`;
+            document.cookie = `lasturl=${webUrl}; path=/;`;
+            window.location.replace(`${BASEURL}/login`);
+        })
+        .catch(error => {
+            hideLoadingSpinner();
+            document.cookie = `token=null; path=/;`;
+            document.cookie = `lasturl=${webUrl}; path=/;`;
+            window.location.replace(`${BASEURL}/login`);
+        })
 }

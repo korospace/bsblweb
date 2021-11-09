@@ -263,8 +263,8 @@ class BaseController extends ResourceController
             if ($dbcheck == false) {
                 return [
                     'success'   => true,
-                    'password'  => (isset($decoded['password' ])) ? $decoded['password' ] : '',
-                    'privilege' => (isset($decoded['privilege'])) ? $decoded['privilege'] : '',
+                    'password'  => (isset($decoded['password' ])) ? $decoded['password' ] : null,
+                    'privilege' => (isset($decoded['privilege'])) ? $decoded['privilege'] : 'nasabah',
                     'expired'   => $decoded['expired'] - time(),
                 ];
             }

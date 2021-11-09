@@ -29,13 +29,13 @@ const httpRequestGet = (url) => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then(() => {
-                        window.location.replace(`${BASEURL}/login`);
                         document.cookie = `token=null;expires=;path=/;`;
+                        window.location.replace(`${BASEURL}/login`);
                     })
                 }
                 else{
-                    window.location.replace(`${BASEURL}/login`);
                     document.cookie = `token=null;expires=;path=/;`;
+                    window.location.replace(`${BASEURL}/login`);
                 }
             }
             else if (error.response.status == 404) {
@@ -113,8 +113,10 @@ $('.filter-transaksi').on('input', function(e) {
  */
 const getAllTransaksi = async (date) => {
     $('.spinner-wraper').removeClass('d-none');
+    $('#transaksi-wraper').addClass('d-none');
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?date=${date}`);
     $('.spinner-wraper').addClass('d-none');
+    $('#transaksi-wraper').removeClass('d-none');
     
     if (httpResponse.status === 404) {
         updateGrafikSetor([],[]);
@@ -599,6 +601,25 @@ $('#formEditProfile').on('submit', function(e) {
                 if (error.response.data.messages.old_password) {
                     $('#oldpass-edit').addClass('is-invalid');
                     $('#oldpass-edit-error').text('*'+error.response.data.messages.old_password);
+                }
+            }
+            // unauthorized
+            else if (error.response.status == 401) {
+                if (error.response.data.messages == 'token expired') {
+                    Swal.fire({
+                        icon : 'error',
+                        title : '<strong>LOGIN EXPIRED</strong>',
+                        text: 'silahkan login ulang untuk perbaharui login anda',
+                        showCancelButton: false,
+                        confirmButtonText: 'ok',
+                    }).then(() => {
+                        document.cookie = `token=null;expires=;path=/;`;
+                        window.location.replace(`${BASEURL}/login`);
+                    })
+                }
+                else{
+                    document.cookie = `token=null;expires=;path=/;`;
+                    window.location.replace(`${BASEURL}/login`);
                 }
             }
             // error server

@@ -39,7 +39,8 @@
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.profile.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.profile.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.profile.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>

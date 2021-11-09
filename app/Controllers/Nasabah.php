@@ -66,36 +66,13 @@ class Nasabah extends BaseController
 
     public function cetakTransaksi(string $id)
     {
-        $token  = [
-            'value' =>  null,
-            'user'  =>  '',
-        ];
+        $token     = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result    = $this->checkToken($token, false);
+        $privilege = (isset($result['privilege'])) ? $result['privilege'] : null;
 
-        if (isset($_COOKIE['token'])){
-            $token  = [
-                'value' => $_COOKIE['token'],
-                'user'  => 'nasabah',
-            ];
-        } 
-        else if (isset($_COOKIE['tokenAdmin'])) {
-            $token  = [
-                'value' => $_COOKIE['tokenAdmin'],
-                'user'  => 'admin',
-            ];
-        }
-        
-        $result = $this->checkToken($token['value']);
-
-        if ($token['value'] == null || $result['success'] == false) {
-            if ($token['user'] == 'nasabah') {
-                setcookie('token', null, -1, '/');
-                unset($_COOKIE['token']);
-            } 
-            else {
-                setcookie('tokenAdmin', null, -1, '/');
-                unset($_COOKIE['tokenAdmin']);
-            }
-            
+        if ($token == null || $result['success'] == false) {
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
         }
 
@@ -208,25 +185,25 @@ class Nasabah extends BaseController
                 </table>
             </div>
 
-            <div style='padding-top: 60px;font-family: 'sans';'>
+            <div style='padding-top: 30px;font-family: 'sans';'>
                 <table>
                     <tr>
-                        <td style='font-size: 2em;'>TANGGAL&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 2em;'>
+                        <td style='font-size: 1.4em;'>TANGGAL&nbsp;&nbsp;&nbsp;</td>
+                        <td style='font-size: 1.4em;'>
                             : ".date("d/m/y H:i:s",$dbresponse['data']['date'])."
                         </td>
                     </tr>
                     <tr>
-                        <td style='font-size: 2em;'>NAMA&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 2em;text-transform: uppercase;'>: ".$dbresponse['data']['nama_lengkap']."</td>
+                        <td style='font-size: 1.4em;'>NAMA&nbsp;&nbsp;&nbsp;</td>
+                        <td style='font-size: 1.4em;text-transform: uppercase;'>: ".$dbresponse['data']['nama_lengkap']."</td>
                     </tr>
                     <tr>
-                        <td style='font-size: 2em;'>ID.NASABAH&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 2em;'>: ".$dbresponse['data']['id_nasabah']."</td>
+                        <td style='font-size: 1.4em;'>ID.NASABAH&nbsp;&nbsp;&nbsp;</td>
+                        <td style='font-size: 1.4em;'>: ".$dbresponse['data']['id_nasabah']."</td>
                     </tr>
                     <tr>
-                        <td style='font-size: 2em;'>ID.TRANSAKSI&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 2em;'>: ".$dbresponse['data']['id_transaksi']."</td>
+                        <td style='font-size: 1.4em;'>ID.TRANSAKSI&nbsp;&nbsp;&nbsp;</td>
+                        <td style='font-size: 1.4em;'>: ".$dbresponse['data']['id_transaksi']."</td>
                     </tr>
                 </table>
             </div>

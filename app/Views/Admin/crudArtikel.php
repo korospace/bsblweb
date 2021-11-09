@@ -13,7 +13,10 @@
 		margin-bottom: 20px;
 	}
 	</style>
-	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  	<!-- ** develoment ** -->
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+	<!-- ** production ** -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.crudartikel.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -40,7 +43,8 @@
 	<script src="<?= base_url('assets/js/plugins/image-resize.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/compress.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>

@@ -46,7 +46,10 @@
 			}
 		} 
 	</style>
-	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  	<!-- ** develoment ** -->
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+	<!-- ** production ** -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.detilnasabah.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -66,6 +69,7 @@
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.detilnasabah.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.detilnasabah.min.js'); ?>"></script> -->
 <?= $this->endSection(); ?>
 
 <!-- Html -->
@@ -803,32 +807,32 @@
 				<div class="input-group col-12 mb-4 form-group form-row">
 					<div class="input-group col-3">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="jenis_saldo" id="uang" value="uang" checked>
-							<label class="form-check-label" for="uang">
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikUang" value="uang" checked>
+							<label class="form-check-label" for="tarikUang">
 								Uang
 							</label>
 						</div>
 					</div>
 					<div class="input-group col-3">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="jenis_saldo" id="antam" value="antam">
-							<label class="form-check-label" for="antam">
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikAntam" value="antam">
+							<label class="form-check-label" for="tarikAntam">
 								Antam
 							</label>
 						</div>
 					</div>
 					<div class="input-group col-3">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="jenis_saldo" id="ubs" value="ubs">
-							<label class="form-check-label" for="ubs">
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikUbs" value="ubs">
+							<label class="form-check-label" for="tarikUbs">
 								Ubs
 							</label>
 						</div>
 					</div>
 					<div class="input-group col-3">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="jenis_saldo" id="galery24" value="galery24">
-							<label class="form-check-label" for="galery24">
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikGalery24" value="galery24">
+							<label class="form-check-label" for="tarikGalery24">
 								Galery24
 							</label>
 						</div>

@@ -1,6 +1,8 @@
-let webTitle  = document.title.split('|');
-let pageTitle = webTitle[1].replace(/\s/,'');
-let dataAdmin = '';
+let webTitle    = document.title.split('|');
+let pageTitle   = webTitle[1].replace(/\s/,'');
+let dataAdmin   = '';
+let webUrl      = window.location.href;
+document.cookie = `lasturl=${webUrl}; path=/;`;
 
 /**
  * API REQUEST GET
@@ -30,13 +32,13 @@ const httpRequestGet = (url) => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then(() => {
+                        document.cookie = `token=null;expires=;path=/;`;
                         window.location.replace(`${BASEURL}/login`);
-                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
                     })
                 }
                 else{
+                    document.cookie = `token=null;expires=;path=/;`;
                     window.location.replace(`${BASEURL}/login`);
-                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
                 }
             }
             // server error
@@ -98,13 +100,13 @@ const httpRequestPost = (url,form) => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then(() => {
+                        document.cookie = `token=null;expires=;path=/;`;
                         window.location.replace(`${BASEURL}/login`);
-                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
                     })
                 }
                 else{
+                    document.cookie = `token=null;expires=;path=/;`;
                     window.location.replace(`${BASEURL}/login`);
-                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
                 }
             }
             // error server
@@ -167,13 +169,13 @@ const httpRequestPut = (url,form) => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then(() => {
+                        document.cookie = `token=null;expires=;path=/;`;
                         window.location.replace(`${BASEURL}/login`);
-                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
                     })
                 }
                 else{
+                    document.cookie = `token=null;expires=;path=/;`;
                     window.location.replace(`${BASEURL}/login`);
-                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
                 }
             }
             // error server
@@ -218,13 +220,13 @@ const httpRequestDelete = (url) => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then(() => {
+                        document.cookie = `token=null;expires=;path=/;`;
                         window.location.replace(`${BASEURL}/login`);
-                        document.cookie = `tokenAdmin=null;expires=;path=/;`;
                     })
                 }
                 else{
+                    document.cookie = `token=null;expires=;path=/;`;
                     window.location.replace(`${BASEURL}/login`);
-                    document.cookie = `tokenAdmin=null;expires=;path=/;`;
                 }
             }
             // error server
@@ -269,7 +271,7 @@ const sessioncheck = async () => {
             // update value filter transkasi
             currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
             currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
-            $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
+            $(`#filter-month`).val(currentMonth);
             $(`#filter-year`).val(currentYear);
 
             getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
@@ -318,14 +320,16 @@ $('#btn-logout').on('click', function(e) {
             .then(() => {
                 Swal.close();
                 
-                document.cookie = `tokenAdmin=null; path=/;`;
+                document.cookie = `token=null; path=/;`;
+                document.cookie = `lasturl=${BASEURL}/admin; path=/;`;
                 window.location.replace(`${BASEURL}/login`);
             })
             .catch(error => {
                 // unauthorized
                 if (error.response.status == 401) {
                     Swal.close();
-                    document.cookie = `tokenAdmin=null; path=/;`;
+                    document.cookie = `token=null; path=/;`;
+                    document.cookie = `lasturl=${BASEURL}/admin; path=/;`;
                     window.location.replace(`${BASEURL}/login`);
                 }
                 // error server

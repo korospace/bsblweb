@@ -31,7 +31,7 @@
 		} 
 	</style>
   	<!-- ** develoment ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css'); ?>"> -->
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
 	<!-- ** production ** -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/nasabah.dashboard.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
@@ -416,7 +416,7 @@
 			<div id="modalPrintTransaksiTarget" class="modal-body w-100 position-relative" style="overflow: hidden;">
 				<!-- spinner -->
 				<div id="detil-transaksi-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-					<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 60px;" />
+					<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 40px;" />
 				</div>
 				<!-- header -->
 				<div class="detil-transaksi-logo d-flex align-items-center justify-content-between py-2 px-4">
@@ -424,7 +424,7 @@
 					<h4>bukti transaksi</h4>
 				</div>
 				<hr class="horizontal dark mt-2">
-				<div class="px-4 detil-transaksi-header">
+				<div class="px-4 detil-transaksi-header text-xs">
 					<table>
 						<tr>
 							<td>TANGGAL&nbsp;&nbsp;&nbsp;</td>
@@ -445,7 +445,7 @@
 					</table>
 				</div>
 				<hr class="horizontal dark mt-2">
-				<h6 id="detil-transaksi-type" class="font-italic px-4"></h6>
+				<h6 id="detil-transaksi-type" class="font-italic px-4 text-xs"></h6>
 				<div id="detil-transaksi-body" class="px-4 mt-2 table-responsive">
 					
 				</div>

@@ -66,6 +66,58 @@ class TransaksiModel extends Model
             ];
         }
     }
+    public function jualSampah(array $data): array
+    {
+        try {
+            $date        = (int)strtotime($data['date']);
+            $idtransaksi = $data['idtransaksi'];
+            $totalHarga  = 0;
+            $queryDetilJual   = "INSERT INTO jual_sampah (id_transaksi,jenis_sampah,jumlah,harga,date) VALUES";
+            $queryJumlahSampah = '';
+
+            foreach ($data['transaksi'] as $t) {
+                $jenisSmp   = $t['jenis_sampah'];
+                $jumlah     = $t['jumlah'];
+                $hargaAsli  = $this->db->table('sampah')->select("harga")->where("jenis",$jenisSmp)->get()->getResultArray();
+                $harga      = (int)$hargaAsli[0]['harga']*(float)$jumlah;
+                $totalHarga = $totalHarga+$harga;
+
+                $queryDetilJual    .= "('$idtransaksi','$jenisSmp',$jumlah,$harga,$date),";
+                $queryJumlahSampah .= "UPDATE sampah SET jumlah=jumlah-$jumlah WHERE jenis = '$jenisSmp';";
+            }
+
+            $queryDetilJual  = rtrim($queryDetilJual, ",");
+            $queryDetilJual .= ';';
+
+            $this->db->transBegin();
+            $this->db->query($queryDetilJual);
+            $this->db->query($queryJumlahSampah);
+
+            if ($this->db->transStatus() === false) {
+                $this->db->transRollback();
+                return [
+                    'success' => false,
+                    'message' => "jual sampah is failed",
+                    'code'    => 500
+                ];
+            } 
+            else {
+                $this->db->transCommit();
+                return [
+                    "success"  => true,
+                    'message' => 'jual sampah is success',
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            $this->db->transRollback();
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
 
     public function getSaldo(array $data): string
     {

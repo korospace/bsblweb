@@ -6,8 +6,9 @@
 	body {}
 
 	section.wrapper {
-		margin: 0 !important;
-		min-height: 490px;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		min-height : 490px;
 	}
 
 	@media (max-width:990px) {
@@ -20,7 +21,6 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/sidebar/reset.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>">
 <?= $this->endSection(); ?>
 
@@ -79,53 +79,44 @@
 
 	<!-- CARDS -->
 	<section class="wrapper d-flex justify-content-center align-items-center">
-		<div class="row" id="container-article">
-			<div class="col-12 d-none" id="img-404">
-				<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
+		<div class="container pd-6">
+			<div class="row" id="container-article">
+				<div class="col-12 d-none" id="img-404">
+					<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
+				</div>
 			</div>
 		</div>
-		<div class="row" id="container-article">
-			<div class="col-12 d-none" id="img-404">
-				<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
-			</div>
-		</div>
-
-
-		<div class=" col-4">
+		<div class=" col-3">
 			<div class="main-sidebar">
-				<!-- Single Widget -->
+				<!-- Search -->
 				<div class="single-widget search">
 					<div class="form">
 						<input type="email" placeholder="Search Here...">
 						<a class="button" href="#"><i class="fa fa-search"></i></a>
 					</div>
 				</div>
-				<!--/ End Single Widget -->
+				<!--/ End Search-->
 				<!-- Single Widget -->
 				<div class="single-widget category">
-					<h3 class="title">Blog Categories</h3>
+					<h3 class="title">Artikel Lainnya</h3>
 					<ul class="categor-list">
-						<li><a href="#">Men's Apparel</a></li>
-						<li><a href="#">Women's Apparel</a></li>
-						<li><a href="#">Bags Collection</a></li>
-						<li><a href="#">Accessories</a></li>
-						<li><a href="#">Sun Glasses</a></li>
+						<li><a href="#">Webinar</a></li>
+						<li><a href="#">KKN</a></li>
+						<li><a href="#">Sosialisasi & Edukasi</a></li>
 					</ul>
 				</div>
 				<!--/ End Single Widget -->
 				<!-- Single Widget -->
-				<div class="single-widget recent-post">
-					<h3 class="title">Recent post</h3>
-					<!-- Single Post -->
+				<!-- <div class="single-widget recent-post">
+					<h3 class="title">Artikel Rekomendasi</h3>
 					<div class="single-post">
 						<div class="image">
 							<img src="https://via.placeholder.com/100x100" alt="#">
 						</div>
 						<div class="content">
-							<h5><a href="#">Top 10 Beautyful Women Dress in the world</a></h5>
+							<h5><a href="#">Lorem ipsum dolor sit amet.</a></h5>
 							<ul class="comment">
 								<li><i class="fa fa-calendar" aria-hidden="true"></i>Jan 11, 2020</li>
-								<li><i class="fa fa-commenting-o" aria-hidden="true"></i>35</li>
 							</ul>
 						</div>
 					</div>
@@ -134,16 +125,24 @@
 							<img src="https://via.placeholder.com/100x100" alt="#">
 						</div>
 						<div class="content">
-							<h5><a href="#">Top 10 Beautyful Women Dress in the world</a></h5>
+							<h5><a href="#">Lorem ipsum dolor sit amet.</a></h5>
 							<ul class="comment">
-								<li><i class="fa fa-calendar" aria-hidden="true"></i>Mar 05, 2019</li>
-								<li><i class="fa fa-commenting-o" aria-hidden="true"></i>59</li>
+								<li><i class="fa fa-calendar" aria-hidden="true"></i>Jan 11, 2020</li>
 							</ul>
 						</div>
 					</div>
-					<!-- End Single Post -->
-
-				</div>
+					<div class="single-post">
+						<div class="image">
+							<img src="https://via.placeholder.com/100x100" alt="#">
+						</div>
+						<div class="content">
+							<h5><a href="#">Lorem ipsum dolor sit amet.</a></h5>
+							<ul class="comment">
+								<li><i class="fa fa-calendar" aria-hidden="true"></i>Jan 11, 2020</li>
+							</ul>
+						</div>
+					</div>
+				</div> -->
 			</div>
 		</div>
 	</section>
@@ -237,5 +236,5 @@
 	</footer>
 
 	<!-- footer section ends -->
-
+</body>
 	<?= $this->endSection(); ?>

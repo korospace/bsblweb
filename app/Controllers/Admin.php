@@ -239,14 +239,6 @@ class Admin extends BaseController
         }
     }
 
-    public function formTransaksi()
-    {
-        $data = [
-            'title' => 'Admin | FormTranskasi'
-        ];
-            return view('/Admin/transaksi',$data);
-    }
-
     /**
      * Profile admin
      */

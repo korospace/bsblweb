@@ -785,6 +785,7 @@ const doTransaksi = async (el,event) => {
                 $('#formJualSampah .barisJualSampah').remove();
                 tambahBaris();
                 countTotalHarga();
+                getAllJenisSampah();
     
                 showAlert({
                     message: `<strong>Success...</strong> jual sampah berhasil!`,

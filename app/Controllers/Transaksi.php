@@ -80,6 +80,64 @@ class Transaksi extends BaseController
     }
 
     /**
+     * Get data transaction
+     *   url    : domain.com/transaksi/rekapdata
+     *   method : GET
+     */
+    public function rekapData()
+    {
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
+
+        if ($result['success'] == true) {
+            $this->validation->run($this->request->getGet(),'rekapData');
+            $errors = $this->validation->getErrors();
+
+            if($errors) {
+                $response = [
+                    'status'   => 400,
+                    'error'    => true,
+                    'messages' => $errors,
+                ];
+        
+                return $this->respond($response,400);
+            } 
+            
+            $dbresponse = $this->transaksiModel->rekapData($this->request->getGet());
+
+            if ($dbresponse['success'] == true) {
+                $response = [
+                    'status'   => 200,
+                    "error"    => false,
+                    'data'     => $dbresponse['data'],
+                ];
+
+                return $this->respond($response,200);
+            } 
+            else {
+                $response = [
+                    'status'   => $dbresponse['code'],
+                    'error'    => true,
+                    'messages' => $dbresponse['message'],
+                ];
+        
+                return $this->respond($response,$dbresponse['code']);
+            }
+        } 
+        else {
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
+        }
+    }
+
+    /**
      * Setor sampah
      *   url    : domain.com/transaksi/setorsampah
      *   method : POST

@@ -67,7 +67,6 @@ $routes->group("admin", function ($routes) {
     $routes->add('listartikel',        'Admin::listArtikelView');
     $routes->add('addartikel',         'Admin::addArtikelView');
     $routes->add('editartikel/(:any)', 'Admin::editArtikelView/$1');
-    $routes->add('transaksi',          'Admin::formTransaksi');
     $routes->add('profile',            'Admin::profileAdmin');
     // API
     $routes->post("login",           "Admin::login");
@@ -122,14 +121,12 @@ $routes->group("sampah", function ($routes) {
 
 
 $routes->group("transaksi", function ($routes) {
-    //VIEW
-    
-
     //API
     $routes->post("setorsampah",  "Transaksi::setorSampah");
     $routes->post("jualsampah",   "Transaksi::jualSampah");
     $routes->post("tariksaldo",   "Transaksi::tarikSaldo");
     $routes->get("getdata",       "Transaksi::getData");
+    $routes->get("rekapdata",     "Transaksi::rekapData");
     $routes->post("pindahsaldo",  "Transaksi::pindahSaldo");
     $routes->delete("deleteitem", "Transaksi::deleteItem");
     $routes->add("(:any)",       "Notfound::PageNotFound");

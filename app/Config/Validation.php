@@ -760,6 +760,16 @@ class Validation
 		],
 	];
 
+	public $rekapData = [
+		'year' => [
+            'rules'  => 'required|regex_match[/^(19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'parameter year is required',
+                'regex_match' => 'format must be yyyy',
+            ],
+		],
+	];
+
 	public $setorSampah1 = [
 		'id_nasabah' => [
             'rules'  => 'required|is_not_unique[nasabah.id]',

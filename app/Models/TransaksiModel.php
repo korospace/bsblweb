@@ -360,6 +360,63 @@ class TransaksiModel extends Model
         return $transaction;
     }
 
+    public function rekapData(array $get): array
+    {
+        try {
+            if (isset($get['month'])) {
+                
+            } 
+            else {
+                $query  = 'SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.date,transaksi.jenis_saldo,
+                (SELECT SUM(harga) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_setor,
+                (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
+                (SELECT SUM(jumlah) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS total_tarik,
+                (SELECT SUM(jumlah) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS total_pindah 
+                FROM transaksi';
+
+                if ($isAdmin && isset($get['idnasabah'])) {
+                    $id_nasabah  = $get['idnasabah'];
+                    $query      .= " WHERE transaksi.id_nasabah = '$id_nasabah'";
+                } 
+                else if (!$isAdmin && $idNasabah) {
+                    $query      .= " WHERE transaksi.id_nasabah = '$idNasabah'";
+                }
+
+                if (isset($get['date'])) {
+                    $start       = (int)strtotime('01-'.$get['date']);
+                    $end         = $start+(86400*30);
+                    $query      .= ($idNasabah || isset($get['idnasabah'])) ? ' AND' : ' WHERE' ;
+                    $query      .= " transaksi.date BETWEEN '$start' AND '$end'";
+                }
+
+                $query      .= ' ORDER BY transaksi.date ASC;';
+                $transaction = $this->db->query($query)->getResultArray();
+                $transaction = $this->filterData($transaction);
+            } 
+
+            if (empty($transaction)) {    
+                return [
+                    'success' => false,
+                    'message' => "transaction notfound",
+                    'code'    => 404
+                ];
+            } 
+            else {   
+                return [
+                    'success' => true,
+                    'data'    => $transaction
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code'    => 500
+            ];
+        }
+    }
+
     public function deleteItem(string $id): array
     {
         try {

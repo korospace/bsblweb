@@ -35,4 +35,14 @@ class HomePage extends BaseController
 
         return view('HomePage/detilArtikel', $data);
     }
+    
+    public function bacaArtikel(string $id)
+    {
+        $data = [
+            'title'     => 'Artikel',
+            'idArtikel' => $id,
+        ];
+
+        return view('HomePage/bacaArtikel', $data);
+    }
 }

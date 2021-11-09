@@ -34,6 +34,7 @@ $routes->setAutoRoute(true);
 
 $routes->add('/',                'HomePage::index');
 $routes->add('/homepage/(:any)', 'HomePage::listArtikel/$1');
+$routes->add('/homepage/(:any)', 'HomePage::bacaArtikel/$1');
 $routes->add('/artikel/(:any)',  'HomePage::detilArtikel/$1');
 $routes->add('/signup',          'SignUp::index');
 $routes->add('/login',           'Login::index');

@@ -21,21 +21,22 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/dropdown/bootstrap.dropdown.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/dropdown/owl.carousel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/dropdown/style.css'); ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
+<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
+
 <script>
 	const KATEGORI = '<?= $kategori; ?>';
 </script>
 <script src="<?= base_url('assets/js/artikel.js'); ?>"></script>
 <script src="<?= base_url('assets/js/dropdown/bootstrap.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/jquery-3.3.1.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/owl.carousel.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/main.js'); ?>"></script>
 <script src="<?= base_url('assets/js/dropdown/popper.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
@@ -56,7 +57,7 @@
 
 	<!-- ***** Header Area Start ***** -->
 	<header class="header-area header-sticky">
-		<div class="container">
+		<div class="container col-lg-4 col-12">
 			<div class="row">
 				<div class="col-12">
 					<nav class="main-nav">
@@ -65,19 +66,6 @@
 							<img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt=""
 								width="65" height="55">
 						</a>
-						<!-- ***** Logo End ***** -->
-
-						<!-- ***** Menu Start ***** -->
-						<!-- <ul class="nav">
-							<li class="submenu">
-								<a href="javascript:;">Artikel Lainnya</a>
-								<ul>
-									<li><a href="" class="menu-item">Webinar</a></li>
-									<li><a href="" class="menu-item">KKN</a></li>
-									<li><a href="" class="menu-item">Sosialisasi & Edukasi</a></li>
-								</ul>
-							</li>
-						</ul> -->
 						<a class='menu-trigger'>
 							<span>Menu</span>
 						</a>
@@ -91,11 +79,70 @@
 
 	<!-- CARDS -->
 	<section class="wrapper d-flex justify-content-center align-items-center">
-		<div class="container">
+		<div class="container pd-6">
 			<div class="row" id="container-article">
 				<div class="col-12 d-none" id="img-404">
 					<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
 				</div>
+			</div>
+		</div>
+		<div class=" col-3">
+			<div class="main-sidebar">
+				<!-- Search -->
+				<div class="single-widget search">
+					<div class="form">
+						<input type="email" placeholder="Search Here...">
+						<a class="button" href="#"><i class="fa fa-search"></i></a>
+					</div>
+				</div>
+				<!--/ End Search-->
+				<!-- Single Widget -->
+				<div class="single-widget category">
+					<h3 class="title">Artikel Lainnya</h3>
+					<ul class="categor-list">
+						<li><a href="#">Webinar</a></li>
+						<li><a href="#">KKN</a></li>
+						<li><a href="#">Sosialisasi & Edukasi</a></li>
+					</ul>
+				</div>
+				<!--/ End Single Widget -->
+				<!-- Single Widget -->
+				<!-- <div class="single-widget recent-post">
+					<h3 class="title">Artikel Rekomendasi</h3>
+					<div class="single-post">
+						<div class="image">
+							<img src="https://via.placeholder.com/100x100" alt="#">
+						</div>
+						<div class="content">
+							<h5><a href="#">Lorem ipsum dolor sit amet.</a></h5>
+							<ul class="comment">
+								<li><i class="fa fa-calendar" aria-hidden="true"></i>Jan 11, 2020</li>
+							</ul>
+						</div>
+					</div>
+					<div class="single-post">
+						<div class="image">
+							<img src="https://via.placeholder.com/100x100" alt="#">
+						</div>
+						<div class="content">
+							<h5><a href="#">Lorem ipsum dolor sit amet.</a></h5>
+							<ul class="comment">
+								<li><i class="fa fa-calendar" aria-hidden="true"></i>Jan 11, 2020</li>
+							</ul>
+						</div>
+					</div>
+					<div class="single-post">
+						<div class="image">
+							<img src="https://via.placeholder.com/100x100" alt="#">
+						</div>
+						<div class="content">
+							<h5><a href="#">Lorem ipsum dolor sit amet.</a></h5>
+							<ul class="comment">
+								<li><i class="fa fa-calendar" aria-hidden="true"></i>Jan 11, 2020</li>
+							</ul>
+						</div>
+					</div>
+				</div> -->
 			</div>
 		</div>
 	</section>
@@ -164,7 +211,9 @@
 										<i class="fas fa-map-marker-alt"></i>
 									</div>
 									<div class="info">
-										<p>125, Park street aven, Brocklyn,<span>Newyork.</span></p>
+										<p>
+											<a>Jl. H. Gaim No.50, RT.10/RW.2, Petukangan Utara, Kec. Pesanggrahan, Kota
+												Jakarta Selatan, Daerah Khusus Ibukota Jakarta.</a></p>
 									</div>
 								</div>
 							</div>
@@ -187,5 +236,5 @@
 	</footer>
 
 	<!-- footer section ends -->
-
+</body>
 	<?= $this->endSection(); ?>

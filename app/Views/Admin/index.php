@@ -16,9 +16,9 @@
 		}
 	</style>
   	<!-- ** develoment ** -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
 	<!-- ** production ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.dashboard.css'); ?>"> -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.dashboard.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -36,8 +36,8 @@
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.dashboard.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.dashboard.min.js'); ?>"></script> -->
+	<!-- <script src="<?= base_url('assets/js/admin.dashboard.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.dashboard.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -190,45 +190,29 @@
 									<h6 id="text-notfound" class='opacity-6'></h6>
 								</div>
 								<!-- table -->
-								<table id="table-transaksi-terbaru" class="table table-striped text-center mb-0">
+								<table id="table-transaksi-terbaru" class="table table-striped text-left mb-0">
 									<thead class="position-sticky bg-white" style="z-index: 11;top: 0;">
 										<tr>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												ID Transaksi
 											</th>
 											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Nama Nasabah
 											</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Jenis transaksi
 											</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Jumlah
 											</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Tgl
 											</th>
 										</tr>
 									</thead>
 									<tbody>
 										<?php for ($i=0; $i < 20 ; $i++) { ?>
-										<tr>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
+										
 										<?php } ?>
 									</tbody>
 								</table>

@@ -4,7 +4,7 @@ module.exports = {
     // ** homepage
     // content: ['app/Views/HomePage/index.php','assets/js/homepage.js'],
     // ** login
-    content: ['app/Views/Login/index.php','public/assets/js/login.js'],
+    // content: ['app/Views/Login/index.php','public/assets/js/login.js'],
     // ** signup
     // content: ['app/Views/SignUp/index.php','assets/js/signup.js'],
     // ** otp
@@ -20,7 +20,7 @@ module.exports = {
     // /////////////////////////////////////////////////////////////////////////
     
     // ** admin dashboard
-    // content: ['app/Views/Admin/index.php','public/assets/js/admin.dashboard.js'],
+    content: ['app/Views/Admin/index.php','public/assets/js/admin.dashboard.js'],
     // ** admin list admin
     // content: ['app/Views/Admin/listAdmin.php','public/assets/js/admin.listadmin.js'],
     // ** admin list nasabah

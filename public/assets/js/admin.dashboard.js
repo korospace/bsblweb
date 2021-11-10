@@ -33,32 +33,61 @@ const getLastTransaksi = async () => {
         let trTransaksi  = '';
         let allTransaksi = httpResponse.data.data;
     
-        allTransaksi.forEach((n,i) => {
+        allTransaksi.forEach(t => {
+            let date      = new Date(parseInt(t.date) * 1000);
+            let hour      = date.toLocaleString("en-US",{ hour: 'numeric', minute: 'numeric' });
+            // let minute    = date.toLocaleString("en-US",{minute: "numeric"});
+            // let second    = date.toLocaleString("en-US",{second: "numeric"});
+            let day       = date.toLocaleString("en-US",{day: "numeric"});
+            let month     = date.toLocaleString("en-US",{month: "long"});
+            let year      = date.toLocaleString("en-US",{year: "numeric"});
+            let jenisTransaksi = (t.type == 'setor')?`${t.type} sampah`:`${t.type} saldo`;
+            let textColor      = '';
+            let jumlah         = '';
 
-            trTransaksi += `<tr class="text-xs">
-                <td class="align-middle text-center py-3">
-                    <span class="font-weight-bold"> ${++i} </span>
+            if (t.type == 'setor') {
+                textColor = 'text-success';
+                jumlah    = `+${t.total_kg} kg`;
+            } 
+            else if (t.type == 'tarik') {
+                textColor = 'text-danger';
+                jumlah    = (t.jenis_saldo == 'uang')?`-Rp ${t.total_tarik}`:`-${t.total_tarik} g`;
+            } 
+            else {
+                textColor = 'text-warning';
+                jumlah    = `Rp ${t.total_pindah}`;
+            }
+
+            trTransaksi += `<tr>
+                <td class="align-middle text-sm">
+                    <span class="text-xs text-name font-weight-bold"> 
+                        ${t.id_transaksi}
+                    </span>
                 </td>
-                <td class="align-middle text-center">
-                    <span class="font-weight-bold"> ${n.kategori} </span>
+                <td class="align-middle text-sm">
+                    <span class="text-xs text-name font-weight-bold">
+                        ${t.nama_lengkap}
+                    </span>
                 </td>
-                <td class="align-middle text-center">
-                ${n.jenis}
+                <td class="align-middle text-sm">
+                    <span class="text-xs text-name font-weight-bold ${textColor}">
+                        ${jenisTransaksi}
+                    </span>
                 </td>
-                <td class="align-middle text-center py-3">
-                    <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
+                <td class="align-middle text-sm">
+                    <span class="text-xs text-name font-weight-bold ${textColor}"> 
+                        ${jumlah}
+                    </span>
                 </td>
-                <td class="align-middle text-center py-3">
-                    <span class="font-weight-bold"> ${n.jumlah} </span>
-                </td>
-                <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah(this,'${n.id}')">hapus</span>
-                    <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('editasampah','${n.id}')">edit</span>
+                <td class="align-middle text-sm">
+                    <span class="text-xs text-name font-weight-bold">
+                    ${day}/${month}/${year} ${hour}
+                    </span>
                 </td>
             </tr>`;
         });
 
-        $('#table-jenis-sampah tbody').html(trTransaksi);
+        $('#table-transaksi-terbaru tbody').html(trTransaksi);
     }
 };
 

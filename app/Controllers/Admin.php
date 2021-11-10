@@ -1277,9 +1277,9 @@ class Admin extends BaseController
                         if ($newpass != '') {
                             $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
                         }
-                        // if ($data['active'] == true) {
-                        //     $data['last_active'] = time();
-                        // }
+                        if ($data['active'] == true) {
+                            $data['last_active'] = time();
+                        }
         
                         $editAdmin = $this->adminModel->editProfileAdmin($data);
         

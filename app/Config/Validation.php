@@ -770,6 +770,16 @@ class Validation
 		],
 	];
 
+	public $lastTransaksi = [
+		'limit' => [
+            'rules'  => 'required|is_natural_no_zero',
+            'errors' => [
+                'required'           => 'parameter limit is required',
+                'is_natural_no_zero' => 'only number allowed',
+            ],
+		],
+	];
+
 	public $setorSampah1 = [
 		'id_nasabah' => [
             'rules'  => 'required|is_not_unique[nasabah.id]',

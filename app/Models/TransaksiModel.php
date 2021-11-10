@@ -219,17 +219,18 @@ class TransaksiModel extends Model
         }
     }
 
-    public function lastTransaksi(): array
+    public function lastTransaksi(string $limit): array
     {
         try {
-            $query  = 'SELECT transaksi.id AS id_transaksi,nasabah.nama_lengkap,transaksi.type,transaksi.date,transaksi.jenis_saldo,
+            $limit  = (int)$limit;
+            $query  = "SELECT transaksi.id AS id_transaksi,nasabah.nama_lengkap,transaksi.type,transaksi.date,transaksi.jenis_saldo,
             (SELECT SUM(harga) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_setor,
             (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
             (SELECT SUM(jumlah) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS total_tarik,
             (SELECT SUM(jumlah) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS total_pindah 
             FROM transaksi 
             JOIN nasabah ON (transaksi.id_nasabah = nasabah.id)
-            ORDER BY transaksi.date DESC LIMIT 20;';
+            ORDER BY transaksi.date DESC LIMIT $limit;";
 
             $transaction = $this->db->query($query)->getResultArray();
             $transaction = $this->filterData($transaction);

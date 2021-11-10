@@ -14,6 +14,54 @@ const getTotalSampah = async () => {
     }
 };
 
+/**
+ * GET LAST TRANSACTION
+ */
+const getLastTransaksi = async () => {
+    $('#transaksi-terbaru-notfound').addClass('d-none'); 
+    $('#table-transaksi-terbaru').addClass('d-none'); 
+    $('#transaksi-terbaru-spinner').removeClass('d-none'); 
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/lasttransaksi?limit=20`);
+    $('#table-transaksi-terbaru').removeClass('d-none'); 
+    $('#transaksi-terbaru-spinner').addClass('d-none'); 
+    
+    if (httpResponse.status === 404) {
+        $('#transaksi-terbaru-notfound').removeClass('d-none'); 
+        $('#transaksi-terbaru-notfound #text-notfound').html(`belum ada transaksi`); 
+    }
+    else if (httpResponse.status === 200) {
+        let trTransaksi  = '';
+        let allTransaksi = httpResponse.data.data;
+    
+        allTransaksi.forEach((n,i) => {
+
+            trTransaksi += `<tr class="text-xs">
+                <td class="align-middle text-center py-3">
+                    <span class="font-weight-bold"> ${++i} </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span class="font-weight-bold"> ${n.kategori} </span>
+                </td>
+                <td class="align-middle text-center">
+                ${n.jenis}
+                </td>
+                <td class="align-middle text-center py-3">
+                    <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
+                </td>
+                <td class="align-middle text-center py-3">
+                    <span class="font-weight-bold"> ${n.jumlah} </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah(this,'${n.id}')">hapus</span>
+                    <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('editasampah','${n.id}')">edit</span>
+                </td>
+            </tr>`;
+        });
+
+        $('#table-jenis-sampah tbody').html(trTransaksi);
+    }
+};
+
 // filter transaksi on change
 let currentYear  = '';
 $('.filter-transaksi').on('input', function(e) {

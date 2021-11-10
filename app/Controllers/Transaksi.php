@@ -151,7 +151,21 @@ class Transaksi extends BaseController
         $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
-            $dbresponse = $this->transaksiModel->lastTransaksi();
+            $this->validation->run($this->request->getGet(),'lastTransaksi');
+            $errors = $this->validation->getErrors();
+
+            if($errors) {
+                $response = [
+                    'status'   => 400,
+                    'error'    => true,
+                    'messages' => $errors['limit'],
+                ];
+        
+                return $this->respond($response,400);
+            } 
+
+            $limit      = $this->request->getGet('limit');
+            $dbresponse = $this->transaksiModel->lastTransaksi($limit);
 
             if ($dbresponse['success'] == true) {
                 $response = [

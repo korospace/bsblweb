@@ -257,8 +257,9 @@ const sessioncheck = async () => {
             currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
             $(`#filter-year`).val(currentYear);
 
-            getRekapTransaksi(currentYear);
             getTotalSampah();
+            getLastTransaksi();
+            getRekapTransaksi(currentYear);
             getAllKatSampah();
             getAllJenisSampah();
         }

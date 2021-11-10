@@ -126,14 +126,15 @@ $routes->group("transaksi", function ($routes) {
     $routes->post("setorsampah",  "Transaksi::setorSampah");
     $routes->post("jualsampah",   "Transaksi::jualSampah");
     $routes->post("tariksaldo",   "Transaksi::tarikSaldo");
+    $routes->post("pindahsaldo",  "Transaksi::pindahSaldo");
     $routes->get("getdata",       "Transaksi::getData");
     $routes->get("rekapdata",     "Transaksi::rekapData");
-    $routes->post("pindahsaldo",  "Transaksi::pindahSaldo");
+    $routes->get("lasttransaksi", "Transaksi::lastTransaksi");
     $routes->delete("deleteitem", "Transaksi::deleteItem");
-    $routes->add("(:any)",       "Notfound::PageNotFound");
+    $routes->add("(:any)",        "Notfound::PageNotFound");
 });
 
-$routes->add('/(:any)',             'Notfound::PageNotFound');
+$routes->add('/(:any)', 'Notfound::PageNotFound');
 
 /*
  * --------------------------------------------------------------------

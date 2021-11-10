@@ -16,27 +16,11 @@
 
 .register {
     background: -webkit-linear-gradient(left, #577b2b, #c1d966);
-    /* margin-top: 7rem; */
-    padding: 3%;
 }
 
 .register-left {
     text-align: center;
     color: #fff;
-    margin-top: 4%;
-}
-
-.register-left input {
-    border: none;
-    border-radius: 1.5rem;
-    padding: 2%;
-    width: 60%;
-    background: #f8f9fa;
-    font-weight: bold;
-    color: #383d41;
-    margin-top: 30%;
-    margin-bottom: 3%;
-    cursor: pointer;
 }
 
 .register-right {
@@ -46,9 +30,7 @@
 }
 
 .register-left img {
-    margin-top: 15%;
-    margin-bottom: 5%;
-    width: 25%;
+    width: 100px;
     -webkit-animation: mover 2s infinite alternate;
     animation: mover 1s infinite alternate;
 }
@@ -75,18 +57,10 @@
 
 .register-left p {
     font-weight: lighter;
-    padding: 12%;
-    margin-top: -9%;
-}
-
-.register .register-form {
-    padding: 10%;
-    margin-top: 10%;
 }
 
 .btnRegister {
     float: right;
-    margin-top: 10%;
     border: none;
     border-radius: 1.5rem;
     padding: 2%;
@@ -99,7 +73,6 @@
 
 .btnRegister:hover {
     float: right;
-    margin-top: 10%;
     border: none;
     border-radius: 1.5rem;
     padding: 2%;
@@ -111,12 +84,10 @@
 }
 
 .register .nav-tabs {
-    margin-top: 3%;
     border: none;
     background: #537629;
     border-radius: 1.5rem;
-    width: 28%;
-    float: right;
+    width: 100px;
 }
 
 .register .nav-tabs .nav-link {
@@ -140,13 +111,6 @@
     border-bottom-left-radius: 1.5rem;
 }
 
-.register-heading {
-    text-align: center;
-    margin-top: 8%;
-    margin-bottom: -15%;
-    color: #495057;
-}
-
 .pristine-error {
     color: red;
     font-size: 12px;
@@ -157,16 +121,5 @@
 @media (max-width:768px) {
     .register-left div {
         display: none;
-    }
-    .register-right {
-        margin-top: 10%;
-    }
-    .register-left img {
-        margin-top: 12%;
-        margin-bottom: 0px;
-    }
-    .register-left p {
-        padding: 0;
-        margin-top: 0;
     }
 } 

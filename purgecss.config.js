@@ -4,7 +4,7 @@ module.exports = {
     // ** homepage
     // content: ['app/Views/HomePage/index.php','assets/js/homepage.js'],
     // ** login
-    // content: ['app/Views/Login/index.php','assets/js/login.js'],
+    content: ['app/Views/Login/index.php','public/assets/js/login.js'],
     // ** signup
     // content: ['app/Views/SignUp/index.php','assets/js/signup.js'],
     // ** otp
@@ -30,7 +30,7 @@ module.exports = {
     // ** admin crud artikel
     // content: ['app/Views/Admin/crudArtikel.php','public/assets/js/admin.artikel.js'],
     // ** admin detil nasabah
-    content: ['app/Views/Admin/detilNasabah.php','public/assets/js/admin.detilnasabah.js'],
+    // content: ['app/Views/Admin/detilNasabah.php','public/assets/js/admin.detilnasabah.js'],
 
     // ** resource bootstrap
     css: ['public/assets/css/bootstrap.min.css'],

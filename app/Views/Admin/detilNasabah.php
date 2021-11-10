@@ -68,8 +68,8 @@
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.detilnasabah.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.detilnasabah.min.js'); ?>"></script> -->
+	<!-- <script src="<?= base_url('assets/js/admin.detilnasabah.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.detilnasabah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Html -->
@@ -280,7 +280,12 @@
 									</select>
 								</div>
 								<div class="col-6 pr-0">
-									<input id="filter-year" type="number" class="filter-transaksi form-control form-control-sm w-100 h-100 border-radius-sm" placeholder="tahun" style="max-height: 31px;">
+									<select id="filter-year" class="filter-transaksi custom-select custom-select-sm w-100" style="max-height: 31px;">
+										<?php $curYear = (int)date("Y"); ?>
+										<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
+											<option value="<?= $i; ?>"><?= $i; ?></option>
+										<?php } ?>
+									</select>
 								</div>
 							</div>
 						</div>

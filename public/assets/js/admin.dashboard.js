@@ -14,6 +14,172 @@ const getTotalSampah = async () => {
     }
 };
 
+// filter transaksi on change
+let currentYear  = '';
+$('.filter-transaksi').on('input', function(e) {
+    chartGrafik.destroy();
+    currentYear  = $(`#filter-year`).val();
+    getRekapTransaksi(currentYear);
+});
+
+/**
+ * GET REKAP TRANSAKSI
+ */
+const getRekapTransaksi = async (year) => {
+    $('.spinner-wraper').removeClass('d-none');
+    $('#transaksi-wraper').addClass('d-none');
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/rekapdata?year=${year}`);
+    $('.spinner-wraper').addClass('d-none'); 
+    $('#transaksi-wraper').removeClass('d-none');
+    
+    if (httpResponse.status === 404) {
+        updateGrafikSetor([],[]);
+        $('#transaksi-wraper').html(`<h6 class='opacity-6'>belum ada transaksi</h6>`); 
+    }
+    else if (httpResponse.status === 200) {
+        let arrayMonth   = [];
+        let arrayKg      = [];
+        let elTransaksi  = '';
+        let allTransaksi = httpResponse.data.data;
+
+        for (const key in allTransaksi) {
+            arrayMonth.push(key);
+            arrayKg.push(allTransaksi[key].totSampahMasuk);
+    
+            elTransaksi  += `<li class="list-group-item border-0 p-0 border-radius-lg">
+                <div class="d-flex align-items-center justify-content-between px-1">
+                    <div class="d-flex flex-column" style="flex:1;">
+                        <h6 class="text-dark font-weight-bold text-sm">${allTransaksi[key].date}</h6>
+                        <div class="d-flex mt-2 w-100">
+                            <i class="fas fa-dollar-sign text-xxs text-success mr-3">
+                               Rp ${kFormatter(allTransaksi[key].totUangMasuk)}
+                            </i>
+                            <i class="fas fa-dollar-sign text-xxs text-danger mr-3">
+                               Rp ${kFormatter(allTransaksi[key].totUangKeluar)}
+                            </i>
+                        </div>
+                        <div class="d-flex mt-2 w-100">
+                            <i class="fas fa-trash text-xxs text-success mr-3">
+                                ${allTransaksi[key].totSampahMasuk} kg
+                            </i>
+                            <i class="fas fa-trash text-xxs text-danger mr-3">
+                                ${allTransaksi[key].totSampahKeluar} kg
+                            </i>
+                            <i class="fas fa-coins text-xxs text-danger mr-3">
+                                ${allTransaksi[key].totEmasKeluar} g
+                            </i>
+                        </div>
+                    </div>
+                    <a href='' class="btn btn-link text-dark text-sm mb-0 px-0 h-100">
+                        <i class="fas fa-file-pdf text-lg me-1"></i> PDF
+                    </a>
+                </div>
+                <hr class="horizontal dark">
+            </li>`;
+        }
+        
+        updateGrafikSetor(arrayMonth,arrayKg);
+        $('#transaksi-wraper').html(`<ul class="list-group h-100 w-100" style="font-family: 'qc-medium';">
+            ${elTransaksi}
+        </ul>`);
+    }
+};
+
+// update grafik setor
+let chartGrafik = '';
+const updateGrafikSetor = (arrayMonth,arrayKg) => {
+    var ctx2       = document.getElementById("chart-line").getContext("2d");
+    // let chartWidth = arrayId.length*160;
+    document.querySelector("#chart-line").style.width    = '100%';
+    document.querySelector("#chart-line").style.height   = '340px';
+    document.querySelector("#chart-line").style.maxHeight= '340px';
+    // document.querySelector("#chart-line").style.minWidth = `${chartWidth}px`;
+
+    var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
+    gradientStroke1.addColorStop(1, 'rgba(193,217,102,0.2)');
+
+    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+    gradientStroke2.addColorStop(1, 'rgba(193,217,102,0.2)');
+
+    for (let i = arrayMonth.length; i <10; i++) {
+        arrayMonth.push(' ');
+    }
+
+    chartGrafik = new Chart(ctx2, {
+        type: "line",
+        data: {
+            labels: arrayMonth,
+            datasets: [
+                {
+                    label: "Kg",
+                    tension: 0.4,
+                    borderWidth: 0,
+                    pointRadius: 0,
+                    borderColor: "#c1d966",
+                    borderWidth: 3,
+                    backgroundColor: gradientStroke1,
+                    fill: true,
+                    data: arrayKg,
+                    maxBarThickness: 6,
+                    minBarLength: 6,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            scales: {
+            y: {
+                grid: {
+                    drawBorder: false,
+                    display: true,
+                    drawOnChartArea: true,
+                    drawTicks: false,
+                    borderDash: [5, 5]
+                },
+                ticks: {
+                    display: true,
+                    padding: 10,
+                    color: '#b2b9bf',
+                    beginAtZero: true,
+                    font: {
+                        size: 11,
+                        family: "Open Sans",
+                        style: 'normal',
+                        lineHeight: 2
+                    },
+                }
+            },
+            x: {
+                grid: {
+                    drawBorder: false,
+                    display: false,
+                    drawOnChartArea: false,
+                    drawTicks: false,
+                    borderDash: [5, 5]
+                },
+                ticks: {
+                    display: true,
+                    color: '#b2b9bf',
+                    padding: 0,
+                    font: {
+                        size: 11,
+                        family: "Open Sans",
+                        style: 'normal',
+                        lineHeight: 2
+                    },
+                }
+            },
+            },
+        },
+    });
+};
+
 /**
  * GET ALL KATEGORI SAMPAH
  */

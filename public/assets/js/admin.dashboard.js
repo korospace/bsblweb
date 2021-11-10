@@ -580,12 +580,12 @@ const doValidateAddSmp = () => {
 
 // Edit modal when open
 const openModalJualSampah = () => {
-    $('#formJualSampah .form-control').removeClass('is-invalid');
-    $('#formJualSampah .text-danger').html('');
-    $(`#formJualSampah .form-control`).val('');
     $('.barisJualSampah').remove();
     tambahBaris();
     countTotalHarga();
+    $('#formJualSampah .form-control').removeClass('is-invalid');
+    $('#formJualSampah .text-danger').html('');
+    $(`#formJualSampah .form-control`).val('');
 }
 
 // tambah baris
@@ -594,11 +594,11 @@ const tambahBaris = (event = false) => {
         event.preventDefault();
     }
 
-    let elJenisSampah = `<option value='' data-harga='0' selected>-- pilih jenis sampah  --</option>`;
+    let elJenisSampah = `<option value='' data-harga='0' data-tersedia='0' selected>-- pilih jenis sampah  --</option>`;
 
     if (arrayJenisSampah.length !== 0) {
         arrayJenisSampah.forEach(s=> {
-            elJenisSampah += `<option value="${s.jenis}" data-harga="${s.harga}">${s.kategori} - ${s.jenis}</option>`;
+            elJenisSampah += `<option value="${s.jenis}" data-harga="${s.harga}" data-tersedia="${s.jumlah}">${s.kategori} - ${s.jenis}</option>`;
         });
     }
 
@@ -613,8 +613,10 @@ const tambahBaris = (event = false) => {
             ${elJenisSampah}
         </select>
     </td>
-    <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+    <td class="py-2 text-left" style="border-right: 0.5px solid #E9ECEF;">
         <input type="text" class="inputJumlahSampah form-control form-control-sm pl-2 border-radius-sm" value="0" name="transaksi[slot${totalBaris+1}][jumlah]" style="min-height: 38px" onkeyup="countHargaXjumlah(this);">
+
+		<small class="text-danger">tes</small>
     </td>
     <td class="py-2">
         <input type="text" class="inputHargaSampah form-control form-control-sm pl-2 border-radius-sm" style="min-height: 38px" data-harga="0" value="0" disabled>
@@ -635,10 +637,14 @@ const hapusBaris = (el) => {
 
 // get harga in option
 const getHargaInOption = (el,event) =>{
-    var harga = event.target.options[event.target.selectedIndex].dataset.harga;
+    var harga    = event.target.options[event.target.selectedIndex].dataset.harga;
+    var tersedia = event.target.options[event.target.selectedIndex].dataset.tersedia;
 
     let elInputJumlah   = el.parentElement.nextElementSibling.children[0];
     elInputJumlah.value = 1;
+    elInputJumlah.setAttribute('data-tersedia',tersedia);
+    elInputJumlah.classList.remove('is-invalid');
+    elInputJumlah.nextElementSibling.innerHTML = '';
 
     let elInputHarga   = el.parentElement.nextElementSibling.nextElementSibling.children[0];
     // elInputHarga.value = modifUang(harga);
@@ -707,6 +713,11 @@ const validateJualSampah = () => {
             $(this).addClass('is-invalid');
             status = false;
             msg    = 'jumlah hanya boleh berupa angka positif dan titik!';
+        }
+        if (parseFloat($(this).val()) > parseFloat($(this).attr('data-tersedia'))) {
+            $(this).addClass('is-invalid');
+            $(this).siblings().html(`hanya tersedia ${$(this).attr('data-tersedia')} kg`);
+            status = false;
         }
     });
 

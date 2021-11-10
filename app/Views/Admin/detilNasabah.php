@@ -607,7 +607,7 @@
 
 				<!-- **** table **** -->
 				<!-- <hr class="editnasabah-item horizontal col-12 dark mt-0 mb-4"> -->
-				<div class="table-responsive col-12 mb-4" style="overflow: auto;font-family: 'qc-semibold';">
+				<div class="table-responsive col-12" style="overflow: auto;font-family: 'qc-semibold';">
 					<table id="table-setor-sampah" class="table table-sm text-center mb-0">
 						<thead class="bg-white" style="border: 0.5px solid #E9ECEF;">
 							<tr>
@@ -639,8 +639,8 @@
 				</div>
 				
 				<!-- tambah baris -->
-				<div class="input-group col-12">
-					<a href="" class="btn btn-info w-100" onclick="tambahBaris(event);">
+				<div class="input-group col-12 mt-2">
+					<a href="" class="badge badge-info w-100 border-radius-sm" onclick="tambahBaris(event);">
 						<i class="fas fa-plus text-white"></i>
 					</a>
 				</div>

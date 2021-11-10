@@ -80,8 +80,6 @@ class AdminModel extends Model
             $this->db->table($this->table)->where('id',$id)->update($data);
             
             if ($this->db->affectedRows() > 0) {
-                // non active admin
-                $this->nonActiveAdmin();
 
                 return [
                     "success"  => true,
@@ -281,6 +279,10 @@ class AdminModel extends Model
     public function getAdmin(array $get,string $id_admin): array
     {
         try {
+
+            // non active admin
+            $this->nonActiveAdmin();
+
             if (isset($get['id'])) {
                 $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,active,last_active,created_at")->where("id",$get['id'])->where("id !=",$id_admin)->get()->getFirstRow();
             } 
@@ -372,22 +374,12 @@ class AdminModel extends Model
     public function nonActiveAdmin(): void
     {
         try {
-            $timeNow    = time();
-            // $rangeTotal = (3600*24)*30;
-            $rangeTotal = (3600*24)*1;
-            $builder    = $this->db;
-            $admins     = $builder->query("SELECT id FROM admin WHERE $timeNow-last_active >= $rangeTotal")->getResultArray();
-            
-            // var_dump((time()-1633184363)/60);
-            // var_dump($admins);die;
+            $timeNow   = time();
+            $batasTime = (int)$timeNow - (86400*1);
+            // var_dump($batasTime );
+            // var_dump(date("H:i:s jS F, Y", 1636423564));die;
 
-            foreach ($admins as $admin) {
-                $data = [
-                    'active' => false,
-                ];
-        
-                $this->db->table($this->table)->where('id',$admin['id'])->update($data);
-            }
+            $this->db->query("UPDATE admin SET active = false WHERE last_active <  $batasTime");
         } 
         catch (Exception $e) {
             

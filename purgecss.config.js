@@ -20,7 +20,7 @@ module.exports = {
     // /////////////////////////////////////////////////////////////////////////
     
     // ** admin dashboard
-    content: ['app/Views/Admin/index.php','public/assets/js/admin.dashboard.js'],
+    // content: ['app/Views/Admin/index.php','public/assets/js/admin.dashboard.js'],
     // ** admin list admin
     // content: ['app/Views/Admin/listAdmin.php','public/assets/js/admin.listadmin.js'],
     // ** admin list nasabah
@@ -30,7 +30,7 @@ module.exports = {
     // ** admin crud artikel
     // content: ['app/Views/Admin/crudArtikel.php','public/assets/js/admin.artikel.js'],
     // ** admin detil nasabah
-    // content: ['app/Views/Admin/detilNasabah.php','public/assets/js/admin.detilnasabah.js'],
+    content: ['app/Views/Admin/detilNasabah.php','public/assets/js/admin.detilnasabah.js'],
 
     // ** resource bootstrap
     css: ['public/assets/css/bootstrap.min.css'],

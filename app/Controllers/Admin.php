@@ -301,7 +301,7 @@ class Admin extends BaseController
 
                     // is admin active or not
                     $active      = $adminData['message']['active'];
-                    $last_active = $adminData['message']['last_active'];
+                    $last_active = (int)$adminData['message']['last_active'];
                     $timeNow     = time();
                     $batasTime   = (int)$timeNow - (86400*1);
                     $privilege   = $adminData['message']['privilege'];

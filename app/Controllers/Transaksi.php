@@ -93,8 +93,17 @@ class Transaksi extends BaseController
         $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
-            $this->validation->run($this->request->getGet(),'rekapData');
-            $errors = $this->validation->getErrors();
+            $errors = null;
+            if ($this->request->getGet('year')) {
+                $this->validation->run($this->request->getGet(),'rekapDataYear');
+                $errors = $this->validation->getErrors();
+    
+            }
+            if ($this->request->getGet('date')) {
+                $this->validation->run($this->request->getGet(),'rekapDataDate');
+                $errors = $this->validation->getErrors();
+    
+            }
 
             if($errors) {
                 $response = [
@@ -151,6 +160,7 @@ class Transaksi extends BaseController
         $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
+            
             $this->validation->run($this->request->getGet(),'lastTransaksi');
             $errors = $this->validation->getErrors();
 

@@ -859,7 +859,7 @@ const tambahBaris = (event = false) => {
     <td class="py-2 text-left" style="border-right: 0.5px solid #E9ECEF;">
         <input type="text" class="inputJumlahSampah form-control form-control-sm pl-2 border-radius-sm" value="0" name="transaksi[slot${totalBaris+1}][jumlah]" style="min-height: 38px" onkeyup="countHargaXjumlah(this);">
 
-		<small class="text-danger">tes</small>
+		<small class="text-danger"></small>
     </td>
     <td class="py-2">
         <input type="text" class="inputHargaSampah form-control form-control-sm pl-2 border-radius-sm" style="min-height: 38px" data-harga="0" value="0" disabled>
@@ -1033,8 +1033,11 @@ const doTransaksi = async (el,event) => {
             hideLoadingSpinner();
     
             if (httpResponse.status === 201) {
+                chartGrafik.destroy();
                 $(`#formJualSampah .form-control`).val('');
                 $('#formJualSampah .form-check-input').prop('checked',false);
+                $(`#filter-year`).val(tglTransaksi[0]);
+                getRekapTransaksi(tglTransaksi[0]);
     
                 $('#formJualSampah .barisJualSampah').remove();
                 tambahBaris();

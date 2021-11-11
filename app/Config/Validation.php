@@ -760,12 +760,20 @@ class Validation
 		],
 	];
 
-	public $rekapData = [
+	public $rekapDataYear = [
 		'year' => [
-            'rules'  => 'required|regex_match[/^(19|20)\d\d$/]',
+            'rules'  => 'regex_match[/^(19|20)\d\d$/]',
             'errors' => [
-                'required'    => 'parameter year is required',
                 'regex_match' => 'format must be yyyy',
+            ],
+		],
+	];
+
+	public $rekapDataDate = [
+		'date' => [
+            'rules'  => 'regex_match[/^(0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'regex_match' => 'format must be mm-yyyy',
             ],
 		],
 	];

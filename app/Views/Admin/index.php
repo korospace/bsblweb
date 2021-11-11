@@ -182,7 +182,7 @@
 						<div class="card-body px-0 pb-2">
 							<div class="table-responsive position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
 								<!-- spinner -->
-								<div id="transaksi-terbaru-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+								<div id="transaksi-terbaru-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 								</div>
 								<!-- message not found -->

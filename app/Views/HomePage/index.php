@@ -161,6 +161,7 @@
             </div>
           </div>
         </div>
+        
         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
           <div class="features-item">
             <div class="features-icon">

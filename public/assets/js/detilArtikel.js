@@ -50,7 +50,11 @@ axios.get(`${APIURL}/berita_acara/otheritem?id=${IDARTIKEL}`)
                             <img src="${BASEURL}/assets/images/404.webp" alt="thumbnail">
                         </div>
                         <div class="content">
-                            <h5><a href="${BASEURL}/artikel/${b.id}">${b.title}</a></h5>
+                            <h5>
+                                <a href="${BASEURL}/artikel/${b.id}" style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+                                    ${b.title}
+                                </a>
+                            </h5>
                             <ul class="comment">
                                 <li><i class="fa fa-calendar" aria-hidden="true"></i> ${newmonth} ${newday}, ${newyear}</li>
                             </ul>

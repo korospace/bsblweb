@@ -35,9 +35,6 @@
 <script>
 	const KATEGORI = '<?= $kategori; ?>';
 </script>
-<script src="<?= base_url('assets/js/artikel.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/bootstrap.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/popper.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->

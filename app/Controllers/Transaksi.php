@@ -12,6 +12,7 @@ class Transaksi extends BaseController
 
 	public function __construct()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $this->validation     = \Config\Services::validation();
         $this->transaksiModel = new TransaksiModel;
     }
@@ -92,8 +93,17 @@ class Transaksi extends BaseController
         $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
-            $this->validation->run($this->request->getGet(),'rekapData');
-            $errors = $this->validation->getErrors();
+            $errors = null;
+            if ($this->request->getGet('year')) {
+                $this->validation->run($this->request->getGet(),'rekapDataYear');
+                $errors = $this->validation->getErrors();
+    
+            }
+            if ($this->request->getGet('date')) {
+                $this->validation->run($this->request->getGet(),'rekapDataDate');
+                $errors = $this->validation->getErrors();
+    
+            }
 
             if($errors) {
                 $response = [
@@ -106,6 +116,66 @@ class Transaksi extends BaseController
             } 
             
             $dbresponse = $this->transaksiModel->rekapData($this->request->getGet());
+
+            if ($dbresponse['success'] == true) {
+                $response = [
+                    'status'   => 200,
+                    "error"    => false,
+                    'data'     => $dbresponse['data'],
+                ];
+
+                return $this->respond($response,200);
+            } 
+            else {
+                $response = [
+                    'status'   => $dbresponse['code'],
+                    'error'    => true,
+                    'messages' => $dbresponse['message'],
+                ];
+        
+                return $this->respond($response,$dbresponse['code']);
+            }
+        } 
+        else {
+            $response = [
+                'status'   => $result['code'],
+                'error'    => true,
+                'messages' => $result['message'],
+            ];
+    
+            return $this->respond($response,$result['code']);
+        }
+    }
+
+    /**
+     * Get data transaction
+     *   url    : domain.com/transaksi/lasttransaksi
+     *   method : GET
+     */
+    public function lastTransaksi()
+    {
+        $authHeader = $this->request->getHeader('token');
+        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+        $result     = $this->checkToken($token);
+        $this->checkPrivilege($result);
+
+        if ($result['success'] == true) {
+            
+            $this->validation->run($this->request->getGet(),'lastTransaksi');
+            $errors = $this->validation->getErrors();
+
+            if($errors) {
+                $response = [
+                    'status'   => 400,
+                    'error'    => true,
+                    'messages' => $errors['limit'],
+                ];
+        
+                return $this->respond($response,400);
+            } 
+
+            $limit      = $this->request->getGet('limit');
+            $dbresponse = $this->transaksiModel->lastTransaksi($limit);
 
             if ($dbresponse['success'] == true) {
                 $response = [

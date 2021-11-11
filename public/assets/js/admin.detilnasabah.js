@@ -19,12 +19,10 @@
 let currentYear  = '';
 let currentMonth = '';
 $('.filter-transaksi').on('input', function(e) {
-    if ($(`#filter-year`).val().length == 4) {
-        chartGrafik.destroy();
-        currentYear  = $(`#filter-year`).val();
-        currentMonth = $(`#filter-month`).val();
-        getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
-    }
+    chartGrafik.destroy();
+    currentYear  = $(`#filter-year`).val();
+    currentMonth = $(`#filter-month`).val();
+    getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
 });
 
 /**

@@ -24,14 +24,18 @@ class Nasabah extends BaseController
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token,false);
         $data   = [
-            'title' => 'Nasabah | dashboard',
-            'token' => $token,
+            'title'     => 'Nasabah | dashboard',
+            'token'     => $token,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
 
         if ($result['success'] == false) {
             setcookie('token', null, -1, '/'); 
             unset($_COOKIE['token']); 
 
+            return redirect()->to(base_url().'/login');
+        } 
+        else if($data['privilege'] !== 'nasabah') {
             return redirect()->to(base_url().'/login');
         } 
         else {
@@ -48,13 +52,17 @@ class Nasabah extends BaseController
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token,false);
         $data = [
-            'title' => 'Nasabah | profile',
-            'token' => $token,
+            'title'     => 'Nasabah | profile',
+            'token'     => $token,
+            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
 
         if ($result['success'] == false) {
             setcookie('token', null, -1, '/'); 
             unset($_COOKIE['token']); 
+            return redirect()->to(base_url().'/login');
+        } 
+        else if($data['privilege'] !== 'nasabah') {
             return redirect()->to(base_url().'/login');
         } 
         else {

@@ -102,10 +102,8 @@ const getTotalSampah = async () => {
 
 // filter transaksi on change
 $('.filter-transaksi').on('input', function(e) {
-    if ($(`#filter-year`).val().length == 4) {
-        chartGrafik.destroy();
-        getAllTransaksi(`${$(`#filter-month`).val()}-${$(`#filter-year`).val()}`);
-    }
+    chartGrafik.destroy();
+    getAllTransaksi(`${$(`#filter-month`).val()}-${$(`#filter-year`).val()}`);
 });
 
 /**

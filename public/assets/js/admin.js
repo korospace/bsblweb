@@ -254,7 +254,12 @@ const sessioncheck = async () => {
     
     if (httpResponse.status === 200) {
         if (pageTitle === 'dashboard') {
+            currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
+            $(`#filter-year`).val(currentYear);
+
             getTotalSampah();
+            getLastTransaksi();
+            getRekapTransaksi(currentYear);
             getAllKatSampah();
             getAllJenisSampah();
         }
@@ -293,7 +298,12 @@ sessioncheck();
 
 // modif saldo uang
 const modifUang = (rHarga) => {
-    return rHarga.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+    return rHarga.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+}
+
+// modif number
+function kFormatter(num) {
+    return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'K' : Math.sign(num)*Math.abs(num)
 }
 
 /**

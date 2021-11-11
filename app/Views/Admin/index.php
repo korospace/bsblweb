@@ -16,9 +16,9 @@
 		}
 	</style>
   	<!-- ** develoment ** -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
 	<!-- ** production ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.dashboard.css'); ?>"> -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.dashboard.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -34,10 +34,10 @@
 	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.dashboard.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.dashboard.min.js'); ?>"></script> -->
+	<!-- <script src="<?= base_url('assets/js/admin.dashboard.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.dashboard.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -170,243 +170,100 @@
 			</div>
 
 			<div class="row my-4">
-				<div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+				<div class="col-12 mb-md-0 mb-4">
 					<div class="card">
 						<div class="card-header pb-0">
 							<div class="row">
 								<div class="col-lg-6 col-7">
-									<h6>Table Transaksi Terbaru</h6>
+									<h6>Transaksi Terbaru</h6>
 								</div>
 							</div>
 						</div>
 						<div class="card-body px-0 pb-2">
-							<div class="table-responsive">
-								<table class="table align-items-center mb-0">
-									<thead>
+							<div class="table-responsive position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
+								<!-- spinner -->
+								<div id="transaksi-terbaru-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+								</div>
+								<!-- message not found -->
+								<div id="transaksi-terbaru-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<h6 id="text-notfound" class='opacity-6'></h6>
+								</div>
+								<!-- table -->
+								<table id="table-transaksi-terbaru" class="table table-striped text-left mb-0">
+									<thead class="position-sticky bg-white" style="z-index: 11;top: 0;">
 										<tr>
-											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Nasabah</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												ID Transaksi
 											</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Rupiah
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Nama Nasabah
 											</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Transaksi</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Jenis transaksi
+											</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Jumlah
+											</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Tgl
+											</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
-										<tr>
-										<tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
-										<tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
-										<tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
-										<tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
-										<tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
-										<tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
-										<tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
-										<tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
-										<tr>
-											<td class="align-middle text-sm">
-												<span class="text-xs text-name font-weight-bold"> Heru Saputro </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> 06020001 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Rp50.000 </span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="text-xs font-weight-bold"> Detil </span>
-											</td>
-										</tr>
+										<?php for ($i=0; $i < 20 ; $i++) { ?>
+										
+										<?php } ?>
 									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="card h-100">
-						<div class="card-header pb-0">
-							<h6>Orders overview</h6>
-							<p class="text-sm">
-								<i class="fa fa-arrow-up text-success" aria-hidden="true"></i>
-								<span class="font-weight-bold">24%</span> this month
-							</p>
+			</div>
+
+			<div class="row my-4">
+				<!-- grafik -->
+				<div class="col-lg-8">
+					<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
+						<!-- header -->
+						<div class="card-header pb-0" style="z-index: 11;">
+							<h6>Grafik Penyetoran</h6>
 						</div>
-						<div class="card-body p-3">
-							<div class="timeline timeline-one-side">
-								<div class="timeline-block mb-3">
-									<span class="timeline-step">
-										<i class="ni ni-bell-55 text-success text-gradient"></i>
-									</span>
-									<div class="timeline-content">
-										<h6 class="text-dark text-sm font-weight-bold mb-0">$2400, Design changes</h6>
-										<p class="text-secondary font-weight-bold text-xs mt-1 mb-0">22 DEC 7:20 PM</p>
-									</div>
-								</div>
-								<div class="timeline-block mb-3">
-									<span class="timeline-step">
-										<i class="ni ni-html5 text-danger text-gradient"></i>
-									</span>
-									<div class="timeline-content">
-										<h6 class="text-dark text-sm font-weight-bold mb-0">New order #1832412</h6>
-										<p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 11 PM</p>
-									</div>
-								</div>
-								<div class="timeline-block mb-3">
-									<span class="timeline-step">
-										<i class="ni ni-cart text-info text-gradient"></i>
-									</span>
-									<div class="timeline-content">
-										<h6 class="text-dark text-sm font-weight-bold mb-0">Server payments for April</h6>
-										<p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 9:34 PM</p>
-									</div>
-								</div>
-								<div class="timeline-block mb-3">
-									<span class="timeline-step">
-										<i class="ni ni-credit-card text-warning text-gradient"></i>
-									</span>
-									<div class="timeline-content">
-										<h6 class="text-dark text-sm font-weight-bold mb-0">New card added for order #4395133</h6>
-										<p class="text-secondary font-weight-bold text-xs mt-1 mb-0">20 DEC 2:20 AM</p>
-									</div>
-								</div>
-								<div class="timeline-block mb-3">
-									<span class="timeline-step">
-										<i class="ni ni-key-25 text-primary text-gradient"></i>
-									</span>
-									<div class="timeline-content">
-										<h6 class="text-dark text-sm font-weight-bold mb-0">Unlock packages for development</h6>
-										<p class="text-secondary font-weight-bold text-xs mt-1 mb-0">18 DEC 4:54 AM</p>
-									</div>
-								</div>
-								<div class="timeline-block">
-									<span class="timeline-step">
-										<i class="ni ni-money-coins text-dark text-gradient"></i>
-									</span>
-									<div class="timeline-content">
-										<h6 class="text-dark text-sm font-weight-bold mb-0">New order #9583120</h6>
-										<p class="text-secondary font-weight-bold text-xs mt-1 mb-0">17 DEC</p>
-									</div>
+						<!-- spinner -->
+						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+						</div>
+						<div class="card-body p-3 mt-2">
+							<div class="chart">
+								<canvas id="chart-line" class="chart-canvas"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Transaksi -->
+				<div class="col-lg-4 mt-4 mt-lg-0">
+					<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
+						<!-- header -->
+						<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
+							<div class="row" style="font-family: 'qc-semibold';">
+								<div class="col-12">
+									<h6 class="mb-0">Rekap Transaksi</h6>
+									<select id="filter-year" class="filter-transaksi custom-select custom-select-sm w-100 mt-3" style="max-height: 31px;">
+										<?php $curYear = (int)date("Y"); ?>
+										<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
+											<option value="<?= $i; ?>"><?= $i; ?></option>
+										<?php } ?>
+									</select>
 								</div>
 							</div>
+						</div>
+						<!-- spinner -->
+						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+						</div>
+						<div id="transaksi-wraper" class="card-body mt-2 pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
+
 						</div>
 					</div>
 				</div>

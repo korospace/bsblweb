@@ -112,7 +112,7 @@ $('#btn-forgotpass').on('click', function(e) {
             autocapitalize: 'off'
         },
         html:`<p class='mb-4'>masukan email yang terdaftar. kami akan mengirim password anda melalui email</p>`,
-        footer: 'merasa kesulitan? <a href="">hubungi admin</a>',
+        footer: '<a href="">hubungi admin</a>',
         showCancelButton: true,
         confirmButtonText: 'submit',
         showLoaderOnConfirm: true,
@@ -225,7 +225,7 @@ function doValidateAdmin(form) {
     // email validation
     if ($('#admin-username').val() == '') {
         $('#admin-username').addClass('is-invalid');
-        $('#admin-username-error').html('*email harus di isi');
+        $('#admin-username-error').html('*username harus di isi');
         status = false;
     }
     // password validation

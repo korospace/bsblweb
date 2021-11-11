@@ -12,6 +12,7 @@ class Admin extends BaseController
 
 	public function __construct()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $this->validation = \Config\Services::validation();
         $this->adminModel = new AdminModel;
         if (isset($_COOKIE['lasturl'])) {
@@ -300,12 +301,12 @@ class Admin extends BaseController
 
                     // is admin active or not
                     $active      = $adminData['message']['active'];
-                    $last_active = $adminData['message']['last_active'];
-                    // $rangeTotal  = (3600*24)*30;
-                    $rangeTotal  = (3600*24)*1;
+                    $last_active = (int)$adminData['message']['last_active'];
+                    $timeNow     = time();
+                    $batasTime   = (int)$timeNow - (86400*1);
                     $privilege   = $adminData['message']['privilege'];
 
-                    if (time()-$last_active >= $rangeTotal && $privilege != 'super' || $active == 'f') {
+                    if ($last_active <  $batasTime && $privilege != 'super' || $active == 'f') {
                         $response = [
                             'status'   => 401,
                             'error'    => true,
@@ -1277,8 +1278,6 @@ class Admin extends BaseController
                             $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
                         }
                         if ($data['active'] == true) {
-                            // date_default_timezone_set('Asia/Jakarta');
-                            // $data['last_active'] = date('Y-m-d H:i:s', time());
                             $data['last_active'] = time();
                         }
         

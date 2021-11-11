@@ -26,7 +26,7 @@ axios.get(`${APIURL}/berita_acara/getitem?kategori=${KATEGORI}`)
 
                 <div class="card-img-overlay d-flex flex-column">
                     <div class="card-body">
-                        <small class="card-meta mb-2">Thought Leadership</small>
+                        <small class="card-meta mb-2">${b.kategori}</small>
                         <h4 class="card-title mt-0 ">
                             ${b.title}
                         </h4>

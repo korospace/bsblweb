@@ -16,11 +16,15 @@
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
+<script>
+	const IDARTIKEL = '<?= $idArtikel; ?>';
+</script>
 <script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/detilArtikel.js'); ?>"></script>
 
 <?= $this->endSection(); ?>
 
@@ -43,9 +47,6 @@
                         <img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt=""
                             width="65" height="55">
                     </a>
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
                     <!-- ***** Menu End ***** -->
                 </nav>
             </div>
@@ -60,120 +61,20 @@
                 <div class="blog-single-main">
                     <div class="row">
                         <div class="col-12">
-                            <div class="image">
-                                <img src="https://via.placeholder.com/950x460" alt="#">
+                            <div class="image position-relative">
+                                <img src="<?= base_url('/assets/images/default-thumbnail.webp'); ?>" alt="#" class="w-100 position-relative" style="z-index: 1;">
+                                <img src="<?= base_url('/assets/images/default-thumbnail.webp'); ?>" alt="#" id="blog-img" class="w-100 h-100 position-absolute" style="z-index: 10;left:0;">
                             </div>
                             <div class="blog-detail">
-                                <h2 class="blog-title">What are the secrets to start- up success?</h2>
+                                <h2 class="blog-title" id="blog-title"></h2>
                                 <div class="blog-meta">
-                                    <span class="author"><a><i class="fa fa-user"></i>By Admin</a><a><i
-                                                class="fa fa-calendar"></i>Dec 24, 2018</a></span>
+                                    <span class="author" id="blog-date"></span>
                                 </div>
-                                <div class="content">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus similique
-                                        rerum aut doloremque labore repudiandae molestiae deleniti, saepe nemo eveniet.
-                                        Quisquam, accusantium architecto? Minima error odit facilis iste non eaque earum
-                                        recusandae eum sed doloribus consequatur illum maxime vitae aliquid a nam vero
-                                        assumenda obcaecati vel impedit, aut natus quisquam.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
-                                        necessitatibus, assumenda rem est id officiis quasi impedit hic esse molestiae
-                                        dolores voluptatum perspiciatis? Dolorum iusto esse doloribus? Vitae recusandae
-                                        sint tempore reiciendis accusantium ratione, sunt quibusdam magni, quasi
-                                        inventore alias dolorem laborum odio! Quis possimus repellat dignissimos velit
-                                        consequatur! Corporis alias eveniet consequatur error natus eos delectus odio
-                                        iusto voluptatum.</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium pariatur
-                                        magnam ipsum reprehenderit voluptatibus adipisci veritatis hic aperiam et
-                                        molestiae mollitia iure nihil quam autem impedit officiis recusandae ducimus
-                                        esse fugit, corporis tenetur! Quod eaque corrupti, odio alias rerum assumenda,
-                                        repellat quam ducimus accusamus sit voluptas reiciendis ab reprehenderit nostrum
-                                        quidem laudantium labore optio facere a consequuntur dolorem deleniti.
-                                        Exercitationem temporibus, autem quidem optio officiis nemo sequi eaque odit
-                                        voluptatibus tempore voluptate obcaecati at aperiam.</p>
+                                <div class="content" id="blog-content">
+                                    
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-12">
-                            <div class="comments">
-                                <h3 class="comment-title">Comments (3)</h3>
-                                <div class="single-comment">
-                                    <img src="https://via.placeholder.com/80x80" alt="#">
-                                    <div class="content">
-                                        <h4>Alisa harm <span>At 8:59 pm On Feb 28, 2018</span></h4>
-                                        <p>Enthusiastically leverage existing premium quality vectors with
-                                            enterprise-wide innovation
-                                            collaboration Phosfluorescently leverage others enterprisee
-                                            Phosfluorescently leverage.</p>
-                                        <div class="button">
-                                            <a href="#" class="btn"><i class="fa fa-reply"
-                                                    aria-hidden="true"></i>Reply</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="single-comment left">
-                                    <img src="https://via.placeholder.com/80x80" alt="#">
-                                    <div class="content">
-                                        <h4>john deo <span>Feb 28, 2018 at 8:59 pm</span></h4>
-                                        <p>Enthusiastically leverage existing premium quality vectors with
-                                            enterprise-wide innovation
-                                            collaboration Phosfluorescently leverage others enterprisee
-                                            Phosfluorescently leverage.</p>
-                                        <div class="button">
-                                            <a href="#" class="btn"><i class="fa fa-reply"
-                                                    aria-hidden="true"></i>Reply</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="single-comment">
-                                    <img src="https://via.placeholder.com/80x80" alt="#">
-                                    <div class="content">
-                                        <h4>megan mart <span>Feb 28, 2018 at 8:59 pm</span></h4>
-                                        <p>Enthusiastically leverage existing premium quality vectors with
-                                            enterprise-wide innovation
-                                            collaboration Phosfluorescently leverage others enterprisee
-                                            Phosfluorescently leverage.</p>
-                                        <div class="button">
-                                            <a href="#" class="btn"><i class="fa fa-reply"
-                                                    aria-hidden="true"></i>Reply</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="reply">
-                                <div class="reply-head">
-                                    <h2 class="reply-title">Leave a Comment</h2>
-                                    <form class="form" action="#">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label>Your Name<span>*</span></label>
-                                                    <input type="text" name="name" placeholder="" required="required">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <label>Your Email<span>*</span></label>
-                                                    <input type="email" name="email" placeholder="" required="required">
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>Your Message<span>*</span></label>
-                                                    <textarea name="message" placeholder=""></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group button">
-                                                    <button type="submit" class="btn">Post comment</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -192,9 +93,10 @@
                     <div class="single-widget category">
                         <h3 class="title">Artikel Lainnya</h3>
                         <ul class="categor-list">
-                            <li><a href="#">Webinar</a></li>
-                            <li><a href="#">KKN</a></li>
-                            <li><a href="#">Sosialisasi & Edukasi</a></li>
+                            <li><a href="<?= base_url('/'); ?>">Home</a></li>
+                            <li><a href="<?= base_url('/homepage/webinar'); ?>">Webinar</a></li>
+                            <li><a href="<?= base_url('/homepage/kkn'); ?>">KKN</a></li>
+                            <li><a href="<?= base_url('/homepage/sosial%20dan%20edukasi'); ?>">Sosialisasi & Edukasi</a></li>
                         </ul>
                     </div>
                     <!--/ End Single Widget -->
@@ -202,55 +104,8 @@
                     <div class="single-widget recent-post">
                         <h3 class="title">Artikel Rekomendasi</h3>
                         <!-- Single Post -->
-                        <div class="single-post">
-                            <div class="image">
-                                <img src="https://via.placeholder.com/100x100" alt="#">
-                            </div>
-                            <div class="content">
-                                <h5><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a></h5>
-                                <ul class="comment">
-                                    <li><i class="fa fa-calendar" aria-hidden="true"></i>Jan 11, 2020</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Post -->
-                        <!-- Single Post -->
-                        <div class="single-post">
-                            <div class="image">
-                                <img src="https://via.placeholder.com/100x100" alt="#">
-                            </div>
-                            <div class="content">
-                                <h5><a href="#">Lorem ipsum dolor sit amet.</a></h5>
-                                <ul class="comment">
-                                    <li><i class="fa fa-calendar" aria-hidden="true"></i>Mar 05, 2019</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Post -->
-                        <!-- Single Post -->
-                        <div class="single-post">
-                            <div class="image">
-                                <img src="https://via.placeholder.com/100x100" alt="#">
-                            </div>
-                            <div class="content">
-                                <h5><a href="#">Lorem ipsum dolor sit amet consectetur.</a></h5>
-                                <ul class="comment">
-                                    <li><i class="fa fa-calendar" aria-hidden="true"></i>June 09, 2019</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Post -->
-                        <!-- Single Post -->
-                        <div class="single-post">
-                            <div class="image">
-                                <img src="https://via.placeholder.com/100x100" alt="#">
-                            </div>
-                            <div class="content">
-                                <h5><a href="#">Lorem ipsum dolor, sit amet consectetur adipisicing.</a></h5>
-                                <ul class="comment">
-                                    <li><i class="fa fa-calendar" aria-hidden="true"></i>June 09, 2021</li>
-                                </ul>
-                            </div>
+                        <div id="blog-recommended">
+
                         </div>
                         <!-- End Single Post -->
                     </div>

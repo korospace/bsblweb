@@ -57,7 +57,7 @@
 
 	<!-- ***** Header Area Start ***** -->
 	<header class="header-area">
-		<div class="container">
+		<div class="container-fluid px-5">
 			<div class="row">
 				<div class="col-12">
 					<nav class="main-nav">
@@ -65,24 +65,21 @@
 							<img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt=""
 								width="65" height="55">
 						</a>
-						<a class='menu-trigger'>
-							<span>Menu</span>
-						</a>
 					</nav>
 				</div>
 			</div>
 		</div>
 	</header>
-	<section class="wrapper d-flex justify-content-center align-items-center">
-		<div class="container pd-6">
+	<section class="wrapper d-flex">
+		<div class="container-fluid pl-5">
 			<div class="row" id="container-article">
 				<div class="col-9 d-none" id="img-404">
 					<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
 				</div>
 			</div>
 		</div>
-		<div class=" col-3 align-self-start">
-				<div class="main-sidebar ">
+		<div class="col-5 col-md-3">
+				<div class="main-sidebar mt-0">
 					<div class="single-widget search">
 						<div class="form">
 							<input type="email" placeholder="Search Here...">
@@ -92,9 +89,10 @@
 					<div class="single-widget category">
 						<h3 class="title">Artikel Lainnya</h3>
 						<ul class="categor-list">
-							<li><a href="#">Webinar</a></li>
-							<li><a href="#">KKN</a></li>
-							<li><a href="#">Sosialisasi & Edukasi</a></li>
+							<li><a href="<?= base_url('/'); ?>">Home</a></li>
+							<li><a href="<?= base_url('/homepage/webinar'); ?>">Webinar</a></li>
+                            <li><a href="<?= base_url('/homepage/kkn'); ?>">KKN</a></li>
+                            <li><a href="<?= base_url('/homepage/sosial%20dan%20edukasi'); ?>">Sosialisasi & Edukasi</a></li>
 						</ul>
 					</div>
 				</div>

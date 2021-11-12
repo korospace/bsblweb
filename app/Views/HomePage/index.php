@@ -167,7 +167,7 @@
               <img src="<?= base_url('assets/images/features-icon-3.png'); ?>" alt="">
               <h4>Sosialisasi & Edukasi</h4>
               <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-              <a href="<?= base_url('/homepage/kmmi'); ?>" class="main-button">
+              <a href="<?= base_url('/homepage/sosial%20dan%20edukasi'); ?>" class="main-button">
                 Read More
               </a>
             </div>

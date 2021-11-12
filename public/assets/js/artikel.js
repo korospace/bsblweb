@@ -48,7 +48,8 @@ axios.get(`${APIURL}/berita_acara/getitem?kategori=${KATEGORI}`)
     .catch(err => {
         hideLoadingSpinner();
         if (err.response.status == 404){
-            $('#img-404').removeClass('d-none');
+            // $('#img-404').removeClass('d-none');
+            window.location.replace(`${BASEURL}/artikel-notfound`);
         }  
         else if (err.response.status == 500){
             showAlert({

@@ -18,7 +18,8 @@ axios.get(`${APIURL}/berita_acara/getitem?id=${IDARTIKEL}`)
 .catch(err => {
     hideLoadingSpinner();
     if (err.response.status == 404){
-        $('#blog-title').html('Punten?');
+        // $('#blog-title').html('Punten?');
+        window.location.replace(`${BASEURL}/artikel-notfound`);
     }  
     else if (err.response.status == 500){
         showAlert({
@@ -35,7 +36,6 @@ axios.get(`${APIURL}/berita_acara/getitem?id=${IDARTIKEL}`)
 let arrayBerita = [];
 axios.get(`${APIURL}/berita_acara/otheritem?id=${IDARTIKEL}`)
 .then(res => {
-    console.log(res);
     let elBerita  = '';
     let allBerita = res.data.data;
     arrayBerita   = allBerita;
@@ -47,7 +47,7 @@ axios.get(`${APIURL}/berita_acara/otheritem?id=${IDARTIKEL}`)
         let newyear      = newdate.toLocaleString("en-US",{year: "numeric"});
         elBerita += `<div id="single-post">
                         <div class="image">
-                            <img src="${BASEURL}/assets/images/404.webp" alt="thumbnail">
+                            <img src="${b.thumbnail}" alt="thumbnail">
                         </div>
                         <div class="content">
                             <h5><a href="${BASEURL}/artikel/${b.id}">${b.title}</a></h5>
@@ -62,6 +62,4 @@ axios.get(`${APIURL}/berita_acara/otheritem?id=${IDARTIKEL}`)
         $('#blog-recommended').html(elBerita);
 })
 .catch(err => {
-    hideLoadingSpinner();
-    console.log(err);
 });

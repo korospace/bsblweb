@@ -2,42 +2,42 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-<style>
-	body {}
+	<style>
+		body {}
 
-	section.wrapper {
-		margin-left: 0 !important;
-		margin-right: 0 !important;
-		min-height: 490px;
-	}
-
-	@media (max-width:990px) {
-		body {
-			overflow: hidden;
+		section.wrapper {
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			min-height: 490px;
 		}
-	}
-</style>
-<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>">
+
+		@media (max-width:990px) {
+			body {
+				overflow: hidden;
+			}
+		}
+	</style>
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-<script>
-	const KATEGORI = '<?= $kategori; ?>';
-</script>
-<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
+	<script>
+		const KATEGORI = '<?= $kategori; ?>';
+	</script>
+	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
 
-<script src="<?= base_url('assets/js/artikel.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/bootstrap.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/popper.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/artikel.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/dropdown/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/dropdown/popper.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
@@ -70,12 +70,12 @@
 			</div>
 		</div>
 	</header>
-	<section class="wrapper d-flex">
+	<section class="wrapper d-flex" style="margin-top: 100px;">
 		<div class="container-fluid pl-5">
 			<div class="row" id="container-article">
-				<div class="col-9 d-none" id="img-404">
+				<!-- <div class="col-9 d-none" id="img-404">
 					<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="col-5 col-md-3">

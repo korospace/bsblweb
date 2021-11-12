@@ -71,7 +71,7 @@
 									</div>
 								</div>
 								<div class="col d-flex justify-content-center align-items-center flex-column">
-									<button type="submit" class="btnRegister mt-4" value="Login">Login</button>
+									<button type="submit" class="btnRegister mt-4" value="Login" style="max-width: 374px;max-height: 54px;">Login</button>
 									<a id="btn-forgotpass" class="mt-3 text-secondary" href="">lupa password?</a>
 								</div>
 							</form>
@@ -96,7 +96,7 @@
 									</div>
 								</div>
 								<div class="col d-flex justify-content-center align-items-center flex-column">
-									<button type="submit" class="btnRegister mt-4" value="Login">Login</button>
+									<button type="submit" class="btnRegister mt-4" value="Login" style="max-width: 374px;max-height: 54px;">Login</button>
 									<span class="mt-3 text-secondary" style="opacity: 0;cursor: context-menu;" href="">lupa password?</span>
 								</div>
 							</form>

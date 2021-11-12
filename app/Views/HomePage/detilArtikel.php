@@ -2,30 +2,27 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-<style>
-</style>
+    <style>
+    </style>
 
-<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/artikel/style.css'); ?>">
-
-
+    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/artikel/style.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-<script>
-	const IDARTIKEL = '<?= $idArtikel; ?>';
-</script>
-<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/detilArtikel.js'); ?>"></script>
-
+    <script>
+        const IDARTIKEL = '<?= $idArtikel; ?>';
+    </script>
+    <script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/detilArtikel.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->

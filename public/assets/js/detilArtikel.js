@@ -46,10 +46,11 @@ axios.get(`${APIURL}/berita_acara/otheritem?id=${IDARTIKEL}`)
         let newmonth     = newdate.toLocaleString("en-US",{month: "long"});
         let newyear      = newdate.toLocaleString("en-US",{year: "numeric"});
         elBerita += `<div id="single-post">
-                        <div class="image">
-                            <img src="${b.thumbnail}" alt="thumbnail">
+                        <div class="image position-relative">
+                            <img src="${BASEURL}/assets/images/default-thumbnail.webp" alt="thumbnail" class="w-100 position-relative" style="z-index: 1;">
+                            <img src="${b.thumbnail}" alt="thumbnail" class="w-100 h-100 position-absolute" style="z-index: 10;left:0;">
                         </div>
-                        <div class="content">
+                        <div class="content mt-3">
                             <h5><a href="${BASEURL}/artikel/${b.id}">${b.title}</a></h5>
                             <ul class="comment">
                                 <li><i class="fa fa-calendar" aria-hidden="true"></i> ${newmonth} ${newday}, ${newyear}</li>

@@ -5,6 +5,7 @@ use App\Controllers\BaseController;
 
 use App\Models\AdminModel;
 use App\Models\NasabahModel;
+use App\Models\TransaksiModel;
 
 class Admin extends BaseController
 {
@@ -266,6 +267,63 @@ class Admin extends BaseController
             setcookie('token',$token,time() + $result['expired'],'/');
             return view('Admin/profile',$data);
         }
+    }
+
+    public function cetakRekap(string $date)
+    {
+        $token     = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result    = $this->checkToken($token, false);
+        $privilege = (isset($result['privilege'])) ? $result['privilege'] : null;
+
+        if ($token == null || $result['success'] == false || !in_array($privilege,['super','admin'])) {
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
+            return redirect()->to(base_url().'/login');
+        }
+
+        $transaksiModel = new TransaksiModel;
+        $dbresponse     = $transaksiModel->rekapData(['date' => $date]);
+        
+        if ($dbresponse['success'] == false) {
+            return redirect()->to(base_url().'/login');
+        }
+        
+        $mpdf = new \Mpdf\Mpdf();
+        
+        $mpdf->WriteHTML("
+        <!DOCTYPE html>
+        <html lang='en'>
+        
+        <head>
+            <meta charset='utf-8'>
+            <title>bsbl | rekap transaksi</title>
+        </head>
+        
+        <body>
+            <div style='border-bottom: 2px solid black;padding-bottom: 20px;'>
+                <table border='0' width='100%'>
+                   <tr>
+                        <th style='text-align: left;'>
+                            <img src='".base_url()."/assets/images/banksampah-logo.png' style='width: 100px;'>
+                        </th>
+                        <th style='text-align: right;font-size: 2em;font-family: 'sans';'>
+                            BUKTI TRANSAKSI
+                        </th>
+                    </tr>';
+                </table>
+            </div>
+
+            <h1 style='font-style: italic;margin-top: 40px;margin-bottom: 20px;font-family: 'sans';'>
+                
+            </h1>
+
+            ".$result."
+        </body>
+        
+        </html>");
+
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('transaksi#'.$date.".pdf", 'I');
     }
 
     /**

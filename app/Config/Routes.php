@@ -68,6 +68,7 @@ $routes->group("admin", function ($routes) {
     $routes->add('addartikel',         'Admin::addArtikelView');
     $routes->add('editartikel/(:any)', 'Admin::editArtikelView/$1');
     $routes->add('profile',            'Admin::profileAdmin');
+    $routes->add('cetakrekap/(:any)',  'Admin::cetakRekap/$1');
     // API
     $routes->post("login",           "Admin::login");
     $routes->post("confirmdelete",   "Admin::confirmDelete");

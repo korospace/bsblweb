@@ -5,6 +5,7 @@ use App\Controllers\BaseController;
 
 use App\Models\AdminModel;
 use App\Models\NasabahModel;
+use App\Models\TransaksiModel;
 
 class Admin extends BaseController
 {
@@ -268,6 +269,358 @@ class Admin extends BaseController
         }
     }
 
+    public function cetakRekap(string $date)
+    {
+        $token     = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result    = $this->checkToken($token, false);
+        $privilege = (isset($result['privilege'])) ? $result['privilege'] : null;
+
+        if ($token == null || $result['success'] == false || !in_array($privilege,['super','admin'])) {
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
+            return redirect()->to(base_url().'/login');
+        }
+
+        $transaksiModel = new TransaksiModel;
+        $dbresponse     = $transaksiModel->rekapData(['date' => $date]);
+        
+        if ($dbresponse['success'] == false) {
+            return redirect()->to(base_url().'/login');
+        }
+
+        $data      = $dbresponse['data'];
+        $rekapDate = $data['date'];
+        // dd($data['tss']);
+
+        // setor sampah
+        $tss   = $data['tss'];
+        $trTss = "";
+        $noTss = 1;
+        $totKgSetor   = 0;
+        $totUangSetor = 0;
+
+        foreach ($tss as $key) {
+            $totKgSetor   = $totKgSetor+(float)$key['jumlah'];
+            $totUangSetor = $totUangSetor+(int)$key['harga'];
+
+            $bg     = ($noTss % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
+
+            $trTss .= "<tr $bg>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$noTss++."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".date("d/m/Y", $key['date'])."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['id_transaksi']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['nama_lengkap']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['jenis_sampah']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['jumlah']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    Rp ".number_format($key['harga'] , 0, ',', '.')."
+                </td>
+            </tr>";
+        }
+
+        $trTss .= "<tr style='background: rgb(230, 230, 230);'>
+            <th colspan='5' style='text-align: center;font-size: 0.8em;font-family: sans;'>
+                total
+            </th>
+            <th style='text-align: left;font-size: 0.8em;font-family: sans;'>
+                ".$totKgSetor."g
+            </th>
+            <th style='text-align: left;font-size: 0.8em;font-family: sans;'>
+                Rp ".number_format($totUangSetor , 0, ',', '.')."
+            </th>
+        </tr>";
+
+        // jual sampah
+        $tjs   = $data['tjs'];
+        $trTjs = "";
+        $noTjs = 1;
+        $totKgjual   = 0;
+        $totUangJual = 0;
+
+        foreach ($tjs as $key) {
+            $totKgjual   = $totKgjual+(float)$key['jumlah'];
+            $totUangJual = $totUangJual+(int)$key['harga'];
+
+            $bg     = ($noTjs % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
+
+            $trTjs .= "<tr $bg>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$noTjs++."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".date("d/m/Y", $key['date'])."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['id_transaksi']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['jenis_sampah']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['jumlah']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    Rp ".number_format($key['harga'] , 0, ',', '.')."
+                </td>
+            </tr>";
+        }
+
+        $trTjs .= "<tr style='background: rgb(230, 230, 230);'>
+            <th colspan='4' style='text-align: center;font-size: 0.8em;font-family: sans;'>
+                total
+            </th>
+            <th style='text-align: left;font-size: 0.8em;font-family: sans;'>
+                ".$totKgjual."g
+            </th>
+            <th style='text-align: left;font-size: 0.8em;font-family: sans;'>
+                Rp ".number_format($totUangJual , 0, ',', '.')."
+            </th>
+        </tr>";
+        
+        // pindah saldo
+        $tps   = $data['tps'];
+        $trTps = "";
+        $noTps = 1;
+        $totKgPindah   = 0;
+        $totUangPindah = 0;
+
+        foreach ($tps as $key) {
+            $totKgPindah   = $totKgPindah+(float)$key['hasil_konversi'];
+            $totUangPindah = $totUangPindah+(int)$key['jumlah'];
+
+            $bg     = ($noTps % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
+
+            $trTps .= "<tr $bg>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$noTps++."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".date("d/m/Y", $key['date'])."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['id_transaksi']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['nama_lengkap']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    Rp ".number_format($key['harga_emas'] , 0, ',', '.')."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['tujuan']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    Rp ".number_format($key['jumlah'] , 0, ',', '.')."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['hasil_konversi']. "g
+                </td>
+            </tr>";
+        }
+
+        $trTps .= "<tr style='background: rgb(230, 230, 230);'>
+            <th colspan='6' style='text-align: center;font-size: 0.8em;font-family: sans;'>
+                total
+            </th>
+            <th style='text-align: left;font-size: 0.8em;font-family: sans;'>
+                Rp ".number_format($totUangPindah , 0, ',', '.')."
+            </th>
+            <th style='text-align: left;font-size: 0.8em;font-family: sans;'>
+                ".$totKgPindah."g
+            </th>
+        </tr>";
+        
+        // tarik saldo
+        $tts   = $data['tts'];
+        $trTts = "";
+        $noTts = 1;
+        $totKgTarik   = 0;
+        $totUangTarik = 0;
+
+        foreach ($tts as $key) {
+            $uang     = ($key['jenis_saldo'] == 'uang')     ? $key['jumlah'] : 0;
+            $antam    = ($key['jenis_saldo'] == 'antam')    ? $key['jumlah'] : 0;
+            $ubs      = ($key['jenis_saldo'] == 'ubs')      ? $key['jumlah'] : 0;
+            $galery24 = ($key['jenis_saldo'] == 'galery24') ? $key['jumlah'] : 0;
+
+            if ($uang == 0) {
+                $totKgTarik   = $totKgTarik+(float)$key['jumlah'];
+            } 
+            else {
+                $totUangTarik = $totUangTarik+(int)$key['jumlah'];
+            }
+
+            $bg     = ($noTts % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
+
+            $trTts .= "<tr $bg>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$noTts++."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".date("d/m/Y", $key['date'])."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['id_transaksi']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['nama_lengkap']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    Rp ".number_format((int)$uang , 0, ',', '.')."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>".$antam."g</td>
+                <td style='font-size: 0.7em;font-family: sans;'>".$ubs."g</td>
+                <td style='font-size: 0.7em;font-family: sans;'>".$galery24."g</td>
+            </tr>";
+        }
+
+        $trTts .= "<tr style='background: rgb(230, 230, 230);'>
+            <th colspan='4' style='text-align: center;font-size: 0.8em;font-family: sans;'>
+                total
+            </th>
+            <th style='text-align: left;font-size: 0.8em;font-family: sans;'>
+                Rp ".number_format($totUangTarik , 0, ',', '.')."
+            </th>
+            <th colspan='3' style='text-align: center;font-size: 0.8em;font-family: sans;'>
+                ".$totKgTarik."g
+            </th>
+        </tr>";
+
+        $mpdf = new \Mpdf\Mpdf();
+        
+        $mpdf->WriteHTML("
+        <!DOCTYPE html>
+        <html lang='en'>
+        
+        <head>
+            <meta charset='utf-8'>
+            <title>bsbl | rekap transaksi</title>
+        </head>
+        
+        <body>
+            <div style='border-bottom: 2px solid black;padding-bottom: 20px;'>
+                <table border='0' width='100%'>
+                   <tr>
+                        <th style='text-align: left;'>
+                            <img src='".base_url()."/assets/images/banksampah-logo.png' style='width: 100px;'>
+                        </th>
+                        <th style='text-align: right;'>
+                            <h1  style='font-size: 2em;'>
+                                REKAP TRANSAKSI
+                            </h1>
+                            <span  style='font-size: 1em;font-family: sans;'>
+                                $rekapDate
+                            </span>
+                        </th>
+                    </tr>';
+                </table>
+            </div>
+
+            <h1 style='font-style: italic;margin-top: 40px;margin-bottom: 10px;font-family: sans;font-size: 1.4em;'>
+                1. Setor sampah
+            </h1>
+
+            <table border='0' width='100%' cellpadding='5'>
+                <thead>
+                    <tr style='font-size: 0.8em;'>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>#</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Tanggal</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>ID Transaksi</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Nama Nasabah</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Jenis sampah</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Kg</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Harga</th>
+                    </tr>
+                <thead>
+                <tbody>
+                    $trTss
+                </tbody>
+            </table>
+
+            <h1 style='font-style: italic;margin-top: 40px;margin-bottom: 10px;font-family: sans;font-size: 1.4em;'>
+                2. Jual sampah
+            </h1>
+
+            <table border='0' width='100%' cellpadding='5'>
+                <thead>
+                    <tr style='font-size: 0.8em;'>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>#</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Tanggal</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>ID Transaksi</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Jenis sampah</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Kg</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Harga</th>
+                    </tr>
+                <thead>
+                <tbody>
+                    $trTjs
+                </tbody>
+            </table>
+
+            <h1 style='font-style: italic;margin-top: 40px;margin-bottom: 10px;font-family: sans;font-size: 1.4em;'>
+                3. Pindah saldo
+            </h1>
+
+            <table border='0' width='100%' cellpadding='5'>
+                <thead>
+                    <tr>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>#</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Tanggal</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>ID Transaksi</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Nama Nasabah</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Harga Emas</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Tujuan</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Jumlah</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Hasil Konversi</th>
+                    </tr>
+                <thead>
+                <tbody>
+                    $trTps
+                </tbody>
+            </table>
+
+            <h1 style='font-style: italic;margin-top: 40px;margin-bottom: 10px;font-family: sans;font-size: 1.4em;'>
+                4. Tarik saldo
+            </h1>
+
+            <table border='0' width='100%' cellpadding='5'>
+                <thead>
+                    <tr>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>#</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Tanggal</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>ID Transaksi</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Nama Nasabah</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Uang</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Antam</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Ubs</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Galery24</th>
+                    </tr>
+                <thead>
+                <tbody>
+                    $trTts
+                </tbody>
+            </table>
+
+        </body>
+        
+        </html>");
+
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('rekap-transaksi#'.$date.".pdf", 'I');
+    }
+
     /**
      * Login
      *   url    : domain.com/admin/login
@@ -303,7 +656,7 @@ class Admin extends BaseController
                     $active      = $adminData['message']['active'];
                     $last_active = (int)$adminData['message']['last_active'];
                     $timeNow     = time();
-                    $batasTime   = (int)$timeNow - (86400*1);
+                    $batasTime   = (int)$timeNow - (86400*30);
                     $privilege   = $adminData['message']['privilege'];
 
                     if ($last_active <  $batasTime && $privilege != 'super' || $active == 'f') {

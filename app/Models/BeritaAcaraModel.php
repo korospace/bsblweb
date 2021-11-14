@@ -114,14 +114,14 @@ class BeritaAcaraModel extends Model
             $lastId    = $this->db->table($this->table)->select('id')->where("kategori",$kategori)->limit(1)->orderBy('id','DESC')->get()->getResultArray()[0]['id'];
             
             $prev       = 2;
-            $prevBerita = $this->db->query("SELECT id,title,kategori,created_at FROM berita_acara WHERE kategori = '$kategori' AND id BETWEEN '$firstId' AND '$id' ORDER BY id DESC LIMIT $prev OFFSET 1")->getResultArray();
+            $prevBerita = $this->db->query("SELECT id,title,kategori,created_at,thumbnail FROM berita_acara WHERE kategori = '$kategori' AND id BETWEEN '$firstId' AND '$id' ORDER BY id DESC LIMIT $prev OFFSET 1")->getResultArray();
             
             $next       = 2 + ($prev-count($prevBerita));
-            $nextBerita = $this->db->query("SELECT id,title,kategori,created_at FROM berita_acara WHERE kategori = '$kategori' AND id BETWEEN '$id' AND '$lastId' ORDER BY id ASC LIMIT $next OFFSET 1")->getResultArray();
+            $nextBerita = $this->db->query("SELECT id,title,kategori,created_at,thumbnail FROM berita_acara WHERE kategori = '$kategori' AND id BETWEEN '$id' AND '$lastId' ORDER BY id ASC LIMIT $next OFFSET 1")->getResultArray();
 
             if (count($nextBerita) < 2 && count($prevBerita) == 2) {
                 $limitNewNextB = 2-count($nextBerita);
-                $newNextBerita = $this->db->query("SELECT id,title,kategori,created_at FROM berita_acara WHERE kategori = '$kategori' AND id BETWEEN '$firstId' AND '".$prevBerita[1]['id']."' ORDER BY id DESC LIMIT $limitNewNextB OFFSET 1")->getResultArray();
+                $newNextBerita = $this->db->query("SELECT id,title,kategori,created_at,thumbnail FROM berita_acara WHERE kategori = '$kategori' AND id BETWEEN '$firstId' AND '".$prevBerita[1]['id']."' ORDER BY id DESC LIMIT $limitNewNextB OFFSET 1")->getResultArray();
                 
                 foreach ($newNextBerita as $key) {
                     $nextBerita[] = $key;
@@ -131,7 +131,7 @@ class BeritaAcaraModel extends Model
             if (count($prevBerita) + count($nextBerita) < 4) {
                 if (count($prevBerita) < 2) {
                     $limitNewPrevB = 2-count($prevBerita);
-                    $newPrevBerita = $this->db->query("SELECT id,title,kategori,created_at FROM berita_acara WHERE kategori != '$kategori' ORDER BY id DESC LIMIT $limitNewPrevB")->getResultArray();
+                    $newPrevBerita = $this->db->query("SELECT id,title,kategori,created_at,thumbnail FROM berita_acara WHERE kategori != '$kategori' ORDER BY id DESC LIMIT $limitNewPrevB")->getResultArray();
     
                     foreach ($newPrevBerita as $key) {
                         $prevBerita[] = $key;
@@ -139,7 +139,7 @@ class BeritaAcaraModel extends Model
                 }
                 if (count($nextBerita) < 2) {
                     $limitNewNextB = 2-count($nextBerita);
-                    $newNextBerita = $this->db->query("SELECT id,title,kategori,created_at FROM berita_acara WHERE kategori != '$kategori' ORDER BY id ASC LIMIT $limitNewNextB")->getResultArray();
+                    $newNextBerita = $this->db->query("SELECT id,title,kategori,created_at,thumbnail FROM berita_acara WHERE kategori != '$kategori' ORDER BY id ASC LIMIT $limitNewNextB")->getResultArray();
     
                     foreach ($newNextBerita as $key) {
                         $nextBerita[] = $key;
@@ -178,10 +178,10 @@ class BeritaAcaraModel extends Model
 
     public function getOldThumbnail(string $id): string
     {
-        $oldThumbnail = $this->db->table($this->table)->select('thumbnail')->where('id',$id)->get()->getResultArray();
+        $oldThumbnail = $this->db->table($this->table)->select('thumbnail')->where('id',$id)->get()->getResultArray()[0]['thumbnail'];
         
         if (!empty($oldThumbnail)) {    
-            return $oldThumbnail[0]['thumbnail'];
+            return $oldThumbnail;
         } 
     }
 

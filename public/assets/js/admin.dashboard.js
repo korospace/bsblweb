@@ -42,20 +42,20 @@ const getLastTransaksi = async () => {
             let month     = date.toLocaleString("en-US",{month: "long"});
             let year      = date.toLocaleString("en-US",{year: "numeric"});
             let jenisTransaksi = (t.type == 'setor')?`${t.type} sampah`:`${t.type} saldo`;
-            let textColor      = '';
+            let color          = '';
             let jumlah         = '';
 
             if (t.type == 'setor') {
-                textColor = 'text-success';
-                jumlah    = `+${t.total_kg} kg`;
+                color  = 'success';
+                jumlah = `+ ${t.total_kg} kg`;
             } 
             else if (t.type == 'tarik') {
-                textColor = 'text-danger';
-                jumlah    = (t.jenis_saldo == 'uang')?`-Rp ${t.total_tarik}`:`-${t.total_tarik} g`;
+                color  = 'danger';
+                jumlah = (t.jenis_saldo == 'uang')?`- Rp ${t.total_tarik}`:`- ${t.total_tarik} g`;
             } 
             else {
-                textColor = 'text-warning';
-                jumlah    = `Rp ${t.total_pindah}`;
+                color  = 'warning';
+                jumlah = `<i class="fas fa-exchange-alt text-xxs"></i> Rp ${t.total_pindah}`;
             }
 
             trTransaksi += `<tr>
@@ -70,12 +70,12 @@ const getLastTransaksi = async () => {
                     </span>
                 </td>
                 <td class="align-middle text-sm">
-                    <span class="text-xs text-name font-weight-bold ${textColor}">
+                    <span class="text-xxs text-name font-weight-bold badge border text-${color} border-${color} pb-1 rounded-sm" style="min-width:100px;max-width:100px;"> 
                         ${jenisTransaksi}
                     </span>
                 </td>
                 <td class="align-middle text-sm">
-                    <span class="text-xs text-name font-weight-bold ${textColor}"> 
+                    <span class="text-xs text-name font-weight-bold text-${color}"> 
                         ${jumlah}
                     </span>
                 </td>
@@ -126,7 +126,7 @@ const getRekapTransaksi = async (year) => {
             elTransaksi  += `<li class="list-group-item border-0 p-0 border-radius-lg">
                 <div class="d-flex align-items-center justify-content-between px-1">
                     <div class="d-flex flex-column" style="flex:1;">
-                        <h6 class="text-dark font-weight-bold text-sm">${allTransaksi[key].date}</h6>
+                        <h6 class="text-dark font-weight-bold text-sm">${allTransaksi[key].date2}</h6>
                         <div class="d-flex mt-2 w-100">
                             <i class="fas fa-dollar-sign text-xxs text-success mr-3">
                                Rp ${kFormatter(allTransaksi[key].totUangMasuk)}
@@ -147,7 +147,7 @@ const getRekapTransaksi = async (year) => {
                             </i>
                         </div>
                     </div>
-                    <a href='' class="btn btn-link text-dark text-sm mb-0 px-0 h-100">
+                    <a href="${BASEURL}/admin/cetakrekap/${allTransaksi[key].date1}" target="_blank" class="btn btn-link text-dark text-sm mb-0 px-0 h-100">
                         <i class="fas fa-file-pdf text-lg me-1"></i> PDF
                     </a>
                 </div>

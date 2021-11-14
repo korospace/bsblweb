@@ -4,11 +4,8 @@
 
 let arrayBerita = [];
 
-showLoadingSpinner();
 axios.get(`${APIURL}/berita_acara/getitem?kategori=${KATEGORI}`)
     .then(res => {
-        hideLoadingSpinner();
-
         let elBerita  = '';
         let allBerita = res.data.data;
         arrayBerita   = allBerita;
@@ -46,11 +43,13 @@ axios.get(`${APIURL}/berita_acara/getitem?kategori=${KATEGORI}`)
         $('#container-article').html(elBerita);
     })
     .catch(err => {
-        hideLoadingSpinner();
         if (err.response.status == 404){
+            $('#container-article').addClass('d-none');
             $('#img-404').removeClass('d-none');
         }  
         else if (err.response.status == 500){
+            $('#container-article').addClass('d-none');
+            $('#img-404').removeClass('d-none');
             showAlert({
                 message: `<strong>Ups...</strong> terjadi kesalahan pada server, silahkan refresh halaman.`,
                 btnclose: true,

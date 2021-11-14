@@ -9,7 +9,7 @@ class NasabahModel extends Model
 {
     protected $table         = 'nasabah';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token','otp','is_verify','created_at'];
+    protected $allowedFields = ['id','email','username','password','nama_lengkap','notelp','alamat','region','tgl_lahir','kelamin','token','otp','is_verify','created_at'];
 
     public function getLastNasabah(string $codepos): array
     {

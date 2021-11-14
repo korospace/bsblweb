@@ -34,7 +34,6 @@ $routes->setAutoRoute(true);
 
 $routes->add('/',                'HomePage::index');
 $routes->add('/homepage/(:any)', 'HomePage::listArtikel/$1');
-$routes->add('/homepage/(:any)', 'HomePage::bacaArtikel/$1');
 $routes->add('/artikel/(:any)',  'HomePage::detilArtikel/$1');
 $routes->add('/signup',          'SignUp::index');
 $routes->add('/login',           'Login::index');
@@ -69,6 +68,7 @@ $routes->group("admin", function ($routes) {
     $routes->add('addartikel',         'Admin::addArtikelView');
     $routes->add('editartikel/(:any)', 'Admin::editArtikelView/$1');
     $routes->add('profile',            'Admin::profileAdmin');
+    $routes->add('cetakrekap/(:any)',  'Admin::cetakRekap/$1');
     // API
     $routes->post("login",           "Admin::login");
     $routes->post("confirmdelete",   "Admin::confirmDelete");

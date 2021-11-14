@@ -2,56 +2,72 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-<style>
-	body {}
+	<style>
+		body {}
 
-	section.wrapper {
-		margin-left: 0 !important;
-		margin-right: 0 !important;
-		min-height: 490px;
-	}
-
-	@media (max-width:990px) {
-		body {
-			overflow: hidden;
+		section.wrapper {
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			min-height: 490px;
 		}
-	}
-</style>
-<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>">
+
+        .skeleton{
+            background: rgb(193, 217, 102) !important;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: .8;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+
+		@media (max-width:990px) {
+			body {
+				overflow: hidden;
+			}
+		}
+	</style>
+
+    <!-- ** develoment ** -->
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>"> -->
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>"> -->
+    <!-- ** production ** -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/listartikel.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel/listArtikel.min.css'); ?>">
+	<link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
-<script>
-	const KATEGORI = '<?= $kategori; ?>';
-</script>
-<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
+	<script>
+		const KATEGORI = '<?= $kategori; ?>';
+	</script>
+	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/plugins/scrollreveal.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
 
-<script src="<?= base_url('assets/js/artikel.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/bootstrap.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/dropdown/popper.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/listArtikel.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/dropdown/bootstrap.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/dropdown/popper.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
 <?= $this->section('content'); ?>
 
-<!-- **** Loading Spinner **** -->
-<?= $this->include('Components/loadingSpinner'); ?>
-<!-- **** Alert Info **** -->
-<?= $this->include('Components/alertInfo'); ?>
+	<!-- **** Alert Info **** -->
+	<?= $this->include('Components/alertInfo'); ?>
 
-<body class="">
-
-	<!-- **** Loading Spinner **** -->
-	<?= $this->include('Components/loadingSpinner'); ?>
 	<!-- **** Alert info **** -->
 	<?= $this->include('Components/alertInfo'); ?>
 
@@ -62,22 +78,30 @@
 				<div class="col-12">
 					<nav class="main-nav">
 						<a class="logo" href="<?= base_url('/'); ?> ">
-							<img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt=""
-								width="65" height="55">
+							<img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt="" width="65" height="55">
 						</a>
 					</nav>
 				</div>
 			</div>
 		</div>
 	</header>
-	<section class="wrapper d-flex">
-		<div class="container-fluid pl-5">
+	<section class="wrapper d-flex" style="margin-top: 100px;">
+		
+		<div class="container-fluid pl-5 pr-0">
+			<div class="w-100 h-100 d-flex align-items-center d-none" id="img-404">
+				<img src="<?= base_url('assets/images/artikel-404.webp') ?>" alt="" style="max-width:100%; opacity:0.7;">
+			</div>
+
 			<div class="row" id="container-article">
-				<div class="col-9 d-none" id="img-404">
-					<img src="<?= base_url('assets/images/404.jpg') ?>" alt="" style="max-width:100%; opacity:0.7;">
-				</div>
+				<?php for ($i=0; $i < 6; $i++) { ?>
+					<div class="col-sm-6 col-lg-4 mb-5">
+						<div class="card text-white position-relative skeleton" style="box-shadow: none;">
+						</div>
+					</div>
+				<?php } ?>
 			</div>
 		</div>
+
 		<div class="col-5 col-md-3">
 				<div class="main-sidebar mt-0">
 					<div class="single-widget search">
@@ -91,8 +115,8 @@
 						<ul class="categor-list">
 							<li><a href="<?= base_url('/'); ?>">Home</a></li>
 							<li><a href="<?= base_url('/homepage/webinar'); ?>">Webinar</a></li>
-                            <li><a href="<?= base_url('/homepage/kkn'); ?>">KKN</a></li>
-                            <li><a href="<?= base_url('/homepage/sosial%20dan%20edukasi'); ?>">Sosialisasi & Edukasi</a></li>
+							<li><a href="<?= base_url('/homepage/kkn'); ?>">KKN</a></li>
+							<li><a href="<?= base_url('/homepage/sosial%20dan%20edukasi'); ?>">Sosialisasi & Edukasi</a></li>
 						</ul>
 					</div>
 				</div>
@@ -182,7 +206,6 @@
 			</div>
 		</div>
 	</footer>
-
 	<!-- footer section ends -->
-</body>
+	
 <?= $this->endSection(); ?>

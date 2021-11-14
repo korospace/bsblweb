@@ -84,7 +84,7 @@
 			</nav>
 
 			<!-- End Navbar -->
-			<div class="container-fluid py-4 d-flex flex-column" style="flex: 1;max-height: 90%;">
+			<div class="container-fluid py-4 d-flex flex-column" style="flex: 1;max-height: 90%;overflow: hidden;">
 				<div class="row" style="flex: 1;max-height: 96%;">
 					<div class="col-12 h-100" style="max-height: 100%;">
 						<div class="card mb-4 h-100 d-flex flex-column" style="max-height: 100%;overflow: hidden;font-family: 'qc-semibold';">
@@ -96,7 +96,7 @@
 											<i class="fas fa-search text-muted"></i>
 										</span>
 									</div>
-									<input id="search-nasabah" type="text" class="form-control h-100 px-2" placeholder="nama lengkap/id nasabah" style="max-height: 39px;">
+									<input id="search-nasabah" type="text" class="form-control h-100 px-2" placeholder="id/nama/kodepos/wilayah" style="max-height: 39px;">
 								</div>
 								<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
 									<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('addnasabah')" style="width: 100%;">tambah</button>
@@ -121,6 +121,9 @@
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												ID Nasabah
+											</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Email
 											</th>
 											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Nama lengkap

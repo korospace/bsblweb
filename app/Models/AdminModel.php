@@ -379,7 +379,7 @@ class AdminModel extends Model
             // var_dump($batasTime );
             // var_dump(date("H:i:s jS F, Y", 1636423564));die;
 
-            $this->db->query("UPDATE admin SET active = false WHERE last_active <  $batasTime");
+            $this->db->query("UPDATE admin SET active = false WHERE last_active <  $batasTime AND privilege != 'super'");
         } 
         catch (Exception $e) {
             

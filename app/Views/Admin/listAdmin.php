@@ -84,7 +84,7 @@
 			</nav>
 
 			<!-- End Navbar -->
-			<div class="container-fluid py-4 d-flex flex-column" style="flex: 1;max-height: 90%;">
+			<div class="container-fluid py-4 d-flex flex-column" style="flex: 1;max-height: 90%;overflow: hidden;">
 				<div class="row" style="flex: 1;max-height: 96%;">
 					<div class="col-12 h-100" style="max-height: 100%;">
 						<div class="card mb-4 h-100 d-flex flex-column" style="max-height: 100%;overflow: hidden;font-family: 'qc-semibold';">

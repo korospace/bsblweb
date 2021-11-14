@@ -3,6 +3,9 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
+		.ps{
+			
+		}
 		.rowCardWraper {
 			height: 100% !important;
 		}
@@ -57,7 +60,7 @@
 	<!-- **** Alert Info **** -->
 	<?= $this->include('Components/alertInfo'); ?>
 
-	<body class="g-sidenav-show bg-gray-100">
+	<body class="g-sidenav-show bg-gray-100" style="overflow: hidden;">
 		<!-- **** Sidebar **** -->
 		<?= $this->include('Components/nasabahSidebar'); ?>
 

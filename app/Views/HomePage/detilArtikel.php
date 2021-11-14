@@ -4,13 +4,35 @@
 <?= $this->section('contentCss'); ?>
     <!-- ** develoment ** -->
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel/style.css'); ?>"> -->
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel-layout.min.css'); ?>"> -->
     <!-- ** production ** -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel/detilArtikel.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel-layout/detilArtikel.css'); ?>">
     <!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/detilartikel.css'); ?>"> -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/artikel.min.css'); ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/artikel/style.css'); ?>">
     <style>
+        .categor-list li, .categor-list a {
+            margin: 0 !important;
+            height: 34px !important;
+            /* padding: 12px 0 12px 0 !important; */
+        }
+        #blog-content li,#blog-content ul,#blog-content ol{
+            list-style: inside !important;
+        }
+        #blog-content ol li{
+            list-style-type: decimal !important;
+            line-height: 30px !important;
+        }
+        #blog-content li{
+            line-height: 30px !important;
+        }
+        #blog-content p{
+            line-height: 20px !important;
+            margin-bottom: 10px !important;
+        }
         .skeleton{
             border-radius: 4px;
             background-color: #777777;
@@ -113,8 +135,8 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-12 sidebar-content">
-                    <div class="main-sidebar">
+                <div class="col-lg-4 col-12 sidebar-content pt-4">
+                    <div class="main-sidebar mt-1">
                         <!-- Single Widget -->
                         <div class="single-widget search">
                             <div class="form">

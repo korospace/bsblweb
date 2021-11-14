@@ -42,7 +42,7 @@
 		<!-- **** Sidebar **** -->
 		<?= $this->include('Components/adminSidebar'); ?>
 
-		<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg d-flex flex-column">
+		<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg d-flex flex-column" style="">
 			<!-- navbar -->
 			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
 				<div class="container-fluid py-1 px-3">
@@ -72,7 +72,7 @@
 			</nav>
 			
 			<!-- End Navbar -->
-			<div class="container-fluid py-4 d-flex flex-column" style="flex: 1;max-height: 90%;">
+			<div class="container-fluid py-4 d-flex flex-column" style="flex: 1;max-height: 90%;overflow: hidden;">
 				<div class="row" style="flex: 1;max-height: 96%;">
 					<div class="col-12" style="max-height: 100%;">
 						<div class="card mb-4 h-100 d-flex flex-column" style="max-height: 100%;overflow: hidden;font-family: 'qc-semibold';">

@@ -37,5 +37,8 @@ module.exports = {
     // content: ['app/Views/Admin/detilNasabah.php','public/assets/js/admin.detilnasabah.js'],
 
     // ** resource bootstrap
-    css: ['public/assets/css/bootstrap.min.css'],
+    // css: ['public/assets/css/bootstrap.min.css'],
+    // css: ['public/assets/css/artikel.min.css'],
+    // css: ['public/assets/css/sidebar/style.css'],
+    css: ['public/assets/css/artikel-layout.min.css'],
 }

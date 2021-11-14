@@ -16,9 +16,9 @@
 		}
 	</style>
   	<!-- ** develoment ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<!-- ** production ** -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.dashboard.css'); ?>">
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.dashboard.css'); ?>"> -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -168,7 +168,54 @@
 				</div>
 			</div>
 
-			<div class="row my-4">
+			<div class="row mt-5">
+				<!-- grafik -->
+				<div class="col-lg-8">
+					<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
+						<!-- header -->
+						<div class="card-header pb-0" style="z-index: 11;">
+							<h6>Grafik Penyetoran</h6>
+						</div>
+						<!-- spinner -->
+						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+						</div>
+						<div class="card-body p-3 mt-2">
+							<div class="chart">
+								<canvas id="chart-line" class="chart-canvas"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Transaksi -->
+				<div class="col-lg-4 mt-4 mt-lg-0">
+					<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
+						<!-- header -->
+						<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
+							<div class="row" style="font-family: 'qc-semibold';">
+								<div class="col-12">
+									<h6 class="mb-0">Rekap Transaksi</h6>
+									<select id="filter-year" class="filter-transaksi custom-select custom-select-sm w-100 mt-3" style="max-height: 31px;">
+										<?php $curYear = (int)date("Y"); ?>
+										<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
+											<option value="<?= $i; ?>"><?= $i; ?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+						</div>
+						<!-- spinner -->
+						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+						</div>
+						<div id="transaksi-wraper" class="card-body mt-2 pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mt-5">
 				<div class="col-12 mb-md-0 mb-4">
 					<div class="card">
 						<div class="card-header pb-0">
@@ -221,54 +268,7 @@
 				</div>
 			</div>
 
-			<div class="row my-4">
-				<!-- grafik -->
-				<div class="col-lg-8">
-					<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
-						<!-- header -->
-						<div class="card-header pb-0" style="z-index: 11;">
-							<h6>Grafik Penyetoran</h6>
-						</div>
-						<!-- spinner -->
-						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-						</div>
-						<div class="card-body p-3 mt-2">
-							<div class="chart">
-								<canvas id="chart-line" class="chart-canvas"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Transaksi -->
-				<div class="col-lg-4 mt-4 mt-lg-0">
-					<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
-						<!-- header -->
-						<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
-							<div class="row" style="font-family: 'qc-semibold';">
-								<div class="col-12">
-									<h6 class="mb-0">Rekap Transaksi</h6>
-									<select id="filter-year" class="filter-transaksi custom-select custom-select-sm w-100 mt-3" style="max-height: 31px;">
-										<?php $curYear = (int)date("Y"); ?>
-										<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
-											<option value="<?= $i; ?>"><?= $i; ?></option>
-										<?php } ?>
-									</select>
-								</div>
-							</div>
-						</div>
-						<!-- spinner -->
-						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-						</div>
-						<div id="transaksi-wraper" class="card-body mt-2 pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
+			<div class="row mt-5">
 				<div class="col-12">
 					<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
 						<!-- search input -->

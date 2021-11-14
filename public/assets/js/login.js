@@ -1,9 +1,9 @@
-/* 
--------------- 
-Login Nasabah 
---------------
-*/
+/**
+ * LOGIN NASABAH
+ * =============================================
+ */
 
+// form on submit
 $('#formLoginNasabah').on('submit', function(e) {
     e.preventDefault();
 
@@ -70,6 +70,7 @@ $('#formLoginNasabah').on('submit', function(e) {
     }
 })
 
+// validate login nasabah
 function doValidateNasabah(form) {
     let status     = true;
     let emailRules = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -99,9 +100,7 @@ function doValidateNasabah(form) {
     return status;
 }
 
-/* 
-Lupa password
-*/
+// btn forgot password on click
 $('#btn-forgotpass').on('click', function(e) {
     e.preventDefault();
 
@@ -112,7 +111,7 @@ $('#btn-forgotpass').on('click', function(e) {
             autocapitalize: 'off'
         },
         html:`<p class='mb-4'>masukan email yang terdaftar. kami akan mengirim password anda melalui email</p>`,
-        footer: '<a href="">hubungi admin</a>',
+        footer: '<a href="https://wa.me/6281287200602?text=Hallo%20Admin,%20saya%20ada%20kendala%20mengenai%20password">hubungi admin</a>',
         showCancelButton: true,
         confirmButtonText: 'submit',
         showLoaderOnConfirm: true,
@@ -151,12 +150,12 @@ $('#btn-forgotpass').on('click', function(e) {
     })
 })
 
-/* 
--------------- 
-Login Admin 
---------------
-*/
+/**
+ * LOGIN ADMIN
+ * =============================================
+ */
 
+// form on submit
 $('#formLoginAdmin').on('submit', function(e) {
     e.preventDefault();
 
@@ -215,6 +214,7 @@ $('#formLoginAdmin').on('submit', function(e) {
     }
 })
 
+// validate login admin
 function doValidateAdmin(form) {
     let status     = true;
 

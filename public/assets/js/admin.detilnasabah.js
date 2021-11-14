@@ -350,7 +350,6 @@ const getDataProfileNasabah = async () => {
     }
 };
 
-
 /**
  * TRANSAKSI SETOR SAMPAH
  * =============================================

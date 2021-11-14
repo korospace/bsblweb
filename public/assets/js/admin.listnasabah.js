@@ -31,6 +31,9 @@ const getAllNasabah = async () => {
                     <span class="font-weight-bold"> ${n.id} </span>
                 </td>
                 <td class="align-middle text-center">
+                    <span class="font-weight-bold text-capitalize"> ${n.email} </span>
+                </td>
+                <td class="align-middle text-center">
                     <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
                 </td>
                 <td class="align-middle text-center">
@@ -59,7 +62,7 @@ $('#search-nasabah').on('keyup', function() {
     } 
     else {
         nasabahFiltered = arrayNasabah.filter((n) => {
-            return n.nama_lengkap.includes($(this).val()) || n.id.includes($(this).val());
+            return n.nama_lengkap.includes($(this).val()) || n.id.includes($(this).val()) || n.region.toLowerCase().includes($(this).val());
         });
     }
 
@@ -78,6 +81,9 @@ $('#search-nasabah').on('keyup', function() {
                 </td>
                 <td class="align-middle text-center py-3">
                     <span class="font-weight-bold"> ${n.id} </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span class="font-weight-bold text-capitalize"> ${n.email} </span>
                 </td>
                 <td class="align-middle text-center">
                     <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>

@@ -5,12 +5,13 @@ if (pageTitle === 'tambah artikel' || pageTitle === 'edit artikel') {
     var quill = new Quill('#editor-container', {
         modules: {
             imageResize: {
-                displaySize: true
+                displaySize: true,
+                debug: false, // default
             },
             imageCompressor: {
-                quality: 0.8, // default
+                quality: 0.9, // default
                 imageType: 'image/jpeg', // default
-                debug: true, // default
+                debug: false, // default
             },
             formula: true,
             syntax: true,
@@ -228,7 +229,9 @@ const getDetailBerita = async () => {
  
         $('#table-kategori-berita tbody').html(trKategori);
     }
+
     $('#kategori-berita-wraper').html(elKategori);
+    editTemporaryContent();
  };
  getAllKatBerita();
 
@@ -280,9 +283,8 @@ $('#formCrudArticle').on('submit', async (e) => {
         }
         form.append('content',$('.ql-editor').html());
 
-        console.log(form.get('thumbnail'));
-    
         showLoadingSpinner();
+
         if (IDARTIKEL !== '') {
             if (fileThumbnail !== '') {
                 form.set('new_thumbnail', fileThumbnail, fileThumbnail.name);
@@ -293,9 +295,12 @@ $('#formCrudArticle').on('submit', async (e) => {
             form.set('thumbnail', fileThumbnail, fileThumbnail.name);
             httpResponse = await httpRequestPost(`${APIURL}/berita_acara/additem`,form);    
         }
+        
         hideLoadingSpinner();
 
         if (httpResponse.status === 201) {
+            localStorage.removeItem('artikel-content');
+
             setTimeout(() => {
                 Swal.fire({
                     icon : 'success',
@@ -317,6 +322,42 @@ $('#formCrudArticle').on('submit', async (e) => {
         }
     }
 })
+
+// auto save ql editor
+let dataTemporaryContent = JSON.parse(localStorage.getItem('add-artikel'));
+if (pageTitle === 'tambah artikel') {
+    $('#formCrudArticle #title').on('keyup', (e) => {
+        saveTemporaryContent();
+    })
+    $('#formCrudArticle #kategori-berita-wraper').on('change', (e) => {
+        saveTemporaryContent();
+    })
+    $('.ql-editor').on('keyup', (e) => {
+        saveTemporaryContent();
+    })
+}
+
+function saveTemporaryContent() {
+    let objContent = {
+        title: $('#formCrudArticle #title').val(),
+        kategori: $('#formCrudArticle #kategori-berita-wraper').val(),
+        content: $('.ql-editor').html(),
+    }
+
+    localStorage.setItem('add-artikel',JSON.stringify(objContent));
+}
+
+function editTemporaryContent() {
+    if (pageTitle === 'tambah artikel' && dataTemporaryContent) {
+        $('#formCrudArticle #title').val(dataTemporaryContent.title);
+        
+        if (dataTemporaryContent.kategori) {
+            $('#formCrudArticle #kategori-berita-wraper').val(dataTemporaryContent.kategori);
+        }
+
+        $('.ql-editor').html(dataTemporaryContent.content);
+    }
+}
 
 // validate add kategori berita
 function validateAddKategori() {
@@ -403,77 +444,45 @@ const changeThumbPreview = (el) => {
         el.value = "";
         return false;
     }
-    // If file size more than 200kb
-    // else if(el.files[0].size > 200000){
-    //     showAlert({
-    //         message: `<strong>Ukuran maximal 200kb!</strong>`,
-    //         btnclose: false,
-    //         type:'danger'
-    //     });setTimeout(() => {
-    //         hideAlert();
-    //     }, 3000);
-
-    //     el.value = "";
-    //     return false;
-    // }
     else{
-        const MAX_WIDTH  = 320;
-        const MAX_HEIGHT = 180;
+        const MAX_WIDTH  = 500;
+        const MAX_HEIGHT = 308;
         const MIME_TYPE  = "image/webp";
-        const QUALITY    = 0.8;
+        const QUALITY    = 0.9;
         const file       = el.files[0]; // get the file
         const blobURL    = URL.createObjectURL(file);
         const img        = new Image();
 
-        document.querySelector('#preview-thumbnail').src = '';
         $('#thumbnail-spinner').removeClass('d-none');
 
-        img.src = blobURL;
-        img.onerror = function () {
-            $('#thumbnail-spinner').addClass('d-none');
-            URL.revokeObjectURL(this.src);
-            showAlert({
-                message: `<strong>Ups terjadi kesalahan, coba sekali lagi!</strong>`,
-                btnclose: false,
-                type:'danger'
-            });setTimeout(() => {
-                hideAlert();
-            }, 3000);
-        };
-
+        img.src    = blobURL;
         img.onload = function () {
-            URL.revokeObjectURL(this.src);
-            const [newWidth, newHeight] = calculateSize(img, MAX_WIDTH, MAX_HEIGHT);
-            const canvas = document.createElement("canvas");
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, newWidth, newHeight);
-            canvas.toBlob(
-                (blob) => {
-                    // Handle the compressed image. es. upload or save in local state
-                },
-                MIME_TYPE,
-                QUALITY
-            );
-
-            fileThumbnail = dataURLtoFile(canvas.toDataURL(),'thumbnail.webp');
-            console.log(fileThumbnail.size);
-
-            if(fileThumbnail.size > 200000){
-                showAlert({
-                    message: `<strong>Ukuran file anda terlalu besar!</strong>`,
-                    btnclose: false,
-                    type:'danger'
-                });setTimeout(() => {
-                    hideAlert();
-                }, 3000);
+            if(el.files[0].size < 2000000){
+                fileThumbnail = el.files[0];
+                document.querySelector('#preview-thumbnail').src = blobURL;
+                // console.log(fileThumbnail,'kurang200');
+            }
+            else{
+                URL.revokeObjectURL(this.src);
+                const [newWidth, newHeight] = calculateSize(img, MAX_WIDTH, MAX_HEIGHT);
+                const canvas = document.createElement("canvas");
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                canvas.toBlob(
+                    (blob) => {
+                        // Handle the compressed image. es. upload or save in local state
+                    },
+                    MIME_TYPE,
+                    QUALITY
+                );
         
-                el.value = "";
-                return false;
+                document.querySelector('#preview-thumbnail').src = canvas.toDataURL();
+                fileThumbnail = dataURLtoFile(canvas.toDataURL(),'thumbnail.webp');
+                // console.log(fileThumbnail,'lebih200');
             }
 
-            document.querySelector('#preview-thumbnail').src = canvas.toDataURL();
             $('#thumbnail-spinner').addClass('d-none');
         }
 

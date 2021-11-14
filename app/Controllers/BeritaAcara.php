@@ -28,13 +28,8 @@ class BeritaAcara extends BaseController
         $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
-            $data = $this->request->getPost(); 
+            $data              = $this->request->getPost(); 
             $data['thumbnail'] = $this->request->getFile('thumbnail'); 
-            
-            // $file = $data['thumbnail'];
-            // $newFileName = $file->getRandomName();
-            // $dbFileName  = base_url().'/assets/img/thumbnail/'.$newFileName;
-            // var_dump($dbFileName);die;
 
             $this->validation->run($data,'addBeritaAcara');
             $errors = $this->validation->getErrors();
@@ -71,39 +66,59 @@ class BeritaAcara extends BaseController
                     return $this->respond($response,$lastBerita['code']);
     
                 }
+            
+                $file        = $data['thumbnail'];
+                // $newFileName = $file->getRandomName();
+                $newFileName = uniqid().'.jpeg';
+                $dbFileName  = base_url().'/assets/images/thumbnail-berita/'.$newFileName;
 
                 $data = [
                     "id"          => $idBerita,
                     "title"       => strtolower(trim($data['title'])),
-                    "thumbnail"   => $this->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
-                    // "thumbnail"  => $dbFileName,
+                    // "thumbnail"   => $this->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
+                    "thumbnail"   => $dbFileName,
                     "content"     => trim($data['content']),
                     "kategori"    => trim($data['kategori']),
                     "created_by"  => $result['message']['data']['id'],
                     "created_at"  => time(),
                 ];
 
-                $dbresponse = $this->beritaModel->addItem($data);
+                // var_dump($newFileName);die;
 
-                if ($dbresponse['success'] == true) {
-                    $response = [
-                        'status' => 201,
-                        'error' => false,
-                        'messages' => $dbresponse['message'],
-                    ];
+                if ($file->move('assets/images/thumbnail-berita/',$newFileName)) {
+                    $dbresponse = $this->beritaModel->addItem($data);
 
-                    // $file->move('assets/img/thumbnail/', $newFileName);
-                    return $this->respond($response,201);
+                    if ($dbresponse['success'] == true) {
+                        $response = [
+                            'status' => 201,
+                            'error' => false,
+                            'messages' => $dbresponse['message'],
+                        ];
+                        
+                        return $this->respond($response,201);
+                    } 
+                    else {
+                        $response = [
+                            'status'   => $dbresponse['code'],
+                            'error'    => true,
+                            'messages' => $dbresponse['message'],
+                        ];
+                
+                        unlink('./assets/images/thumbnail-berita/'.$newFileName);
+                        return $this->respond($response,$dbresponse['code']);
+                    }
                 } 
                 else {
                     $response = [
-                        'status'   => $dbresponse['code'],
-                        'error'    => true,
-                        'messages' => $dbresponse['message'],
+                        'status'   => 500,
+                        'error'    => false,
+                        'messages' => 'storage thumbnail berita penuh',
                     ];
-            
-                    return $this->respond($response,$dbresponse['code']);
+                    
+                    unlink('./assets/images/thumbnail-berita/'.$newFileName);
+                    return $this->respond($response,500);
                 }
+                
             }
         } 
         else {
@@ -245,16 +260,29 @@ class BeritaAcara extends BaseController
                         return $this->respond($response,400);
                     }  
 
-                    // $file          = $xx['new_thumbnail'];
-                    // $newFileName   = $file->getRandomName();
-                    // $dbFileName    = base_url().'/assets/img/thumbnail/'.$newFileName;
-                    // $old_thumbnail = $this->beritaModel->getOldThumbnail($data['id']);
-                    // $old_thumbnail = explode('/',$old_thumbnail);
-                    // $old_thumbnail = end($old_thumbnail);
-                    // $realPath      = $_SERVER["DOCUMENT_ROOT"].'/bsblapi/assets/img/thumbnail/';
+                    $file              = $xx['new_thumbnail'];
+                    $newFileName       = uniqid().'.jpeg';
+                    $dbFileName        = base_url().'/assets/images/thumbnail-berita/'.$newFileName;
+                    $old_thumbnail     = $this->beritaModel->getOldThumbnail($data['id']);
+                    $old_thumbnail     = explode('/',$old_thumbnail);
+                    $old_thumbnail     = end($old_thumbnail);
+                    $data['thumbnail'] = $dbFileName;
+                }
 
-                    $data['thumbnail'] = $this->base64Decode($_FILES['new_thumbnail']['tmp_name'],$_FILES['new_thumbnail']['type']);
-                    // $data['thumbnail'] = $dbFileName;
+                $unlinkOldThumb = false;
+                if (isset($xx['new_thumbnail'])) {
+                    if (rename($file->getRealPath(),'./assets/images/thumbnail-berita/'.$newFileName)) {
+                        $unlinkOldThumb = true;
+                    } 
+                    else {
+                        $response = [
+                            'status'   => 500,
+                            'error'    => false,
+                            'messages' => 'storage thumbnail berita penuh',
+                        ];
+                        
+                        return $this->respond($response,500);
+                    }
                 }
 
                 $dbresponse = $this->beritaModel->editItem($data);
@@ -266,11 +294,9 @@ class BeritaAcara extends BaseController
                         'messages' => $dbresponse['message'],
                     ];
 
-                    // if (isset($xx['new_thumbnail'])) {
-                    //     rename($file->getPathname(),$realPath.$newFileName);
-                    //     unlink($realPath.$old_thumbnail);
-                    // }
-
+                    if ($unlinkOldThumb) {
+                        unlink('./assets/images/thumbnail-berita/'.$old_thumbnail);
+                    }
                     return $this->respond($response,201);
                 } 
                 else {
@@ -280,6 +306,9 @@ class BeritaAcara extends BaseController
                         'messages' => $dbresponse['message'],
                     ];
             
+                    if ($unlinkOldThumb) {
+                        unlink('./assets/images/thumbnail-berita/'.$newFileName);
+                    }
                     return $this->respond($response,$dbresponse['code']);
                 }
             }
@@ -308,7 +337,7 @@ class BeritaAcara extends BaseController
         $this->checkPrivilege($result);
 
         if ($result['success'] == true) {
-            $this->validation->run($this->request->getGet(),'idForDeleteCheck');
+            $this->validation->run($this->request->getGet(),'idForDeleteBerita');
             $errors = $this->validation->getErrors();
 
             if($errors) {
@@ -321,15 +350,21 @@ class BeritaAcara extends BaseController
                 return $this->respond($response,400);
             } 
             else {
-                $dbresponse = $this->beritaModel->deleteItem($this->request->getGet('id'));
+                $old_thumbnail = $this->beritaModel->getOldThumbnail($this->request->getGet('id'));
+                $old_thumbnail = explode('/',$old_thumbnail);
+                $old_thumbnail = end($old_thumbnail);
+
+                $dbresponse    = $this->beritaModel->deleteItem($this->request->getGet('id'));
 
                 if ($dbresponse['success'] == true) {
                     $response = [
-                        'status' => 201,
-                        'error' => false,
+                        'status'   => 201,
+                        'error'    => false,
                         'messages' => $dbresponse['message'],
                     ];
 
+                    // delete local thumbnail
+                    unlink('./assets/images/thumbnail-berita/'.$old_thumbnail);
                     return $this->respond($response,201);
                 } 
                 else {

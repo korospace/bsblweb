@@ -4,11 +4,8 @@
 
 let arrayBerita = [];
 
-showLoadingSpinner();
 axios.get(`${APIURL}/berita_acara/getitem?kategori=${KATEGORI}`)
     .then(res => {
-        hideLoadingSpinner();
-
         let elBerita  = '';
         let allBerita = res.data.data;
         arrayBerita   = allBerita;
@@ -19,10 +16,10 @@ axios.get(`${APIURL}/berita_acara/getitem?kategori=${KATEGORI}`)
             let month     = date.toLocaleString("en-US",{month: "long"});
             let year      = date.toLocaleString("en-US",{year: "numeric"});
 
-            elBerita += `<div class="col-md-4 pt-5">
+            elBerita += `<div class="col-sm-6 col-lg-4 mb-5">
             <a href="${BASEURL}/artikel/${b.id}" class="card text-white card-has-bg click-col position-relative">
             
-                <img src="${b.thumbnail}" class="position-absolute" style="height:100%;">
+                <img src="${b.thumbnail}" class="position-absolute" style="height:100%;width:100%;">
 
                 <div class="card-img-overlay d-flex flex-column">
                     <div class="card-body">
@@ -46,11 +43,13 @@ axios.get(`${APIURL}/berita_acara/getitem?kategori=${KATEGORI}`)
         $('#container-article').html(elBerita);
     })
     .catch(err => {
-        hideLoadingSpinner();
         if (err.response.status == 404){
+            $('#container-article').addClass('d-none');
             $('#img-404').removeClass('d-none');
         }  
         else if (err.response.status == 500){
+            $('#container-article').addClass('d-none');
+            $('#img-404').removeClass('d-none');
             showAlert({
                 message: `<strong>Ups...</strong> terjadi kesalahan pada server, silahkan refresh halaman.`,
                 btnclose: true,

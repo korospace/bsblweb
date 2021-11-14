@@ -2,11 +2,73 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
+	<style>
+		.register-left img {
+			width: 100px;
+			-webkit-animation: mover 2s infinite alternate;
+			animation: mover 1s infinite alternate;
+		}
+
+		.btnRegister {
+			background: #537629;
+			color: #fff;
+		}
+
+		.btnRegister:hover {
+			background: #c1d966;
+			color: #537629;
+		}
+		
+		.register .nav-tabs .nav-link {
+			height: 34px;
+			font-weight: 600;
+			color: #fff;
+			border-top-right-radius: 1.5rem;
+			border-bottom-right-radius: 1.5rem;
+		}
+
+		.register .nav-tabs .nav-link:hover {
+			border: none;
+		}
+
+		.register .nav-tabs .nav-link.active {
+			width: 100px;
+			color: #537629;
+			border: 2px solid #537629;
+			border-top-left-radius: 1.5rem;
+			border-bottom-left-radius: 1.5rem;
+		}
+
+		@media (max-width:768px) {
+			.register-left div {
+				display: none;
+			}
+		} 
+
+		@-webkit-keyframes mover {
+			0% {
+				transform: translateY(0);
+			}
+
+			100% {
+				transform: translateY(-20px);
+			}
+		}
+
+		@keyframes mover {
+			0% {
+				transform: translateY(0);
+			}
+
+			100% {
+				transform: translateY(-20px);
+			}
+		}
+	</style>
   	<!-- ** develoment ** -->
 	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
 	<!-- ** production ** -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/login.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/login.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -14,7 +76,10 @@
 	<script>
 		const LASTURL = '<?= $lasturl; ?>';
 	</script>
-	<script src="<?= base_url('assets/js/login.js'); ?>"></script>
+  	<!-- ** develoment ** -->
+	<!-- <script src="<?= base_url('assets/js/login.js'); ?>"></script> -->
+	<!-- ** production ** -->
+	<script src="<?= base_url('assets/js/login.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Html -->
@@ -25,78 +90,103 @@
 	<!-- **** Alert Info **** -->
 	<?= $this->include('Components/alertInfo'); ?>
 
-	<div class="container-fluid register-wraper d-flex justify-content-center align-items-center p-0 p-md-5">
-		<div class="w-100 h-100 register py-4 px-4">
+	<div 
+	  class="register-wraper container-fluid d-flex justify-content-center align-items-center p-0 p-md-5"
+	  style="height: 100vh;">
+		<div 
+		  class="register w-100 h-100 py-4 px-4"
+		  style="background: -webkit-linear-gradient(left, #577b2b, #c1d966);">
 			<div class="row h-100">
+
 				<!-- side left -->
-				<div class="col-md-4 register-left d-flex flex-column justify-content-center align-items-center">
-					<img class="mt-0" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt="" />
+				<div class="register-left col-md-4 d-flex flex-column justify-content-center align-items-center text-white text-center">
+					<img 
+					  class="mt-0" 
+					  src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" 
+					  alt="logo banksampah budiluhur" />
 					<div class="mt-3">
 						<h3>Selamat Datang Kembali</h3>
 						<p>Silahkan Login Untuk Ketampilan Dashboard</p>
 					</div>
-					<p class=" mt-2 mt-md-4">Belum Memiliki Akun? <br> <a class="text-link" href="<?= base_url('signup');?>">Daftar</a> | <a class="text-link" href="<?= base_url('/');?>">Home</a></p>
+					<p class="mt-2 mt-md-4">
+						Belum Memiliki Akun? <br> 
+						<a style="color: #c1d966;" href="<?= base_url('signup');?>">Daftar</a> | 
+						<a style="color: #c1d966;" href="<?= base_url('/');?>">Home</a>
+					</p>
 				</div>
 
 				<!-- side right -->
-				<div class="col-md-8 register-right mt-md-0">
+				<div 
+				  class="register-right col-md-8 mt-md-0"
+				  style="background: #f8f9fa;border-top-left-radius: 10% 50%;border-bottom-left-radius: 10% 50%;">
 
 					<!-- form wraper -->
-					<div class="tab-content d-flex flex-column align-items-end pb-4" id="myTabContent">
+					<div 
+					  id="myTabContent" 
+					  class="tab-content d-flex flex-column align-items-end pb-4">
 						
 						<!-- toggle switch -->
-						<ul class="nav nav-tabs nav-justified mt-3" id="myTab" role="tablist">
+						<ul 
+						  id="myTab" role="tablist" 
+						  class="nav nav-tabs nav-justified border-0 mt-3"
+						  style="background: #537629;border-radius: 1.5rem;width: 100px;">
 							<li class="nav-item">
-								<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Nasabah</a>
+								<a id="nasabah-tab" class="nav-link active py-1" data-toggle="tab" href="#nasabah" role="tab" aria-controls="nasabah" aria-selected="true">Nasabah</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Admin</a>
+								<a id="admin-tab" class="nav-link py-1" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">Admin</a>
 							</li>
 						</ul>
 
 						<!-- Login nasabah -->
-						<div class="tab-pane fade show active pt-4 w-100" id="home" role="tabpanel" aria-labelledby="home-tab">
+						<div id="nasabah" class="tab-pane fade show active pt-4 w-100" role="tabpanel" aria-labelledby="nasabah-tab">
 							<h3 class="register-heading text-center" style="color: #495057;">
 								Masuk Sebagai Nasabah
 							</h3>
-							<form id="formLoginNasabah" class="row register-form pt-3 px-5">
+							<form id="formLoginNasabah" class="register-form row pt-3 px-5">
 								<div class="col-md-12">
 									<div class="form-group position-relative px-0 px-md-5">
-										<input type="text" name="email" id="nasabah-email" class="form-control" placeholder="Email" autocomplete="off" />
+										<input id="nasabah-email" type="text" name="email" class="form-control" placeholder="Email" autocomplete="off" />
 										<small id="nasabah-email-error" class="position-absolute text-danger"></small>
 									</div>
 									<div class="form-group position-relative px-0 px-md-5" style="margin-top: 30px;">
-										<input type="password" name="password" id="nasabah-password" class="form-control" placeholder="Password" autocomplete="off" />
+										<input id="nasabah-password" type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" />
 										<small id="nasabah-password-error" class="position-absolute text-danger"></small>
 									</div>
 								</div>
-								<div class="col d-flex justify-content-center align-items-center flex-column">
-									<button type="submit" class="btnRegister mt-4" value="Login">Login</button>
+								<div class="col d-flex flex-column justify-content-center align-items-center">
+									<button 
+									  class="btnRegister w-100 mt-4 py-3 border-0 border-radius-lg" 
+									  style="max-width: 374px;max-height: 54px;border-radius: 1.5rem;cursor: pointer;">
+									  	Login</button>
 									<a id="btn-forgotpass" class="mt-3 text-secondary" href="">lupa password?</a>
 								</div>
 							</form>
 						</div>
 
 						<!-- Admin login -->
-						<div class="tab-pane fade show pt-4 w-100" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+						<div id="admin" class="tab-pane fade show pt-4 w-100" role="tabpanel" aria-labelledby="admin-tab">
 							<h3 class="register-heading text-center" style="color: #495057;">
 								Masuk Sebagai Admin
 							</h3>
-							<form id="formLoginAdmin" class="row register-form pt-3 px-5">
+							<form id="formLoginAdmin" class="register-form row pt-3 px-5">
 								<div class="col-md-12">
 									<div class="form-group position-relative px-0 px-md-5">
-										<input type="text" id="admin-username" class="form-control" name="username" placeholder="Username" value="" 
+										<input id="admin-username" type="text" class="form-control" name="username" placeholder="Username" value="" 
 										autocomplete="off" />
 										<small id="admin-username-error" class="position-absolute text-danger"></small>
 									</div>
 									<div class="form-group position-relative px-0 px-md-5" style="margin-top: 30px;">
-										<input type="password" id="admin-password" class="form-control" name="password" placeholder="Password" value="" 
+										<input id="admin-password" type="password" class="form-control" name="password" placeholder="Password" value="" 
 										autocomplete="off" />
 										<small id="admin-password-error" class="position-absolute text-danger"></small>
 									</div>
 								</div>
-								<div class="col d-flex justify-content-center align-items-center flex-column">
-									<button type="submit" class="btnRegister mt-4" value="Login">Login</button>
+								<div class="col d-flex flex-column justify-content-center align-items-center">
+									<button
+									  class="btnRegister w-100 mt-4 py-3 border-0 border-radius-lg" 
+									  style="max-width: 374px;max-height: 54px;border-radius: 1.5rem;cursor: pointer;">
+									  	Login</button>
 									<span class="mt-3 text-secondary" style="opacity: 0;cursor: context-menu;" href="">lupa password?</span>
 								</div>
 							</form>

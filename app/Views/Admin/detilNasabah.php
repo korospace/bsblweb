@@ -568,7 +568,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<a id="btn-cetak-transaksi" href="" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+				<a id="btn-cetak-transaksi" href="" target="_blank" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
 					<span id="text">Cetak</span>
 					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
 				</a>

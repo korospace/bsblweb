@@ -3,6 +3,10 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
+		html,body{
+			height:100%;
+		}
+
 		#btn-toggle{
 			left: 0;
 			transition: all 0.3s;
@@ -50,7 +54,7 @@
 		<!-- **** Sidebar **** -->
 		<?= $this->include('Components/adminSidebar'); ?>
 
-		<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
+		<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg d-flex flex-column">
 			<!-- navbar -->
 			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
 				<div class="container-fluid py-1 px-3">
@@ -78,11 +82,12 @@
 					</div>
 				</div>
 			</nav>
+
 			<!-- End Navbar -->
-			<div class="container-fluid py-4">
-				<div class="row">
-					<div class="col-12">
-						<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
+			<div class="container-fluid py-4 d-flex flex-column" style="flex: 1;max-height: 90%;">
+				<div class="row" style="flex: 1;max-height: 96%;">
+					<div class="col-12 h-100" style="max-height: 100%;">
+						<div class="card mb-4 h-100 d-flex flex-column" style="max-height: 100%;overflow: hidden;font-family: 'qc-semibold';">
 							<!-- search input -->
 							<div class="card-header form-row pb-0 d-flex justify-content-between" style="font-family: 'qc-semibold';">
 								<div class="input-group col-12 col-sm-6">
@@ -91,49 +96,52 @@
 											<i class="fas fa-search text-muted"></i>
 										</span>
 									</div>
-									<input id="search-nasabah" type="text" class="form-control h-100 px-2" placeholder="nama lengkap/id nasabah" style="max-height: 39px;">
+									<input id="search-nasabah" type="text" class="form-control h-100 px-2" placeholder="id/nama/kodepos/wilayah" style="max-height: 39px;">
 								</div>
 								<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
 									<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('addnasabah')" style="width: 100%;">tambah</button>
 								</div>
 							</div>
 							<!-- container table -->
-							<div class="card-body px-0 pb-2">
-								<div class="table-responsive p-0 position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
-									<!-- spinner -->
-									<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-										<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-									</div>
-									<!-- message not found -->
-									<div id="list-nasabah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-										<h6 id="text-notfound" class='opacity-6'></h6>
-									</div>
-									<!-- table -->
-									<table id="table-nasabah" class="table table-striped text-center mb-0">
-										<thead class="position-sticky bg-white" style="top: 0;">
-											<tr>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													#
-												</th>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													ID Nasabah
-												</th>
-												<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													Nama lengkap
-												</th>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													Ter-verifikasi
-												</th>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													Action
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											
-										</tbody>
-									</table>
+							<div class="card-body px-0 pt-0 pb-2 position-relative" style="flex: 1;overflow: auto;font-family: 'qc-semibold';">
+								<!-- spinner -->
+								<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 								</div>
+								<!-- message not found -->
+								<div id="list-nasabah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+									<h6 id="text-notfound" class='opacity-6'></h6>
+								</div>
+								<!-- table -->
+								<table id="table-nasabah" class="table table-striped text-center mb-0">
+									<thead class="position-sticky bg-white" style="top: 0;">
+										<tr>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												#
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												ID Nasabah
+											</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Email
+											</th>
+											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Nama lengkap
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Ter-verifikasi
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Action
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php for ($i=0; $i < 20; $i++) { ?>
+											
+										<?php } ?>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>

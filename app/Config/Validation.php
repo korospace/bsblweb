@@ -597,16 +597,6 @@ class Validation
 		],
 	];
 
-    public $getOtherItem = [
-		'id' => [
-            'rules'  => 'required|is_not_unique[berita_acara.id]',
-            'errors' => [
-                'required'      => 'id is required',
-                'is_not_unique' => 'berita with id ({value}) is not found',
-            ],
-		]
-	];
-
 	public $addBeritaAcara = [
 		'title' => [
             'rules'  => 'required|max_length[250]|is_unique[berita_acara.title]',
@@ -617,10 +607,10 @@ class Validation
             ],
 		],
 		'thumbnail' => [
-            'rules'  => 'uploaded[thumbnail]|max_size[thumbnail,200]|mime_in[thumbnail,image/png,image/jpg,image/jpeg,image/webp]',
+            'rules'  => 'uploaded[thumbnail]|max_size[thumbnail,2000]|mime_in[thumbnail,image/png,image/jpg,image/jpeg,image/webp]',
             'errors' => [
                 'uploaded' => 'thumbnail is required',
-                'max_size' => 'max size is 200kb',
+                'max_size' => 'max size is 2mb',
                 // 'is_image' => 'your file is not image',
                 'mime_in'  => 'your file is not in format(png/jpg/webp)',
             ],
@@ -636,6 +626,27 @@ class Validation
             'errors' => [
                 'required'      => 'kategori is required',
                 'is_not_unique' => 'kategori with value ({value}) is not found',
+            ],
+		]
+	];
+
+	public $ifImgageUploadCheck = [
+        'new_thumbnail' => [
+            'rules'  => 'max_size[new_thumbnail,2000]|mime_in[new_thumbnail,image/png,image/jpg,image/jpeg,image/webp]',
+            'errors' => [
+                'max_size' => 'max size is 2mb',
+                // 'is_image' => 'your file is not image',
+                'mime_in'  => 'your file is not in format(png/jpg/webp)',
+            ],
+        ],
+	];
+
+    public $getOtherItem = [
+		'id' => [
+            'rules'  => 'required|is_not_unique[berita_acara.id]',
+            'errors' => [
+                'required'      => 'id is required',
+                'is_not_unique' => 'berita with id ({value}) is not found',
             ],
 		]
 	];
@@ -683,10 +694,9 @@ class Validation
             ],
 		],
 		'content' => [
-            'rules'  => 'required|max_length[9980]',
+            'rules'  => 'required',
             'errors' => [
                 'required'    => 'content is required',
-                'max_length'  => 'max 10.000 character',
             ],
 		],
 		'kategori' => [
@@ -740,15 +750,14 @@ class Validation
 		],
 	];
 
-	public $ifImgageUploadCheck = [
-        'new_thumbnail' => [
-            'rules'  => 'max_size[new_thumbnail,200]|mime_in[new_thumbnail,image/png,image/jpg,image/jpeg,image/webp]',
+    public $idForDeleteBerita = [
+		'id' => [
+            'rules'  => 'required|is_not_unique[berita_acara.id]',
             'errors' => [
-                'max_size' => 'max size is 200kb',
-                // 'is_image' => 'your file is not image',
-                'mime_in'  => 'your file is not in format(png/jpg/webp)',
+                'required'      => 'id is required',
+                'is_not_unique' => 'berita with id ({value}) is not found',
             ],
-        ],
+		],
 	];
 
 	public $transaksiDate = [

@@ -434,10 +434,11 @@ class TransaksiModel extends Model
                 WHERE date BETWEEN '$start' AND '$end'
                 ORDER BY date ASC;")->getResultArray();
 
-                $transaction['tss'] = $dataTss;
-                $transaction['tps'] = $dataTps;
-                $transaction['tts'] = $dataTts;
-                $transaction['tjs'] = $dataTjs;
+                $transaction['date'] = date('F, Y', $start);
+                $transaction['tss']  = $dataTss;
+                $transaction['tps']  = $dataTps;
+                $transaction['tts']  = $dataTts;
+                $transaction['tjs']  = $dataTjs;
             } 
             else {
                 $query  = "SELECT transaksi.id,transaksi.date,
@@ -560,8 +561,8 @@ class TransaksiModel extends Model
             }
 
             $newData[$key] = [
-                'month'          => $date1,
-                'date'           => $date2,
+                'date1'          => $date1,
+                'date2'          => $date2,
                 'totSampahMasuk' => $totSampahMasuk,
                 'totSampahKeluar'=> 0,
                 'totUangMasuk'   => $totUangMasuk,

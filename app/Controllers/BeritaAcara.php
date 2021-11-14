@@ -69,7 +69,7 @@ class BeritaAcara extends BaseController
             
                 $file        = $data['thumbnail'];
                 // $newFileName = $file->getRandomName();
-                $newFileName = str_replace(' ', '-',strtolower(trim($data['title']))).'-'.uniqid().'.jpeg';
+                $newFileName = uniqid().'.jpeg';
                 $dbFileName  = base_url().'/assets/images/thumbnail-berita/'.$newFileName;
 
                 $data = [
@@ -261,7 +261,7 @@ class BeritaAcara extends BaseController
                     }  
 
                     $file              = $xx['new_thumbnail'];
-                    $newFileName       = str_replace(' ', '-',$data['title']).'-'.uniqid().'.jpeg';
+                    $newFileName       = uniqid().'.jpeg';
                     $dbFileName        = base_url().'/assets/images/thumbnail-berita/'.$newFileName;
                     $old_thumbnail     = $this->beritaModel->getOldThumbnail($data['id']);
                     $old_thumbnail     = explode('/',$old_thumbnail);

@@ -35,12 +35,13 @@
 	</style>
 
   	<!-- ** develoment ** -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
 	<!-- ** production ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/nasabah.dashboard.css'); ?>"> -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/nasabah.dashboard.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/softui/nasabah.dashboard.css'); ?>"> -->
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -59,6 +60,7 @@
 	<?= $this->include('Components/loadingSpinner'); ?>
 	<!-- **** Alert Info **** -->
 	<?= $this->include('Components/alertInfo'); ?>
+
 
 	<body class="g-sidenav-show bg-gray-100" style="overflow: hidden;">
 		<!-- **** Sidebar **** -->

@@ -93,7 +93,7 @@
 					<div class="gx-4" style="width: max-content;">
 						<div class="text-center">
 							<div class="avatar avatar-xl position-relative">
-								<img src="<?= base_url('assets/images/bruce-mars.jpg');?>" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+								<img src="<?= base_url('assets/images/default-profile.webp');?>" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
 							</div>
 							<p class="mt-2 mb-0 font-weight-bold text-sm" style="font-family: 'qc-medium';">
 								id: <span id="idadmin">_ _ _ _</span>

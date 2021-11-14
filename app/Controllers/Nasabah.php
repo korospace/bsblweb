@@ -97,7 +97,9 @@ class Nasabah extends BaseController
         if ($dbresponse['data']['type'] == 'tarik') {
             $jumlah = ($dbresponse['data']['jenis_saldo'] == 'uang')? 'Rp '.number_format($dbresponse['data']['jumlah'] , 0, ',', '.') : $dbresponse['data']['jumlah'].' gram';
             $result = "<div style='padding: 20px;width: 100%;background-color: rgb(131, 146, 171);border-radius: 6px;'>
-                <h1 style='font-size: 2.5em;'><b>Jumlah</b> : ${jumlah}</h1>
+                <h1 style='font-size: 2.5em;font-family: sans;'>
+                    <b>Jumlah</b> : ${jumlah}
+                </h1>
             </div>";
         } 
         else if ($dbresponse['data']['type'] == 'pindah') {
@@ -107,32 +109,42 @@ class Nasabah extends BaseController
             $result = "<div style='padding: 20px;width: 100%;background-color: rgb(131, 146, 171);border-radius: 6px;'>
                 <table>
                     <tr>
-                        <td style='font-size: 2em;'>Saldo asal&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 2em;'>
+                        <td style='font-size: 2em;font-family: sans;'>
+                            Saldo asal&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td style='font-size: 2em;font-family: sans;'>
                             : ".$dbresponse['data']['asal']."
                         </td>
                     </tr>
                     <tr>
-                        <td style='font-size: 2em;'>Saldo tujuan&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 2em;text-transform: uppercase;'>
+                        <td style='font-size: 2em;font-family: sans;'>
+                            Saldo tujuan&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td style='font-size: 2em;font-family: sans;text-transform: uppercase;'>
                             : ".  $dbresponse['data']['tujuan']."
                         </td>
                     </tr>
                     <tr>
-                        <td style='font-size: 2em;'>Jumlah&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 2em;'>
+                        <td style='font-size: 2em;font-family: sans;'>
+                            Jumlah&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td style='font-size: 2em;font-family: sans;'>
                             : ".$jumlah."
                         </td>
                     </tr>
                     <tr>
-                        <td style='font-size: 2em;'>Harga emas&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 2em;'>
+                        <td style='font-size: 2em;font-family: sans;'>
+                            Harga emas&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td style='font-size: 2em;font-family: sans;'>
                             : Rp ".number_format($dbresponse['data']['harga_emas'] , 0, ',', '.')."
                         </td>
                     </tr>
                     <tr>
-                        <td style='font-size: 2em;'>Hasil konversi&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 2em;'>
+                        <td style='font-size: 2em;font-family: sans;'>
+                            Hasil konversi&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td style='font-size: 2em;font-family: sans;'>
                             : ".$hasilKonversi."
                         </td>
                     </tr>
@@ -148,20 +160,36 @@ class Nasabah extends BaseController
                 $bg     = ($no % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
 
                 $trBody .= "<tr $bg>
-                    <th>".$no++."</th>
-                    <th>".$key['jenis_sampah']."</th>
-                    <th>".$key['jumlah']."</th>
-                    <th>Rp ".number_format($key['harga'] , 0, ',', '.')."</th>
+                    <td style='font-family: sans;text-align: center;'>
+                        ".$no++."
+                    </td>
+                    <td style='font-family: sans;text-align: center;'>
+                        ".$key['jenis_sampah']."
+                    </td>
+                    <td style='font-family: sans;text-align: center;'>
+                        ".$key['jumlah']."
+                    </td>
+                    <td style='font-family: sans;text-align: center;'>
+                        Rp ".number_format($key['harga'] , 0, ',', '.')."
+                    </td>
                 </tr>";
             }
             
             $result = "<table border='0' width='100%' cellpadding='5'>
                 <thead>
                     <tr>
-                        <th style='border: 1px solid black;'>#</th>
-                        <th style='border: 1px solid black;'>Jenis sampah</th>
-                        <th style='border: 1px solid black;'>Kg</th>
-                        <th style='border: 1px solid black;'>Harga</th>
+                        <th style='border: 1px solid black;font-family: sans;'>
+                            #
+                        </th>
+                        <th style='border: 1px solid black;font-family: sans;'>
+                            Jenis sampah
+                        </th>
+                        <th style='border: 1px solid black;font-family: sans;'>
+                            Kg
+                        </th>
+                        <th style='border: 1px solid black;font-family: sans;'>
+                            Harga
+                        </th>
                     </tr>
                 <thead>
                 <tbody>
@@ -186,37 +214,51 @@ class Nasabah extends BaseController
                         <th style='text-align: left;'>
                             <img src='".base_url()."/assets/images/banksampah-logo.png' style='width: 100px;'>
                         </th>
-                        <th style='text-align: right;font-size: 2em;font-family: 'sans';'>
+                        <th style='text-align: right;font-size: 2em;'>
                             BUKTI TRANSAKSI
                         </th>
                     </tr>';
                 </table>
             </div>
 
-            <div style='padding-top: 30px;font-family: 'sans';'>
+            <div style='padding-top: 30px;'>
                 <table>
                     <tr>
-                        <td style='font-size: 1.4em;'>TANGGAL&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 1.4em;'>
-                            : ".date("d/m/y H:i:s",$dbresponse['data']['date'])."
+                        <td style='font-size: 1.4em;font-family: sans;'>
+                            TANGGAL&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td style='font-size: 1.4em;font-family: sans;'>
+                            : ".date("d/m/Y",$dbresponse['data']['date'])."
                         </td>
                     </tr>
                     <tr>
-                        <td style='font-size: 1.4em;'>NAMA&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 1.4em;text-transform: uppercase;'>: ".$dbresponse['data']['nama_lengkap']."</td>
+                        <td style='font-size: 1.4em;font-family: sans;'>
+                            NAMA&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td style='font-size: 1.4em;font-family: sans;text-transform: uppercase;'>
+                            : ".$dbresponse['data']['nama_lengkap']."
+                        </td>
                     </tr>
                     <tr>
-                        <td style='font-size: 1.4em;'>ID.NASABAH&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 1.4em;'>: ".$dbresponse['data']['id_nasabah']."</td>
+                        <td style='font-size: 1.4em;font-family: sans;'>
+                            ID.NASABAH&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td style='font-size: 1.4em;font-family: sans;'>
+                            : ".$dbresponse['data']['id_nasabah']."
+                        </td>
                     </tr>
                     <tr>
-                        <td style='font-size: 1.4em;'>ID.TRANSAKSI&nbsp;&nbsp;&nbsp;</td>
-                        <td style='font-size: 1.4em;'>: ".$dbresponse['data']['id_transaksi']."</td>
+                        <td style='font-size: 1.4em;font-family: sans;'>
+                            ID.TRANSAKSI&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td style='font-size: 1.4em;font-family: sans;'>
+                            : ".$dbresponse['data']['id_transaksi']."
+                        </td>
                     </tr>
                 </table>
             </div>
 
-            <h1 style='font-style: italic;margin-top: 40px;margin-bottom: 20px;font-family: 'sans';'>
+            <h1 style='font-style: italic;margin-top: 40px;margin-bottom: 20px;font-family: sans;'>
                 ".$type."
             </h1>
 
@@ -285,6 +327,7 @@ class Nasabah extends BaseController
                 "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
                 "notelp"       => trim($data['notelp']),
                 "alamat"       => trim($data['alamat']),
+                "region"       => trim($data['region']),
                 "tgl_lahir"    => trim($data['tgl_lahir']),
                 "kelamin"      => $data['kelamin'],
                 "otp"          => $otp,

@@ -285,6 +285,7 @@ const sessioncheck = async () => {
         }
         if (pageTitle === 'list artikel') {
             getAllBerita();
+            localStorage.removeItem("add-artikel"); 
         }
         if (pageTitle === 'edit artikel') {
             setTimeout(() => {

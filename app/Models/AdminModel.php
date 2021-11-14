@@ -223,7 +223,7 @@ class AdminModel extends Model
                 $nasabah = $this->db->table('nasabah')->select("nasabah.id,nasabah.email,nasabah.username,nasabah.nama_lengkap,nasabah.alamat,nasabah.notelp,nasabah.tgl_lahir,nasabah.kelamin,dompet.uang AS saldo_uang,dompet.galery24 AS saldo_galery24,dompet.ubs AS saldo_ubs,dompet.antam AS saldo_antam,nasabah.is_verify,nasabah.created_at")->join('dompet', 'dompet.id_nasabah = nasabah.id')->where("nasabah.id",$get['id'])->get()->getFirstRow();
             } 
             else {
-                $nasabah = $this->db->table('nasabah')->select("nasabah.id,nasabah.nama_lengkap,nasabah.is_verify,nasabah.created_at")->orderBy('created_at','DESC')->get()->getResultArray();
+                $nasabah = $this->db->table('nasabah')->select("nasabah.id,nasabah.nama_lengkap,nasabah.email,nasabah.region,nasabah.is_verify,nasabah.created_at")->orderBy('created_at','DESC')->get()->getResultArray();
             }
             
             if (empty($nasabah)) {    
@@ -375,7 +375,7 @@ class AdminModel extends Model
     {
         try {
             $timeNow   = time();
-            $batasTime = (int)$timeNow - (86400*1);
+            $batasTime = (int)$timeNow - (86400*30);
             // var_dump($batasTime );
             // var_dump(date("H:i:s jS F, Y", 1636423564));die;
 

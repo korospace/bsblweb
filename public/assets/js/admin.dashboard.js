@@ -42,20 +42,20 @@ const getLastTransaksi = async () => {
             let month     = date.toLocaleString("en-US",{month: "long"});
             let year      = date.toLocaleString("en-US",{year: "numeric"});
             let jenisTransaksi = (t.type == 'setor')?`${t.type} sampah`:`${t.type} saldo`;
-            let textColor      = '';
+            let color          = '';
             let jumlah         = '';
 
             if (t.type == 'setor') {
-                textColor = 'text-success';
-                jumlah    = `+${t.total_kg} kg`;
+                color  = 'success';
+                jumlah = `+ ${t.total_kg} kg`;
             } 
             else if (t.type == 'tarik') {
-                textColor = 'text-danger';
-                jumlah    = (t.jenis_saldo == 'uang')?`-Rp ${t.total_tarik}`:`-${t.total_tarik} g`;
+                color  = 'danger';
+                jumlah = (t.jenis_saldo == 'uang')?`- Rp ${t.total_tarik}`:`- ${t.total_tarik} g`;
             } 
             else {
-                textColor = 'text-warning';
-                jumlah    = `Rp ${t.total_pindah}`;
+                color  = 'warning';
+                jumlah = `<i class="fas fa-exchange-alt text-xxs"></i> Rp ${t.total_pindah}`;
             }
 
             trTransaksi += `<tr>
@@ -70,12 +70,12 @@ const getLastTransaksi = async () => {
                     </span>
                 </td>
                 <td class="align-middle text-sm">
-                    <span class="text-xs text-name font-weight-bold ${textColor}">
+                    <span class="text-xxs text-name font-weight-bold badge border text-${color} border-${color} pb-1 rounded-sm" style="min-width:100px;max-width:100px;"> 
                         ${jenisTransaksi}
                     </span>
                 </td>
                 <td class="align-middle text-sm">
-                    <span class="text-xs text-name font-weight-bold ${textColor}"> 
+                    <span class="text-xs text-name font-weight-bold text-${color}"> 
                         ${jumlah}
                     </span>
                 </td>

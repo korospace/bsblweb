@@ -47,6 +47,12 @@ class Nasabah extends Migration
                 'constraint' => 255,
                 'null' => false,
             ],
+            'region' => [
+                'type' => 'character varying',
+                'constraint' => 255,
+                'null' => false,
+                'default' => 'indonesia',
+            ],
             'tgl_lahir' => [
                 'type' => 'character varying',
                 'constraint' => 10,

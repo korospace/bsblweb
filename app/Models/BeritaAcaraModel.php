@@ -178,10 +178,10 @@ class BeritaAcaraModel extends Model
 
     public function getOldThumbnail(string $id): string
     {
-        $oldThumbnail = $this->db->table($this->table)->select('thumbnail')->where('id',$id)->get()->getResultArray();
+        $oldThumbnail = $this->db->table($this->table)->select('thumbnail')->where('id',$id)->get()->getResultArray()[0]['thumbnail'];
         
         if (!empty($oldThumbnail)) {    
-            return $oldThumbnail[0]['thumbnail'];
+            return $oldThumbnail;
         } 
     }
 

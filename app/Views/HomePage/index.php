@@ -10,9 +10,9 @@
   }
 </style>
 <!-- ** develoment ** -->
-<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 <!-- ** production ** -->
-<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>">
+<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>"> -->
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/homepage.min.css'); ?>">
@@ -269,7 +269,6 @@
   <footer id="contact-us">
     <div class="container">
       <div class="footer-content">
-        <h1 class="text-center">Hubungi Kami</h1>
         <div class="row">
           <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="contact-form">
@@ -316,7 +315,7 @@
   <footer class="">
     <div class="pt-5" style="background-image: url(assets/images/footer-bg.webp);background-repeat: no-repeat;background-size: cover;">
     <!-- <div class="widget_wrapper bg-danger" style=""> -->
-      <div class="container-fluid pt-5 pt-lg-0">
+      <div class="container-fluid px-5 pt-5 pt-lg-0">
         <div class="row mt-5 pb-5 px-4">
 
           <div class="col-12 col-md-2 mt-5 mt-md-0">
@@ -353,7 +352,7 @@
                     <i class="fas fa-envelope" style="color:#C1D966;"></i>
                   </div>
                   <div class="info d-flex flex-column">
-                    <a class="text-white" href="bankasampahbudiluhur@gmail.com">
+                    <a class="text-white" href="mailto:bankasampahbudiluhur@gmail.com">
                       bankasampahbudiluhur@gmail.com
                     </a>
                     <a class="text-white" href="mailto:bsblservice@gmail.com">
@@ -376,11 +375,14 @@
           <div class="col-12 col-md-5 mt-5 mt-md-0">
             <div class="widget widegt_about">
               <h4 class="text-white" style="font-weight: bold;">Social media</h4>
-              <p class="mt-4 text-white">Quisque orci nisl, viverra et sem ac, tincidunt egestas massa. Morbi est arcu, hendrerit ac vehicula condimentum, euismod nec tortor praesent consequat urna.</p>
+              <p class="mt-4 text-white">
+                "Kebersihan menjadi awal dari penilaian baik buruknya seseorang. Kepribadian yang baik
+                akan menjaga kebersihan dirinya, lingkungannya, dan sekitarnya."
+              </p>
               <ul class="social" style="text-align: left;">
                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                 <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="https://www.instagram.com/banksampah.ubl/"><i class="fab fa-instagram"></i></a></li>
               </ul>
             </div>
           </div>

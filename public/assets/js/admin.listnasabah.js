@@ -131,6 +131,64 @@ const openModalAddEditNsb = (modalName,idnasabah=null) => {
 }
 
 /**
+ * KODEPOS
+ * =============================================
+ */
+
+// search kodepos
+const searchKodepos = async (el) => {
+ 
+    $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+       <img src="${BASEURL}/assets/images/spinner.svg" style="width: 20px;" />
+    </div>`); 
+
+    axios
+    .get(`https://kodepos.vercel.app/search/?q=${el.value}`,{
+        headers: {
+        }
+    })
+    .then((response) => {
+
+        // console.log(response.data.status);
+        if (response.data.code === 200) {
+            if (response.data.messages === 'No data can be returned.') {
+                $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+                    <h6 tyle="opacity: 0.6;">kodepos tidak ditemukan</h6>
+                </div>`);    
+            } 
+            else {
+                let elPostList = '';
+
+                response.data.data.forEach(x => {
+                    let makeStringRegion = `${x.urban},${x.subdistrict},${x.city},${x.province}`;
+
+                    elPostList += `
+                    <div class="w-100">
+                        <div class="kodepos-list w-100 d-flex align-items-center px-3 py-3" style="cursor: pointer;font-size:16px;" onclick="changeKodeposVal(this,'${x.postalcode}','${makeStringRegion}');">
+                            <span class="w-100" style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+                                ${x.postalcode} - ${x.urban}, ${x.subdistrict}, ${x.city}, ${x.province}
+                            </span>
+                        </div>
+                    </div>`;
+                });
+        
+                $('#kodepos-wraper').html(elPostList);
+                if (el.value == '') {
+                    $('#kodepos-wraper').html(``); 
+                }
+            } 
+        }
+    })
+ };
+
+ const changeKodeposVal = (el,kodepos,stringRegion) => {
+     $('.kodepos-list').removeClass('active');
+     $('input[name=kodepos]').val(kodepos);
+     $('input[name=region]').val(stringRegion);
+     el.classList.add('active');
+ };
+
+/**
  * CRUD NASABAH
  */
 const crudNasabah = async (el,event) => {
@@ -151,6 +209,8 @@ const crudNasabah = async (el,event) => {
             httpResponse = await httpRequestPut(`${APIURL}/admin/editnasabah`,form);    
         } 
         else {
+            form.set('kodepos',$('input[name=kodepos]').val());
+
             httpResponse = await httpRequestPost(`${APIURL}/admin/addnasabah`,form);    
         }
         $('#formAddEditNasabah button#submit #text').removeClass('d-none');
@@ -439,89 +499,91 @@ const doValidate = (form) => {
             status = false;
         }
     }
-
-    // new pass 
-    if ($('#modalAddEditNasabah #newpass').val() !== '') {   
-        if ($('#modalAddEditNasabah #newpass').val().length < 8 || $('#modalAddEditNasabah #newpass').val().length > 20) {
-            $('#modalAddEditNasabah #newpass').addClass('is-invalid');
-            $('#modalAddEditNasabah #newpass-error').html('*minimal 8 huruf dan maksimal 20 huruf');
+    else{
+        // new pass 
+        if ($('#modalAddEditNasabah #newpass').val() !== '') {   
+            if ($('#modalAddEditNasabah #newpass').val().length < 8 || $('#modalAddEditNasabah #newpass').val().length > 20) {
+                $('#modalAddEditNasabah #newpass').addClass('is-invalid');
+                $('#modalAddEditNasabah #newpass-error').html('*minimal 8 huruf dan maksimal 20 huruf');
+                status = false;
+            }
+            else if (/\s/.test($('#modalAddEditNasabah #newpass').val())) {
+                $('#modalAddEditNasabah #newpass').addClass('is-invalid');
+                $('#modalAddEditNasabah #newpass-error').html('*tidak boleh ada spasi');
+                status = false;
+            }
+        }
+    
+        // saldo uang validation
+        if ($('#formAddEditNasabah #saldo_uang').val() == '') {
+            $('#formAddEditNasabah #saldo_uang').addClass('is-invalid');
             status = false;
         }
-        else if (/\s/.test($('#modalAddEditNasabah #newpass').val())) {
-            $('#modalAddEditNasabah #newpass').addClass('is-invalid');
-            $('#modalAddEditNasabah #newpass-error').html('*tidak boleh ada spasi');
+        else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_uang').val())) {
+            $('#formAddEditNasabah #saldo_uang').addClass('is-invalid');
+            showAlert({
+                message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
+                btnclose: false,
+                type:'danger'
+            })
+            setTimeout(() => {
+                hideAlert();
+            }, 3000);
+            status = false;
+        }
+        // saldo antam validation
+        if ($('#formAddEditNasabah #saldo_antam').val() == '') {
+            $('#formAddEditNasabah #saldo_antam').addClass('is-invalid');
+            status = false;
+        }
+        else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_antam').val())) {
+            $('#formAddEditNasabah #saldo_antam').addClass('is-invalid');
+            showAlert({
+                message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
+                btnclose: false,
+                type:'danger'
+            })
+            setTimeout(() => {
+                hideAlert();
+            }, 3000);
+            status = false;
+        }
+        // saldo ubs validation
+        if ($('#formAddEditNasabah #saldo_ubs').val() == '') {
+            $('#formAddEditNasabah #saldo_ubs').addClass('is-invalid');
+            status = false;
+        }
+        else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_ubs').val())) {
+            $('#formAddEditNasabah #saldo_ubs').addClass('is-invalid');
+            showAlert({
+                message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
+                btnclose: false,
+                type:'danger'
+            })
+            setTimeout(() => {
+                hideAlert();
+            }, 3000);
+            status = false;
+        }
+        // saldo g24 validation
+        if ($('#formAddEditNasabah #saldo_galery24').val() == '') {
+            $('#formAddEditNasabah #saldo_galery24').addClass('is-invalid');
+            status = false;
+        }
+        else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_galery24').val())) {
+            $('#formAddEditNasabah #saldo_galery24').addClass('is-invalid');
+            showAlert({
+                message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
+                btnclose: false,
+                type:'danger'
+            })
+            setTimeout(() => {
+                hideAlert();
+            }, 3000);
             status = false;
         }
     }
 
-    // saldo uang validation
-    if ($('#formAddEditNasabah #saldo_uang').val() == '') {
-        $('#formAddEditNasabah #saldo_uang').addClass('is-invalid');
-        status = false;
-    }
-    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_uang').val())) {
-        $('#formAddEditNasabah #saldo_uang').addClass('is-invalid');
-        showAlert({
-            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
-            btnclose: false,
-            type:'danger'
-        })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
-        status = false;
-    }
-    // saldo antam validation
-    if ($('#formAddEditNasabah #saldo_antam').val() == '') {
-        $('#formAddEditNasabah #saldo_antam').addClass('is-invalid');
-        status = false;
-    }
-    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_antam').val())) {
-        $('#formAddEditNasabah #saldo_antam').addClass('is-invalid');
-        showAlert({
-            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
-            btnclose: false,
-            type:'danger'
-        })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
-        status = false;
-    }
-    // saldo ubs validation
-    if ($('#formAddEditNasabah #saldo_ubs').val() == '') {
-        $('#formAddEditNasabah #saldo_ubs').addClass('is-invalid');
-        status = false;
-    }
-    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_ubs').val())) {
-        $('#formAddEditNasabah #saldo_ubs').addClass('is-invalid');
-        showAlert({
-            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
-            btnclose: false,
-            type:'danger'
-        })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
-        status = false;
-    }
-    // saldo g24 validation
-    if ($('#formAddEditNasabah #saldo_galery24').val() == '') {
-        $('#formAddEditNasabah #saldo_galery24').addClass('is-invalid');
-        status = false;
-    }
-    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_galery24').val())) {
-        $('#formAddEditNasabah #saldo_galery24').addClass('is-invalid');
-        showAlert({
-            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
-            btnclose: false,
-            type:'danger'
-        })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
-        status = false;
-    }
 
     // tgl lahir validation
     if ($('#formAddEditNasabah #tgllahir').val() == '') {

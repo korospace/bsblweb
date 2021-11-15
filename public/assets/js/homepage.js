@@ -311,7 +311,7 @@
 			.then((response) => {
 				hideLoadingSpinner();
 				$('#contact-name').val('');
-				$('#contact-emai').val('');
+				$('#contact-email').val('');
 				$('#contact-message').val('')
 
 				setTimeout(() => {

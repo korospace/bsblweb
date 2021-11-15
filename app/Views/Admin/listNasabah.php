@@ -18,6 +18,20 @@
 			right: 0 !important; */
 			transform: translateX(25px);
 		}
+
+		#search-kodepos::placeholder {
+			color: #ccc;
+			font-weight: lighter;
+			font-size: 14px;
+		}
+
+		.kodepos-list:hover{
+			/* background-color: #E9ECEF !important; */
+		}
+
+		.kodepos-list.active{
+			background-color: #E9ECEF !important;
+		}
 	</style>
   	<!-- ** develoment ** -->
 	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
@@ -258,6 +272,20 @@
 							id="tgllahir-error"
 							class="text-danger"></small>
 					</div>
+					<!-- **** no telp **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fa fa-phone-square text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="notelp" name="notelp" autocomplete="off" placeholder="Masukan no.telp">
+						</div>
+						<small
+							id="notelp-error"
+							class="text-danger"></small>
+					</div>
 					<!-- kelamin -->
 					<input type="hidden" name="kelamin">
 					<div class="input-group col-lg-6 mb-2 form-group">
@@ -277,7 +305,7 @@
 						</div>
 					</div>
 					<!-- **** alamat **** -->
-					<div class="input-group col-lg-12 mb-4 form-group">
+					<div class="input-group col-12 mb-4">
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
@@ -299,7 +327,7 @@
 										<i class="fas fa-home text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control" id="rt" name="rt" autocomplete="off" placeholder="RT">
+								<input type="text" class="form-control px-2" id="rt" name="rt" autocomplete="off" placeholder="RT">
 							</div>
 							<small
 								id="rt-error"
@@ -312,39 +340,45 @@
 										<i class="fas fa-home text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control" id="rw" name="rw" autocomplete="off" placeholder="RW">
+								<input type="text" class="form-control px-2" id="rw" name="rw" autocomplete="off" placeholder="RW">
 							</div>
 							<small
 								id="rw-error"
 								class="text-danger"></small>
 						</div>
-						<div class="col-12 mt-4">
+						<!-- **** kode pos **** -->
+						<div class="input-group col-12 mt-4">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text bg-gray px-4 border-md border-right-0">
 										<i class="fas fa-mail-bulk text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control" id="kodepos" name="kodepos" autocomplete="off" placeholder="KODE POS">
+								<input type="text" class="form-control px-2" id="kodepos" name="kodepos" autocomplete="off" placeholder="KODE POS (pilih dibawah)" disabled>
 							</div>
 							<small
 								id="kodepos-error"
 								class="text-danger"></small>
 						</div>
-					</div>
-					<!-- **** no telp **** -->
-					<div class="input-group col-lg-12 mb-4 form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-									<i class="fa fa-phone-square text-muted"></i>
-								</span>
+						<!-- LIST kodepos -->
+						<input type="hidden" name="region">
+						<div class="input-group col-lg-12 mt-4 form-group">
+							<div class="container-fluid border-radius-sm p-2" style="border: 0.5px solid #D2D6DA;">
+								<!-- header -->
+								<div class="add-item container-fluid input-group mb-2 d-flex p-0">
+									<div class="input-group-prepend">
+										<span class="input-group-text d-flex justify-content-center p-0 bg-gray border-md border-right-0" style="width: 52px;max-height: 39px;">
+										<i class="fas fa-search text-muted"></i>
+										</span>
+									</div>
+								<input id="search-kodepos" type="text" class="form-control px-2 text-xxs border-radius-sm" placeholder="ketik provinsi/kota/kecamatan/kelurahan" style="max-height: 30px;border: 0.5px solid #D2D6DA;" autocomplete="off" onkeyup="searchKodepos(this);">
+								</div>
+								<!-- body -->
+								<div id="kodepos-wraper" class="container-fluid border-radius-sm p-0 position-relative" style="min-height: 150px;max-height: 150px;overflow: auto;border: 0.5px solid #D2D6DA;">
+								
+								</div>
 							</div>
-							<input type="text" class="form-control px-2" id="notelp" name="notelp" autocomplete="off" placeholder="Masukan no.telp">
 						</div>
-						<small
-							id="notelp-error"
-							class="text-danger"></small>
 					</div>
 					<!-- **** is verify **** -->
 					<div class="editnasabah-item mb-3">

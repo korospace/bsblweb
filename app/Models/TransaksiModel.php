@@ -66,6 +66,7 @@ class TransaksiModel extends Model
             ];
         }
     }
+
     public function jualSampah(array $data): array
     {
         try {
@@ -445,6 +446,7 @@ class TransaksiModel extends Model
                 (SELECT SUM(jumlah) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
                 (SELECT SUM(harga) AS uang_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
                 (SELECT SUM(jumlah) AS uang_keluar from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id AND jenis = 'uang'),
+                (SELECT SUM(hasil_konversi) AS emas_masuk from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id),
                 (SELECT SUM(jumlah) AS emas_keluar from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id AND jenis != 'uang')
                 FROM transaksi";
 
@@ -522,6 +524,9 @@ class TransaksiModel extends Model
         if ($newData['uang_keluar'] == null) {
             unset($newData['uang_keluar']);
         }
+        if ($newData['emas_masuk'] == null) {
+            unset($newData['emas_masuk']);
+        }
         if ($newData['emas_keluar'] == null) {
             unset($newData['emas_keluar']);
         }
@@ -539,6 +544,7 @@ class TransaksiModel extends Model
             $totSampahMasuk = 0;
             $totUangMasuk   = 0;
             $totUangKeluar  = 0;
+            $totEmasMasuk   = 0;
             $totEmasKeluar  = 0;
             
             foreach ($value as $v) {
@@ -549,6 +555,10 @@ class TransaksiModel extends Model
                 if ($id_transaksi == 'TSS') {
                     $totSampahMasuk = $totSampahMasuk + (float)$v['sampah_masuk'];
                     $totUangMasuk   = $totUangMasuk + (int)$v['uang_masuk'];
+                }
+                else if ($id_transaksi == 'TPS') {
+                    // var_dump($id_transaksi);
+                    $totEmasMasuk   = $totEmasMasuk + (float)$v['emas_masuk'];
                 }
                 else if ($id_transaksi == 'TTS') {
                     if (isset($v['uang_keluar'])) {
@@ -567,6 +577,7 @@ class TransaksiModel extends Model
                 'totSampahKeluar'=> 0,
                 'totUangMasuk'   => $totUangMasuk,
                 'totUangKeluar'  => $totUangKeluar,
+                'totEmasMasuk'   => $totEmasMasuk,
                 'totEmasKeluar'  => $totEmasKeluar,
             ];
         }

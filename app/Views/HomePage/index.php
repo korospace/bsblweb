@@ -10,7 +10,7 @@
   }
 </style>
 <!-- ** develoment ** -->
-<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css'); ?>"> -->
+<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
 <!-- ** production ** -->
 <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
@@ -313,83 +313,82 @@
 
   <!-- footer section starts  -->
 
-  <footer class="deneb_footer">
-    <div class="widget_wrapper" style="background-image: url(assets/images/footer-bg.webp);">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4 col-md-6 col-12">
-            <div class="widget widegt_about">
-              <div class="widget_title">
-                <img src="assets/images/logo_1.png" class="img-fluid" alt="">
-                <p>Quisque orci nisl, viverra et sem ac, tincidunt egestas massa. Morbi est arcu, hendrerit ac vehicula condimentum, euismod nec tortor praesent consequat urna.</p>
+  <footer class="">
+    <div class="pt-5" style="background-image: url(assets/images/footer-bg.webp);background-repeat: no-repeat;background-size: cover;">
+    <!-- <div class="widget_wrapper bg-danger" style=""> -->
+      <div class="container-fluid pt-5 pt-lg-0">
+        <div class="row mt-5 pb-5 px-4">
+
+          <div class="col-12 col-md-2 mt-5 mt-md-0">
+            <div class="widget widget_link">
+              <h4 class="text-white" style="font-weight: bold;">Links</h4>
+              <ul class="mt-4">
+                <li class="pb-2"><a class="text-white" href="/">Home</a></li>
+                <li class="pb-2"><a class="text-white" href="#activity">Kegiatan</a></li>
+                <li class="pb-2"><a class="text-white" href="#services">Layanan</a></li>
+                <li class="pb-2"><a class="text-white" href="#contact-us">Kontak Kami</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-5 mt-5 mt-md-0">
+            <div class="widget widget_contact">
+              <h4 class="text-white" style="font-weight: bold;">Contact Us</h4>
+              <div class="mt-4">
+                <div class="d-flex">
+                  <div class="icon mr-3">
+                    <i class="fas fa-phone-alt" style="color:#C1D966;"></i>
+                  </div>
+                  <div class="info d-flex flex-column">
+                    <a class="text-white" target="_blank" href="https://wa.me/6281385624543?text=Assalamualaikum%20Umi%20Utik,%20saya%20ingin%20bertanya%20mengenai%20banksampah%20budiluhur">
+                      +62 813-8562-4543
+                    </a>
+                    <a class="text-white" target="_blank" href="https://wa.me/6287871911407?text=Assalamualaikum%20Umi%20Utik,%20saya%20ingin%20bertanya%20mengenai%20banksampah%20budiluhur">
+                      +62 878-7191-1407
+                    </a>
+                  </div>
+                </div>
+                <div class="d-flex mt-3">
+                  <div class="icon mr-3">
+                    <i class="fas fa-envelope" style="color:#C1D966;"></i>
+                  </div>
+                  <div class="info d-flex flex-column">
+                    <a class="text-white" href="bankasampahbudiluhur@gmail.com">
+                      bankasampahbudiluhur@gmail.com
+                    </a>
+                    <a class="text-white" href="mailto:bsblservice@gmail.com">
+                      bsblservice@gmail.com
+                    </a>
+                  </div>
+                </div>
+                <div class="d-flex mt-3">
+                  <div class="icon mr-3">
+                    <i class="fas fa-map-marker-alt" style="color:#C1D966;"></i>
+                  </div>
+                  <div class="info text-white">
+                    Jl. H. Gaim No.50, RT.10/RW.2, Petukangan Utara, Kec. Pesanggrahan, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta.
+                  </div>
+                </div>
               </div>
-              <ul class="social">
+            </div>
+          </div>
+          
+          <div class="col-12 col-md-5 mt-5 mt-md-0">
+            <div class="widget widegt_about">
+              <h4 class="text-white" style="font-weight: bold;">Social media</h4>
+              <p class="mt-4 text-white">Quisque orci nisl, viverra et sem ac, tincidunt egestas massa. Morbi est arcu, hendrerit ac vehicula condimentum, euismod nec tortor praesent consequat urna.</p>
+              <ul class="social" style="text-align: left;">
                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                 <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                 <li><a href="#"><i class="fab fa-instagram"></i></a></li>
               </ul>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="widget widget_link">
-              <div class="widget_title">
-                <h4>Links</h4>
-              </div>
-              <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="#activity">Kegiatan</a></li>
-                <li><a href="#services">Layanan</a></li>
-                <li><a href="#contact-us">Kontak Kami</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="widget widget_contact">
-              <div class="widget_title">
-                <h4>Contact Us</h4>
-              </div>
-              <div class="contact_info">
-                <div class="single_info">
-                  <div class="icon">
-                    <i class="fas fa-phone-alt"></i>
-                  </div>
-                  <div class="info">
-                    <p><a>+62 813-8562-4543</a></p>
-                    <p><a>+62 878-7191-1407</a></p>
-                  </div>
-                </div>
-                <div class="single_info">
-                  <div class="icon">
-                    <i class="fas fa-envelope"></i>
-                  </div>
-                  <div class="info">
-                    <p><a href="mailto:info@deneb.com">bankasampahbudiluhur@gmail.com</a></p>
-                    <p><a href="mailto:services@deneb.com">bsblservice.com</a></p>
-                  </div>
-                </div>
-                <div class="single_info">
-                  <div class="icon">
-                    <i class="fas fa-map-marker-alt"></i>
-                  </div>
-                  <div class="info">
-                    <p><a>Jl. H. Gaim No.50, RT.10/RW.2, Petukangan Utara, Kec. Pesanggrahan, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta.</a></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-    </div>
-    <div class="copyright_area">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="copyright_text">
-              <p>Copyright &copy; 2020 All rights reserved.</p>
-            </div>
-          </div>
-        </div>
+
+      <div class="container-fluid mt-5 py-3 d-flex justify-content-center">
+        <p class="text-light">Copyright &copy; 2020 All rights reserved.</p>
       </div>
     </div>
   </footer>

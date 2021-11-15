@@ -2,11 +2,11 @@ module.exports = {
     // ** alertinfo
     // content: ['app/Views/Components/alertInfo.php'],
     // ** homepage
-    // content: ['app/Views/HomePage/index.php','assets/js/homepage.js'],
+    // content: ['app/Views/HomePage/index.php','public/assets/js/homepage.js'],
     // ** detil artikel
-    content: ['app/Views/HomePage/detilArtikel.php','public/assets/js/detilArtikel.js'],
+    // content: ['app/Views/HomePage/detilArtikel.php','public/assets/js/detilArtikel.js'],
     // ** list artikel
-    // content: ['app/Views/HomePage/listArtikel.php','public/assets/js/listArtikel.js'],
+    content: ['app/Views/HomePage/listArtikel.php','public/assets/js/listArtikel.js'],
     // ** login
     // content: ['app/Views/Login/index.php','public/assets/js/login.js'],
     // ** signup
@@ -14,7 +14,7 @@ module.exports = {
     // ** otp
     // content: ['app/Views/OTP/index.php','assets/js/otp.js'],
     // ** nasabah dashboard
-    // content: ['app/Views/Nasabah/index.php','assets/js/nasabah.js'],
+    // content: ['app/Views/Nasabah/index.php','public/assets/js/nasabah.js'],
     // ** nasabah profile
     // content: ['app/Views/Nasabah/profilenasabah.php','assets/js/nasabah.js'],
 
@@ -37,8 +37,9 @@ module.exports = {
     // content: ['app/Views/Admin/detilNasabah.php','public/assets/js/admin.detilnasabah.js'],
 
     // ** resource bootstrap
-    // css: ['public/assets/css/bootstrap.min.css'],
+    css: ['public/assets/css/bootstrap.min.css'],
+    // css: ['public/assets/css/soft-ui-dashboard.min.css'],
     // css: ['public/assets/css/artikel.min.css'],
     // css: ['public/assets/css/sidebar/style.css'],
-    css: ['public/assets/css/artikel-layout.min.css'],
+    // css: ['public/assets/css/artikel-layout.min.css'],
 }

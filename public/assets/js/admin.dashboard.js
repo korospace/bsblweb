@@ -127,24 +127,38 @@ const getRekapTransaksi = async (year) => {
                 <div class="d-flex align-items-center justify-content-between px-1">
                     <div class="d-flex flex-column" style="flex:1;">
                         <h6 class="text-dark font-weight-bold text-sm">${allTransaksi[key].date2}</h6>
-                        <div class="d-flex mt-2 w-100">
-                            <i class="fas fa-dollar-sign text-xxs text-success mr-3">
-                               Rp ${kFormatter(allTransaksi[key].totUangMasuk)}
-                            </i>
-                            <i class="fas fa-dollar-sign text-xxs text-danger mr-3">
-                               Rp ${kFormatter(allTransaksi[key].totUangKeluar)}
-                            </i>
-                        </div>
-                        <div class="d-flex mt-2 w-100">
-                            <i class="fas fa-trash text-xxs text-success mr-3">
-                                ${allTransaksi[key].totSampahMasuk} kg
-                            </i>
-                            <i class="fas fa-trash text-xxs text-danger mr-3">
-                                ${allTransaksi[key].totSampahKeluar} kg
-                            </i>
-                            <i class="fas fa-coins text-xxs text-danger mr-3">
-                                ${allTransaksi[key].totEmasKeluar} g
-                            </i>
+                        <div class="d-flex w-100">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-trash text-xs text-success mr-3">
+                                            ${allTransaksi[key].totSampahMasuk} kg
+                                        </i>
+                                    </td>
+                                    <td colspan="2">
+                                        <i class="fas fa-dollar-sign text-xs text-success mr-3">
+                                        Rp ${kFormatter(allTransaksi[key].totUangMasuk)}
+                                        </i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-trash text-xs text-danger mr-3">
+                                            ${allTransaksi[key].totSampahKeluar} kg
+                                        </i>
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-dollar-sign text-xs text-danger mr-3">
+                                            Rp ${kFormatter(allTransaksi[key].totUangKeluar)}
+                                        </i>
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-coins text-xs text-danger mr-3">
+                                            ${allTransaksi[key].totEmasKeluar} g
+                                        </i>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     <a href="${BASEURL}/admin/cetakrekap/${allTransaksi[key].date1}" target="_blank" class="btn btn-link text-dark text-sm mb-0 px-0 h-100">

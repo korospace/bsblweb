@@ -143,7 +143,7 @@
 						</div>
 					</div>
 					<div class="single-widget category">
-						<h3 class="title">Artikel Lainnya</h3>
+						<h3 class="title">Kategori Lainnya</h3>
 						<ul class="categor-list">
 							<li><a href="<?= base_url('/'); ?>">Home</a></li>
 							<li><a href="<?= base_url('/homepage/webinar'); ?>">Webinar</a></li>
@@ -157,7 +157,7 @@
 	
 	<footer class="">
 		<div class="pt-5" style="background-image:url('<?= base_url('assets/images/footer-bg.png'); ?>');background-repeat: no-repeat;background-size: cover;">
-			<div class="container-fluid pt-5 pt-lg-0">
+			<div class="container-fluid px-5 pt-5 pt-lg-0">
 				<div class="row mt-5 pb-5 px-4">
 					<div class="col-12 col-md-2 mt-5 mt-md-0">
 						<div class="widget widget_link">
@@ -193,7 +193,7 @@
 										<i class="fas fa-envelope" style="color:#C1D966;"></i>
 									</div>
 									<div class="info d-flex flex-column">
-										<a class="text-white" href="bankasampahbudiluhur@gmail.com">
+										<a class="text-white" href="mailto:bankasampahbudiluhur@gmail.com">
 											bankasampahbudiluhur@gmail.com
 										</a>
 										<a class="text-white" href="mailto:bsblservice@gmail.com">
@@ -216,11 +216,14 @@
 					<div class="col-12 col-md-5 mt-5 mt-md-0">
 						<div class="widget widegt_about">
 							<h4 class="text-white" style="font-weight: bold;">Social media</h4>
-							<p class="mt-4 text-white">Quisque orci nisl, viverra et sem ac, tincidunt egestas massa. Morbi est arcu, hendrerit ac vehicula condimentum, euismod nec tortor praesent consequat urna.</p>
+							<p class="mt-4 text-white">
+								"Kebersihan menjadi awal dari penilaian baik buruknya seseorang. Kepribadian yang baik
+                				akan menjaga kebersihan dirinya, lingkungannya, dan sekitarnya."
+							</p>
 							<ul class="social">
 								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
 								<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fab fa-instagram"></i></a></li>
+								<li><a href="https://www.instagram.com/banksampah.ubl/"><i class="fab fa-instagram"></i></a></li>
 							</ul>
 						</div>
 					</div>

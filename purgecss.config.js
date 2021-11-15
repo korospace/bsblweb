@@ -6,7 +6,7 @@ module.exports = {
     // ** detil artikel
     // content: ['app/Views/HomePage/detilArtikel.php','public/assets/js/detilArtikel.js'],
     // ** list artikel
-    content: ['app/Views/HomePage/listArtikel.php','public/assets/js/listArtikel.js'],
+    // content: ['app/Views/HomePage/listArtikel.php','public/assets/js/listArtikel.js'],
     // ** login
     // content: ['app/Views/Login/index.php','public/assets/js/login.js'],
     // ** signup
@@ -28,7 +28,7 @@ module.exports = {
     // ** admin list admin
     // content: ['app/Views/Admin/listAdmin.php','public/assets/js/admin.listadmin.js'],
     // ** admin list nasabah
-    // content: ['app/Views/Admin/listNasabah.php','public/assets/js/admin.listnasabah.js'],
+    content: ['app/Views/Admin/listNasabah.php','public/assets/js/admin.listnasabah.js'],       
     // ** admin list artikel
     // content: ['app/Views/Admin/listArtikel.php','public/assets/js/admin.artikel.js'],
     // ** admin crud artikel

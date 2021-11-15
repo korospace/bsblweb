@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "purgecss --config ./purgecss.config.js --output public/assets/css/purge/bootstrap/listartikel.css"
+    "build": "purgecss --config ./purgecss.config.js --output public/assets/css/purge/bootstrap/admin.listnasabah.css"
   },
   "repository": {
     "type": "git",

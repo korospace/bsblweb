@@ -3,13 +3,13 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
     <!-- ** develoment ** -->
-    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
     <!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel/style.css'); ?>"> -->
     <!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel-layout.min.css'); ?>"> -->
     <!-- ** production ** -->
     <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel/detilArtikel.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel-layout/detilArtikel.css'); ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/detilartikel.css'); ?>">
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/detilartikel.css'); ?>"> -->
     <link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">

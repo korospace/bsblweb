@@ -10,9 +10,9 @@
   }
 </style>
 <!-- ** develoment ** -->
-<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 <!-- ** production ** -->
-<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>">
+<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>"> -->
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/homepage.min.css'); ?>">
@@ -269,7 +269,6 @@
   <footer id="contact-us">
     <div class="container">
       <div class="footer-content">
-        <h1 class="text-center">Hubungi Kami</h1>
         <div class="row">
           <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="contact-form">
@@ -298,7 +297,7 @@
           </div>
           <!-- ***** Contact Form End ***** -->
           <div class="right-content col-lg-6 col-md-12 col-sm-12">
-            <h2>More About <em>Lorem ipmsum</em></h2>
+            <h2>Hubungi <em>Kami</em></h2>
             <p>Phasellus dapibus urna vel lacus accumsan, iaculis eleifend leo auctor. Duis at finibus odio.
               Vivamus ut pharetra arcu, in porta metus. Suspendisse blandit pulvinar ligula ut elementum.
               <br><br>If you need this contact form to send email to your inbox, you may follow our <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact</a> page
@@ -316,7 +315,7 @@
   <footer class="">
     <div class="pt-5" style="background-image: url(assets/images/footer-bg.webp);background-repeat: no-repeat;background-size: cover;">
     <!-- <div class="widget_wrapper bg-danger" style=""> -->
-      <div class="container-fluid pt-5 pt-lg-0">
+      <div class="container-fluid px-5 pt-5 pt-lg-0">
         <div class="row mt-5 pb-5 px-4">
 
           <div class="col-12 col-md-2 mt-5 mt-md-0">

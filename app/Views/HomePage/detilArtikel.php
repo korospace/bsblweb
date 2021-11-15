@@ -3,13 +3,13 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
     <!-- ** develoment ** -->
-    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
     <!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel/style.css'); ?>"> -->
     <!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel-layout.min.css'); ?>"> -->
     <!-- ** production ** -->
     <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel/detilArtikel.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel-layout/detilArtikel.css'); ?>">
-    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/detilartikel.css'); ?>"> -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/detilartikel.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
@@ -33,6 +33,13 @@
             line-height: 20px !important;
             margin-bottom: 10px !important;
         }
+        #blog-content blockquote{
+            background: #F6F6F6;
+            padding: 20px;
+            margin: 0;
+            color: #555;
+            border-left: 3px solid #c1d966;
+        }
         .skeleton{
             border-radius: 4px;
             background-color: #777777;
@@ -53,6 +60,39 @@
         #single-post #date.skeleton{
             width: 148px;
             height: 14px;
+        }
+
+        .widegt_about p {
+            color: #FFF;
+            margin-bottom: 20px;
+        }
+        .widegt_about .social li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .widegt_about .social li a {
+            display: block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: #f9e6d4;
+            color: #537629;
+            font-size: 14px;
+            -webkit-transition: all all 0.5s ease-out 0s;
+            -moz-transition: all all 0.5s ease-out 0s;
+            -ms-transition: all all 0.5s ease-out 0s;
+            -o-transition: all all 0.5s ease-out 0s;
+            transition: all all 0.5s ease-out 0s;
+        }
+        .widegt_about .social li a:hover,
+        .widegt_about .social li a:focus {
+            background-image: -moz-linear-gradient(0deg, #c1d966 0%, #c1d966 100%);
+            background-image: -webkit-linear-gradient(0deg, #c1d966 0%, #c1d966 100%);
+            background-image: -ms-linear-gradient(0deg, #c1d966 0%, #c1d966 100%);
+            color: #fff;
+            box-shadow: 2.5px 4.33px 15px 0px rgba(254, 176, 0, 0.4);
         }
 
         @keyframes pulse {
@@ -187,91 +227,85 @@
     </section>
     <!--/ End Single Widget -->
     <!-- footer section starts  -->
+    
+	<footer class="">
+		<div class="pt-5" style="background-image:url('<?= base_url('assets/images/footer-bg.png'); ?>');background-repeat: no-repeat;background-size: cover;">
+			<div class="container-fluid pt-5 pt-lg-0">
+				<div class="row mt-5 pb-5 px-4">
+					<div class="col-12 col-md-2 mt-5 mt-md-0">
+						<div class="widget widget_link">
+							<h4 class="text-white" style="font-weight: bold;">Links</h4>
+							<div class="mt-4 d-flex flex-column">
+								<a class="text-white mb-3" href="/">Home</a>
+								<a class="text-white mb-3" href="#activity">Kegiatan</a>
+								<a class="text-white mb-3" href="#services">Layanan</a>
+								<a class="text-white mb-3" href="#contact-us">Kontak Kami</a>
+							</div>
+						</div>
+					</div>
 
-    <footer class="deneb_footer">
-        <div class="widget_wrapper" style="background-image:url('<?= base_url('assets/images/footer-bg.png'); ?>');">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="widget widegt_about">
-                            <div class="widget_title">
-                                <img src="assets/images/logo_1.png" class="img-fluid" alt="">
-                                <p>Quisque orci nisl, viverra et sem ac, tincidunt egestas massa. Morbi est arcu,
-                                    hendrerit ac vehicula
-                                    condimentum, euismod nec tortor praesent consequat urna.</p>
-                            </div>
-                            <ul class="social">
-                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="widget widget_link">
-                            <div class="widget_title">
-                                <h4>Links</h4>
-                            </div>
-                            <ul>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="#activity">Kegiatan</a></li>
-                                <li><a href="#services">Layanan</a></li>
-                                <li><a href="#contact-us">Kontak Kami</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="widget widget_contact">
-                            <div class="widget_title">
-                                <h4>Contact Us</h4>
-                            </div>
-                            <div class="contact_info">
-                                <div class="single_info">
-                                    <div class="icon">
-                                        <i class="fas fa-phone-alt"></i>
-                                    </div>
-                                    <div class="info">
-                                        <p><a>1800-121-3637</a></p>
-                                        <p><a>+91 924-614-7999</a></p>
-                                    </div>
-                                </div>
-                                <div class="single_info">
-                                    <div class="icon">
-                                        <i class="fas fa-envelope"></i>
-                                    </div>
-                                    <div class="info">
-                                        <p><a href="mailto:info@deneb.com">bankasampahbudiluhur@gmail.com</a></p>
-                                        <p><a href="mailto:services@deneb.com">bsblservice.com</a></p>
-                                    </div>
-                                </div>
-                                <div class="single_info">
-                                    <div class="icon">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                    </div>
-                                    <div class="info">
-                                        <p>
-                                            <a>Jl. H. Gaim No.50, RT.10/RW.2, Petukangan Utara, Kec. Pesanggrahan, Kota
-                                                Jakarta Selatan, Daerah Khusus Ibukota Jakarta.</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright_area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="copyright_text">
-                            <p>Copyright &copy; 2020 All rights reserved.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+					<div class="col-12 col-md-5 mt-5 mt-md-0">
+						<div class="widget widget_contact">
+							<h4 class="text-white" style="font-weight: bold;">Contact Us</h4>
+							<div class="mt-4">
+								<div class="d-flex">
+									<div class="icon mr-3">
+										<i class="fas fa-phone-alt" style="color:#C1D966;"></i>
+									</div>
+									<div class="info d-flex flex-column" style="line-height: 1.5;">
+										<a class="text-white" target="_blank" href="https://wa.me/6281385624543?text=Assalamualaikum%20Umi%20Utik,%20saya%20ingin%20bertanya%20mengenai%20banksampah%20budiluhur">
+											+62 813-8562-4543
+										</a>
+										<a class="text-white" target="_blank" href="https://wa.me/6287871911407?text=Assalamualaikum%20Umi%20Utik,%20saya%20ingin%20bertanya%20mengenai%20banksampah%20budiluhur">
+											+62 878-7191-1407
+										</a>
+									</div>
+								</div>
+								<div class="d-flex mt-3">
+									<div class="icon mr-3">
+										<i class="fas fa-envelope" style="color:#C1D966;"></i>
+									</div>
+									<div class="info d-flex flex-column" style="line-height: 1.5;">
+										<a class="text-white" href="bankasampahbudiluhur@gmail.com">
+											bankasampahbudiluhur@gmail.com
+										</a>
+										<a class="text-white" href="mailto:bsblservice@gmail.com">
+											bsblservice@gmail.com
+										</a>
+									</div>
+								</div>
+								<div class="d-flex mt-3">
+									<div class="icon mr-3">
+										<i class="fas fa-map-marker-alt" style="color:#C1D966;"></i>
+									</div>
+									<div class="info text-white" style="line-height: 1.5;">
+										Jl. H. Gaim No.50, RT.10/RW.2, Petukangan Utara, Kec. Pesanggrahan, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta.
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+          
+					<div class="col-12 col-md-5 mt-5 mt-md-0">
+						<div class="widget widegt_about">
+							<h4 class="text-white" style="font-weight: bold;">Social media</h4>
+							<p class="mt-4 text-white">Quisque orci nisl, viverra et sem ac, tincidunt egestas massa. Morbi est arcu, hendrerit ac vehicula condimentum, euismod nec tortor praesent consequat urna.</p>
+							<ul class="social">
+								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+								<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fab fa-instagram"></i></a></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="container-fluid mt-5 py-3 d-flex justify-content-center">
+				<p class="text-light">Copyright &copy; 2020 All rights reserved.</p>
+			</div>
+		</div>
+	</footer>
 
 <!-- footer section ends -->
 

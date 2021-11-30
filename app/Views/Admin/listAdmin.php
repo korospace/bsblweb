@@ -38,9 +38,10 @@
 	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.listadmin.js'); ?>"></script> -->
-	<script src="<?= base_url('assets/js/admin.listadmin.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.listadmin.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.listadmin.min.js'); ?>"></script> -->
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -50,7 +51,7 @@
 	<!-- **** Alert Info **** -->
 	<?= $this->include('Components/alertInfo'); ?>
 
-	<body class="g-sidenav-show bg-gray-100">
+	<body class="g-sidenav-show bg-gray-100" style="overflow: hidden;">
 		<!-- **** Sidebar **** -->
 		<?= $this->include('Components/adminSidebar'); ?>
 
@@ -96,7 +97,7 @@
 											<i class="fas fa-search text-muted"></i>
 										</span>
 									</div>
-									<input id="search-admin" type="text" class="form-control h-100 px-2" placeholder="nama lengkap/username admin" style="max-height: 39px;">
+									<input id="search-admin" type="text" class="form-control h-100 px-2" placeholder="username/nama lengkap" style="max-height: 39px;">
 								</div>
 								<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
 									<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="openModalAddEditAdm('addadmin')" style="width: 100%;">tambah</button>
@@ -120,16 +121,19 @@
 												#
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												ID ADMIN
+												username
 											</th>
 											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Nama lengkap
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Type admin
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Akun aktif
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Type admin
+												terakhir login
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Action
@@ -308,7 +312,7 @@
 						</label>
 						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
 							<div class="btn-toggle toggle-akunaktif bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
-								<input type="checkbox" name="active" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
+								<input type="checkbox" name="is_active" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
 							</div>
 						</div>
 					</div>

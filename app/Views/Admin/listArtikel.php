@@ -26,9 +26,10 @@
 	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script> -->
-	<script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script> -->
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -84,14 +85,25 @@
 											<i class="fas fa-search text-muted"></i>
 										</span>
 									</div>
-									<input id="search-artikel" type="text" class="form-control h-100 px-2" placeholder="judul artikel/kategori artikel" style="max-height: 39px;">
+									<input id="search-artikel" type="text" class="form-control h-100 px-2" placeholder="judul artikel" style="max-height: 39px;">
 								</div>
 								<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
 									<a class="btn btn-success mt-4 mt-sm-0 text-xxs" href="<?= base_url('admin/addartikel');?>" style="width: 100%;">tambah</a>
 								</div>
+								<div class="input-group col-12 flex-column text-sm">
+									<div class="d-flex align-items-center">
+										<a id="btn-edit-profile" class="shadow px-1 border-radius-none mr-2" href="" data-toggle="modal" data-target="#modalFilterArtikel">
+											<i class="fas fa-sliders-h text-secondary"></i>
+										</a>
+										<span id="ket-filter" class=" text-secondary">terbaru - semua kategori</span>
+									</div>
+									<div class="mt-2 text-xs text-secondary">
+										<span id="ket-total">0</span> artikel
+									</div>
+								</div>
 							</div>
 							<!-- container list -->
-							<div class="card-body pl-4 pr-3 pb-2 position-relative" style="flex: 1;overflow: auto;font-family: 'qc-semibold';">
+							<div class="card-body pl-3 pr-3 pb-2 position-relative" style="flex: 1;overflow: auto;font-family: 'qc-semibold';">
 								<!-- spinner -->
 								<div id="list-artikel-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
@@ -126,4 +138,50 @@
 			</div>
 		</main>
 	</body>
+
+	<!-- modals filter artikel-->
+	<div class="modal fade" id="modalFilterArtikel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<form id="formFilterArtikel" class="modal-dialog modal-sm" role="document">
+			<input type="hidden" name="id">
+			<div class="modal-content" style="overflow: hidden;">
+
+				<!-- modal header -->
+				<div class="modal-header">
+					<h5 class="modal-title">filter artikel</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal body -->
+				<div class="modal-body w-100 px-3">
+					<h6 class="font-italic text-xs text-secondary">Urutan</h6>
+					<div class="position-relative">
+						<select class='form-control form-control-sm' name="orderby">
+							<option value="terbaru" selected>terbaru</option>
+							<option value="terlama">terlama</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+					<h6 class="font-italic text-xs text-secondary mt-4">Kategori</h6>
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="kategori">
+							<option value="">-- pilih kategori --</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+				</div>
+
+				<!-- modal footer -->
+				<div class="modal-footer">
+					<div class="badge badge-secondary d-flex justify-content-center align-items-center border-0 cursor-pointer" onclick="resetFilterArtikel();">
+						<span>Reset</span>
+					</div>
+					<button id="submit" type="submit" class="badge badge-success d-flex justify-content-center align-items-center border-0" data-dismiss="modal" onclick="filterArtikel(this,event);">
+						<span>Ok</span>
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
 <?= $this->endSection(); ?>

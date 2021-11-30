@@ -1,60 +1,7 @@
-let pageTitle   = document.title.replace(/\s/g,'').split('|');
-let dataNasabah = '';
-
-/**
- * API REQUEST GET
- */
-const httpRequestGet = (url) => {
-
-    return axios
-        .get(url,{
-            headers: {
-                token: TOKEN
-            }
-        })
-        .then((response) => {
-            return {
-                'status':200,
-                'data':response.data
-            };
-        })
-        .catch((error) => {
-            // 401 Unauthorized
-            if (error.response.status == 401) {
-                if (error.response.data.messages == 'token expired') {
-                    Swal.fire({
-                        icon : 'error',
-                        title : '<strong>LOGIN EXPIRED</strong>',
-                        text: 'silahkan login ulang untuk perbaharui login anda',
-                        showCancelButton: false,
-                        confirmButtonText: 'ok',
-                    }).then(() => {
-                        document.cookie = `token=null;expires=;path=/;`;
-                        window.location.replace(`${BASEURL}/login`);
-                    })
-                }
-                else{
-                    document.cookie = `token=null;expires=;path=/;`;
-                    window.location.replace(`${BASEURL}/login`);
-                }
-            }
-            else if (error.response.status == 404) {
-                return {'status':404};
-            }
-            // server error
-            else{
-                showAlert({
-                    message: `<strong>Ups...</strong> terjadi kesalahan pada server, silahkan refresh halaman.`,
-                    btnclose: true,
-                    type:'danger' 
-                })
-            }
-
-        })
-};
 
 /**
  * SESSION CHECK
+ * ================================
  */
 const sessioncheck = async () => {
     showLoadingSpinner();
@@ -62,140 +9,132 @@ const sessioncheck = async () => {
     hideLoadingSpinner();
 
     // update value filter transkasi
-    let currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
-    let currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
-    $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
-    $(`#filter-year`).val(currentYear);
+    // let currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
+    // let currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
+    // $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
+    // $(`#filter-year`).val(currentYear);
 
     if (httpResponse.status === 200) {
-        if (pageTitle[1] === 'dashboard') {
-            getTotalSampah();
-            getAllTransaksi(`${currentMonth}-${currentYear}`);
-            getDataSaldo();
-            getDataProfile();
-            getAllJenisSampah();
-        }
-        if (pageTitle[1] === 'profile') {
-            getDataProfile();
-        }
+        getSampahMasuk();
+        updateGrafikSetorNasabah();
+        getHistoriTransaksi();
+        getDataSaldo();
+        getAllJenisSampah();
+        getDataProfile();
     }
-
 };
 
 sessioncheck();
 
 /**
- * GET TOTAL SAMPAH
+ * GET SAMPAH MASUK
+ * ==================================
  */
-const getTotalSampah = async () => {
+const getSampahMasuk = async () => {
 
-    let httpResponse = await httpRequestGet(`${APIURL}/sampah/totalitem`);
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/sampahmasuk`);
 
     if (httpResponse.status === 200) {
         let dataSampah = httpResponse.data.data;
 
-        for (const name in dataSampah) {
-            $(`#sampah-${name}`).html(dataSampah[name].total+' Kg');
-        }   
+        dataSampah.forEach(ds => {
+            $(`#sampah-${ds.kategori}`).html(ds.total+' Kg');
+        });    
     }
 };
 
-// filter transaksi on change
-$('.filter-transaksi').on('input', function(e) {
-    chartGrafik.destroy();
-    getAllTransaksi(`${$(`#filter-month`).val()}-${$(`#filter-year`).val()}`);
-});
+/**
+ * FILTER TRANSACTION Section
+ * =========================================================
+ */
+
+// modal filter transaksi is open
+let openModalFilterT = (modalTitle) =>  {
+    $('#formFilterTransaksi .modal-title').html(modalTitle);
+}
+
+const filterTransaksi = async (e) => {
+    let formFilter = new FormData(e.parentElement.parentElement.parentElement);
+    let startDate  = formFilter.get('date-start').split('-');
+    let endDate    = formFilter.get('date-end').split('-');
+
+    if ($('#formFilterTransaksi .modal-title').html() == 'Filter Histori') {
+        dateStartHistori = `${startDate[2]}-${startDate[1]}-${startDate[0]}`;
+        dateEndHistori   = `${endDate[2]}-${endDate[1]}-${endDate[0]}`;
+        $('#btn-filter-histori #startdate').html(`${startDate[2]}/${startDate[1]}/${startDate[0]}`);
+        $('#btn-filter-histori #enddate').html(`${endDate[2]}/${endDate[1]}/${endDate[0]}`);
+        getHistoriTransaksi();
+    } 
+    else {
+        dateStartGrafik = `${startDate[2]}-${startDate[1]}-${startDate[0]}`;
+        dateEndGrafik   = `${endDate[2]}-${endDate[1]}-${endDate[0]}`;
+        $('#btn-filter-grafik #startdate').html(`${startDate[2]}/${startDate[1]}/${startDate[0]}`);
+        $('#btn-filter-grafik #enddate').html(`${endDate[2]}/${endDate[1]}/${endDate[0]}`);
+        updateGrafikSetorNasabah();
+    }
+};
+
+// set current start and end DATE
+let dateStartGrafik  = '';
+let dateEndGrafik    = '';
+let dateStartHistori = '';
+let dateEndHistori   = '';
+let setCurrentStartDate = () =>  {
+    let currentUnixTime = new Date(new Date().getTime());
+    let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "numeric"});
+    let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "numeric"});
+    let currentYear  = currentUnixTime.toLocaleString("en-US",{year: "numeric"});
+
+    let previousUnixTime = new Date(currentUnixTime.getTime()-(86400*30*1000));
+    let previousDay   = previousUnixTime.toLocaleString("en-US",{day: "numeric"});
+    let previousMonth = previousUnixTime.toLocaleString("en-US",{month: "numeric"});
+    let previousYear  = previousUnixTime.toLocaleString("en-US",{year: "numeric"});
+
+    dateStartGrafik  = `${previousDay}-${previousMonth}-${previousYear}`;
+    dateEndGrafik    = `${currentDay}-${currentMonth}-${currentYear}`;
+    dateStartHistori = `${previousDay}-${previousMonth}-${previousYear}`;
+    dateEndHistori   = `${currentDay}-${currentMonth}-${currentYear}`;
+
+    $('#btn-filter-grafik #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
+    $('#btn-filter-grafik #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
+    $('#btn-filter-histori #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
+    $('#btn-filter-histori #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
+    
+    $('#formFilterTransaksi #date-start').val(`${previousYear}-${previousMonth}-${previousDay}`);
+    $('#formFilterTransaksi #date-end').val(`${currentYear}-${currentMonth}-${currentDay}`);
+}
+
+setCurrentStartDate();
 
 /**
- * GET ALL TRANSAKSI
+ * UPDATE GRAFIK SETOR
+ * ========================================
  */
-const getAllTransaksi = async (date) => {
-    $('.spinner-wraper').removeClass('d-none');
-    $('#transaksi-wraper').addClass('d-none');
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?date=${date}`);
-    $('.spinner-wraper').addClass('d-none');
-    $('#transaksi-wraper').removeClass('d-none');
+let chartGrafik = '';
+const updateGrafikSetorNasabah = async () => {
+
+    $('#spinner-wraper-grafik').removeClass('d-none');
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?start=${dateStartGrafik}&end=${dateEndGrafik}`);
+    $('#spinner-wraper-grafik').addClass('d-none'); 
+    let arrayId = [];
+    let arrayKg = [];
     
-    if (httpResponse.status === 404) {
-        updateGrafikSetor([],[]);
-        $('#transaksi-wraper').html(`<h6 class='opacity-6'>belum ada transaksi</h6>`); 
-    }
-    else if (httpResponse.status === 200) {
-        let arrayId      = [];
-        let arrayKg      = [];
-        let elTransaksi  = '';
+    if (httpResponse.status === 200) {
         let allTransaksi = httpResponse.data.data;
         
         allTransaksi.forEach(t => {
-            let type      = t.type;
-            let jenisSaldo= t.jenis_saldo;
-            let textClass = '';
-            let date      = new Date(parseInt(t.date) * 1000);
-            let day       = date.toLocaleString("en-US",{day: "numeric"});
-            let month     = date.toLocaleString("en-US",{month: "long"});
-            let year      = date.toLocaleString("en-US",{year: "numeric"});
-            let totalTransaksi = '';
-            
-            if (type == 'setor') {
-                textClass = 'text-success';
-                totalTransaksi = '+Rp'+modifUang(t[`total_${type}`]);
+            if (t.jenis_transaksi == 'penyetoran sampah') {
                 arrayId.push(t.id_transaksi);
-                arrayKg.push(t.total_kg);
+                arrayKg.push(t.total_kg_setor);
             } 
-            else if (type == 'tarik') {
-                textClass = 'text-danger';
-                if (jenisSaldo == 'uang') {
-                    totalTransaksi = '-Rp'+modifUang(t[`total_${type}`]);
-                } else {
-                    totalTransaksi = t[`total_${type}`]+'g';
-                }
-            }
-            else {
-                textClass = 'text-warning';
-                if (jenisSaldo == 'uang') {
-                    totalTransaksi = '<i class="fas fa-exchange-alt"></i> Rp'+modifUang(t[`total_${type}`]);
-                } else {
-                    totalTransaksi = t[`total_${type}`]+'g';
-                }
-            }
-
-            elTransaksi  += `<li class="list-group-item border-0 ps-0 border-radius-lg">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex flex-column">
-                    <h6 class="mb-1 text-dark font-weight-bold text-sm">${month}, ${day}, ${year}</h6>
-                    <span class="text-xs">ID: ${t.id_transaksi}</span>
-                    <span class="${textClass} mt-2">${totalTransaksi}</span>
-                </div>
-                <div class="d-flex align-items-center text-sm">
-                    <a href='' class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksi('${t.id_transaksi}');">
-                        <i class="fas fa-file-pdf text-lg me-1"></i> PDF
-                    </a>
-                </div>
-            </div>
-            <hr class="horizontal dark mt-2">
-        </li>`;
         });
-
-        updateGrafikSetor(arrayId,arrayKg);
-        $('#transaksi-wraper').html(`<ul class="list-group h-100 w-100" style="font-family: 'qc-medium';">
-            ${elTransaksi}
-        </ul>`);
     }
-};
+    if (chartGrafik != '') {
+        chartGrafik.destroy();
+    }
 
-// modif saldo uang
-const modifUang = (rHarga) => {
-    return rHarga.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
-}
-
-// update grafik setor
-let chartGrafik = '';
-const updateGrafikSetor = (arrayId,arrayKg) => {
     var ctx2 = document.getElementById("chart-line").getContext("2d");
-    // let chartWidth = arrayId.length*160;
-    // document.querySelector("#chart-line").style.minWidth = `${chartWidth}px`;
     document.querySelector("#chart-line").style.width    = '100%';
-    document.querySelector("#chart-line").style.minHeight= '100%';
     document.querySelector("#chart-line").style.maxHeight= '300px';
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
@@ -223,7 +162,8 @@ const updateGrafikSetor = (arrayId,arrayKg) => {
                     backgroundColor: gradientStroke1,
                     fill: true,
                     data: arrayKg,
-                    maxBarThickness: 6
+                    maxBarThickness: 6,
+                    minBarLength: 6,
                 },
             ],
         },
@@ -248,6 +188,7 @@ const updateGrafikSetor = (arrayId,arrayKg) => {
                     display: true,
                     padding: 10,
                     color: '#b2b9bf',
+                    beginAtZero: true,
                     font: {
                         size: 11,
                         family: "Open Sans",
@@ -282,72 +223,165 @@ const updateGrafikSetor = (arrayId,arrayKg) => {
 };
 
 /**
- * GET DETAIL TRANSAKSI
+ * GET ALL TRANSAKSI NASABAH
+ * ========================================
  */
-const getDetailTransaksi = async (id) => {
+const getHistoriTransaksi = async () => {
+    $('#spinner-wraper-histori').removeClass('d-none');
+    $('#transaksi-wraper-histori').addClass('d-none');
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?start=${dateStartHistori}&end=${dateEndHistori}`);
+    $('#spinner-wraper-histori').addClass('d-none'); 
+    $('#transaksi-wraper-histori').removeClass('d-none');
+    
+    if (httpResponse.status === 404) {
+        $('#transaksi-wraper-histori').html(`<h6 class='opacity-6'>belum ada transaksi</h6>`); 
+    }
+    else if (httpResponse.status === 200) {
+        let elTransaksi  = '';
+        let allTransaksi = httpResponse.data.data;
+        
+        allTransaksi.forEach(t => {
+            let textClass      = '';
+            let totalTransaksi = '';
+            let jenisTransaksi = t.jenis_transaksi;
+            let jenisSaldo     = t.jenis_saldo;
+            let date      = new Date(parseInt(t.date) * 1000);
+            let day       = date.toLocaleString("en-US",{day: "numeric"});
+            let month     = date.toLocaleString("en-US",{month: "long"});
+            let year      = date.toLocaleString("en-US",{year: "numeric"});
+
+            // const zeroPad = (num, places) => String(num).padStart(places, '0');
+            // const xMonth  = zeroPad(date.toLocaleString("en-US",{month: "numeric"}), 2);
+            // const yMonth  = dateFilter.split('-');
+            
+            if (jenisTransaksi == 'penyetoran sampah') {
+                textClass      = 'text-success';
+                totalTransaksi = '+ Rp'+modifUang(t[`total_uang_setor`]);
+                
+                // arrayId.push(t.id_transaksi);
+                // arrayKg.push(t.total_kg);
+            } 
+            else if (jenisTransaksi == 'konversi saldo') {
+                textClass      = 'text-warning';
+                totalTransaksi = 'Rp'+modifUang(kFormatter(t[`total_pindah`]))+' <i class="fas fa-exchange-alt"></i> '+parseFloat(t[`hasil_konversi`]).toFixed(2)+'g';
+            }
+            else {
+                textClass = 'text-danger';
+                if (jenisSaldo == 'uang') {
+                    totalTransaksi = '- Rp'+modifUang(t[`total_tarik`]);
+                } 
+                else {
+                    totalTransaksi = '- '+t[`total_tarik`]+'g';
+                }
+            }
+
+            elTransaksi  += `<li class="list-group-item border-0 ps-0 border-radius-lg">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                        <h6 class="mb-1 text-dark font-weight-bold text-sm">${month}, ${day}, ${year}</h6>
+                        <span class="text-xs">ID: ${t.id_transaksi}</span>
+                        <span class="${textClass} mt-2">${totalTransaksi}</span>
+                    </div>
+                    <div class="d-flex align-items-center text-sm">
+                        <a href='' class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
+                            <i class="fas fa-file-pdf text-lg me-1"></i> PDF
+                        </a>
+                    </div>
+                </div>
+                <hr class="horizontal dark mt-2">
+            </li>`;
+        });
+
+        // updateGrafikSetorNasabah(arrayId,arrayKg);
+        $('#transaksi-wraper-histori').html(`<ul class="list-group h-100 w-100" style="font-family: 'qc-medium';">
+            ${elTransaksi}
+        </ul>`);
+    }
+};
+
+/**
+ * GET DETAIL TRANSAKSI
+ * ==============================================
+ */
+const getDetailTransaksiNasabah = async (id) => {
     $('#detil-transaksi-body').html(' ');
     $('#detil-transaksi-spinner').removeClass('d-none');
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?id_transaksi=${id}`);
     
     if (httpResponse.status === 200) {
         $('#detil-transaksi-spinner').addClass('d-none');
-        let date = new Date(parseInt(httpResponse.data.data.date) * 1000);
+        let date  = new Date(parseInt(httpResponse.data.data.date) * 1000);
+        let day   = date.toLocaleString("en-US",{day: "numeric"});
+        let month = date.toLocaleString("en-US",{month: "numeric"});
+        let year  = date.toLocaleString("en-US",{year: "numeric"});
+        let time  = date.toLocaleString("en-US",{hour: '2-digit', minute: '2-digit',second: '2-digit'});
         
-        $('#detil-transaksi-date').html(`${date.toLocaleString("en-US",{day: "numeric"})}/${date.toLocaleString("en-US",{month: "numeric"})}/${date.toLocaleString("en-US",{year: "numeric"})}&nbsp;&nbsp;&nbsp;${date.toLocaleString("en-US",{hour: '2-digit', minute: '2-digit',second: '2-digit'})}`);
+        $('#detil-transaksi-date').html(`${day}/${month}/${year}&nbsp;&nbsp;&nbsp;${time}`);
         $('#detil-transaksi-nama').html(httpResponse.data.data.nama_lengkap);
-        $('#detil-transaksi-idnasabah').html(httpResponse.data.data.id_nasabah);
+        $('#detil-transaksi-idnasabah').html(httpResponse.data.data.id_user);
         $('#detil-transaksi-idtransaksi').html(httpResponse.data.data.id_transaksi);
-        $('#detil-transaksi-type').html((httpResponse.data.data.type == 'setor')?httpResponse.data.data.type+' sampah':httpResponse.data.data.type+' saldo');
+        $('#detil-transaksi-type').html(httpResponse.data.data.jenis_transaksi);
         $('#btn-cetak-transaksi').attr('href',`${BASEURL}/nasabah/cetaktransaksi/${httpResponse.data.data.id_transaksi}`);
 
         // tarik saldo
-        if (httpResponse.data.data.type == 'tarik') {
-            let jumlah = (httpResponse.data.data.jenis_saldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah):httpResponse.data.data.jumlah+' gram';
+        if (httpResponse.data.data.jenis_transaksi == 'penarikan saldo') {
+            let jenisSaldo = httpResponse.data.data.jenis_saldo;
+            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah_tarik):httpResponse.data.data.jumlah_tarik+' gram';
 
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
-                <h4><strong>Jumlah</strong> : ${jumlah}</h4>
+                <table>
+                    <tr class="text-dark">
+                        <td><h4>Jenis saldo&nbsp;</h4></td>
+                        <td>
+                            <h4>
+                            : &nbsp;&nbsp;${(jenisSaldo == 'uang') ? jenisSaldo : 'emas '+jenisSaldo}
+                            </h4>
+                        </td>
+                    </tr>
+                    <tr class="text-dark">
+                        <td><h4>Jumlah</h4></td>
+                        <td><h4>: &nbsp;&nbsp;${jumlah}</h4></td>
+                    </tr>
+                </table>
             </div>`);
         }
-        // pindah saldo
-        if (httpResponse.data.data.type == 'pindah') {
-            let jumlah = (httpResponse.data.data.jenis_saldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah):httpResponse.data.data.jumlah+' gram';
-            let hasilKonversi = (httpResponse.data.data.asal !== 'uang')?'Rp '+modifUang(httpResponse.data.data.hasil_konversi):httpResponse.data.data.hasil_konversi+' gram';
-
+        // konversi saldo
+        if (httpResponse.data.data.jenis_transaksi == 'konversi saldo') {
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
             <table>
                 <tr class="text-dark">
-                    <td>Saldo asal&nbsp;&nbsp;&nbsp;</td>
-                    <td>: ${httpResponse.data.data.asal}</td>
+                    <td>Saldo tujuan</td>
+                    <td>: &nbsp;&nbsp;${httpResponse.data.data.saldo_tujuan}</td>
                 </tr>
                 <tr class="text-dark">
-                    <td>Saldo tujuan&nbsp;&nbsp;&nbsp;</td>
-                    <td>: ${httpResponse.data.data.tujuan}</td>
+                    <td>Jumlah</td>
+                    <td>: &nbsp;&nbsp;Rp ${modifUang(httpResponse.data.data.jumlah)}</td>
                 </tr>
                 <tr class="text-dark">
-                    <td>Jumlah&nbsp;&nbsp;&nbsp;</td>
-                    <td>: ${jumlah}</td>
+                    <td>Harga emas</td>
+                    <td>: &nbsp;&nbsp;Rp ${modifUang(httpResponse.data.data.harga_emas)}</td>
                 </tr>
                 <tr class="text-dark">
-                    <td>Harga emas&nbsp;&nbsp;&nbsp;</td>
-                    <td>: Rp ${modifUang(httpResponse.data.data.harga_emas)}</td>
-                </tr>
-                <tr class="text-dark">
-                    <td>Hasil konversi&nbsp;&nbsp;&nbsp;</td>
-                    <td>: ${hasilKonversi}</td>
+                    <td>Hasil konversi&nbsp;</td>
+                    <td>
+                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(4)} g
+                    </td>
                 </tr>
             </table>
             </div>`);
         }
         // setor sampah
-        if (httpResponse.data.data.type == 'setor') {
+        if (httpResponse.data.data.jenis_transaksi == 'penyetoran sampah') {
+            let totalRp= 0;
             let trBody = '';
             let barang = httpResponse.data.data.barang;
             barang.forEach((b,i) => {
-                trBody += `<tr class="text-center">
+                totalRp += parseFloat(b.jumlah_rp);
+                trBody  += `<tr class="text-center">
                     <th scope="row">${++i}</th>
-                    <td>${b.jenis_sampah}</td>
-                    <td>${b.jumlah}</td>
-                    <td>Rp ${modifUang(b.harga)}</td>
+                    <td>${b.jenis}</td>
+                    <td>${b.jumlah_kg} kg</td>
+                    <td class="text-left">Rp ${modifUang(b.jumlah_rp)}</td>
                 </tr>`;
             })
 
@@ -362,6 +396,10 @@ const getDetailTransaksi = async (id) => {
                 </thead>
                 <tbody>
                     ${trBody}
+                    <tr>
+                        <th class="text-center" colspan='3'>Total</th>
+                        <td class="text-left">Rp ${modifUang(totalRp.toString())}</td>
+                    </tr>
                 </tbody>
             </table>`);
         }
@@ -370,62 +408,68 @@ const getDetailTransaksi = async (id) => {
 
 /**
  * GET DATA SALDO
+ * ===============================================
  */
 const getDataSaldo = async () => {
+    $('#saldo-uang').html('_ _');
+    $('#saldo-ubs').html('_ _');
+    $('#saldo-antam').html('_ _');
+    $('#saldo-galery24').html('_ _');
 
-    let httpResponse = await httpRequestGet(`${APIURL}/nasabah/getsaldo`);
-
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getsaldo`);
+    
     if (httpResponse.status === 200) {
-        $('#saldo-uang').html(modifUang(httpResponse.data.data.uang));
-        $('#saldo-ubs').html(parseFloat(httpResponse.data.data.ubs).toFixed(4));
-        $('#saldo-antam').html(parseFloat(httpResponse.data.data.antam).toFixed(4));
-        $('#saldo-galery24').html(parseFloat(httpResponse.data.data.galery24).toFixed(4));
+        let dataNasabah = httpResponse.data.data;
+
+        $('#saldo-uang').html(modifUang(dataNasabah.uang.toString()));
+        $('#saldo-ubs').html(parseFloat(dataNasabah.ubs).toFixed(4));
+        $('#saldo-antam').html(parseFloat(dataNasabah.antam).toFixed(4));
+        $('#saldo-galery24').html(parseFloat(dataNasabah.galery24).toFixed(4));
     }
 };
 
 /**
  * GET ALL JENIS SAMPAH
+ * ===============================================
  */
- const getAllJenisSampah = async () => {
- 
-     $('#search-sampah').val('');
-     $('#list-sampah-notfound').addClass('d-none'); 
-     $('#table-jenis-sampah').addClass('d-none'); 
-     $('#list-sampah-spinner').removeClass('d-none'); 
-     let httpResponse = await httpRequestGet(`${APIURL}/sampah/getitem`);
-     $('#table-jenis-sampah').removeClass('d-none'); 
-     $('#list-sampah-spinner').addClass('d-none'); 
-     
-     if (httpResponse.status === 404) {
-         $('#list-sampah-notfound').removeClass('d-none'); 
-         $('#list-sampah-notfound #text-notfound').html(`jenis sampah belum ditambah`); 
-     }
-     else if (httpResponse.status === 200) {
-         let trJenisSampah  = '';
-         let allJenisSampah = sortingSampah(httpResponse.data.data);
-         arrayJenisSampah   = allJenisSampah;
-        
-         allJenisSampah.forEach((n,i) => {
- 
-             trJenisSampah += `<tr class="text-xs">
-                 <td class="align-middle text-center py-3">
-                     <span class="font-weight-bold"> ${++i} </span>
-                 </td>
-                 <td class="align-middle text-center">
-                     <span class="font-weight-bold"> ${n.kategori} </span>
-                 </td>
-                 <td class="align-middle text-center">
-                    ${n.jenis}
-                 </td>
-                 <td class="align-middle text-center py-3">
-                     <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
-                 </td>
-             </tr>`;
-         });
- 
-         $('#table-jenis-sampah tbody').html(trJenisSampah);
-     }
- };
+const getAllJenisSampah = async () => {
+    $('#list-sampah-notfound').addClass('d-none'); 
+    $('#table-jenis-sampah').addClass('d-none'); 
+    $('#list-sampah-spinner').removeClass('d-none'); 
+    let httpResponse = await httpRequestGet(`${APIURL}/sampah/getsampah`);
+    $('#table-jenis-sampah').removeClass('d-none'); 
+    $('#list-sampah-spinner').addClass('d-none'); 
+    
+    if (httpResponse.status === 404) {
+        $('#list-sampah-notfound').removeClass('d-none'); 
+        $('#list-sampah-notfound #text-notfound').html(`jenis sampah belum ditambah`); 
+    }
+    else if (httpResponse.status === 200) {
+        let trJenisSampah  = '';
+        let allJenisSampah = sortingSampah(httpResponse.data.data);
+        arrayJenisSampah   = allJenisSampah;
+    
+        allJenisSampah.forEach((n,i) => {
+
+            trJenisSampah += `<tr class="text-xs">
+                <td class="align-middle text-center py-3">
+                    <span class="font-weight-bold"> ${++i} </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span class="font-weight-bold"> ${n.kategori} </span>
+                </td>
+                <td class="align-middle text-center">
+                ${n.jenis}
+                </td>
+                <td class="align-middle text-center py-3">
+                    <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
+                </td>
+            </tr>`;
+        });
+
+        $('#table-jenis-sampah tbody').html(trJenisSampah);
+    }
+};
 
 // sorting sampah
 const sortingSampah = (data) => {
@@ -456,8 +500,13 @@ const sortingSampah = (data) => {
 }
 
 /**
- * GET DATA PROFILE
+ * DATA PROFILE
+ * ===============================================
  */
+
+let dataNasabah = '';
+
+// get data
 const getDataProfile = async () => {
 
     let httpResponse = await httpRequestGet(`${APIURL}/nasabah/getprofile`);
@@ -465,10 +514,10 @@ const getDataProfile = async () => {
     if (httpResponse.status === 200) {
         dataNasabah = httpResponse.data.data;
         
-        if (pageTitle[1] == 'dashboard') {
+        if (pageTitle2 == 'dashboard') {
             updateNasabahCard(dataNasabah);
         }
-        else if (pageTitle[1] == 'profile') {
+        else if (pageTitle2 == 'profile') {
             updatePersonalInfo(dataNasabah);
         }
     }
@@ -508,6 +557,11 @@ const updatePersonalInfo = (data) => {
     $('#notelp').html(data.notelp);
 };
 
+/**
+ * EDIT PROFILE 
+ * =============================================
+ */
+
 // open modal edit profile
 $('#btn-edit-profile').on('click', function(e) {
     e.preventDefault();
@@ -535,10 +589,8 @@ $('#formEditProfile .form-check-input').on('click', function(e) {
     $(this).prop('checked',true);
 });
 
-/**
- * EDIT PROFILE PROFILE
- */
-$('#formEditProfile').on('submit', function(e) {
+// submit form
+$('#formEditProfile').on('submit', async function(e) {
     e.preventDefault();
     let form = new FormData(e.target);
 
@@ -552,18 +604,15 @@ $('#formEditProfile').on('submit', function(e) {
 
         $('#formEditProfile button#submit #text').addClass('d-none');
         $('#formEditProfile button#submit #spinner').removeClass('d-none');
+        httpResponse = await httpRequestPut(`${APIURL}/nasabah/editprofile`,form);
+        $('#formEditProfile button#submit #text').removeClass('d-none');
+        $('#formEditProfile button#submit #spinner').addClass('d-none');
 
-        axios
-        .put(`${APIURL}/nasabah/editprofile`,form, {
-            headers: {
-                token: TOKEN
+        if (httpResponse.status === 201) {
+            if (form.get('new_password') != '') {
+                $('#newpass-edit').val('');
+                $('#oldpass-edit').val('');
             }
-        })
-        .then((response) => {
-            $('#formEditProfile button#submit #text').removeClass('d-none');
-            $('#formEditProfile button#submit #spinner').addClass('d-none');
-            $('#newpass-edit').val('');
-            $('#oldpass-edit').val('');
 
             let newDataProfile = {};
             for (var pair of form.entries()) {
@@ -575,60 +624,24 @@ $('#formEditProfile').on('submit', function(e) {
 
             showAlert({
                 message: `<strong>Success...</strong> edit profile berhasil!`,
-                btnclose: false,
+                autohide: true,
                 type:'success'
             })
-            setTimeout(() => {
-                hideAlert();
-            }, 3000);
-        })
-        .catch((error) => {
-            $('#formEditProfile button#submit #text').removeClass('d-none');
-            $('#formEditProfile button#submit #spinner').addClass('d-none');
-
-            // bad request
-            if (error.response.status == 400) {
-                if (error.response.data.messages.username) {
-                    $('#username-edit').addClass('is-invalid');
-                    $('#username-edit-error').text('*'+error.response.data.messages.username);
-                }
-                if (error.response.data.messages.notelp) {
-                    $('#notelp-edit').addClass('is-invalid');
-                    $('#notelp-edit-error').text('*'+error.response.data.messages.notelp);
-                }
-                if (error.response.data.messages.old_password) {
-                    $('#oldpass-edit').addClass('is-invalid');
-                    $('#oldpass-edit-error').text('*'+error.response.data.messages.old_password);
-                }
-            }
-            // unauthorized
-            else if (error.response.status == 401) {
-                if (error.response.data.messages == 'token expired') {
-                    Swal.fire({
-                        icon : 'error',
-                        title : '<strong>LOGIN EXPIRED</strong>',
-                        text: 'silahkan login ulang untuk perbaharui login anda',
-                        showCancelButton: false,
-                        confirmButtonText: 'ok',
-                    }).then(() => {
-                        document.cookie = `token=null;expires=;path=/;`;
-                        window.location.replace(`${BASEURL}/login`);
-                    })
-                }
-                else{
-                    document.cookie = `token=null;expires=;path=/;`;
-                    window.location.replace(`${BASEURL}/login`);
-                }
-            }
-            // error server
-            else if (error.response.status == 500) {
-                showAlert({
-                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
-                    btnclose: true,
-                    type:'danger'
-                })
-            }
-        })
+        }
+        else if (httpResponse.status === 400) {
+           if (httpResponse.message.username) {
+               $('#username-edit').addClass('is-invalid');
+               $('#username-edit-error').text('*'+httpResponse.message.username);
+           }
+           if (httpResponse.message.notelp) {
+               $('#notelp-edit').addClass('is-invalid');
+               $('#notelp-edit-error').text('*'+httpResponse.message.notelp);
+           }
+           if (httpResponse.message.old_password) {
+               $('#oldpass-edit').addClass('is-invalid');
+               $('#oldpass-edit-error').text('*'+httpResponse.message.old_password);
+           }
+        }
     }
 });
 
@@ -728,50 +741,3 @@ function validateFormEditProfile(form) {
 
     return status;
 }
-
-/**
- * LOGOUT
- */
-$('#btn-logout').on('click', function(e) {
-    e.preventDefault();
-      
-    Swal.fire({
-        title: 'LOGOUT',
-        text: "Anda yakin ingin keluar dari dashboad?",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'iya',
-        cancelButtonText: 'tidak',
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-            return axios
-            .delete(`${APIURL}/nasabah/logout`, {
-                headers: {
-                    token: TOKEN
-                }
-            })
-            .then(() => {
-                Swal.close();
-                
-                document.cookie = `token=null; path=/;`;
-                window.location.replace(`${BASEURL}/login`);
-            })
-            .catch(error => {
-                Swal.close();
-
-                // unauthorized
-                if (error.response.status == 401) {
-                    document.cookie = `token=null; path=/;`;
-                    window.location.replace(`${BASEURL}/login`);
-                }
-                // error server
-                else if (error.response.status == 500) {
-                    Swal.showValidationMessage(
-                        `server error: coba sekali lagi!`
-                    )
-                }
-            })
-        },
-        allowOutsideClick: () => !Swal.isLoading()
-    })
-})

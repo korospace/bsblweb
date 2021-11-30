@@ -1,127 +1,114 @@
 
 /**
- * GET TOTAL SAMPAH NASABAH
+ * GET TOTAL SAMPAH MASUK
+ * =========================================================
  */
- const getTotalSampahNasabah = async () => {
+ const getSampahMasuk = async () => {
 
-    let httpResponse = await httpRequestGet(`${APIURL}/sampah/totalitem?idnasabah=${IDNASABAH}`);
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/sampahmasuk?idnasabah=${IDNASABAH}`);
 
     if (httpResponse.status === 200) {
         let dataSampah = httpResponse.data.data;
 
-        for (const name in dataSampah) {
-            $(`#sampah-${name}`).html(dataSampah[name].total+' Kg');
-        }   
+        dataSampah.forEach(ds => {
+            $(`#sampah-${ds.kategori}`).html(ds.total+' Kg');
+        });   
     }
 };
 
-// filter transaksi on change
-let currentYear  = '';
-let currentMonth = '';
-$('.filter-transaksi').on('input', function(e) {
-    chartGrafik.destroy();
-    currentYear  = $(`#filter-year`).val();
-    currentMonth = $(`#filter-month`).val();
-    getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
-});
+/**
+ * FILTER TRANSACTION Section
+ * =========================================================
+ */
+
+// modal filter transaksi is open
+let openModalFilterT = (modalTitle) =>  {
+    $('#formFilterTransaksi .modal-title').html(modalTitle);
+}
+
+const filterTransaksi = async (e) => {
+    let formFilter = new FormData(e.parentElement.parentElement.parentElement);
+    let startDate  = formFilter.get('date-start').split('-');
+    let endDate    = formFilter.get('date-end').split('-');
+
+    if ($('#formFilterTransaksi .modal-title').html() == 'Filter Histori') {
+        dateStartHistori = `${startDate[2]}-${startDate[1]}-${startDate[0]}`;
+        dateEndHistori   = `${endDate[2]}-${endDate[1]}-${endDate[0]}`;
+        $('#btn-filter-histori #startdate').html(`${startDate[2]}/${startDate[1]}/${startDate[0]}`);
+        $('#btn-filter-histori #enddate').html(`${endDate[2]}/${endDate[1]}/${endDate[0]}`);
+        getHistoriTransaksi();
+    } 
+    else {
+        dateStartGrafik = `${startDate[2]}-${startDate[1]}-${startDate[0]}`;
+        dateEndGrafik   = `${endDate[2]}-${endDate[1]}-${endDate[0]}`;
+        $('#btn-filter-grafik #startdate').html(`${startDate[2]}/${startDate[1]}/${startDate[0]}`);
+        $('#btn-filter-grafik #enddate').html(`${endDate[2]}/${endDate[1]}/${endDate[0]}`);
+        updateGrafikSetorNasabah();
+    }
+};
+
+// set current start and end DATE
+let dateStartGrafik  = '';
+let dateEndGrafik    = '';
+let dateStartHistori = '';
+let dateEndHistori   = '';
+let setCurrentStartDate = () =>  {
+    let currentUnixTime = new Date(new Date().getTime());
+    let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "numeric"});
+    let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "numeric"});
+    let currentYear  = currentUnixTime.toLocaleString("en-US",{year: "numeric"});
+
+    let previousUnixTime = new Date(currentUnixTime.getTime()-(86400*30*1000));
+    let previousDay   = previousUnixTime.toLocaleString("en-US",{day: "numeric"});
+    let previousMonth = previousUnixTime.toLocaleString("en-US",{month: "numeric"});
+    let previousYear  = previousUnixTime.toLocaleString("en-US",{year: "numeric"});
+
+    dateStartGrafik  = `${previousDay}-${previousMonth}-${previousYear}`;
+    dateEndGrafik    = `${currentDay}-${currentMonth}-${currentYear}`;
+    dateStartHistori = `${previousDay}-${previousMonth}-${previousYear}`;
+    dateEndHistori   = `${currentDay}-${currentMonth}-${currentYear}`;
+
+    $('#btn-filter-grafik #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
+    $('#btn-filter-grafik #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
+    $('#btn-filter-histori #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
+    $('#btn-filter-histori #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
+    
+    $('#formFilterTransaksi #date-start').val(`${previousYear}-${previousMonth}-${previousDay}`);
+    $('#formFilterTransaksi #date-end').val(`${currentYear}-${currentMonth}-${currentDay}`);
+}
+
+setCurrentStartDate();
 
 /**
- * GET ALL TRANSAKSI NASABAH
+ * UPDATE GRAFIK SETOR
+ * ========================================
  */
-const getAllTransaksiNasabah = async (dateFilter) => {
-    $('.spinner-wraper').removeClass('d-none');
-    $('#transaksi-wraper').addClass('d-none');
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&date=${dateFilter}`);
-    $('.spinner-wraper').addClass('d-none'); 
-    $('#transaksi-wraper').removeClass('d-none');
+let chartGrafik = '';
+const updateGrafikSetorNasabah = async () => {
+
+    $('#spinner-wraper-grafik').removeClass('d-none');
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&start=${dateStartGrafik}&end=${dateEndGrafik}`);
+    $('#spinner-wraper-grafik').addClass('d-none'); 
+    let arrayId = [];
+    let arrayKg = [];
     
-    if (httpResponse.status === 404) {
-        updateGrafikSetorNasabah([],[]);
-        $('#transaksi-wraper').html(`<h6 class='opacity-6'>belum ada transaksi</h6>`); 
-    }
-    else if (httpResponse.status === 200) {
-        let arrayId      = [];
-        let arrayKg      = [];
-        let elTransaksi  = '';
+    if (httpResponse.status === 200) {
         let allTransaksi = httpResponse.data.data;
         
         allTransaksi.forEach(t => {
-            let type      = t.type;
-            let jenisSaldo= t.jenis_saldo;
-            let textClass = '';
-            let date      = new Date(parseInt(t.date) * 1000);
-            let day       = date.toLocaleString("en-US",{day: "numeric"});
-            let month     = date.toLocaleString("en-US",{month: "long"});
-            let year      = date.toLocaleString("en-US",{year: "numeric"});
-            let totalTransaksi = '';
-
-            const zeroPad = (num, places) => String(num).padStart(places, '0');
-            const xMonth  = zeroPad(date.toLocaleString("en-US",{month: "numeric"}), 2);
-            const yMonth  = dateFilter.split('-');
-            
-            if (type == 'setor') {
-                textClass      = 'text-success';
-                totalTransaksi = '+Rp'+modifUang(t[`total_${type}`]);
-                
-                if (xMonth == yMonth[0]) {
-                    arrayId.push(t.id_transaksi);
-                    arrayKg.push(t.total_kg);
-                }
+            if (t.jenis_transaksi == 'penyetoran sampah') {
+                arrayId.push(t.id_transaksi);
+                arrayKg.push(t.total_kg_setor);
             } 
-            else if (type == 'tarik') {
-                textClass = 'text-danger';
-                if (jenisSaldo == 'uang') {
-                    totalTransaksi = '-Rp'+modifUang(t[`total_${type}`]);
-                } else {
-                    totalTransaksi = '-'+t[`total_${type}`]+'g';
-                }
-            }
-            else {
-                textClass = 'text-warning';
-                if (jenisSaldo == 'uang') {
-                    totalTransaksi = '<i class="fas fa-exchange-alt"></i> Rp'+modifUang(t[`total_${type}`]);
-                } else {
-                    totalTransaksi = t[`total_${type}`]+'g';
-                }
-            }
-
-            if (xMonth == yMonth[0]) {
-                elTransaksi  += `<li class="list-group-item border-0 ps-0 border-radius-lg">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-column">
-                        <h6 class="mb-1 text-dark font-weight-bold text-sm">${month}, ${day}, ${year}</h6>
-                        <span class="text-xs">ID: ${t.id_transaksi}</span>
-                        <span class="${textClass} mt-2">${totalTransaksi}</span>
-                    </div>
-                    <div class="d-flex align-items-center text-sm">
-                        <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 text-sm bg-info border-radius-sm"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
-                            <i class="fas fa-file-pdf text-xs text-white"></i>
-                        </a>
-                        <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 ml-1 text-sm bg-danger border-radius-sm" onclick="deleteTransaksiNasabah('${t.id_transaksi}',event);">
-                            <i class="fas fa-trash text-xs text-white"></i>
-                        </a>
-                    </div>
-                </div>
-                <hr class="horizontal dark mt-2">
-            </li>`;
-            }
         });
-
-        updateGrafikSetorNasabah(arrayId,arrayKg);
-        $('#transaksi-wraper').html(`<ul class="list-group h-100 w-100" style="font-family: 'qc-medium';">
-            ${elTransaksi}
-        </ul>`);
     }
-};
+    if (chartGrafik != '') {
+        chartGrafik.destroy();
+    }
 
-// update grafik setor
-let chartGrafik = '';
-const updateGrafikSetorNasabah = (arrayId,arrayKg) => {
-    var ctx2       = document.getElementById("chart-line").getContext("2d");
-    // let chartWidth = arrayId.length*160;
+    var ctx2 = document.getElementById("chart-line").getContext("2d");
     document.querySelector("#chart-line").style.width    = '100%';
     document.querySelector("#chart-line").style.maxHeight= '300px';
-    // document.querySelector("#chart-line").style.minWidth = `${chartWidth}px`;
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
     gradientStroke1.addColorStop(1, 'rgba(193,217,102,0.2)');
@@ -209,7 +196,88 @@ const updateGrafikSetorNasabah = (arrayId,arrayKg) => {
 };
 
 /**
+ * GET ALL TRANSAKSI NASABAH
+ * ========================================
+ */
+const getHistoriTransaksi = async () => {
+    $('#spinner-wraper-histori').removeClass('d-none');
+    $('#transaksi-wraper-histori').addClass('d-none');
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&start=${dateStartHistori}&end=${dateEndHistori}`);
+    $('#spinner-wraper-histori').addClass('d-none'); 
+    $('#transaksi-wraper-histori').removeClass('d-none');
+    
+    if (httpResponse.status === 404) {
+        $('#transaksi-wraper-histori').html(`<h6 class='opacity-6'>belum ada transaksi</h6>`); 
+    }
+    else if (httpResponse.status === 200) {
+        let elTransaksi  = '';
+        let allTransaksi = httpResponse.data.data;
+        
+        allTransaksi.forEach(t => {
+            let textClass      = '';
+            let totalTransaksi = '';
+            let jenisTransaksi = t.jenis_transaksi;
+            let jenisSaldo     = t.jenis_saldo;
+            let date      = new Date(parseInt(t.date) * 1000);
+            let day       = date.toLocaleString("en-US",{day: "numeric"});
+            let month     = date.toLocaleString("en-US",{month: "long"});
+            let year      = date.toLocaleString("en-US",{year: "numeric"});
+
+            // const zeroPad = (num, places) => String(num).padStart(places, '0');
+            // const xMonth  = zeroPad(date.toLocaleString("en-US",{month: "numeric"}), 2);
+            // const yMonth  = dateFilter.split('-');
+            
+            if (jenisTransaksi == 'penyetoran sampah') {
+                textClass      = 'text-success';
+                totalTransaksi = '+ Rp'+modifUang(t[`total_uang_setor`]);
+                
+                // arrayId.push(t.id_transaksi);
+                // arrayKg.push(t.total_kg);
+            } 
+            else if (jenisTransaksi == 'konversi saldo') {
+                textClass      = 'text-warning';
+                totalTransaksi = 'Rp'+modifUang(kFormatter(t[`total_pindah`]))+' <i class="fas fa-exchange-alt"></i> '+parseFloat(t[`hasil_konversi`]).toFixed(2)+'g';
+            }
+            else {
+                textClass = 'text-danger';
+                if (jenisSaldo == 'uang') {
+                    totalTransaksi = '- Rp'+modifUang(t[`total_tarik`]);
+                } 
+                else {
+                    totalTransaksi = '- '+t[`total_tarik`]+'g';
+                }
+            }
+
+            elTransaksi  += `<li class="list-group-item border-0 ps-0 border-radius-lg">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                        <h6 class="mb-1 text-dark font-weight-bold text-sm">${month}, ${day}, ${year}</h6>
+                        <span class="text-xs">ID: ${t.id_transaksi}</span>
+                        <span class="${textClass} mt-2">${totalTransaksi}</span>
+                    </div>
+                    <div class="d-flex align-items-center text-sm">
+                        <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 text-sm bg-info border-radius-sm"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
+                            <i class="fas fa-file-pdf text-xs text-white"></i>
+                        </a>
+                        <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 ml-1 text-sm bg-danger border-radius-sm" onclick="deleteTransaksiNasabah('${t.id_transaksi}',event);">
+                            <i class="fas fa-trash text-xs text-white"></i>
+                        </a>
+                    </div>
+                </div>
+                <hr class="horizontal dark mt-2">
+            </li>`;
+        });
+
+        // updateGrafikSetorNasabah(arrayId,arrayKg);
+        $('#transaksi-wraper-histori').html(`<ul class="list-group h-100 w-100" style="font-family: 'qc-medium';">
+            ${elTransaksi}
+        </ul>`);
+    }
+};
+
+/**
  * GET DETAIL TRANSAKSI
+ * ==============================================
  */
 const getDetailTransaksiNasabah = async (id) => {
     $('#detil-transaksi-body').html(' ');
@@ -218,26 +286,33 @@ const getDetailTransaksiNasabah = async (id) => {
     
     if (httpResponse.status === 200) {
         $('#detil-transaksi-spinner').addClass('d-none');
-        let date = new Date(parseInt(httpResponse.data.data.date) * 1000);
+        let date  = new Date(parseInt(httpResponse.data.data.date) * 1000);
+        let day   = date.toLocaleString("en-US",{day: "numeric"});
+        let month = date.toLocaleString("en-US",{month: "numeric"});
+        let year  = date.toLocaleString("en-US",{year: "numeric"});
+        let time  = date.toLocaleString("en-US",{hour: '2-digit', minute: '2-digit',second: '2-digit'});
         
-        $('#detil-transaksi-date').html(`${date.toLocaleString("en-US",{day: "numeric"})}/${date.toLocaleString("en-US",{month: "numeric"})}/${date.toLocaleString("en-US",{year: "numeric"})}&nbsp;&nbsp;&nbsp;${date.toLocaleString("en-US",{hour: '2-digit', minute: '2-digit',second: '2-digit'})}`);
+        $('#detil-transaksi-date').html(`${day}/${month}/${year}&nbsp;&nbsp;&nbsp;${time}`);
         $('#detil-transaksi-nama').html(httpResponse.data.data.nama_lengkap);
-        $('#detil-transaksi-idnasabah').html(httpResponse.data.data.id_nasabah);
+        $('#detil-transaksi-idnasabah').html(httpResponse.data.data.id_user);
         $('#detil-transaksi-idtransaksi').html(httpResponse.data.data.id_transaksi);
-        $('#detil-transaksi-type').html((httpResponse.data.data.type == 'setor')?httpResponse.data.data.type+' sampah':httpResponse.data.data.type+' saldo');
+        $('#detil-transaksi-type').html(httpResponse.data.data.jenis_transaksi);
         $('#btn-cetak-transaksi').attr('href',`${BASEURL}/nasabah/cetaktransaksi/${httpResponse.data.data.id_transaksi}`);
 
         // tarik saldo
-        if (httpResponse.data.data.type == 'tarik') {
+        if (httpResponse.data.data.jenis_transaksi == 'penarikan saldo') {
             let jenisSaldo = httpResponse.data.data.jenis_saldo;
-            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah):httpResponse.data.data.jumlah+' gram';
-
+            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah_tarik):httpResponse.data.data.jumlah_tarik+' gram';
 
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
                 <table>
                     <tr class="text-dark">
                         <td><h4>Jenis saldo&nbsp;</h4></td>
-                        <td><h4>: &nbsp;&nbsp;${(jenisSaldo == 'uang') ? jenisSaldo : 'emas '+jenisSaldo}</h4></td>
+                        <td>
+                            <h4>
+                            : &nbsp;&nbsp;${(jenisSaldo == 'uang') ? jenisSaldo : 'emas '+jenisSaldo}
+                            </h4>
+                        </td>
                     </tr>
                     <tr class="text-dark">
                         <td><h4>Jumlah</h4></td>
@@ -246,24 +321,17 @@ const getDetailTransaksiNasabah = async (id) => {
                 </table>
             </div>`);
         }
-        // pindah saldo
-        if (httpResponse.data.data.type == 'pindah') {
-            let jumlah = (httpResponse.data.data.jenis_saldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah):httpResponse.data.data.jumlah+' gram';
-            let hasilKonversi = (httpResponse.data.data.asal !== 'uang')?'Rp '+modifUang(httpResponse.data.data.hasil_konversi):httpResponse.data.data.hasil_konversi+' gram';
-
+        // konversi saldo
+        if (httpResponse.data.data.jenis_transaksi == 'konversi saldo') {
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
             <table>
                 <tr class="text-dark">
-                    <td>Saldo asal</td>
-                    <td>: &nbsp;&nbsp;${httpResponse.data.data.asal}</td>
-                </tr>
-                <tr class="text-dark">
                     <td>Saldo tujuan</td>
-                    <td>: &nbsp;&nbsp;${httpResponse.data.data.tujuan}</td>
+                    <td>: &nbsp;&nbsp;${httpResponse.data.data.saldo_tujuan}</td>
                 </tr>
                 <tr class="text-dark">
                     <td>Jumlah</td>
-                    <td>: &nbsp;&nbsp;${jumlah}</td>
+                    <td>: &nbsp;&nbsp;Rp ${modifUang(httpResponse.data.data.jumlah)}</td>
                 </tr>
                 <tr class="text-dark">
                     <td>Harga emas</td>
@@ -271,21 +339,25 @@ const getDetailTransaksiNasabah = async (id) => {
                 </tr>
                 <tr class="text-dark">
                     <td>Hasil konversi&nbsp;</td>
-                    <td>: &nbsp;&nbsp;${hasilKonversi}</td>
+                    <td>
+                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(4)} g
+                    </td>
                 </tr>
             </table>
             </div>`);
         }
         // setor sampah
-        if (httpResponse.data.data.type == 'setor') {
+        if (httpResponse.data.data.jenis_transaksi == 'penyetoran sampah') {
+            let totalRp= 0;
             let trBody = '';
             let barang = httpResponse.data.data.barang;
             barang.forEach((b,i) => {
-                trBody += `<tr class="text-center">
+                totalRp += parseFloat(b.jumlah_rp);
+                trBody  += `<tr class="text-center">
                     <th scope="row">${++i}</th>
-                    <td>${b.jenis_sampah}</td>
-                    <td>${b.jumlah}</td>
-                    <td>Rp ${modifUang(b.harga)}</td>
+                    <td>${b.jenis}</td>
+                    <td>${b.jumlah_kg} kg</td>
+                    <td class="text-left">Rp ${modifUang(b.jumlah_rp)}</td>
                 </tr>`;
             })
 
@@ -300,6 +372,10 @@ const getDetailTransaksiNasabah = async (id) => {
                 </thead>
                 <tbody>
                     ${trBody}
+                    <tr>
+                        <th class="text-center" colspan='3'>Total</th>
+                        <td class="text-left">Rp ${modifUang(totalRp.toString())}</td>
+                    </tr>
                 </tbody>
             </table>`);
         }
@@ -307,7 +383,31 @@ const getDetailTransaksiNasabah = async (id) => {
 };
 
 /**
+ * GET SALDO NASABAH
+ * ==============================================
+ */
+const getSaldoNasabah = async () => {
+
+    $('#saldo-uang').html('_ _');
+    $('#saldo-ubs').html('_ _');
+    $('#saldo-antam').html('_ _');
+    $('#saldo-galery24').html('_ _');
+
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getsaldo?idnasabah=${IDNASABAH}`);
+    
+    if (httpResponse.status === 200) {
+        let dataNasabah = httpResponse.data.data;
+
+        $('#saldo-uang').html(modifUang(dataNasabah.uang.toString()));
+        $('#saldo-ubs').html(parseFloat(dataNasabah.ubs).toFixed(4));
+        $('#saldo-antam').html(parseFloat(dataNasabah.antam).toFixed(4));
+        $('#saldo-galery24').html(parseFloat(dataNasabah.galery24).toFixed(4));
+    }
+};
+
+/**
  * GET DATA PROFILE NASABAH
+ * ==============================================
  */
 const getDataProfileNasabah = async () => {
 
@@ -324,8 +424,8 @@ const getDataProfileNasabah = async () => {
             window.location.replace(`${BASEURL}/admin/listnasabah`);
         })
     }
-    if (httpResponse.status === 200) {
-        let dataNasabah = httpResponse.data.data;
+    else if (httpResponse.status === 200) {
+        let dataNasabah = httpResponse.data.data[0];
         let date        = new Date(parseInt(dataNasabah.created_at) * 1000);
 
         // -- nasabah card --
@@ -334,10 +434,10 @@ const getDataProfileNasabah = async () => {
         $('#card-date').html(`${date.toLocaleString("en-US",{day: "numeric"})}/${date.toLocaleString("en-US",{month: "numeric"})}/${date.toLocaleString("en-US",{year: "numeric"})}`);
 
         // -- saldo --
-        $('#saldo-uang').html(modifUang(dataNasabah.saldo_uang));
-        $('#saldo-ubs').html(parseFloat(dataNasabah.saldo_ubs).toFixed(4));
-        $('#saldo-antam').html(parseFloat(dataNasabah.saldo_antam).toFixed(4));
-        $('#saldo-galery24').html(parseFloat(dataNasabah.saldo_galery24).toFixed(4));
+        // $('#saldo-uang').html(modifUang(dataNasabah.saldo_uang));
+        // $('#saldo-ubs').html(parseFloat(dataNasabah.saldo_ubs).toFixed(4));
+        // $('#saldo-antam').html(parseFloat(dataNasabah.saldo_antam).toFixed(4));
+        // $('#saldo-galery24').html(parseFloat(dataNasabah.saldo_galery24).toFixed(4));
 
         // -- personal info --
         $('#personal-info #email').html(dataNasabah.email);
@@ -368,43 +468,15 @@ const openModalSetorSaldo = () => {
 // GET ALL JENIS SAMPAH
 let arrayJenisSampah = [];
 const getAllJenisSampah = async () => {
-    let httpResponse = await httpRequestGet(`${APIURL}/sampah/getitem`);
+    let httpResponse = await httpRequestGet(`${APIURL}/sampah/getsampah`);
 
     if (httpResponse.status === 200) {
-        arrayJenisSampah = sortingSampah(httpResponse.data.data);
+        arrayJenisSampah = httpResponse.data.data;
     }
 
     tambahBaris();
 };
 getAllJenisSampah();
-
-// sorting sampah
-const sortingSampah = (data) => {
-    let arrKategori = [];
-    let objSampah   = {};
-    let newArrSampah= [];
-    
-    // create array kategori
-    data.forEach(d => {
-        if (!arrKategori.includes(d.kategori)) {
-            arrKategori.push(d.kategori.replace(/\s/g,'_'));
-        }
-    });
-
-    arrKategori.forEach(aK => {
-        objSampah[aK] = data.filter((d) => {
-            return d.kategori == aK.replace(/_/g,' ');
-        })
-    });
-
-    for (let key in objSampah) {
-        objSampah[key].forEach(x => {
-            newArrSampah.push(x);
-        });
-    }
-
-    return newArrSampah;
-}
 
 // tambah baris
 const tambahBaris = (event = false) => {
@@ -412,11 +484,15 @@ const tambahBaris = (event = false) => {
         event.preventDefault();
     }
 
-    let elJenisSampah = `<option value='' data-harga='0' selected>-- pilih jenis sampah  --</option>`;
+    let tmpKatSampah = [];
+    let elKatSampah  = `<option data-kategori="" selected>-- kategori sampah  --</option>`;
 
     if (arrayJenisSampah.length !== 0) {
         arrayJenisSampah.forEach(s=> {
-            elJenisSampah += `<option value="${s.jenis}" data-harga="${s.harga}">${s.kategori} - ${s.jenis}</option>`;
+            if (!tmpKatSampah.includes(s.kategori)) {
+                tmpKatSampah.push(s.kategori)
+                elKatSampah += `<option data-kategori="${s.kategori}">${s.kategori}</option>`;
+            }
         });
     }
 
@@ -427,8 +503,13 @@ const tambahBaris = (event = false) => {
         </span>
     </td>
     <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
-        <select id="kategori-berita-wraper" class="inputJenisSampah form-control form-control-sm py-1 pl-2 border-radius-sm" name="transaksi[slot${totalBaris+1}][jenis_sampah]" style="min-height: 38px" onchange="getHargaInOption(this,event);">
-            ${elJenisSampah}
+        <select id="kategori-berita-wraper" class="inputJenisSampah form-control form-control-sm py-1 pl-2 border-radius-sm" style="min-height: 38px" onchange="insertJenisSampah(this,event);">
+            ${elKatSampah}
+        </select>
+    </td>
+    <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <select id="kategori-berita-wraper" class="inputJenisSampah form-control form-control-sm py-1 pl-2 border-radius-sm" name="transaksi[slot${totalBaris+1}][id_sampah]" style="min-height: 38px" onchange="getHargaInOption(this,event);" disabled>
+            <option>-- jenis sampah  --</option>
         </select>
     </td>
     <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
@@ -451,7 +532,35 @@ const hapusBaris = (el) => {
     countTotalHarga();
 }
 
-// get harga in option
+// kategori sampah on change
+const insertJenisSampah = (el,event) =>{
+    var kategori      = event.target.options[event.target.selectedIndex].dataset.kategori;
+    let eljenisSampah = `<option value='' data-harga='' selected>-- jenis sampah --</option>`;
+    
+    arrayJenisSampah.forEach(s=> {
+        if (s.kategori == kategori) {
+            eljenisSampah += `<option value='${s.id}' data-harga='${s.harga}'>${s.jenis}</option>`;
+        }
+    });
+
+    let elInputJenisSampah = el.parentElement.nextElementSibling.children[0];
+    let elInputJumlah      = el.parentElement.nextElementSibling.nextElementSibling.children[0];
+    let elInputHarga       = el.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.children[0];
+    elInputJenisSampah.innerHTML = eljenisSampah;
+    elInputJumlah.value          = 0;
+    elInputHarga.value           = 0;
+    elInputHarga.setAttribute('data-harga',0);
+    countTotalHarga();
+
+    if (kategori != '') {
+        elInputJenisSampah.removeAttribute('disabled');
+    } 
+    else {
+        elInputJenisSampah.setAttribute('disabled',true);
+    }
+};
+
+// jenis sampah on change
 const getHargaInOption = (el,event) =>{
     var harga = event.target.options[event.target.selectedIndex].dataset.harga;
 
@@ -502,7 +611,13 @@ const validateSetorSampah = () => {
     // tgl transaksi
     if ($('#formSetorSampah #date').val() == '') {
         $('#formSetorSampah #date').addClass('is-invalid');
-        $('#formSetorSampah #date-error').html('*tanggal harus di isi');
+        $('#formSetorSampah #date-error').html('*waktu harus di isi');
+        status = false;
+    }
+    // waktu transaksi
+    if ($('#formSetorSampah #time').val() == '') {
+        $('#formSetorSampah #time').addClass('is-invalid');
+        $('#formSetorSampah #date-error').html('*waktu harus di isi');
         status = false;
     }
 
@@ -571,6 +686,12 @@ const validatePindahSaldo = () => {
         $('#formPindahSaldo #date-error').html('*tanggal harus di isi');
         status = false;
     }
+    // waktu transaksi
+    if ($('#formPindahSaldo #time').val() == '') {
+        $('#formPindahSaldo #time').addClass('is-invalid');
+        $('#formPindahSaldo #date-error').html('*waktu harus di isi');
+        status = false;
+    }
     // harga emas
     if ($('#formPindahSaldo #harga_emas').val() == '') {
         $('#formPindahSaldo #harga_emas').addClass('is-invalid');
@@ -634,6 +755,12 @@ const validateTarikSaldo = () => {
     if ($('#formTarikSaldo #date').val() == '') {
         $('#formTarikSaldo #date').addClass('is-invalid');
         $('#formTarikSaldo #date-error').html('*tanggal harus di isi');
+        status = false;
+    }
+    // waktu transaksi
+    if ($('#formTarikSaldo #time').val() == '') {
+        $('#formTarikSaldo #time').addClass('is-invalid');
+        $('#formTarikSaldo #date-error').html('*waktu harus di isi');
         status = false;
     }
     // saldo tujuan
@@ -717,28 +844,30 @@ const doTransaksi = async (el,event,method) => {
         })
         
         let doTransaksiInner = async () => {
-            let form         = new FormData(elForm);
-            let tglTransaksi = form.get('date').split('-');
-            form.set('date',`${tglTransaksi[2]}-${tglTransaksi[1]}-${tglTransaksi[0]}`);
+            let form           = new FormData(elForm);
+            let tglTransaksi   = form.get('date').split('-');
+            let waktuTransaksi = form.get('time');
+            form.set('date',`${tglTransaksi[2]}-${tglTransaksi[1]}-${tglTransaksi[0]} ${waktuTransaksi}`);
     
             showLoadingSpinner();
             httpResponse = await httpRequestPost(`${APIURL}/transaksi/${method}`,form);    
             hideLoadingSpinner();
     
             if (httpResponse.status === 201) {
-                chartGrafik.destroy();
                 $(`.form-control`).val('');
                 $('.form-check-input').prop('checked',false);
-                $(`#filter-month`).val(tglTransaksi[1]);
-                $(`#filter-year`).val(tglTransaksi[0]);
-                getAllTransaksiNasabah(`${tglTransaksi[1]}-${tglTransaksi[0]}`);
-                getDataProfileNasabah();
+                getSaldoNasabah();
+                // chartGrafik.destroy();
+                // $(`#filter-month`).val(tglTransaksi[1]);
+                // $(`#filter-year`).val(tglTransaksi[0]);
+                // getAllTransaksiNasabah(`${tglTransaksi[1]}-${tglTransaksi[0]}`);
+                // getDataProfileNasabah();
     
                 if (method == 'setorsampah') {
                     $('.barisSetorSampah').remove();
                     tambahBaris();
-                    getTotalSampahNasabah();
                     countTotalHarga();
+                    // getTotalSampahNasabah();
                 } 
     
                 showAlert({

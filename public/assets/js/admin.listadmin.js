@@ -22,25 +22,40 @@ const getAllAdmin = async () => {
         arrayAdmin   = httpResponse.data.data;
 
         allAdmin.forEach((n,i) => {
+            let stringLastActive = 'belum login';
+
+            if (n.last_active != n.created_at) {
+                let date  = new Date(parseInt(n.last_active) * 1000);
+                let hour  = date.toLocaleString("en-US",{ hour: 'numeric', minute: 'numeric' });
+                let day   = date.toLocaleString("en-US",{day: "numeric"});
+                let month = date.toLocaleString("en-US",{month: "long"});
+                let year  = date.toLocaleString("en-US",{year: "numeric"});
+                stringLastActive = `${day}-${month}-${year} ${hour}`;
+            }
 
             trAdmin += `<tr class="text-xs">
                 <td class="align-middle text-center py-3">
                     <span class="font-weight-bold"> ${++i} </span>
                 </td>
                 <td class="align-middle text-center py-3">
-                    <span class="font-weight-bold"> ${n.id} </span>
+                    <span class="font-weight-bold"> ${n.username} </span>
                 </td>
                 <td class="align-middle text-center">
                     <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.active === 't')? 'yes' : 'no'} </span>
+                    <span class="font-weight-bold badge border ${(n.privilege === 'superadmin')? 'text-primary border-primary' : 'text-info border-info'} pb-1 rounded-sm"> ${n.privilege} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.privilege === 'super')? 'text-primary border-primary' : 'text-info border-info'} pb-1 rounded-sm"> ${(n.privilege === 'super')? 'superadmin' : 'admin'} </span>
+                    <span class="font-weight-bold badge border ${(n.is_active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_active === 't')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin(this,'${n.id}')">hapus</span>
+                    <span class="font-weight-bold text-capitalize"> 
+                        ${stringLastActive}
+                    </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin('${n.id}')">hapus</span>
                     <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="openModalAddEditAdm('editadmin','${n.id}')">edit</span>
                 </td>
             </tr>`;
@@ -73,24 +88,40 @@ $('#search-admin').on('keyup', function() {
         $('#list-admin-notfound #text-notfound').html(` `); 
 
         adminFiltered.forEach((n,i) => {
+            let stringLastActive = 'belum login';
+
+            if (n.last_active != n.created_at) {
+                let date  = new Date(parseInt(n.last_active) * 1000);
+                let hour  = date.toLocaleString("en-US",{ hour: 'numeric', minute: 'numeric' });
+                let day   = date.toLocaleString("en-US",{day: "numeric"});
+                let month = date.toLocaleString("en-US",{month: "long"});
+                let year  = date.toLocaleString("en-US",{year: "numeric"});
+                stringLastActive = `${day}-${month}-${year} ${hour}`;
+            }
+
             elSugetion += `<tr class="text-xs">
                 <td class="align-middle text-center py-3">
                     <span class="font-weight-bold"> ${++i} </span>
                 </td>
                 <td class="align-middle text-center py-3">
-                    <span class="font-weight-bold"> ${n.id} </span>
+                    <span class="font-weight-bold"> ${n.username} </span>
                 </td>
                 <td class="align-middle text-center">
                     <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.active === 't')? 'yes' : 'no'} </span>
+                    <span class="font-weight-bold badge border ${(n.privilege === 'superadmin')? 'text-primary border-primary' : 'text-info border-info'} pb-1 rounded-sm"> ${n.privilege} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.privilege === 'super')? 'text-primary border-primary' : 'text-info border-info'} pb-1 rounded-sm"> ${(n.privilege === 'super')? 'superadmin' : 'admin'} </span>
+                    <span class="font-weight-bold badge border ${(n.is_active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_active === 't')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin(this,'${n.id}')">hapus</span>
+                    <span class="font-weight-bold text-capitalize"> 
+                        ${stringLastActive}
+                    </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin('${n.id}')">hapus</span>
                     <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="openModalAddEditAdm('editadmin','${n.id}')">edit</span>
                 </td>
             </tr>`;
@@ -139,16 +170,16 @@ const crudAdmin = async (el,event) => {
         let newTgl       = form.get('tgl_lahir').split('-');
         let isSuperAdmin = $('#formAddEditAdmin input[name=privilege]').val();
         form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`);
-        form.set('privilege',`${(isSuperAdmin == '1') ? 'super' : 'admin' }`);
+        form.set('privilege',`${(isSuperAdmin == '1') ? 'superadmin' : 'admin' }`);
 
         $('#formAddEditAdmin button#submit #text').addClass('d-none');
         $('#formAddEditAdmin button#submit #spinner').removeClass('d-none');
         if (modalTitle == 'edit admin') {
-            form.set('active',$('#formAddEditAdmin input[name=active]').val());
+            form.set('is_active',$('#formAddEditAdmin input[name=is_active]').val());
             httpResponse = await httpRequestPut(`${APIURL}/admin/editadmin`,form);    
         } 
         else {
-            httpResponse = await httpRequestPost(`${APIURL}/admin/addadmin`,form);    
+            httpResponse = await httpRequestPost(`${APIURL}/register/admin`,form);    
         }
         $('#formAddEditAdmin button#submit #text').removeClass('d-none');
         $('#formAddEditAdmin button#submit #spinner').addClass('d-none');
@@ -161,12 +192,9 @@ const crudAdmin = async (el,event) => {
 
             showAlert({
                 message: `<strong>Success...</strong> admin berhasil ${(modalTitle == 'tambah admin') ? 'ditambah' : 'diedit' }!`,
-                btnclose: false,
+                autohide: true,
                 type:'success'
             })
-            setTimeout(() => {
-                hideAlert();
-            }, 3000);
         }
         else if (httpResponse.status === 400) {
             if (httpResponse.message.username) {
@@ -202,7 +230,7 @@ const crudAdmin = async (el,event) => {
         // kelamin
         $(`#formAddEditAdmin input#kelamin-${dataAdmin.kelamin}`).prop('checked',true);
         // admin privilege
-        if (dataAdmin.privilege == 'super') {
+        if (dataAdmin.privilege == 'superadmin') {
             $(`#formAddEditAdmin input[name=privilege]`).val('1');
             $(`#formAddEditAdmin .toggle-privilege`).removeClass('bg-secondary').addClass('active bg-success');
         } 
@@ -212,12 +240,12 @@ const crudAdmin = async (el,event) => {
         }
         
         // is account active
-        if (dataAdmin.active == 't') {
-            $(`#formAddEditAdmin input[name=active]`).val('1');
+        if (dataAdmin.is_active == 't') {
+            $(`#formAddEditAdmin input[name=is_active]`).val('1');
             $(`#formAddEditAdmin .toggle-akunaktif`).removeClass('bg-secondary').addClass('active bg-success');
         } 
         else {
-            $(`#formAddEditAdmin input[name=active]`).val('0');
+            $(`#formAddEditAdmin input[name=is_active]`).val('0');
             $(`#formAddEditAdmin .toggle-akunaktif`).removeClass('active bg-success').addClass('bg-secondary');
         }
 
@@ -254,10 +282,10 @@ $('#formAddEditAdmin input[type=checkbox]').on('click', function(e) {
 /**
  * HAPUS ADMIN
  */
-const hapusAdmin = (el,id) => {
+const hapusAdmin = (id) => {
     Swal.fire({
         title: 'ANDA YAKIN?',
-        text: "Data akan terhapus permanen",
+        text: `semua artikel yang ditulis admin ini akan ikut terhapus`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'iya',
@@ -287,12 +315,14 @@ const hapusAdmin = (el,id) => {
                         return httpRequestDelete(`${APIURL}/admin/deleteadmin?id=${id}`)
                         .then((e) => {
                             if (e.status == 201) {
-                                el.parentElement.parentElement.remove();
-                                arrayAdmin = arrayAdmin.filter(e => e.id != id);
-                                if (arrayAdmin.length == 0) {
-                                    $('#list-admin-notfound').removeClass('d-none'); 
-                                    $('#list-admin-notfound #text-notfound').html(`admin belum ditambah`); 
-                                } 
+                                getAllAdmin();
+                            }
+                            else if (e.status == 400) {
+                                showAlert({
+                                    message: `<strong>Gagal . . .</strong> ${e.message}`,
+                                    autohide: true,
+                                    type:'danger'
+                                })
                             }
                         })
                     })

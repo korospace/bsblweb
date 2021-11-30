@@ -18,11 +18,25 @@
 			right: 0 !important; */
 			transform: translateX(25px);
 		}
+
+		#search-kodepos::placeholder {
+			color: #ccc;
+			font-weight: lighter;
+			font-size: 14px;
+		}
+
+		.kodepos-list:hover{
+			background-color: rgba(233, 236, 239, 0.4) !important;
+		}
+
+		.kodepos-list.active{
+			background-color: #E9ECEF !important;
+		}
 	</style>
   	<!-- ** develoment ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<!-- ** production ** -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.listnasabah.css'); ?>">
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.listnasabah.css'); ?>"> -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -38,9 +52,10 @@
 	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.listnasabah.js'); ?>"></script> -->
-	<script src="<?= base_url('assets/js/admin.listnasabah.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.listnasabah.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.listnasabah.min.js'); ?>"></script> -->
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -50,7 +65,7 @@
 	<!-- **** Alert Info **** -->
 	<?= $this->include('Components/alertInfo'); ?>
 
-	<body class="g-sidenav-show bg-gray-100">
+	<body class="g-sidenav-show bg-gray-100" style="overflow: hidden;">
 		<!-- **** Sidebar **** -->
 		<?= $this->include('Components/adminSidebar'); ?>
 
@@ -89,21 +104,32 @@
 					<div class="col-12 h-100" style="max-height: 100%;">
 						<div class="card mb-4 h-100 d-flex flex-column" style="max-height: 100%;overflow: hidden;font-family: 'qc-semibold';">
 							<!-- search input -->
-							<div class="card-header form-row pb-0 d-flex justify-content-between" style="font-family: 'qc-semibold';">
+							<div class="card-header form-row pb-0 mb-3 d-flex justify-content-between" style="font-family: 'qc-semibold';">
 								<div class="input-group col-12 col-sm-6">
 									<div class="input-group-prepend">
 										<span class="input-group-text bg-gray px-4 border-md border-right-0" style="max-height: 39px;">
 											<i class="fas fa-search text-muted"></i>
 										</span>
 									</div>
-									<input id="search-nasabah" type="text" class="form-control h-100 px-2" placeholder="id/nama/kodepos/wilayah" style="max-height: 39px;">
+									<input id="search-nasabah" type="text" class="form-control h-100 px-2" placeholder="id/nama lengkap" style="max-height: 39px;">
 								</div>
 								<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
 									<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('addnasabah')" style="width: 100%;">tambah</button>
 								</div>
+								<div class="input-group col-12 flex-column text-sm">
+									<div class="d-flex align-items-center">
+										<a id="btn-edit-profile" class="shadow px-1 border-radius-none mr-2" href="" data-toggle="modal" data-target="#modalFilterNasabah">
+											<i class="fas fa-sliders-h text-secondary"></i>
+										</a>
+										<span id="ket-filter" class=" text-secondary">terbaru - semua wilayah</span>
+									</div>
+									<div class="mt-2 text-xs text-secondary">
+										<span id="ket-total">0</span> nasabah
+									</div>
+								</div>
 							</div>
 							<!-- container table -->
-							<div class="card-body px-0 pt-0 pb-2 position-relative" style="flex: 1;overflow: auto;font-family: 'qc-semibold';">
+							<div class="card-body table-responsive px-0 pt-0 pb-2 position-relative" style="flex: 1;overflow: hidden;font-family: 'qc-semibold';">
 								<!-- spinner -->
 								<div id="list-nasabah-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
@@ -123,13 +149,13 @@
 												ID Nasabah
 											</th>
 											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Email
-											</th>
-											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Nama lengkap
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Ter-verifikasi
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Terakhir login
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Action
@@ -164,6 +190,70 @@
 			</div>
 		</main>
 	</body>
+
+	<!-- modals filter nasabah-->
+	<div class="modal fade" id="modalFilterNasabah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<form id="formFilterNasabah" class="modal-dialog modal-sm" role="document">
+			<input type="hidden" name="id">
+			<div class="modal-content" style="overflow: hidden;">
+
+				<!-- modal header -->
+				<div class="modal-header">
+					<h5 class="modal-title"> filter nasabah</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal body -->
+				<div class="modal-body w-100 px-3">
+					<h6 class="font-italic text-xs text-secondary">Urutan</h6>
+					<div class="position-relative">
+						<select class='form-control form-control-sm' name="orderby">
+							<option value="terbaru" selected>terbaru</option>
+							<option value="terlama">terlama</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+					<h6 class="font-italic text-xs text-secondary mt-4">Wilayah</h6>
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="provinsi">
+							<option value="">-- pilih provinsi --</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="kota" disabled>
+							<option value="">-- pilih kota --</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="kecamatan" disabled>
+							<option value="">-- pilih kecamatan --</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="kelurahan" disabled>
+							<option value="">-- pilih kelurahan --</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+				</div>
+
+				<!-- modal footer -->
+				<div class="modal-footer">
+					<div class="badge badge-secondary d-flex justify-content-center align-items-center border-0 cursor-pointer" onclick="resetFilterNasabah();">
+						<span>Reset</span>
+					</div>
+					<button id="submit" type="submit" class="badge badge-success d-flex justify-content-center align-items-center border-0" data-dismiss="modal" onclick="filterNasabah(this,event);">
+						<span>Ok</span>
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
 
 	<!-- modals Add / Edit nasabah -->
 	<div class="modal fade" id="modalAddEditNasabah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -258,6 +348,20 @@
 							id="tgllahir-error"
 							class="text-danger"></small>
 					</div>
+					<!-- **** no telp **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fa fa-phone-square text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="notelp" name="notelp" autocomplete="off" placeholder="Masukan no.telp">
+						</div>
+						<small
+							id="notelp-error"
+							class="text-danger"></small>
+					</div>
 					<!-- kelamin -->
 					<input type="hidden" name="kelamin">
 					<div class="input-group col-lg-6 mb-2 form-group">
@@ -277,7 +381,7 @@
 						</div>
 					</div>
 					<!-- **** alamat **** -->
-					<div class="input-group col-lg-12 mb-4 form-group">
+					<div class="input-group col-12 mb-4">
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
@@ -299,7 +403,7 @@
 										<i class="fas fa-home text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control" id="rt" name="rt" autocomplete="off" placeholder="RT">
+								<input type="text" class="form-control px-2" id="rt" name="rt" autocomplete="off" placeholder="RT">
 							</div>
 							<small
 								id="rt-error"
@@ -312,39 +416,48 @@
 										<i class="fas fa-home text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control" id="rw" name="rw" autocomplete="off" placeholder="RW">
+								<input type="text" class="form-control px-2" id="rw" name="rw" autocomplete="off" placeholder="RW">
 							</div>
 							<small
 								id="rw-error"
 								class="text-danger"></small>
 						</div>
-						<div class="col-12 mt-4">
+						<!-- **** kode pos **** -->
+						<div class="input-group col-12 mt-4">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text bg-gray px-4 border-md border-right-0">
 										<i class="fas fa-mail-bulk text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control" id="kodepos" name="kodepos" autocomplete="off" placeholder="KODE POS">
+								<input type="text" class="form-control px-2" id="kodepos" name="kodepos" autocomplete="off" placeholder="KODE POS (pilih dibawah)" disabled>
 							</div>
 							<small
 								id="kodepos-error"
 								class="text-danger"></small>
 						</div>
-					</div>
-					<!-- **** no telp **** -->
-					<div class="input-group col-lg-12 mb-4 form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-									<i class="fa fa-phone-square text-muted"></i>
-								</span>
+						<!-- LIST kodepos -->
+						<input type="hidden" name="kelurahan">
+						<input type="hidden" name="kecamatan">
+						<input type="hidden" name="kota">
+						<input type="hidden" name="provinsi">
+						<div class="input-group col-lg-12 mt-4 form-group">
+							<div class="container-fluid border-radius-sm p-2" style="border: 0.5px solid #D2D6DA;">
+								<!-- header -->
+								<div class="add-item container-fluid input-group mb-2 d-flex p-0">
+									<div class="input-group-prepend">
+										<span class="input-group-text d-flex justify-content-center p-0 bg-gray border-md border-right-0" style="width: 52px;max-height: 39px;">
+										<i class="fas fa-search text-muted"></i>
+										</span>
+									</div>
+								<input id="search-kodepos" type="text" class="form-control px-2 text-xxs border-radius-sm" placeholder="ketik provinsi/kota/kecamatan/kelurahan" style="max-height: 30px;border: 0.5px solid #D2D6DA;" autocomplete="off" onkeyup="searchKodepos(this);">
+								</div>
+								<!-- body -->
+								<div id="kodepos-wraper" class="container-fluid border-radius-sm p-0 position-relative" style="min-height: 150px;max-height: 150px;overflow: auto;border: 0.5px solid #D2D6DA;">
+								
+								</div>
 							</div>
-							<input type="text" class="form-control px-2" id="notelp" name="notelp" autocomplete="off" placeholder="Masukan no.telp">
 						</div>
-						<small
-							id="notelp-error"
-							class="text-danger"></small>
 					</div>
 					<!-- **** is verify **** -->
 					<div class="editnasabah-item mb-3">
@@ -358,63 +471,6 @@
 						</div>
 					</div>
 
-					<!-- **** Uang, Antam, Ubs, Galery24 **** -->
-					<hr class="editnasabah-item horizontal dark mt-2 mb-2">
-					<h6 class="editnasabah-item font-italic opacity-8">Edit saldo</h6>
-					<div class="editnasabah-item form-row mt-2 mb-4" style="padding-right: 2px;">
-						<div class="col-6">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text bg-gray border-md border-right-0" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
-										<i class="fas fa-money-bill-wave-alt text-muted"></i>
-									</span>
-								</div>
-								<input type="text" class="form-control pl-2" id="saldo_uang" name="saldo_uang" autocomplete="off">
-							</div>
-							<small
-								id="saldo_uang-error"
-								class="text-danger"></small>
-						</div>
-						<div class="col-6">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text bg-gray border-md border-right-0 text-xxs" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
-										ANT
-									</span>
-								</div>
-								<input type="text" class="form-control pl-2" id="saldo_antam" name="saldo_antam" autocomplete="off">
-							</div>
-							<small
-								id="saldo_antam-error"
-								class="text-danger"></small>
-						</div>
-						<div class="col-6 mt-3">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text bg-gray border-md border-right-0 text-xxs" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
-										UBS
-									</span>
-								</div>
-								<input type="text" class="form-control pl-2" id="saldo_ubs" name="saldo_ubs" autocomplete="off">
-							</div>
-							<small
-								id="saldo_ubs-error"
-								class="text-danger"></small>
-						</div>
-						<div class="col-6 mt-3">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text bg-gray border-md border-right-0 text-xxs" style="padding-left: 0.8rem;padding-right: 0.8rem;max-height: 35px;">
-										G24
-									</span>
-								</div>
-								<input type="text" class="form-control pl-2" id="saldo_galery24" name="saldo_galery24" autocomplete="off">
-							</div>
-							<small
-								id="saldo_galery24-error"
-								class="text-danger"></small>
-						</div>
-					</div>
 					<!-- **** change password **** -->
 					<hr class="editnasabah-item horizontal dark mt-2 mb-2">
 					<h6 class="editnasabah-item font-italic opacity-8">Ubah password (opsionial)</h6>

@@ -9,7 +9,7 @@ class SampahModel extends Model
 {
     protected $table         = 'sampah';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','kategori','jenis','harga'];
+    protected $allowedFields = ['id','id_kategori','jenis','harga'];
 
     public function getLastSampah(): array
     {
@@ -18,88 +18,149 @@ class SampahModel extends Model
 
             if (!empty($lastSampah)) { 
                 return [
-                    'success' => true,
-                    'message' => $lastSampah[0]
+                    'status' => 200,
+                    'error'  => false,
+                    'data'   => $lastSampah[0],
                 ];
             }
             else {   
                 return [
-                    'success' => false,
-                    'message' => "not found",
-                    'code'    => 404
+                    'status'   => 404,
+                    'error'    => true,
+                    'messages' => 'not found',
                 ];
             } 
         } 
         catch (Exception $e) {
             return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
             ];
         }
     }
 
-    public function addItem(array $data): array
+    public function addSampah(array $data): array
     {
         try {
             $query = $this->db->table($this->table)->insert($data);
 
-            $query = $query ? true : false;
-            
             if ($query == true) {
                 return [
-                    "success"  => true,
-                    'message' => 'add new sampah is success',
-                ];
-            } 
-            else {   
-                return [
-                    'success' => false,
-                    'message' => "add new sampah is failed",
-                    'code'    => 500
+                    'status'   => 201,
+                    'error'    => false,
+                    'messages' => 'add sampah is success',
                 ];
             } 
         } 
         catch (Exception $e) {
             return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
             ];
         }
     }
 
-    public function getItem(bool $isAdmin): array
+    public function editSampah(array $data): array
     {
         try {
-            if ($isAdmin) {
-                $select = "id,kategori,jenis,harga,jumlah";
-            }
-            else {
-                $select = "kategori,jenis,harga";
-            }
+            $this->db->table($this->table)->where('id',$data['id'])->update($data);
 
-            $sampah = $this->db->table($this->table)->select($select)->orderBy('id','ASC')->get()->getResultArray();
+            return [
+                'status'   => 201,
+                'error'    => false,
+                'messages' => ($this->db->affectedRows()>0) ? 'edit sampah is success' : 'nothing updated'
+            ];  
+        } 
+        catch (Exception $e) {
+            return [
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
+            ];
+        }
+    }
+
+    public function checkTransaksi(string $idsampah): bool
+    {
+        $transaction = $this->db->table('setor_sampah')->select('id_sampah')->where('id_sampah',$idsampah)->limit(1)->get()->getResultArray();
+
+        if (empty($transaction)) {    
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function deleteSampah(string $id): array
+    {
+        try {
+            if ($this->checkTransaksi($id)) {
+                $this->db->table($this->table)->where('id', $id)->delete();
+                $affectedRows = $this->db->affectedRows();
+
+                return [
+                    'status'   => ($affectedRows>0) ? 201   : 404,
+                    'error'    => ($affectedRows>0) ? false : true,
+                    'messages' => ($affectedRows>0) ? "delete sampah with id $id is success" : "sampah with id $id is not found"
+                ];  
+            } 
+            else {
+                return [
+                    'status'   => 400,
+                    'error'    => true,
+                    'messages' => "sampah ini sudah pernah dipakai dalam transaksi"
+                ];  
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
+            ];
+        }
+    }
+
+    public function getSampah(array $get): array
+    {
+        try {
+            $orderby = (isset($get['orderby']) && $get['orderby']=='terbaru')? 'DESC': 'ASC';
+
+            if (isset($get['kategori'])) {
+                $sampah  = $this->db->table($this->table)->select('sampah.id,sampah.id_kategori,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah')
+                ->join('kategori_sampah', 'kategori_sampah.id = sampah.id_kategori')
+                ->where('kategori_sampah.name',$get['kategori'])
+                ->orderBy('sampah.id',$orderby)->get()->getResultArray();
+            } 
+            else {
+                $sampah  = $this->db->table($this->table)->select('sampah.id,sampah.id_kategori,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah')
+                ->join('kategori_sampah', 'kategori_sampah.id = sampah.id_kategori')
+                ->orderBy('sampah.id',$orderby)->get()->getResultArray();
+            }
             
             if (empty($sampah)) {    
                 return [
-                    'success' => false,
-                    'message' => "sampah notfound",
-                    'code'    => 404
+                    'status'   => 404,
+                    'error'    => true,
+                    'messages' => "artikel notfound",
                 ];
             } 
             else {   
                 return [
-                    'success' => true,
-                    'message' => $sampah
+                    'status' => 200,
+                    'error'  => false,
+                    'data'   => $sampah
                 ];
             }
         } 
         catch (Exception $e) {
             return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
             ];
         }
     }
@@ -139,61 +200,6 @@ class SampahModel extends Model
                 'success' => true,
                 'message' => $totalSampah
             ];
-        } 
-        catch (Exception $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
-            ];
-        }
-    }
-
-    public function editItem(array $data): array
-    {
-        try {
-            $this->db->table($this->table)->where('id',$data['id'])->update($data);
-            
-            if ($this->db->affectedRows() > 0) {
-                return [
-                    "success" => true,
-                    'message' => 'edit sampah is success',
-                ];
-            } 
-            else {   
-                return [
-                    'success' => true,
-                    'message' => "nothing updated",
-                ];
-            } 
-        } 
-        catch (Exception $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
-            ];
-        }
-    }
-
-    public function deleteItem(string $id): array
-    {
-        try {
-            $result = $this->db->table($this->table)->where('id', $id)->delete();
-
-            if ($this->db->affectedRows() > 0) {
-                return [
-                    "success"  => true,
-                    'message' => "delete sampah with id $id is success",
-                ];
-            } 
-            else {   
-                return [
-                    'success' => false,
-                    'message' => "sampah with id $id is not found",
-                    'code'    => 404
-                ];
-            }     
         } 
         catch (Exception $e) {
             return [

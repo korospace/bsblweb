@@ -1,14 +1,16 @@
 module.exports = {
     // ** alertinfo
     // content: ['app/Views/Components/alertInfo.php'],
+    // ** alertinfo
+    content: ['app/Views/Components/artikelFooter.php'],
     // ** homepage
     // content: ['app/Views/HomePage/index.php','public/assets/js/homepage.js'],
     // ** detil artikel
     // content: ['app/Views/HomePage/detilArtikel.php','public/assets/js/detilArtikel.js'],
     // ** list artikel
-    content: ['app/Views/HomePage/listArtikel.php','public/assets/js/listArtikel.js'],
+    // content: ['app/Views/HomePage/listArtikel.php','public/assets/js/listArtikel.js'],
     // ** login
-    // content: ['app/Views/Login/index.php','public/assets/js/login.js'],
+    // content: ['app/Views/LoginPage/index.php','public/assets/js/login.js'],
     // ** signup
     // content: ['app/Views/SignUp/index.php','public/assets/js/signup.js'],
     // ** otp
@@ -25,6 +27,8 @@ module.exports = {
     
     // ** admin dashboard
     // content: ['app/Views/Admin/index.php','public/assets/js/admin.dashboard.js'],
+    // ** admin list admin
+    // content: ['app/Views/Admin/listSampah.php','public/assets/js/admin.listsampah.js'],
     // ** admin list admin
     // content: ['app/Views/Admin/listAdmin.php','public/assets/js/admin.listadmin.js'],
     // ** admin list nasabah

@@ -4,7 +4,7 @@
 <?= $this->section('contentCss'); ?>
 	<style>
 	#editor-container {
-		height: 450px;
+		min-height: 450px;
 		border-radius : 10px;
 		border: 0.5px solid #D2D6DA;
 	}
@@ -42,7 +42,8 @@
 	<script src="<?= base_url('assets/js/plugins/quill.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/image-resize.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/compress.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
 	<!-- <script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script> -->
 <?= $this->endSection(); ?>
@@ -154,16 +155,14 @@
 						<div class="col-12 col-sm-6 form-group">
 							<i class="fas fa-list-ul mr-1 text-muted"></i>
 							<h6 class="text-muted" style="display:inline;">Kategori</h6>
-							<select id="kategori-berita-wraper" name="kategori" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
+							<select id="kategori-berita-wraper" name="id_kategori" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
 								
 							</select>
-							<?php if ($title !== 'Admin | edit artikel') { ?>
-								<div class="d-flex justify-content-end">
-									<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm" style="width: max-content;">
-										<u>manage kategori</u>
-									</a>
-								</div>
-							<?php } ?>
+							<div class="d-flex justify-content-end">
+								<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm" style="width: max-content;">
+									<u>manage kategori</u>
+								</a>
+							</div>
 						</div>
 					</div>
 					<div id="toolbar-container" class="mt-4">
@@ -213,7 +212,7 @@
 	<!-- Modal -->
 	<div class="modal fade" id="modalAddKategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
-			<form id="formAddKategoriBerita" class="modal-content">
+			<form id="formAddKategoriArtikel" class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Manage kategori</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -260,6 +259,7 @@
 							</div>
 							<input type="text" class="form-control px-2" id="NewKategoriArtikel" autocomplete="off" placeholder="masukan kategori baru">
 						</div>
+						<small id="newkategori-error" class="text-danger"></small>
 					</div>
 				</div>
 				<div class="modal-footer">

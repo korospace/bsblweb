@@ -50,12 +50,15 @@ class BaseController extends ResourceController
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
+        date_default_timezone_set('Asia/Jakarta');
+        
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
+        $this->validation = \Config\Services::validation();
     }
 
     /**
@@ -108,7 +111,7 @@ class BaseController extends ResourceController
     /**
      * Send Email OTP.
      */
-    public function sendVerification(String $email,String $otp)
+    public function sendOtpToEmail(String $email,String $otp)
     {
         $mail = new PHPMailer(true);
 
@@ -127,6 +130,39 @@ class BaseController extends ResourceController
 
             $mail->setFrom('bsublservice@gmail.com', 'Bank Sampah UBL');
             $mail->addAddress($email);
+            $mail->isHTML(true);
+
+            if($mail->send()) {
+                return true;
+            }
+        } 
+        catch (Exception $e) {
+            return $e;
+        }
+    }
+
+    /**
+     * Send Forgot Password
+     */
+    public function sendPassToEmail(String $userEmail,String $password)
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();                          
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->Port       = 465;
+            $mail->SMTPAuth   = true;
+            $mail->SMTPSecure = 'ssl';
+            // $mail->Username   = 'banksampahbudiluhur@gmail.com';
+            // $mail->Password   = 'latxapaiejnamadl';
+            $mail->Username   = 'bsublservice@gmail.com';
+            $mail->Password   = 'cibqkqfbrvoaxvwt';
+            $mail->Subject    = 'Lupa Password';
+            $mail->Body       = "<u>password anda:</u><h1>$password</h1>";
+
+            $mail->setFrom('bsublservice@gmail.com', 'Bank Sampah UBL');
+            $mail->addAddress($userEmail);
             $mail->isHTML(true);
 
             if($mail->send()) {
@@ -175,60 +211,45 @@ class BaseController extends ResourceController
     }
 
     /**
-     * Send Forgot Password
+     * Privilege check
      */
-    public function sendForgotPass(String $userEmail,String $password)
+    public function checkPrivilege(string $privilege1,$privilege2)
     {
-        $mail = new PHPMailer(true);
-
-        try {
-            $mail->isSMTP();                          
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->Port       = 465;
-            $mail->SMTPAuth   = true;
-            $mail->SMTPSecure = 'ssl';
-            // $mail->Username   = 'banksampahbudiluhur@gmail.com';
-            // $mail->Password   = 'latxapaiejnamadl';
-            $mail->Username   = 'bsublservice@gmail.com';
-            $mail->Password   = 'cibqkqfbrvoaxvwt';
-            $mail->Subject    = 'Lupa Password';
-            $mail->Body       = "<u>password anda:</u><h1>$password</h1>";
-
-            $mail->setFrom('bsublservice@gmail.com', 'Bank Sampah UBL');
-            $mail->addAddress($userEmail);
-            $mail->isHTML(true);
-
-            if($mail->send()) {
-                return true;
-            }
+        if (is_array($privilege2)) {
+            if (!in_array($privilege1,$privilege2)) {
+                self::httpResponse([
+                    'status'   => 401,
+                    'error'    => true,
+                    'messages' => 'access denied',
+                ]);
+            } 
         } 
-        catch (Exception $e) {
-            return $e;
+        else {
+            if ($privilege1 != $privilege2) {
+                self::httpResponse([
+                    'status'   => 401,
+                    'error'    => true,
+                    'messages' => 'access denied',
+                ]);
+            } 
         }
     }
 
     /**
-     * Privilege check
+     * Api response
      */
-    public function checkPrivilege(array $resultCheckToken)
+    static private function httpResponse(array $response): string
     {
-        $privilege  = (isset($resultCheckToken['message']['data']['privilege']) ) ? $resultCheckToken['message']['data']['privilege'] : 'nasabah';
-
-        if (!in_array($privilege,['admin','super'])) {
-            $response = [
-                'status'   => 401,
-                'error'    => true,
-                'messages' => 'access denied',
-            ];
-    
-            return $this->respond($response,401);
-        } 
+        header('Content-Type: application/json; charset=UTF-8');
+        http_response_code($response['status']);
+        echo json_encode($response);
+        die;
     }
 
     /**
      * Generate New Token 
      */
-    public function generateToken(String $id,bool $rememberme,?String $password = null,?String $privilege = null): string
+    public function generateToken(String $id,bool $rememberme,String $password,String $privilege): string
     {
         // $iat = time(); // current timestamp value
         // $nbf = $iat + 10;
@@ -238,12 +259,10 @@ class BaseController extends ResourceController
             // "nbf" => $nbf, //not before in seconds
             "id"         => $id,
             "uniqueid"   => uniqid(),
+            "password"   => $password,
+            "privilege"  => $privilege,
             "expired"    => ($rememberme == true) ? time()+2592000 : time()+3600, 
         );
-
-        ($password)  ? $payload['password']  = $password  : '' ;
-        ($privilege) ? $payload['privilege'] = $privilege : '' ;
-        // var_dump($payload);die;
 
         return JWT::encode($payload, $this->getKey());
     }
@@ -251,76 +270,83 @@ class BaseController extends ResourceController
     /**
      * Check token
      */
-    public function checkToken(?string $token,?bool $dbcheck = true): array
+    public function checkToken(?string $token = null,?bool $dbcheck = true): array
     {
         try {
-            $db      = \Config\Database::connect();
-            $key     = $this->getKey();
-            $decoded = JWT::decode($token, $key, array("HS256"));
-            $decoded = (array)$decoded;
-            $table   = (isset($decoded['privilege'])) ? 'admin' : 'nasabah';
+            if ($token == null) {
+                // get token from HttpHeader
+                $authHeader = $this->request->getHeader('token');
+                $token      = ($authHeader != null) ? $authHeader->getValue() : null;
+            }
+
+            // token decode
+            $key       = $this->getKey();
+            $decoded   = JWT::decode($token, $key, array("HS256"));
+            $decoded   = (array)$decoded;
+            $dbConnect = \Config\Database::connect();
 
             if ($dbcheck == false) {
                 return [
-                    'success'   => true,
-                    'password'  => (isset($decoded['password' ])) ? $decoded['password' ] : null,
-                    'privilege' => (isset($decoded['privilege'])) ? $decoded['privilege'] : 'nasabah',
-                    'expired'   => $decoded['expired'] - time(),
+                    'success' => true,
+                    'error'   => false,
+                    'status'  => 200,
+                    'data'    => [
+                        'userid'    => $decoded['id'],
+                        'password'  => $decoded['password'],
+                        'privilege' => $decoded['privilege'],
+                        'expired'   => $decoded['expired'] - time(),
+                    ],
                 ];
             }
             else if (time() < $decoded['expired']) {
-                if ($table == 'admin') {
-                    $dataUser = $db->table('admin')->select('token')->where("token", $token)->get()->getResultArray();
-                } 
-                else {
-                    $dataUser = $db->table('nasabah')->select('token')->where("token", $token)->get()->getResultArray();
-                }
+                $dataUser = $dbConnect->table('users')->select('token')->where("token", $token)->get()->getResultArray();
 
                 if (!empty($dataUser)) {
-                    $response = [
-                        'status'   => 200,
-                        'error'    => false,
-                        'data'     => $decoded
-                    ];
-
-                    $response['data']['expired'] = $decoded['expired'] - time();
-                    
                     return [
                         'success' => true,
-                        'message' => $response
+                        'error'   => false,
+                        'status'  => 200,
+                        'data'    => [
+                            'userid'    => $decoded['id'],
+                            'password'  => $decoded['password'],
+                            'privilege' => $decoded['privilege'],
+                            'expired'   => $decoded['expired'] - time(),
+                        ],
                     ];
                 } 
                 else {
-                    return [
-                        'success' => false,
-                        'code'    => 401,
-                        'message' => 'access denied'
-                    ];
+                    self::httpResponse([
+                        'success'  => false,
+                        'error'    => true,
+                        'status'   => 401,
+                        'messages' => 'invalid token',
+                    ]);
                 }
             } 
             else {
-                $db->table($table)->where('id', $decoded['id'])->update(['token' => null]);
-                
-                if ($db->affectedRows()> 0) {
-                    $msg = 'token expired';
-                }
-                else {
-                    $msg = 'access denied';
-                }
+                $dbConnect->table('users')->where('id', $decoded['id'])->update(['token' => null]);
 
-                return [
-                    'success' => false,
-                    'code'    => 401,
-                    'message' => $msg 
-                ];
+                self::httpResponse([
+                    'success'  => false,
+                    'error'    => true,
+                    'status'   => 401,
+                    'messages' => ($dbConnect->affectedRows()>0) ? 'token expired' : 'invalid token' 
+                ]);
             }
         } 
         catch (phpException $ex) {
-            return [
+            $response = [
                 'success' => false,
-                'code'    => 401,
+                'error'   => true,
+                'status'  => 401,
                 'message' => 'access denied'
             ];
+
+            if ($dbcheck == false) {
+                return $response;
+            }
+
+            self::httpResponse($response);
         }
     }
 

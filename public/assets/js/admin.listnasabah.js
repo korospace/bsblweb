@@ -1,14 +1,158 @@
 /**
+ * FILTER NASABAH
+ */
+let arrayWilayah = [];
+const getAllWilayah = async () => {
+
+    let httpResponse = await httpRequestGet(`${APIURL}/nasabah/wilayah`);
+
+    let tmpProvinsi  = [];
+    let elprovinsi   = `<option value="">-- pilih provinsi --</option>`;
+    
+    if (httpResponse.status === 200) {
+        arrayWilayah = httpResponse.data.data;
+ 
+        arrayWilayah.forEach(w=> {
+            if (!tmpProvinsi.includes(w.provinsi)) {
+                tmpProvinsi.push(w.provinsi)
+                elprovinsi += `<option value="${w.provinsi}" data-provinsi="${w.provinsi}">${w.provinsi}</option>`;
+            }
+        });
+    }
+
+    $('select[name=provinsi]').html(elprovinsi);
+};
+
+$('select[name=provinsi]').on('change', function() {
+    let tmpKota = [];
+    let elKota  = `<option value="">-- pilih kota --</option>`;
+    
+    if ($(this).val() != '') {
+        $('select[name=kota]').removeAttr('disabled');
+
+        arrayWilayah.forEach(w=> {
+            if (w.provinsi == $(this).val()) {
+                if (!tmpKota.includes(w.kota)) {
+                    tmpKota.push(w.kota)
+                    elKota += `<option value="${w.kota}">${w.kota}</option>`;
+                }
+            }
+        });
+
+        $('select[name=kota]').html(elKota);
+    }
+    else {
+        $('select[name=kota]').attr('disabled',true);
+    }
+    $('select[name=kota]').val('');
+    $('select[name=kecamatan]').val('');
+    $('select[name=kecamatan]').attr('disabled',true);
+    $('select[name=kelurahan]').val('');
+    $('select[name=kelurahan]').attr('disabled',true);
+});
+$('select[name=kota]').on('change', function() {
+    let tmpKecamatan = [];
+    let elKecamatan  = `<option value="">-- pilih kecamatan --</option>`;
+
+    if ($(this).val() != '') {
+        $('select[name=kecamatan]').removeAttr('disabled');
+
+        arrayWilayah.forEach(w=> {
+            if (w.kota == $(this).val()) {
+                if (!tmpKecamatan.includes(w.kecamatan)) {
+                    tmpKecamatan.push(w.kecamatan)
+                    elKecamatan += `<option value="${w.kecamatan}">${w.kecamatan}</option>`;
+                }
+            }
+        });
+
+        $('select[name=kecamatan]').html(elKecamatan);
+    }
+    else {
+        $('select[name=kecamatan]').attr('disabled',true);
+    }
+    $('select[name=kecamatan]').val('');
+    $('select[name=kelurahan]').val('');
+    $('select[name=kelurahan]').attr('disabled',true);
+});
+$('select[name=kecamatan]').on('change', function() {
+    let tmpKelurahan = [];
+    let elKelurahan  = `<option value="">-- pilih kelurahan --</option>`;
+
+    if ($(this).val() != '') {
+        $('select[name=kelurahan]').removeAttr('disabled');
+
+        arrayWilayah.forEach(w=> {
+            if (w.kecamatan == $(this).val()) {
+                if (!tmpKelurahan.includes(w.kelurahan)) {
+                    tmpKelurahan.push(w.kelurahan)
+                    elKelurahan += `<option value="${w.kelurahan}">${w.kelurahan}</option>`;
+                }
+            }
+        });
+
+        $('select[name=kelurahan]').html(elKelurahan);
+    }
+    else {
+        $('select[name=kelurahan]').attr('disabled',true);
+    }
+    $('select[name=kelurahan]').val('');
+});
+
+const filterNasabah = async (e) => {
+    let formFilter = new FormData(e.parentElement.parentElement.parentElement);
+    let ketFilter  = `${formFilter.get('orderby')} - `;
+    nasabahUrl     = `${APIURL}/admin/getnasabah?orderby=${formFilter.get('orderby')}`;
+
+    if (formFilter.get('kelurahan')) {
+        ketFilter  += `${formFilter.get('kelurahan')}, `
+        nasabahUrl += `&kelurahan=${formFilter.get('kelurahan')}`
+    }
+    if (formFilter.get('kecamatan')) {
+        ketFilter  += `${formFilter.get('kecamatan')}, `
+        nasabahUrl += `&kecamatan=${formFilter.get('kecamatan')}`
+    }
+    if (formFilter.get('kota')) {
+        ketFilter  += `${formFilter.get('kota')}, `
+        nasabahUrl += `&kota=${formFilter.get('kota')}`
+    }
+    if (formFilter.get('provinsi')) {
+        ketFilter  += `${formFilter.get('provinsi')}`
+        nasabahUrl += `&provinsi=${formFilter.get('provinsi')}`
+    }
+    if (formFilter.get('provinsi') == '') {
+        ketFilter  = `${formFilter.get('orderby')} - semua wilayah`;
+        nasabahUrl = `${APIURL}/admin/getnasabah?orderby=${formFilter.get('orderby')}`
+    }
+
+    $('#ket-filter').html(ketFilter);
+    getAllNasabah();
+};
+
+const resetFilterNasabah = async (e) => {
+    $('select[name=orderby]').val('terbaru');
+    $('select[name=provinsi]').val('');
+    $('select[name=kota]').val('');
+    $('select[name=kota]').attr('disabled',true);
+    $('select[name=kecamatan]').val('');
+    $('select[name=kecamatan]').attr('disabled',true);
+    $('select[name=kelurahan]').val('');
+    $('select[name=kelurahan]').attr('disabled',true);
+};
+
+/**
  * GET ALL NASABAH
  */
 let arrayNasabah = [];
+let nasabahUrl   = `${APIURL}/admin/getnasabah?orderby=terbaru`;
 const getAllNasabah = async () => {
 
     $('#search-nasabah').val('');
+    $('#ket-total').html('0');
     $('#list-nasabah-notfound').addClass('d-none'); 
     $('#table-nasabah').addClass('d-none'); 
     $('#list-nasabah-spinner').removeClass('d-none'); 
-    let httpResponse = await httpRequestGet(`${APIURL}/admin/getnasabah`);
+    let httpResponse = await httpRequestGet(nasabahUrl);
     $('#table-nasabah').removeClass('d-none'); 
     $('#list-nasabah-spinner').addClass('d-none'); 
     
@@ -22,36 +166,49 @@ const getAllNasabah = async () => {
         arrayNasabah   = httpResponse.data.data;
 
         allNasabah.forEach((n,i) => {
+        let stringLastActive = 'belum login';
 
-            trNasabah += `<tr class="text-xs">
-                <td class="align-middle text-center py-3">
-                    <span class="font-weight-bold"> ${++i} </span>
-                </td>
-                <td class="align-middle text-center py-3">
-                    <span class="font-weight-bold"> ${n.id} </span>
-                </td>
-                <td class="align-middle text-center">
-                    <span class="font-weight-bold text-capitalize"> ${n.email} </span>
-                </td>
-                <td class="align-middle text-center">
-                    <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
-                </td>
-                <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_verify === 't')? 'yes' : 'no'} </span>
-                </td>
-                <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah(this,'${n.id}')">hapus</span>
-                    <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')">edit</span>
-                    <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer">detil</a>
-                    <span id="btn-detil" class="d-none badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" onclick="goToDetilNasabah('${n.id}')">detil</span>
-                </td>
-            </tr>`;
+        if (n.last_active != n.created_at) {
+            let date  = new Date(parseInt(n.last_active) * 1000);
+            let hour  = date.toLocaleString("en-US",{ hour: 'numeric', minute: 'numeric' });
+            let day   = date.toLocaleString("en-US",{day: "numeric"});
+            let month = date.toLocaleString("en-US",{month: "long"});
+            let year  = date.toLocaleString("en-US",{year: "numeric"});
+            stringLastActive = `${day}-${month}-${year} ${hour}`;
+        }
+
+        trNasabah += `<tr class="text-xs">
+            <td class="align-middle text-center py-3">
+                <span class="font-weight-bold"> ${++i} </span>
+            </td>
+            <td class="align-middle text-center py-3">
+                <span class="font-weight-bold"> ${n.id} </span>
+            </td>
+            <td class="align-middle text-center">
+                <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
+            </td>
+            <td class="align-middle text-center">
+                <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_verify === 't')? 'yes' : 'no'} </span>
+            </td>
+            <td class="align-middle text-center">
+                <span class="font-weight-bold text-capitalize"> 
+                    ${stringLastActive}
+                </span>
+            </td>
+            <td class="align-middle text-center">
+                <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah('${n.id}')">hapus</span>
+                <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')">edit</span>
+                <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer">detil</a>
+                <span id="btn-detil" class="d-none badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" onclick="goToDetilNasabah('${n.id}')">detil</span>
+            </td>
+        </tr>`;
         });
 
+        $('#ket-total').html(arrayNasabah.length);
         $('#table-nasabah tbody').html(trNasabah);
     }
 };
-
+ 
 // Search nasabah
 $('#search-nasabah').on('keyup', function() {
     let elSugetion      = '';
@@ -62,7 +219,7 @@ $('#search-nasabah').on('keyup', function() {
     } 
     else {
         nasabahFiltered = arrayNasabah.filter((n) => {
-            return n.nama_lengkap.includes($(this).val()) || n.id.includes($(this).val()) || n.region.toLowerCase().includes($(this).val());
+            return n.nama_lengkap.includes($(this).val()) || n.id.includes($(this).val());
         });
     }
 
@@ -75,6 +232,17 @@ $('#search-nasabah').on('keyup', function() {
         $('#list-nasabah-notfound #text-notfound').html(` `); 
 
         nasabahFiltered.forEach((n,i) => {
+            let stringLastActive = 'belum login';
+
+            if (n.last_active != n.created_at) {
+                let date  = new Date(parseInt(n.last_active) * 1000);
+                let hour  = date.toLocaleString("en-US",{ hour: 'numeric', minute: 'numeric' });
+                let day   = date.toLocaleString("en-US",{day: "numeric"});
+                let month = date.toLocaleString("en-US",{month: "long"});
+                let year  = date.toLocaleString("en-US",{year: "numeric"});
+                stringLastActive = `${day}-${month}-${year} ${hour}`;
+            }
+
             elSugetion += `<tr class="text-xs">
                 <td class="align-middle text-center py-3">
                     <span class="font-weight-bold"> ${++i} </span>
@@ -83,16 +251,18 @@ $('#search-nasabah').on('keyup', function() {
                     <span class="font-weight-bold"> ${n.id} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold text-capitalize"> ${n.email} </span>
-                </td>
-                <td class="align-middle text-center">
                     <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
                 </td>
                 <td class="align-middle text-center">
                     <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_verify === 't')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah(this,'${n.id}')">hapus</span>
+                    <span class="font-weight-bold text-capitalize"> 
+                        ${stringLastActive}
+                    </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah('${n.id}')">hapus</span>
                     <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')">edit</span>
                     <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer">detil</a>
                     <span id="btn-detil" class="d-none badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" onclick="goToDetilNasabah('${n.id}')">detil</span>
@@ -101,16 +271,16 @@ $('#search-nasabah').on('keyup', function() {
         });    
     }
 
+    $('#ket-total').html(nasabahFiltered.length);
     $('#table-nasabah tbody').html(elSugetion);
 });
-
+ 
 // Edit modal when open
 const openModalAddEditNsb = (modalName,idnasabah=null) => {
     let modalTitle = (modalName=='addnasabah') ? 'tambah nasabah' : 'edit nasabah' ;
     
     $('#modalAddEditNasabah .modal-title').html(modalTitle);
     $('#formAddEditNasabah .form-check-input').prop('checked',false);
-    // clear error message first
     $('#formAddEditNasabah .form-control').removeClass('is-invalid');
     $('#formAddEditNasabah .form-check-input').removeClass('is-invalid');
     $('#formAddEditNasabah .text-danger').html('');
@@ -118,17 +288,71 @@ const openModalAddEditNsb = (modalName,idnasabah=null) => {
     if (modalName == 'addnasabah') {
         $('#modalAddEditNasabah .addnasabah-item').removeClass('d-none');
         $('#modalAddEditNasabah .editnasabah-item').addClass('d-none');        
-        
-        clearInputForm();
+        $(`#formAddEditNasabah .form-control`).val('');
     } 
     else {
         $('#modalAddEditNasabah .addnasabah-item').addClass('d-none');
         $('#modalAddEditNasabah .editnasabah-item').removeClass('d-none');        
-        
         $('#modalAddEditNasabah #list-nasabah-spinner').removeClass('d-none');
         getProfileNasabah(idnasabah);
     }
 }
+ 
+// search kodepos
+const searchKodepos = async (el) => {
+ 
+    $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+       <img src="${BASEURL}/assets/images/spinner.svg" style="width: 20px;" />
+    </div>`); 
+
+    axios
+    .get(`https://kodepos.vercel.app/search/?q=${el.value}`,{
+        headers: {
+        }
+    })
+    .then((response) => {
+
+        // console.log(response.data.status);
+        if (response.data.code === 200) {
+            if (response.data.messages === 'No data can be returned.') {
+                $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+                    <h6 style="opacity: 0.6;">kodepos tidak ditemukan</h6>
+                </div>`);    
+            } 
+            else {
+                let elPostList = '';
+
+                response.data.data.forEach(x => {
+                    elPostList += `
+                    <div class="w-100">
+                        <div class="kodepos-list w-100 d-flex align-items-center px-3 py-3" style="cursor: pointer;font-size:16px;" onclick="changeKodeposVal(this,'${x.postalcode}','${x.urban}','${x.subdistrict}','${x.city}','${x.province}');">
+                            <span class="w-100" style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+                                ${x.postalcode} - ${x.urban}, ${x.subdistrict}, ${x.city}, ${x.province}
+                            </span>
+                        </div>
+                    </div>`;
+                });
+        
+                $('#kodepos-wraper').html(elPostList);
+                if (el.value == '') {
+                    $('#kodepos-wraper').html(``); 
+                }
+            } 
+        }
+    })
+};
+ 
+// codepos on click
+const changeKodeposVal = (el,postalcode,urban,subdistrict,city,province) => {
+    $('.kodepos-list').removeClass('active');
+    $('input[name=kodepos]').val(postalcode);
+    $('input[name=kelurahan]').val(urban);
+    $('input[name=kecamatan]').val(subdistrict);
+    $('input[name=kota]').val(city);
+    $('input[name=provinsi]').val(province);
+    
+    el.classList.add('active');
+};
 
 /**
  * CRUD NASABAH
@@ -147,11 +371,11 @@ const crudNasabah = async (el,event) => {
         $('#formAddEditNasabah button#submit #spinner').removeClass('d-none');
         if (modalTitle == 'edit nasabah') {
             form.set('is_verify',$('#formAddEditNasabah input[name=is_verify]').val());
-
             httpResponse = await httpRequestPut(`${APIURL}/admin/editnasabah`,form);    
         } 
         else {
-            httpResponse = await httpRequestPost(`${APIURL}/admin/addnasabah`,form);    
+            form.set('kodepos',$('input[name=kodepos]').val());
+            httpResponse = await httpRequestPost(`${APIURL}/register/nasabah`,form);    
         }
         $('#formAddEditNasabah button#submit #text').removeClass('d-none');
         $('#formAddEditNasabah button#submit #spinner').addClass('d-none');
@@ -159,17 +383,17 @@ const crudNasabah = async (el,event) => {
         if (httpResponse.status === 201) {
             getAllNasabah();
             if (modalTitle == 'tambah nasabah') {
-                clearInputForm();
+                $(`#formAddEditNasabah .form-control`).val('');
+                $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+                    <h6 style="opacity: 0.6;">kodepos tidak ditemukan</h6>
+                </div>`);  
             } 
 
             showAlert({
                 message: `<strong>Success...</strong> nasabah berhasil ${(modalTitle == 'tambah nasabah') ? 'ditambah' : 'diedit' }!`,
-                btnclose: false,
+                autohide: true,
                 type:'success'
             })
-            setTimeout(() => {
-                hideAlert();
-            }, 3000);
         }
         else if (httpResponse.status === 400) {
             if (httpResponse.message.email) {
@@ -191,13 +415,13 @@ const crudNasabah = async (el,event) => {
 /**
  * GET PROFILE NASABAH
  */
- const getProfileNasabah = async (id) => {
+const getProfileNasabah = async (id) => {
 
     let httpResponse = await httpRequestGet(`${APIURL}/admin/getnasabah?id=${id}`);
     $('#modalAddEditNasabah #list-nasabah-spinner').addClass('d-none');
     
     if (httpResponse.status === 200) {
-        dataNasabah = httpResponse.data.data;
+        dataNasabah = httpResponse.data.data[0];
         
         for (const name in dataNasabah) {
             $(`#formAddEditNasabah input[name=${name}]`).val(dataNasabah[name]);
@@ -221,83 +445,6 @@ const crudNasabah = async (el,event) => {
         $('#newpass').val('');
     }
 };
-
-/**
- * EDIT NASABAH
- */
-const editNasabah = (el,event) => {
-    event.preventDefault();
-    let form = new FormData(el);
-
-    if (doValidate(form)) {
-        $('#formAddEditNasabah button#submit #text').addClass('d-none');
-        $('#formAddEditNasabah button#submit #spinner').removeClass('d-none');
-
-        let newTgl = form.get('tgl_lahir').split('-');
-        form.set('tgl_lahir',`${newTgl[2]}-${newTgl[1]}-${newTgl[0]}`);
-        form.set('is_verify',$('#formAddEditNasabah input[name=is_verify]').val());
-        
-        if (form.get('new_password') == '') {
-            form.delete('new_password');
-        }
-
-        for (var pair of form.entries()) {
-            console.log(pair[0],pair[1]);
-        }
-
-        axios
-        .put(`${APIURL}/admin/editnasabah`,form, {
-            headers: {
-                token: TOKEN
-            }
-        })
-        .then((response) => {
-            $('#formAddEditNasabah button#submit #text').removeClass('d-none');
-            $('#formAddEditNasabah button#submit #spinner').addClass('d-none');
-            getAllNasabah();
-            $('#newpass-edit').val('');
-
-            showAlert({
-                message: `<strong>Success...</strong> edit profile berhasil!`,
-                btnclose: false,
-                type:'success'
-            })
-            setTimeout(() => {
-                hideAlert();
-            }, 3000);
-        })
-        .catch((error) => {
-            $('#formAddEditNasabah button#submit #text').removeClass('d-none');
-            $('#formAddEditNasabah button#submit #spinner').addClass('d-none');
-
-            // bad request
-            if (error.response.status == 400) {
-                if (error.response.data.messages.username) {
-                    $('#formAddEditNasabah #username').addClass('is-invalid');
-                    $('#formAddEditNasabah #username-error').text(error.response.data.messages.username);
-                }
-                if (error.response.data.messages.notelp) {
-                    $('#formAddEditNasabah #notelp').addClass('is-invalid');
-                    $('#formAddEditNasabah #notelp-error').text(error.response.data.messages.notelp);
-                }
-            }
-            // error server
-            else {
-                showAlert({
-                    message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
-                    btnclose: true,
-                    type:'danger'
-                })
-            }
-        })
-        
-    }
-}
-
-// clear input form
-const clearInputForm = () => {
-    $(`#formAddEditNasabah .form-control`).val('');
-}
 
 // change kelamin value
 $('#formAddEditNasabah .form-check-input').on('click', function(e) {
@@ -439,89 +586,22 @@ const doValidate = (form) => {
             status = false;
         }
     }
-
-    // new pass 
-    if ($('#modalAddEditNasabah #newpass').val() !== '') {   
-        if ($('#modalAddEditNasabah #newpass').val().length < 8 || $('#modalAddEditNasabah #newpass').val().length > 20) {
-            $('#modalAddEditNasabah #newpass').addClass('is-invalid');
-            $('#modalAddEditNasabah #newpass-error').html('*minimal 8 huruf dan maksimal 20 huruf');
-            status = false;
+    else{
+        // new pass 
+        if ($('#modalAddEditNasabah #newpass').val() !== '') {   
+            if ($('#modalAddEditNasabah #newpass').val().length < 8 || $('#modalAddEditNasabah #newpass').val().length > 20) {
+                $('#modalAddEditNasabah #newpass').addClass('is-invalid');
+                $('#modalAddEditNasabah #newpass-error').html('*minimal 8 huruf dan maksimal 20 huruf');
+                status = false;
+            }
+            else if (/\s/.test($('#modalAddEditNasabah #newpass').val())) {
+                $('#modalAddEditNasabah #newpass').addClass('is-invalid');
+                $('#modalAddEditNasabah #newpass-error').html('*tidak boleh ada spasi');
+                status = false;
+            }
         }
-        else if (/\s/.test($('#modalAddEditNasabah #newpass').val())) {
-            $('#modalAddEditNasabah #newpass').addClass('is-invalid');
-            $('#modalAddEditNasabah #newpass-error').html('*tidak boleh ada spasi');
-            status = false;
-        }
     }
 
-    // saldo uang validation
-    if ($('#formAddEditNasabah #saldo_uang').val() == '') {
-        $('#formAddEditNasabah #saldo_uang').addClass('is-invalid');
-        status = false;
-    }
-    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_uang').val())) {
-        $('#formAddEditNasabah #saldo_uang').addClass('is-invalid');
-        showAlert({
-            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
-            btnclose: false,
-            type:'danger'
-        })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
-        status = false;
-    }
-    // saldo antam validation
-    if ($('#formAddEditNasabah #saldo_antam').val() == '') {
-        $('#formAddEditNasabah #saldo_antam').addClass('is-invalid');
-        status = false;
-    }
-    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_antam').val())) {
-        $('#formAddEditNasabah #saldo_antam').addClass('is-invalid');
-        showAlert({
-            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
-            btnclose: false,
-            type:'danger'
-        })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
-        status = false;
-    }
-    // saldo ubs validation
-    if ($('#formAddEditNasabah #saldo_ubs').val() == '') {
-        $('#formAddEditNasabah #saldo_ubs').addClass('is-invalid');
-        status = false;
-    }
-    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_ubs').val())) {
-        $('#formAddEditNasabah #saldo_ubs').addClass('is-invalid');
-        showAlert({
-            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
-            btnclose: false,
-            type:'danger'
-        })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
-        status = false;
-    }
-    // saldo g24 validation
-    if ($('#formAddEditNasabah #saldo_galery24').val() == '') {
-        $('#formAddEditNasabah #saldo_galery24').addClass('is-invalid');
-        status = false;
-    }
-    else if (/[^0-9\.]/g.test($('#modalAddEditNasabah #saldo_galery24').val())) {
-        $('#formAddEditNasabah #saldo_galery24').addClass('is-invalid');
-        showAlert({
-            message: `<strong>Saldo hanya boleh angka dan titik</strong>`,
-            btnclose: false,
-            type:'danger'
-        })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
-        status = false;
-    }
 
     // tgl lahir validation
     if ($('#formAddEditNasabah #tgllahir').val() == '') {
@@ -569,63 +649,55 @@ const doValidate = (form) => {
 /**
  * HAPUS NASABAH
  */
-const hapusNasabah = (el,id) => {
+ const hapusNasabah = (id) => {
     Swal.fire({
-        title: 'ANDA YAKIN?',
-        text: "Semua data transaksi dan saldo nasabah akan ikut terhapus",
-        icon: 'warning',
+        input: 'password',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        html:`<h5 class='mb-4'>Password</h5>`,
         showCancelButton: true,
-        confirmButtonText: 'iya',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                input: 'password',
-                inputAttributes: {
-                    autocapitalize: 'off'
-                },
-                html:`<h5 class='mb-4'>Password</h5>`,
-                showCancelButton: true,
-                confirmButtonText: 'submit',
-                showLoaderOnConfirm: true,
-                preConfirm: (password) => {
-                    let form = new FormData();
-                    form.append('hashedpass',PASSADMIN);
-                    form.append('password',password);
-        
-                    return axios
-                    .post(`${APIURL}/admin/confirmdelete`,form, {
-                        headers: {
-                            // header options 
-                        }
-                    })
-                    .then((response) => {
-                        return httpRequestDelete(`${APIURL}/admin/deletenasabah?id=${id}`)
-                        .then((e) => {
-                            if (e.status == 201) {
-                                el.parentElement.parentElement.remove();
-                                arrayNasabah = arrayNasabah.filter(e => e.id != id);
-                                if (arrayNasabah.length == 0) {
-                                    $('#list-nasabah-notfound').removeClass('d-none'); 
-                                    $('#list-nasabah-notfound #text-notfound').html(`nasabah belum ditambah`); 
-                                } 
-                            }
-                        })
-                    })
-                    .catch(error => {
-                        if (error.response.status == 404) {
-                            Swal.showValidationMessage(
-                                `password salah`
-                            )
-                        }
-                        else if (error.response.status == 500) {
-                            Swal.showValidationMessage(
-                                `terjadi kesalahan, coba sekali lagi`
-                            )
-                        }
-                    })
-                },
-                allowOutsideClick: () => !Swal.isLoading()
+        confirmButtonText: 'submit',
+        showLoaderOnConfirm: true,
+        preConfirm: (password) => {
+            let form = new FormData();
+            form.append('hashedpass',PASSADMIN);
+            form.append('password',password);
+
+            return axios
+            .post(`${APIURL}/admin/confirmdelete`,form, {
+                headers: {
+                    // header options 
+                }
             })
-        }
+            .then((response) => {
+                return httpRequestDelete(`${APIURL}/admin/deletenasabah?id=${id}`)
+                .then((e) => {
+                    if (e.status == 201) {
+                        getAllNasabah();
+                    }
+                    else if (e.status == 400) {
+                        showAlert({
+                            message: `<strong>Gagal . . .</strong> ${e.message}`,
+                            autohide: true,
+                            type:'danger'
+                        })
+                    }
+                })
+            })
+            .catch(error => {
+                if (error.response.status == 404) {
+                    Swal.showValidationMessage(
+                        `password salah`
+                    )
+                }
+                else if (error.response.status == 500) {
+                    Swal.showValidationMessage(
+                        `terjadi kesalahan, coba sekali lagi`
+                    )
+                }
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
     })
 }

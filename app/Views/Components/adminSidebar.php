@@ -20,8 +20,28 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
+            <!-- list sampah -->
+            <li class="nav-item">
+                <a class="nav-link <?= ($title=='Admin | list sampah') ? 'active' : ''?>" href="<?= base_url('admin/listsampah');?>">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-recycle <?= ($title=='Admin | list sampah') ? 'text-white' : 'text-muted'?>" style="font-size: 13px;transform: translateY(-1px);"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Sampah</span>
+                </a>
+            </li>
+            <!-- transaksi -->
+            <li class="nav-item">
+                <a class="nav-link <?= ($title=='Admin | transaksi') ? 'active' : ''?>" href="<?= base_url('admin/transaksi');?>">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-cash-register <?= ($title=='Admin | transaksi') ? 'text-white' : 'text-muted'?>" style="font-size: 14px;transform: translateY(-1px);"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Transaksi</span>
+                </a>
+            </li>
             <!-- list admin -->
-            <?php if ($privilege == 'super') { ?>
+            <?php if ($privilege == 'superadmin') { ?>
             <li class="nav-item mt-2">
                 <a class="nav-link <?= ($title=='Admin | list admin') ? 'active' : ''?>" href="<?= base_url('admin/listadmin');?>">
                     <div

@@ -3,17 +3,16 @@
 namespace App\Controllers;
 use App\Controllers\BaseController;
 
-use App\Models\NasabahModel;
+use App\Models\UserModel;
 use App\Models\TransaksiModel;
 
 class Nasabah extends BaseController
 {
-    public $nasabahModel;
+    public $userModel;
 
 	public function __construct()
     {
-        $this->validation   = \Config\Services::validation();
-        $this->nasabahModel = new NasabahModel;
+        $this->userModel  = new UserModel;
     }
 
     /**
@@ -26,7 +25,7 @@ class Nasabah extends BaseController
         $data   = [
             'title'     => 'Nasabah | dashboard',
             'token'     => $token,
-            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
+            'privilege' => (isset($result['data']['privilege'])) ? $result['data']['privilege'] : null,
         ];
 
         if ($result['success'] == false) {
@@ -36,10 +35,10 @@ class Nasabah extends BaseController
             return redirect()->to(base_url().'/login');
         } 
         else if($data['privilege'] !== 'nasabah') {
-            return redirect()->to(base_url().'/login');
+            return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['expired'],'/');
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
             return view('Nasabah/index',$data);
         }
     }
@@ -54,7 +53,7 @@ class Nasabah extends BaseController
         $data = [
             'title'     => 'Nasabah | profile',
             'token'     => $token,
-            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
+            'privilege' => (isset($result['data']['privilege'])) ? $result['data']['privilege'] : null,
         ];
 
         if ($result['success'] == false) {
@@ -63,10 +62,10 @@ class Nasabah extends BaseController
             return redirect()->to(base_url().'/login');
         } 
         else if($data['privilege'] !== 'nasabah') {
-            return redirect()->to(base_url().'/login');
+            return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['expired'],'/');
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
             return view('Nasabah/profilenasabah',$data);
         }
 
@@ -76,52 +75,60 @@ class Nasabah extends BaseController
     {
         $token     = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result    = $this->checkToken($token, false);
-        $privilege = (isset($result['privilege'])) ? $result['privilege'] : null;
+        $privilege = (isset($result['data']['privilege'])) ? $result['data']['privilege'] : null;
 
-        if ($token == null || $result['success'] == false) {
+        if ($token == null || $result['success'] == false || !in_array($privilege,['nasabah','admin','superadmin'])) {
             setcookie('token', null, -1, '/');
             unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
         }
 
         $transaksiModel = new TransaksiModel;
-        $dbresponse     = $transaksiModel->getData(['id_transaksi' => $id]);
+        $dbresponse     = $transaksiModel->getData(['id_transaksi' => $id],'');
         
-        if ($dbresponse['success'] == false) {
+        if ($dbresponse['error'] == true) {
             return redirect()->to(base_url().'/login');
         }
         
-        $mpdf = new \Mpdf\Mpdf();
-        $type = ($dbresponse['data']['type'] == 'setor')? $dbresponse['data']['type'].' sampah' : $dbresponse['data']['type'].' saldo';
+        $mpdf           = new \Mpdf\Mpdf();
+        $jenisTransaksi = $dbresponse['data']['jenis_transaksi'];
         
-        if ($dbresponse['data']['type'] == 'tarik') {
-            $jumlah = ($dbresponse['data']['jenis_saldo'] == 'uang')? 'Rp '.number_format($dbresponse['data']['jumlah'] , 0, ',', '.') : $dbresponse['data']['jumlah'].' gram';
-            $result = "<div style='padding: 20px;width: 100%;background-color: rgb(131, 146, 171);border-radius: 6px;'>
-                <h1 style='font-size: 2.5em;font-family: sans;'>
-                    <b>Jumlah</b> : ${jumlah}
-                </h1>
-            </div>";
-        } 
-        else if ($dbresponse['data']['type'] == 'pindah') {
-            $jumlah = ($dbresponse['data']['jenis_saldo'] == 'uang')? 'Rp '.number_format($dbresponse['data']['jumlah'] , 0, ',', '.') : $dbresponse['data']['jumlah'].' gram';
-            $hasilKonversi = ($dbresponse['data']['asal'] == 'uang')? $dbresponse['data']['hasil_konversi'].' gram' : 'Rp '.number_format($dbresponse['data']['hasil_konversi'] , 0, ',', '.');
+        if ($jenisTransaksi == 'penarikan saldo') {
+            $jenisSaldo = ($dbresponse['data']['jenis_saldo'] == 'uang')? 'uang' : 'emas '.$dbresponse['data']['jenis_saldo'];
+            $jumlah     = ($jenisSaldo == 'uang')? 'Rp '.number_format($dbresponse['data']['jumlah_tarik'] , 0, ',', '.') : $dbresponse['data']['jumlah_tarik'].' gram';
 
             $result = "<div style='padding: 20px;width: 100%;background-color: rgb(131, 146, 171);border-radius: 6px;'>
                 <table>
                     <tr>
-                        <td style='font-size: 2em;font-family: sans;'>
-                            Saldo asal&nbsp;&nbsp;&nbsp;
+                        <td style='font-family: sans;'>
+                            <h4>Jenis saldo&nbsp;</h4>
                         </td>
-                        <td style='font-size: 2em;font-family: sans;'>
-                            : ".$dbresponse['data']['asal']."
+                        <td style='font-family: sans;'>
+                            <h4>
+                            : &nbsp;&nbsp;$jenisSaldo
+                            </h4>
                         </td>
                     </tr>
+                    <tr>
+                        <td style='font-family: sans;'>
+                            <h4>Jumlah</h4>
+                        </td>
+                        <td style='font-family: sans;'>
+                            <h4>: &nbsp;&nbsp;$jumlah</h4>
+                        </td>
+                    </tr>
+                </table>
+            </div>";
+        } 
+        if ($jenisTransaksi == 'konversi saldo') {
+            $result = "<div style='padding: 20px;width: 100%;background-color: rgb(131, 146, 171);border-radius: 6px;'>
+                <table>
                     <tr>
                         <td style='font-size: 2em;font-family: sans;'>
                             Saldo tujuan&nbsp;&nbsp;&nbsp;
                         </td>
                         <td style='font-size: 2em;font-family: sans;text-transform: uppercase;'>
-                            : ".  $dbresponse['data']['tujuan']."
+                            : ".$dbresponse['data']['saldo_tujuan']."
                         </td>
                     </tr>
                     <tr>
@@ -129,7 +136,7 @@ class Nasabah extends BaseController
                             Jumlah&nbsp;&nbsp;&nbsp;
                         </td>
                         <td style='font-size: 2em;font-family: sans;'>
-                            : ".$jumlah."
+                            : Rp ".number_format($dbresponse['data']['jumlah'] , 0, ',', '.')."
                         </td>
                     </tr>
                     <tr>
@@ -145,32 +152,34 @@ class Nasabah extends BaseController
                             Hasil konversi&nbsp;&nbsp;&nbsp;
                         </td>
                         <td style='font-size: 2em;font-family: sans;'>
-                            : ".$hasilKonversi."
+                            : ".$dbresponse['data']['hasil_konversi']." gram
                         </td>
                     </tr>
                 </table>
             </div>";
         }
-        else {
+        if ($jenisTransaksi == 'penyetoran sampah') {
             $barang = $dbresponse['data']['barang'];
             $trBody = "";
             $no     = 1;
+            $totalRp= 0;
 
             foreach ($barang as $key) {
-                $bg     = ($no % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
+                $totalRp += $key['jumlah_rp'];
+                $bg       = ($no % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
 
                 $trBody .= "<tr $bg>
                     <td style='font-family: sans;text-align: center;'>
                         ".$no++."
                     </td>
                     <td style='font-family: sans;text-align: center;'>
-                        ".$key['jenis_sampah']."
+                        ".$key['jenis']."
                     </td>
                     <td style='font-family: sans;text-align: center;'>
-                        ".$key['jumlah']."
+                        ".$key['jumlah_kg']."
                     </td>
-                    <td style='font-family: sans;text-align: center;'>
-                        Rp ".number_format($key['harga'] , 0, ',', '.')."
+                    <td style='font-family: sans;text-align: right;'>
+                        Rp ".number_format($key['jumlah_rp'] , 0, ',', '.')."
                     </td>
                 </tr>";
             }
@@ -194,6 +203,14 @@ class Nasabah extends BaseController
                 <thead>
                 <tbody>
                     $trBody
+                    <tr style='background: rgb(230, 230, 230);'>
+                        <th style='font-family: sans;text-align: right;' colspan='3'>
+                            Total :
+                        </th>
+                        <td style='font-family: sans;text-align: right;'>
+                            Rp ".number_format($totalRp , 0, ',', '.')."
+                        </td>
+                    </tr>
                 </tbody>
             </table>";
         }
@@ -228,7 +245,7 @@ class Nasabah extends BaseController
                             TANGGAL&nbsp;&nbsp;&nbsp;
                         </td>
                         <td style='font-size: 1.4em;font-family: sans;'>
-                            : ".date("d/m/Y",$dbresponse['data']['date'])."
+                            : ".date("d/m/Y h:i A",$dbresponse['data']['date'])."
                         </td>
                     </tr>
                     <tr>
@@ -244,7 +261,7 @@ class Nasabah extends BaseController
                             ID.NASABAH&nbsp;&nbsp;&nbsp;
                         </td>
                         <td style='font-size: 1.4em;font-family: sans;'>
-                            : ".$dbresponse['data']['id_nasabah']."
+                            : ".$dbresponse['data']['id_user']."
                         </td>
                     </tr>
                     <tr>
@@ -259,7 +276,7 @@ class Nasabah extends BaseController
             </div>
 
             <h1 style='font-style: italic;margin-top: 40px;margin-bottom: 20px;font-family: sans;'>
-                ".$type."
+                ".$jenisTransaksi."
             </h1>
 
             ".$result."
@@ -272,276 +289,16 @@ class Nasabah extends BaseController
     }
 
     /**
-     * register
-     *   url    : domain.com/nasabah/register
-     *   method : POST
-     */
-    public function register(): object
-    {
-		$data   = $this->request->getPost();
-        $this->validation->run($data,'nasabahRegister');
-        $errors = $this->validation->getErrors();
-        
-        if($errors) {
-            $response = [
-                'status' => 400,
-                'error' => true,
-                'messages' => $errors,
-            ];
-    
-            return $this->respond($response,400);
-        } 
-        else {
-            $email        = trim($data['email']);
-            $otp          = $this->generateOTP(6);
-
-            $lastNasabah  = $this->nasabahModel->getLastNasabah($data['kodepos']);
-            $idNasabah    = '';
-
-            if ($lastNasabah['success'] == true) {
-                $lastID = $lastNasabah['message']['id'];
-                $lastID = (int)substr($lastID,9)+1;
-                // $lastID = sprintf('%06d',$lastID);
-
-                $idNasabah = $data['kodepos'].$this->request->getPost("rt").$this->request->getPost("rw").$lastID;
-            }
-            else if ($lastNasabah['code'] == 404) {
-                $idNasabah = $data['kodepos'].$this->request->getPost("rt").$this->request->getPost("rw").'1';
-            } 
-            else {
-                $response = [
-                    'status'   => $lastNasabah['code'],
-                    'error'    => true,
-                    'messages' => $lastNasabah['message'],
-                ];
-        
-                return $this->respond($response,$lastNasabah['code']);
-            }
-            
-            $data = [
-                "id"           => $idNasabah,
-                "email"        => $email,
-                "username"     => trim($data['username']),
-                // "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
-                "password"     => $this->encrypt($data['password']),
-                "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                "notelp"       => trim($data['notelp']),
-                "alamat"       => trim($data['alamat']),
-                "region"       => trim($data['region']),
-                "tgl_lahir"    => trim($data['tgl_lahir']),
-                "kelamin"      => $data['kelamin'],
-                "otp"          => $otp,
-                "created_at"   => (int)time(),
-            ];
-
-            $addNasabah = $this->nasabahModel->addNasabah($data);
-
-            if ($addNasabah['success'] == true) {
-                $sendEmail = $this->sendVerification($email,$otp);
-
-                if ($sendEmail == true) {
-                    $response = [
-                        'status'   => 201,
-                        "error"    => false,
-                        'messages' => 'register success. please check your email',
-                    ];
-    
-                    return $this->respond($response,201);
-                } 
-                else {
-                    $response = [
-                        'status'   => 500,
-                        'error'    => true,
-                        'messages' => $sendEmail,
-                    ];
-            
-                    return $this->respond($response,500);
-                }
-                
-            } 
-            else {
-                $response = [
-                    'status'   => $addNasabah['code'],
-                    'error'    => true,
-                    'messages' => $addNasabah['message'],
-                ];
-        
-                return $this->respond($response,$addNasabah['code']);
-            }
-        }
-
-    }
-
-    /**
-     * Verifikasi akun
-     *   url    : domain.com/nasabah/verification
-     *   method : POST
-     */
-    public function verification(): object
-    {
-		$data   = $this->request->getPost();
-        $this->validation->run($data,'codeOTP');
-        $errors = $this->validation->getErrors();
-
-        if($errors) {
-            $response = [
-                'status'   => 400,
-                'error'    => true,
-                'messages' => $errors['code_otp'],
-            ];
-    
-            return $this->respond($response,400);
-        } 
-        else {
-            
-            $email        = $this->request->getPost('code_otp');
-            $editNasabah  = $this->nasabahModel->emailVerification($email);
-
-            if ($editNasabah['success'] == true) {
-                $response = [
-                    'status'   => 201,
-                    'error'    => false,
-                    'messages' => $editNasabah['message'],
-                ];
-        
-                return $this->respond($response,201);
-
-            } 
-            else {
-                $response = [
-                    'status'   => $editNasabah['code'],
-                    'error'    => true,
-                    'messages' => $editNasabah['message'],
-                ];
-        
-                return $this->respond($response,$editNasabah['code']);
-            }
-        }    
-    }
-
-    /**
-     * Login
-     *   url    : domain.com/nasabah/login
-     *   method : POST
-     */
-    public function login(): object
-    {
-		$data   = $this->request->getPost();
-        $this->validation->run($data,'nasabahLogin');
-        $errors = $this->validation->getErrors();
-
-        if($errors) {
-            $response = [
-                'status'   => 400,
-                'error'    => true,
-                'messages' => $errors,
-            ];
-    
-            return $this->respond($response,400);
-        } 
-        else {
-            
-            $nasabahData  = $this->nasabahModel->getNasabahByEmail($this->request->getPost("email"));
-
-            if ($nasabahData['success'] == true) {
-                $login_pass    = $this->request->getPost("password");
-                $database_pass = $this->decrypt($nasabahData['message']['password']);
-                
-                // if (password_verify($login_pass,$database_pass)) {
-                if ($login_pass === $database_pass) {
-                    $is_verify = $nasabahData['message']['is_verify'];
-
-                    if ($is_verify == 'f') {
-                        $response = [
-                            'status'   => 401,
-                            'error'    => true,
-                            'messages' => 'account is not verify',
-                        ];
-                
-                        return $this->respond($response,401);
-                    } 
-                    else {
-                        // database row id
-                        $id           = $nasabahData['message']['id'];
-                        // rememberMe check
-                        $rememberme   = ($this->request->getPost("rememberme") == '1') ? true : false;
-                        // generate new token
-                        $token        = $this->generateToken(
-                            $id,
-                            $rememberme
-                        );
-
-                        // edit nasabah in database
-                        $editNasabah = $this->nasabahModel->updateToken($id,$token);
-
-                        if ($editNasabah['success'] == true) {
-                            $response = [
-                                'status'   => 200,
-                                'error'    => false,
-                                'messages' => 'loggin success',
-                                'token'    => $token
-                            ];
-    
-                            return $this->respond($response,200);
-                        } 
-                        else {
-                            $response = [
-                                'status'   => $editNasabah['code'],
-                                'error'    => true,
-                                'messages' => $editNasabah['message'],
-                            ];
-                    
-                            return $this->respond($response,$editNasabah['code']);
-                        }
-                    } 
-                } 
-                else {
-                    $response = [
-                        'status'   => 404,
-                        'error'    => true,
-                        'messages' => [
-                            'password' => "password not match",
-                        ],
-                    ];
-            
-                    return $this->respond($response,404);
-                }
-            } 
-            else {
-                $response = [
-                    'status'   => $nasabahData['code'],
-                    'error'    => true,
-                    'messages' => $nasabahData['message'],
-                ];
-        
-                return $this->respond($response,$nasabahData['code']);
-            }
-        }
-    }
-
-    /**
      * Check nasabah session
      *   url    : domain.com/nasabah/sessioncheck
      *   method : GET
      */
     public function sessionCheck(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],'nasabah');
 
-        if ($result['success'] == true) {
-            return $this->respond($result['message'],200);
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
+        return $this->respond($result,200);
     }
 
     /**
@@ -551,89 +308,13 @@ class Nasabah extends BaseController
      */
     public function getProfile(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],'nasabah');
 
-        if ($result['success'] == true) {
-            
-            $id           = $result['message']['data']['id'];
-            $dataNasabah  = $this->nasabahModel->getProfileNasabah($id);
-            
-            if ($dataNasabah['success'] == true) {
-                $response = [
-                    'status' => 200,
-                    'error'  => false,
-                    'data'   => $dataNasabah['message']
-                ];
+        $id        = $result['data']['userid'];
+        $dbrespond = $this->userModel->getProfileUser($id);
 
-                return $this->respond($response,200);
-            } 
-            else {
-                $response = [
-                    'status'   => $dataNasabah['code'],
-                    'error'    => true,
-                    'messages' => $dataNasabah['message'],
-                ];
-        
-                return $this->respond($response,$dataNasabah['code']);
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
-    }
-
-    /**
-     * Get saldo
-     *   url    : domain.com/nasabah/getsaldo
-     *   method : GET
-     */
-    public function getSaldo(): object
-    {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-
-        if ($result['success'] == true) {
-            
-            $id        = $result['message']['data']['id'];
-            $dataSaldo = $this->nasabahModel->getSaldoNasabah($id);
-            
-            if ($dataSaldo['success'] == true) {
-                $response = [
-                    'status' => 200,
-                    'error'  => false,
-                    'data'   => $dataSaldo['message']
-                ];
-
-                return $this->respond($response,200);
-            } 
-            else {
-                $response = [
-                    'status'   => $dataSaldo['code'],
-                    'error'    => true,
-                    'messages' => $dataSaldo['message'],
-                ];
-        
-                return $this->respond($response,$dataSaldo['code']);
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
+        return $this->respond($dbrespond,$dbrespond['status']);
     }
 
     /**
@@ -643,114 +324,84 @@ class Nasabah extends BaseController
      */
     public function editProfile(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-
-        if ($result['success'] == true) {
-            $this->_methodParser('data');
-            global $data;
-            $data['id'] = $result['message']['data']['id']; 
-
-            $this->validation->run($data,'editProfileNasabah');
-            $errors = $this->validation->getErrors();
-
-            if($errors) {
-                $response = [
-                    'status'   => 400,
-                    'error'    => true,
-                    'messages' => $errors,
-                ];
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],'nasabah');
         
-                return $this->respond($response,400);
-            } 
-            else {
-                $id           = $data['id'];
-                $dataNasabah  = $this->nasabahModel->db->table('nasabah')->select('password')->where("id",$id)->get()->getResultArray();
+        $this->_methodParser('data');
+        global $data;
+        $data['id'] = $result['data']['userid']; 
+        
+        $this->validation->run($data,'editProfileNasabah');
+        $errors = $this->validation->getErrors();
 
-                if (!empty($dataNasabah)) {
-                    $newpass = '';
-                    $oldpass = '';
-
-                    if (isset($data['new_password'])) {
-                        $this->validation->run($data,'editNewPassword');
-                        $errors = $this->validation->getErrors();
-                        
-                        if($errors) {
-                            $response = [
-                                'status'   => 400,
-                                'error'    => true,
-                                'messages' => $errors,
-                            ];
-                    
-                            return $this->respond($response,400);
-                        } 
-                        else {
-                            $newpass = $data['new_password'];
-                            $oldpass = $data['old_password'];
-                        }
-                    }
-            
-                    $data = [
-                        "id"           => $data['id'],
-                        "username"     => trim($data['username']),
-                        "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                        "notelp"       => trim($data['notelp']),
-                        "alamat"       => trim($data['alamat']),
-                        "tgl_lahir"    => trim($data['tgl_lahir']),
-                        "kelamin"      => $data['kelamin'],
-                    ];
-
-                    if ($newpass != '') {
-                        $dbPass = $this->decrypt($dataNasabah[0]['password']);
-                        
-                        if ($oldpass === $dbPass) {
-                            $data['password'] = $this->encrypt($newpass);
-                            unset($data['new_password']);
-                            unset($data['old_password']);
-                        } 
-                        else {
-                            return $this->fail(["old_password" => "password lama anda salah"],400,true);
-                        }
-                    }
-
-                    $editNasabah  = $this->nasabahModel->editProfileNasabah($data);
-
-                    if ($editNasabah['success'] == true) {
-                        $response = [
-                            'status' => 201,
-                            'error' => false,
-                            'messages' => $editNasabah['message'],
-                        ];
-    
-                        return $this->respond($response,201);
-                    } 
-                    else {
-                        $response = [
-                            'status'   => $editNasabah['code'],
-                            'error'    => true,
-                            'messages' => $editNasabah['message'],
-                        ];
-                
-                        return $this->respond($response,$editNasabah['code']);
-                    }
-                } 
-                else {
-                    return $this->fail("nasabah with id $id not found",404,true);
-                }
-                
-            }
-        } 
-        else {
+        if($errors) {
             $response = [
-                'status'   => $result['code'],
+                'status'   => 400,
                 'error'    => true,
-                'messages' => $result['message'],
+                'messages' => $errors,
             ];
     
-            return $this->respond($response,$result['code']);
-        }
+            return $this->respond($response,400);
+        } 
+        else {
+            $id           = $data['id'];
+            $dataNasabah  = $this->userModel->db->table('users')->select('password')->where("id",$id)->get()->getResultArray();
+
+            if (!empty($dataNasabah)) {
+                $newpass = '';
+                $oldpass = '';
+
+                if (isset($data['new_password'])) {
+                    $this->validation->run($data,'newPasswordWithOld');
+                    $errors = $this->validation->getErrors();
+                    
+                    if($errors) {
+                        $response = [
+                            'status'   => 400,
+                            'error'    => true,
+                            'messages' => $errors,
+                        ];
+                
+                        return $this->respond($response,400);
+                    } 
+                    else {
+                        $newpass = $data['new_password'];
+                        $oldpass = $data['old_password'];
+                    }
+                }
         
+                $data = [
+                    "id"           => $data['id'],
+                    "username"     => trim($data['username']),
+                    "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
+                    "notelp"       => trim($data['notelp']),
+                    "alamat"       => trim($data['alamat']),
+                    "tgl_lahir"    => trim($data['tgl_lahir']),
+                    "kelamin"      => strtolower(trim($data['kelamin'])),
+                ];
+
+                if ($newpass != '') {
+                    $dbPass = $this->decrypt($dataNasabah[0]['password']);
+                    
+                    if ($oldpass === $dbPass) {
+                        $data['password'] = $this->encrypt($newpass);
+                        unset($data['new_password']);
+                        unset($data['old_password']);
+                    } 
+                    else {
+                        return $this->fail(["old_password" => "password lama anda salah"],400,true);
+                    }
+                }
+
+                $dbrespond = $this->userModel->editUser($data);
+        
+                return $this->respond($dbrespond,$dbrespond['status']);
+            } 
+            else {
+                return $this->fail("nasabah with id $id not found",404,true);
+            }
+            
+        }
     }
 
     /**
@@ -760,91 +411,25 @@ class Nasabah extends BaseController
      */
     public function logout(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],'nasabah');
 
-        if ($result['success'] == true) {
-            
-            $id           = $result['message']['data']['id'];
-            $editNasabah  = $this->nasabahModel->setTokenNull($id);
+        $id        = $result['data']['userid'];
+        $dbrespond = $this->userModel->setTokenNull($id);
 
-            if ($editNasabah['success'] == true) {
-                $response = [
-                    'status' => 200,
-                    'error' => false,
-                    'messages' => $editNasabah['message'],
-                ];
-
-                return $this->respond($response,200);
-            } 
-            else {
-                $response = [
-                    'status'   => $editNasabah['code'],
-                    'error'    => true,
-                    'messages' => $editNasabah['message'],
-                ];
-        
-                return $this->respond($response,$editNasabah['code']);
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
-        
+        return $this->respond($dbrespond,$dbrespond['status']);
     }
 
     /**
-     * Forgot password
-     *   url    : domain.com/nasabah/forgotpass
-     *   method : POST
+     * Get wilayah
+     *   url    : domain.com/nasabah/wilayah
+     *   method : GET
      */
-    public function forgotPassword(): object
+    public function getWilayah(): object
     {
-        $this->validation->run($_POST,'forgotPassword');
-        $errors = $this->validation->getErrors();
+        $dbrespond = $this->userModel->getWilayah();
 
-        if($errors) {
-            $response = [
-                'status'   => 404,
-                'error'    => true,
-                'messages' => $errors['email'],
-            ];
-    
-            return $this->respond($response,404);
-        } 
-        else {
-            $email         = $this->request->getPost("email");
-            $nasabahData   = $this->nasabahModel->getNasabahByEmail($email);
-            $database_pass = $this->decrypt($nasabahData['message']['password']);
-            $sendEmail     = $this->sendForgotPass($email,$database_pass);
-
-            if ($sendEmail == true) {
-                $response = [
-                    'status'   => 200,
-                    "error"    => false,
-                    'messages' => 'password telah terkirim',
-                ];
-
-                return $this->respond($response,200);
-            } 
-            else {
-                $response = [
-                    'status'   => 500,
-                    'error'    => true,
-                    'messages' => $sendEmail,
-                ];
-        
-                return $this->respond($response,500);
-            }
-        }
-        
+        return $this->respond($dbrespond,$dbrespond['status']);
     }
 
     /**
@@ -854,7 +439,7 @@ class Nasabah extends BaseController
      */
     public function sendKritik(): object
     {
-        $this->validation->run($_POST,'kritikSaran');
+        $this->validation->run($_POST,'sendKritikValidate');
         $errors = $this->validation->getErrors();
 
         if($errors) {
@@ -869,25 +454,13 @@ class Nasabah extends BaseController
         else {
             $sendEmail = $this->sendKritikSaran($_POST['name'],$_POST['email'],$_POST['message']);
 
-            if ($sendEmail == true) {
-                $response = [
-                    'status'   => 201,
-                    "error"    => false,
-                    'messages' => 'kritik dan saran successfully sent',
-                ];
+            $response = [
+                'status'   => ($sendEmail == true) ? 201   : 500,
+                "error"    => ($sendEmail == true) ? false : true,
+                'messages' => ($sendEmail == true) ? 'kritik dan saran successfully sent' : $sendEmail,
+            ];
 
-                return $this->respond($response,201);
-            } 
-            else {
-                $response = [
-                    'status'   => 500,
-                    'error'    => true,
-                    'messages' => $sendEmail,
-                ];
-        
-                return $this->respond($response,500);
-            }
+            return $this->respond($response,$response['status']);
         }
-        
     }
 }

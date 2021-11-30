@@ -38,7 +38,8 @@
 	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
 	<!-- <script src="<?= base_url('assets/js/admin.profile.js'); ?>"></script> -->
 	<script src="<?= base_url('assets/js/admin.profile.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
@@ -110,7 +111,7 @@
 							<div class="card-header pb-0 p-3 position-relative" style="z-index: 11;">
 								<div class="row">
 									<div class="opacity-8 col-9 mt-1">
-										<h4 class="text-responsive" style="font-family: 'qc-medium';">Personoal information</h4 >
+										<h4 class="text-responsive" style="font-family: 'qc-medium';">Personal information</h4 >
 									</div>
 									<div class="col-3 text-end">
 										<a id="btn-edit-profile" class="shadow p-2  border-radius-sm" href="" data-toggle="modal" data-target="#modalEditProfile">
@@ -268,7 +269,7 @@
 					<div class="input-group col-lg-6 mb-2 form-group">
 						<div class="form-check">
 							<input class="form-check-input" type="radio" id="kelamin-laki-laki" value="laki-laki" />
-							<label class="form-check-label" for="kelamin-laki">
+							<label class="form-check-label" for="kelamin-laki-laki">
 							Laki Laki
 							</label>
 						</div>

@@ -9,43 +9,31 @@
 <?= $this->section('jsComponent'); ?>
     <script>
         function showAlert(data) {
-            if ($('#alert').hasClass(`show`)) {
-                hideAlert()
+            $('#alert #message').html(data.message);
+            $('#alert').addClass(`alert-${data.type} show`);
+            if (data.autohide) {
                 setTimeout(() => {
-                    $('#alert #message').html(data.message);
-                    $('#alert #close').addClass(`${(data.btnclose == true) ? '' : 'd-none'}`);
-                    $('#alert').addClass(`alert-${data.type} show`);
-                }, 500);                
-            } 
-            else {
-                $('#alert #message').html(data.message);
-                $('#alert #close').addClass(`${(data.btnclose == true) ? '' : 'd-none'}`);
-                $('#alert').addClass(`alert-${data.type} show`);
-            }
-        }
-
-        function hideAlert() {
-            $('#alert #message').html('custom text');
-            $('#alert #close').removeClass('d-none');
-            $('#alert').removeClass('show alert-success alert-danger alert-warning alert-info');
+                    $('#alert').removeClass('show alert-success alert-danger alert-warning alert-info');
+                }, 5000);    
+            }     
         }
         
         if(!navigator.onLine){
             showAlert({
                 message: `<strong>Ups . . .</strong> koneksi anda terputus!`,
-                btnclose: false,
+                autohide: false,
                 type:'danger'
             })
         }
         window.onoffline = () => {
             showAlert({
                 message: `<strong>Ups . . .</strong> koneksi anda terputus!`,
-                btnclose: false,
+                autohide: false,
                 type:'danger'
             })
         };
         window.ononline = () => {
-            hideAlert();
+            $('#alert').removeClass('show alert-success alert-danger alert-warning alert-info');
         };
     </script>
 <?= $this->endSection(); ?>
@@ -56,8 +44,8 @@
     class="container-fluid position-fixed alert alert-dismissible fade"
     style="top:0;z-index:10000;" role="alert">
       <span id="message">custom text</span>
-      <button id="close" type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <!-- <button id="close" type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
-      </button>
+      </button> -->
   </div>
 <?= $this->endSection(); ?>

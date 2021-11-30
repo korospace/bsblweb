@@ -256,13 +256,13 @@
 	get total sampah
 	--------------
 	*/
-	axios.get(APIURL+'/sampah/totalitem')
+	axios.get(APIURL+'/transaksi/sampahmasuk')
 	.then(res => {
 		let totalSampah   = res.data.data;
 
-        for (let name in totalSampah) {
-            $(`#sampah-${name}`).html(kFormatter(totalSampah[name].total));
-        }   
+		totalSampah.forEach(ts => {
+            $(`#sampah-${ts.kategori}`).html(kFormatter(ts.total));
+        });   
 
 		// modif number
 		function kFormatter(num) {
@@ -311,7 +311,7 @@
 			.then((response) => {
 				hideLoadingSpinner();
 				$('#contact-name').val('');
-				$('#contact-emai').val('');
+				$('#contact-email').val('');
 				$('#contact-message').val('')
 
 				setTimeout(() => {
@@ -331,7 +331,7 @@
 				if (error.response.status == 500) {
 					showAlert({
 						message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
-						btnclose: true,
+						autohide: true,
 						type:'danger'
 					})
 				}
@@ -367,7 +367,7 @@
 		}
 		else if ($('#contact-email').val().length > 40) {
 			$('#contact-email').addClass('is-invalid');
-			$('#contact-email-error').html('*ebih dari 40 huruf');
+			$('#contact-email-error').html('*lebih dari 40 huruf');
 			status = false;
 		}
 		else if (!emailRules.test(String($('#contact-email').val()).toLowerCase())) {

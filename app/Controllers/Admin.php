@@ -3,37 +3,58 @@
 namespace App\Controllers;
 use App\Controllers\BaseController;
 
-use App\Models\AdminModel;
-use App\Models\NasabahModel;
+use App\Models\UserModel;
 use App\Models\TransaksiModel;
 
 class Admin extends BaseController
 {
-    public $adminModel;
+    public $userModel;
 
 	public function __construct()
     {
-        date_default_timezone_set('Asia/Jakarta');
-        $this->validation = \Config\Services::validation();
-        $this->adminModel = new AdminModel;
-        if (isset($_COOKIE['lasturl'])) {
-            unset($_COOKIE['lasturl']);
-        }
+        $this->userModel  = new UserModel;
     }
 
     /**
-     * Dashboard admin
+     * Views method
+     * =====================================
      */
+    // Admin dashboard
     public function dashboardAdmin()
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
         
         $data   = [
-            'title'     => 'Admin | dashboard',
-            'token'     => $token,
-            'password'  => (isset($result['password']))  ? $result['password']  : null,
-            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
+            'title' => 'Admin | dashboard',
+            'token' => $token,
+        ];
+        
+        if($result['success'] == false) {
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
+            return redirect()->to(base_url().'/login/admin');
+        } 
+        else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+            return redirect()->to(base_url().'/notfound');
+        } 
+        else {
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
+            return view('Admin/index',$data);
+        }
+    }
+
+    // transaksi page
+    public function transaksiPage()
+    {
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result = $this->checkToken($token, false);
+
+        $data   = [
+            'title' => 'Admin | transaksi',
+            'token' => $token,
         ];
         
         if($result['success'] == false) {
@@ -41,18 +62,46 @@ class Admin extends BaseController
             unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
         } 
-        else if($data['privilege'] == 'nasabah') {
-            return redirect()->to(base_url().'/nasabah');
+        else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+            return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['expired'],'/');
-            return view('Admin/index',$data);
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
+            $data['idadmin']   = $result['data']['userid'];
+            return view('Admin/transaksiPage',$data);
         }
     }
 
-    /**
-     * View list admin
-     */
+    // List sampah page
+    public function listSampahView()
+    {
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result = $this->checkToken($token, false);
+
+        $data   = [
+            'title'     => 'Admin | list sampah',
+            'token'     => $token,
+        ];
+        
+        if($result['success'] == false) {
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
+            return redirect()->to(base_url().'/login');
+        } 
+        else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+            return redirect()->to(base_url().'/notfound');
+        } 
+        else {
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
+            return view('Admin/listSampah',$data);
+        }
+    }
+
+    // List admin page
     public function listAdminView()
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
@@ -61,8 +110,6 @@ class Admin extends BaseController
         $data   = [
             'title'     => 'Admin | list admin',
             'token'     => $token,
-            'password'  => (isset($result['password']))  ? $result['password']  : null,
-            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -70,33 +117,26 @@ class Admin extends BaseController
             unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
         } 
-        else if($data['privilege'] == 'nasabah') {
-            return redirect()->to(base_url().'/nasabah');
+        else if($result['data']['privilege'] != 'superadmin') {
+            return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['expired'],'/');
-            if ($data['privilege'] != 'super') {
-                return redirect()->to(base_url().'/admin');
-            } 
-            else {
-                return view('Admin/listAdmin',$data);
-            }
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
+            return view('Admin/listAdmin',$data);
         }
     }
 
-    /**
-     * View list nasabah
-     */
+    // List nasabah page
     public function listNasabahView()
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
 
         $data   = [
-            'title'     => 'Admin | list nasabah',
-            'token'     => $token,
-            'password'  => (isset($result['password']))  ? $result['password']  : null,
-            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
+            'title' => 'Admin | list nasabah',
+            'token' => $token,
         ];
         
         if($result['success'] == false) {
@@ -104,63 +144,26 @@ class Admin extends BaseController
             unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
         } 
-        else if($data['privilege'] == 'nasabah') {
-            return redirect()->to(base_url().'/nasabah');
+        else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+            return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['expired'],'/');
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
             return view('Admin/listNasabah',$data);
         }
     }
 
-    /**
-     * View detil nasabah
-     */
-    public function detilNasabahView(?string $id=null)
-    {
-        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
-        $result = $this->checkToken($token, false);
-
-        if ($id!=null) {
-            $data = [
-                'title'     => 'Admin | detil nasabah',
-                'idnasabah' => $id,
-                'token'     => $token,
-                'password'  => (isset($result['password']))  ? $result['password']  : null,
-                'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
-            ];
-
-            if($result['success'] == false) {
-                setcookie('token', null, -1, '/');
-                unset($_COOKIE['token']);
-                return redirect()->to(base_url().'/login');
-            } 
-            else if($data['privilege'] == 'nasabah') {
-                return redirect()->to(base_url().'/nasabah');
-            } 
-            else {
-                setcookie('token',$token,time() + $result['expired'],'/');
-                return view('Admin/detilNasabah',$data);
-            }
-        }
-        else {
-            return redirect()->to(base_url().'/admin/listnasabah');
-        }
-    }
-
-    /**
-     * View list artikel
-     */
+    // List artikel page
     public function listArtikelView()
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
 
         $data   = [
-            'title'     => 'Admin | list artikel',
-            'token'     => $token,
-            'password'  => (isset($result['password']))  ? $result['password']  : null,
-            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
+            'title' => 'Admin | list artikel',
+            'token' => $token,
         ];
         
         if($result['success'] == false) {
@@ -168,18 +171,18 @@ class Admin extends BaseController
             unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
         } 
-        else if($data['privilege'] == 'nasabah') {
-            return redirect()->to(base_url().'/nasabah');
+        else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+            return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['expired'],'/');
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
             return view('Admin/listArtikel',$data);
         }
     }
 
-    /**
-     * View add artikel
-     */
+    // Add artikel page
     public function addArtikelView()
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
@@ -188,8 +191,6 @@ class Admin extends BaseController
         $data   = [
             'title'     => 'Admin | tambah artikel',
             'token'     => $token,
-            'password'  => (isset($result['password']))  ? $result['password']  : null,
-            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
         ];
         
         if($result['success'] == false) {
@@ -197,18 +198,18 @@ class Admin extends BaseController
             unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
         }  
-        else if($data['privilege'] == 'nasabah') {
-            return redirect()->to(base_url().'/nasabah');
+        else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+            return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['expired'],'/');
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
             return view('Admin/crudArtikel',$data);
         }
     }
 
-    /**
-     * View edit artikel
-     */
+    // Edit artikel page
     public function editArtikelView(?string $id=null)
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
@@ -219,8 +220,6 @@ class Admin extends BaseController
                 'title'     => 'Admin | edit artikel',
                 'idartikel' => $id,
                 'token'     => $token,
-                'password'  => (isset($result['password']))  ? $result['password']  : null,
-                'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
             ];
             
             if($result['success'] == false) {
@@ -228,11 +227,13 @@ class Admin extends BaseController
                 unset($_COOKIE['token']);
                 return redirect()->to(base_url().'/login');
             } 
-            else if($data['privilege'] == 'nasabah') {
-                return redirect()->to(base_url().'/nasabah');
+            else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+                return redirect()->to(base_url().'/notfound');
             } 
             else {
-                setcookie('token',$token,time() + $result['expired'],'/');
+                setcookie('token',$token,time() + $result['data']['expired'],'/');
+                $data['password']  = $result['data']['password'];
+                $data['privilege'] = $result['data']['privilege'];
                 return view('Admin/crudArtikel',$data);
             }
         } 
@@ -241,18 +242,14 @@ class Admin extends BaseController
         }
     }
 
-    /**
-     * Profile admin
-     */
+    // Admin profile page
     public function profileAdmin()
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token, false);
         $data   = [
-            'title'     => 'Admin | profile',
-            'token'     => $token,
-            'password'  => (isset($result['password']))  ? $result['password']  : null,
-            'privilege' => (isset($result['privilege'])) ? $result['privilege'] : null,
+            'title' => 'Admin | profile',
+            'token' => $token,
         ];
         
         if($result['success'] == false) {
@@ -260,12 +257,47 @@ class Admin extends BaseController
             unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
         } 
-        else if($data['privilege'] == 'nasabah') {
-            return redirect()->to(base_url().'/nasabah');
+        else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+            return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['expired'],'/');
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
             return view('Admin/profile',$data);
+        }
+    }
+
+    // Detil nasabah view
+    public function detilNasabahView(?string $id=null)
+    {
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result = $this->checkToken($token, false);
+
+        if ($id!=null) {
+            $data = [
+                'title'     => 'Admin | detil nasabah',
+                'idnasabah' => $id,
+                'token'     => $token,
+            ];
+
+            if($result['success'] == false) {
+                setcookie('token', null, -1, '/');
+                unset($_COOKIE['token']);
+                return redirect()->to(base_url().'/login');
+            } 
+            else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+                return redirect()->to(base_url().'/notfound');
+            } 
+            else {
+                setcookie('token',$token,time() + $result['data']['expired'],'/');
+                $data['password']  = $result['data']['password'];
+                $data['privilege'] = $result['data']['privilege'];
+                return view('Admin/detilNasabah',$data);
+            }
+        }
+        else {
+            return redirect()->to(base_url().'/admin/listnasabah');
         }
     }
 
@@ -622,114 +654,7 @@ class Admin extends BaseController
     }
 
     /**
-     * Login
-     *   url    : domain.com/admin/login
-     *   method : POST
-     */
-    public function login(): object
-    {
-        $data   = $this->request->getPost();
-        $this->validation->run($data,'adminLogin');
-        $errors = $this->validation->getErrors();
-
-        if($errors) {
-            $response = [
-                'status'   => 400,
-                'error'    => true,
-                'messages' => $errors,
-            ];
-    
-            return $this->respond($response,400);
-        } 
-        else {
-            // get admin data from DB by username
-            $adminData  = $this->adminModel->getAdminByUsername($this->request->getPost("username"));
-
-            if ($adminData['success'] == true) {
-                $login_pass    = $this->request->getPost("password");
-                $database_pass = $adminData['message']['password'];
-
-                // verify password
-                if (password_verify($login_pass,$database_pass)) {
-
-                    // is admin active or not
-                    $active      = $adminData['message']['active'];
-                    $last_active = (int)$adminData['message']['last_active'];
-                    $timeNow     = time();
-                    $batasTime   = (int)$timeNow - (86400*30);
-                    $privilege   = $adminData['message']['privilege'];
-
-                    if ($last_active <  $batasTime && $privilege != 'super' || $active == 'f') {
-                        $response = [
-                            'status'   => 401,
-                            'error'    => true,
-                            'messages' => 'akun tidak aktif',
-                        ];
-                
-                        return $this->respond($response,401);
-                    } 
-                    else {
-                        // database row id
-                        $id           = $adminData['message']['id'];
-                        // generate new token
-                        // var_dump($this->request->getPost("username"));die;
-                        $token        = $this->generateToken(
-                            $id,
-                            false,
-                            $database_pass,
-                            $privilege,
-                        );
-
-                        // edit admin in database
-                        $editAdmin = $this->adminModel->updateToken($id,$token);
-
-                        if ($editAdmin['success'] == true) {
-                            $response = [
-                                'status'   => 200,
-                                'error'    => false,
-                                'messages' => 'loggin success',
-                                'token'    => $token
-                            ];
-    
-                            return $this->respond($response,200);
-                        } 
-                        else {
-                            $response = [
-                                'status'   => $editAdmin['code'],
-                                'error'    => true,
-                                'messages' => $editAdmin['message'],
-                            ];
-                    
-                            return $this->respond($response,$editAdmin['code']);
-                        }
-                    } 
-                } 
-                else {
-                    $response = [
-                        'status'   => 404,
-                        'error'    => true,
-                        'messages' => [
-                            'password' => "password not match",
-                        ],
-                    ];
-            
-                    return $this->respond($response,404);
-                }
-            } 
-            else {
-                $response = [
-                    'status'   => $adminData['code'],
-                    'error'    => true,
-                    'messages' => $adminData['message'],
-                ];
-        
-                return $this->respond($response,$adminData['code']);
-            }
-        }
-    }
-
-    /**
-     * Login
+     * Confirm delete
      *   url    : domain.com/admin/confirmdelete
      *   method : POST
      */
@@ -781,23 +706,10 @@ class Admin extends BaseController
      */
     public function sessionCheck(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
 
-        if ($result['success'] == true) {
-            return $this->respond($result['message'],200);
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
+        return $this->respond($result,200);
     }
 
     /**
@@ -807,43 +719,13 @@ class Admin extends BaseController
      */
     public function getProfile(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
 
-        if ($result['success'] == true) {
-            $id         = $result['message']['data']['id'];
-            $dataAdmin  = $this->adminModel->getProfileAdmin($id);
-            
-            if ($dataAdmin['success'] == true) {
-                $response = [
-                    'status' => 200,
-                    'error'  => false,
-                    'data'   => $dataAdmin['message']
-                ];
+        $id        = $result['data']['userid'];
+        $dbrespond = $this->userModel->getProfileUser($id);
 
-                return $this->respond($response,200);
-            } 
-            else {
-                $response = [
-                    'status'   => $dataAdmin['code'],
-                    'error'    => true,
-                    'messages' => $dataAdmin['message'],
-                ];
-        
-                return $this->respond($response,$dataAdmin['code']);
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
+        return $this->respond($dbrespond,$dbrespond['status']);
     }
 
     /**
@@ -853,17 +735,148 @@ class Admin extends BaseController
      */
     public function editProfile(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
 
-        if ($result['success'] == true) {
-            $this->_methodParser('data');
-            global $data;
-            $data['id'] = $result['message']['data']['id']; 
+        $this->_methodParser('data');
+        global $data;
+        $data['id'] = $result['data']['userid']; 
 
-            $this->validation->run($data,'editProfileAdmin');
+        $this->validation->run($data,'editOwnProfileAdmin');
+        $errors = $this->validation->getErrors();
+
+        if($errors) {
+            $response = [
+                'status'   => 400,
+                'error'    => true,
+                'messages' => $errors,
+            ];
+    
+            return $this->respond($response,400);
+        } 
+        else {
+            $id         = $data['id'];
+            $dataAdmin  = $this->userModel->db->table('users')->select('password')->where("id",$id)->get()->getResultArray();
+
+            if (!empty($dataAdmin)) {
+                $newpass = '';
+                $oldpass = '';
+
+                if (isset($data['new_password'])) {
+                    $this->validation->run($data,'newPasswordWithOld');
+                    $errors = $this->validation->getErrors();
+                    
+                    if($errors) {
+                        $response = [
+                            'status'   => 400,
+                            'error'    => true,
+                            'messages' => $errors,
+                        ];
+                
+                        return $this->respond($response,400);
+                    } 
+                    else {
+                        $newpass = trim($data['new_password']);
+                        $oldpass = trim($data['old_password']);
+                    }
+                }
+        
+                $data = [
+                    "id"           => $data['id'],
+                    "username"     => trim($data['username']),
+                    "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
+                    "notelp"       => trim($data['notelp']),
+                    "alamat"       => trim($data['alamat']),
+                    "tgl_lahir"    => trim($data['tgl_lahir']),
+                    "kelamin"      => strtolower(trim($data['kelamin'])),
+                ];
+
+                if ($newpass != '') {
+                    if (password_verify($oldpass,$dataAdmin[0]['password'])) {
+                        $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
+                        unset($data['new_password']);
+                        unset($data['old_password']);
+                    } 
+                    else {
+                        return $this->fail(['old_password' => 'wrong old password'],400,true);
+                    }
+                }
+
+                $dbrespond = $this->userModel->editUser($data);
+
+                return $this->respond($dbrespond,$dbrespond['status']);
+            } 
+            else {
+                return $this->fail("nasabah with id $id not found",404,true);
+            }
+        }
+    }
+
+    /**
+     * Logout
+     *   url    : domain.com/admin/logout
+     *   method : DELETE
+     */
+    public function logout(): object
+    {
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
+
+        $id        = $result['data']['userid'];
+        $dbrespond = $this->userModel->setTokenNull($id);
+
+        return $this->respond($dbrespond,$dbrespond['status']);
+    }
+
+    /**
+     * Get nasabah
+     *   url    : - domain.com/admin/getnasabah
+     *   method : GET
+     */
+    public function getNasabah(): object
+    {
+        $result    = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
+        
+        if ($this->request->getGet('orderby')) {
+            $this->validation->run($this->request->getGet(),'filterGetNasabah');
+            $errors = $this->validation->getErrors();
+
+            if($errors) {
+                $response = [
+                    'status'   => 400,
+                    'error'    => true,
+                    'messages' => $errors,
+                ];
+        
+                return $this->respond($response,400);
+            }
+        }
+
+        $getnasabah = $this->userModel->getNasabah($this->request->getGet());
+
+        return $this->respond($getnasabah,$getnasabah['status']);
+    }
+
+    /**
+     * Edit nasabah
+     *   url    : domain.com/admin/editnasabah
+     *   method : PUT
+     */
+    public function editNasabah(): object
+    {
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
+
+        $this->_methodParser('data');
+        global $data;
+
+        $id           = (isset($data['id'])) ? $data['id'] : 'null';
+        $dataNasabah  = $this->userModel->db->table('users')->select('id')->where("id",$id)->get()->getResultArray();
+        
+        if (!empty($dataNasabah)) {
+
+            $this->validation->run($data,'editNasabahValidate');
             $errors = $this->validation->getErrors();
 
             if($errors) {
@@ -876,16 +889,11 @@ class Admin extends BaseController
                 return $this->respond($response,400);
             } 
             else {
-                $id         = $data['id'];
+                $newpass = '';
 
-                $dataAdmin  = $this->adminModel->db->table('admin')->select('password')->where("id",$id)->get()->getResultArray();
-
-                if (!empty($dataAdmin)) {
-                    $newpass = '';
-                    $oldpass = '';
-
-                    if (isset($data['new_password'])) {
-                        $this->validation->run($data,'editNewPassword');
+                if (isset($data['new_password'])) {
+                    if ($data['new_password'] != '') {
+                        $this->validation->run($data,'newPassword');
                         $errors = $this->validation->getErrors();
                         
                         if($errors) {
@@ -899,428 +907,40 @@ class Admin extends BaseController
                         } 
                         else {
                             $newpass = $data['new_password'];
-                            $oldpass = $data['old_password'];
                         }
                     }
-            
-                    $data = [
-                        "id"           => $data['id'],
-                        "username"     => $data['username'],
-                        "nama_lengkap" => $data['nama_lengkap'],
-                        "notelp"       => $data['notelp'],
-                        "alamat"       => $data['alamat'],
-                        "tgl_lahir"    => $data['tgl_lahir'],
-                        "kelamin"      => $data['kelamin'],
-                    ];
-
-                    if ($newpass != '') {
-                        if (password_verify($oldpass,$dataAdmin[0]['password'])) {
-                            $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
-                            unset($data['new_password']);
-                            unset($data['old_password']);
-                        } 
-                        else {
-                            return $this->fail(['old_password' => 'wrong old password'],400,true);
-                        }
-                    }
-
-                    $editAdmin = $this->adminModel->editProfileAdmin($data);
-
-                    if ($editAdmin['success'] == true) {
-                        $response = [
-                            'status' => 201,
-                            'error' => false,
-                            'messages' => $editAdmin['message'],
-                        ];
-    
-                        return $this->respond($response,201);
-                    } 
-                    else {
-                        $response = [
-                            'status'   => $editAdmin['code'],
-                            'error'    => true,
-                            'messages' => $editAdmin['message'],
-                        ];
-                
-                        return $this->respond($response,$editAdmin['code']);
-                    }
-                } 
-                else {
-                    return $this->fail("nasabah with id $id not found",404,true);
                 }
-                
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
-    }
-
-    /**
-     * Logout
-     *   url    : domain.com/admin/logout
-     *   method : DELETE
-     */
-    public function logout(): object
-    {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
-
-        if ($result['success'] == true) {
-            $id         = $result['message']['data']['id'];
-            $editAdmin  = $this->adminModel->setTokenNull($id);
-
-            if ($editAdmin['success'] == true) {
-                $response = [
-                    'status' => 200,
-                    'error' => false,
-                    'messages' => $editAdmin['message'],
-                ];
-
-                return $this->respond($response,200);
-            } 
-            else {
-                $response = [
-                    'status'   => $editAdmin['code'],
-                    'error'    => true,
-                    'messages' => $editAdmin['message'],
-                ];
         
-                return $this->respond($response,$editAdmin['code']);
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
-        
-    }
-
-    /**
-     * Get total saldo
-     *   url    : domain.com/admin/totalsaldo
-     *   method : GET
-     */
-    public function getTotalSaldo(): object
-    {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
-
-        if ($result['success'] == true) {
-            $totalSaldo = $this->adminModel->getTotalSaldo();
-            
-            if ($totalSaldo['success'] == true) {
-                $response = [
-                    'status' => 200,
-                    'error'  => false,
-                    'data '  => $totalSaldo['message']
-                ];
-
-                return $this->respond($response,200);
-            } 
-            else {
-                $response = [
-                    'status'   => $totalSaldo['code'],
-                    'error'    => true,
-                    'messages' => $totalSaldo['message'],
-                ];
-        
-                return $this->respond($response,$totalSaldo['code']);
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
-    }
-
-    /**
-     * Get nasabah
-     *   url    : - domain.com/admin/getnasabah
-     *            - domain.com/admin/getnasabah?id=:id
-     *   method : GET
-     */
-    public function getNasabah(): object
-    {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
-
-        if ($result['success'] == true) {
-            $getnasabah = $this->adminModel->getNasabah($this->request->getGet());
-
-            if ($getnasabah['success'] == true) {
-                $response = [
-                    'status' => 200,
-                    'error' => false,
-                    'data' => $getnasabah['message'],
-                ];
-
-                return $this->respond($response,200);
-            } 
-            else {
-                $response = [
-                    'status'   => $getnasabah['code'],
-                    'error'    => true,
-                    'messages' => $getnasabah['message'],
-                ];
-        
-                return $this->respond($response,$getnasabah['code']);
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
-
-    }
-
-    /**
-     * Add nasabah
-     *   url    : domain.com/admin/addnasabah
-     *   method : POST
-     */
-    public function addNasabah(): object
-    {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
-
-		if ($result['success'] == true) {
-            $data   = $this->request->getPost();
-            $this->validation->run($data,'nasabahRegister');
-            $errors = $this->validation->getErrors();
-
-            if($errors) {
-                $response = [
-                    'status' => 400,
-                    'error' => true,
-                    'messages' => $errors,
-                ];
-        
-                return $this->respond($response,400);
-            } 
-            else {
-                $nasabahModel = new NasabahModel();
-                $lastNasabah  = $nasabahModel->getLastNasabah($data['kodepos']);
-                $idNasabah    = '';
-
-                if ($lastNasabah['success'] == true) {
-                    $lastID = $lastNasabah['message']['id'];
-                    $lastID = (int)substr($lastID,9)+1;
-                    // $lastID = sprintf('%06d',$lastID);
-    
-                    $idNasabah = $data['kodepos'].$this->request->getPost("rt").$this->request->getPost("rw").$lastID;
-                }
-                else if ($lastNasabah['code'] == 404) {
-                    $idNasabah = $data['kodepos'].$this->request->getPost("rt").$this->request->getPost("rw").'1';
-                } 
-                else {
-                    $response = [
-                        'status'   => $lastNasabah['code'],
-                        'error'    => true,
-                        'messages' => $lastNasabah['message'],
-                    ];
-            
-                    return $this->respond($response,$lastNasabah['code']);
-                }
-                
                 $data = [
-                    "id"           => $idNasabah,
-                    "email"        => trim($data['email']),
+                    "id"           => $data['id'],
                     "username"     => trim($data['username']),
-                    "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
                     "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
                     "notelp"       => trim($data['notelp']),
                     "alamat"       => trim($data['alamat']),
                     "tgl_lahir"    => trim($data['tgl_lahir']),
                     "kelamin"      => $data['kelamin'],
-                    "is_verify"    => true,
-                    "otp"          => null,
-                    "created_at"   => (int)time(),
+                    "is_verify"    => (trim($data['is_verify']) == '1') ?true:false,
                 ];
 
-                $addNasabah = $nasabahModel->addNasabah($data);
-
-                if ($addNasabah['success'] == true) {
-                    $response = [
-                        'status'   => 201,
-                        "error"    => false,
-                        'messages' => 'add new nasabah is success',
-                    ];
-
-                    return $this->respond($response,201);
-                } 
-                else {
-                    $response = [
-                        'status'   => $addNasabah['code'],
-                        'error'    => true,
-                        'messages' => $addNasabah['message'],
-                    ];
-            
-                    return $this->respond($response,$addNasabah['code']);
+                if ($newpass != '') {
+                    $data['password'] = $this->encrypt($newpass);
                 }
+
+                $editNasabah  = $this->userModel->editUser($data);
+
+                return $this->respond($editNasabah,$editNasabah['status']);
             }
         } 
         else {
             $response = [
-                'status'   => $result['code'],
+                'status'   => 404,
                 'error'    => true,
-                'messages' => $result['message'],
+                'messages' => [
+                    'id'   => "nasabah with id ($id) not found",
+                ],
             ];
     
-            return $this->respond($response,$result['code']);
-        }
-    }
-
-    /**
-     * Edit nasabah
-     *   url    : domain.com/admin/editnasabah
-     *   method : PUT
-     */
-    public function editNasabah(): object
-    {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
-
-        if ($result['success'] == true) {
-            $this->_methodParser('data');
-            global $data;
-
-            $id           = (isset($data['id'])) ? $data['id'] : 'null';
-            $nasabahModel = new NasabahModel();
-            $dataNasabah  = $nasabahModel->db->table('nasabah')->select('id')->where("id",$id)->get()->getResultArray();
-            
-            if (!empty($dataNasabah)) {
-    
-                $this->validation->run($data,'editProfileNasabahByAdmin');
-                $errors = $this->validation->getErrors();
-    
-                if($errors) {
-                    $response = [
-                        'status'   => 400,
-                        'error'    => true,
-                        'messages' => $errors,
-                    ];
-            
-                    return $this->respond($response,400);
-                } 
-                else {
-                    $newpass = '';
-    
-                    if (isset($data['new_password'])) {
-                        if ($data['new_password'] != '') {
-                            $this->validation->run($data,'editNewPasswordWithoutOld');
-                            $errors = $this->validation->getErrors();
-                            
-                            if($errors) {
-                                $response = [
-                                    'status'   => 400,
-                                    'error'    => true,
-                                    'messages' => $errors,
-                                ];
-                        
-                                return $this->respond($response,400);
-                            } 
-                            else {
-                                $newpass = $data['new_password'];
-                            }
-                        }
-                    }
-            
-                    $data = [
-                        "id"           => $data['id'],
-                        "email"        => trim($data['email']),
-                        "username"     => trim($data['username']),
-                        "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                        "notelp"       => trim($data['notelp']),
-                        "alamat"       => trim($data['alamat']),
-                        "tgl_lahir"    => trim($data['tgl_lahir']),
-                        "kelamin"      => $data['kelamin'],
-                        "is_verify"    => (trim($data['is_verify']) == '1') ?true:false,
-                        "saldo"        => [
-                            "uang"     => trim($data['saldo_uang']),
-                            "antam"    => trim($data['saldo_antam']),
-                            "ubs"      => trim($data['saldo_ubs']),
-                            "galery24" => trim($data['saldo_galery24']),
-                        ]
-                    ];
-    
-                    if ($newpass != '') {
-                        $data['password'] = $this->encrypt($newpass);
-                    }
-    
-                    $editNasabah  = $nasabahModel->editProfileNasabah($data);
-    
-                    if ($editNasabah['success'] == true) {
-                        $response = [
-                            'status' => 201,
-                            'error' => false,
-                            'messages' => "edit nasabah with id $id is success",
-                        ];
-    
-                        return $this->respond($response,201);
-                    } 
-                    else {
-                        $response = [
-                            'status'   => $editNasabah['code'],
-                            'error'    => true,
-                            'messages' => $editNasabah['message'],
-                        ];
-                
-                        return $this->respond($response,$editNasabah['code']);
-                    }
-                }
-            } 
-            else {
-                $response = [
-                    'status'   => 404,
-                    'error'    => true,
-                    'messages' => [
-                        'id'   => "nasabah with id ($id) not found",
-                    ],
-                ];
-        
-                return $this->respond($response,404);
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
+            return $this->respond($response,404);
         }
     }
 
@@ -1331,53 +951,23 @@ class Admin extends BaseController
      */
 	public function deleteNasabah(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
 
-        if ($result['success'] == true) {
-
-            if($this->request->getGet('id') == null) {
-                $response = [
-                    'status'   => 400,
-                    'error'    => true,
-                    'messages' => 'required parameter id',
-                ];
-        
-                return $this->respond($response,400);
-            } 
-            else {
-                $dbresponse = $this->adminModel->deleteNasabah($this->request->getGet('id'));
-
-                if ($dbresponse['success'] == true) {
-                    $response = [
-                        'status' => 201,
-                        'error' => false,
-                        'messages' => $dbresponse['message'],
-                    ];
-
-                    return $this->respond($response,201);
-                } 
-                else {
-                    $response = [
-                        'status'   => $dbresponse['code'],
-                        'error'    => true,
-                        'messages' => $dbresponse['message'],
-                    ];
-            
-                    return $this->respond($response,$dbresponse['code']);
-                }
-            }
-        } 
-        else {
+        if($this->request->getGet('id') == null) {
             $response = [
-                'status'   => $result['code'],
+                'status'   => 400,
                 'error'    => true,
-                'messages' => $result['message'],
+                'messages' => 'required parameter id',
             ];
     
-            return $this->respond($response,$result['code']);
+            return $this->respond($response,400);
+        } 
+        else {
+            $currentAdminId = $result['data']['userid'];
+            $dbrespond      = $this->userModel->deleteUser($this->request->getGet('id'),$currentAdminId);
+
+            return $this->respond($dbrespond,$dbrespond['status']);
         }
     }
 
@@ -1389,163 +979,14 @@ class Admin extends BaseController
      */
     public function getAdmin(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],'superadmin');
 
-        if ($result['success'] == true) {
-            $privilege = $result['message']['data']['privilege'];
-            $id_admin  = $result['message']['data']['id'];
+        $idadmin        = ($this->request->getGet('id'))?$this->request->getGet('id'):false;
+        $currentAdminId = $result['data']['userid'];
+        $dbrespond      = $this->userModel->getAdmin($idadmin,$currentAdminId);
 
-            if ($privilege != 'super') {
-                $response = [
-                    'status'   => 401,
-                    'error'    => true,
-                    'messages' => 'only super admin allowed',
-                ];
-        
-                return $this->respond($response,401);
-            } 
-            else {
-
-                $getAdmin   = $this->adminModel->getAdmin($this->request->getGet(),$id_admin);
-    
-                if ($getAdmin['success'] == true) {
-                    $response = [
-                        'status' => 200,
-                        'error' => false,
-                        'data' => $getAdmin['message'],
-                    ];
-    
-                    return $this->respond($response,200);
-                } 
-                else {
-                    $response = [
-                        'status'   => $getAdmin['code'],
-                        'error'    => true,
-                        'messages' => $getAdmin['message'],
-                    ];
-            
-                    return $this->respond($response,$getAdmin['code']);
-                }
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
-
-    }
-
-    /**
-     * Add admin
-     *   url    : domain.com/admin/addadmin
-     *   method : POST
-     */
-    public function addAdmin(): object
-    {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
-
-		if ($result['success'] == true) {
-            $privilege = $result['message']['data']['privilege'];
-
-            if ($privilege != 'super') {
-                $response = [
-                    'status'   => 401,
-                    'error'    => true,
-                    'messages' => 'only super admin allowed',
-                ];
-        
-                return $this->respond($response,401);
-            } 
-            else {
-                $data   = $this->request->getPost();
-                $this->validation->run($data,'adminRegister');
-                $errors = $this->validation->getErrors();
-    
-                if($errors) {
-                    $response = [
-                        'status' => 400,
-                        'error' => true,
-                        'messages' => $errors,
-                    ];
-            
-                    return $this->respond($response,400);
-                } 
-                else {
-                    $lastAdmin  = $this->adminModel->getLastAdmin();
-                    $idAdmin    = '';
-    
-                    if ($lastAdmin['success'] == true) {
-                        $lastID  = $lastAdmin['message']['id'];
-                        $lastID  = (int)substr($lastID,1)+1;
-                        $lastID  = sprintf('%03d',$lastID);
-                        $idAdmin = 'A'.$lastID;
-                    } 
-                    else {
-                        $response = [
-                            'status'   => $lastAdmin['code'],
-                            'error'    => true,
-                            'messages' => $lastAdmin['message'],
-                        ];
-                
-                        return $this->respond($response,$lastAdmin['code']);
-                    }
-                    
-                    $data = [
-                        "id"           => $idAdmin,
-                        "username"     => trim($data['username']),
-                        "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
-                        "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                        "notelp"       => trim($data['notelp']),
-                        "alamat"       => trim($data['alamat']),
-                        "tgl_lahir"    => trim($data['tgl_lahir']),
-                        "kelamin"      => strtolower(trim($data['kelamin'])),
-                        "privilege"    => strtolower(trim($data['privilege'])),
-                        "last_active"  => time(),
-                    ];
-    
-                    $addAdmin = $this->adminModel->addAdmin($data);
-    
-                    if ($addAdmin['success'] == true) {
-                        $response = [
-                            'status'   => 201,
-                            "error"    => false,
-                            'messages' => 'add new admin is success',
-                        ];
-    
-                        return $this->respond($response,201);
-                    } 
-                    else {
-                        $response = [
-                            'status'   => $addAdmin['code'],
-                            'error'    => true,
-                            'messages' => $addAdmin['message'],
-                        ];
-                
-                        return $this->respond($response,$addAdmin['code']);
-                    }
-                }
-            }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
-            ];
-    
-            return $this->respond($response,$result['code']);
-        }
+        return $this->respond($dbrespond,$dbrespond['status']);
     }
 
     /**
@@ -1555,128 +996,76 @@ class Admin extends BaseController
      */
     public function editAdmin(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],'superadmin');
 
-		if ($result['success'] == true) {
-            $privilege = $result['message']['data']['privilege'];
+        $this->_methodParser('data');
+        global $data;
 
-            if ($privilege != 'super') {
-                $response = [
-                    'status'   => 401,
-                    'error'    => true,
-                    'messages' => 'only super admin allowed',
-                ];
-        
-                return $this->respond($response,401);
-            } 
-            else {
-                $this->_methodParser('data');
-                global $data;
+        $this->validation->run($data,'editAdminValidate');
+        $errors = $this->validation->getErrors();
 
-                $id        = (isset($data['id'])) ? $data['id'] : 'null';
-                $dataAdmin = $this->adminModel->db->table('admin')->select('id')->where("id",$id)->get()->getResultArray();
+        if($errors) {
+            $response = [
+                'status' => 400,
+                'error' => true,
+                'messages' => $errors,
+            ];
+    
+            return $this->respond($response,400);
+        } 
+        else {
 
-                if (!empty($dataAdmin)) {
-                    $this->validation->run($data,'editProfileAdminByAdmin');
+            $newpass = '';
+
+            if (isset($data['new_password'])) {
+                if ($data['new_password'] != '') {
+                    $this->validation->run($data,'newPassword');
                     $errors = $this->validation->getErrors();
-        
+                    
                     if($errors) {
                         $response = [
-                            'status' => 400,
-                            'error' => true,
+                            'status'   => 400,
+                            'error'    => true,
                             'messages' => $errors,
                         ];
                 
                         return $this->respond($response,400);
                     } 
                     else {
-                        $newpass = '';
-        
-                        if (isset($data['new_password'])) {
-                            if ($data['new_password'] != '') {
-                                $this->validation->run($data,'editNewPasswordWithoutOld');
-                                $errors = $this->validation->getErrors();
-                                
-                                if($errors) {
-                                    $response = [
-                                        'status'   => 400,
-                                        'error'    => true,
-                                        'messages' => $errors,
-                                    ];
-                            
-                                    return $this->respond($response,400);
-                                } 
-                                else {
-                                    $newpass = $data['new_password'];
-                                }
-                            }
-                        }
-                        
-                        $data = [
-                            "id"           => trim($data['id']),
-                            "username"     => trim($data['username']),
-                            "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                            "notelp"       => trim($data['notelp']),
-                            "alamat"       => trim($data['alamat']),
-                            "tgl_lahir"    => trim($data['tgl_lahir']),
-                            "kelamin"      => strtolower(trim($data['kelamin'])),
-                            "privilege"    => strtolower(trim($data['privilege'])),
-                            "active"       => (trim($data['active']) == '1') ?true:false,
-                        ];
-    
-                        if ($newpass != '') {
-                            $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
-                        }
-                        if ($data['active'] == true) {
-                            $data['last_active'] = time();
-                        }
-        
-                        $editAdmin = $this->adminModel->editProfileAdmin($data);
-        
-                        if ($editAdmin['success'] == true) {
-                            $response = [
-                                'status'   => 201,
-                                "error"    => false,
-                                'messages' => "edit admin with id $id is success",
-                            ];
-        
-                            return $this->respond($response,201);
-                        } 
-                        else {
-                            $response = [
-                                'status'   => $editAdmin['code'],
-                                'error'    => true,
-                                'messages' => $editAdmin['message'],
-                            ];
-                    
-                            return $this->respond($response,$editAdmin['code']);
-                        }
+                        $newpass = $data['new_password'];
                     }
-                } 
-                else {
-                    $response = [
-                        'status'   => 404,
-                        'error'    => true,
-                        'messages' => [
-                            'id'   => "admin with id ($id) not found",
-                        ],
-                    ];
-            
-                    return $this->respond($response,404);
                 }
             }
-        } 
-        else {
-            $response = [
-                'status'   => $result['code'],
-                'error'    => true,
-                'messages' => $result['message'],
+            
+            $data = [
+                "id"           => trim($data['id']),
+                "username"     => trim($data['username']),
+                "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
+                "notelp"       => trim($data['notelp']),
+                "alamat"       => trim($data['alamat']),
+                "tgl_lahir"    => trim($data['tgl_lahir']),
+                "kelamin"      => strtolower(trim($data['kelamin'])),
+                "privilege"    => strtolower(trim($data['privilege'])),
+                "is_active"    => (trim($data['is_active']) == '1') ?true:false,
             ];
-    
-            return $this->respond($response,$result['code']);
+
+            if ($newpass != '') {
+                $data['password'] = password_hash($newpass, PASSWORD_DEFAULT);
+            }
+
+            $dataAdmin = $this->userModel->db->table('users')->select('is_active')->where("id",$data['id'])->get()->getResultArray();
+
+            if ($dataAdmin[0]['is_active'] == 'f') {
+                if ($data['is_active'] == true) {
+                    $data['last_active'] = (int)time();
+                    $data['created_at']  = (int)time();
+                }
+            }
+
+            $dbrespond = $this->userModel->editUser($data);
+
+            return $this->respond($dbrespond,$dbrespond['status']);
         }
     }
 
@@ -1687,66 +1076,23 @@ class Admin extends BaseController
      */
 	public function deleteAdmin(): object
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        $this->checkPrivilege($result);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],'superadmin');
 
-        if ($result['success'] == true) {
-            $privilege = $result['message']['data']['privilege'];
-            $id_admin  = $result['message']['data']['id'];
-
-            if ($privilege != 'super') {
-                $response = [
-                    'status'   => 401,
-                    'error'    => true,
-                    'messages' => 'only super admin allowed',
-                ];
-        
-                return $this->respond($response,401);
-            } 
-            else {
-                if($this->request->getGet('id') == null) {
-                    $response = [
-                        'status'   => 400,
-                        'error'    => true,
-                        'messages' => 'required parameter id',
-                    ];
-            
-                    return $this->respond($response,400);
-                } 
-                else {
-                    $dbresponse = $this->adminModel->deleteAdmin($this->request->getGet('id'),$id_admin);
-    
-                    if ($dbresponse['success'] == true) {
-                        $response = [
-                            'status' => 201,
-                            'error' => false,
-                            'messages' => $dbresponse['message'],
-                        ];
-    
-                        return $this->respond($response,201);
-                    } 
-                    else {
-                        $response = [
-                            'status'   => $dbresponse['code'],
-                            'error'    => true,
-                            'messages' => $dbresponse['message'],
-                        ];
-                
-                        return $this->respond($response,$dbresponse['code']);
-                    }
-                }
-            }
-        } 
-        else {
+        if($this->request->getGet('id') == null) {
             $response = [
-                'status'   => $result['code'],
+                'status'   => 400,
                 'error'    => true,
-                'messages' => $result['message'],
+                'messages' => 'required parameter id',
             ];
     
-            return $this->respond($response,$result['code']);
+            return $this->respond($response,400);
+        } 
+        else {
+            $currentAdminId = $result['data']['userid'];
+            $dbrespond      = $this->userModel->deleteUser($this->request->getGet('id'),$currentAdminId);
+
+            return $this->respond($dbrespond,$dbrespond['status']);
         }
     }
 }

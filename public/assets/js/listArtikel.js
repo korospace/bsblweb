@@ -1,10 +1,24 @@
 /**
+ * Get Kategori Artikel
+ */
+ axios.get(`${APIURL}/artikel/getkategori`)
+ .then(res => {
+     let elKategori = ''
+     res.data.data.forEach(e => {
+         elKategori += `<a class="dropdown-item py-3" href="${BASEURL}/homepage/${e.name}">${e.name}</a>`;
+     });
+ 
+     $('.dropdown-menu').html(elKategori);
+ })
+ .catch(err => {
+ 
+ });
+
+/**
 * GET ALL ARTIKEL
 */
-
 let arrayBerita = [];
-
-axios.get(`${APIURL}/berita_acara/getitem?kategori=${KATEGORI}`)
+axios.get(`${APIURL}/artikel/getartikel?kategori=${KATEGORI}`)
     .then(res => {
         let elBerita  = '';
         let allBerita = res.data.data;
@@ -16,17 +30,17 @@ axios.get(`${APIURL}/berita_acara/getitem?kategori=${KATEGORI}`)
             let month     = date.toLocaleString("en-US",{month: "long"});
             let year      = date.toLocaleString("en-US",{year: "numeric"});
 
-            elBerita += `<div class="col-sm-6 col-lg-4 mb-5">
-            <a href="${BASEURL}/artikel/${b.id}" class="card text-white card-has-bg click-col position-relative">
+            elBerita += `<div class="col-12 col-sm-6 col-md-4 mb-5">
+            <a href="${BASEURL}/artikel/${b.id}" class="card text-white card-has-bg click-col position-relative" style="min-height: 220px;border-radius: 10px;">
             
                 <img src="${b.thumbnail}" class="position-absolute" style="height:100%;width:100%;">
 
                 <div class="card-img-overlay d-flex flex-column">
                     <div class="card-body">
-                        <small class="card-meta mb-2">${b.kategori}</small>
-                        <h4 class="card-title mt-0 ">
+                        <h6 class="card-meta mb-2">${b.kategori}</h6>
+                        <h6 class="card-title mt-0" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
                             ${b.title}
-                        </h4>
+                        </h6>
                     </div>
                     <div class="card-footer">
                         <div class="media">

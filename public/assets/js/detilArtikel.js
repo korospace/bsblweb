@@ -1,7 +1,23 @@
 /**
+ * Get Kategori Artikel
+ */
+axios.get(`${APIURL}/artikel/getkategori`)
+.then(res => {
+    let elKategori = ''
+    res.data.data.forEach(e => {
+        elKategori += `<a class="dropdown-item" href="${BASEURL}/homepage/${e.name}">${e.name}</a>`;
+    });
+
+    $('.dropdown-menu').html(elKategori);
+})
+.catch(err => {
+
+});
+
+/**
  * Get Detail Artikel
  */
-axios.get(`${APIURL}/berita_acara/getitem?id=${IDARTIKEL}`)
+axios.get(`${APIURL}/artikel/getartikel?id=${IDARTIKEL}`)
 .then(res => {
     let response  = res.data.data;
     let date      = new Date(parseInt(response.created_at) * 1000);
@@ -14,25 +30,29 @@ axios.get(`${APIURL}/berita_acara/getitem?id=${IDARTIKEL}`)
     $('#blog-title').removeClass('skeleton');
     $('#blog-title').html(response.title);
     $('#blog-date').removeClass('skeleton');
-    $('#blog-date').html(`<i class="fa fa-calendar text-muted text-xxs"></i>${month}, ${day} ,${year}`);
+    $('#blog-date').html(`<i class="fa fa-calendar text-muted text-xxs"></i>${day} ${month} ${year}`);
+    $('#blog-penulis').html(`<i class="fas fa-user-edit text-muted text-xxs"></i>${response.penulis}`);
+    $('#blog-penulis').removeClass('skeleton');
     $('#blog-content').html(response.content);
     hideLoadingSpinner();
 })
 .catch(err => {
-    if (err.response.status == 404){
-        $('#img-404').removeClass('d-none');
-        $('.main-content').addClass('d-none');
-        $('.sidebar-content').addClass('d-none');
-    }  
-    else if (err.response.status == 500){
-        $('#img-404').removeClass('d-none');
-        $('.main-content').addClass('d-none');
-        $('.sidebar-content').addClass('d-none');
-        showAlert({
-            message: `<strong>Ups...</strong> terjadi kesalahan pada server, silahkan refresh halaman.`,
-            btnclose: true,
-            type:'danger' 
-        })
+    if (err.response) {
+        if (err.response.status == 404){
+            $('#img-404').removeClass('d-none');
+            $('.main-content').addClass('d-none');
+            $('.sidebar-content').addClass('d-none');
+        }  
+        else if (err.response.status == 500){
+            $('#img-404').removeClass('d-none');
+            $('.main-content').addClass('d-none');
+            $('.sidebar-content').addClass('d-none');
+            showAlert({
+                message: `<strong>Ups...</strong> terjadi kesalahan pada server, silahkan refresh halaman.`,
+                btnclose: true,
+                type:'danger' 
+            })
+        }
     }
 });
 
@@ -40,7 +60,7 @@ axios.get(`${APIURL}/berita_acara/getitem?id=${IDARTIKEL}`)
  * Get Other Items
  */
 let arrayBerita = [];
-axios.get(`${APIURL}/berita_acara/otheritem?id=${IDARTIKEL}`)
+axios.get(`${APIURL}/artikel/relatedartikel?id=${IDARTIKEL}`)
 .then(res => {
     let elBerita  = '';
     let allBerita = res.data.data;

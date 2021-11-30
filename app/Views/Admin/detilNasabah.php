@@ -47,9 +47,9 @@
 		} 
 	</style>
   	<!-- ** develoment ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<!-- ** production ** -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.detilnasabah.css'); ?>">
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.detilnasabah.css'); ?>"> -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -67,9 +67,10 @@
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.detilnasabah.js'); ?>"></script> -->
-	<script src="<?= base_url('assets/js/admin.detilnasabah.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.detilnasabah.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.detilnasabah.min.js'); ?>"></script> -->
 <?= $this->endSection(); ?>
 
 <!-- Html -->
@@ -261,36 +262,24 @@
 					<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
 						<!-- header -->
 						<div class="card-header pb-0" style="z-index: 11;">
-							<h6>Grafik Penyetoran</h6>
+							<h5>Grafik Penyetoran</h5>
 							<div class="mt-3 form-row">
-								<div class="col-6 pl-0">
-									<select id="filter-month" class="filter-transaksi custom-select custom-select-sm" style="max-height: 31px;">
-										<option value="01">Januari</option>
-										<option value="02">Februari</option>
-										<option value="03">Maret</option>
-										<option value="04">April</option>
-										<option value="05">Mei</option>
-										<option value="06">Juni</option>
-										<option value="07">Juli</option>
-										<option value="08">Agustus</option>
-										<option value="09">September</option>
-										<option value="10">Oktober</option>
-										<option value="11">November</option>
-										<option value="12">Desember</option>
-									</select>
-								</div>
-								<div class="col-6 pr-0">
-									<select id="filter-year" class="filter-transaksi custom-select custom-select-sm w-100" style="max-height: 31px;">
-										<?php $curYear = (int)date("Y"); ?>
-										<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
-											<option value="<?= $i; ?>"><?= $i; ?></option>
-										<?php } ?>
-									</select>
+								<div id="btn-filter-grafik" class="d-flex align-items-center">
+									<a class="shadow px-1 pt-1 border-radius-none mr-2" href="" data-toggle="modal" data-whatever="filter grafik" data-target="#modalFilterTransaksi" onclick="openModalFilterT('Filter Grafik');">
+										<i class="fas fa-sliders-h text-secondary"></i>
+									</a>
+									<span id="startdate" class=" text-secondary text-sm mt-1">
+										00/00/0000
+									</span>
+									<i class="fas fa-long-arrow-alt-right text-secondary mt-1 mx-2"></i>
+									<span id="enddate" class=" text-secondary text-sm mt-1">
+										00/00/0000
+									</span>
 								</div>
 							</div>
 						</div>
 						<!-- spinner -->
-						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+						<div id="spinner-wraper-grafik" class="position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 						</div>
 						<div class="card-body p-3 mt-2">
@@ -306,16 +295,28 @@
 						<!-- header -->
 						<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
 							<div class="row" style="font-family: 'qc-semibold';">
-								<div class="col-6 d-flex align-items-center">
-									<h6 class="mb-0">History</h6>
+								<div class="col-6 d-flex flex-column">
+									<h5>History</h5>
+									<div id="btn-filter-histori" class="d-flex align-items-center mt-3">
+										<a class="shadow px-1 pt-1 border-radius-none mr-2" href="" data-toggle="modal" data-whatever="filter histori" data-target="#modalFilterTransaksi" onclick="openModalFilterT('Filter Histori');">
+											<i class="fas fa-sliders-h text-secondary"></i>
+										</a>
+										<span id="startdate" class=" text-secondary text-sm mt-1">
+											00/00/0000
+										</span>
+										<i class="fas fa-long-arrow-alt-right text-secondary mt-1 mx-2"></i>
+										<span id="enddate" class=" text-secondary text-sm mt-1">
+											00/00/0000
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
 						<!-- spinner -->
-						<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+						<div id="spinner-wraper-histori" class="position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 						</div>
-						<div id="transaksi-wraper" class="card-body pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
+						<div id="transaksi-wraper-histori" class="card-body pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
 
 						</div>
 					</div>
@@ -367,7 +368,9 @@
 											<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
 												<h6 class="text-center mb-0">Tunai</h6>
 												<hr class="horizontal dark my-3">
-												<h5 class="mb-0">Rp <span id="saldo-uang">0</span></h5>
+												<h5 class="mb-0">
+													Rp <span id="saldo-uang">_ _</span>
+												</h5>
 											</div>
 										</div>
 									</div>
@@ -381,7 +384,9 @@
 											<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
 												<h6 class="text-center mb-0">UBS</h6>
 												<hr class="horizontal dark my-3">
-												<h5 class="mb-0"><span id="saldo-ubs">0</span> g</h5>
+												<h5 class="mb-0">
+													<span id="saldo-ubs">_ _</span> g
+												</h5>
 											</div>
 										</div>
 									</div>
@@ -399,7 +404,9 @@
 											<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
 												<h6 class="text-center mb-0">Antam</h6>
 												<hr class="horizontal dark my-3">
-												<h5 class="mb-0"><span id="saldo-antam">0</span> g</h5>
+												<h5 class="mb-0">
+													<span id="saldo-antam">_ _</span> g
+												</h5>
 											</div>
 										</div>
 									</div>
@@ -413,7 +420,9 @@
 											<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
 												<h6 class="text-center mb-0">Galery24</h6>
 												<hr class="horizontal dark my-3">
-												<h5 class="mb-0"><span id="saldo-galery24">0</span> g</h5>
+												<h5 class="mb-0">
+													<span id="saldo-galery24">_ _</span> g
+												</h5>
 											</div>
 										</div>
 									</div>
@@ -520,6 +529,52 @@
 
 </body>
 
+<!-- modals filter transaksi-->
+<div class="modal fade" id="modalFilterTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<form id="formFilterTransaksi" class="modal-dialog modal-sm" role="document">
+		<input type="hidden" name="id">
+		<div class="modal-content" style="overflow: hidden;">
+
+			<!-- modal header -->
+			<div class="modal-header">
+				<h5 class="modal-title">filter</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal body -->
+			<div class="modal-body w-100 px-3 form-row">
+				<h6 class="font-italic text-xs text-secondary">From</h6>
+				<div class="input-group col-12">
+					<div class="input-group-prepend">
+						<span class="input-group-text bg-gray px-4 border-md">
+							<i class="fas fa-calendar-alt text-muted"></i>
+						</span>
+					</div>
+					<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-start" name="date-start">
+				</div>
+				<h6 class="font-italic text-xs text-secondary mt-4">To</h6>
+				<div class="input-group col-12">
+					<div class="input-group-prepend">
+						<span class="input-group-text bg-gray px-4 border-md">
+							<i class="fas fa-calendar-alt text-muted"></i>
+						</span>
+					</div>
+					<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-end" name="date-end">
+				</div>
+			</div>
+
+			<!-- modal footer -->
+			<div class="modal-footer">
+				<button id="submit" type="submit" class="badge badge-success d-flex justify-content-center align-items-center border-0" data-dismiss="modal" onclick="filterTransaksi(this,event);">
+					<span>Ok</span>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
+
 <!-- **** Modal print transaksi **** -->
 <div class="modal fade" id="modalPrintTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -595,15 +650,25 @@
 				<input type="hidden" name="id_nasabah" value="<?= $idnasabah; ?>">
 				
 				<!-- **** tgl transaksi **** -->
-				<h6 class="font-italic opacity-8 col-12 text-sm">Tanggal transaksi</h6>
-				<div class="input-group col-6 col-sm-4 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray px-4 border-md">
-								<i class="fas fa-calendar-alt text-muted"></i>
-							</span>
+				<!-- <h6 class="font-italic opacity-8 col-12 text-sm">Waktu transaksi</h6> -->
+				<div class="input-group col-12 col-lg-6 mb-5 form-group">
+					<div class="w-100 form-row">
+						<div class="input-group col-6">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-calendar-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date" name="date">
 						</div>
-						<input type="date" class="form-control form-control-sm px-2 h-100" id="date" name="date">
+						<div class="input-group col-6">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-clock text-muted"></i>
+								</span>
+							</div>
+							<input type="time" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="time" name="time">
+						</div>
 					</div>
 					<small
 						id="date-error"
@@ -620,6 +685,9 @@
 									#
 								</th>
 								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									kategori
+								</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
 									jenis
 								</th>
 								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
@@ -632,10 +700,10 @@
 						</thead>
 						<tbody style="border: 0.5px solid #E9ECEF;">
 							<tr id="special-tr">
-								<td colspan="3" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+								<td colspan="4" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
 									Total harga
 								</td>
-								<td colspan="4" class="p-2 text-left">
+								<td class="p-2 text-left">
 									Rp. <span id="total-harga"></span>
 								</td>
 							</tr>
@@ -679,15 +747,25 @@
 				<input type="hidden" name="id_nasabah" value="<?= $idnasabah; ?>">
 				
 				<!-- **** tgl transaksi **** -->
-				<h6 class="font-italic opacity-8 col-12 text-sm">Tanggal transaksi</h6>
+				<h6 class="font-italic opacity-8 col-12 text-sm">Waktu transaksi</h6>
 				<div class="input-group col-12 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray px-4 border-md">
-								<i class="fas fa-calendar-alt text-muted"></i>
-							</span>
+					<div class="w-100 form-row">
+						<div class="input-group col-6">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-calendar-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date" name="date">
 						</div>
-						<input type="date" class="form-control form-control-sm px-2 h-100" id="date" name="date">
+						<div class="input-group col-6">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-clock text-muted"></i>
+								</span>
+							</div>
+							<input type="time" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="time" name="time">
+						</div>
 					</div>
 					<small
 						id="date-error"
@@ -737,17 +815,17 @@
 				<div class="input-group col-12 mb-4 form-group form-row">
 					<div class="input-group col-4">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="tujuan" id="antam" value="antam" checked>
-							<label class="form-check-label" for="antam">
-								Antam
+							<input class="form-check-input" type="radio" name="tujuan" id="ubs" value="ubs">
+							<label class="form-check-label" for="ubs">
+								Ubs
 							</label>
 						</div>
 					</div>
 					<div class="input-group col-4">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="tujuan" id="ubs" value="ubs">
-							<label class="form-check-label" for="ubs">
-								Ubs
+							<input class="form-check-input" type="radio" name="tujuan" id="antam" value="antam" checked>
+							<label class="form-check-label" for="antam">
+								Antam
 							</label>
 						</div>
 					</div>
@@ -790,15 +868,25 @@
 				<input type="hidden" name="id_nasabah" value="<?= $idnasabah; ?>">
 				
 				<!-- **** tgl transaksi **** -->
-				<h6 class="font-italic opacity-8 col-12 text-sm">Tanggal transaksi</h6>
+				<h6 class="font-italic opacity-8 col-12 text-sm">Waktu transaksi</h6>
 				<div class="input-group col-12 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray px-4 border-md">
-								<i class="fas fa-calendar-alt text-muted"></i>
-							</span>
+					<div class="w-100 form-row">
+						<div class="input-group col-6">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-calendar-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date" name="date">
 						</div>
-						<input type="date" class="form-control form-control-sm px-2 h-100" id="date" name="date">
+						<div class="input-group col-6">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-clock text-muted"></i>
+								</span>
+							</div>
+							<input type="time" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="time" name="time">
+						</div>
 					</div>
 					<small
 						id="date-error"
@@ -820,17 +908,17 @@
 					</div>
 					<div class="input-group col-3">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikAntam" value="antam">
-							<label class="form-check-label" for="tarikAntam">
-								Antam
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikUbs" value="ubs">
+							<label class="form-check-label" for="tarikUbs">
+								Ubs
 							</label>
 						</div>
 					</div>
 					<div class="input-group col-3">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikUbs" value="ubs">
-							<label class="form-check-label" for="tarikUbs">
-								Ubs
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikAntam" value="antam">
+							<label class="form-check-label" for="tarikAntam">
+								Antam
 							</label>
 						</div>
 					</div>

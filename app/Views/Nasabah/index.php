@@ -3,9 +3,6 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
-		.ps{
-			
-		}
 		.rowCardWraper {
 			height: 100% !important;
 		}
@@ -35,9 +32,9 @@
 	</style>
 
   	<!-- ** develoment ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<!-- ** production ** -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/nasabah.dashboard.css'); ?>">
+	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/nasabah.dashboard.css'); ?>"> -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -51,7 +48,8 @@
 	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/nasabah.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Html -->
@@ -61,8 +59,7 @@
 	<!-- **** Alert Info **** -->
 	<?= $this->include('Components/alertInfo'); ?>
 
-
-	<body class="g-sidenav-show bg-gray-100" style="overflow: hidden;">
+	<body class="g-sidenav-show bg-gray-100" style="">
 		<!-- **** Sidebar **** -->
 		<?= $this->include('Components/nasabahSidebar'); ?>
 
@@ -188,40 +185,30 @@
 						<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
 							<!-- header -->
 							<div class="card-header pb-0" style="z-index: 11;">
-								<h6>Grafik Penyetoran</h6>
+								<h5>Grafik Penyetoran</h5>
 								<div class="mt-3 form-row">
-									<div class="col-6 pl-0">
-										<select id="filter-month" class="filter-transaksi custom-select custom-select-sm" style="max-height: 31px;">
-											<option value="01">Januari</option>
-											<option value="02">Februari</option>
-											<option value="03">Maret</option>
-											<option value="04">April</option>
-											<option value="05">Mei</option>
-											<option value="06">Juni</option>
-											<option value="07">Juli</option>
-											<option value="08">Agustus</option>
-											<option value="09">September</option>
-											<option value="10">Oktober</option>
-											<option value="11">November</option>
-											<option value="12">Desember</option>
-										</select>
-									</div>
-									<div class="col-6 pr-0">
-										<select id="filter-year" class="filter-transaksi custom-select custom-select-sm w-100" style="max-height: 31px;">
-											<?php $curYear = (int)date("Y"); ?>
-											<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
-												<option value="<?= $i; ?>"><?= $i; ?></option>
-											<?php } ?>
-										</select>
+									<div id="btn-filter-grafik" class="d-flex align-items-center">
+										<a class="shadow px-1 pt-1 border-radius-none mr-2" href="" data-toggle="modal" data-whatever="filter grafik" data-target="#modalFilterTransaksi" onclick="openModalFilterT('Filter Grafik');">
+											<i class="fas fa-sliders-h text-secondary"></i>
+										</a>
+										<span id="startdate" class=" text-secondary text-sm mt-1">
+											00/00/0000
+										</span>
+										<i class="fas fa-long-arrow-alt-right text-secondary mt-1 mx-2"></i>
+										<span id="enddate" class=" text-secondary text-sm mt-1">
+											00/00/0000
+										</span>
 									</div>
 								</div>
 							</div>
 							<!-- spinner -->
-							<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<div id="spinner-wraper-grafik" class="position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 							</div>
 							<div class="card-body p-3 mt-2">
-								<canvas id="chart-line" class="chart-canvas"></canvas>
+								<div class="chart">
+									<canvas id="chart-line" class="chart-canvas"></canvas>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -231,16 +218,28 @@
 							<!-- header -->
 							<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
 								<div class="row" style="font-family: 'qc-semibold';">
-									<div class="col-6 d-flex align-items-center">
-										<h6 class="mb-0">History</h6>
+									<div class="col-6 d-flex flex-column">
+										<h5>History</h5>
+										<div id="btn-filter-histori" class="d-flex align-items-center mt-3">
+											<a class="shadow px-1 pt-1 border-radius-none mr-2" href="" data-toggle="modal" data-whatever="filter histori" data-target="#modalFilterTransaksi" onclick="openModalFilterT('Filter Histori');">
+												<i class="fas fa-sliders-h text-secondary"></i>
+											</a>
+											<span id="startdate" class=" text-secondary text-sm mt-1">
+												00/00/0000
+											</span>
+											<i class="fas fa-long-arrow-alt-right text-secondary mt-1 mx-2"></i>
+											<span id="enddate" class=" text-secondary text-sm mt-1">
+												00/00/0000
+											</span>
+										</div>
 									</div>
 								</div>
 							</div>
 							<!-- spinner -->
-							<div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+							<div id="spinner-wraper-histori" class="position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 							</div>
-							<div id="transaksi-wraper" class="card-body pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
+							<div id="transaksi-wraper-histori" class="card-body pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
 
 							</div>
 						</div>
@@ -411,6 +410,52 @@
 		</main>
 
 	</body>
+
+	<!-- modals filter transaksi-->
+	<div class="modal fade" id="modalFilterTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<form id="formFilterTransaksi" class="modal-dialog modal-sm" role="document">
+			<input type="hidden" name="id">
+			<div class="modal-content" style="overflow: hidden;">
+
+				<!-- modal header -->
+				<div class="modal-header">
+					<h5 class="modal-title">filter</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal body -->
+				<div class="modal-body w-100 px-3 form-row">
+					<h6 class="font-italic text-xs text-secondary">From</h6>
+					<div class="input-group col-12">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-start" name="date-start">
+					</div>
+					<h6 class="font-italic text-xs text-secondary mt-4">To</h6>
+					<div class="input-group col-12">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-end" name="date-end">
+					</div>
+				</div>
+
+				<!-- modal footer -->
+				<div class="modal-footer">
+					<button id="submit" type="submit" class="badge badge-success d-flex justify-content-center align-items-center border-0" data-dismiss="modal" onclick="filterTransaksi(this,event);">
+						<span>Ok</span>
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
 
 	<!-- **** Modal print transaksi **** -->
 	<div class="modal fade" id="modalPrintTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

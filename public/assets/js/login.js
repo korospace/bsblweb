@@ -12,13 +12,14 @@ $('#formLoginNasabah').on('submit', function(e) {
         let formLogin = new FormData(e.target);
 
         axios
-        .post(`${APIURL}/nasabah/login`,formLogin, {
+        .post(`${APIURL}/login/nasabah`,formLogin, {
             headers: {
                 // header options 
             }
         })
         .then((response) => {
             hideLoadingSpinner();
+
             document.cookie = `token=${response.data.token}; path=/;`;
             window.location.replace(`${BASEURL}/nasabah`);
         })
@@ -59,10 +60,10 @@ $('#formLoginNasabah').on('submit', function(e) {
                 }, 300);
             }
             // server error
-            else{
+            else if (error.response.status == 500){
                 showAlert({
                     message: `<strong>Ups . . .</strong> terjadi kesalahan, coba sekali lagi!`,
-                    btnclose: true,
+                    autohide: true,
                     type:'danger' 
                 })
             }
@@ -120,7 +121,7 @@ $('#btn-forgotpass').on('click', function(e) {
             form.append('email',email);
 
             return axios
-            .post(`${APIURL}/nasabah/forgotpass`,form, {
+            .post(`${APIURL}/login/forgotpass`,form, {
                 headers: {
                     // header options 
                 }
@@ -135,9 +136,7 @@ $('#btn-forgotpass').on('click', function(e) {
             })
             .catch(error => {
                 if (error.response.status == 404) {
-                    Swal.showValidationMessage(
-                        `email tidak terdaftar`
-                    )
+                    Swal.showValidationMessage(error.response.data.messages);
                 }
                 else if (error.response.status == 500) {
                     Swal.showValidationMessage(
@@ -154,7 +153,6 @@ $('#btn-forgotpass').on('click', function(e) {
  * LOGIN ADMIN
  * =============================================
  */
-
 // form on submit
 $('#formLoginAdmin').on('submit', function(e) {
     e.preventDefault();
@@ -164,7 +162,7 @@ $('#formLoginAdmin').on('submit', function(e) {
         let form = new FormData(e.target);
 
         axios
-        .post(`${APIURL}/admin/login`,form, {
+        .post(`${APIURL}/login/admin`,form, {
             headers: {
                 // header options 
             }
@@ -173,7 +171,7 @@ $('#formLoginAdmin').on('submit', function(e) {
             hideLoadingSpinner();
             
             let url = `${BASEURL}/admin`;
-            if (LASTURL != '') {
+            if (LASTURL != '' && LASTURL != 'null' && LASTURL != null) {
                 url = LASTURL;
             }
 
@@ -187,7 +185,7 @@ $('#formLoginAdmin').on('submit', function(e) {
             if (error.response.status == 401) {
                 showAlert({
                     message: `<strong>Maaf . . .</strong> akun anda sudah tidak aktif!`,
-                    btnclose: true,
+                    autohide: true,
                     type:'warning' 
                 })
             }
@@ -203,10 +201,10 @@ $('#formLoginAdmin').on('submit', function(e) {
                 }
             }
             // server error
-            else{
+            else if (error.response.status == 500){
                 showAlert({
                     message: `<strong>Ups . . .</strong> terjadi kesalahan, coba sekali lagi!`,
-                    btnclose: true,
+                    autohide: true,
                     type:'danger' 
                 })
             }

@@ -107,12 +107,11 @@ $('#formEditProfile').on('submit', function(e) {
 
             showAlert({
                 message: `<strong>Success...</strong> edit profile berhasil!`,
-                btnclose: false,
+                autohide: true,
                 type:'success'
-            })
-            setTimeout(() => {
-                hideAlert();
+            });
 
+            setTimeout(() => {
                 if (updatePass) {
                     Swal.fire({
                         icon  : 'info',
@@ -125,7 +124,7 @@ $('#formEditProfile').on('submit', function(e) {
                         doLogout();
                     })
                 }
-            }, 3000);
+            }, 2000);
         })
         .catch((error) => {
             $('#formEditProfile button#submit #text').removeClass('d-none');
@@ -169,7 +168,7 @@ $('#formEditProfile').on('submit', function(e) {
             else if (error.response.status == 500) {
                 showAlert({
                     message: `<strong>Ups . . .</strong> terjadi kesalahan pada server, coba sekali lagi`,
-                    btnclose: true,
+                    autohide: true,
                     type:'danger'
                 })
             }
@@ -286,13 +285,11 @@ function doLogout() {
         .then(() => {
             hideLoadingSpinner();
             document.cookie = `token=null; path=/;`;
-            document.cookie = `lasturl=${webUrl}; path=/;`;
             window.location.replace(`${BASEURL}/login`);
         })
         .catch(error => {
             hideLoadingSpinner();
             document.cookie = `token=null; path=/;`;
-            document.cookie = `lasturl=${webUrl}; path=/;`;
             window.location.replace(`${BASEURL}/login`);
         })
 }

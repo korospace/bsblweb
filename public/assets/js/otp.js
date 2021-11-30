@@ -32,7 +32,7 @@ $('.digit-group').find('input').each(function() {
 						form.append('code_otp',otp);
 
 						axios
-						.post(`${APIURL}/nasabah/verification`,form, {
+						.post(`${APIURL}/otp/verify`,form, {
 							headers: {
 								// header options 
 							}
@@ -47,9 +47,6 @@ $('.digit-group').find('input').each(function() {
 							})
 							.then(() => {
 								if (EMAIL == '' && PASSWORD == '') {
-									// console.log(EMAIL);
-									// console.log(PASSWORD);
-									
 									window.location.replace(`${BASEURL}/login`);
 								} 
 								else {
@@ -61,7 +58,7 @@ $('.digit-group').find('input').each(function() {
 									formLogin.append('password',PASSWORD);
 
 									axios
-									.post(`${APIURL}/nasabah/login`,formLogin, {
+									.post(`${APIURL}/login/nasabah`,formLogin, {
 										headers: {
 											// header options 
 										}
@@ -85,21 +82,17 @@ $('.digit-group').find('input').each(function() {
 							if (error.response.status == 404) {
 								showAlert({
 									message: `<strong>Ups . . .</strong> code OTP tidak valid!`,
-									btnclose: false,
+									autohide: true,
 									type:'danger' 
 								})
 							}
 							else if (error.response.status == 500) {
 								showAlert({
 									message: `<strong>Ups . . .</strong> terjadi kesalahan, coba sekali lagi!`,
-									btnclose: false,
+									autohide: true,
 									type:'danger' 
 								})
 							}
-
-							setTimeout(() => {
-								hideAlert();
-							}, 4000);
 						})
 					}
 				}

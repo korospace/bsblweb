@@ -40,9 +40,59 @@ class Validation
     //--------------------------------------------------------------------
     // Rules
     //--------------------------------------------------------------------
-	public $nasabahRegister = [
+
+    // confirm delete 
+    public $confirmDelete = [
+		'hashedpass' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'hashed password is required',
+            ],
+		],
+		'password' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'password is required',
+            ],
+		],
+	];
+
+    // new password with old
+	public $newPasswordWithOld = [
+		'new_password' => [
+            'rules'  => 'min_length[8]|max_length[20]',
+            'errors' => [
+                'min_length'  => 'min 8 character',
+                'max_length'  => 'max 20 character',
+            ],
+		],
+		'old_password' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required'   => 'old password is required',
+            ],
+		],
+	];
+
+    // new password
+	public $newPassword = [
+		'new_password' => [
+            'rules'  => 'min_length[8]|max_length[20]',
+            'errors' => [
+                'min_length'  => 'min 8 character',
+                'max_length'  => 'max 20 character',
+            ],
+		],
+	];
+
+    /**
+     * REGSITER VALIDATE
+     * ================================
+     */
+    // nasabah
+	public $nasabahRegisterValidate = [
 		'email' => [
-			'rules'  => 'required|max_length[40]|is_unique[nasabah.email]|valid_email|valid_emails',
+			'rules'  => 'required|max_length[40]|is_unique[users.email]|valid_email|valid_emails',
 			'errors' => [
                 'required'     => 'email is required',
                 'max_length'   => 'max 40 character',
@@ -52,7 +102,7 @@ class Validation
 			]
 		],
 		'username' => [
-            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[nasabah.username]',
+            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username]',
             'errors' => [
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
@@ -76,7 +126,7 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|max_length[14]|is_unique[nasabah.notelp]|is_natural',
+            'rules'  => 'required|max_length[14]|is_unique[users.notelp]|is_natural',
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 12 character',
@@ -91,13 +141,18 @@ class Validation
                 'max_length'  => 'max 255 character',
             ],
 		],
-		'kodepos' => [
-            'rules'  => 'required|is_natural|min_length[5]|max_length[5]',
+		'tgl_lahir' => [
+            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
             'errors' => [
-                'required'    => 'kodepos is required',
-                'is_natural'  => 'only number allowed',
-                'min_length'  => 'min 5 character',
-                'max_length'  => 'max 5 character',
+                'required'    => 'tgl lahir is required',
+                'regex_match' => 'format must be dd-mm-yyyy',
+            ],
+		],
+		'kelamin' => [
+            'rules'  => 'required|in_list[laki-laki,perempuan]',
+            'errors' => [
+                'required'    => 'kelamin is required',
+                'in_list'     => "value must be 'laki-laki' or 'perempuan'",
             ],
 		],
 		'rt' => [
@@ -118,25 +173,47 @@ class Validation
                 'is_natural'  => 'only number allowed',
             ],
 		],
-		'tgl_lahir' => [
-            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+		'kodepos' => [
+            'rules'  => 'required|is_natural|max_length[5]',
             'errors' => [
-                'required'    => 'tgl lahir is required',
-                'regex_match' => 'format must be dd-mm-yyyy',
+                'required'    => 'kodepos is required',
+                'is_natural'  => 'only number allowed',
+                'max_length'  => 'max 5 character',
             ],
 		],
-		'kelamin' => [
-            'rules'  => 'required|in_list[laki-laki,perempuan]',
+		'kelurahan' => [
+            'rules'  => 'required|max_length[200]',
             'errors' => [
-                'required'    => 'kelamin is required',
-                'in_list'     => "value must be 'laki-laki' or 'perempuan'",
+                'required'    => 'kelurahan is required',
+                'max_length'  => 'max 200 character',
             ],
-		]
+		],
+		'kecamatan' => [
+            'rules'  => 'required|max_length[200]',
+            'errors' => [
+                'required'    => 'kecamatan is required',
+                'max_length'  => 'max 200 character',
+            ],
+		],
+		'kota' => [
+            'rules'  => 'required|max_length[200]',
+            'errors' => [
+                'required'    => 'kota is required',
+                'max_length'  => 'max 200 character',
+            ],
+		],
+		'provinsi' => [
+            'rules'  => 'required|max_length[200]',
+            'errors' => [
+                'required'    => 'provinsi is required',
+                'max_length'  => 'max 200 character',
+            ],
+		],
 	];
     
-	public $adminRegister = [
+	public $adminRegisterValidate = [
 		'username' => [
-            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[admin.username]',
+            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username]',
             'errors' => [
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
@@ -160,7 +237,7 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|max_length[14]|is_unique[admin.notelp]',
+            'rules'  => 'required|max_length[14]|is_unique[users.notelp]',
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 14 character',
@@ -189,24 +266,20 @@ class Validation
             ],
 		],
 		'privilege' => [
-            'rules'  => 'required|in_list[super,admin]',
+            'rules'  => 'required|in_list[superadmin,admin]',
             'errors' => [
                 'required'    => 'kelamin is required',
-                'in_list'     => "value must be 'super' or 'admin'",
+                'in_list'     => "value must be 'superadmin' or 'admin'",
             ],
 		]
 	];
 
-	public $codeOTP = [
-		'code_otp' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'code_otp is required',
-            ],
-		]
-	];
-
-	public $nasabahLogin = [
+    /**
+     * LOGIN Validate
+     * =================================
+     */
+    // nasabah
+	public $nasabahLoginValidate = [
 		'email' => [
             'rules'  => 'required|valid_email',
             'errors' => [
@@ -221,10 +294,53 @@ class Validation
             ],
 		],
 	];
-    
+
+    // admin
+    public $adminLoginValidate = [
+		'username' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'username is required',
+            ],
+		],
+		'password' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'password is required',
+            ],
+		],
+	];
+
+    // forgot password
+    public $forgotPasswordValidate = [
+		'email' => [
+            'rules'  => 'required|valid_email|is_not_unique[users.email]',
+            'errors' => [
+                'required'      => 'email is required',
+                'valid_email'   => 'Email tidak valid',
+                'is_not_unique' => 'email tidak terdaftar',
+            ],
+		],
+	];
+
+    // Otp verification
+	public $verifyOtpValidate = [
+		'code_otp' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'code_otp is required',
+            ],
+		]
+	];
+
+    /**
+     * NASABAH Controller Validate
+     * ================================
+     */
+    //  edit profile
 	public $editProfileNasabah = [
 		'username' => [
-            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[nasabah.username,nasabah.id,{id}]',
+            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username,users.id,{id}]',
             'errors' => [
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
@@ -241,7 +357,7 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|max_length[12]|is_unique[nasabah.notelp,nasabah.id,{id}]|is_natural',
+            'rules'  => 'required|max_length[12]|is_unique[users.notelp,users.id,{id}]|is_natural',
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 12 character',
@@ -271,20 +387,123 @@ class Validation
             ],
 		]
 	];
-    
-	public $editProfileNasabahByAdmin = [
-		'email' => [
-			'rules'  => 'required|max_length[40]|is_unique[nasabah.email,nasabah.id,{id}]|valid_email|valid_emails',
-			'errors' => [
-                'required'     => 'email is required',
-                'max_length'   => 'max 40 character',
-                'is_unique'    => 'email sudah terdaftar',
-                'valid_email'  => 'Email is not in format',
-                'valid_emails' => "Email's provider is not valid",
-			]
+
+    //  send kritik
+    public $sendKritikValidate = [
+		'name' => [
+            'rules'  => 'required|max_length[20]',
+            'errors' => [
+                'required'   => 'name is required',
+                'max_length' => 'max 20 character',
+            ],
 		],
+		'email' => [
+            'rules'  => 'required|max_length[40]|valid_email',
+            'errors' => [
+                'required'    => 'email is required',
+                'max_length'  => 'max 40 character',
+                'valid_email' => 'Email is not in format',
+            ],
+		],
+		'message' => [
+            'rules'  => 'required',
+            'errors' => [
+                'message' => 'message is required',
+            ],
+		],
+	];
+    
+    /**
+     * ADMIN Controller Validate
+     * ================================
+     */
+    // edit profile
+	public $editOwnProfileAdmin = [
 		'username' => [
-            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[nasabah.username,nasabah.id,{id}]',
+            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username,users.id,{id}]',
+            'errors' => [
+                'required'    => 'username is required',
+                'min_length'  => 'min 8 character',
+                'max_length'  => 'max 20 character',
+                'is_unique'   => 'username sudah terdaftar',
+            ],
+		],
+		'nama_lengkap' => [
+            'rules'  => 'required|max_length[40]',
+            'errors' => [
+                'required'    => 'nama lengkap is required',
+                'max_length'  => 'max 40 character',
+            ],
+		],
+		'notelp' => [
+            'rules'  => 'required|max_length[12]|is_unique[users.notelp,users.id,{id}]',
+            'errors' => [
+                'required'    => 'nomor telepon is required',
+                'max_length'  => 'max 12 character',
+                'is_unique'   => 'no.telp sudah dipakai',
+            ],
+		],
+		'alamat' => [
+            'rules'  => 'required|max_length[255]',
+            'errors' => [
+                'required'    => 'alamat is required',
+                'max_length'  => 'max 255 character',
+            ],
+		],
+		'tgl_lahir' => [
+            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'tgl lahir is required',
+                'regex_match' => 'format must be dd-mm-yyyy',
+            ],
+		],
+		'kelamin' => [
+            'rules'  => 'required|in_list[laki-laki,perempuan]',
+            'errors' => [
+                'required'    => 'kelamin is required',
+                'in_list'     => "value must be 'laki-laki' or 'perempuan'",
+            ],
+		]
+	];
+
+    // filter get nasabah
+    public $filterGetNasabah = [
+		'orderby' => [
+            'rules'  => 'in_list[terbaru,terlama]',
+            'errors' => [
+                'in_list' => "value must be 'terbaru' or 'terlama'",
+            ],
+		],
+		// 'kelurahan' => [
+        //     'rules'  => 'is_not_unique[wilayah.kelurahan]',
+        //     'errors' => [
+        //         'is_not_unique' => 'kelurahan with value ({value}) is not in database',
+        //     ],
+		// ],
+		// 'kecamatan' => [
+        //     'rules'  => 'is_not_unique[wilayah.kecamatan]',
+        //     'errors' => [
+        //         'is_not_unique' => 'kecamatan with value ({value}) is not in database',
+        //     ],
+		// ],
+		// 'kota' => [
+        //     'rules'  => 'is_not_unique[wilayah.kota]',
+        //     'errors' => [
+        //         'is_not_unique' => 'kota with value ({value}) is not in database',
+        //     ],
+		// ],
+		// 'provinsi' => [
+        //     'rules'  => 'is_not_unique[wilayah.provinsi]',
+        //     'errors' => [
+        //         'is_not_unique' => 'provinsi with value ({value}) is not in database',
+        //     ],
+		// ],
+	];
+
+    // edit nasabah
+	public $editNasabahValidate = [
+		'username' => [
+            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username,users.id,{id}]',
             'errors' => [
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
@@ -301,7 +520,7 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|max_length[12]|is_unique[nasabah.notelp,nasabah.id,{id}]',
+            'rules'  => 'required|max_length[12]|is_unique[users.notelp,users.id,{id}]',
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 12 character',
@@ -336,129 +555,19 @@ class Validation
                 'in_list'     => "value must be '1' or '0'",
             ],
 		],
-		'saldo_uang' => [
-            'rules'  => 'required|numeric',
-            'errors' => [
-                'required'   => 'saldo_uang is required',
-                'numeric'    => 'only number allowed',
-            ],
-		],
-		'saldo_antam' => [
-            'rules'  => 'required|numeric',
-            'errors' => [
-                'required'   => 'saldo_antam is required',
-                'numeric'    => 'only number allowed',
-            ],
-		],
-		'saldo_ubs' => [
-            'rules'  => 'required|numeric',
-            'errors' => [
-                'required'   => 'saldo_ubs is required',
-                'numeric'    => 'only number allowed',
-            ],
-		],
-		'saldo_galery24' => [
-            'rules'  => 'required|numeric',
-            'errors' => [
-                'required'   => 'saldo_galery24 is required',
-                'numeric'    => 'only number allowed',
-            ],
-		],
-	];
-
-	public $editNewPassword = [
-		'new_password' => [
-            'rules'  => 'min_length[8]|max_length[20]',
-            'errors' => [
-                'min_length'  => 'min 8 character',
-                'max_length'  => 'max 20 character',
-            ],
-		],
-		'old_password' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required'   => 'old password is required',
-            ],
-		],
-	];
-
-	public $editNewPasswordWithoutOld = [
-		'new_password' => [
-            'rules'  => 'min_length[8]|max_length[20]',
-            'errors' => [
-                'min_length'  => 'min 8 character',
-                'max_length'  => 'max 20 character',
-            ],
-		],
-	];
-
-    public $kritikSaran = [
-		'name' => [
-            'rules'  => 'required|max_length[20]',
-            'errors' => [
-                'required'   => 'name is required',
-                'max_length' => 'max 20 character',
-            ],
-		],
-		'email' => [
-            'rules'  => 'required|max_length[40]|valid_email',
-            'errors' => [
-                'required'    => 'email is required',
-                'max_length'  => 'max 40 character',
-                'valid_email' => 'Email is not in format',
-            ],
-		],
-		'message' => [
-            'rules'  => 'required',
-            'errors' => [
-                'message' => 'message is required',
-            ],
-		],
-	];
-
-    public $forgotPassword = [
-		'email' => [
-            'rules'  => 'required|is_not_unique[nasabah.email]',
-            'errors' => [
-                'required'      => 'email is required',
-                'is_not_unique' => 'email tidak terdaftar',
-            ],
-		],
-	];
-
-    public $adminLogin = [
-		'username' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'username is required',
-            ],
-		],
-		'password' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'password is required',
-            ],
-		],
-	];
-
-    public $confirmDelete = [
-		'hashedpass' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'hashed password is required',
-            ],
-		],
-		'password' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'password is required',
-            ],
-		],
 	];
     
-	public $editProfileAdmin = [
+    // edit admin data
+	public $editAdminValidate = [
+		'id' => [
+            'rules'  => 'required|is_not_unique[users.id]',
+            'errors' => [
+                'required'      => 'id is required',
+                'is_not_unique' => 'admin with id ({value}) is not found',
+            ],
+		],
 		'username' => [
-            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[admin.username,admin.id,{id}]',
+            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username,users.id,{id}]',
             'errors' => [
                 'required'    => 'username is required',
                 'min_length'  => 'min 8 character',
@@ -474,55 +583,7 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|max_length[12]|is_unique[admin.notelp,admin.id,{id}]',
-            'errors' => [
-                'required'    => 'nomor telepon is required',
-                'max_length'  => 'max 12 character',
-                'is_unique'   => 'no.telp sudah dipakai',
-            ],
-		],
-		'alamat' => [
-            'rules'  => 'required|max_length[255]',
-            'errors' => [
-                'required'    => 'alamat is required',
-                'max_length'  => 'max 255 character',
-            ],
-		],
-		'tgl_lahir' => [
-            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
-            'errors' => [
-                'required'    => 'tgl lahir is required',
-                'regex_match' => 'format must be dd-mm-yyyy',
-            ],
-		],
-		'kelamin' => [
-            'rules'  => 'required|in_list[laki-laki,perempuan]',
-            'errors' => [
-                'required'    => 'kelamin is required',
-                'in_list'     => "value must be 'laki-laki' or 'perempuan'",
-            ],
-		]
-	];
-    
-	public $editProfileAdminByAdmin = [
-		'username' => [
-            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[admin.username,admin.id,{id}]',
-            'errors' => [
-                'required'    => 'username is required',
-                'min_length'  => 'min 8 character',
-                'max_length'  => 'max 20 character',
-                'is_unique'   => 'username sudah terdaftar',
-            ],
-		],
-		'nama_lengkap' => [
-            'rules'  => 'required|max_length[40]',
-            'errors' => [
-                'required'    => 'nama lengkap is required',
-                'max_length'  => 'max 40 character',
-            ],
-		],
-		'notelp' => [
-            'rules'  => 'required|max_length[14]|is_unique[admin.notelp,admin.id,{id}]',
+            'rules'  => 'required|max_length[14]|is_unique[users.notelp,users.id,{id}]',
             'errors' => [
                 'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 14 character',
@@ -551,24 +612,29 @@ class Validation
             ],
 		],
 		'privilege' => [
-            'rules'  => 'required|in_list[super,admin]',
+            'rules'  => 'required|in_list[superadmin,admin]',
             'errors' => [
                 'required'    => 'privilege is required',
-                'in_list'     => "value must be 'super' or 'admin'",
+                'in_list'     => "value must be 'superadmin' or 'admin'",
             ],
 		],
-		'active' => [
+		'is_active' => [
             'rules'  => 'required|in_list[1,0]',
             'errors' => [
-                'required'    => 'active is required',
+                'required'    => 'is_active is required',
                 'in_list'     => "value must be '1' or '0'",
             ],
 		]
 	];
-
-	public $addKategoriBerita = [
+    
+    /**
+     * ARTIKEL Controller Validate
+     * ================================
+     */
+    // kategori artikel
+	public $kategoriArtikelValidate = [
 		'kategori_name' => [
-            'rules'  => 'required|max_length[20]|is_unique[kategori_berita.name]',
+            'rules'  => 'required|max_length[20]|is_unique[kategori_artikel.name]',
             'errors' => [
                 'required'    => 'kategori name is required',
                 'max_length'  => 'max 20 character',
@@ -577,29 +643,10 @@ class Validation
 		]
 	];
 
-	public $addKategoriSampah = [
-		'kategori_name' => [
-            'rules'  => 'required|max_length[20]|is_unique[kategori_sampah.name]',
-            'errors' => [
-                'required'    => 'kategori name is required',
-                'max_length'  => 'max 20 character',
-                'is_unique'   => 'kategori name is exist',
-            ],
-		]
-	];
-
-    public $idForDeleteCheck = [
-		'id' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'id is required',
-            ],
-		],
-	];
-
-	public $addBeritaAcara = [
+    // add artikel
+	public $addArtikelValidate = [
 		'title' => [
-            'rules'  => 'required|max_length[250]|is_unique[berita_acara.title]',
+            'rules'  => 'required|max_length[250]|is_unique[artikel.title]',
             'errors' => [
                 'required'    => 'title is required',
                 'max_length'  => 'max 250 character',
@@ -621,16 +668,49 @@ class Validation
                 'required'    => 'content is required',
             ],
 		],
-		'kategori' => [
-            'rules'  => 'required|is_not_unique[kategori_berita.name]',
+		'id_kategori' => [
+            'rules'  => 'required|is_not_unique[kategori_artikel.id]',
             'errors' => [
-                'required'      => 'kategori is required',
-                'is_not_unique' => 'kategori with value ({value}) is not found',
+                'required'      => 'id_kategori is required',
+                'is_not_unique' => 'id_kategori with value ({value}) is not found',
             ],
 		]
 	];
 
-	public $ifImgageUploadCheck = [
+    // edit artikel
+	public $editArtikelValidate = [
+		'id' => [
+            'rules'  => 'required|is_not_unique[artikel.id]',
+            'errors' => [
+                'required'      => 'id is required',
+                'is_not_unique' => 'berita with id ({value}) is not found',
+            ],
+		],
+		'title' => [
+            'rules'  => 'required|max_length[250]|is_unique[artikel.title,artikel.id,{id}]',
+            'errors' => [
+                'required'    => 'title is required',
+                'max_length'  => 'max 250 character',
+                'is_unique'   => 'judul ({value}) sudah ada',
+            ],
+		],
+		'content' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'content is required',
+            ],
+		],
+		'id_kategori' => [
+            'rules'  => 'required|is_not_unique[kategori_artikel.id]',
+            'errors' => [
+                'required'      => 'id_kategori is required',
+                'is_not_unique' => 'id_kategori with value ({value}) is not found',
+            ],
+		]
+	];
+
+    // new thumbnail
+	public $newArtikelThumbnail = [
         'new_thumbnail' => [
             'rules'  => 'max_size[new_thumbnail,2000]|mime_in[new_thumbnail,image/png,image/jpg,image/jpeg,image/webp]',
             'errors' => [
@@ -641,22 +721,39 @@ class Validation
         ],
 	];
 
-    public $getOtherItem = [
+    public $getRelatedArtikel = [
 		'id' => [
-            'rules'  => 'required|is_not_unique[berita_acara.id]',
+            'rules'  => 'required|is_not_unique[artikel.id]',
             'errors' => [
                 'required'      => 'id is required',
-                'is_not_unique' => 'berita with id ({value}) is not found',
+                'is_not_unique' => 'artikel with id ({value}) is not found',
             ],
 		]
 	];
 
-	public $addSampah = [
-		'kategori' => [
-            'rules'  => 'required|is_not_unique[kategori_sampah.name]',
+    /**
+     * SAMPAH Controller Validate
+     * ================================
+     */
+    // kategori sampah
+	public $kategoriSampahValidate = [
+		'kategori_name' => [
+            'rules'  => 'required|max_length[20]|is_unique[kategori_sampah.name]',
             'errors' => [
-                'required'      => 'kategori is required',
-                'is_not_unique' => 'kategori with value ({value}) is not found',
+                'required'    => 'kategori_name is required',
+                'max_length'  => 'max 20 character',
+                'is_unique'   => 'kategori_name is exist',
+            ],
+		]
+	];
+
+    // add sampah
+	public $addSampahValidate = [
+		'id_kategori' => [
+            'rules'  => 'required|is_not_unique[kategori_sampah.id]',
+            'errors' => [
+                'required'      => 'id_kategori is required',
+                'is_not_unique' => 'id_kategori with value ({value}) is not found',
             ],
 		],
 		'jenis' => [
@@ -677,39 +774,8 @@ class Validation
 		],
 	];
 
-	public $updateBeritaAcara = [
-		'id' => [
-            'rules'  => 'required|is_not_unique[berita_acara.id]',
-            'errors' => [
-                'required'      => 'id is required',
-                'is_not_unique' => 'berita with id ({value}) is not found',
-            ],
-		],
-		'title' => [
-            'rules'  => 'required|max_length[250]|is_unique[berita_acara.title,berita_acara.id,{id}]',
-            'errors' => [
-                'required'    => 'title is required',
-                'max_length'  => 'max 250 character',
-                'is_unique'   => 'judul ({value}) sudah ada',
-            ],
-		],
-		'content' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required'    => 'content is required',
-            ],
-		],
-		'kategori' => [
-            'rules'  => 'required|max_length[20]|is_not_unique[kategori_berita.name]',
-            'errors' => [
-                'required'      => 'kategori is required',
-                'max_length'    => 'max 20 character',
-                'is_not_unique' => 'kategori with value ({value}) is not found',
-            ],
-		]
-	];
-
-	public $updateSampah = [
+    // edit sampah
+	public $updateSampahValidate = [
 		'id' => [
             'rules'  => 'required|is_not_unique[sampah.id]',
             'errors' => [
@@ -717,11 +783,11 @@ class Validation
                 'is_not_unique' => 'sampah with id ({value}) is not found',
             ],
 		],
-		'kategori' => [
-            'rules'  => 'required|is_not_unique[kategori_sampah.name]',
+		'id_kategori' => [
+            'rules'  => 'required|is_not_unique[kategori_sampah.id]',
             'errors' => [
-                'required'      => 'kategori is required',
-                'is_not_unique' => 'kategori with value ({value}) is not found',
+                'required'      => 'id_kategori is required',
+                'is_not_unique' => 'id_kategori with value ({value}) is not found',
             ],
 		],
 		'jenis' => [
@@ -740,6 +806,111 @@ class Validation
                 'is_natural_no_zero' => 'only number allowed',
             ],
 		],
+	];
+
+    /**
+     * TRANSAKSI Controller Validate
+     * ================================
+     */
+
+    // setor sampah 
+	public $setorSampah1 = [
+		'id_nasabah' => [
+            'rules'  => 'required|is_not_unique[users.id]',
+            'errors' => [
+                'required'      => 'id_nasabah is required',
+                'is_not_unique' => 'nasabah dengan id ({value}) tidak ditemukan',
+            ],
+		],
+		'transaksi' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'transaksi is required',
+            ],
+		],
+		'date' => [
+            'rules'  => 'required|regex_match[/^[0-3][0-9][-][0-1][0-9][-][2-9][0-9][0-9][0-9] [0-2][0-9][:][0-5][0-9]$/]',
+            // 'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'date is required',
+                'regex_match' => 'format must be dd-mm-yyyy hh:mm',
+            ],
+		],
+	];
+
+	public $setorSampah2 = [
+		'id_sampah' => [
+            'rules'  => 'required|is_not_unique[sampah.id]',
+            'errors' => [
+                'required'      => 'id_sampah is required',
+                'is_not_unique' => 'id_sampah with value ({value}) is not found',
+            ],
+		],
+		'jumlah' => [
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required'   => 'jumlah is required',
+                'numeric'    => 'only number allowed',
+            ],
+		],
+	];
+
+    // pindah saldo
+	public $pindahSaldo = [
+		'id_nasabah' => [
+            'rules'  => 'required|is_not_unique[users.id]',
+            'errors' => [
+                'required'      => 'id nasabah is required',
+                'is_not_unique' => "nasabah with id ({value}) is not found",
+            ],
+		],
+		'tujuan' => [
+            'rules'  => 'required|in_list[antam,ubs,galery24]',
+            'errors' => [
+                'required'    => 'saldo tujuan is required',
+                'in_list'     => "value must be 'antam/ubs/galery24'",
+            ],
+		],
+		'harga_emas' => [
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required'    => 'harga_emas is required',
+                'numeric'     => "value must be number",
+            ],
+		],
+		'jumlah' => [
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'jumlah is required',
+                'numeric'  => 'value must be number',
+            ],
+		],
+		'date' => [
+            'rules'  => 'required|regex_match[/^[0-3][0-9][-][0-1][0-9][-][2-9][0-9][0-9][0-9] [0-2][0-9][:][0-5][0-9]$/]',
+            // 'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'date is required',
+                'regex_match' => 'format must be dd-mm-yyyy hh:mm',
+            ],
+		],
+	];
+
+    // tarik saldo
+	public $tarikSaldo = [
+		'id_nasabah' => [
+            'rules'  => 'required|is_not_unique[users.id]',
+            'errors' => [
+                'required'      => 'id_nasabah is required',
+                'is_not_unique' => 'id_nasabah with value ({value}) is not found',
+            ],
+		],
+		'jenis_saldo' => [
+            'rules'  => 'required|in_list[uang,ubs,antam,galery24]',
+            'errors' => [
+                'required' => 'jenis saldo sampah is required',
+                'in_list'  => "value must be 'uang/ubs/antam/galery24'",
+            ],
+		],
 		'jumlah' => [
             'rules'  => 'required|max_length[11]|numeric',
             'errors' => [
@@ -748,23 +919,27 @@ class Validation
                 'numeric'    => 'only number allowed',
             ],
 		],
-	];
-
-    public $idForDeleteBerita = [
-		'id' => [
-            'rules'  => 'required|is_not_unique[berita_acara.id]',
+		'date' => [
+            'rules'  => 'required|regex_match[/^[0-3][0-9][-][0-1][0-9][-][2-9][0-9][0-9][0-9] [0-2][0-9][:][0-5][0-9]$/]',
+            // 'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
             'errors' => [
-                'required'      => 'id is required',
-                'is_not_unique' => 'berita with id ({value}) is not found',
+                'required'    => 'date is required',
+                'regex_match' => 'format must be dd-mm-yyyy hh:mm',
             ],
 		],
 	];
 
-	public $transaksiDate = [
-		'date' => [
-            'rules'  => 'regex_match[/^(0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+	public $dateForFilterTransaksi = [
+		'start' => [
+            'rules'  => 'regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
             'errors' => [
-                'regex_match' => 'format must be mm-yyyy',
+                'regex_match' => 'format must be dd-mm-yyyy',
+            ],
+		],
+		'end' => [
+            'rules'  => 'regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'regex_match' => 'format must be dd-mm-yyyy',
             ],
 		],
 	];
@@ -797,83 +972,11 @@ class Validation
 		],
 	];
 
-	public $setorSampah1 = [
-		'id_nasabah' => [
-            'rules'  => 'required|is_not_unique[nasabah.id]',
-            'errors' => [
-                'required'      => 'id nasabah is required',
-                'is_not_unique' => 'nasabah dengan id ({value}) tidak ditemukan',
-            ],
-		],
-		'transaksi' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'transaksi is required',
-            ],
-		],
-		'date' => [
-            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
-            'errors' => [
-                'required'    => 'date is required',
-                'regex_match' => 'format must be dd-mm-yyyy',
-            ],
-		],
-	];
-
-	public $setorSampah2 = [
-		'jenis_sampah' => [
-            'rules'  => 'required|is_not_unique[sampah.jenis]',
-            'errors' => [
-                'required'      => 'jenis_sampah is required',
-                'is_not_unique' => 'jenis_sampah with value ({value}) is not found',
-            ],
-		],
-		'jumlah' => [
-            'rules'  => 'required|numeric',
-            'errors' => [
-                'required'   => 'jumlah is required',
-                'numeric'    => 'only number allowed',
-            ],
-		],
-	];
-
 	public $jualSampah = [
 		'transaksi' => [
             'rules'  => 'required',
             'errors' => [
                 'required' => 'transaksi is required',
-            ],
-		],
-		'date' => [
-            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
-            'errors' => [
-                'required'    => 'date is required',
-                'regex_match' => 'format must be dd-mm-yyyy',
-            ],
-		],
-	];
-
-	public $tarikSaldo = [
-		'id_nasabah' => [
-            'rules'  => 'required|is_not_unique[nasabah.id]',
-            'errors' => [
-                'required'      => 'id nasabah is required',
-                'is_not_unique' => 'id_nasabah with value ({value}) is not found',
-            ],
-		],
-		'jenis_saldo' => [
-            'rules'  => 'required|in_list[uang,ubs,antam,galery24]',
-            'errors' => [
-                'required' => 'jenis saldo sampah is required',
-                'in_list'  => "value must be 'uang/ubs/antam/galery24'",
-            ],
-		],
-		'jumlah' => [
-            'rules'  => 'required|max_length[11]|numeric',
-            'errors' => [
-                'required'   => 'jumlah is required',
-                'max_length' => 'max 11 character',
-                'numeric'    => 'only number allowed',
             ],
 		],
 		'date' => [
@@ -891,51 +994,6 @@ class Validation
             'errors' => [
                 'required' => 'type is required',
                 'in_list'  => "value must be 'setor/tarik/pindah'",
-            ],
-		],
-	];
-
-	public $pindahSaldo = [
-		'id_nasabah' => [
-            'rules'  => 'required|is_not_unique[nasabah.id]',
-            'errors' => [
-                'required'      => 'id nasabah is required',
-                'is_not_unique' => "nasabah with id ({value}) is not found",
-            ],
-		],
-		// 'asal' => [
-        //     'rules'  => 'required|in_list[uang]',
-        //     'errors' => [
-        //         'required'    => 'saldo asal is required',
-        //         'in_list'     => "value must be 'uang'",
-        //     ],
-		// ],
-		'tujuan' => [
-            'rules'  => 'required|in_list[antam,ubs,galery24]',
-            'errors' => [
-                'required'    => 'saldo tujuan is required',
-                'in_list'     => "value must be 'antam/ubs/galery24'",
-            ],
-		],
-		'harga_emas' => [
-            'rules'  => 'required|numeric',
-            'errors' => [
-                'required'    => 'harga_emas is required',
-                'numeric'     => "value must be number",
-            ],
-		],
-		'jumlah' => [
-            'rules'  => 'required|numeric',
-            'errors' => [
-                'required' => 'jumlah is required',
-                'numeric'  => 'value must be number',
-            ],
-		],
-		'date' => [
-            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
-            'errors' => [
-                'required'    => 'date is required',
-                'regex_match' => 'format must be dd-mm-yyyy',
             ],
 		],
 	];

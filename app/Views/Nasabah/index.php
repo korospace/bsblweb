@@ -3,6 +3,11 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
+		#row-sampah-masuk .card-wraper:hover{
+			transform: scale(0.96);
+			transition: all 0.5s;
+		}
+
 		.rowCardWraper {
 			height: 100% !important;
 		}
@@ -12,6 +17,12 @@
 		}
 
 		@media (max-width:768px) {
+			.numbers p {
+				font-size: 12px !important;
+			}
+			.numbers h5 {
+				font-size: 12px !important;
+			}
 			.rowCardWraper {
 				height: auto !important;
 			}
@@ -93,12 +104,14 @@
 			</nav>
 			<!-- End Navbar -->
 			<div class="container-fluid py-4">
-				<div class="row">
-					<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+
+				<!-- sampah masuk -->
+				<div id="row-sampah-masuk" class="row">
+					<div class="card-wraper col-xl-3 col-6 mb-xl-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('kertas')">
 						<div class="card">
 							<div class="card-body p-3">
 								<div class="row" style="font-family: 'qc-medium';">
-									<div class="col-8">
+									<div class="col-8 d-flex align-items-center">
 										<div class="numbers">
 											<p class="text-sm mb-0 text-capitalize font-weight-bold">Kertas</p>
 											<h5 id="sampah-kertas" class="font-weight-bolder mb-0">
@@ -115,11 +128,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+					<div class="card-wraper col-xl-3 col-6 mb-xl-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('logam')">
 						<div class="card">
 							<div class="card-body p-3">
 								<div class="row" style="font-family: 'qc-medium';">
-									<div class="col-8">
+									<div class="col-8 d-flex align-items-center">
 										<div class="numbers">
 											<p class="text-sm mb-0 text-capitalize font-weight-bold">Logam</p>
 											<h5 id="sampah-logam" class="font-weight-bolder mb-0">
@@ -136,11 +149,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+					<div class="card-wraper col-xl-3 col-6 mb-xl-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('plastik')">
 						<div class="card">
 							<div class="card-body p-3">
 								<div class="row" style="font-family: 'qc-medium';">
-									<div class="col-8">
+									<div class="col-8 d-flex align-items-center">
 										<div class="numbers">
 											<p class="text-sm mb-0 text-capitalize font-weight-bold">Plastik</p>
 											<h5 id="sampah-plastik" class="font-weight-bolder mb-0">
@@ -157,11 +170,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-3 col-sm-6">
+					<div class="card-wraper col-xl-3 col-6 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('lain-lain')">
 						<div class="card">
 							<div class="card-body p-3">
 								<div class="row" style="font-family: 'qc-medium';">
-									<div class="col-8">
+									<div class="col-8 d-flex align-items-center">
 										<div class="numbers">
 											<p class="text-sm mb-0 text-capitalize font-weight-bold">Lain-lain</p>
 											<h5 id="sampah-lain-lain" class="font-weight-bolder mb-0">
@@ -179,6 +192,8 @@
 						</div>
 					</div>
 				</div>
+				
+				<!-- transaksi -->
 				<div class="row mt-4">
 					<!-- grafik -->
 					<div class="col-lg-8">
@@ -188,7 +203,7 @@
 								<h5>Grafik Penyetoran</h5>
 								<div class="mt-3 form-row">
 									<div id="btn-filter-grafik" class="d-flex align-items-center">
-										<a class="shadow px-1 pt-1 border-radius-none mr-2" href="" data-toggle="modal" data-whatever="filter grafik" data-target="#modalFilterTransaksi" onclick="openModalFilterT('Filter Grafik');">
+										<a class="shadow px-1 pt-1 border-radius-none mr-2" href="" data-toggle="modal" data-target="#modalFilterTransaksi" onclick="openModalFilterT('Filter Grafik');">
 											<i class="fas fa-sliders-h text-secondary"></i>
 										</a>
 										<span id="startdate" class=" text-secondary text-sm mt-1">
@@ -213,7 +228,7 @@
 						</div>
 					</div>
 					<!-- Transaksi -->
-					<div class="col-lg-4 mt-4 mt-lg-0">
+					<div class="col-lg-4 mt-5 mt-lg-0">
 						<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
 							<!-- header -->
 							<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
@@ -245,98 +260,102 @@
 						</div>
 					</div>
 				</div>
-				<div class="container-fluid mt-5 p-0">
-					<div class="row px-4">
-						<div class="col-lg-12 p-0">
-							<div class="row">
-								<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
-									<div class="card-id bg-transparent shadow-xl">
-										<div class="overflow-hidden position-relative border-radius-md"
-											style="background-image: url(<?= base_url('assets/images/curved-images/curved14.jpg'); ?>);">
-											<span class="mask bg-gradient-dark"></span>
-											<div class="card-body-id position-relative z-index-1 p-3">
-												<i class="fas fa-wifi text-white p-2"></i>
-												<h5 id="card-id" class="text-white mt-4 mb-5 pb-2" style="font-family: 'qc-medium';">_ _ _ _ _&nbsp;&nbsp;&nbsp;_ _ _
-													_&nbsp;&nbsp;&nbsp;_</h5>
-												<div class="d-flex">
+
+				<div class="row mt-5 p-0">
+					<!-- saldo -->
+					<div class="col-12">
+						<div class="row px-4">
+							<div class="col-lg-12 p-0">
+								<div class="row">
+									<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
+										<div class="card-id bg-transparent shadow-xl">
+											<div class="overflow-hidden position-relative border-radius-md"
+												style="background-image: url(<?= base_url('assets/images/curved-images/curved14.jpg'); ?>);">
+												<span class="mask bg-gradient-dark"></span>
+												<div class="card-body-id position-relative z-index-1 p-3">
+													<i class="fas fa-wifi text-white p-2"></i>
+													<h5 id="card-id" class="text-white mt-4 mb-5 pb-2" style="font-family: 'qc-medium';">_ _ _ _ _&nbsp;&nbsp;&nbsp;_ _ _
+														_&nbsp;&nbsp;&nbsp;_</h5>
 													<div class="d-flex">
-														<div class="me-4" style="font-family: 'qc-medium';">
-															<p class="text-white text-sm opacity-8 mb-0">Username</p>
-															<h6 id="card-username" class="text-white mb-0">_ _ _ _ _ _</h6>
+														<div class="d-flex">
+															<div class="me-4" style="font-family: 'qc-medium';">
+																<p class="text-white text-sm opacity-8 mb-0">Username</p>
+																<h6 id="card-username" class="text-white mb-0">_ _ _ _ _ _</h6>
+															</div>
+															<div style="font-family: 'qc-medium';">
+																<p class="text-white text-sm opacity-8 mb-0">Tanggal Bergabung</p>
+																<h6 id="card-date" class="text-white mb-0">_ _/_ _/_ _ _ _<h6>
+															</div>
 														</div>
-														<div style="font-family: 'qc-medium';">
-															<p class="text-white text-sm opacity-8 mb-0">Tanggal Bergabung</p>
-															<h6 id="card-date" class="text-white mb-0">_ _/_ _/_ _ _ _<h6>
+														<div class="ms-auto w-20 d-flex align-items-end justify-content-end">
+															<img class="w-60 mt-2" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>"
+																alt="logo">
 														</div>
-													</div>
-													<div class="ms-auto w-20 d-flex align-items-end justify-content-end">
-														<img class="w-60 mt-2" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>"
-															alt="logo">
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
-									<div class="row d-flex justify-content-center rowCardWraper">
-										<div class="col-sm-6 h-100 pr-sm-1">
-											<div class="card h-100 border-radius-md">
-												<div class="card-header p-3 text-center">
-													<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-														<i class="fas fa-money-bill-wave-alt"></i>
+									<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
+										<div class="row d-flex justify-content-center rowCardWraper">
+											<div class="col-sm-6 h-100 pr-sm-1">
+												<div class="card h-100 border-radius-md">
+													<div class="card-header p-3 text-center">
+														<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+															<i class="fas fa-money-bill-wave-alt"></i>
+														</div>
 													</div>
-												</div>
-												<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-													<h6 class="text-center mb-0">Tunai</h6>
-													<hr class="horizontal dark my-3">
-													<h5 class="mb-0">Rp <span id="saldo-uang">0</span></h5>
+													<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
+														<h6 class="text-center mb-0">Tunai</h6>
+														<hr class="horizontal dark my-3">
+														<h5 class="mb-0">Rp <span id="saldo-uang">0</span></h5>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="col-sm-6 h-100 pl-sm-1 mt-sm-0 mt-4">
-											<div class="card h-100 border-radius-md">
-												<div class="card-header p-3 text-center">
-													<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-														<i class="fas fa-coins"></i>
+											<div class="col-sm-6 h-100 pl-sm-1 mt-sm-0 mt-4">
+												<div class="card h-100 border-radius-md">
+													<div class="card-header p-3 text-center">
+														<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+															<i class="fas fa-coins"></i>
+														</div>
 													</div>
-												</div>
-												<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-													<h6 class="text-center mb-0">UBS</h6>
-													<hr class="horizontal dark my-3">
-													<h5 class="mb-0"><span id="saldo-ubs">0</span> g</h5>
+													<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
+														<h6 class="text-center mb-0">UBS</h6>
+														<hr class="horizontal dark my-3">
+														<h5 class="mb-0"><span id="saldo-ubs">0</span> g</h5>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
-									<div class="row d-flex justify-content-center rowCardWraper">
-										<div class="col-sm-6 pr-sm-1 h-100">
-											<div class="card h-100 border-radius-md">
-												<div class="card-header p-3 text-center">
-													<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-														<i class="fas fa-coins"></i>
+									<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
+										<div class="row d-flex justify-content-center rowCardWraper">
+											<div class="col-sm-6 pr-sm-1 h-100">
+												<div class="card h-100 border-radius-md">
+													<div class="card-header p-3 text-center">
+														<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+															<i class="fas fa-coins"></i>
+														</div>
 													</div>
-												</div>
-												<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-													<h6 class="text-center mb-0">Antam</h6>
-													<hr class="horizontal dark my-3">
-													<h5 class="mb-0"><span id="saldo-antam">0</span> g</h5>
+													<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
+														<h6 class="text-center mb-0">Antam</h6>
+														<hr class="horizontal dark my-3">
+														<h5 class="mb-0"><span id="saldo-antam">0</span> g</h5>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="col-sm-6 pl-sm-1 h-100 mt-sm-0 mt-4">
-											<div class="card h-100 border-radius-md">
-												<div class="card-header p-3 text-center">
-													<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-														<i class="fas fa-coins"></i>
+											<div class="col-sm-6 pl-sm-1 h-100 mt-sm-0 mt-4">
+												<div class="card h-100 border-radius-md">
+													<div class="card-header p-3 text-center">
+														<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+															<i class="fas fa-coins"></i>
+														</div>
 													</div>
-												</div>
-												<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-													<h6 class="text-center mb-0">Galery24</h6>
-													<hr class="horizontal dark my-3">
-													<h5 class="mb-0"><span id="saldo-galery24">0</span> g</h5>
+													<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
+														<h6 class="text-center mb-0">Galery24</h6>
+														<hr class="horizontal dark my-3">
+														<h5 class="mb-0"><span id="saldo-galery24">0</span> g</h5>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -345,9 +364,9 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row mt-5">
-					<div class="col-12">
+
+					<!-- table sampah -->
+					<div id="info-sampah" class="col-12 mt-4 mt-md-5">
 						<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
 							<!-- header -->
 							<div class="card-header form-row pb-0 d-flex flex-column" style="font-family: 'qc-semibold';">
@@ -393,6 +412,7 @@
 							</div>
 						</div>
 					</div>
+	
 					<!-- Footer -->
 					<footer class="footer mt-4">
 						<div class="container-fluid p-0">
@@ -410,6 +430,39 @@
 		</main>
 
 	</body>
+
+	<!-- modals detail sampah-->
+	<div class="modal fade" id="modalDetailSampah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<form id="formFilterTransaksi" class="modal-dialog" role="document">
+			<input type="hidden" name="id">
+			<div class="modal-content" style="overflow: hidden;">
+
+				<!-- modal header -->
+				<div class="modal-header">
+					<h5 class="modal-title text-capitalize"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal body -->
+				<div class="modal-body w-100 position-relative p-0" style="min-height: 200px;overflow: hidden;">
+					<!-- spinner -->
+					<div id="detil-sampah-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+						<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 40px;" />
+					</div>
+					<!-- message not found -->
+					<div id="detil-sampah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+						<h6 id="text-notfound" class='opacity-6'>data tidak tersedia</h6>
+					</div>
+					<!-- table jenis -->
+					<div id="table-jenis-wraper" class="table-responsive">
+
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 
 	<!-- modals filter transaksi-->
 	<div class="modal fade" id="modalFilterTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -449,9 +502,9 @@
 
 				<!-- modal footer -->
 				<div class="modal-footer">
-					<button id="submit" type="submit" class="badge badge-success d-flex justify-content-center align-items-center border-0" data-dismiss="modal" onclick="filterTransaksi(this,event);">
+					<span id="btn-filter-transaksi" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" data-dismiss="modal" onclick="filterTransaksi(this,event);">
 						<span>Ok</span>
-					</button>
+					</span>
 				</div>
 			</div>
 		</form>

@@ -929,6 +929,42 @@ class Validation
 		],
 	];
 
+    // jual sampah
+	public $jualSampah = [
+		'id_admin' => [
+            'rules'  => 'required|is_not_unique[users.id]',
+            'errors' => [
+                'required'      => 'id_admin is required',
+                'is_not_unique' => 'admin dengan id ({value}) tidak ditemukan',
+            ],
+		],
+		'transaksi' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'transaksi is required',
+            ],
+		],
+		'date' => [
+            'rules'  => 'required|regex_match[/^[0-3][0-9][-][0-1][0-9][-][2-9][0-9][0-9][0-9] [0-2][0-9][:][0-5][0-9]$/]',
+            // 'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'date is required',
+                'regex_match' => 'format must be dd-mm-yyyy hh:mm',
+            ],
+		],
+	];
+
+    // delete transaksi
+    public $deleteTransaksi = [
+		'id' => [
+            'rules'  => 'required|is_not_unique[transaksi.id]',
+            'errors' => [
+                'required'      => 'id is required',
+                'is_not_unique' => 'transaksi with id ({value}) is not found',
+            ],
+		]
+	];
+
 	public $dateForFilterTransaksi = [
 		'start' => [
             'rules'  => 'regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
@@ -968,22 +1004,6 @@ class Validation
             'errors' => [
                 'required'           => 'parameter limit is required',
                 'is_natural_no_zero' => 'only number allowed',
-            ],
-		],
-	];
-
-	public $jualSampah = [
-		'transaksi' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'transaksi is required',
-            ],
-		],
-		'date' => [
-            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
-            'errors' => [
-                'required'    => 'date is required',
-                'regex_match' => 'format must be dd-mm-yyyy',
             ],
 		],
 	];

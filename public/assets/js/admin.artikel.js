@@ -203,8 +203,8 @@ let artikelUrl     = `${APIURL}/artikel/getartikel?orderby=terbaru`;
 const getAllBerita = async () => {
     $('#search-artikel').val('');
     $('#ket-total').html('0');
-    $('#list-artikel-notfound').addClass('d-none'); 
     $('#container-list-artikel').html(''); 
+    $('#list-artikel-notfound').addClass('d-none'); 
     $('#list-artikel-spinner').removeClass('d-none'); 
     let httpResponse = await httpRequestGet(artikelUrl);
     $('#list-artikel-spinner').addClass('d-none'); 

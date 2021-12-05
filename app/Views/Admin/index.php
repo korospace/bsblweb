@@ -2,6 +2,21 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
+	<style>
+		#row-sampah-masuk .card-wraper:hover{
+			transform: scale(0.96);
+			transition: all 0.5s;
+		}
+
+		@media (max-width:768px) {
+			.numbers p {
+				font-size: 12px !important;
+			}
+			.numbers h5 {
+				font-size: 12px !important;
+			}
+		} 
+	</style>
   	<!-- ** develoment ** -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<!-- ** production ** -->
@@ -70,12 +85,13 @@
 		</nav>
 		<!-- End Navbar -->
 		<div class="container-fluid py-4">
-			<div class="row" style="font-family: 'qc-semibold';">
-				<div class="col-xl-3 col-6 mb-4">
+			<!-- sampah masuk -->
+			<div id="row-sampah-masuk" class="row" style="font-family: 'qc-semibold';">
+				<div class="card-wraper col-xl-3 col-6 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('kertas')">
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Kertas</p>
 										<h5 id="sampah-kertas" class="font-weight-bolder mb-0">
@@ -92,11 +108,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-6 mb-4">
+				<div class="card-wraper col-xl-3 col-6 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('logam')">
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Logam</p>
 										<h5 id="sampah-logam" class="font-weight-bolder mb-0">
@@ -113,11 +129,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-6 mb-4">
+				<div class="card-wraper col-xl-3 col-6 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('plastik')">
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Plastik</p>
 										<h5 id="sampah-plastik" class="font-weight-bolder mb-0">
@@ -134,11 +150,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-6 mb-4">
+				<div class="card-wraper col-xl-3 col-6 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('lain-lain')">
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Lain-lain</p>
 										<h5 id="sampah-lain-lain" class="font-weight-bolder mb-0">
@@ -157,12 +173,13 @@
 				</div>
 			</div>
 
+			<!-- jumlah saldo -->
 			<div class="row" style="font-family: 'qc-semibold';">
 				<div class="col-xl-3 col-6 mb-4">
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Uang</p>
 										<h5 id="sampah-kertas" class="font-weight-bolder mb-0">
@@ -183,7 +200,7 @@
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Ubs</p>
 										<h5 id="sampah-logam" class="font-weight-bolder mb-0">
@@ -204,7 +221,7 @@
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Antam</p>
 										<h5 id="sampah-plastik" class="font-weight-bolder mb-0">
@@ -225,7 +242,7 @@
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Galery24</p>
 										<h5 id="sampah-lain-lain" class="font-weight-bolder mb-0">
@@ -244,6 +261,7 @@
 				</div>
 			</div>
 
+			<!-- grafik -->
 			<div class="row mt-5">
 				<!-- grafik -->
 				<div class="col-lg-8">
@@ -291,59 +309,6 @@
 				</div>
 			</div>
 
-			<div class="row mt-5">
-				<div class="col-12 mb-md-0 mb-4">
-					<div class="card">
-						<div class="card-header pb-0">
-							<div class="row">
-								<div class="col-lg-6 col-7">
-									<h6>Transaksi Terbaru</h6>
-								</div>
-							</div>
-						</div>
-						<div class="card-body px-0 pb-2">
-							<div class="table-responsive position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
-								<!-- spinner -->
-								<!-- <div id="transaksi-terbaru-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-								</div> -->
-								<!-- message not found -->
-								<div id="transaksi-terbaru-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-									<h6 id="text-notfound" class='opacity-6'></h6>
-								</div>
-								<!-- table -->
-								<table id="table-transaksi-terbaru" class="table table-striped text-left mb-0">
-									<thead class="position-sticky bg-white" style="z-index: 11;top: 0;">
-										<tr>
-											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												ID Transaksi
-											</th>
-											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Nama Nasabah
-											</th>
-											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Jenis transaksi
-											</th>
-											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Jumlah
-											</th>
-											<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Tgl
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php for ($i=0; $i < 20 ; $i++) { ?>
-										
-										<?php } ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
 			<footer class="footer pt-3">
 				<div class="container-fluid">
 					<div class="row align-items-center justify-content-lg-between">
@@ -362,85 +327,34 @@
 	</main>
 </body>
 
-<!-- **** Modal Jual Sampah **** -->
-<div class="modal fade" id="modalJualSampah" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  	<form id="formJualSampah" class="modal-dialog modal-lg">
-		<div class="modal-content">
+<!-- modals detail sampah-->
+<div class="modal fade" id="modalDetailSampah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<form id="formFilterTransaksi" class="modal-dialog" role="document">
+		<input type="hidden" name="id">
+		<div class="modal-content" style="overflow: hidden;">
 
 			<!-- modal header -->
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Jual sampah</h5>
+				<h5 class="modal-title text-capitalize"></h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 
 			<!-- modal body -->
-			<div class="modal-body form-row">
-				
-				<!-- **** tgl transaksi **** -->
-				<h6 class="font-italic opacity-8 col-12 text-sm">Tanggal transaksi</h6>
-				<div class="input-group col-6 col-sm-4 mb-4 form-group">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text bg-gray px-4 border-md">
-								<i class="fas fa-calendar-alt text-muted"></i>
-							</span>
-						</div>
-						<input type="date" class="form-control form-control-sm px-2 h-100" id="date" name="date">
-					</div>
-					<small
-						id="date-error"
-						class="text-danger"></small>
+			<div class="modal-body w-100 position-relative p-0" style="min-height: 200px;overflow: hidden;">
+				<!-- spinner -->
+				<div id="detil-sampah-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+					<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 40px;" />
 				</div>
+				<!-- message not found -->
+				<div id="detil-sampah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+					<h6 id="text-notfound" class='opacity-6'>data tidak tersedia</h6>
+				</div>
+				<!-- table jenis -->
+				<div id="table-jenis-wraper" class="table-responsive">
 
-				<!-- **** table **** -->
-				<!-- <hr class="editnasabah-item horizontal col-12 dark mt-0 mb-4"> -->
-				<div class="table-responsive col-12 mb-0" style="overflow: auto;font-family: 'qc-semibold';">
-					<table id="table-jual-sampah" class="table table-sm text-center mb-0">
-						<thead class="bg-white" style="border: 0.5px solid #E9ECEF;">
-							<tr>
-								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
-									#
-								</th>
-								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
-									jenis
-								</th>
-								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
-									jumlah(kg)
-								</th>
-								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-									harga
-								</th>
-							</tr>
-						</thead>
-						<tbody style="border: 0.5px solid #E9ECEF;">
-							<tr id="special-tr">
-								<td colspan="3" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
-									Total harga
-								</td>
-								<td colspan="4" class="p-2 text-left">
-									Rp. <span id="total-harga"></span>
-								</td>
-							</tr>
-						</tbody>
-					</table>
 				</div>
-				
-				<!-- tambah baris -->
-				<div class="input-group col-12 mt-2">
-					<a href="" class="badge badge-info w-100 border-radius-sm" onclick="tambahBaris(event);">
-						<i class="fas fa-plus text-white"></i>
-					</a>
-				</div>
-			</div>
-
-			<!-- modal footer -->
-			<div class="modal-footer">
-				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event);">
-					<span id="text">Submit</span>
-					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
-				</button>
 			</div>
 		</div>
 	</form>

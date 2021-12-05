@@ -16,18 +16,18 @@ const sessioncheck = async () => {
             // getLastTransaksi();
             // getRekapTransaksi(currentYear);
         }
-        if (pageTitle2 === 'profile') {
-            getDataProfile();
-        }
         if (pageTitle2 === 'list sampah') {
             getAllKatSampah();
             getAllJenisSampah();
+        }
+        if (pageTitle2 === 'transaksi') {
+            getDataTransaksi();
+            getRekapTransaksi();
         }
         if (pageTitle2 === 'list admin') {
             getAllAdmin();
         }
         if (pageTitle2 === 'list nasabah') {
-            getAllWilayah();
             getAllNasabah();
         }
         if (pageTitle2 === 'detil nasabah') {
@@ -45,6 +45,9 @@ const sessioncheck = async () => {
             setTimeout(() => {
                 getDetailBerita();
             }, 50);
+        }
+        if (pageTitle2 === 'profile') {
+            getDataProfile();
         }
     }
 };

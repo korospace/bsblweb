@@ -68,7 +68,6 @@ $routes->group("nasabah", function ($routes) {
     // VIEWS
     $routes->add('/',                    'Nasabah::dashboardNasabah');
     $routes->add('profile',              'Nasabah::profileNasabah');
-    $routes->add('cetaktransaksi/(:any)','Nasabah::cetakTransaksi/$1');
     // API
     $routes->get("sessioncheck",  "Nasabah::sessionCheck");
     $routes->get("getprofile",    "Nasabah::getProfile");
@@ -92,7 +91,6 @@ $routes->group("admin", function ($routes) {
     $routes->add('addartikel',         'Admin::addArtikelView');
     $routes->add('editartikel/(:any)', 'Admin::editArtikelView/$1');
     $routes->add('profile',            'Admin::profileAdmin');
-    $routes->add('cetakrekap/(:any)',  'Admin::cetakRekap/$1');
     // API
     $routes->post("login",           "Admin::login");
     $routes->post("confirmdelete",   "Admin::confirmDelete");
@@ -135,6 +133,8 @@ $routes->group("sampah", function ($routes) {
 
 
 $routes->group("transaksi", function ($routes) {
+    $routes->add('cetaktransaksi/(:any)','Transaksi::cetakTransaksi/$1');
+    $routes->add('cetakrekap/(:any)',    'Transaksi::cetakRekap/$1');
     //API
     $routes->post("setorsampah",  "Transaksi::setorSampah");
     $routes->post("tariksaldo",   "Transaksi::tarikSaldo");
@@ -145,7 +145,7 @@ $routes->group("transaksi", function ($routes) {
     $routes->get("getdata",       "Transaksi::getData");
     $routes->get("rekapdata",     "Transaksi::rekapData");
     $routes->get("lasttransaksi", "Transaksi::lastTransaksi");
-    $routes->delete("deleteitem", "Transaksi::deleteItem");
+    $routes->delete("deletedata", "Transaksi::deleteData");
     $routes->add("(:any)",        "Notfound::PageNotFound");
 });
 

@@ -62,7 +62,7 @@ const httpRequestPost = (url,form) => {
     let newForm = new FormData();
 
     for (var pair of form.entries()) {
-        let noPair = ['id','id_nasabah','id_kategori','username','password','new_password','old_password','thumbnail','content'];
+        let noPair = ['id','id_admin','id_nasabah','id_kategori','username','password','new_password','old_password','thumbnail','content'];
 
         if (noPair.includes(pair[0]) == false) {
             if (pair[0].includes('transaksi')) {

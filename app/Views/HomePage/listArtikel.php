@@ -64,14 +64,11 @@
 			}
 		}
 	</style>
-
     <!-- ** develoment ** -->
     <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/artikel.css'); ?>">
     <!-- ** production ** -->
     <!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/listartikel.css'); ?>"> -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
 	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel/listArtikel.min.css'); ?>"> -->
 <?= $this->endSection(); ?>
 
@@ -81,15 +78,7 @@
 		const KATEGORI = '<?= $kategori; ?>';
 	</script>
 	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/scrollreveal.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
-
 	<script src="<?= base_url('assets/js/listArtikel.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/dropdown/bootstrap.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/dropdown/popper.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
@@ -137,6 +126,13 @@
 						<div class="card text-white position-relative skeleton" style="box-shadow: none;min-height: 220px;border-radius: 10px;">
 						</div>
 					</div>
+
+					<!-- <div class="col-12 col-sm-6 position-relative d-flex align-items-center">
+						<img src="<?= base_url('assets/images/default-thumbnail.webp') ?>" alt="" style="min-width:100%;max-width:100%; opacity:0;">
+						<div class="card text-white position-absolute skeleton" style="min-width:93%;max-width:93%;min-height:88%;max-height:88%;border-radius: 10px;box-shadow: none;">
+
+						</div>
+					</div> -->
 				<?php } ?>
 			</div>
 		</div>

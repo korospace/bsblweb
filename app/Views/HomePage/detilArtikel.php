@@ -2,17 +2,6 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-    <!-- ** develoment ** -->
-    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel/style.css'); ?>"> -->
-    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel-layout.min.css'); ?>"> -->
-    <!-- ** production ** -->
-    <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel/detilArtikel.css'); ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel-layout/detilArtikel.css'); ?>">
-    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/detilartikel.css'); ?>"> -->
-    <link rel="stylesheet" href="<?= base_url('assets/css/sidebar/style.css'); ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
     <style>
         .categor-list li, .categor-list a {
             margin: 0 !important;
@@ -74,6 +63,14 @@
             }
         }
     </style>
+    <!-- ** develoment ** -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel/style.css'); ?>"> -->
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/artikel-layout.min.css'); ?>"> -->
+    <!-- ** production ** -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel/detilArtikel.css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/purge/artikel-layout/detilArtikel.css'); ?>">
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/detilartikel.css'); ?>"> -->
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -82,11 +79,6 @@
         const IDARTIKEL = '<?= $idArtikel; ?>';
     </script>
     <script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
-    <script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
-    <script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
-    <script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/scrollreveal.min.js'); ?>"></script>
-    <script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
     <script src="<?= base_url('assets/js/detilArtikel.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
@@ -147,7 +139,7 @@
                                         <br>
                                         <span id="blog-date" class="author skeleton mt-1"></span>
                                     </div>
-                                    <div id="blog-content">
+                                    <div id="blog-content" class="text-justify">
 
                                     </div>
                                 </div>

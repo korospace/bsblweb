@@ -1,3 +1,5 @@
+<?= $this->extend('Layout/template') ?>
+
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
@@ -34,6 +36,10 @@
             box-shadow: 2.5px 4.33px 15px 0px rgba(254, 176, 0, 0.4);
         }
     </style>
+    <!-- ** develoment ** -->
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+    <!-- ** production ** -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/artikelFooter.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- Html -->

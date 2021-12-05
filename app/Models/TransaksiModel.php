@@ -175,50 +175,49 @@ class TransaksiModel extends Model
         try {
             $date        = (int)strtotime($data['date']);
             $idtransaksi = $data['idtransaksi'];
-            $totalHarga  = 0;
-            $queryDetilJual   = "INSERT INTO jual_sampah (id_transaksi,jenis_sampah,jumlah,harga,date) VALUES";
-            $queryJumlahSampah = '';
+            $idnasabah   = $data['id_admin'];
+            $queryJmlSampah  = '';
+            $queryDetilJual = "INSERT INTO jual_sampah (id_transaksi,id_sampah,jumlah_kg,jumlah_rp) VALUES";
 
             foreach ($data['transaksi'] as $t) {
-                $jenisSmp   = $t['jenis_sampah'];
+                $idSampah   = $t['id_sampah'];
                 $jumlah     = $t['jumlah'];
-                $hargaAsli  = $this->db->table('sampah')->select("harga")->where("jenis",$jenisSmp)->get()->getResultArray();
+                $hargaAsli  = $this->db->table('sampah')->select("harga")->where("id",$idSampah)->get()->getResultArray();
                 $harga      = (int)$hargaAsli[0]['harga']*(float)$jumlah;
-                $totalHarga = $totalHarga+$harga;
 
-                $queryDetilJual    .= "('$idtransaksi','$jenisSmp',$jumlah,$harga,$date),";
-                $queryJumlahSampah .= "UPDATE sampah SET jumlah=jumlah-$jumlah WHERE jenis = '$jenisSmp';";
+                $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah-$jumlah WHERE id = '$idSampah';";
+                $queryDetilJual.= "('$idtransaksi','$idSampah',$jumlah,$harga),";
             }
 
             $queryDetilJual  = rtrim($queryDetilJual, ",");
             $queryDetilJual .= ';';
 
             $this->db->transBegin();
+            $this->db->query("INSERT INTO transaksi (id,id_user,jenis_transaksi,date) VALUES('$idtransaksi','$idnasabah','penjualan sampah',$date);");
+            $this->db->query($queryJmlSampah);
             $this->db->query($queryDetilJual);
-            $this->db->query($queryJumlahSampah);
 
-            if ($this->db->transStatus() === false) {
-                $this->db->transRollback();
-                return [
-                    'success' => false,
-                    'message' => "jual sampah is failed",
-                    'code'    => 500
-                ];
+            $transStatus = $this->db->transStatus();
+
+            if ($transStatus) {
+                $this->db->transCommit();
             } 
             else {
-                $this->db->transCommit();
-                return [
-                    "success"  => true,
-                    'message' => 'jual sampah is success',
-                ];
+                $this->db->transRollback();
             }
+
+            return [
+                'status'   => ($transStatus) ? 201   : 500,
+                'error'    => ($transStatus) ? false : true,
+                'messages' => ($transStatus) ? 'jual sampah is success' : "jual sampah is failed",
+            ];
         } 
         catch (Exception $e) {
             $this->db->transRollback();
             return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
             ];
         }
     }
@@ -227,7 +226,20 @@ class TransaksiModel extends Model
     {
         try {
             if (isset($get['kategori'])) {
+                $query  = "SELECT SUM(setor_sampah.jumlah_kg) AS jumlah_kg,sampah.jenis
+                FROM transaksi 
+                JOIN setor_sampah    ON(setor_sampah.id_transaksi=transaksi.id)
+                JOIN sampah          ON(setor_sampah.id_sampah=sampah.id) 
+                JOIN kategori_sampah ON(sampah.id_kategori=kategori_sampah.id)";
 
+                if ($idNasabah != '') {
+                    $query .= " WHERE transaksi.id_user = '$idNasabah' AND kategori_sampah.name='".$get['kategori']."'";
+                }
+                else {
+                    $query .= " WHERE kategori_sampah.name='".$get['kategori']."'";
+                }
+
+                $query .= "  GROUP BY sampah.jenis;";
             } 
             else {
                 $query  = "SELECT SUM(setor_sampah.jumlah_kg) AS total,kategori_sampah.name AS kategori
@@ -240,10 +252,9 @@ class TransaksiModel extends Model
                     $query .= " WHERE transaksi.id_user = '$idNasabah'";
                 }
 
-                $query .= "  GROUP BY kategori_sampah.name";
+                $query .= "  GROUP BY kategori_sampah.name;";
             }
 
-            $query      .= ";";
             $sampahMasuk = $this->db->query($query)->getResultArray();
             
             if (empty($sampahMasuk)) {    
@@ -335,19 +346,32 @@ class TransaksiModel extends Model
                     JOIN pindah_saldo ON (transaksi.id = pindah_saldo.id_transaksi) 
                     WHERE transaksi.id = '$id_transaksi';")->getResultArray()[0];
                 }
+                else if ($code_transaksi == 'TJS') {
+                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,sampah.jenis,jual_sampah.jumlah_kg,jual_sampah.jumlah_rp,transaksi.date 
+                    FROM transaksi 
+                    JOIN users        ON (transaksi.id_user = users.id) 
+                    JOIN jual_sampah  ON (transaksi.id = jual_sampah.id_transaksi) 
+                    JOIN sampah       ON (jual_sampah.id_sampah = sampah.id) 
+                    WHERE transaksi.id = '$id_transaksi';")->getResultArray();
+
+                    $transaction = $this->makeDetilTransaksi($transaction);
+                } 
                 else {
                     $transaction = false;
                 }
             } 
             else {
-                $query  = 'SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.date,transaksi.jenis_transaksi,
+                $query  = 'SELECT transaksi.id AS id_transaksi,transaksi.id_user,users.nama_lengkap,transaksi.date,transaksi.jenis_transaksi,
                 (SELECT SUM(jumlah_rp) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_uang_setor,
                 (SELECT SUM(jumlah_kg) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_kg_setor,
+                (SELECT SUM(jumlah_rp) from jual_sampah WHERE jual_sampah.id_transaksi = transaksi.id) AS total_uang_jual,
+                (SELECT SUM(jumlah_kg) from jual_sampah WHERE jual_sampah.id_transaksi = transaksi.id) AS total_kg_jual,
                 (SELECT SUM(jumlah_tarik) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS total_tarik,
                 (SELECT jenis_saldo from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS jenis_saldo,
                 (SELECT SUM(jumlah) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS total_pindah,
                 (SELECT SUM(hasil_konversi) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS hasil_konversi 
-                FROM transaksi';
+                FROM transaksi
+                JOIN users ON (transaksi.id_user = users.id)';
 
                 if ($idNasabah != '') {
                     $query .= " WHERE transaksi.id_user = '$idNasabah'";
@@ -356,14 +380,13 @@ class TransaksiModel extends Model
                 if (isset($get['start']) && isset($get['end'])) {
                     $start   = (int)strtotime($get['start'].' 01:00');
                     $end     = (int)strtotime($get['end'].' 23:59');
-                    // var_dump($start);
-                    // var_dump($end);die;
 
                     $query  .= ($idNasabah != '') ? ' AND' : ' WHERE' ;
                     $query  .= " transaksi.date BETWEEN $start AND $end";
                 }
 
-                $query      .= ' ORDER BY transaksi.date ASC;';
+                $orderby     = (isset($get['orderby']) && $get['orderby']=='terbaru')? 'DESC': 'ASC';
+                $query      .= " ORDER BY transaksi.date $orderby;";
                 $transaction = $this->db->query($query)->getResultArray();
                 $transaction = $this->filterData($transaction);
             } 
@@ -472,6 +495,12 @@ class TransaksiModel extends Model
             if ($d['total_kg_setor'] == null) {
                 unset($d['total_kg_setor']);
             }
+            if ($d['total_uang_jual'] == null) {
+                unset($d['total_uang_jual']);
+            }
+            if ($d['total_kg_jual'] == null) {
+                unset($d['total_kg_jual']);
+            }
             if ($d['total_tarik'] == null) {
                 unset($d['total_tarik']);
             }
@@ -497,33 +526,46 @@ class TransaksiModel extends Model
             $transaction = [];
 
             if (isset($get['date'])) {
-                $start   = (int)strtotime('01-'.$get['date']);
-                $end     = $start+(86400*30);
+                $start         = (int)strtotime('01-'.$get['date']);
+                $end           = $start+(86400*30);
+                $filterWIlayah = '';
+                unset($get['date']);
+
+                foreach ($get as $key => $value) {
+                    $filterWIlayah .= "AND wilayah.$key = '$value' ";
+                }
                 
-                $dataTss = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,setor_sampah.jenis_sampah,setor_sampah.jumlah,setor_sampah.harga,transaksi.date 
+                $dataTss = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,sampah.jenis AS jenis_sampah,setor_sampah.jumlah_kg,setor_sampah.jumlah_rp,transaksi.date 
                 FROM transaksi 
+                JOIN users        ON (transaksi.id_user = users.id)
                 JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi) 
-                JOIN nasabah ON (transaksi.id_nasabah = nasabah.id)
-                WHERE transaksi.date BETWEEN '$start' AND '$end'
+                JOIN sampah       ON (setor_sampah.id_sampah = sampah.id) 
+                JOIN wilayah      ON (wilayah.id_user = users.id)
+                WHERE transaksi.date BETWEEN '$start' AND '$end' $filterWIlayah
                 ORDER BY date ASC;")->getResultArray();
 
-                $dataTps = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,pindah_saldo.asal,pindah_saldo.jumlah,pindah_saldo.tujuan,pindah_saldo.hasil_konversi,pindah_saldo.harga_emas,transaksi.date 
+                $dataTps = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,pindah_saldo.jumlah,pindah_saldo.saldo_tujuan,pindah_saldo.harga_emas,pindah_saldo.hasil_konversi,transaksi.date 
                 FROM transaksi 
+                JOIN users        ON (transaksi.id_user = users.id)
                 JOIN pindah_saldo ON (transaksi.id = pindah_saldo.id_transaksi) 
-                JOIN nasabah ON (transaksi.id_nasabah = nasabah.id)
-                WHERE transaksi.date BETWEEN '$start' AND '$end'
+                JOIN wilayah      ON (wilayah.id_user = users.id)
+                WHERE transaksi.date BETWEEN '$start' AND '$end' $filterWIlayah
                 ORDER BY date ASC;")->getResultArray();
 
-                $dataTts = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_nasabah,transaksi.type,transaksi.jenis_saldo,nasabah.nama_lengkap,tarik_saldo.jenis,tarik_saldo.jumlah,transaksi.date 
+                $dataTts = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,tarik_saldo.jenis_saldo,tarik_saldo.jumlah_tarik,transaksi.date 
                 FROM transaksi 
+                JOIN users       ON (transaksi.id_user = users.id)
                 JOIN tarik_saldo ON (transaksi.id = tarik_saldo.id_transaksi) 
-                JOIN nasabah ON (transaksi.id_nasabah = nasabah.id)
-                WHERE transaksi.date BETWEEN '$start' AND '$end'
+                JOIN wilayah      ON (wilayah.id_user = users.id)
+                WHERE transaksi.date BETWEEN '$start' AND '$end' $filterWIlayah
                 ORDER BY date ASC;")->getResultArray();
 
-                $dataTjs = $this->db->query("SELECT id_transaksi,jenis_sampah,jumlah,harga,date 
-                FROM jual_sampah 
-                WHERE date BETWEEN '$start' AND '$end'
+                $dataTjs = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,sampah.jenis AS jenis_sampah,jual_sampah.jumlah_kg,jual_sampah.jumlah_rp,transaksi.date 
+                FROM transaksi 
+                JOIN users        ON (transaksi.id_user = users.id)
+                JOIN jual_sampah  ON (transaksi.id = jual_sampah.id_transaksi) 
+                JOIN sampah       ON (jual_sampah.id_sampah = sampah.id) 
+                WHERE transaksi.date BETWEEN '$start' AND '$end'
                 ORDER BY date ASC;")->getResultArray();
 
                 $transaction['date'] = date('F, Y', $start);
@@ -533,12 +575,19 @@ class TransaksiModel extends Model
                 $transaction['tjs']  = $dataTjs;
             } 
             else {
+                // var_dump($get['year']);die;
                 $query  = "SELECT transaksi.id,transaksi.date,
-                (SELECT SUM(jumlah) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
-                (SELECT SUM(harga) AS uang_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
-                (SELECT SUM(jumlah) AS uang_keluar from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id AND jenis = 'uang'),
-                (SELECT SUM(jumlah) AS emas_keluar from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id AND jenis != 'uang')
+                (SELECT SUM(jumlah_kg) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
+                (SELECT SUM(jumlah_kg) AS sampah_keluar from jual_sampah WHERE jual_sampah.id_transaksi = transaksi.id),
+                (SELECT SUM(jumlah_rp) AS uang_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
+                (SELECT SUM(jumlah_tarik) AS uang_keluar from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id AND jenis_saldo = 'uang'),
+                (SELECT SUM(hasil_konversi) AS emas_masuk from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id),
+                (SELECT SUM(jumlah_tarik) AS emas_keluar from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id AND jenis_saldo != 'uang')
                 FROM transaksi";
+
+                if (isset($get['provinsi'])) {
+                    $query .= " JOIN wilayah ON (transaksi.id_user = wilayah.id_user)";
+                }
 
                 $year = null;
                 if (isset($get['year'])) {
@@ -547,32 +596,47 @@ class TransaksiModel extends Model
                     $end    = $start+(86400*365);
                     $query .= " WHERE transaksi.date BETWEEN '$start' AND '$end'";
                 } 
+                if (isset($get['kelurahan'])) {
+                    $query .= " AND wilayah.kelurahan = '".$get['kelurahan']."'";
+                }
+    
+                if (isset($get['kecamatan'])) {
+                    $query .= " AND wilayah.kecamatan = '".$get['kecamatan']."'";
+                }
+    
+                if (isset($get['kota'])) {
+                    $query .= " AND wilayah.kota = '".$get['kota']."'";
+                }
+    
+                if (isset($get['provinsi'])) {
+                    $query .= " AND wilayah.provinsi = '".$get['provinsi']."'";
+                }
 
                 $query       .= " ORDER BY transaksi.date ASC;";
                 $transaction = $this->db->query($query)->getResultArray();
                 $transaction = $this->filterRekapData($transaction,$year);
-                $transaction = $this->addSampahKeluar($transaction,$year);
             } 
 
             if (empty($transaction)) {    
                 return [
-                    'success' => false,
-                    'message' => "transaction notfound",
-                    'code'    => 404
+                    'status'   => 404,
+                    'error'    => true,
+                    'messages' => "transaction notfound",
                 ];
             } 
             else {   
                 return [
-                    'success' => true,
-                    'data'    => $transaction
+                    'status' => 200,
+                    'error'  => false,
+                    'data'   => $transaction
                 ];
             }
         } 
         catch (Exception $e) {
             return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
             ];
         }
     }
@@ -580,22 +644,19 @@ class TransaksiModel extends Model
     public function filterRekapData(array $data,?string $year = null): array
     {
         $transaction = [];
+        // var_dump($data);die;
 
         foreach ($data as $d) {
 
             $newD = $this->removeNull($d);
-            $id_transaksi = substr($newD['id'],0,3);
+            // $id_transaksi = substr($newD['id'],0,3);
 
-            if ($id_transaksi != 'TPS') {
-                if ($year) {
-                    $transaction[strtolower(date('F', $d['date']))][] = $newD;
-                } 
-                else {
-                    $transaction[strtolower(date('F-Y', $d['date']))][] = $newD;
-                }
-                
+            if ($year) {
+                $transaction[strtolower(date('F', $d['date']))][] = $newD;
+            } 
+            else {
+                $transaction[strtolower(date('F-Y', $d['date']))][] = $newD;
             }
-
         }
 
         return $this->groupingEachTrans($transaction);
@@ -608,11 +669,17 @@ class TransaksiModel extends Model
         if ($newData['sampah_masuk'] == null) {
             unset($newData['sampah_masuk']);
         }
+        if ($newData['sampah_keluar'] == null) {
+            unset($newData['sampah_keluar']);
+        }
         if ($newData['uang_masuk'] == null) {
             unset($newData['uang_masuk']);
         }
         if ($newData['uang_keluar'] == null) {
             unset($newData['uang_keluar']);
+        }
+        if ($newData['emas_masuk'] == null) {
+            unset($newData['emas_masuk']);
         }
         if ($newData['emas_keluar'] == null) {
             unset($newData['emas_keluar']);
@@ -626,12 +693,14 @@ class TransaksiModel extends Model
         $newData = [];
 
         foreach ($data as $key => $value) {
-            $date1          = '';
-            $date2          = '';
-            $totSampahMasuk = 0;
-            $totUangMasuk   = 0;
-            $totUangKeluar  = 0;
-            $totEmasKeluar  = 0;
+            $date1           = '';
+            $date2           = '';
+            $totSampahMasuk  = 0;
+            $totSampahKeluar = 0;
+            $totUangMasuk    = 0;
+            $totUangKeluar   = 0;
+            $totEmasMasuk    = 0;
+            $totEmasKeluar   = 0;
             
             foreach ($value as $v) {
                 $date1        = date('m-Y', $v['date']);
@@ -641,6 +710,12 @@ class TransaksiModel extends Model
                 if ($id_transaksi == 'TSS') {
                     $totSampahMasuk = $totSampahMasuk + (float)$v['sampah_masuk'];
                     $totUangMasuk   = $totUangMasuk + (int)$v['uang_masuk'];
+                }
+                else if ($id_transaksi == 'TJS') {
+                    $totSampahKeluar = $totSampahKeluar + (float)$v['sampah_keluar'];
+                }
+                else if ($id_transaksi == 'TPS') {
+                    $totEmasMasuk = $totEmasMasuk + (float)$v['emas_masuk'];
                 }
                 else if ($id_transaksi == 'TTS') {
                     if (isset($v['uang_keluar'])) {
@@ -653,97 +728,93 @@ class TransaksiModel extends Model
             }
 
             $newData[$key] = [
-                'date1'          => $date1,
-                'date2'          => $date2,
-                'totSampahMasuk' => $totSampahMasuk,
-                'totSampahKeluar'=> 0,
-                'totUangMasuk'   => $totUangMasuk,
-                'totUangKeluar'  => $totUangKeluar,
-                'totEmasKeluar'  => $totEmasKeluar,
+                'date1'           => $date1,
+                'date2'           => $date2,
+                'totSampahMasuk'  => $totSampahMasuk,
+                'totSampahKeluar' => $totSampahKeluar,
+                'totUangMasuk'    => $totUangMasuk,
+                'totUangKeluar'   => $totUangKeluar,
+                'totEmasMasuk'    => $totEmasMasuk,
+                'totEmasKeluar'   => $totEmasKeluar,
             ];
         }
 
         return $newData;
     }
 
-    public function addSampahKeluar(array $data,?string $year = null)
-    {
-        $newData = $data;
-        $query   = "SELECT id_transaksi,date,SUM(jumlah) AS jumlah FROM jual_sampah";
-
-        if ($year) {
-            $start = (int)strtotime('01-01-'.$year);
-            $end   = $start+(86400*365);
-            $query.= " WHERE date BETWEEN '$start' AND '$end'";
-        }
-
-        $query   .= " GROUP BY id_transaksi,date ORDER BY date ASC;";
-
-        $sampahKeluar = $this->db->query($query)->getResultArray();
-
-        $newSampahKeluar1 = []; 
-        $newSampahKeluar2 = []; 
-
-        foreach ($sampahKeluar as $sk) {
-            if ($year) {
-                $newSampahKeluar1[strtolower(date('F', $sk['date']))][] = $sk;
-            } 
-            else {
-                $newSampahKeluar1[strtolower(date('F-Y', $sk['date']))][] = $sk;
-            }
-        }
-
-        foreach ($newSampahKeluar1 as $key => $sk1) {
-            $date      = '';
-            $totSampah = 0;
-            
-            foreach ($sk1 as $s) {
-                $date      = $s['date'];
-                $totSampah = $totSampah + (float)$s['jumlah'];
-            }
-
-            $newSampahKeluar2[$key] = [
-                'date'   => $date,
-                'jumlah' => $totSampah,
-            ];
-        }
-
-        foreach ($newSampahKeluar2 as $sk2) {
-            if ($year) {
-                $newData[strtolower(date('F', $sk2['date']))]['totSampahKeluar'] = $sk2['jumlah'];
-            } 
-            else {
-                $newData[strtolower(date('F-Y', $sk2['date']))]['totSampahKeluar'] = $sk2['jumlah'];
-            }
-        }
-        
-        return $newData;
-    }
-
-    public function deleteItem(string $id): array
+    public function deleteData(string $idtransaksi): array
     {
         try {
-            $this->db->table($this->table)->where('id', $id)->delete();
-            
-            if ($this->db->affectedRows() > 0) {
-                return [
-                    "success"  => true,
-                    'message' => "delete transaksi with id $id is success",
-                ];
+            $this->db->transBegin();
+            $detailTs       = $this->getData(['id_transaksi'=>$idtransaksi],'');
+            $detailTs       = $detailTs['data'];
+            // var_dump($detailTs);die;
+            $idnasabah      = $detailTs['id_user'];
+            $code_transaksi = substr($idtransaksi,0,3);
+
+
+            if ($code_transaksi == 'TSS') {
+                $totalHarga      = 0;
+                $queryJmlSampah  = '';
+
+                foreach ($detailTs['barang'] as $t) {
+                    $totalHarga      = $totalHarga+$t['jumlah_rp'];
+                    $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah-".$t['jumlah_kg']." WHERE jenis = '".$t['jenis']."';";
+                }
+
+                // update jumlah sampah
+                $this->db->query($queryJmlSampah);
+                // update saldo nasabah
+                $this->db->query("UPDATE dompet SET uang=uang-$totalHarga WHERE id_user='$idnasabah';");
             } 
-            else {   
-                return [
-                    'success' => false,
-                    'message' => "transaksi with id '$id' is not found",
-                    'code'    => 404
-                ];
-            }     
+            else if ($code_transaksi == 'TTS') {
+                $jenisSaldo  = $detailTs['jenis_saldo'];
+                $jumlahTarik = $detailTs['jumlah_tarik'];
+
+                // update saldo nasabah
+                $this->db->query("UPDATE dompet SET $jenisSaldo=$jenisSaldo+$jumlahTarik WHERE id_user='$idnasabah';");
+            }
+            else if ($code_transaksi == 'TPS') {
+                $jmlPindah     = $detailTs['jumlah'];
+                $saldoTujuan   = $detailTs['saldo_tujuan'];
+                $hasilKonversi = $detailTs['hasil_konversi'];
+                
+                // update saldo nasabah
+                $this->db->query("UPDATE dompet SET uang=uang+$jmlPindah,$saldoTujuan=$saldoTujuan-$hasilKonversi WHERE id_user='$idnasabah';");
+            }
+            else if ($code_transaksi == 'TJS') {
+                $queryJmlSampah  = '';
+
+                foreach ($detailTs['barang'] as $t) {
+                    $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah+".$t['jumlah_kg']." WHERE jenis = '".$t['jenis']."';";
+                }
+                
+                // update jumlah sampah
+                $this->db->query($queryJmlSampah);
+            } 
+
+            $this->db->table($this->table)->where('id', $idtransaksi)->delete();
+            $transStatus = $this->db->transStatus();
+
+            if ($transStatus) {
+                $this->db->transCommit();
+            } 
+            else {
+                $this->db->transRollback();
+            }
+
+            return [
+                'status'   => ($transStatus) ? 201   : 500,
+                'error'    => ($transStatus) ? false : true,
+                'messages' => ($transStatus) ? "delete transaksi with id $idtransaksi is success" : "delete transaksi with id $idtransaksi is failed",
+            ];  
         } 
         catch (Exception $e) {
+            $this->db->transRollback();
             return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
             ];
         }
     }

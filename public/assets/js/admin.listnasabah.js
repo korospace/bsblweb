@@ -22,6 +22,7 @@ const getAllWilayah = async () => {
 
     $('select[name=provinsi]').html(elprovinsi);
 };
+getAllWilayah();
 
 $('select[name=provinsi]').on('change', function() {
     let tmpKota = [];
@@ -146,14 +147,12 @@ const resetFilterNasabah = async (e) => {
 let arrayNasabah = [];
 let nasabahUrl   = `${APIURL}/admin/getnasabah?orderby=terbaru`;
 const getAllNasabah = async () => {
-
     $('#search-nasabah').val('');
     $('#ket-total').html('0');
+    $('#table-nasabah tbody').html('');
     $('#list-nasabah-notfound').addClass('d-none'); 
-    $('#table-nasabah').addClass('d-none'); 
     $('#list-nasabah-spinner').removeClass('d-none'); 
     let httpResponse = await httpRequestGet(nasabahUrl);
-    $('#table-nasabah').removeClass('d-none'); 
     $('#list-nasabah-spinner').addClass('d-none'); 
     
     if (httpResponse.status === 404) {

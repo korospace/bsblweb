@@ -1,3 +1,30 @@
+<?= $this->extend('Layout/template') ?>
+
+<!-- Css -->
+<?= $this->section('contentCss'); ?>
+	<style>
+        #href-transaksi-wraper a:hover{
+			color: #344767 !important;
+		}
+    </style>
+<?= $this->endSection(); ?>
+
+<!-- JS -->
+<?= $this->section('contentJs'); ?>
+	<script>
+		//smoothscroll
+		$('#href-transaksi-wraper a').on('click', function (e) {
+			e.preventDefault();
+			
+			var target = $(`${$(this).attr('href')}`);
+
+			$('html, body').stop().animate({
+				'scrollTop': target.offset().top-60
+			}, 500, 'swing');
+		});
+	</script>
+<?= $this->endSection(); ?>
+
 <aside class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main" style="font-family: 'qc-semibold';">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" id="iconSidenav"></i>
@@ -32,13 +59,29 @@
             </li>
             <!-- transaksi -->
             <li class="nav-item">
-                <a class="nav-link <?= ($title=='Admin | transaksi') ? 'active' : ''?>" href="<?= base_url('admin/transaksi');?>">
+                <a class="nav-link <?= ($title == 'Admin | transaksi') ? 'active' : ''?>" href="<?= base_url('admin/transaksi');?>">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-cash-register <?= ($title=='Admin | transaksi') ? 'text-white' : 'text-muted'?>" style="font-size: 14px;transform: translateY(-1px);"></i>
                     </div>
                     <span class="nav-link-text ms-1">Transaksi</span>
                 </a>
+                <?php if ($title == 'Admin | transaksi') { ?>
+                <div id="href-transaksi-wraper" class="w-100 pl-5 d-flex flex-column">
+                    <a href="#tambah-transaksi" class="pt-4 pb-2 text-muted text-xs">
+                        <i class="fas fa-angle-right mr-2"></i>
+                        <span>tambah transaksi</span>
+                    </a>
+                    <a href="#semua-transaksi" class="pt-2 pb-2 text-muted text-xs">
+                        <i class="fas fa-angle-right mr-2"></i>
+                        <span>semua transaksi</span>
+                    </a>
+                    <a href="#rekap-transaksi" class="pt-2 pb-2 text-muted text-xs">
+                        <i class="fas fa-angle-right mr-2"></i>
+                        <span>rekap transaksi</span>
+                    </a>
+                </div>
+                <?php } ?>
             </li>
             <!-- list admin -->
             <?php if ($privilege == 'superadmin') { ?>

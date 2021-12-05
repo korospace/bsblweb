@@ -97,14 +97,14 @@ function validateAddKategori() {
         })
         status = false;
     }
-    else if (/[^A-Za-z0-9\| ]/g.test($('input#NewkategoriSampah').val())) {
-        showAlert({
-            message: `<strong>Kategori hanya boleh huruf dan angka !</strong>`,
-            autohide: true,
-            type:'danger'
-        })
-        status = false;
-    }
+    // else if (/[^A-Za-z0-9\| ]/g.test($('input#NewkategoriSampah').val())) {
+    //     showAlert({
+    //         message: `<strong>Kategori hanya boleh huruf dan angka !</strong>`,
+    //         autohide: true,
+    //         type:'danger'
+    //     })
+    //     status = false;
+    // }
     // check kategori is exist
     arrayKatSampah.forEach(ks => {
         if (ks.name.toLowerCase() == $('input#NewkategoriSampah').val().toLowerCase().trim()) {
@@ -225,11 +225,10 @@ let sampahUrl        = `${APIURL}/sampah/getsampah?orderby=terlama`;
 const getAllJenisSampah = async () => {
     $('#search-sampah').val('');
     $('#ket-total').html('0');
+    $('#table-jenis-sampah tbody').html('');
     $('#list-sampah-notfound').addClass('d-none'); 
-    $('#table-jenis-sampah').addClass('d-none'); 
     $('#list-sampah-spinner').removeClass('d-none'); 
     let httpResponse = await httpRequestGet(sampahUrl);
-    $('#table-jenis-sampah').removeClass('d-none'); 
     $('#list-sampah-spinner').addClass('d-none'); 
     
     if (httpResponse.status === 404) {
@@ -276,6 +275,7 @@ const sortingSampah = (data) => {
     let arrKategori = [];
     let objSampah   = {};
     let newArrSampah= [];
+    // let newData     = data.sort((a, b) => b.jumlah - a.jumlah);
     
     // create array kategori
     data.forEach(d => {

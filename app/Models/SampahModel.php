@@ -138,7 +138,7 @@ class SampahModel extends Model
             else {
                 $sampah  = $this->db->table($this->table)->select('sampah.id,sampah.id_kategori,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah')
                 ->join('kategori_sampah', 'kategori_sampah.id = sampah.id_kategori')
-                ->orderBy('sampah.id',$orderby)->get()->getResultArray();
+                ->orderBy("sampah.id",$orderby)->get()->getResultArray();
             }
             
             if (empty($sampah)) {    

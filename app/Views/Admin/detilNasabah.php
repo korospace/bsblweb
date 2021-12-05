@@ -3,6 +3,11 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
+		#row-sampah-masuk .card-wraper:hover{
+			transform: scale(0.96);
+			transition: all 0.5s;
+		}
+
 		.chartWrapper {
 			position: relative !important;
 		}
@@ -28,6 +33,12 @@
 		}
 
 		@media (max-width:768px) {
+			.numbers p {
+				font-size: 12px !important;
+			}
+			.numbers h5 {
+				font-size: 12px !important;
+			}
 			.rowCardWraper {
 				height: auto !important;
 			}
@@ -108,7 +119,7 @@
 			<ul class="navbar-nav">
 				<!-- setor sampah -->
 				<li class="nav-item">
-					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalSetorSaldo" onclick="openModalSetorSaldo()" >
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalSetorSaldo" onclick="openModalTransaksi(true)" >
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<i class="fas fa-trash-restore text-muted" style="font-size: 13px;transform: translateY(-1px);"></i>
@@ -118,7 +129,7 @@
 				</li>
 				<!-- pindah saldo -->
 				<li class="nav-item">
-					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalPindahSaldo" onclick="openModalPindahSaldo()">
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalPindahSaldo" onclick="openModalTransaksi()">
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<i class="fas fa-exchange-alt text-muted" style="font-size: 13px;transform: translateY(-1px);"></i>
@@ -128,7 +139,7 @@
 				</li>
 				<!-- tarik saldo -->
 				<li class="nav-item">
-					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalTarikSaldo" onclick="openModalTarikSaldo()">
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalTarikSaldo" onclick="openModalTransaksi()">
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<i class="fas fa-hand-holding-usd text-muted" style="font-size: 15px;transform: translateY(-1px);"></i>
@@ -170,12 +181,13 @@
 		</nav>
 		<!-- End Navbar -->
 		<div class="container-fluid py-4">
-			<div class="row">
-				<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+			<!-- sampah masuk -->
+			<div id="row-sampah-masuk" class="row">
+				<div class="card-wraper col-xl-3 col-6 mb-xl-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('kertas')">
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Kertas</p>
 										<h5 id="sampah-kertas" class="font-weight-bolder mb-0">
@@ -192,11 +204,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+				<div class="card-wraper col-xl-3 col-6 mb-xl-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('logam')">
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Logam</p>
 										<h5 id="sampah-logam" class="font-weight-bolder mb-0">
@@ -213,11 +225,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+				<div class="card-wraper col-xl-3 col-6 mb-xl-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('plastik')">
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Plastik</p>
 										<h5 id="sampah-plastik" class="font-weight-bolder mb-0">
@@ -234,11 +246,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-sm-6">
+				<div class="card-wraper col-xl-3 col-6 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('lain-lain')">
 					<div class="card">
 						<div class="card-body p-3">
 							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8">
+								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
 										<p class="text-sm mb-0 text-capitalize font-weight-bold">Lain-lain</p>
 										<h5 id="sampah-lain-lain" class="font-weight-bolder mb-0">
@@ -256,6 +268,8 @@
 					</div>
 				</div>
 			</div>
+			
+			<!-- transaksi -->
 			<div class="row mt-4">
 				<!-- grafik -->
 				<div class="col-lg-8">
@@ -290,7 +304,7 @@
 					</div>
 				</div>
 				<!-- Transaksi -->
-				<div class="col-lg-4 mt-4 mt-lg-0">
+				<div class="col-lg-4 mt-5 mt-lg-0">
 					<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
 						<!-- header -->
 						<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
@@ -298,7 +312,7 @@
 								<div class="col-6 d-flex flex-column">
 									<h5>History</h5>
 									<div id="btn-filter-histori" class="d-flex align-items-center mt-3">
-										<a class="shadow px-1 pt-1 border-radius-none mr-2" href="" data-toggle="modal" data-whatever="filter histori" data-target="#modalFilterTransaksi" onclick="openModalFilterT('Filter Histori');">
+										<a class="shadow px-1 pt-1 border-radius-none mr-2" href="" data-toggle="modal" data-target="#modalFilterTransaksi" onclick="openModalFilterT('Filter Histori');">
 											<i class="fas fa-sliders-h text-secondary"></i>
 										</a>
 										<span id="startdate" class=" text-secondary text-sm mt-1">
@@ -322,8 +336,9 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="container-fluid mt-5 p-0">
-				<!-- card AND saldo -->
+				<!-- saldo -->
 				<div class="row px-4">
 					<div class="col-lg-12 p-0">
 						<div class="row">
@@ -432,8 +447,8 @@
 					</div>
 				</div>
 				
-				<!-- Personal info -->
-				<div id='personal-info' class="row mt-5">
+				<!-- personal info -->
+				<div id='personal-info' class="row mt-4 mt-md-5">
 					<div class="col-12">
 						<div class="card h-100">
 							<div class="card-header pb-0 p-3">
@@ -529,6 +544,39 @@
 
 </body>
 
+<!-- modals detail sampah-->
+<div class="modal fade" id="modalDetailSampah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<form id="formFilterTransaksi" class="modal-dialog" role="document">
+		<input type="hidden" name="id">
+		<div class="modal-content" style="overflow: hidden;">
+
+			<!-- modal header -->
+			<div class="modal-header">
+				<h5 class="modal-title text-capitalize"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal body -->
+			<div class="modal-body w-100 position-relative p-0" style="min-height: 200px;overflow: hidden;">
+				<!-- spinner -->
+				<div id="detil-sampah-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+					<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 40px;" />
+				</div>
+				<!-- message not found -->
+				<div id="detil-sampah-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+					<h6 id="text-notfound" class='opacity-6'>data tidak tersedia</h6>
+				</div>
+				<!-- table jenis -->
+				<div id="table-jenis-wraper" class="table-responsive">
+
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
 <!-- modals filter transaksi-->
 <div class="modal fade" id="modalFilterTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<form id="formFilterTransaksi" class="modal-dialog modal-sm" role="document">
@@ -567,9 +615,9 @@
 
 			<!-- modal footer -->
 			<div class="modal-footer">
-				<button id="submit" type="submit" class="badge badge-success d-flex justify-content-center align-items-center border-0" data-dismiss="modal" onclick="filterTransaksi(this,event);">
+				<span id="btn-filter-transaksi" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" data-dismiss="modal" onclick="filterTransaksi(this,event);">
 					<span>Ok</span>
-				</button>
+				</span>
 			</div>
 		</div>
 	</form>

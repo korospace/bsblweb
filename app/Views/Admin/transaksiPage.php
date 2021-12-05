@@ -5,12 +5,26 @@
 	<style>
 		html,body{
 			height:100%;
+			/* background-color: #b2b8c2; */
 		}
+
 		#toggle,.switch-section{
 			transition: all 0.3s;
 		}
 		.switch-section:hover{
-			background-color: rgba(217, 228, 252, 0.5);
+			background-color: rgba(212, 212, 212, 0.3);
+		}
+
+		/* #table-rekap-transaksi{
+			border-spacing: 0px;
+			border-collapse: separate !important;
+		} */
+		/* #table-rekap-transaksi th{
+			border: 0.3px solid #454D55 !important;
+		} */
+		
+		.detil-transaksi-logo img{
+			width: 80px;
 		}
 	</style>
   	<!-- ** develoment ** -->
@@ -46,11 +60,11 @@
 	<!-- **** Alert Info **** -->
 	<?= $this->include('Components/alertInfo'); ?>
 
-	<body class="g-sidenav-show bg-gray-100" style="overflow: hidden;">
+	<body class="g-sidenav-show bg-gray-100">
 		<!-- **** Sidebar **** -->
 		<?= $this->include('Components/adminSidebar'); ?>
 
-		<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg d-flex flex-column">
+		<main class="main-content position-relative mt-1 border-radius-lg">
 			<!-- navbar -->
 			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
 				<div class="container-fluid py-1 px-3">
@@ -80,76 +94,520 @@
 			</nav>
 
 			<!-- End Navbar -->
-			<div class="container-fluid py-4 d-flex flex-column" style="flex: 1;max-height: 90%;overflow: hidden;">
-				<div class="row" style="flex: 1;max-height: 96%;">
-					<div class="col-12 h-100" style="max-height: 100%;">
-						<div class="card mb-4 h-100 d-flex flex-column" style="max-height: 100%;overflow: hidden;font-family: 'qc-semibold';">
-							<!-- toggle switch -->
-							<div class="form-row py-2 d-flex justify-content-center" style="font-family: 'qc-semibold';">
-								<div id="toggle-wraper" class="position-relative p-0 d-flex align-items-center text-xxs" style="border-radius: 4px;width: 320px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
-									<div id="toggle" class="position-absolute d-flex justify-content-center align-items-center bg-success opacity-7 text-white" data-color="success" style="width: 80px;height: 23px;margin: 0 1px;z-index: 10;border-radius: 5px;">
-										setor sampah
-									</div>
+			<div class="container-fluid py-4 d-flex flex-column" style="flex: 1;overflow: hidden;">
 
-									<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative opacity-0" data-color="success" style="flex: 1;z-index: 9;">
-										setor sampah
-									</div>
-									<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative" data-color="warning" style="flex: 1;z-index: 9;">
-										konversi saldo										
-									</div>
-									<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative" data-color="danger" style="flex: 1;z-index: 9;">
-										tarik saldo
-									</div>
-									<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative" data-color="info" style="flex: 1;z-index: 9;">
-										jual sampah										
-									</div>
+				<!-- Insert transaksi  -->
+				<div id="tambah-transaksi" class="row" style="flex: 1;">
+					<div class="col-12 h-100">
+						<div class="card h-100 d-flex flex-column" style="font-family: 'qc-semibold';overflow: hidden;">
+							<!-- toggle switch -->
+							<div class="form-row mt-2 py-2 d-flex justify-content-center" style="font-family: 'qc-semibold';">
+								<div id="toggle-wraper" class="position-relative p-0 d-flex align-items-center text-xxs" style="overflow: hidden;border-radius: 12px;width: 320px;height: 28px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
+									<div id="toggle" class="position-absolute d-flex justify-content-center align-items-center bg-success opacity-7 text-white" data-color="success" style="width: 78px;height: 26px;z-index: 10;left: 1px;border-radius: 10px;">setor sampah</div>
+
+									<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative opacity-0" data-form="setor-jual-sampah" data-color="success" style="flex: 1;z-index: 9;border-radius: 10px;">setor sampah</div>
+									<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative" data-form="konversi-saldo" data-color="warning" style="flex: 1;z-index: 9;border-radius: 10px;">konversi saldo</div>
+									<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative" data-form="tarik-saldo" data-color="danger" style="flex: 1;z-index: 9;border-radius: 10px;">tarik saldo</div>
+									<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative" data-form="setor-jual-sampah" data-color="info" style="flex: 1;z-index: 9;border-radius: 10px;">jual sampah</div>
 								</div>
 							</div>
+
 							<!-- search nasabah -->
-							<div class="form-row p-0 d-flex mt-4 px-4" style="font-family: 'qc-semibold';">
+							<div id="search-nasabah-wraper" class="form-row p-0 d-flex mt-4 px-4 position-relative" style="font-family: 'qc-semibold';">
+								<div id="barrier-search-nasabah" class="position-absolute d-none" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+
+								</div>	
 								<div class="input-group col-3">
 									<div class="input-group-prepend">
-										<span class="input-group-text bg-gray pl-2 pr-2 border-md border-right-0" style="max-height: 39px;">
+										<span class="input-group-text bg-gray pl-2 pr-2 border-md border-right-0" style="max-height: 28px;border-radius: 4px;">
 											<i class="fas fa-search text-muted"></i>
 										</span>
 									</div>
-									<input id="search-admin" type="text" class="form-control form-control-sm h-100 px-2" placeholder="id nasabah" style="max-height: 39px;">
+									<input id="search-nasabah" type="text" class="form-control form-control-sm h-100 px-2" placeholder="id nasabah" style="max-height: 28px;border-radius: 0px 4px 4px 0px;">
 								</div>
 								<div class="input-group p-0 col-1" style="min-width: 50px;max-width: 50px;">
-									<button class="btn btn-dark h-100 mt-4 mt-sm-0 text-xxs p-1" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="openModalAddEditAdm('addadmin')" style="width: 100%;">cari</button>
+									<button id="btn-search-nasabah" class="btn btn-dark h-100 mt-4 mt-sm-0 text-xxs p-1" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="searchNasabah(this,event)" style="width: 100%;max-height: 28px;border-radius: 4px;">
+										<span id="text">check</span>
+										<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 18px;">
+									</button>
 								</div>
-								<div class="input-group p-0 col-12 mt-2 px-1">
-									<table>
+								<div class="input-group p-0 col-12 mt-2 px-1 d-flex">
+									<table class="mr-5">
 										<tr>
-											<td>email</td>
-											<td id="email-check">:</td>
+											<td class="">email</td>
+											<td>: <span id="email-check"></span></td>
 										</tr>
 										<tr>
-											<td>username</td>
-											<td id="username-check">:</td>
+											<td class="">username</td>
+											<td>: <span id="username-check"></span></td>
 										</tr>
 										<tr>
-											<td>nama lengkap&nbsp;&nbsp;</td>
-											<td id="nama-lengkap-check">:</td>
+											<td class="">nama lengkap&nbsp;&nbsp;</td>
+											<td>: <span id="nama-lengkap-check"></span></td>
+										</tr>
+									</table>
+									<table class="ml-5">
+										<tr>
+											<td class="">kelamin</td>
+											<td>: <span id="kelamin-check"></span></td>
 										</tr>
 										<tr>
-											<td>no.telepon</td>
-											<td id="notelp-check">:</td>
+											<td class="">no.telepon&nbsp;&nbsp;</td>
+											<td>: <span id="notelp-check"></span></td>
 										</tr>
 										<tr>
-											<td>alamat</td>
-											<td id="alamat-check">:</td>
+											<td class="">alamat</td>
+											<td>: <span id="alamat-check"></span></td>
 										</tr>
 									</table>
 								</div>
 							</div>
-							<!-- container table -->
-							<div class="px-0 pt-0 pb-2 position-relative" style="flex: 1;overflow: hidden;font-family: 'qc-semibold';">
-								
+							<hr class="horizontal dark mt-4 mb-0">
+
+							<!-- container add transaksi -->
+							<div id="formWraper" class="px-2 pt-4 position-relative" style="font-family: 'qc-semibold';">
+								<div id="barrier-transaksi" class="position-absolute" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+
+								</div>	
+
+								<!-- form setor AND jual sampah -->
+								<form id="form-setor-jual-sampah" class="w-100 position-relative opacity-6" style="z-index: 9;">
+									<div class="modal-body form-row">
+										<!-- **** tgl transaksi **** -->
+										<div class="input-group col-12 col-md-6 mt-2 mb-4 form-group">
+											<div class="w-100 form-row">
+												<div class="input-group col-6">
+													<div class="input-group-prepend">
+														<span class="input-group-text bg-gray px-4 border-md">
+															<i class="fas fa-calendar-alt text-muted"></i>
+														</span>
+													</div>
+													<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date" name="date">
+												</div>
+												<div class="input-group col-6">
+													<div class="input-group-prepend">
+														<span class="input-group-text bg-gray px-4 border-md">
+															<i class="fas fa-clock text-muted"></i>
+														</span>
+													</div>
+													<input type="time" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="time" name="time">
+												</div>
+											</div>
+											<small
+												id="date-error"
+												class="text-danger"></small>
+										</div>
+
+										<!-- **** table **** -->
+										<div class="table-responsive col-12" style="overflow: auto;font-family: 'qc-semibold';">
+											<table id="table-setor-sampah" class="table table-sm text-center mb-0">
+												<thead class="bg-white" style="border: 0.5px solid #E9ECEF;">
+													<tr>
+														<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+															#
+														</th>
+														<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+															kategori
+														</th>
+														<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+															jenis
+														</th>
+														<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+															jumlah(kg)
+														</th>
+														<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+															harga
+														</th>
+													</tr>
+												</thead>
+												<tbody style="border: 0.5px solid #E9ECEF;">
+													<tr id="special-tr" class="text-light">
+														<td colspan="4" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+															Total harga
+														</td>
+														<td class="p-2 text-left">
+															Rp. <span id="total-harga"></span>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										
+										<!-- tambah baris -->
+										<div class="input-group col-12 mt-2">
+											<a href="" class="badge badge-info w-100 border-radius-sm" onclick="tambahBaris(event);">
+												<i class="fas fa-plus text-white"></i>
+											</a>
+										</div>
+									</div>
+
+									<div class="modal-footer form-row">
+										<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event,'setorjualsampah');">
+											<span id="text">Submit</span>
+											<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+										</button>
+									</div>
+								</form>
+
+								<!-- form konversi saldo -->
+								<form id="form-konversi-saldo" class="w-100 position-relative opacity-6 d-none" style="z-index: 9;">
+									<div class="modal-body form-row">
+										<!-- **** tgl transaksi **** -->
+										<h6 class="font-italic opacity-8 col-12 text-sm">Waktu transaksi</h6>
+										<div class="input-group col-12 col-md-6 mb-4 form-group">
+											<div class="w-100 form-row">
+												<div class="input-group col-6">
+													<div class="input-group-prepend">
+														<span class="input-group-text bg-gray px-4 border-md">
+															<i class="fas fa-calendar-alt text-muted"></i>
+														</span>
+													</div>
+													<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date" name="date">
+												</div>
+												<div class="input-group col-6">
+													<div class="input-group-prepend">
+														<span class="input-group-text bg-gray px-4 border-md">
+															<i class="fas fa-clock text-muted"></i>
+														</span>
+													</div>
+													<input type="time" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="time" name="time">
+												</div>
+											</div>
+											<small
+												id="date-error"
+												class="text-danger"></small>
+										</div>
+
+										<!-- **** harga emas **** -->
+										<h6 class="font-italic opacity-8 col-12 text-sm">
+											Harga emas <small>(saat ini)</small>
+										</h6>
+										<div class="input-group col-12 col-md-6 mb-4 form-group">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text bg-gray px-4 border-md">
+														<i class="fas fa-coins text-muted"></i>
+													</span>
+												</div>
+												<input type="text" class="form-control form-control-sm px-2 h-100" id="harga_emas" name="harga_emas" placeholder="contoh: 900000" autocomplete="off">
+											</div>
+											<small
+												id="harga_emas-error"
+												class="text-danger"></small>
+										</div>
+										
+										<!-- **** jumlah **** -->
+										<h6 class="font-italic opacity-8 col-12 text-sm">
+											Jumlah uang
+										</h6>
+										<div class="input-group col-12 col-md-6 mb-4 form-group">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text bg-gray px-4 border-md">
+													<i class="fas fa-money-bill-wave-alt text-muted"></i>
+													</span>
+												</div>
+												<input type="text" class="form-control form-control-sm px-2 h-100" id="jumlah" name="jumlah" placeholder="contoh: 10000" autocomplete="off">
+											</div>
+											<small
+												id="jumlah-error"
+												class="text-danger"></small>
+										</div>
+
+										<!-- **** saldo tujuan **** -->
+										<h6 class="font-italic opacity-8 col-12 text-sm">
+											Saldo tujuan
+										</h6>
+										<div class="input-group col-12 col-md-6 mb-4 form-group form-row">
+											<div class="input-group col-4">
+												<div class="form-check">
+													<input class="form-check-input" type="radio" name="tujuan" id="ubs" value="ubs">
+													<label class="form-check-label" for="ubs">
+														Ubs
+													</label>
+												</div>
+											</div>
+											<div class="input-group col-4">
+												<div class="form-check">
+													<input class="form-check-input" type="radio" name="tujuan" id="antam" value="antam" checked>
+													<label class="form-check-label" for="antam">
+														Antam
+													</label>
+												</div>
+											</div>
+											<div class="input-group col-4">
+												<div class="form-check">
+													<input class="form-check-input" type="radio" name="tujuan" id="galery24" value="galery24">
+													<label class="form-check-label" for="galery24">
+														Galery24
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="modal-footer form-row">
+										<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event,'pindahsaldo');">
+											<span id="text">Submit</span>
+											<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+										</button>
+									</div>
+								</form>
+
+								<!-- form tarik saldo -->
+								<form id="form-tarik-saldo" class="w-100 position-relative opacity-6 d-none" style="z-index: 9;">
+									<div class="modal-body form-row">
+										<!-- **** tgl transaksi **** -->
+										<h6 class="font-italic opacity-8 col-12 text-sm">Waktu transaksi</h6>
+										<div class="input-group col-12 col-md-6 mb-4 form-group">
+											<div class="w-100 form-row">
+												<div class="input-group col-6">
+													<div class="input-group-prepend">
+														<span class="input-group-text bg-gray px-4 border-md">
+															<i class="fas fa-calendar-alt text-muted"></i>
+														</span>
+													</div>
+													<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date" name="date">
+												</div>
+												<div class="input-group col-6">
+													<div class="input-group-prepend">
+														<span class="input-group-text bg-gray px-4 border-md">
+															<i class="fas fa-clock text-muted"></i>
+														</span>
+													</div>
+													<input type="time" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="time" name="time">
+												</div>
+											</div>
+											<small
+												id="date-error"
+												class="text-danger"></small>
+										</div>
+
+										<!-- **** jenis saldo **** -->
+										<h6 class="font-italic opacity-8 col-12 text-sm">
+											Jenis saldo
+										</h6>
+										<div class="input-group col-12 col-md-6 mb-4 form-group form-row">
+											<div class="input-group col-3">
+												<div class="form-check">
+													<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikUang" value="uang" checked>
+													<label class="form-check-label" for="tarikUang">
+														Uang
+													</label>
+												</div>
+											</div>
+											<div class="input-group col-3">
+												<div class="form-check">
+													<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikUbs" value="ubs">
+													<label class="form-check-label" for="tarikUbs">
+														Ubs
+													</label>
+												</div>
+											</div>
+											<div class="input-group col-3">
+												<div class="form-check">
+													<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikAntam" value="antam">
+													<label class="form-check-label" for="tarikAntam">
+														Antam
+													</label>
+												</div>
+											</div>
+											<div class="input-group col-3">
+												<div class="form-check">
+													<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikGalery24" value="galery24">
+													<label class="form-check-label" for="tarikGalery24">
+														Galery24
+													</label>
+												</div>
+											</div>
+										</div>
+										
+										<!-- **** jumlah **** -->
+										<h6 class="font-italic opacity-8 col-12 text-sm">
+											Jumlah saldo
+										</h6>
+										<div class="input-group col-12 col-md-6 mb-4 form-group">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text bg-gray px-4 border-md">
+													<i class="fas fa-money-bill-wave-alt text-muted"></i>
+													</span>
+												</div>
+												<input type="text" class="form-control form-control-sm px-2 h-100" id="jumlah" name="jumlah" placeholder="contoh: 1.1" autocomplete="off">
+											</div>
+											<small
+												id="jumlah-error"
+												class="text-danger"></small>
+										</div>
+									</div>
+
+									<div class="modal-footer form-row">
+										<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doTransaksi(this,event,'tariksaldo');">
+											<span id="text">Submit</span>
+											<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+										</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
 				</div>
+
+				<!-- Semua transaksi -->
+				<div id="semua-transaksi" class="row mt-5">
+					<div class="col-12 mb-md-0 mb-4">
+						<div class="card" style="overflow: hidden;">
+							<div class="card-header pb-0">
+								<!-- tittle -->
+								<div class="row">
+									<div class="col-12">
+										<h5 class="text-center">Semua Transaksi</h5>
+									</div>
+								</div>
+								<div class="form-row pb-0 mt-3 d-flex justify-content-between" style="font-family: 'qc-semibold';">
+									<!-- search -->
+									<div class="input-group col-12 col-sm-6">
+										<div class="input-group-prepend">
+											<span class="input-group-text px-4 border-md border-right-0" style="max-height: 39px;">
+												<i class="fas fa-search text-muted"></i>
+											</span>
+										</div>
+										<input id="search-data-transaksi" type="text" class="form-control h-100 px-2" placeholder="id transaksi/nama lengkap" style="max-height: 39px;">
+									</div>
+									<!-- Btn filter -->
+									<div class="input-group mt-3 col-12 flex-column text-sm">
+										<div class="d-flex align-items-center text-secondary">
+											<a class="shadow px-1 border-radius-none mr-2" href="" data-toggle="modal" data-target="#modalFilterDataTransaksi" style="border-radius: 4px;" onclick="openModalFilterDataT();">
+												<i class="fas fa-sliders-h text-muted"></i>
+											</a>
+											<span id="ket-filter-data-transaksi" class="">
+												00/00/0000 
+												<i class="fas fa-long-arrow-alt-right mt-1 mx-2"></i>
+												00/00/0000
+												&nbsp;&nbsp;(terbaru - semua jenis)
+											</span>
+										</div>
+										<div class="mt-2 text-xs">
+											<span id="ket-total">0</span> transaksi
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-body mt-3 pt-0 px-0 pb-2">
+								<div class="table-responsive position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
+									<!-- spinner -->
+									<div id="data-transaksi-spinner" class="position-absolute d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+										<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+									</div>
+									<!-- message not found -->
+									<div id="data-transaksi-notfound" class="d-none position-absolute d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+										<h6 id="text-notfound" class='opacity-6'></h6>
+									</div>
+									<!-- table -->
+									<table id="table-data-transaksi" class="table table-hover text-left mb-0">
+										<thead class="position-sticky bg-white" style="z-index: 11;top: 0;">
+											<tr>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+													ID Transaksi
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+													Nama User
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+													Jenis transaksi
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+													Jumlah
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+													Tgl
+												</th>
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+													Action
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php for ($i=0; $i < 20 ; $i++) { ?>
+											
+											<?php } ?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Rekap transaksi -->
+				<div id="rekap-transaksi" class="row mt-5">
+					<div class="col-12 mb-md-0 mb-4">
+						<div class="card" style="overflow: hidden;">
+							<div class="card-header pb-0">
+								<!-- tittle -->
+								<div class="row">
+									<div class="col-12">
+										<h5 class="text-center">Rekap Transaksi</h5>
+									</div>
+								</div>
+								<div class="form-row pb-0 mt-3 d-flex justify-content-between" style="font-family: 'qc-semibold';">
+									<!-- Btn filter -->
+									<div class="d-flex align-items-center text-sm">
+										<a class="shadow px-1 border-radius-none mr-2" href="" data-toggle="modal" data-target="#modalFilterRekapTransaksi" style="border-radius: 4px;">
+											<i class="fas fa-sliders-h text-muted"></i>
+										</a>
+										<span id="ket-filter-rekap-transaksi" class="">
+											<?= (int)date("Y"); ?> - semua wilayah
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="card-body mt-3 pt-0 px-0 pb-2">
+								<div class="table-responsive position-relative" style="min-height: 380px;max-height: 380px;overflow: auto;font-family: 'qc-semibold';">
+									<!-- spinner -->
+									<div id="rekap-transaksi-spinner" class="position-absolute d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+										<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
+									</div>
+									<!-- message not found -->
+									<div id="rekap-transaksi-notfound" class="d-none position-absolute d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+
+									</div>
+									<!-- table -->
+									<table id="table-rekap-transaksi" class="table table-hover text-left mb-0">
+										<thead class="position-sticky" style="z-index: 11;top: 0;">
+											<tr style="background-color: rgba(255,255,255,0.2);">
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													#
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													Sampah
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													Uang
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													Emas
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													Waktu
+												</th>
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+													Action
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php for ($i=0; $i < 20 ; $i++) { ?>
+											
+											<?php } ?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<!-- FOOTER -->
 				<footer class="footer pt-3  ">
 					<div class="container-fluid">
@@ -168,4 +626,221 @@
 			</div>
 		</main>
 	</body>
+
+	<!-- modals filter transaksi-->
+	<div class="modal fade" id="modalFilterDataTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<form id="formFilterDataTransaksi" class="modal-dialog" role="document">
+			<div class="modal-content" style="overflow: hidden;">
+
+				<!-- modal header -->
+				<div class="modal-header">
+					<h5 class="modal-title">filter transaksi</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal body -->
+				<div class="modal-body w-100 px-3">
+					<h6 class="font-italic text-xs text-secondary">From</h6>
+					<div class="input-group col-12 px-0">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-start" name="date-start">
+					</div>
+					<h6 class="font-italic text-xs text-secondary mt-4">To</h6>
+					<div class="input-group col-12 px-0">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
+						</div>
+						<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-end" name="date-end">
+					</div>
+					<h6 class="font-italic text-xs text-secondary mt-4">Urutan</h6>
+					<div class="position-relative">
+						<select class='form-control form-control-sm' name="orderby">
+							<option value="terbaru" selected>terbaru</option>
+							<option value="terlama">terlama</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+					<h6 class="font-italic text-xs text-secondary mt-4">Jenis transaksi</h6>				
+					<div class="input-group col-12 form-group form-row px-0 text-xs">
+						<div class="input-group col-4">
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="jenis_transaksi" id="setorSampah" value="penyetoran sampah" style="padding: 4px;">
+								<label class="form-check-label" for="setorSampah">
+									Setor sampah
+								</label>
+							</div>
+						</div>
+						<div class="input-group col-4">
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="jenis_transaksi" id="konversiSaldo" value="konversi saldo" style="padding: 4px;">
+								<label class="form-check-label" for="konversiSaldo">
+									Konversi saldo
+								</label>
+							</div>
+						</div>
+						<div class="input-group col-4">
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="jenis_transaksi" id="tarikSaldo" value="penarikan saldo" style="padding: 4px;">
+								<label class="form-check-label" for="tarikSaldo">
+									Tarik saldo
+								</label>
+							</div>
+						</div>
+						<div class="input-group col-4 mt-2">
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="jenis_transaksi" id="jualSampah" value="penjualan sampah" style="padding: 4px;">
+								<label class="form-check-label" for="jualSampah">
+									Jual sampah
+								</label>
+							</div>
+						</div>
+						<div class="input-group col-4 mt-2">
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="jenis_transaksi" id="semuaJenis" value="semua jenis" style="padding: 4px;" checked>
+								<label class="form-check-label" for="semuaJenis">
+									Semua jenis
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- modal footer -->
+				<div class="modal-footer">
+					<span id="btn-filter-data-transaksi" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" data-dismiss="modal" onclick="filterDataTransaksi(this,event);">
+						<span>Ok</span>
+					</span>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- **** Modal print transaksi **** -->
+	<div class="modal fade" id="modalPrintTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Cetak bukti transaksi</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div id="modalPrintTransaksiTarget" class="modal-body w-100 position-relative" style="overflow: hidden;">
+					<!-- spinner -->
+					<div id="detil-transaksi-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+						<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 40px;" />
+					</div>
+					<!-- header -->
+					<div class="detil-transaksi-logo d-flex align-items-center justify-content-between py-2 px-4">
+						<img src="<?= base_url('assets/images/banksampah-logo.png');?>" />
+						<h4>bukti transaksi</h4>
+					</div>
+					<hr class="horizontal dark mt-2">
+					<div class="px-4 detil-transaksi-header text-xs">
+						<table>
+							<tr>
+								<td>TANGGAL&nbsp;&nbsp;&nbsp;</td>
+								<td>: <span id="detil-transaksi-date"></span></td>
+							</tr>
+							<tr>
+								<td>NAMA&nbsp;&nbsp;&nbsp;</td>
+								<td>: <span id="detil-transaksi-nama" class="text-uppercase"></span></td>
+							</tr>
+							<tr>
+								<td id="id-user">ID.NASABAH</td>
+								<td>: <span id="detil-transaksi-idnasabah"></span></td>
+							</tr>
+							<tr>
+								<td>ID.TRANSAKSI&nbsp;&nbsp;&nbsp;</td>
+								<td>: <span id="detil-transaksi-idtransaksi"></span></td>
+							</tr>
+						</table>
+					</div>
+					<hr class="horizontal dark mt-2">
+					<h6 id="detil-transaksi-type" class="font-italic px-4 text-xs"></h6>
+					<div id="detil-transaksi-body" class="px-4 mt-2 table-responsive">
+						
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a id="btn-cetak-transaksi" href="" target="_blank" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
+						<span id="text">Cetak</span>
+						<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- modals filter rekap transaksi-->
+	<div class="modal fade" id="modalFilterRekapTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<form id="formFilterRekapTransaksi" class="modal-dialog" role="document">
+			<div class="modal-content" style="overflow: hidden;">
+
+				<!-- modal header -->
+				<div class="modal-header">
+					<h6 class="modal-title">filter rekap transaksi</h6>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal body -->
+				<div class="modal-body w-100 px-3">
+					<h6 class="font-italic text-xs text-secondary">Tahun</h6>
+					<div class="input-group col-12 px-0">
+						<select id="year" name="year" class="filter-transaksi custom-select custom-select-sm w-100 mt-3" style="max-height: 31px;">
+							<?php $curYear = (int)date("Y"); ?>
+							<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
+								<option value="<?= $i; ?>"><?= $i; ?></option>
+							<?php } ?>
+						</select>
+					</div>
+					<h6 class="font-italic text-xs text-secondary mt-4">Wilayah</h6>
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="provinsi">
+							<option value="">-- pilih provinsi --</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="kota" disabled>
+							<option value="">-- pilih kota --</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="kecamatan" disabled>
+							<option value="">-- pilih kecamatan --</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="kelurahan" disabled>
+							<option value="">-- pilih kelurahan --</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+				</div>
+
+				<!-- modal footer -->
+				<div class="modal-footer">
+					<span class="badge badge-secondary d-flex justify-content-center align-items-center border-0 cursor-pointer" onclick="resetFilterRekapT();">
+						<span>Reset</span>
+					</span>
+					<span id="btn-filter-data-transaksi" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" data-dismiss="modal" onclick="filterRekapTransaksi(this,event);">
+						<span>Ok</span>
+					</span>
+				</div>
+			</div>
+		</form>
+	</div>
 <?= $this->endSection(); ?>

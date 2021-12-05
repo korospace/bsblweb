@@ -31,27 +31,52 @@ axios.get(`${APIURL}/artikel/getartikel?kategori=${KATEGORI}`)
             let year      = date.toLocaleString("en-US",{year: "numeric"});
 
             elBerita += `<div class="col-12 col-sm-6 col-md-4 mb-5">
-            <a href="${BASEURL}/artikel/${b.id}" class="card text-white card-has-bg click-col position-relative" style="min-height: 220px;border-radius: 10px;">
-            
-                <img src="${b.thumbnail}" class="position-absolute" style="height:100%;width:100%;">
+                <a href="${BASEURL}/artikel/${b.id}" class="card text-white card-has-bg click-col position-relative" style="min-height: 220px;border-radius: 10px;">
+                
+                    <img src="${b.thumbnail}" class="position-absolute" style="height:100%;width:100%;">
 
-                <div class="card-img-overlay d-flex flex-column">
-                    <div class="card-body">
-                        <h6 class="card-meta mb-2">${b.kategori}</h6>
-                        <h6 class="card-title mt-0" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
-                            ${b.title}
-                        </h6>
-                    </div>
-                    <div class="card-footer">
-                        <div class="media">
-                            <div class="media-body">
-                            <small><i class="far fa-clock"></i> ${month} ${day}, ${year}</small>
+                    <div class="card-img-overlay d-flex flex-column">
+                        <div class="card-body">
+                            <h6 class="card-meta mb-2">${b.kategori}</h6>
+                            <h6 class="card-title mt-0" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+                                ${b.title}
+                            </h6>
+                        </div>
+                        <div class="card-footer">
+                            <div class="media">
+                                <div class="media-body">
+                                <small><i class="far fa-clock"></i> ${month} ${day}, ${year}</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a>
-        </div>`;
+                </a>
+            </div>`;
+
+            // elBerita += `<div class="col-12 col-sm-6 position-relative d-flex align-items-center">
+
+            //     <img src="${BASEURL}/assets/images/default-thumbnail.webp" alt="" style="min-width:100%;max-width:100%; opacity:0;">
+            //     <a href="${BASEURL}/artikel/${b.id}" class="card text-white card-has-bg click-col position-absolute" style="min-width:93%;max-width:93%;height:90%;min-height:max-content;max-height:max-content;border-radius: 10px;">
+                
+            //         <img src="${b.thumbnail}" class="position-absolute" style="height:100%;width:100%;">
+
+            //         <div class="card-img-overlay d-flex flex-column">
+            //             <div class="card-body">
+            //                 <h6 class="card-meta mb-2">${b.kategori}</h6>
+            //                 <h6 class="card-title mt-0" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+            //                     ${b.title}
+            //                 </h6>
+            //             </div>
+            //             <div class="card-footer">
+            //                 <div class="media">
+            //                     <div class="media-body">
+            //                     <small><i class="far fa-clock"></i> ${month} ${day}, ${year}</small>
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </a>
+            // </div>`;
         });
         
         $('#container-article').html(elBerita);

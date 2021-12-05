@@ -3,13 +3,10 @@
  */
 let arrayAdmin = [];
 const getAllAdmin = async () => {
-
     $('#search-admin').val('');
     $('#list-admin-notfound').addClass('d-none'); 
-    $('#table-admin').addClass('d-none'); 
     $('#list-admin-spinner').removeClass('d-none'); 
     let httpResponse = await httpRequestGet(`${APIURL}/admin/getadmin`);
-    $('#table-admin').removeClass('d-none'); 
     $('#list-admin-spinner').addClass('d-none'); 
     
     if (httpResponse.status === 404) {

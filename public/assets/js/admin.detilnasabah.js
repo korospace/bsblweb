@@ -16,16 +16,118 @@
     }
 };
 
+// open modal detail sampah masuk
+const openModalSampahMasuk = async (kategori) => {
+    $('#modalDetailSampah .modal-title').html(`kategori ${kategori}`);
+    
+    $('#detil-sampah-spinner').removeClass('d-none');
+    $('#detil-sampah-notfound').addClass('d-none')
+    $('#modalDetailSampah #table-jenis-wraper').html(``);
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/sampahmasuk?kategori=${kategori}&idnasabah=${IDNASABAH}`);
+    $('#detil-sampah-spinner').addClass('d-none');
+
+    if (httpResponse.status === 404) {
+        $('#detil-sampah-notfound').removeClass('d-none')
+    }
+    else if (httpResponse.status === 200) {
+        let trBody     = '';
+        let dataSampah = httpResponse.data.data;
+        
+        dataSampah.forEach((b,i) => {
+            trBody  += `<tr class="text-center">
+                <th scope="row">${++i}</th>
+                <td>${b.jenis}</td>
+                <td>${b.jumlah_kg} kg</td>
+            </tr>`;
+        })
+
+        $('#modalDetailSampah #table-jenis-wraper').html(`<table class="table table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">#</th>
+                    <th scope="col">Jenis sampah</th>
+                    <th scope="col">Jumlah</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${trBody}
+            </tbody>
+        </table>`);
+    }
+
+};
+
 /**
  * FILTER TRANSACTION Section
  * =========================================================
  */
 
-// modal filter transaksi is open
+// modal filter transaksi when open
 let openModalFilterT = (modalTitle) =>  {
     $('#formFilterTransaksi .modal-title').html(modalTitle);
+
+    let modifTitle = modalTitle.toLowerCase().replace(' ','-');
+    let dateStart  = $(`#btn-${modifTitle} #startdate`).html().split('/');
+    let dateEnd    = $(`#btn-${modifTitle} #enddate`).html().split('/');
+
+    $('#formFilterTransaksi input[name=date-start]').val(`${dateStart[2]}-${dateStart[1]}-${dateStart[0]}`);
+    $('#formFilterTransaksi input[name=date-end]').val(`${dateEnd[2]}-${dateEnd[1]}-${dateEnd[0]}`);
 }
 
+// input date on change
+$('#formFilterTransaksi input[type=date]').on('change',function (e) {
+    let dateStart = $('#formFilterTransaksi input[name=date-start]').val();
+    let dateEnd   = $('#formFilterTransaksi input[name=date-end]').val();
+
+    if (dateStart && dateEnd) {
+        $('#btn-filter-transaksi').attr('data-dismiss','modal');
+        $('#btn-filter-transaksi').attr('onclick','filterTransaksi(this,event);');
+
+        $('#formFilterTransaksi input[type=date]').removeClass('is-invalid');
+    }
+    else {
+        $('#btn-filter-transaksi').removeAttr('data-dismiss');
+        $('#btn-filter-transaksi').removeAttr('onclick');
+
+        if (dateStart == '') {
+            $('#formFilterTransaksi input[name=date-start]').addClass('is-invalid');
+        }
+        if (dateEnd == '') {
+            $('#formFilterTransaksi input[name=date-end]').addClass('is-invalid');
+        }
+    }
+})
+
+// set current start and end DATE
+let dateStartGrafik  = '';
+let dateEndGrafik    = '';
+let dateStartHistori = '';
+let dateEndHistori   = '';
+let setCurrentStartDate = () =>  {
+    let currentUnixTime = new Date(new Date().getTime());
+    let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "2-digit"});
+    let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "2-digit"});
+    let currentYear  = currentUnixTime.toLocaleString("en-US",{year: "numeric"});
+
+    let previousUnixTime = new Date(currentUnixTime.getTime()-(86400*30*1000));
+    let previousDay   = previousUnixTime.toLocaleString("en-US",{day: "2-digit"});
+    let previousMonth = previousUnixTime.toLocaleString("en-US",{month: "2-digit"});
+    let previousYear  = previousUnixTime.toLocaleString("en-US",{year: "numeric"});
+
+    dateStartGrafik  = `${previousDay}-${previousMonth}-${previousYear}`;
+    dateEndGrafik    = `${currentDay}-${currentMonth}-${currentYear}`;
+    dateStartHistori = `${previousDay}-${previousMonth}-${previousYear}`;
+    dateEndHistori   = `${currentDay}-${currentMonth}-${currentYear}`;
+
+    $('#btn-filter-grafik #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
+    $('#btn-filter-grafik #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
+    $('#btn-filter-histori #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
+    $('#btn-filter-histori #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
+}
+
+setCurrentStartDate();
+
+// do filter transaksi
 const filterTransaksi = async (e) => {
     let formFilter = new FormData(e.parentElement.parentElement.parentElement);
     let startDate  = formFilter.get('date-start').split('-');
@@ -46,38 +148,6 @@ const filterTransaksi = async (e) => {
         updateGrafikSetorNasabah();
     }
 };
-
-// set current start and end DATE
-let dateStartGrafik  = '';
-let dateEndGrafik    = '';
-let dateStartHistori = '';
-let dateEndHistori   = '';
-let setCurrentStartDate = () =>  {
-    let currentUnixTime = new Date(new Date().getTime());
-    let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "numeric"});
-    let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "numeric"});
-    let currentYear  = currentUnixTime.toLocaleString("en-US",{year: "numeric"});
-
-    let previousUnixTime = new Date(currentUnixTime.getTime()-(86400*30*1000));
-    let previousDay   = previousUnixTime.toLocaleString("en-US",{day: "numeric"});
-    let previousMonth = previousUnixTime.toLocaleString("en-US",{month: "numeric"});
-    let previousYear  = previousUnixTime.toLocaleString("en-US",{year: "numeric"});
-
-    dateStartGrafik  = `${previousDay}-${previousMonth}-${previousYear}`;
-    dateEndGrafik    = `${currentDay}-${currentMonth}-${currentYear}`;
-    dateStartHistori = `${previousDay}-${previousMonth}-${previousYear}`;
-    dateEndHistori   = `${currentDay}-${currentMonth}-${currentYear}`;
-
-    $('#btn-filter-grafik #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
-    $('#btn-filter-grafik #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
-    $('#btn-filter-histori #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
-    $('#btn-filter-histori #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
-    
-    $('#formFilterTransaksi #date-start').val(`${previousYear}-${previousMonth}-${previousDay}`);
-    $('#formFilterTransaksi #date-end').val(`${currentYear}-${currentMonth}-${currentDay}`);
-}
-
-setCurrentStartDate();
 
 /**
  * UPDATE GRAFIK SETOR
@@ -256,7 +326,7 @@ const getHistoriTransaksi = async () => {
                         <span class="${textClass} mt-2">${totalTransaksi}</span>
                     </div>
                     <div class="d-flex align-items-center text-sm">
-                        <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 text-sm bg-info border-radius-sm"  data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
+                        <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 text-sm bg-info border-radius-sm" data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
                             <i class="fas fa-file-pdf text-xs text-white"></i>
                         </a>
                         <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 ml-1 text-sm bg-danger border-radius-sm" onclick="deleteTransaksiNasabah('${t.id_transaksi}',event);">
@@ -297,7 +367,7 @@ const getDetailTransaksiNasabah = async (id) => {
         $('#detil-transaksi-idnasabah').html(httpResponse.data.data.id_user);
         $('#detil-transaksi-idtransaksi').html(httpResponse.data.data.id_transaksi);
         $('#detil-transaksi-type').html(httpResponse.data.data.jenis_transaksi);
-        $('#btn-cetak-transaksi').attr('href',`${BASEURL}/nasabah/cetaktransaksi/${httpResponse.data.data.id_transaksi}`);
+        $('#btn-cetak-transaksi').attr('href',`${BASEURL}/transaksi/cetaktransaksi/${httpResponse.data.data.id_transaksi}`);
 
         // tarik saldo
         if (httpResponse.data.data.jenis_transaksi == 'penarikan saldo') {
@@ -451,19 +521,47 @@ const getDataProfileNasabah = async () => {
 };
 
 /**
+ * Get default date AND time
+ */
+ function getCurrentDate() {
+    let currentUnixTime = new Date(new Date().getTime());
+    let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "2-digit"});
+    let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "2-digit"});
+    let currentYear  = currentUnixTime.toLocaleString("en-US",{year: "numeric"});
+    
+    return `${currentYear}-${currentMonth}-${currentDay}`;
+}
+
+function getCurrentTime() {
+    let currentUnixTime = new Date(new Date().getTime());
+    
+    return currentUnixTime.toLocaleString("en-US",{hour12: false,hour: '2-digit', minute: '2-digit'});
+}
+
+/**
+ * Edit modal when open
+ */
+const openModalTransaksi = (isSetorSampah = false) => {
+    $('.form-check-input').removeClass('is-invalid');
+    $('.form-check-input').prop('checked',false);
+    $('.form-control').removeClass('is-invalid');
+    $('.text-danger').html('');
+    $(`.form-control`).val('');
+    
+    if (isSetorSampah) {
+        $('.barisSetorSampah').remove();
+        tambahBaris();
+        countTotalHarga();
+    }
+
+    $(`input[type=date]`).val(getCurrentDate());
+    $(`input[type=time]`).val(getCurrentTime());
+}
+
+/**
  * TRANSAKSI SETOR SAMPAH
  * =============================================
  */
-
-// Edit modal when open
-const openModalSetorSaldo = () => {
-    $('#formSetorSampah .form-control').removeClass('is-invalid');
-    $('#formSetorSampah .text-danger').html('');
-    $(`#formSetorSampah .form-control`).val('');
-    $('.barisSetorSampah').remove();
-    tambahBaris();
-    countTotalHarga();
-}
 
 // GET ALL JENIS SAMPAH
 let arrayJenisSampah = [];
@@ -662,15 +760,6 @@ const validateSetorSampah = () => {
  * =============================================
  */
 
-// Edit modal when open
-const openModalPindahSaldo = () => {
-    $('#formPindahSaldo .form-check-input').removeClass('is-invalid');
-    $('#formPindahSaldo .form-control').removeClass('is-invalid');
-    $('#formPindahSaldo .form-check-input').prop('checked',false);
-    $('#formPindahSaldo .text-danger').html('');
-    $(`#formPindahSaldo .form-control`).val('');
-}
-
 // Validate Pindah Saldo
 const validatePindahSaldo = () => {
     let status = true;
@@ -732,15 +821,6 @@ const validatePindahSaldo = () => {
  * TRANSAKSI TARIK SALDO
  * =============================================
  */
-
-// Edit modal when open
-const openModalTarikSaldo = () => {
-    $('#formTarikSaldo .form-check-input').removeClass('is-invalid');
-    $('#formTarikSaldo .form-control').removeClass('is-invalid');
-    $('#formTarikSaldo .form-check-input').prop('checked',false);
-    $('#formTarikSaldo .text-danger').html('');
-    $(`#formTarikSaldo .form-control`).val('');
-}
 
 // Validate Tarik Saldo
 const validateTarikSaldo = () => {
@@ -856,28 +936,23 @@ const doTransaksi = async (el,event,method) => {
             if (httpResponse.status === 201) {
                 $(`.form-control`).val('');
                 $('.form-check-input').prop('checked',false);
+                chartGrafik.destroy();
+                updateGrafikSetorNasabah();
+                getHistoriTransaksi();
                 getSaldoNasabah();
-                // chartGrafik.destroy();
-                // $(`#filter-month`).val(tglTransaksi[1]);
-                // $(`#filter-year`).val(tglTransaksi[0]);
-                // getAllTransaksiNasabah(`${tglTransaksi[1]}-${tglTransaksi[0]}`);
-                // getDataProfileNasabah();
     
                 if (method == 'setorsampah') {
                     $('.barisSetorSampah').remove();
                     tambahBaris();
                     countTotalHarga();
-                    // getTotalSampahNasabah();
+                    getSampahMasuk();
                 } 
     
                 showAlert({
                     message: `<strong>Success...</strong> ${transaksiName} berhasil!`,
-                    btnclose: false,
+                    autohide: true,
                     type:'success'
                 })
-                setTimeout(() => {
-                    hideAlert();
-                }, 3000);
             }
             else if (httpResponse.status === 400) {
                 if (httpResponse.message.jumlah) {
@@ -898,8 +973,9 @@ const doTransaksi = async (el,event,method) => {
 
 /**
  * HAPUS TRANSAKSI
+ * =============================================
  */
- const deleteTransaksiNasabah = (id,event) => {
+const deleteTransaksiNasabah = (id,event) => {
     event.preventDefault();
 
     Swal.fire({
@@ -931,12 +1007,13 @@ const doTransaksi = async (el,event,method) => {
                         }
                     })
                     .then((response) => {
-                        return httpRequestDelete(`${APIURL}/transaksi/deleteitem?id=${id}`)
+                        return httpRequestDelete(`${APIURL}/transaksi/deletedata?id=${id}`)
                         .then((e) => {
                             if (e.status == 201) {
                                 chartGrafik.destroy();
-                                getAllTransaksiNasabah(`${currentMonth}-${currentYear}`);
-                                getTotalSampahNasabah();
+                                updateGrafikSetorNasabah();
+                                getHistoriTransaksi();
+                                getSaldoNasabah();
                             }
                         })
                     })

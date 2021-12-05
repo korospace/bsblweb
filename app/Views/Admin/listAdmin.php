@@ -104,7 +104,7 @@
 								</div>
 							</div>
 							<!-- container table -->
-							<div class="card-body px-0 pt-0 pb-2 position-relative" style="flex: 1;overflow: auto;font-family: 'qc-semibold';">
+							<div class="card-body table-responsive px-0 pt-0 pb-2 position-relative" style="flex: 1;overflow: auto;font-family: 'qc-semibold';">
 								<!-- spinner -->
 								<div id="list-admin-spinner" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 									<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
@@ -115,7 +115,7 @@
 								</div>
 								<!-- table -->
 								<table id="table-admin" class="table table-striped text-center mb-0">
-									<thead class="position-sticky bg-white" style="top: 0;">
+									<thead class="position-sticky bg-white" style="z-index: 11;top: 0;">
 										<tr>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												#

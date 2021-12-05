@@ -261,7 +261,7 @@
 		let totalSampah   = res.data.data;
 
 		totalSampah.forEach(ts => {
-            $(`#sampah-${ts.kategori}`).html(kFormatter(ts.total));
+            $(`#sampah-${ts.kategori}`).html(ts.total);
         });   
 
 		// modif number

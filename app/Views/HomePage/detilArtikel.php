@@ -151,7 +151,7 @@
                 <div class="col-lg-4 col-12 sidebar-content pt-4">
                     <div class="main-sidebar mt-1">
                         <div class="single-widget recent-post pb-5">
-                            <h3 class="title">Artikel Rekomendasi</h3>
+                            <h3 class="title">Artikel Lainnya</h3>
                             <!-- Single Post -->
                             <div id="blog-recommended" class="row">
                                 <?php for ($i=0; $i < 4; $i++) { ?>

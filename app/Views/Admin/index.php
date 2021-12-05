@@ -35,7 +35,6 @@
 	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>

@@ -118,9 +118,14 @@ const getRekapTransaksi = async (year) => {
                                             ${allTransaksi[key].totSampahMasuk} kg
                                         </i>
                                     </td>
-                                    <td colspan="2">
+                                    <td>
                                         <i class="fas fa-dollar-sign text-xs text-success mr-3">
                                         Rp ${kFormatter(allTransaksi[key].totUangMasuk)}
+                                        </i>
+                                    </td>
+                                    <td>
+                                        <i class="fas fa-coins text-xs text-success mr-3">
+                                            ${allTransaksi[key].totEmasMasuk} g
                                         </i>
                                     </td>
                                 </tr>

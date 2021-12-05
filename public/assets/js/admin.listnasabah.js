@@ -354,6 +354,64 @@ const changeKodeposVal = (el,postalcode,urban,subdistrict,city,province) => {
 };
 
 /**
+ * KODEPOS
+ * =============================================
+ */
+
+// search kodepos
+const searchKodepos = async (el) => {
+ 
+    $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+       <img src="${BASEURL}/assets/images/spinner.svg" style="width: 20px;" />
+    </div>`); 
+
+    axios
+    .get(`https://kodepos.vercel.app/search/?q=${el.value}`,{
+        headers: {
+        }
+    })
+    .then((response) => {
+
+        // console.log(response.data.status);
+        if (response.data.code === 200) {
+            if (response.data.messages === 'No data can be returned.') {
+                $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+                    <h6 tyle="opacity: 0.6;">kodepos tidak ditemukan</h6>
+                </div>`);    
+            } 
+            else {
+                let elPostList = '';
+
+                response.data.data.forEach(x => {
+                    let makeStringRegion = `${x.urban},${x.subdistrict},${x.city},${x.province}`;
+
+                    elPostList += `
+                    <div class="w-100">
+                        <div class="kodepos-list w-100 d-flex align-items-center px-3 py-3" style="cursor: pointer;font-size:16px;" onclick="changeKodeposVal(this,'${x.postalcode}','${makeStringRegion}');">
+                            <span class="w-100" style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+                                ${x.postalcode} - ${x.urban}, ${x.subdistrict}, ${x.city}, ${x.province}
+                            </span>
+                        </div>
+                    </div>`;
+                });
+        
+                $('#kodepos-wraper').html(elPostList);
+                if (el.value == '') {
+                    $('#kodepos-wraper').html(``); 
+                }
+            } 
+        }
+    })
+ };
+
+ const changeKodeposVal = (el,kodepos,stringRegion) => {
+     $('.kodepos-list').removeClass('active');
+     $('input[name=kodepos]').val(kodepos);
+     $('input[name=region]').val(stringRegion);
+     el.classList.add('active');
+ };
+
+/**
  * CRUD NASABAH
  */
 const crudNasabah = async (el,event) => {

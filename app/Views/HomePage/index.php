@@ -10,9 +10,9 @@
   }
 </style>
 <!-- ** develoment ** -->
-<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 <!-- ** production ** -->
-<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>">
+<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>"> -->
 <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/homepage.min.css'); ?>">
@@ -70,7 +70,7 @@
   <!-- ***** Header Area End ***** -->
 
   <!-- ***** Welcome Area Start ***** -->
-  <div class="welcome-area" id="welcome" style="background-image: url(<?= base_url('assets/images/banner-bg.webp'); ?>);">
+  <div class="welcome-area" id="welcome" style="background-image: url(<?= base_url('assets/images/banner-bg1.png'); ?>);">
     <div class="header-text">
       <div class="container">
         <div class="row">
@@ -80,7 +80,7 @@
               membantu pemerintah mengurangi produksi pembuangan sampah dengan cara sosialisai sekaligus edukasi proses
               pemilihan sampah skala rumah tangga.</p>
             <a href="signup" class="main-button-slider">BERGABUNG</a>
-            <a href="login" class="main-button-slider">LOGIN</a>
+            <a href="login" class="main-button-slider ml-1">LOGIN</a>
           </div>
         </div>
       </div>
@@ -135,21 +135,23 @@
     <div class="container">
       <h1 class="text-center mb-5">Kegiatan Bank Sampah Budi Luhur</h1>
       <div class="row">
+
         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
-          <div class="features-item">
-            <div class="features-icon">
+          <div class="features-item h-100">
+            <div class="features-icon h-100">
               <!-- <h2>01</h2> -->
               <img src="<?= base_url('assets/images/features-icon-1.png'); ?>" alt="">
               <h4>WEBINAR</h4>
-              <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
+              <p>Curabitur pulvinar vel odio sed sagittis</p>
               <a href="<?= base_url('/homepage/webinar'); ?>" class="main-button">
                 Read More
               </a>
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter bottom move 30px over 0.6s after 0.4s">
-          <div class="features-item">
+          <div class="features-item" style="height: 100%;">
             <div class="features-icon">
               <!-- <h2>02</h2> -->
               <img src="<?= base_url('assets/images/features-icon-2.png'); ?>" alt="">
@@ -161,9 +163,9 @@
             </div>
           </div>
         </div>
-        
+
         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
-          <div class="features-item">
+          <div class="features-item" style="height: 100%;">
             <div class="features-icon">
               <img src="<?= base_url('assets/images/features-icon-3.png'); ?>" alt="">
               <h4>Sosialisasi & Edukasi</h4>
@@ -269,7 +271,6 @@
   <footer id="contact-us">
     <div class="container">
       <div class="footer-content">
-        <h1 class="text-center">Hubungi Kami</h1>
         <div class="row">
           <div class="col-lg-6 col-md-12 col-sm-12">
             <div class="contact-form">
@@ -298,12 +299,17 @@
           </div>
           <!-- ***** Contact Form End ***** -->
           <div class="right-content col-lg-6 col-md-12 col-sm-12">
-            <h2>More About <em>Lorem ipmsum</em></h2>
+            <h2>Hubungi <em>Kami</em></h2>
             <p>Phasellus dapibus urna vel lacus accumsan, iaculis eleifend leo auctor. Duis at finibus odio.
               Vivamus ut pharetra arcu, in porta metus. Suspendisse blandit pulvinar ligula ut elementum.
               <br><br>If you need this contact form to send email to your inbox, you may follow our <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact</a> page
               for more detail.
             </p>
+            <ul class="social" style="text-align: left;">
+              <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+              <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+              <li><a href="https://www.instagram.com/banksampah.ubl/"><i class="fab fa-instagram"></i></a></li>
+            </ul>
           </div>
         </div>
       </div>

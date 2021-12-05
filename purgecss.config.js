@@ -32,7 +32,7 @@ module.exports = {
     // ** admin list admin
     // content: ['app/Views/Admin/listAdmin.php','public/assets/js/admin.listadmin.js'],
     // ** admin list nasabah
-    // content: ['app/Views/Admin/listNasabah.php','public/assets/js/admin.listnasabah.js'],
+    content: ['app/Views/Admin/listNasabah.php','public/assets/js/admin.listnasabah.js'],       
     // ** admin list artikel
     // content: ['app/Views/Admin/listArtikel.php','public/assets/js/admin.artikel.js'],
     // ** admin crud artikel

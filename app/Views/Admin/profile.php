@@ -3,10 +3,6 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
-		td.max60-sm{
-			max-width: 54px !important;
-		}
-
 		@media (max-width: 640px) {
 			h4.text-responsive{
 				font-size: 18px;
@@ -19,9 +15,6 @@
 			}
 			tr.text-responsive{
 				font-size: 12px;
-			}
-			td.max60-sm{
-				max-width: 28px !important;
 			}
 		} 
 	</style>
@@ -40,7 +33,6 @@
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.profile.js'); ?>"></script> -->
 	<script src="<?= base_url('assets/js/admin.profile.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
@@ -125,7 +117,7 @@
 								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 							</div>
 							<div class="table-responsive card-body mt-4 p-3">
-								<table class="" style="font-family: 'qc-medium';min-width: 490px;">
+								<table class="" style="font-family: 'qc-medium';">
 									<tr class='text-responsive'>
 										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
 											<strong>Nama lengkap</strong>

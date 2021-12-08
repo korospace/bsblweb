@@ -52,12 +52,20 @@ class UserModel extends Model
     public function getNasabah(array $get): array
     {
         try {
-            $query  = "SELECT users.id,users.email,users.username,users.nama_lengkap,users.notelp,users.alamat,users.tgl_lahir,users.kelamin,users.last_active,users.is_verify,users.created_at FROM users";
-
-            $query  .= " JOIN wilayah ON (users.id = wilayah.id_user) WHERE users.privilege = 'nasabah'";
+            $query  = "SELECT users.id,users.nama_lengkap,users.is_active,users.last_active,users.is_verify,users.created_at 
+            FROM users
+            JOIN wilayah ON (users.id = wilayah.id_user) 
+            WHERE users.privilege = 'nasabah'";
 
             if (isset($get['id'])) {
+                $query  = "SELECT users.id,users.email,users.username,users.nama_lengkap,users.notelp,users.alamat,users.tgl_lahir,users.kelamin,users.is_active,users.last_active,users.is_verify,users.created_at 
+                FROM users
+                WHERE users.privilege = 'nasabah'";
                 $query .= " AND users.id = '".$get['id']."'";
+            }
+            else {
+                // auto non active nasabah
+                $this->nonActiveNasabah();
             }
 
             if (isset($get['kelurahan'])) {
@@ -115,7 +123,7 @@ class UserModel extends Model
                 $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,is_active")->where("id",$idadmin)->where("id !=",$currentIdAdmin)->get()->getFirstRow();
             } 
             else {
-                // non active admin
+                // auto non active admin
                 $this->nonActiveAdmin();
 
                 $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,privilege,is_active,last_active,created_at")->where("id !=",$currentIdAdmin)->whereIn('privilege',['admin','superadmin'])->orderBy('created_at','DESC')->get()->getResultArray();
@@ -145,13 +153,25 @@ class UserModel extends Model
         }
     }
 
+    public function nonActiveNasabah(): void
+    {
+        try {
+            $timeNow   = time();
+            // $batasTime = (int)$timeNow - (86400*(12*30));
+            $batasTime = (int)$timeNow - (86400*1);
+
+            $this->db->query("UPDATE users SET is_active = false WHERE last_active <  $batasTime AND privilege = 'nasabah'");
+        } 
+        catch (Exception $e) {
+            
+        }
+    }
+
     public function nonActiveAdmin(): void
     {
         try {
             $timeNow   = time();
             $batasTime = (int)$timeNow - (86400*30);
-            // var_dump($batasTime );
-            // var_dump(date("H:i:s jS F, Y", 1636423564));die;
 
             $this->db->query("UPDATE users SET is_active = false WHERE last_active <  $batasTime AND privilege = 'admin'");
         } 

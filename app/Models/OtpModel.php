@@ -9,14 +9,17 @@ class OtpModel extends Model
 {
     protected $table         = 'users';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['otp','is_verify'];
+    protected $allowedFields = ['otp','is_verify','is_active','last_active','created_at'];
 
     public function verifyOtp(string $codeOtp): array
     {
         try {
             $data = [
-                'otp'       => null,
-                'is_verify' => true,
+                'otp'         => null,
+                'is_verify'   => true,
+                'is_active'   => true,
+                'last_active' => (int)time(),
+                'created_at'  => (int)time(),
             ];
     
             $this->db->table($this->table)->where('otp', $codeOtp)->update($data);

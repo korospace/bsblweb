@@ -10,7 +10,7 @@ const getAllKatSampah = async () => {
     </div>`); 
 
     let elSelectKat  = `<option value='' selected>-- pilih kategori --</option>`;
-    let elKatFilter  = `<option value='' selected>-- pilih kategori --</option>`;
+    let elKatFilter  = `<option value='' selected>-- semua kategori --</option>`;
     let httpResponse = await httpRequestGet(`${APIURL}/sampah/getkategori`);
 
     if (httpResponse.status === 404) {
@@ -34,9 +34,9 @@ const getAllKatSampah = async () => {
                     <div class="d-flex align-items-center text-md" style="flex: 1;">
                         ${k.name}
                     </div>
-                    <span id="${k.id}" class="badge badge-danger border-radius-sm cursor-pointer" onclick="hapusKatSampahVal('${k.id}','${k.name}')">
+                    <a href='' id="${k.id}" class="badge badge-danger border-radius-sm cursor-pointer" onclick="hapusKatSampahVal('${k.id}','${k.name}',event)">
                         <i class="fas fa-trash text-white"></i>
-                    </span>
+                    </a>
                 </div>
                 <hr class="horizontal dark mt-0">
             </div>`;
@@ -121,7 +121,9 @@ function validateAddKategori() {
 }
 
 // delete kategori sampah
-const hapusKatSampahVal = (id,katName) => {
+const hapusKatSampahVal = (id,katName,event) => {
+    event.preventDefault();
+
     Swal.fire({
         title: 'ANDA YAKIN?',
         text: `semua sampah dengan kategori '${katName}' akan ikut terhapus`,
@@ -259,8 +261,8 @@ const getAllJenisSampah = async () => {
                     <span class="font-weight-bold"> ${n.jumlah} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah('${n.id}')">hapus</span>
-                    <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('editasampah','${n.id}')">edit</span>
+                    <a href="" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah('${n.id}',event)" style="border-radius:4px;">hapus</a>
+                    <a href="" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('editasampah','${n.id}')" style="border-radius:4px;">edit</a>
                 </td>
             </tr>`;
         });
@@ -339,8 +341,8 @@ $('#search-sampah').on('keyup', function() {
                 <span class="font-weight-bold"> 0 </span>
             </td>
             <td class="align-middle text-center">
-                <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah('${n.id}')">hapus</span>
-                <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('editasampah','${n.id}')">edit</span>
+                <a href="" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah('${n.id}',event)" style="border-radius:4px;">hapus</a>
+                <a href="" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditSampah" onclick="openModalAddEditSmp('editasampah','${n.id}')" style="border-radius:4px;">edit</a>
             </td>
         </tr>`;
         });    
@@ -434,7 +436,9 @@ const crudSampah = async (el,event) => {
 }
 
 // hapus sampah
-const hapusSampah = (id) => {
+const hapusSampah = (id,event) => {
+    event.preventDefault();
+
     Swal.fire({
         input: 'password',
         inputAttributes: {

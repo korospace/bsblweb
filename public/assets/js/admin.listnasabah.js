@@ -7,7 +7,7 @@ const getAllWilayah = async () => {
     let httpResponse = await httpRequestGet(`${APIURL}/nasabah/wilayah`);
 
     let tmpProvinsi  = [];
-    let elprovinsi   = `<option value="">-- pilih provinsi --</option>`;
+    let elprovinsi   = `<option value="">-- semua wilayah --</option>`;
     
     if (httpResponse.status === 200) {
         arrayWilayah = httpResponse.data.data;
@@ -187,7 +187,12 @@ const getAllNasabah = async () => {
                 <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
             </td>
             <td class="align-middle text-center">
-                <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_verify === 't')? 'yes' : 'no'} </span>
+                <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;">
+                    ${(n.is_verify === 't')? 'yes' : 'no'}
+                </span>
+            </td>
+            <td class="align-middle text-center">
+                <span class="font-weight-bold badge border ${(n.is_active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;"> ${(n.is_active === 't')? 'yes' : 'no'} </span>
             </td>
             <td class="align-middle text-center">
                 <span class="font-weight-bold text-capitalize"> 
@@ -195,10 +200,9 @@ const getAllNasabah = async () => {
                 </span>
             </td>
             <td class="align-middle text-center">
-                <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah('${n.id}')">hapus</span>
-                <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')">edit</span>
-                <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer">detil</a>
-                <span id="btn-detil" class="d-none badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" onclick="goToDetilNasabah('${n.id}')">detil</span>
+                <a href='' id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah('${n.id}',event)" style="border-radius:4px;">hapus</a>
+                <a href='' id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')" style="border-radius:4px;">edit</a>
+                <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" style="border-radius:4px;">detil</a>
             </td>
         </tr>`;
         });
@@ -253,7 +257,12 @@ $('#search-nasabah').on('keyup', function() {
                     <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_verify === 't')? 'yes' : 'no'} </span>
+                    <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;">
+                        ${(n.is_verify === 't')? 'yes' : 'no'}
+                    </span>
+                </td>
+                <td class="align-middle text-center">
+                    <span class="font-weight-bold badge border ${(n.is_active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;"> ${(n.is_active === 't')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
                     <span class="font-weight-bold text-capitalize"> 
@@ -261,10 +270,9 @@ $('#search-nasabah').on('keyup', function() {
                     </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah('${n.id}')">hapus</span>
-                    <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')">edit</span>
-                    <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer">detil</a>
-                    <span id="btn-detil" class="d-none badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" onclick="goToDetilNasabah('${n.id}')">detil</span>
+                    <a href='' id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah('${n.id}',event)" style="border-radius:4px;">hapus</a>
+                    <a href='' id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')" style="border-radius:4px;">edit</a>
+                    <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" style="border-radius:4px;">detil</a>
                 </td>
             </tr>`;
         });    
@@ -297,6 +305,10 @@ const openModalAddEditNsb = (modalName,idnasabah=null) => {
     }
 }
  
+/**
+ * KODEPOS
+ * =============================================
+ */
 // search kodepos
 const searchKodepos = async (el) => {
  
@@ -354,64 +366,6 @@ const changeKodeposVal = (el,postalcode,urban,subdistrict,city,province) => {
 };
 
 /**
- * KODEPOS
- * =============================================
- */
-
-// search kodepos
-const searchKodepos = async (el) => {
- 
-    $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-       <img src="${BASEURL}/assets/images/spinner.svg" style="width: 20px;" />
-    </div>`); 
-
-    axios
-    .get(`https://kodepos.vercel.app/search/?q=${el.value}`,{
-        headers: {
-        }
-    })
-    .then((response) => {
-
-        // console.log(response.data.status);
-        if (response.data.code === 200) {
-            if (response.data.messages === 'No data can be returned.') {
-                $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-                    <h6 tyle="opacity: 0.6;">kodepos tidak ditemukan</h6>
-                </div>`);    
-            } 
-            else {
-                let elPostList = '';
-
-                response.data.data.forEach(x => {
-                    let makeStringRegion = `${x.urban},${x.subdistrict},${x.city},${x.province}`;
-
-                    elPostList += `
-                    <div class="w-100">
-                        <div class="kodepos-list w-100 d-flex align-items-center px-3 py-3" style="cursor: pointer;font-size:16px;" onclick="changeKodeposVal(this,'${x.postalcode}','${makeStringRegion}');">
-                            <span class="w-100" style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
-                                ${x.postalcode} - ${x.urban}, ${x.subdistrict}, ${x.city}, ${x.province}
-                            </span>
-                        </div>
-                    </div>`;
-                });
-        
-                $('#kodepos-wraper').html(elPostList);
-                if (el.value == '') {
-                    $('#kodepos-wraper').html(``); 
-                }
-            } 
-        }
-    })
- };
-
- const changeKodeposVal = (el,kodepos,stringRegion) => {
-     $('.kodepos-list').removeClass('active');
-     $('input[name=kodepos]').val(kodepos);
-     $('input[name=region]').val(stringRegion);
-     el.classList.add('active');
- };
-
-/**
  * CRUD NASABAH
  */
 const crudNasabah = async (el,event) => {
@@ -428,6 +382,7 @@ const crudNasabah = async (el,event) => {
         $('#formAddEditNasabah button#submit #spinner').removeClass('d-none');
         if (modalTitle == 'edit nasabah') {
             form.set('is_verify',$('#formAddEditNasabah input[name=is_verify]').val());
+            form.set('is_active',$('#formAddEditNasabah input[name=is_active]').val());
             httpResponse = await httpRequestPut(`${APIURL}/admin/editnasabah`,form);    
         } 
         else {
@@ -438,6 +393,7 @@ const crudNasabah = async (el,event) => {
         $('#formAddEditNasabah button#submit #spinner').addClass('d-none');
 
         if (httpResponse.status === 201) {
+            getAllWilayah();
             getAllNasabah();
             if (modalTitle == 'tambah nasabah') {
                 $(`#formAddEditNasabah .form-control`).val('');
@@ -492,11 +448,20 @@ const getProfileNasabah = async (id) => {
         // is verify
         if (dataNasabah.is_verify == 't') {
             $(`#formAddEditNasabah input[name=is_verify]`).val('1');
-            $(`#formAddEditNasabah #btn-toggle`).removeClass('bg-secondary').addClass('active bg-success');
+            $(`#formAddEditNasabah .toggle-akunverify`).removeClass('bg-secondary').addClass('active bg-success');
         } 
         else {
             $(`#formAddEditNasabah input[name=is_verify]`).val('0');
-            $(`#formAddEditNasabah #btn-toggle`).removeClass('active bg-success').addClass('bg-secondary');
+            $(`#formAddEditNasabah .toggle-akunverify`).removeClass('active bg-success').addClass('bg-secondary');
+        }
+        // is account active
+        if (dataNasabah.is_active == 't') {
+            $(`#formAddEditNasabah input[name=is_active]`).val('1');
+            $(`#formAddEditNasabah .toggle-akunaktif`).removeClass('bg-secondary').addClass('active bg-success');
+        } 
+        else {
+            $(`#formAddEditNasabah input[name=is_active]`).val('0');
+            $(`#formAddEditNasabah .toggle-akunaktif`).removeClass('active bg-success').addClass('bg-secondary');
         }
 
         $('#newpass').val('');
@@ -510,8 +475,8 @@ $('#formAddEditNasabah .form-check-input').on('click', function(e) {
     $(this).prop('checked',true);
 });
 
-// change isverify value
-$('#formAddEditNasabah input[name=is_verify]').on('click', function(e) {
+// change akun verify/account activate value
+$('#formAddEditNasabah input[type=checkbox]').on('click', function(e) {
     if ($(this).val() == '1') {
         $(this).val('0');
         $(this).parent().removeClass('active bg-success').addClass('bg-secondary');
@@ -659,7 +624,6 @@ const doValidate = (form) => {
         }
     }
 
-
     // tgl lahir validation
     if ($('#formAddEditNasabah #tgllahir').val() == '') {
         $('#formAddEditNasabah #tgllahir').addClass('is-invalid');
@@ -706,7 +670,9 @@ const doValidate = (form) => {
 /**
  * HAPUS NASABAH
  */
- const hapusNasabah = (id) => {
+ const hapusNasabah = (id,event) => {
+    event.preventDefault();
+
     Swal.fire({
         input: 'password',
         inputAttributes: {
@@ -731,6 +697,7 @@ const doValidate = (form) => {
                 return httpRequestDelete(`${APIURL}/admin/deletenasabah?id=${id}`)
                 .then((e) => {
                     if (e.status == 201) {
+                        getAllWilayah();
                         getAllNasabah();
                     }
                     else if (e.status == 400) {

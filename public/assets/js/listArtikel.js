@@ -1,3 +1,16 @@
+// add navbar shadow when scrolling
+$(window).scroll(function () {
+    var scroll = $(window).scrollTop();
+    var box = $('nav').height();
+    var header = $('#blog-single').height();
+
+    if (scroll >= box - header) {
+        $("nav").addClass("nav-shadow");
+    } else {
+        $("nav").removeClass("nav-shadow");
+    }
+});
+
 /**
  * Get Kategori Artikel
  */
@@ -18,7 +31,7 @@
 * GET ALL ARTIKEL
 */
 let arrayBerita = [];
-axios.get(`${APIURL}/artikel/getartikel?kategori=${KATEGORI}`)
+axios.get(`${APIURL}/artikel/getartikel?kategori=${KATEGORI}&orderby=terbaru`)
     .then(res => {
         let elBerita  = '';
         let allBerita = res.data.data;
@@ -31,7 +44,7 @@ axios.get(`${APIURL}/artikel/getartikel?kategori=${KATEGORI}`)
             let year      = date.toLocaleString("en-US",{year: "numeric"});
 
             elBerita += `<div class="col-12 col-sm-6 col-md-4 mb-5">
-                <a href="${BASEURL}/artikel/${b.id}" class="card text-white card-has-bg click-col position-relative" style="min-height: 220px;border-radius: 10px;">
+                <a href="${BASEURL}/artikel/${b.slug}" class="card text-white card-has-bg click-col position-relative" style="min-height: 220px;border-radius: 10px;">
                 
                     <img src="${b.thumbnail}" class="position-absolute" style="height:100%;width:100%;">
 
@@ -56,7 +69,7 @@ axios.get(`${APIURL}/artikel/getartikel?kategori=${KATEGORI}`)
             // elBerita += `<div class="col-12 col-sm-6 position-relative d-flex align-items-center">
 
             //     <img src="${BASEURL}/assets/images/default-thumbnail.webp" alt="" style="min-width:100%;max-width:100%; opacity:0;">
-            //     <a href="${BASEURL}/artikel/${b.id}" class="card text-white card-has-bg click-col position-absolute" style="min-width:93%;max-width:93%;height:90%;min-height:max-content;max-height:max-content;border-radius: 10px;">
+            //     <a href="${BASEURL}/artikel/${b.id}" class="card text-white card-has-bg click-col position-absolute" style="min-width:93%;max-width:93%;min-height: 220px;border-radius: 10px;">
                 
             //         <img src="${b.thumbnail}" class="position-absolute" style="height:100%;width:100%;">
 

@@ -9,7 +9,7 @@ class ArtikelModel extends Model
 {
     protected $table         = 'artikel';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','title','thumbnail','content','id_kategori','created_by','created_at'];
+    protected $allowedFields = ['id','title','slug','thumbnail','content','id_kategori','created_by','created_at'];
 
     public function getLastArtikel(): array
     {
@@ -119,20 +119,27 @@ class ArtikelModel extends Model
 
             if (isset($get['id']) && !isset($get['kategori'])) {
                 $berita = $this->db->table($this->table)
-                ->select("artikel.id,artikel.title,artikel.id_kategori,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail,artikel.content")
+                ->select("artikel.id,artikel.title,artikel.slug,artikel.id_kategori,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail,artikel.content")
                 ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
                 ->join('users', 'users.id = artikel.created_by')
                 ->where("artikel.id",$get['id'])->get()->getFirstRow();
             } 
+            else if (isset($get['slug']) && !isset($get['kategori'])) {
+                $berita = $this->db->table($this->table)
+                ->select("artikel.id,artikel.title,artikel.slug,artikel.id_kategori,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail,artikel.content")
+                ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
+                ->join('users', 'users.id = artikel.created_by')
+                ->where("artikel.slug",$get['slug'])->get()->getFirstRow();
+            } 
             else if (isset($get['kategori']) && !isset($get['id'])) {
-                $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail')
+                $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail')
                 ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
                 ->join('users', 'users.id = artikel.created_by')
                 ->where("kategori_artikel.name",$get['kategori'])
                 ->orderBy('artikel.created_at',$orderby)->get()->getResultArray();
             } 
             else {
-                $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail')
+                $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail')
                 ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
                 ->join('users', 'users.id = artikel.created_by')
                 ->orderBy('artikel.created_at',$orderby)->get()->getResultArray();
@@ -162,34 +169,41 @@ class ArtikelModel extends Model
         }
     }
 
-    public function getRelatedArtikel(string $id): array
+    public function getRelatedArtikel(string $slug): array
     {
         try {
             $allBerita  = [];
-            $idKategori = $this->db->table($this->table)->select("id_kategori")->where("id",$id)->get()->getResultArray()[0]['id_kategori'];
+            $target     = $this->db->table($this->table)->select("id,id_kategori")->where("slug",$slug)->get()->getResultArray();
+            $id         = $target[0]['id'];
+            $idKategori = $target[0]['id_kategori'];
 
             $firstId   = $this->db->table($this->table)->select('id')->where("id_kategori",$idKategori)->limit(1)->orderBy('id','ASC')->get()->getResultArray()[0]['id'];
             $lastId    = $this->db->table($this->table)->select('id')->where("id_kategori",$idKategori)->limit(1)->orderBy('id','DESC')->get()->getResultArray()[0]['id'];
+
+            // var_dump($idKategori);
+            // var_dump($id);
+            // var_dump($firstId);
+            // var_dump($lastId);die;
             
             $limitPrev  = 2;
-            $prevBerita = $this->db->query("SELECT artikel.id,artikel.title,kategori_artikel.name AS kategori,artikel.created_at,artikel.thumbnail 
+            $prevBerita = $this->db->query("SELECT artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,artikel.created_at,artikel.thumbnail 
             FROM artikel 
-            JOIN kategori_artikel ON(artikel.id_kategori = kategori_artikel.name) 
+            JOIN kategori_artikel ON(artikel.id_kategori = kategori_artikel.id) 
             WHERE artikel.id_kategori = '$idKategori' 
             AND artikel.id BETWEEN '$firstId' AND '$id' 
             ORDER BY artikel.id DESC LIMIT $limitPrev OFFSET 1")->getResultArray();
             
             $limitNext  = 2 + ($limitPrev-count($prevBerita));
-            $nextBerita = $this->db->query("SELECT artikel.id,artikel.title,kategori_artikel.name AS kategori,artikel.created_at,artikel.thumbnail 
+            $nextBerita = $this->db->query("SELECT artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,artikel.created_at,artikel.thumbnail 
             FROM artikel 
-            JOIN kategori_artikel ON(artikel.id_kategori = kategori_artikel.name) 
+            JOIN kategori_artikel ON(artikel.id_kategori = kategori_artikel.id) 
             WHERE artikel.id_kategori = '$idKategori' 
             AND artikel.id BETWEEN '$id' AND '$lastId '
             ORDER BY artikel.id ASC LIMIT $limitNext OFFSET 1")->getResultArray();
 
             if (count($nextBerita) < 2 && count($prevBerita) == 2) {
                 $limitNewNext  = 2-count($nextBerita);
-                $newNextBerita = $this->db->query("SELECT artikel.id,artikel.title,kategori_artikel.name AS kategori,artikel.created_at,artikel.thumbnail 
+                $newNextBerita = $this->db->query("SELECT artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,artikel.created_at,artikel.thumbnail 
                 FROM artikel 
                 JOIN kategori_artikel ON(artikel.id_kategori = kategori_artikel.name)
                 WHERE artikel.id_kategori = '$idKategori' 
@@ -209,7 +223,7 @@ class ArtikelModel extends Model
 
             if (count($prevBerita) + count($nextBerita) < 4) {
                 $limitOtherKat = 4-(count($prevBerita) + count($nextBerita));
-                $otherKat = $this->db->query("SELECT artikel.id,artikel.title,kategori_artikel.name AS kategori,artikel.created_at,artikel.thumbnail 
+                $otherKat = $this->db->query("SELECT artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,artikel.created_at,artikel.thumbnail 
                 FROM artikel 
                 JOIN kategori_artikel ON(artikel.id_kategori = kategori_artikel.id)
                 WHERE artikel.id_kategori != '$idKategori' 

@@ -39,25 +39,34 @@ $('#formLoginNasabah').on('submit', function(e) {
             }
             // account not verify
             else if (error.response.status == 401) {
-                setTimeout(() => {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'LOGIN GAGAL!',
-                        text: 'akun anda belum ter-verifikasi. silahkan verifikasi akun terlebih dahulu',
-                        confirmButtonText: 'ok',
+                if (error.response.data.messages == 'account is not verify') {
+                    setTimeout(() => {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'LOGIN GAGAL!',
+                            text: 'akun anda belum ter-verifikasi. silahkan verifikasi akun terlebih dahulu',
+                            confirmButtonText: 'ok',
+                        })
+                        .then(() => {
+                            var url = BASEURL + '/otp';
+                            var form = $('<form action="' + url + '" method="post">' +
+                            '<input type="text" name="email" value="' + formLogin.get('email') + '" />' +
+                            '<input type="text" name="password" value="' + formLogin.get('password') + '" />' +
+                            '</form>');
+                            $('body').append(form);
+                            form.submit();
+    
+                            // window.location.replace(`${BASEURL}/otp`);
+                        })
+                    }, 300);
+                }
+                else if (error.response.data.messages == 'akun tidak aktif') {
+                    showAlert({
+                        message: `<strong>Maaf . . .</strong> akun anda sedang di Non-aktifkan!`,
+                        autohide: true,
+                        type:'warning' 
                     })
-                    .then(() => {
-                        var url = BASEURL + '/otp';
-                        var form = $('<form action="' + url + '" method="post">' +
-                        '<input type="text" name="email" value="' + formLogin.get('email') + '" />' +
-                        '<input type="text" name="password" value="' + formLogin.get('password') + '" />' +
-                        '</form>');
-                        $('body').append(form);
-                        form.submit();
-
-                        // window.location.replace(`${BASEURL}/otp`);
-                    })
-                }, 300);
+                }
             }
             // server error
             else if (error.response.status == 500){
@@ -184,7 +193,7 @@ $('#formLoginAdmin').on('submit', function(e) {
             // akun tidak aktif
             if (error.response.status == 401) {
                 showAlert({
-                    message: `<strong>Maaf . . .</strong> akun anda sudah tidak aktif!`,
+                    message: `<strong>Maaf . . .</strong> akun anda sedang di Non-aktifkan!`,
                     autohide: true,
                     type:'warning' 
                 })

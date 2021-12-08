@@ -2,20 +2,20 @@
 
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
-<style>
-  @media (max-width:990px) {
-    body {
-      overflow: hidden;
+  <style>
+    @media (max-width:990px) {
+      body {
+        overflow: hidden;
+      }
     }
-  }
-</style>
-<!-- ** develoment ** -->
-<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-<!-- ** production ** -->
-<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>"> -->
-<link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/homepage.min.css'); ?>">
+  </style>
+  <!-- ** develoment ** -->
+  <!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
+  <!-- ** production ** -->
+  <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/homepage.min.css'); ?>">
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -70,7 +70,7 @@
   <!-- ***** Header Area End ***** -->
 
   <!-- ***** Welcome Area Start ***** -->
-  <div class="welcome-area" id="welcome" style="background-image: url(<?= base_url('assets/images/banner-bg1.png'); ?>);">
+  <div class="welcome-area" id="welcome" style="background-image: url(<?= base_url('assets/images/banner-bg1.webp'); ?>);">
     <div class="header-text">
       <div class="container">
         <div class="row">
@@ -79,8 +79,8 @@
             <p>Bank Sampah Budi Luhur diresmikan tanggal 17 April 2017, tujuan didirikan Bank Sampah Budi Luhur untuk
               membantu pemerintah mengurangi produksi pembuangan sampah dengan cara sosialisai sekaligus edukasi proses
               pemilihan sampah skala rumah tangga.</p>
-            <a href="signup" class="main-button-slider">BERGABUNG</a>
-            <a href="login" class="main-button-slider ml-1">LOGIN</a>
+            <a href="<?= base_url('register'); ?>" class="main-button-slider">BERGABUNG</a>
+            <a href="<?= base_url('login'); ?>" class="main-button-slider ml-1">LOGIN</a>
           </div>
         </div>
       </div>
@@ -136,9 +136,9 @@
       <h1 class="text-center mb-5">Kegiatan Bank Sampah Budi Luhur</h1>
       <div class="row">
 
-        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
           <div class="features-item h-100">
-            <div class="features-icon h-100">
+            <div class="features-icon h-100 position-relative">
               <!-- <h2>01</h2> -->
               <img src="<?= base_url('assets/images/features-icon-1.png'); ?>" alt="">
               <h4>WEBINAR</h4>
@@ -150,7 +150,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter bottom move 30px over 0.6s after 0.4s">
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4" data-scroll-reveal="enter bottom move 30px over 0.6s after 0.4s">
           <div class="features-item" style="height: 100%;">
             <div class="features-icon">
               <!-- <h2>02</h2> -->
@@ -164,7 +164,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
+        <div class="col-md-12 col-lg-4 mb-md-4" data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
           <div class="features-item" style="height: 100%;">
             <div class="features-icon">
               <img src="<?= base_url('assets/images/features-icon-3.png'); ?>" alt="">

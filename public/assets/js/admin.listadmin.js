@@ -52,8 +52,8 @@ const getAllAdmin = async () => {
                     </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin('${n.id}')">hapus</span>
-                    <span id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="openModalAddEditAdm('editadmin','${n.id}')">edit</span>
+                    <a href="" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusAdmin('${n.id}',event)">hapus</a>
+                    <a href="" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="openModalAddEditAdm('editadmin','${n.id}')">edit</a>
                 </td>
             </tr>`;
         });
@@ -279,7 +279,9 @@ $('#formAddEditAdmin input[type=checkbox]').on('click', function(e) {
 /**
  * HAPUS ADMIN
  */
-const hapusAdmin = (id) => {
+const hapusAdmin = (id,event) => {
+    event.preventDefault();
+
     Swal.fire({
         title: 'ANDA YAKIN?',
         text: `semua artikel yang ditulis admin ini akan ikut terhapus`,

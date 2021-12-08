@@ -15,7 +15,7 @@
     $('#table-kategori-berita tbody').removeClass('d-none');
     
     let elKategori  = `<option value='' selected>-- pilih kategori --</option>`;
-    let elKatFilter = `<option value='' selected>-- pilih kategori --</option>`;
+    let elKatFilter = `<option value='' selected>-- semua kategori --</option>`;
     
     if (httpResponse.status == 404) {
         $('#list-kategori-notfound').removeClass('d-none');
@@ -38,12 +38,12 @@
                      <span class="font-weight-bold"> ${k.name} </span>
                  </td>
                  <td class="align-middle text-center">
-                     <span id="${k.id}" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusKategori('${k.id}','${k.name}')">hapus</span>
+                     <a href='' id="${k.id}" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusKategori('${k.id}','${k.name}',event)">hapus</a>
                  </td>
              </tr>`;
         });
  
-        $('#table-kategori-berita tbody').html(trKategori);
+        $('#table-kategori-artikel tbody').html(trKategori);
         $('#formFilterArtikel select[name=kategori]').html(elKatFilter);
     }
 
@@ -113,60 +113,62 @@ function validateAddKategori() {
 }
 
 // DELETE kategori
-const hapusKategori = (id,katName) => {
-   Swal.fire({
-       title: 'ANDA YAKIN?',
-       text: `berita dengan kategori '${katName}' akan terhapus juga`,
-       icon: 'warning',
-       showCancelButton: true,
-       confirmButtonText: 'iya',
-   }).then((result) => {
-       if (result.isConfirmed) {
-           Swal.fire({
-               input: 'password',
-               inputAttributes: {
-                   autocapitalize: 'off'
-               },
-               html:`<h5 class='mb-4'>Password</h5>`,
-               showCancelButton: true,
-               confirmButtonText: 'submit',
-               showLoaderOnConfirm: true,
-               preConfirm: (password) => {
-                   let form = new FormData();
-                   form.append('hashedpass',PASSADMIN);
-                   form.append('password',password);
-       
-                   return axios
-                   .post(`${APIURL}/admin/confirmdelete`,form, {
-                       headers: {
-                           // header options 
-                       }
-                   })
-                   .then((response) => {
-                       return httpRequestDelete(`${APIURL}/artikel/deletekategori?id=${id}`)
-                       .then(e => {
-                           if (e.status == 201) {
-                                getAllKatBerita();
-                           }
-                       })
-                   })
-                   .catch(error => {
-                       if (error.response.status == 404) {
-                           Swal.showValidationMessage(
-                               `password salah`
-                           )
-                       }
-                       else if (error.response.status == 500) {
-                           Swal.showValidationMessage(
-                               `terjadi kesalahan, coba sekali lagi`
-                           )
-                       }
-                   })
-               },
-               allowOutsideClick: () => !Swal.isLoading()
-           })
-       }
-   })
+const hapusKategori = (id,katName,event) => {
+    event.preventDefault();
+
+    Swal.fire({
+        title: 'ANDA YAKIN?',
+        text: `berita dengan kategori '${katName}' akan terhapus juga`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'iya',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                html:`<h5 class='mb-4'>Password</h5>`,
+                showCancelButton: true,
+                confirmButtonText: 'submit',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    let form = new FormData();
+                    form.append('hashedpass',PASSADMIN);
+                    form.append('password',password);
+        
+                    return axios
+                    .post(`${APIURL}/admin/confirmdelete`,form, {
+                        headers: {
+                            // header options 
+                        }
+                    })
+                    .then((response) => {
+                        return httpRequestDelete(`${APIURL}/artikel/deletekategori?id=${id}`)
+                        .then(e => {
+                            if (e.status == 201) {
+                                    getAllKatBerita();
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        if (error.response.status == 404) {
+                            Swal.showValidationMessage(
+                                `password salah`
+                            )
+                        }
+                        else if (error.response.status == 500) {
+                            Swal.showValidationMessage(
+                                `terjadi kesalahan, coba sekali lagi`
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        }
+    })
 };
 
 /**

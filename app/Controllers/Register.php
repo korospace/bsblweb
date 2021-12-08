@@ -47,6 +47,7 @@ class Register extends BaseController
      */
     public function nasabahRegister(): object
     {
+        $result = '';
         if ($this->request->getHeader('token')) {
             $result = $this->checkToken();
         }
@@ -110,8 +111,10 @@ class Register extends BaseController
                 ],
             ];
 
-            if (in_array($result['data']['privilege'],['admin','superadmin'])) {
-                $data['is_verify'] = true;
+            if ($this->request->getHeader('token')) {
+                if (in_array($result['data']['privilege'],['admin','superadmin'])) {
+                    $data['is_verify'] = true;
+                }
             }
 
             $dbrespond = $this->registerModel->addNasabah($data);

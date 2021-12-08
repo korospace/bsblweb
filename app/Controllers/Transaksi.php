@@ -233,7 +233,7 @@ class Transaksi extends BaseController
         $mpdf->Output('transaksi#'.$id.".pdf", 'I');
     }
 
-    public function cetakRekap(string $date)
+    public function cetakRekap()
     {
         $token     = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result    = $this->checkToken($token, false);
@@ -244,38 +244,55 @@ class Transaksi extends BaseController
             unset($_COOKIE['token']);
             return redirect()->to(base_url().'/login');
         }
-
+        
         $transaksiModel = new TransaksiModel;
-        $get            = ['date' => $date];
-        $stringWilayah  = '';
+        $get            = [];
+        $headDate       = '';
         $headWilayah    = '';
+        $stringDate     = '';
+        $stringWilayah  = '';
         $filterWilayah  = false;
 
         if ($this->request->getGet()) {
-            $filterWilayah  = true;
+            $filterWilayah = true;
 
             foreach ($this->request->getGet() as $key => $value) {
-                $get[$key]     = $value;
-                $headWilayah   .= ucfirst($value).', ';
+                $get[$key] = $value;
+
+                // var_dump(!in_array($key,['date','start','end']));
+
+                if (!in_array($key,['date','start','end'])) {
+                    $headWilayah .= ucfirst($value).', ';
+                }
             }
+            // die;
 
             $stringWilayah = preg_replace('/, | /i', '-', $headWilayah);
             $headWilayah   = "<p style='font-size: 1.1em;font-family: sans;margin-top: 6px;text-align: right;'>
                 ".trim($headWilayah,', ')."
             </p>";
         }
-
-
-        $dbresponse = $transaksiModel->rekapData($get);
-        
-        if ($dbresponse['error'] == true) {
-            return redirect()->to(base_url().'/login');
+        else {
+            return redirect()->to(base_url().'/admin/transaksi');
         }
 
-        $data     = $dbresponse['data'];
-        $headDate = "<span  style='font-size: 1em;font-family: sans;'>
-            ".$data['date']."
-        </span>";
+        $dbresponse = $transaksiModel->rekapData($get);
+        $data       = $dbresponse['data'];
+
+        if (isset($get['date'])) {
+            $stringDate = $get['date'];
+
+            $headDate   = "<span  style='font-size: 1em;font-family: sans;'>
+                ".$data['date']."
+            </span>";
+        } 
+        else if (isset($get['start']) && isset($get['end'])) {
+            $stringDate = date("d/F/Y", strtotime($get['start'].' 01:00'))."-".date("d/F/Y", strtotime($get['end'].' 23:59'));
+
+            $headDate   = "<span  style='font-size: 1em;font-family: sans;'>
+                ".date("d/F/Y", strtotime($get['start'].' 01:00'))." - ".date("d/F/Y", strtotime($get['end'].' 23:59'))."
+            </span>";
+        }
 
         // setor sampah
         $tss   = $data['tss'];
@@ -611,7 +628,7 @@ class Transaksi extends BaseController
         </html>");
 
         $this->response->setHeader('Content-Type', 'application/pdf');
-        $mpdf->Output('rekap-transaksi#'.$date."#".trim($stringWilayah,'-').".pdf", 'I');
+        $mpdf->Output('rekap-transaksi#'.$stringDate."#".trim($stringWilayah,'-').".pdf", 'I');
     }
 
     /**
@@ -1030,62 +1047,33 @@ class Transaksi extends BaseController
 
     /**
      * Get data transaction
-     *   url    : domain.com/transaksi/lasttransaksi
+     *   url    : domain.com/transaksi/grafikssampah
      *   method : GET
      */
-    public function lastTransaksi()
+    public function grafikSetorSampah()
     {
-        $authHeader = $this->request->getHeader('token');
-        $token      = ($authHeader != null) ? $authHeader->getValue() : null;
-        $result     = $this->checkToken($token);
-        // $this->checkPrivilege($result);
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
 
-        if ($result['success'] == true) {
-            
-            $this->validation->run($this->request->getGet(),'lastTransaksi');
+        $errors = null;
+        if ($this->request->getGet('year')) {
+            $this->validation->run($this->request->getGet(),'rekapDataYear');
             $errors = $this->validation->getErrors();
+        }
 
-            if($errors) {
-                $response = [
-                    'status'   => 400,
-                    'error'    => true,
-                    'messages' => $errors['limit'],
-                ];
-        
-                return $this->respond($response,400);
-            } 
-
-            $limit      = $this->request->getGet('limit');
-            $dbresponse = $this->transaksiModel->lastTransaksi($limit);
-
-            if ($dbresponse['success'] == true) {
-                $response = [
-                    'status'   => 200,
-                    "error"    => false,
-                    'data'     => $dbresponse['data'],
-                ];
-
-                return $this->respond($response,200);
-            } 
-            else {
-                $response = [
-                    'status'   => $dbresponse['code'],
-                    'error'    => true,
-                    'messages' => $dbresponse['message'],
-                ];
-        
-                return $this->respond($response,$dbresponse['code']);
-            }
-        } 
-        else {
+        if($errors) {
             $response = [
-                'status'   => $result['code'],
+                'status'   => 400,
                 'error'    => true,
-                'messages' => $result['message'],
+                'messages' => $errors,
             ];
     
-            return $this->respond($response,$result['code']);
-        }
+            return $this->respond($response,400);
+        } 
+        
+        $dbresponse = $this->transaksiModel->grafikSetorSampah($this->request->getGet());
+
+        return $this->respond($dbresponse,$dbresponse['status']);
     }
 
     /**

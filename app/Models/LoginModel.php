@@ -15,7 +15,7 @@ class LoginModel extends Model
     public function getNasabahByEmail(string $email): array
     {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("id,password,is_verify")->where("email",$email)->where("privilege",'nasabah')->get()->getResultArray();
+            $dataNasabah = $this->db->table($this->table)->select("id,password,is_active,last_active,is_verify,privilege")->where("email",$email)->where("privilege",'nasabah')->get()->getResultArray();
             
             return [
                 'status'   => (empty($dataNasabah)) ? 404  : 200,

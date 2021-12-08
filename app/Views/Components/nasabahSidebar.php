@@ -1,3 +1,30 @@
+<?= $this->extend('Layout/template') ?>
+
+<!-- Css -->
+<?= $this->section('contentCss'); ?>
+	<style>
+        #href-transaksi-wraper a:hover{
+			color: #344767 !important;
+		}
+    </style>
+<?= $this->endSection(); ?>
+
+<!-- JS -->
+<?= $this->section('contentJs'); ?>
+	<script>
+		//smoothscroll
+		$('#href-transaksi-wraper a').on('click', function (e) {
+			e.preventDefault();
+			
+			var target = $(`${$(this).attr('href')}`);
+
+			$('html, body').stop().animate({
+				'scrollTop': target.offset().top-80
+			}, 500, 'swing');
+		});
+	</script>
+<?= $this->endSection(); ?>
+
 <aside class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
 	<div class="sidenav-header" style="font-family: 'qc-semibold';">
 		<i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" id="iconSidenav"></i>
@@ -18,6 +45,26 @@
 					</div>
 					<span class="nav-link-text ms-1">Dashboard</span>
 				</a>
+                <?php if ($title == 'Nasabah | dashboard') { ?>
+                <div id="href-transaksi-wraper" class="w-100 pl-5 d-flex flex-column">
+                    <a href="#row-sampah-masuk" class="pt-4 pb-2 text-muted text-xs">
+                        <i class="fas fa-angle-right mr-2"></i>
+                        <span>sampah masuk</span>
+                    </a>
+                    <a href="#history-transaksi" class="pt-2 pb-2 text-muted text-xs">
+                        <i class="fas fa-angle-right mr-2"></i>
+                        <span>history transaksi</span>
+                    </a>
+                    <a href="#jumlah-saldo" class="pt-2 pb-2 text-muted text-xs">
+                        <i class="fas fa-angle-right mr-2"></i>
+                        <span>jumlah saldo</span>
+                    </a>
+                    <a href="#info-sampah" class="pt-2 pb-2 text-muted text-xs">
+                        <i class="fas fa-angle-right mr-2"></i>
+                        <span>info sampah</span>
+                    </a>
+                </div>
+                <?php } ?>
 			</li>
 			<li class="nav-item mt-2">
 				<a class="nav-link <?= ($title=='Nasabah | profile') ? 'active' : ''?>" href="<?= base_url('nasabah/profile');?>">

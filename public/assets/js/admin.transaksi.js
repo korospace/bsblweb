@@ -40,18 +40,18 @@ const clearAllForm = (isFormJualSetorSampah = false) => {
 }
 
 /**
- * Toggle switch
+ * Toggle switch transaksi
  */
 let idnasabah  = '';
 let formTarget = 'setor-jual-sampah';
-$('.switch-section').on('click',function (e) {
-    $('#toggle').removeClass(`bg-${$('#toggle').attr('data-color')}`);
-    $('#toggle').attr('data-color',$(this).data('color'));
-    $('#toggle').addClass(`bg-${$(this).data('color')}`);
-    $('.switch-section').removeClass('opacity-0');
+$('#toggle-transaksi-wraper .switch-section').on('click',function (e) {
+    $('.toggle-transaksi').removeClass(`bg-${$('.toggle-transaksi').attr('data-color')}`);
+    $('.toggle-transaksi').attr('data-color',$(this).data('color'));
+    $('.toggle-transaksi').addClass(`bg-${$(this).data('color')}`);
+    $('#toggle-transaksi-wraper .switch-section').removeClass('opacity-0');
     $(this).addClass('opacity-0');
-    $('#toggle').css("transform", `translateX(${$(this).position().left}px)`);
-    $('#toggle').html($(this).html());
+    $('.toggle-transaksi').css("transform", `translateX(${$(this).position().left}px)`);
+    $('.toggle-transaksi').html($(this).html());
 
     idnasabah  = '';
     formTarget = $(this).data('form');
@@ -178,7 +178,7 @@ const tambahBaris = (event = false) => {
         </select>
     </td>
     <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
-        <input type="text" class="inputJumlahSampah form-control form-control-sm pl-2 border-radius-sm" value="0" name="transaksi[slot${totalBaris+1}][jumlah]" style="min-height: 38px" onkeyup="countHargaXjumlah(this);">
+        <input type="text" class="inputJumlahSampah form-control form-control-sm pl-2 border-radius-sm" value="0" name="transaksi[slot${totalBaris+1}][jumlah]" style="min-height: 38px" onkeyup="countHargaXjumlah(this);" autocomplete="off">
         <small class="text-danger"></small>
     </td>
     <td class="py-2">
@@ -531,6 +531,7 @@ const doTransaksi = async (el,event,method) => {
                 $('#barrier-transaksi').removeClass('d-none');
                 $(`#form-${formTarget}`).addClass('opacity-6');
                 clearAllForm();
+                updateAllTable(`${tglTransaksi[0]}/${tglTransaksi[1]}/${tglTransaksi[2]}`);
     
                 if (method == 'jualsampah' || method == 'setorsampah') {
                     $('.barisSetorSampah').remove();
@@ -561,11 +562,25 @@ const doTransaksi = async (el,event,method) => {
 
 }
 
+const updateAllTable = (valInputDate) => {
+    let unixStart = new Date(`${valInputDate} 00:00:01`).getTime();
+    setCurrentStartDate(unixStart);
+    getDataTransaksi();
+
+    ketFilter  = `${new Date(unixStart).getFullYear()} - semua wilayah`;
+    rekapTUrl  = `${APIURL}/transaksi/rekapdata?year=${new Date(unixStart).getFullYear()}`;
+
+    $('#ket-filter-rekap-transaksi').html(ketFilter);
+    getRekapTransaksi();
+}
+
 /**
  * HAPUS TRANSAKSI
  * =============================================
  */
- const deleteTransaksi = (id) => {
+const deleteTransaksi = (id,event) => {
+    event.preventDefault();
+    
     Swal.fire({
         title: 'ANDA YAKIN?',
         text: "Data akan terhapus permanen",
@@ -666,8 +681,16 @@ $('#formFilterDataTransaksi input[type=date]').on('change',function (e) {
 })
 
 // set current start and end DATE
-let setCurrentStartDate = () =>  {
-    let currentUnixTime = new Date(new Date().getTime());
+let setCurrentStartDate = (unixTime = null) =>  {
+    let currentUnixTime = '';
+    
+    if (unixTime) {
+        currentUnixTime = new Date(unixTime);    
+    } 
+    else {
+        currentUnixTime = new Date(new Date().getTime());
+    }
+
     let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "2-digit"});
     let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "2-digit"});
     let currentYear  = currentUnixTime.toLocaleString("en-US",{year: "numeric"});
@@ -790,7 +813,7 @@ const getDataTransaksi = async () => {
                     </${tagNamaLengkap}>
                 </td>
                 <td class="align-middle text-sm">
-                    <span class="text-xxs text-name font-weight-bold badge border text-${color} border-${color} pb-1 rounded-sm" style="min-width:150px;max-width:150px;"> 
+                    <span class="text-xxs text-name font-weight-bold badge border text-${color} border-${color} pb-1" style="min-width:150px;max-width:150px;border-radius:4px;"> 
                         ${t.jenis_transaksi}
                     </span>
                 </td>
@@ -805,8 +828,8 @@ const getDataTransaksi = async () => {
                     </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="badge badge-dark text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksi('${t.id_transaksi}');">cetak</span>
-                    <span class="badge badge-danger ml-1 text-xxs pb-1 rounded-sm cursor-pointer" onclick="deleteTransaksi('${t.id_transaksi}');">hapus</span>
+                    <a href='' class="badge badge-dark text-xxs pb-1 cursor-pointer" data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksi('${t.id_transaksi}');" style="border-radius:4px;">cetak</a>
+                    <a href='' class="badge badge-danger text-xxs pb-1 cursor-pointer" onclick="deleteTransaksi('${t.id_transaksi}',event);" style="border-radius:4px;">hapus</a>
                 </td>
             </tr>`;
         });
@@ -878,7 +901,7 @@ $('#search-data-transaksi').on('keyup', function() {
                     </${tagNamaLengkap}>
                 </td>
                 <td class="align-middle text-sm">
-                    <span class="text-xxs text-name font-weight-bold badge border text-${color} border-${color} pb-1 rounded-sm" style="min-width:150px;max-width:150px;"> 
+                    <span class="text-xxs text-name font-weight-bold badge border text-${color} border-${color} pb-1" style="min-width:150px;max-width:150px;border-radius:4px;"> 
                         ${t.jenis_transaksi}
                     </span>
                 </td>
@@ -893,8 +916,8 @@ $('#search-data-transaksi').on('keyup', function() {
                     </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="badge badge-dark text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksi('${t.id_transaksi}');">cetak</span>
-                    <span class="badge badge-danger ml-1 text-xxs pb-1 rounded-sm cursor-pointer" onclick="deleteTransaksi('${t.id_transaksi}');">hapus</span>
+                    <a href='' class="badge badge-dark text-xxs pb-1 cursor-pointer" data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksi('${t.id_transaksi}');" style="border-radius:4px;">cetak</a>
+                    <a href='' class="badge badge-danger text-xxs pb-1 cursor-pointer" onclick="deleteTransaksi('${t.id_transaksi}',event);" style="border-radius:4px;">hapus</a>
                 </td>
             </tr>`;
         });    
@@ -1019,37 +1042,88 @@ const getDetailTransaksi = async (id) => {
  * REKAP TRANSAKSI Section
  * =========================================
  */
+// modal filter rekap transaksi when open
+let openModalFilterRekapT = () =>  {
+    let ketFilter = $(`#ket-filter-rekap-transaksi`).html().split('-');
+    
+    if (ketFilter[1].includes('semua wilayah')) {
+        resetFilterRekap(null,ketFilter[0].replace(' ',''));
+    }
+}
+
+// Toggle switch transaksi
+let formTargetRekap = 'pertahun';
+$('#toggle-rekap-wraper .switch-section').on('click',function (e) {
+    $('.toggle-rekap').removeClass(`bg-${$('.toggle-rekap').attr('data-color')}`);
+    $('.toggle-rekap').attr('data-color',$(this).data('color'));
+    $('.toggle-rekap').addClass(`bg-${$(this).data('color')}`);
+    $('#toggle-rekap-wraper .switch-section').removeClass('opacity-0');
+    $(this).addClass('opacity-0');
+    $('.toggle-rekap').css("transform", `translateX(${$(this).position().left}px)`);
+    $('.toggle-rekap').html($(this).html());
+
+    formTargetRekap = $(this).data('form');
+    
+    $('#modalFilterRekapTransaksi form').addClass('d-none');
+    $(`#formFilterRekap-${formTargetRekap}`).removeClass('d-none');
+    $('#modalFilterRekapTransaksi .modal-footer').addClass('d-none');
+    $(`#modal-footer-${formTargetRekap}`).removeClass('d-none');
+
+    if (formTargetRekap == 'custom') {
+        let currentUnixTime = new Date(new Date().getTime());
+        let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "2-digit"});
+        let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "2-digit"});
+        let currentYear  = currentUnixTime.toLocaleString("en-US",{year: "numeric"});
+
+        let previousUnixTime = new Date(currentUnixTime.getTime()-(86400*30*1000));
+        let previousDay   = previousUnixTime.toLocaleString("en-US",{day: "2-digit"});
+        let previousMonth = previousUnixTime.toLocaleString("en-US",{month: "2-digit"});
+        let previousYear  = previousUnixTime.toLocaleString("en-US",{year: "numeric"});
+
+        $('#formFilterRekap-custom input[name=date-start]').val(`${previousYear}-${previousMonth}-${previousDay}`);
+        $('#formFilterRekap-custom input[name=date-end]').val(`${currentYear}-${currentMonth}-${currentDay}`);
+
+        $('#formFilterRekap-custom input[type=date]').removeClass('is-invalid');
+        $('#btn-filter-rekap-custom').attr('onclick','cetakCustomRekap();');
+    }
+
+    resetFilterRekap();
+    insertPorvinsi();
+})
+
 // get data wilayah
 let arrayWilayah = [];
 const getAllWilayah = async () => {
-
     let httpResponse = await httpRequestGet(`${APIURL}/nasabah/wilayah`);
-
-    let tmpProvinsi  = [];
-    let elprovinsi   = `<option value="">-- pilih provinsi --</option>`;
     
     if (httpResponse.status === 200) {
         arrayWilayah = httpResponse.data.data;
-
-        arrayWilayah.forEach(w=> {
-            if (!tmpProvinsi.includes(w.provinsi)) {
-                tmpProvinsi.push(w.provinsi)
-                elprovinsi += `<option value="${w.provinsi}" data-provinsi="${w.provinsi}">${w.provinsi}</option>`;
-            }
-        });
+        insertPorvinsi();
     }
-
-    $('#formFilterRekapTransaksi select[name=provinsi]').html(elprovinsi);
 };
 getAllWilayah();
 
+const insertPorvinsi = () => {
+    let tmpProvinsi  = [];
+    let elprovinsi   = `<option value="">-- pilih provinsi --</option>`;
+    
+    arrayWilayah.forEach(w=> {
+        if (!tmpProvinsi.includes(w.provinsi)) {
+            tmpProvinsi.push(w.provinsi)
+            elprovinsi += `<option value="${w.provinsi}" data-provinsi="${w.provinsi}">${w.provinsi}</option>`;
+        }
+    });
+
+    $('#modalFilterRekapTransaksi select[name=provinsi]').html(elprovinsi);
+};
+
 // wilayah on change
-$('#formFilterRekapTransaksi select[name=provinsi]').on('change', function() {
+$('#modalFilterRekapTransaksi select[name=provinsi]').on('change', function() {
     let tmpKota = [];
     let elKota  = `<option value="">-- pilih kota --</option>`;
     
     if ($(this).val() != '') {
-        $('#formFilterRekapTransaksi select[name=kota]').removeAttr('disabled');
+        $('#modalFilterRekapTransaksi select[name=kota]').removeAttr('disabled');
 
         arrayWilayah.forEach(w=> {
             if (w.provinsi == $(this).val()) {
@@ -1060,23 +1134,23 @@ $('#formFilterRekapTransaksi select[name=provinsi]').on('change', function() {
             }
         });
 
-        $('#formFilterRekapTransaksi select[name=kota]').html(elKota);
+        $('#modalFilterRekapTransaksi select[name=kota]').html(elKota);
     }
     else {
-        $('#formFilterRekapTransaksi select[name=kota]').attr('disabled',true);
+        $('#modalFilterRekapTransaksi select[name=kota]').attr('disabled',true);
     }
-    $('#formFilterRekapTransaksi select[name=kota]').val('');
-    $('#formFilterRekapTransaksi select[name=kecamatan]').val('');
-    $('#formFilterRekapTransaksi select[name=kecamatan]').attr('disabled',true);
-    $('#formFilterRekapTransaksi select[name=kelurahan]').val('');
-    $('#formFilterRekapTransaksi select[name=kelurahan]').attr('disabled',true);
+    $('#modalFilterRekapTransaksi select[name=kota]').val('');
+    $('#modalFilterRekapTransaksi select[name=kecamatan]').val('');
+    $('#modalFilterRekapTransaksi select[name=kecamatan]').attr('disabled',true);
+    $('#modalFilterRekapTransaksi select[name=kelurahan]').val('');
+    $('#modalFilterRekapTransaksi select[name=kelurahan]').attr('disabled',true);
 });
-$('#formFilterRekapTransaksi select[name=kota]').on('change', function() {
+$('#modalFilterRekapTransaksi select[name=kota]').on('change', function() {
     let tmpKecamatan = [];
     let elKecamatan  = `<option value="">-- pilih kecamatan --</option>`;
 
     if ($(this).val() != '') {
-        $('#formFilterRekapTransaksi select[name=kecamatan]').removeAttr('disabled');
+        $('#modalFilterRekapTransaksi select[name=kecamatan]').removeAttr('disabled');
 
         arrayWilayah.forEach(w=> {
             if (w.kota == $(this).val()) {
@@ -1087,21 +1161,21 @@ $('#formFilterRekapTransaksi select[name=kota]').on('change', function() {
             }
         });
 
-        $('#formFilterRekapTransaksi select[name=kecamatan]').html(elKecamatan);
+        $('#modalFilterRekapTransaksi select[name=kecamatan]').html(elKecamatan);
     }
     else {
-        $('#formFilterRekapTransaksi select[name=kecamatan]').attr('disabled',true);
+        $('#modalFilterRekapTransaksi select[name=kecamatan]').attr('disabled',true);
     }
-    $('#formFilterRekapTransaksi select[name=kecamatan]').val('');
-    $('#formFilterRekapTransaksi select[name=kelurahan]').val('');
-    $('#formFilterRekapTransaksi select[name=kelurahan]').attr('disabled',true);
+    $('#modalFilterRekapTransaksi select[name=kecamatan]').val('');
+    $('#modalFilterRekapTransaksi select[name=kelurahan]').val('');
+    $('#modalFilterRekapTransaksi select[name=kelurahan]').attr('disabled',true);
 });
-$('#formFilterRekapTransaksi select[name=kecamatan]').on('change', function() {
+$('#modalFilterRekapTransaksi select[name=kecamatan]').on('change', function() {
     let tmpKelurahan = [];
     let elKelurahan  = `<option value="">-- pilih kelurahan --</option>`;
 
     if ($(this).val() != '') {
-        $('#formFilterRekapTransaksi select[name=kelurahan]').removeAttr('disabled');
+        $('#modalFilterRekapTransaksi select[name=kelurahan]').removeAttr('disabled');
 
         arrayWilayah.forEach(w=> {
             if (w.kecamatan == $(this).val()) {
@@ -1112,17 +1186,38 @@ $('#formFilterRekapTransaksi select[name=kecamatan]').on('change', function() {
             }
         });
 
-        $('#formFilterRekapTransaksi select[name=kelurahan]').html(elKelurahan);
+        $('#modalFilterRekapTransaksi select[name=kelurahan]').html(elKelurahan);
     }
     else {
-        $('#formFilterRekapTransaksi select[name=kelurahan]').attr('disabled',true);
+        $('#modalFilterRekapTransaksi select[name=kelurahan]').attr('disabled',true);
     }
-    $('#formFilterRekapTransaksi select[name=kelurahan]').val('');
+    $('#modalFilterRekapTransaksi select[name=kelurahan]').val('');
 });
 
+// input date on change
+$('#formFilterRekap-custom input[type=date]').on('change',function (e) {
+    let dateStart = $('#formFilterRekap-custom input[name=date-start]').val();
+    let dateEnd   = $('#formFilterRekap-custom input[name=date-end]').val();
+
+    if (dateStart && dateEnd) {
+        $('#formFilterRekap-custom input[type=date]').removeClass('is-invalid');
+        $('#btn-filter-rekap-custom').attr('onclick','cetakCustomRekap();');
+    }
+    else {
+        $('#btn-filter-rekap-custom').removeAttr('onclick');
+
+        if (dateStart == '') {
+            $('#formFilterRekap-custom input[name=date-start]').addClass('is-invalid');
+        }
+        if (dateEnd == '') {
+            $('#formFilterRekap-custom input[name=date-end]').addClass('is-invalid');
+        }
+    }
+})
+
 // do filter rekap
-const filterRekapTransaksi = async (e) => {
-    let formFilter = new FormData(e.parentElement.parentElement.parentElement);
+const doFilterRekapPertahun = async () => {
+    let formFilter = new FormData(document.querySelector('#formFilterRekap-pertahun'));
     let ketFilter  = `${formFilter.get('year')} - `;
     rekapTUrl      = `${APIURL}/transaksi/rekapdata?year=${formFilter.get('year')}`;
     wilayahRekapUrl = ``;
@@ -1157,18 +1252,57 @@ const filterRekapTransaksi = async (e) => {
     getRekapTransaksi();
 };
 
-// reset filter rekap
-const resetFilterRekapT = async (e) => {
-    $('#formFilterRekapTransaksi select[name=year]').val(new Date().getFullYear());
+// do filter rekap
+const cetakCustomRekap = () => {
+    let formFilter      = new FormData(document.querySelector('#formFilterRekap-custom'));
+    let inputStartDate  = formFilter.get('date-start').split('-');
+    let inputEndDate    = formFilter.get('date-end').split('-');
+    
+    let start = `${inputStartDate[2]}-${inputStartDate[1]}-${inputStartDate[0]}`;
+    let end   = `${inputEndDate[2]}-${inputEndDate[1]}-${inputEndDate[0]}`;
+    let customRekapTUrl = `${BASEURL}/transaksi/cetakrekap?start=${start}&end=${end}`;
 
-    $('#formFilterRekapTransaksi select[name=orderby]').val('terbaru');
-    $('#formFilterRekapTransaksi select[name=provinsi]').val('');
-    $('#formFilterRekapTransaksi select[name=kota]').val('');
-    $('#formFilterRekapTransaksi select[name=kota]').attr('disabled',true);
-    $('#formFilterRekapTransaksi select[name=kecamatan]').val('');
-    $('#formFilterRekapTransaksi select[name=kecamatan]').attr('disabled',true);
-    $('#formFilterRekapTransaksi select[name=kelurahan]').val('');
-    $('#formFilterRekapTransaksi select[name=kelurahan]').attr('disabled',true);
+    if (formFilter.get('kelurahan')) {
+        customRekapTUrl  += `&kelurahan=${formFilter.get('kelurahan')}`;
+    }
+    if (formFilter.get('kecamatan')) {
+        customRekapTUrl  += `&kecamatan=${formFilter.get('kecamatan')}`;
+    }
+    if (formFilter.get('kota')) {
+        customRekapTUrl  += `&kota=${formFilter.get('kota')}`;
+    }
+    if (formFilter.get('provinsi')) {
+        customRekapTUrl  += `&provinsi=${formFilter.get('provinsi')}`
+    }
+    if (formFilter.get('provinsi') == '') {
+        customRekapTUrl  = `${BASEURL}/transaksi/cetakrekap?start=${start}&end=${end}`;
+    }
+
+    console.log(customRekapTUrl);
+    window.open(customRekapTUrl, '_blank');
+};
+
+// reset filter rekap
+const resetFilterRekap = (event = null,year = null) => {
+    if (event) {
+        event.preventDefault(event);
+    }
+
+    if (year) {
+        $('#modalFilterRekapTransaksi select[name=year]').val(year);
+    }
+    else{
+        $('#modalFilterRekapTransaksi select[name=year]').val(new Date().getFullYear());
+    }
+
+    $('#modalFilterRekapTransaksi select[name=orderby]').val('terbaru');
+    $('#modalFilterRekapTransaksi select[name=provinsi]').val('');
+    $('#modalFilterRekapTransaksi select[name=kota]').val('');
+    $('#modalFilterRekapTransaksi select[name=kota]').attr('disabled',true);
+    $('#modalFilterRekapTransaksi select[name=kecamatan]').val('');
+    $('#modalFilterRekapTransaksi select[name=kecamatan]').attr('disabled',true);
+    $('#modalFilterRekapTransaksi select[name=kelurahan]').val('');
+    $('#modalFilterRekapTransaksi select[name=kelurahan]').attr('disabled',true);
 };
 
 // Get rekap transaksi
@@ -1199,35 +1333,38 @@ const getRekapTransaksi = async () => {
                 </td>
                 <td class="py-3 align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
                     <span class="text-xs text-name font-weight-bold">
-                        <i class="fas fa-trash text-xs text-success mr-3">
+                        <i class="fas fa-trash text-xs text-success mr-1"></i>
+                        <span class="text-success">
                             ${parseFloat(allTransaksi[key].totSampahMasuk).toFixed(1)} kg
-                        </i>
-                        <span class="${(wilayahRekapUrl != '') ? 'd-none' : '' }">&nbsp;</i>
-                        <i class="${(wilayahRekapUrl != '') ? 'd-none' : '' } fas fa-trash text-xs text-info mr-3">
+                        </span>
+                        <i class="${(wilayahRekapUrl != '') ? 'd-none' : '' } fas fa-trash text-xs text-info ml-3 mr-1"></i>
+                        <span class="${(wilayahRekapUrl != '') ? 'd-none' : '' } text-info">
                             ${parseFloat(allTransaksi[key].totSampahKeluar).toFixed(1)} kg
-                        </i>
+                        </span>
                     </span>
                 </td>
                 <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
                     <span class="text-xs text-name font-weight-bold">
-                        <i class="fas fa-dollar-sign text-xs text-success mr-3">
-                        Rp ${kFormatter(allTransaksi[key].totUangMasuk)}
-                        </i>
-                        &nbsp;
-                        <i class="fas fa-dollar-sign text-xs text-danger mr-3">
+                        <i class="fas fa-dollar-sign text-xs text-success mr-1"></i>
+                        <span class="text-success">
+                            Rp ${kFormatter(allTransaksi[key].totUangMasuk)}
+                        </span>
+                        <i class="fas fa-dollar-sign text-xs text-danger ml-3 mr-1"></i>
+                        <span class="text-danger">
                             Rp ${kFormatter(allTransaksi[key].totUangKeluar)}
-                        </i>
+                        </span>        
                     </span>
                 </td>
                 <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
                     <span class="text-xs text-name font-weight-bold">
-                        <i class="fas fa-coins text-xs text-success mr-3">
+                        <i class="fas fa-coins text-xs text-success mr-1"></i>
+                        <span class="text-success">
                             ${parseFloat(allTransaksi[key].totEmasMasuk).toFixed(1)}  g
-                        </i>
-                        &nbsp;
-                        <i class="fas fa-coins text-xs text-danger mr-3">
+                        </span>
+                        <i class="fas fa-coins text-xs text-danger ml-3 mr-1"></i>
+                        <span class="text-danger">
                             ${parseFloat(allTransaksi[key].totEmasKeluar).toFixed(1)} g
-                        </i>
+                        </span>      
                     </span>
                 </td>
                 <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
@@ -1236,7 +1373,7 @@ const getRekapTransaksi = async () => {
                     </span>
                 </td>
                 <td class="align-middle text-center">
-                    <a href="${BASEURL}/transaksi/cetakrekap/${allTransaksi[key].date1}?${wilayahRekapUrl}" target="_blank" class="badge badge-dark text-xxs pb-1 rounded-sm cursor-pointer">cetak</a>
+                    <a href="${BASEURL}/transaksi/cetakrekap?date=${allTransaksi[key].date1}&${wilayahRekapUrl}" target="_blank" class="badge badge-dark text-xxs pb-1 cursor-pointer" style="border-radius:4px;">cetak</a>
                 </td>
             </tr>`;
         }

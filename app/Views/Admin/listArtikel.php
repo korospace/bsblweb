@@ -7,10 +7,7 @@
 			height:100%;
 		}
 	</style>
-  	<!-- ** develoment ** -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<!-- ** production ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.listartikel.css'); ?>"> -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -28,8 +25,7 @@
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -43,7 +39,7 @@
 		<!-- **** Sidebar **** -->
 		<?= $this->include('Components/adminSidebar'); ?>
 
-		<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg d-flex flex-column" style="">
+		<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg d-flex flex-column">
 			<!-- navbar -->
 			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
 				<div class="container-fluid py-1 px-3">
@@ -78,7 +74,7 @@
 					<div class="col-12" style="max-height: 100%;">
 						<div class="card mb-4 h-100 d-flex flex-column" style="max-height: 100%;overflow: hidden;font-family: 'qc-semibold';">
 							<!-- search input -->
-							<div class="card-header form-row pb-0 d-flex justify-content-between" style="font-family: 'qc-semibold';">
+							<div class="card-header form-row pb-3 d-flex justify-content-between" style="font-family: 'qc-semibold';">
 								<div class="input-group col-12 col-sm-6">
 									<div class="input-group-prepend">
 										<span class="input-group-text bg-gray px-4 border-md border-right-0" style="max-height: 39px;">

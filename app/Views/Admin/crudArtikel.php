@@ -12,6 +12,9 @@
 		border-radius : 10px;
 		margin-bottom: 20px;
 	}
+	#table-kategori-artikel th {
+		border-top: 0px !important;
+	}
 	</style>
   	<!-- ** develoment ** -->
 	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
@@ -44,8 +47,7 @@
 	<script src="<?= base_url('assets/js/plugins/compress.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.artikel.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -229,7 +231,7 @@
 						<div id="list-kategori-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 							<h6 id="text-notfound" class='opacity-6 text-sm'>kategori belum ditambah</h6>
 						</div>
-						<table id="table-kategori-berita" class="table table-hover text-center mb-0" style="">
+						<table id="table-kategori-artikel" class="table table-hover text-center mb-0" style="">
 							<thead class="position-sticky bg-white" style="z-index: 11;top: 0;">
 								<tr>
 									<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -249,7 +251,7 @@
 						</table>
 					</div>
 					<hr class="horizontal dark mt-2 mb-2">
-					<h6 class="font-italic opacity-8">Tambah kategori</h6>
+					<h6 class="font-italic opacity-8">kategori baru</h6>
 					<div class="input-group col-lg-12 px-0 form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">

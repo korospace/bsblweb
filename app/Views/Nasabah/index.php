@@ -42,14 +42,11 @@
 		} 
 	</style>
 
-  	<!-- ** develoment ** -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<!-- ** production ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/nasabah.dashboard.css'); ?>"> -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/softui/nasabah.dashboard.css'); ?>"> -->
+
 <?= $this->endSection(); ?>
 
 <!-- JS -->
@@ -60,7 +57,7 @@
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/nasabah.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/nasabah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Html -->
@@ -70,7 +67,7 @@
 	<!-- **** Alert Info **** -->
 	<?= $this->include('Components/alertInfo'); ?>
 
-	<body class="g-sidenav-show bg-gray-100" style="">
+	<body class="g-sidenav-show bg-gray-100">
 		<!-- **** Sidebar **** -->
 		<?= $this->include('Components/nasabahSidebar'); ?>
 
@@ -107,7 +104,7 @@
 
 				<!-- sampah masuk -->
 				<div id="row-sampah-masuk" class="row">
-					<div class="card-wraper col-xl-3 col-6 mb-xl-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('kertas')">
+					<div class="card-wraper col-xl-3 col-6 mb-md-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('kertas')">
 						<div class="card">
 							<div class="card-body p-3">
 								<div class="row" style="font-family: 'qc-medium';">
@@ -128,7 +125,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="card-wraper col-xl-3 col-6 mb-xl-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('logam')">
+					<div class="card-wraper col-xl-3 col-6 mb-md-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('logam')">
 						<div class="card">
 							<div class="card-body p-3">
 								<div class="row" style="font-family: 'qc-medium';">
@@ -149,7 +146,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="card-wraper col-xl-3 col-6 mb-xl-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('plastik')">
+					<div class="card-wraper col-xl-3 col-6 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('plastik')">
 						<div class="card">
 							<div class="card-body p-3">
 								<div class="row" style="font-family: 'qc-medium';">
@@ -194,7 +191,7 @@
 				</div>
 				
 				<!-- transaksi -->
-				<div class="row mt-4">
+				<div id="row-transaksi" class="row mt-5">
 					<!-- grafik -->
 					<div class="col-lg-8">
 						<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
@@ -228,7 +225,7 @@
 						</div>
 					</div>
 					<!-- Transaksi -->
-					<div class="col-lg-4 mt-5 mt-lg-0">
+					<div id="history-transaksi" class="col-lg-4 mt-5 mt-lg-0">
 						<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
 							<!-- header -->
 							<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
@@ -263,7 +260,7 @@
 
 				<div class="row mt-5 p-0">
 					<!-- saldo -->
-					<div class="col-12">
+					<div id="jumlah-saldo" class="col-12">
 						<div class="row px-4">
 							<div class="col-lg-12 p-0">
 								<div class="row">
@@ -433,7 +430,7 @@
 
 	<!-- modals detail sampah-->
 	<div class="modal fade" id="modalDetailSampah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<form id="formFilterTransaksi" class="modal-dialog" role="document">
+		<form id="formFilterTransaksi" class="modal-dialog modal-dialog-centered" role="document">
 			<input type="hidden" name="id">
 			<div class="modal-content" style="overflow: hidden;">
 
@@ -466,7 +463,7 @@
 
 	<!-- modals filter transaksi-->
 	<div class="modal fade" id="modalFilterTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<form id="formFilterTransaksi" class="modal-dialog modal-sm" role="document">
+		<form id="formFilterTransaksi" class="modal-dialog modal-sm modal-dialog-centered" role="document">
 			<input type="hidden" name="id">
 			<div class="modal-content" style="overflow: hidden;">
 

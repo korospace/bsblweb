@@ -60,6 +60,7 @@ class Artikel extends BaseController
             $data = [
                 "id"          => $idBerita,
                 "title"       => strtolower(trim($data['title'])),
+                "slug"        => preg_replace('/ /i', '-',strtolower(trim($data['title']))),
                 // "thumbnail"   => $this->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
                 "thumbnail"   => $dbFileName,
                 "content"     => trim($data['content']),
@@ -115,6 +116,7 @@ class Artikel extends BaseController
             $data = [
                 "id"          => trim($data['id']),
                 "title"       => strtolower(trim($data['title'])),
+                "slug"        => preg_replace('/ /i', '-',strtolower(trim($data['title']))),
                 "content"     => trim($data['content']),
                 "id_kategori" => trim($data['id_kategori']),
                 "created_by"  => $result['data']['userid'],
@@ -234,8 +236,8 @@ class Artikel extends BaseController
             return $this->respond($response,400);
         }
 
-        $id         = $this->request->getGet('id');
-        $dbResponse = $this->artikelModel->getRelatedArtikel($id);
+        $slug       = ($this->request->getGet('slug'))?$this->request->getGet('slug'):'';
+        $dbResponse = $this->artikelModel->getRelatedArtikel($slug);
     
         return $this->respond($dbResponse,$dbResponse['status']);
     }

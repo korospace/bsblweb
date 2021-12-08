@@ -18,6 +18,10 @@ class Artikel extends Migration
                 'constraint' => 255,
                 'null'       => false,
             ],
+            'slug' => [
+                'type' => 'text',
+                'null' => false,
+            ],
             'thumbnail' => [
                 'type' => 'text',
                 'null' => false,

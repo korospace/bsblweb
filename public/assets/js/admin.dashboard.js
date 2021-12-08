@@ -74,105 +74,193 @@ const getSaldoNasabah = async () => {
     }
 };
 
-// filter transaksi on change
-let currentYear  = '';
-$('.filter-transaksi').on('input', function(e) {
-    chartGrafik.destroy();
-    currentYear  = $(`#filter-year`).val();
-    getRekapTransaksi(currentYear);
+/**
+ * GRAFIK PENYETORAN Section
+ * =========================================
+ */
+// get data wilayah
+let arrayWilayah = [];
+const getAllWilayah = async () => {
+
+    let httpResponse = await httpRequestGet(`${APIURL}/nasabah/wilayah`);
+
+    let tmpProvinsi  = [];
+    let elprovinsi   = `<option value="">-- pilih provinsi --</option>`;
+    
+    if (httpResponse.status === 200) {
+        arrayWilayah = httpResponse.data.data;
+
+        arrayWilayah.forEach(w=> {
+            if (!tmpProvinsi.includes(w.provinsi)) {
+                tmpProvinsi.push(w.provinsi)
+                elprovinsi += `<option value="${w.provinsi}" data-provinsi="${w.provinsi}">${w.provinsi}</option>`;
+            }
+        });
+    }
+
+    $('#formFilterGrafikSetor select[name=provinsi]').html(elprovinsi);
+};
+getAllWilayah();
+
+// wilayah on change
+$('#formFilterGrafikSetor select[name=provinsi]').on('change', function() {
+    let tmpKota = [];
+    let elKota  = `<option value="">-- pilih kota --</option>`;
+    
+    if ($(this).val() != '') {
+        $('#formFilterGrafikSetor select[name=kota]').removeAttr('disabled');
+
+        arrayWilayah.forEach(w=> {
+            if (w.provinsi == $(this).val()) {
+                if (!tmpKota.includes(w.kota)) {
+                    tmpKota.push(w.kota)
+                    elKota += `<option value="${w.kota}">${w.kota}</option>`;
+                }
+            }
+        });
+
+        $('#formFilterGrafikSetor select[name=kota]').html(elKota);
+    }
+    else {
+        $('#formFilterGrafikSetor select[name=kota]').attr('disabled',true);
+    }
+    $('#formFilterGrafikSetor select[name=kota]').val('');
+    $('#formFilterGrafikSetor select[name=kecamatan]').val('');
+    $('#formFilterGrafikSetor select[name=kecamatan]').attr('disabled',true);
+    $('#formFilterGrafikSetor select[name=kelurahan]').val('');
+    $('#formFilterGrafikSetor select[name=kelurahan]').attr('disabled',true);
+});
+$('#formFilterGrafikSetor select[name=kota]').on('change', function() {
+    let tmpKecamatan = [];
+    let elKecamatan  = `<option value="">-- pilih kecamatan --</option>`;
+
+    if ($(this).val() != '') {
+        $('#formFilterGrafikSetor select[name=kecamatan]').removeAttr('disabled');
+
+        arrayWilayah.forEach(w=> {
+            if (w.kota == $(this).val()) {
+                if (!tmpKecamatan.includes(w.kecamatan)) {
+                    tmpKecamatan.push(w.kecamatan)
+                    elKecamatan += `<option value="${w.kecamatan}">${w.kecamatan}</option>`;
+                }
+            }
+        });
+
+        $('#formFilterGrafikSetor select[name=kecamatan]').html(elKecamatan);
+    }
+    else {
+        $('#formFilterGrafikSetor select[name=kecamatan]').attr('disabled',true);
+    }
+    $('#formFilterGrafikSetor select[name=kecamatan]').val('');
+    $('#formFilterGrafikSetor select[name=kelurahan]').val('');
+    $('#formFilterGrafikSetor select[name=kelurahan]').attr('disabled',true);
+});
+$('#formFilterGrafikSetor select[name=kecamatan]').on('change', function() {
+    let tmpKelurahan = [];
+    let elKelurahan  = `<option value="">-- pilih kelurahan --</option>`;
+
+    if ($(this).val() != '') {
+        $('#formFilterGrafikSetor select[name=kelurahan]').removeAttr('disabled');
+
+        arrayWilayah.forEach(w=> {
+            if (w.kecamatan == $(this).val()) {
+                if (!tmpKelurahan.includes(w.kelurahan)) {
+                    tmpKelurahan.push(w.kelurahan)
+                    elKelurahan += `<option value="${w.kelurahan}">${w.kelurahan}</option>`;
+                }
+            }
+        });
+
+        $('#formFilterGrafikSetor select[name=kelurahan]').html(elKelurahan);
+    }
+    else {
+        $('#formFilterGrafikSetor select[name=kelurahan]').attr('disabled',true);
+    }
+    $('#formFilterGrafikSetor select[name=kelurahan]').val('');
 });
 
-/**
- * GET REKAP TRANSAKSI
- */
-const getRekapTransaksi = async (year) => {
-    $('.spinner-wraper').removeClass('d-none');
-    $('#transaksi-wraper').addClass('d-none');
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/rekapdata?year=${year}`);
-    $('.spinner-wraper').addClass('d-none'); 
-    $('#transaksi-wraper').removeClass('d-none');
-    
-    if (httpResponse.status === 404) {
-        updateGrafikSetor([],[]);
-        $('#transaksi-wraper').html(`<h6 class='opacity-6'>belum ada transaksi</h6>`); 
-    }
-    else if (httpResponse.status === 200) {
-        let arrayMonth   = [];
-        let arrayKg      = [];
-        let elTransaksi  = '';
-        let allTransaksi = httpResponse.data.data;
+// do filter rekap
+const filterGrafikSetor = async (e) => {
+    let formFilter = new FormData(e.parentElement.parentElement.parentElement);
+    let ketFilter  = `${formFilter.get('year')} - `;
+    penyetoranUrl  = `${APIURL}/transaksi/grafikssampah?year=${formFilter.get('year')}&tampilan=${formFilter.get('tampilan')}`;
+    typeTampilan   = formFilter.get('tampilan');
 
-        for (const key in allTransaksi) {
-            arrayMonth.push(key);
-            arrayKg.push(allTransaksi[key].totSampahMasuk);
-    
-            elTransaksi  += `<li class="list-group-item border-0 p-0 border-radius-lg">
-                <div class="d-flex align-items-center justify-content-between px-1">
-                    <div class="d-flex flex-column" style="flex:1;">
-                        <h6 class="text-dark font-weight-bold text-sm">${allTransaksi[key].date2}</h6>
-                        <div class="d-flex w-100">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <i class="fas fa-trash text-xs text-success mr-3">
-                                            ${allTransaksi[key].totSampahMasuk} kg
-                                        </i>
-                                    </td>
-                                    <td>
-                                        <i class="fas fa-dollar-sign text-xs text-success mr-3">
-                                        Rp ${kFormatter(allTransaksi[key].totUangMasuk)}
-                                        </i>
-                                    </td>
-                                    <td>
-                                        <i class="fas fa-coins text-xs text-success mr-3">
-                                            ${allTransaksi[key].totEmasMasuk} g
-                                        </i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <i class="fas fa-trash text-xs text-danger mr-3">
-                                            ${allTransaksi[key].totSampahKeluar} kg
-                                        </i>
-                                    </td>
-                                    <td>
-                                        <i class="fas fa-dollar-sign text-xs text-danger mr-3">
-                                            Rp ${kFormatter(allTransaksi[key].totUangKeluar)}
-                                        </i>
-                                    </td>
-                                    <td>
-                                        <i class="fas fa-coins text-xs text-danger mr-3">
-                                            ${allTransaksi[key].totEmasKeluar} g
-                                        </i>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <a href="${BASEURL}/admin/cetakrekap/${allTransaksi[key].date1}" target="_blank" class="btn btn-link text-dark text-sm mb-0 px-0 h-100">
-                        <i class="fas fa-file-pdf text-lg me-1"></i> PDF
-                    </a>
-                </div>
-                <hr class="horizontal dark">
-            </li>`;
-        }
-        
-        updateGrafikSetor(arrayMonth,arrayKg);
-        $('#transaksi-wraper').html(`<ul class="list-group h-100 w-100" style="font-family: 'qc-medium';">
-            ${elTransaksi}
-        </ul>`);
+    if (formFilter.get('kelurahan')) {
+        ketFilter  += `${formFilter.get('kelurahan')}, `;
+        penyetoranUrl  += `&kelurahan=${formFilter.get('kelurahan')}`;
     }
+    if (formFilter.get('kecamatan')) {
+        ketFilter  += `${formFilter.get('kecamatan')}, `;
+        penyetoranUrl  += `&kecamatan=${formFilter.get('kecamatan')}`;
+    }
+    if (formFilter.get('kota')) {
+        ketFilter  += `${formFilter.get('kota')}, `;
+        penyetoranUrl  += `&kota=${formFilter.get('kota')}`;
+    }
+    if (formFilter.get('provinsi')) {
+        ketFilter  += `${formFilter.get('provinsi')}`
+        penyetoranUrl  += `&provinsi=${formFilter.get('provinsi')}`
+    }
+    if (formFilter.get('provinsi') == '') {
+        ketFilter  = `${formFilter.get('year')} - semua wilayah`;
+        penyetoranUrl  = `${APIURL}/transaksi/grafikssampah?year=${formFilter.get('year')}&tampilan=${formFilter.get('tampilan')}`;
+    }
+
+    $('#ket-filter-grafik-penyetoran').html(`${ketFilter} <small class="text-xxs">(${formFilter.get('tampilan')})</small>`);
+    getDataSetorSampah();
 };
 
-// update grafik setor
-let chartGrafik = '';
-const updateGrafikSetor = (arrayMonth,arrayKg) => {
-    var ctx2       = document.getElementById("chart-line").getContext("2d");
-    // let chartWidth = arrayId.length*160;
-    document.querySelector("#chart-line").style.width    = '100%';
-    document.querySelector("#chart-line").style.height   = '340px';
-    document.querySelector("#chart-line").style.maxHeight= '340px';
-    // document.querySelector("#chart-line").style.minWidth = `${chartWidth}px`;
+// reset filter rekap
+const resetFilterGrafik = async (e) => {
+    $('#formFilterGrafikSetor select[name=year]').val(new Date().getFullYear());
+    $('#formFilterGrafikSetor select[name=orderby]').val('terbaru');
+    
+    $('#formFilterGrafikSetor select[name=provinsi]').val('');
+    $('#formFilterGrafikSetor select[name=kota]').val('');
+    $('#formFilterGrafikSetor select[name=kota]').attr('disabled',true);
+    $('#formFilterGrafikSetor select[name=kecamatan]').val('');
+    $('#formFilterGrafikSetor select[name=kecamatan]').attr('disabled',true);
+    $('#formFilterGrafikSetor select[name=kelurahan]').val('');
+    $('#formFilterGrafikSetor select[name=kelurahan]').attr('disabled',true);
+
+    $('#formFilterGrafikSetor .form-check-input').prop('checked',false);
+    $(`#formFilterGrafikSetor input#per-bulan`).prop('checked',true);
+};
+
+// Get data penyetoran
+let chartGrafik     = '';
+let typeTampilan    = 'per-bulan';
+let penyetoranUrl   = `${APIURL}/transaksi/grafikssampah?year=${new Date().getFullYear()}&tampilan=per-bulan`;
+const getDataSetorSampah = async () => {
+
+    $('#spinner-grafik-penyetoran').removeClass('d-none');
+    let httpResponse = await httpRequestGet(penyetoranUrl);
+    $('#spinner-grafik-penyetoran').addClass('d-none'); 
+
+    let chartType = 'line';
+    let arrayX = [];
+    let arrayY = [];
+    
+    if (httpResponse.status === 200) {
+        let allTransaksi = httpResponse.data.data;
+        
+        for (const key in allTransaksi) {
+            arrayX.push(key);
+            arrayY.push(allTransaksi[key].totSampahMasuk);
+        }
+    }
+
+    if (chartGrafik != '') {
+        chartGrafik.destroy();
+    }
+    if (typeTampilan == 'per-daerah') {
+        chartType = 'bar';
+    }
+
+    var ctx2 = document.getElementById("chart-grafik-penyetoran").getContext("2d");
+    document.querySelector("#chart-grafik-penyetoran").style.width    = '100%';
+    document.querySelector("#chart-grafik-penyetoran").style.maxHeight= '300px';
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
     gradientStroke1.addColorStop(1, 'rgba(193,217,102,0.2)');
@@ -180,14 +268,14 @@ const updateGrafikSetor = (arrayMonth,arrayKg) => {
     var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
     gradientStroke2.addColorStop(1, 'rgba(193,217,102,0.2)');
 
-    for (let i = arrayMonth.length; i <10; i++) {
-        arrayMonth.push(' ');
+    for (let i = arrayX.length; i <10; i++) {
+        arrayX.push(' ');
     }
 
     chartGrafik = new Chart(ctx2, {
-        type: "line",
+        type: chartType,
         data: {
-            labels: arrayMonth,
+            labels: arrayX,
             datasets: [
                 {
                     label: "Kg",
@@ -198,7 +286,7 @@ const updateGrafikSetor = (arrayMonth,arrayKg) => {
                     borderWidth: 3,
                     backgroundColor: gradientStroke1,
                     fill: true,
-                    data: arrayKg,
+                    data: arrayY,
                     maxBarThickness: 6,
                     minBarLength: 6,
                 },

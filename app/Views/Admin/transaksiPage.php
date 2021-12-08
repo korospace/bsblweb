@@ -8,7 +8,7 @@
 			/* background-color: #b2b8c2; */
 		}
 
-		#toggle,.switch-section{
+		.toggle-transaksi,.toggle-rekap,.switch-section{
 			transition: all 0.3s;
 		}
 		.switch-section:hover{
@@ -27,10 +27,7 @@
 			width: 80px;
 		}
 	</style>
-  	<!-- ** develoment ** -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<!-- ** production ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.transaksi.css'); ?>"> -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -49,8 +46,7 @@
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.transaksi.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.transaksi.min.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.transaksi.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -102,8 +98,8 @@
 						<div class="card h-100 d-flex flex-column" style="font-family: 'qc-semibold';overflow: hidden;">
 							<!-- toggle switch -->
 							<div class="form-row mt-2 py-2 d-flex justify-content-center" style="font-family: 'qc-semibold';">
-								<div id="toggle-wraper" class="position-relative p-0 d-flex align-items-center text-xxs" style="overflow: hidden;border-radius: 12px;width: 320px;height: 28px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
-									<div id="toggle" class="position-absolute d-flex justify-content-center align-items-center bg-success opacity-7 text-white" data-color="success" style="width: 78px;height: 26px;z-index: 10;left: 1px;border-radius: 10px;">setor sampah</div>
+								<div id="toggle-transaksi-wraper" class="position-relative p-0 d-flex align-items-center text-xxs" style="overflow: hidden;border-radius: 12px;width: 320px;height: 28px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
+									<div class="toggle-transaksi position-absolute d-flex justify-content-center align-items-center bg-success opacity-7 text-white" data-color="success" style="width: 78px;height: 26px;z-index: 10;left: 1px;border-radius: 10px;">setor sampah</div>
 
 									<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative opacity-0" data-form="setor-jual-sampah" data-color="success" style="flex: 1;z-index: 9;border-radius: 10px;">setor sampah</div>
 									<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative" data-form="konversi-saldo" data-color="warning" style="flex: 1;z-index: 9;border-radius: 10px;">konversi saldo</div>
@@ -221,7 +217,7 @@
 													</tr>
 												</thead>
 												<tbody style="border: 0.5px solid #E9ECEF;">
-													<tr id="special-tr" class="text-light">
+													<tr id="special-tr">
 														<td colspan="4" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
 															Total harga
 														</td>
@@ -553,12 +549,10 @@
 								<div class="form-row pb-0 mt-3 d-flex justify-content-between" style="font-family: 'qc-semibold';">
 									<!-- Btn filter -->
 									<div class="d-flex align-items-center text-sm">
-										<a class="shadow px-1 border-radius-none mr-2" href="" data-toggle="modal" data-target="#modalFilterRekapTransaksi" style="border-radius: 4px;">
+										<a class="shadow px-1 border-radius-none mr-2" href="" data-toggle="modal" data-target="#modalFilterRekapTransaksi" style="border-radius: 4px;" onclick="openModalFilterRekapT();">
 											<i class="fas fa-sliders-h text-muted"></i>
 										</a>
-										<span id="ket-filter-rekap-transaksi" class="">
-											<?= (int)date("Y"); ?> - semua wilayah
-										</span>
+										<span id="ket-filter-rekap-transaksi" class=""><?= (int)date("Y"); ?> - semua wilayah</span>
 									</div>
 								</div>
 							</div>
@@ -782,7 +776,7 @@
 
 	<!-- modals filter rekap transaksi-->
 	<div class="modal fade" id="modalFilterRekapTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<form id="formFilterRekapTransaksi" class="modal-dialog" role="document">
+		<div class="modal-dialog" role="document">
 			<div class="modal-content" style="overflow: hidden;">
 
 				<!-- modal header -->
@@ -794,53 +788,116 @@
 				</div>
 
 				<!-- modal body -->
-				<div class="modal-body w-100 px-3">
-					<h6 class="font-italic text-xs text-secondary">Tahun</h6>
-					<div class="input-group col-12 px-0">
-						<select id="year" name="year" class="filter-transaksi custom-select custom-select-sm w-100 mt-3" style="max-height: 31px;">
-							<?php $curYear = (int)date("Y"); ?>
-							<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
-								<option value="<?= $i; ?>"><?= $i; ?></option>
-							<?php } ?>
-						</select>
+				<div class="modal-body form-row w-100 px-3">
+
+					<div class="col-12 d-flex justify-content-center">
+						<div id="toggle-rekap-wraper" class="position-relative p-0 d-flex align-items-center text-xxs" style="overflow: hidden;border-radius: 12px;width: 160px;height: 28px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
+							<div class="toggle-rekap position-absolute d-flex justify-content-center align-items-center bg-success opacity-7 text-white" data-color="success" style="width: 78px;height: 26px;z-index: 10;left: 1px;border-radius: 10px;">per-tahun</div>
+
+							<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative opacity-0" data-form="pertahun" data-color="success" style="flex: 1;z-index: 9;border-radius: 10px;">per-tahun</div>
+							<div class="switch-section h-100 d-flex justify-content-center align-items-center cursor-pointer position-relative" data-form="custom" data-color="warning" style="flex: 1;z-index: 9;border-radius: 10px;">custom</div>
+						</div>
 					</div>
-					<h6 class="font-italic text-xs text-secondary mt-4">Wilayah</h6>
-					<div class="mt-2 position-relative">
-						<select class='form-control form-control-sm' name="provinsi">
-							<option value="">-- pilih provinsi --</option>
-						</select>
-						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
-					</div>
-					<div class="mt-2 position-relative">
-						<select class='form-control form-control-sm' name="kota" disabled>
-							<option value="">-- pilih kota --</option>
-						</select>
-						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
-					</div>
-					<div class="mt-2 position-relative">
-						<select class='form-control form-control-sm' name="kecamatan" disabled>
-							<option value="">-- pilih kecamatan --</option>
-						</select>
-						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
-					</div>
-					<div class="mt-2 position-relative">
-						<select class='form-control form-control-sm' name="kelurahan" disabled>
-							<option value="">-- pilih kelurahan --</option>
-						</select>
-						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
-					</div>
+
+					<form id="formFilterRekap-pertahun" class="mt-3 col-12">
+						<h6 class="font-italic text-xs text-secondary">Tahun</h6>
+						<div class="input-group col-12 px-0">
+							<select id="year" name="year" class="filter-transaksi custom-select custom-select-sm w-100 mt-0" style="max-height: 31px;">
+								<?php $curYear = (int)date("Y"); ?>
+								<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
+									<option value="<?= $i; ?>"><?= $i; ?></option>
+								<?php } ?>
+							</select>
+						</div>
+						<h6 class="font-italic text-xs text-secondary mt-4">Wilayah</h6>
+						<div class="mt-2 position-relative">
+							<select class='form-control form-control-sm' name="provinsi">
+								<option value="">-- pilih provinsi --</option>
+							</select>
+							<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+						</div>
+						<div class="mt-2 position-relative">
+							<select class='form-control form-control-sm' name="kota" disabled>
+								<option value="">-- pilih kota --</option>
+							</select>
+							<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+						</div>
+						<div class="mt-2 position-relative">
+							<select class='form-control form-control-sm' name="kecamatan" disabled>
+								<option value="">-- pilih kecamatan --</option>
+							</select>
+							<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+						</div>
+						<div class="mt-2 position-relative">
+							<select class='form-control form-control-sm' name="kelurahan" disabled>
+								<option value="">-- pilih kelurahan --</option>
+							</select>
+							<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+						</div>
+					</form>
+
+					<form id="formFilterRekap-custom" class="mt-3 col-12 d-none">
+						<h6 class="font-italic text-xs text-secondary">From</h6>
+						<div class="input-group col-12 px-0">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-calendar-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-start" name="date-start">
+						</div>
+						<h6 class="font-italic text-xs text-secondary mt-3">To</h6>
+						<div class="input-group col-12 px-0">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-calendar-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-end" name="date-end">
+						</div>
+						<h6 class="font-italic text-xs text-secondary mt-4">Wilayah</h6>
+						<div class="mt-2 position-relative">
+							<select class='form-control form-control-sm' name="provinsi">
+								<option value="">-- pilih provinsi --</option>
+							</select>
+							<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+						</div>
+						<div class="mt-2 position-relative">
+							<select class='form-control form-control-sm' name="kota" disabled>
+								<option value="">-- pilih kota --</option>
+							</select>
+							<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+						</div>
+						<div class="mt-2 position-relative">
+							<select class='form-control form-control-sm' name="kecamatan" disabled>
+								<option value="">-- pilih kecamatan --</option>
+							</select>
+							<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+						</div>
+						<div class="mt-2 position-relative">
+							<select class='form-control form-control-sm' name="kelurahan" disabled>
+								<option value="">-- pilih kelurahan --</option>
+							</select>
+							<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+						</div>
+					</form>
 				</div>
 
 				<!-- modal footer -->
-				<div class="modal-footer">
-					<span class="badge badge-secondary d-flex justify-content-center align-items-center border-0 cursor-pointer" onclick="resetFilterRekapT();">
+				<div id="modal-footer-pertahun" class="modal-footer">
+					<a href="" class="badge badge-secondary d-flex justify-content-center align-items-center border-0 cursor-pointer" onclick="resetFilterRekap(event);">
 						<span>Reset</span>
-					</span>
-					<span id="btn-filter-data-transaksi" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" data-dismiss="modal" onclick="filterRekapTransaksi(this,event);">
+					</a>
+					<a href="" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" data-dismiss="modal" onclick="doFilterRekapPertahun();">
 						<span>Ok</span>
-					</span>
+					</a>
+				</div>
+				<div id="modal-footer-custom" class="modal-footer d-none">
+					<button id="btn-filter-rekap-custom" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" onclick="cetakCustomRekap();">
+						<span>Cetak</span>
+					</button>
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
 <?= $this->endSection(); ?>

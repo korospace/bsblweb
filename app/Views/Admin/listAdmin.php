@@ -40,8 +40,8 @@
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.listadmin.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.listadmin.min.js'); ?>"></script> -->
+	<!-- <script src="<?= base_url('assets/js/admin.listadmin.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.listadmin.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -169,7 +169,7 @@
 		</main>
 	</body>
 
-	<!-- modals Add / Edit nasabah -->
+	<!-- modals Add / Edit admin -->
 	<div class="modal fade" id="modalAddEditAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<form id="formAddEditAdmin" class="modal-dialog modal-dialog-centered" role="document" onsubmit="crudAdmin(this,event);">
 			<input type="hidden" name="id">

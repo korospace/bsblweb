@@ -81,7 +81,6 @@
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.detilnasabah.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.detilnasabah.min.js'); ?>"></script> -->
 <?= $this->endSection(); ?>
 
 <!-- Html -->
@@ -150,6 +149,7 @@
 			</ul>
 		</div>
 	</aside>
+
 	<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
 		<!-- Navbar -->
 		<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
@@ -160,7 +160,7 @@
 						<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
 						<li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
 					</ol>
-					<h6 class="font-weight-bolder mb-0">Dashboard nasabah</h6>
+					<h4 id="navbar-namalengkap" class="font-weight-bolder text-capitalize mt-2 mb-0" style="font-size: 16px;">_ _ _ _</h4>
 				</nav>
 				<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 					<div class="ms-auto pe-md-3 d-flex align-items-center">

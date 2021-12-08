@@ -20,6 +20,8 @@ class Nasabah extends BaseController
      */
     public function dashboardNasabah()
     {
+        // dd('nasabah dash');
+
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token,false);
         $data   = [
@@ -48,6 +50,8 @@ class Nasabah extends BaseController
      */
     public function profileNasabah()
     {
+        // dd('nasabah profile');
+
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result = $this->checkToken($token,false);
         $data = [

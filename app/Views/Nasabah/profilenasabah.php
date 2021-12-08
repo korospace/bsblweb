@@ -3,9 +3,6 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
 	<style>
-		td.max60-sm{
-			max-width: 100px !important;
-		}
 
 		@media (max-width: 640px) {
 			h4.text-responsive{
@@ -19,9 +16,6 @@
 			}
 			tr.text-responsive{
 				font-size: 12px;
-			}
-			td.max60-sm{
-				max-width: 52px !important;
 			}
 		} 
 	</style>
@@ -133,11 +127,11 @@
 								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 							</div>
 							<div class="table-responsive card-body mt-4 p-3">
-								<table class="" style="font-family: 'qc-medium';min-width: 490px;">
+								<table class="" style="font-family: 'qc-medium';min-width: min-content;">
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2" style="font-family: 'qc-semibold';">
 											<strong>Nama lengkap</strong>
-
+											&nbsp;
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
@@ -145,9 +139,8 @@
 										</td>
 									</tr>
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2" style="font-family: 'qc-semibold';">
 											<strong>Username</strong>
-
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
@@ -155,9 +148,8 @@
 										</td>
 									</tr>
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2" style="font-family: 'qc-semibold';">
 											<strong>Tanggal lahir</strong>
-
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
@@ -165,9 +157,8 @@
 										</td>
 									</tr>
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2" style="font-family: 'qc-semibold';">
 											<strong>Jenis kelamin</strong>
-
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
@@ -175,9 +166,8 @@
 										</td>
 									</tr>
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2" style="font-family: 'qc-semibold';">
 											<strong>Alamat</strong>
-
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;
@@ -185,9 +175,8 @@
 										</td>
 									</tr>
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2" style="font-family: 'qc-semibold';">
 											<strong>No.telepon</strong>
-
 										</td>
 										<td>: 
 											&nbsp;&nbsp;&nbsp;

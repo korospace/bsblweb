@@ -13,8 +13,7 @@ const sessioncheck = async () => {
         if (pageTitle2 === 'dashboard') {
             getSampahMasuk();
             getSaldoNasabah();
-            // getLastTransaksi();
-            // getRekapTransaksi(currentYear);
+            getDataSetorSampah();
         }
         if (pageTitle2 === 'list sampah') {
             getAllKatSampah();

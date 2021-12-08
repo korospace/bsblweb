@@ -103,8 +103,16 @@ let dateStartGrafik  = '';
 let dateEndGrafik    = '';
 let dateStartHistori = '';
 let dateEndHistori   = '';
-let setCurrentStartDate = () =>  {
-    let currentUnixTime = new Date(new Date().getTime());
+let setCurrentStartDate = (unixTime = null,updateGrafik = true) =>  {
+    let currentUnixTime = '';
+    
+    if (unixTime) {
+        currentUnixTime = new Date(unixTime);    
+    } 
+    else {
+        currentUnixTime = new Date(new Date().getTime());
+    }
+
     let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "2-digit"});
     let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "2-digit"});
     let currentYear  = currentUnixTime.toLocaleString("en-US",{year: "numeric"});
@@ -114,13 +122,15 @@ let setCurrentStartDate = () =>  {
     let previousMonth = previousUnixTime.toLocaleString("en-US",{month: "2-digit"});
     let previousYear  = previousUnixTime.toLocaleString("en-US",{year: "numeric"});
 
-    dateStartGrafik  = `${previousDay}-${previousMonth}-${previousYear}`;
-    dateEndGrafik    = `${currentDay}-${currentMonth}-${currentYear}`;
+    if (updateGrafik) {
+        dateStartGrafik = `${previousDay}-${previousMonth}-${previousYear}`;
+        dateEndGrafik   = `${currentDay}-${currentMonth}-${currentYear}`;
+        $('#btn-filter-grafik #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
+        $('#btn-filter-grafik #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
+    }
+
     dateStartHistori = `${previousDay}-${previousMonth}-${previousYear}`;
     dateEndHistori   = `${currentDay}-${currentMonth}-${currentYear}`;
-
-    $('#btn-filter-grafik #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
-    $('#btn-filter-grafik #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
     $('#btn-filter-histori #startdate').html(`${previousDay}/${previousMonth}/${previousYear}`);
     $('#btn-filter-histori #enddate').html(`${currentDay}/${currentMonth}/${currentYear}`);
 }
@@ -272,7 +282,7 @@ const updateGrafikSetorNasabah = async () => {
 const getHistoriTransaksi = async () => {
     $('#spinner-wraper-histori').removeClass('d-none');
     $('#transaksi-wraper-histori').addClass('d-none');
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&start=${dateStartHistori}&end=${dateEndHistori}`);
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&orderby=terbaru&start=${dateStartHistori}&end=${dateEndHistori}`);
     $('#spinner-wraper-histori').addClass('d-none'); 
     $('#transaksi-wraper-histori').removeClass('d-none');
     
@@ -497,6 +507,8 @@ const getDataProfileNasabah = async () => {
     else if (httpResponse.status === 200) {
         let dataNasabah = httpResponse.data.data[0];
         let date        = new Date(parseInt(dataNasabah.created_at) * 1000);
+
+        $('#navbar-namalengkap').html(dataNasabah.nama_lengkap);
 
         // -- nasabah card --
         $('#card-id').html(`${dataNasabah.id.slice(0, 5)}&nbsp;&nbsp;&nbsp;${dataNasabah.id.slice(5, 9)}&nbsp;&nbsp;&nbsp;${dataNasabah.id.slice(9,99999999)}`);
@@ -936,11 +948,11 @@ const doTransaksi = async (el,event,method) => {
             if (httpResponse.status === 201) {
                 $(`.form-control`).val('');
                 $('.form-check-input').prop('checked',false);
-                chartGrafik.destroy();
-                updateGrafikSetorNasabah();
-                getHistoriTransaksi();
+                $(`input[type=date]`).val(getCurrentDate());
+                $(`input[type=time]`).val(getCurrentTime());
+                updateHistoryT(`${tglTransaksi[0]}/${tglTransaksi[1]}/${tglTransaksi[2]}`);
                 getSaldoNasabah();
-    
+                
                 if (method == 'setorsampah') {
                     $('.barisSetorSampah').remove();
                     tambahBaris();
@@ -968,7 +980,13 @@ const doTransaksi = async (el,event,method) => {
             }
         }
     }
+}
 
+const updateHistoryT = (valInputDate) => {
+    let unixStart = new Date(`${valInputDate} 00:00:01`).getTime();
+
+    setCurrentStartDate(unixStart,false);
+    getHistoriTransaksi();
 }
 
 /**
@@ -1010,8 +1028,8 @@ const deleteTransaksiNasabah = (id,event) => {
                         return httpRequestDelete(`${APIURL}/transaksi/deletedata?id=${id}`)
                         .then((e) => {
                             if (e.status == 201) {
-                                chartGrafik.destroy();
-                                updateGrafikSetorNasabah();
+                                // chartGrafik.destroy();
+                                // updateGrafikSetorNasabah();
                                 getHistoriTransaksi();
                                 getSaldoNasabah();
                             }

@@ -134,7 +134,7 @@ $routes->group("sampah", function ($routes) {
 
 $routes->group("transaksi", function ($routes) {
     $routes->add('cetaktransaksi/(:any)','Transaksi::cetakTransaksi/$1');
-    $routes->add('cetakrekap/(:any)',    'Transaksi::cetakRekap/$1');
+    $routes->add('cetakrekap',           'Transaksi::cetakRekap');
     //API
     $routes->post("setorsampah",  "Transaksi::setorSampah");
     $routes->post("tariksaldo",   "Transaksi::tarikSaldo");
@@ -144,7 +144,7 @@ $routes->group("transaksi", function ($routes) {
     $routes->get("getsaldo",      "Transaksi::getSaldo");
     $routes->get("getdata",       "Transaksi::getData");
     $routes->get("rekapdata",     "Transaksi::rekapData");
-    $routes->get("lasttransaksi", "Transaksi::lastTransaksi");
+    $routes->get("grafikssampah", "Transaksi::grafikSetorSampah");
     $routes->delete("deletedata", "Transaksi::deleteData");
     $routes->add("(:any)",        "Notfound::PageNotFound");
 });

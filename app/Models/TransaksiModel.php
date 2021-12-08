@@ -165,7 +165,7 @@ class TransaksiModel extends Model
 
     public function jumlahTps(string $idNasabah): int
     {
-        $transaction = $this->db->table($this->table)->select('count(id) AS jumlah')->where('id_user',$idNasabah)->where('jenis_transaksi','pindah saldo')->get()->getResultArray();
+        $transaction = $this->db->table($this->table)->select('count(id) AS jumlah')->where('id_user',$idNasabah)->where('jenis_transaksi','konversi saldo')->get()->getResultArray();
 
         return (int)$transaction[0]['jumlah'];
     }
@@ -330,7 +330,7 @@ class TransaksiModel extends Model
                     JOIN sampah       ON (setor_sampah.id_sampah = sampah.id) 
                     WHERE transaksi.id = '$id_transaksi';")->getResultArray();
 
-                    $transaction = $this->makeDetilTransaksi($transaction);
+                    $transaction = $this->makeDetilSetorJualSampah($transaction);
                 } 
                 else if ($code_transaksi == 'TTS') {
                     $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,tarik_saldo.jenis_saldo,tarik_saldo.jumlah_tarik,transaksi.date 
@@ -354,7 +354,7 @@ class TransaksiModel extends Model
                     JOIN sampah       ON (jual_sampah.id_sampah = sampah.id) 
                     WHERE transaksi.id = '$id_transaksi';")->getResultArray();
 
-                    $transaction = $this->makeDetilTransaksi($transaction);
+                    $transaction = $this->makeDetilSetorJualSampah($transaction);
                 } 
                 else {
                     $transaction = false;
@@ -388,7 +388,7 @@ class TransaksiModel extends Model
                 $orderby     = (isset($get['orderby']) && $get['orderby']=='terbaru')? 'DESC': 'ASC';
                 $query      .= " ORDER BY transaksi.date $orderby;";
                 $transaction = $this->db->query($query)->getResultArray();
-                $transaction = $this->filterData($transaction);
+                $transaction = $this->filterAllTransaksi($transaction);
             } 
 
             if (empty($transaction)) {    
@@ -416,46 +416,7 @@ class TransaksiModel extends Model
         }
     }
 
-    public function lastTransaksi(string $limit): array
-    {
-        try {
-            $limit  = (int)$limit;
-            $query  = "SELECT transaksi.id AS id_transaksi,nasabah.nama_lengkap,transaksi.type,transaksi.date,transaksi.jenis_saldo,
-            (SELECT SUM(harga) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS total_setor,
-            (SELECT SUM(jumlah) AS total_kg from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
-            (SELECT SUM(jumlah) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id) AS total_tarik,
-            (SELECT SUM(jumlah) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS total_pindah 
-            FROM transaksi 
-            JOIN nasabah ON (transaksi.id_nasabah = nasabah.id)
-            ORDER BY transaksi.date DESC LIMIT $limit;";
-
-            $transaction = $this->db->query($query)->getResultArray();
-            $transaction = $this->filterData($transaction);
-
-            if (empty($transaction)) {    
-                return [
-                    'success' => false,
-                    'message' => "transaction notfound",
-                    'code'    => 404
-                ];
-            } 
-            else {   
-                return [
-                    'success' => true,
-                    'data'    => $transaction
-                ];
-            }
-        } 
-        catch (Exception $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code'    => 500
-            ];
-        }
-    }
-
-    public function makeDetilTransaksi(array $data): array
+    public function makeDetilSetorJualSampah(array $data): array
     {
         $detil  = [];
         $barang = [];
@@ -484,7 +445,7 @@ class TransaksiModel extends Model
         return $detil;
     }
 
-    public function filterData(array $data): array
+    public function filterAllTransaksi(array $data): array
     {
         $transaction = [];
 
@@ -525,11 +486,20 @@ class TransaksiModel extends Model
         try {
             $transaction = [];
 
-            if (isset($get['date'])) {
-                $start         = (int)strtotime('01-'.$get['date']);
-                $end           = $start+(86400*30);
+            if (isset($get['date']) || isset($get['start']) && isset($get['end'])) {
+                if (isset($get['date'])) {
+                    $start = (int)strtotime('01-'.$get['date']);
+                    $end   = $start+(86400*30);
+                    unset($get['date']);
+                } 
+                else {
+                    $start = (int)strtotime($get['start'].' 01:00');
+                    $end   = (int)strtotime($get['end'].' 23:59');
+                    unset($get['start']);
+                    unset($get['end']);
+                }
+                
                 $filterWIlayah = '';
-                unset($get['date']);
 
                 foreach ($get as $key => $value) {
                     $filterWIlayah .= "AND wilayah.$key = '$value' ";
@@ -648,7 +618,7 @@ class TransaksiModel extends Model
 
         foreach ($data as $d) {
 
-            $newD = $this->removeNull($d);
+            $newD = $this->removeNullRekap($d);
             // $id_transaksi = substr($newD['id'],0,3);
 
             if ($year) {
@@ -659,10 +629,10 @@ class TransaksiModel extends Model
             }
         }
 
-        return $this->groupingEachTrans($transaction);
+        return $this->groupingEachRekap($transaction);
     }
 
-    public function removeNull(array $data): array
+    public function removeNullRekap(array $data): array
     {
         $newData = $data;
 
@@ -688,7 +658,7 @@ class TransaksiModel extends Model
         return $newData;
     }
 
-    public function groupingEachTrans(array $data): array
+    public function groupingEachRekap(array $data): array
     {
         $newData = [];
 
@@ -740,6 +710,156 @@ class TransaksiModel extends Model
         }
 
         return $newData;
+    }
+
+    public function grafikSetorSampah(array $get): array
+    {
+        try {
+            $transaction = [];
+            
+            $query  = "SELECT transaksi.id,transaksi.date,wilayah.provinsi,
+            (SELECT SUM(jumlah_kg) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id)
+            FROM transaksi
+            JOIN wilayah ON (transaksi.id_user = wilayah.id_user)";
+
+            if (isset($get['provinsi'])) {
+                $provinsi = $get['provinsi'];
+                $query    = "SELECT transaksi.id,transaksi.date,wilayah.provinsi,wilayah.kota,
+                (SELECT SUM(jumlah_kg) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id)
+                FROM transaksi
+                JOIN wilayah ON (transaksi.id_user = wilayah.id_user)
+                WHERE wilayah.provinsi = '$provinsi'";
+            }
+
+            if (isset($get['kota'])) {
+                $provinsi = $get['provinsi'];
+                $kota     = $get['kota'];
+                $query    = "SELECT transaksi.id,transaksi.date,wilayah.provinsi,wilayah.kota,wilayah.kecamatan,
+                (SELECT SUM(jumlah_kg) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id)
+                FROM transaksi
+                JOIN wilayah ON (transaksi.id_user = wilayah.id_user)
+                WHERE wilayah.provinsi = '$provinsi'
+                AND  wilayah.kota      = '$kota'";
+            }
+
+            if (isset($get['kecamatan'])) {
+                $provinsi = $get['provinsi'];
+                $kota     = $get['kota'];
+                $kecamatan= $get['kecamatan'];
+                $query    = "SELECT transaksi.id,transaksi.date,wilayah.provinsi,wilayah.kota,wilayah.kecamatan,
+                (SELECT SUM(jumlah_kg) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id)
+                FROM transaksi
+                JOIN wilayah ON (transaksi.id_user = wilayah.id_user)
+                WHERE wilayah.provinsi = '$provinsi'
+                AND  wilayah.kota      = '$kota'
+                AND  wilayah.kecamatan = '$kecamatan'";
+            }
+
+            $year = null;
+            if (isset($get['year'])) {
+                $year   = $get['year'];
+                $start  = (int)strtotime('01-01-'.$get['year']);
+                $end    = $start+(86400*365);
+
+                if (isset($get['provinsi'])) {
+                    $query .= " AND transaksi.date BETWEEN '$start' AND '$end'";
+                } 
+                else {
+                    $query .= " WHERE transaksi.date BETWEEN '$start' AND '$end'";
+                }
+            } 
+
+            $query      .= " ORDER BY transaksi.date ASC;";
+            $transaction = $this->db->query($query)->getResultArray();
+            $transaction = $this->removeNullGrafik($transaction);
+
+            if (isset($get['tampilan']) && $get['tampilan']=='perwilayah') {
+                $transaction = $this->groupingGrafikPerwilayah($transaction,$year);
+            } 
+            else {
+                $transaction = $this->groupingGrafikPerbulan($transaction,$year);
+            }
+
+            // var_dump($transaction);die;
+
+            if (empty($transaction)) {    
+                return [
+                    'status'   => 404,
+                    'error'    => true,
+                    'messages' => "transaction notfound",
+                ];
+            } 
+            else {   
+                return [
+                    'status' => 200,
+                    'error'  => false,
+                    'data'   => $transaction
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
+            ];
+        }
+    }
+
+
+    public function removeNullGrafik(array $data): array
+    {
+        $newData = [];
+
+        foreach ($data as $d) {
+            if ($d['sampah_masuk'] != null) {
+                $newData[] = $d;
+            }
+        }
+
+        return $newData;
+    }
+
+    public function groupingGrafikPerbulan(array $data,?string $year): array
+    {
+        $transaction = [];
+        
+        foreach ($data as $d) {
+            if ($year) {
+                $transaction[strtolower(date('F', $d['date']))][] = $d;
+            } 
+            else {
+                $transaction[strtolower(date('F-Y', $d['date']))][] = $d;
+            }
+        }
+
+        $newTransaction = [];
+
+        foreach ($transaction as $key => $value) {
+            $date1           = '';
+            $date2           = '';
+            $totSampahMasuk  = 0;
+            
+            foreach ($value as $v) {
+                $date1        = date('m-Y', $v['date']);
+                $date2        = date("F, Y", $v['date']);
+                $id_transaksi = substr($v['id'],0,3);
+
+                if ($id_transaksi == 'TSS') {
+                    $totSampahMasuk = $totSampahMasuk + (float)$v['sampah_masuk'];
+                }
+            }
+
+            $newTransaction[$key] = [
+                'date1'           => $date1,
+                'date2'           => $date2,
+                'totSampahMasuk'  => $totSampahMasuk,
+            ];
+        }
+
+        // var_dump($newTransaction);die;
+
+        return $newTransaction;
     }
 
     public function deleteData(string $idtransaksi): array

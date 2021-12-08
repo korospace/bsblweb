@@ -502,6 +502,13 @@ class Validation
 
     // edit nasabah
 	public $editNasabahValidate = [
+		'id' => [
+            'rules'  => 'required|is_not_unique[users.id]',
+            'errors' => [
+                'required'      => 'id is required',
+                'is_not_unique' => 'nasabah with id ({value}) is not found',
+            ],
+		],
 		'username' => [
             'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username,users.id,{id}]',
             'errors' => [
@@ -555,6 +562,13 @@ class Validation
                 'in_list'     => "value must be '1' or '0'",
             ],
 		],
+		'is_active' => [
+            'rules'  => 'required|in_list[1,0]',
+            'errors' => [
+                'required'    => 'is_active is required',
+                'in_list'     => "value must be '1' or '0'",
+            ],
+		]
 	];
     
     // edit admin data
@@ -722,11 +736,11 @@ class Validation
 	];
 
     public $getRelatedArtikel = [
-		'id' => [
-            'rules'  => 'required|is_not_unique[artikel.id]',
+		'slug' => [
+            'rules'  => 'required|is_not_unique[artikel.slug]',
             'errors' => [
-                'required'      => 'id is required',
-                'is_not_unique' => 'artikel with id ({value}) is not found',
+                'required'      => 'slug is required',
+                'is_not_unique' => 'artikel with id ({slug}) is not found',
             ],
 		]
 	];
@@ -994,26 +1008,6 @@ class Validation
             'rules'  => 'regex_match[/^(0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
             'errors' => [
                 'regex_match' => 'format must be mm-yyyy',
-            ],
-		],
-	];
-
-	public $lastTransaksi = [
-		'limit' => [
-            'rules'  => 'required|is_natural_no_zero',
-            'errors' => [
-                'required'           => 'parameter limit is required',
-                'is_natural_no_zero' => 'only number allowed',
-            ],
-		],
-	];
-
-	public $detilTransaksiCheck = [
-		'type' => [
-            'rules'  => 'required|in_list[setor,tarik,pindah]',
-            'errors' => [
-                'required' => 'type is required',
-                'in_list'  => "value must be 'setor/tarik/pindah'",
             ],
 		],
 	];

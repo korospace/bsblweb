@@ -60,7 +60,7 @@ class Admin extends BaseController
         if($result['success'] == false) {
             setcookie('token', null, -1, '/');
             unset($_COOKIE['token']);
-            return redirect()->to(base_url().'/login');
+            return redirect()->to(base_url().'/login/admin');
         } 
         else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
             return redirect()->to(base_url().'/notfound');
@@ -88,7 +88,7 @@ class Admin extends BaseController
         if($result['success'] == false) {
             setcookie('token', null, -1, '/');
             unset($_COOKIE['token']);
-            return redirect()->to(base_url().'/login');
+            return redirect()->to(base_url().'/login/admin');
         } 
         else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
             return redirect()->to(base_url().'/notfound');
@@ -115,7 +115,7 @@ class Admin extends BaseController
         if($result['success'] == false) {
             setcookie('token', null, -1, '/');
             unset($_COOKIE['token']);
-            return redirect()->to(base_url().'/login');
+            return redirect()->to(base_url().'/login/admin');
         } 
         else if($result['data']['privilege'] != 'superadmin') {
             return redirect()->to(base_url().'/notfound');
@@ -142,7 +142,7 @@ class Admin extends BaseController
         if($result['success'] == false) {
             setcookie('token', null, -1, '/');
             unset($_COOKIE['token']);
-            return redirect()->to(base_url().'/login');
+            return redirect()->to(base_url().'/login/admin');
         } 
         else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
             return redirect()->to(base_url().'/notfound');
@@ -169,7 +169,7 @@ class Admin extends BaseController
         if($result['success'] == false) {
             setcookie('token', null, -1, '/');
             unset($_COOKIE['token']);
-            return redirect()->to(base_url().'/login');
+            return redirect()->to(base_url().'/login/admin');
         } 
         else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
             return redirect()->to(base_url().'/notfound');
@@ -196,7 +196,7 @@ class Admin extends BaseController
         if($result['success'] == false) {
             setcookie('token', null, -1, '/');
             unset($_COOKIE['token']);
-            return redirect()->to(base_url().'/login');
+            return redirect()->to(base_url().'/login/admin');
         }  
         else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
             return redirect()->to(base_url().'/notfound');
@@ -225,7 +225,7 @@ class Admin extends BaseController
             if($result['success'] == false) {
                 setcookie('token', null, -1, '/');
                 unset($_COOKIE['token']);
-                return redirect()->to(base_url().'/login');
+                return redirect()->to(base_url().'/login/admin');
             } 
             else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
                 return redirect()->to(base_url().'/notfound');
@@ -255,7 +255,7 @@ class Admin extends BaseController
         if($result['success'] == false) {
             setcookie('token', null, -1, '/');
             unset($_COOKIE['token']);
-            return redirect()->to(base_url().'/login');
+            return redirect()->to(base_url().'/login/admin');
         } 
         else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
             return redirect()->to(base_url().'/notfound');
@@ -284,7 +284,7 @@ class Admin extends BaseController
             if($result['success'] == false) {
                 setcookie('token', null, -1, '/');
                 unset($_COOKIE['token']);
-                return redirect()->to(base_url().'/login');
+                return redirect()->to(base_url().'/login/admin');
             } 
             else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
                 return redirect()->to(base_url().'/notfound');
@@ -518,77 +518,70 @@ class Admin extends BaseController
 
         $this->_methodParser('data');
         global $data;
-
-        $id           = (isset($data['id'])) ? $data['id'] : 'null';
-        $dataNasabah  = $this->userModel->db->table('users')->select('id')->where("id",$id)->get()->getResultArray();
         
-        if (!empty($dataNasabah)) {
+        $this->validation->run($data,'editNasabahValidate');
+        $errors = $this->validation->getErrors();
 
-            $this->validation->run($data,'editNasabahValidate');
-            $errors = $this->validation->getErrors();
-
-            if($errors) {
-                $response = [
-                    'status'   => 400,
-                    'error'    => true,
-                    'messages' => $errors,
-                ];
-        
-                return $this->respond($response,400);
-            } 
-            else {
-                $newpass = '';
-
-                if (isset($data['new_password'])) {
-                    if ($data['new_password'] != '') {
-                        $this->validation->run($data,'newPassword');
-                        $errors = $this->validation->getErrors();
-                        
-                        if($errors) {
-                            $response = [
-                                'status'   => 400,
-                                'error'    => true,
-                                'messages' => $errors,
-                            ];
-                    
-                            return $this->respond($response,400);
-                        } 
-                        else {
-                            $newpass = $data['new_password'];
-                        }
-                    }
-                }
-        
-                $data = [
-                    "id"           => $data['id'],
-                    "username"     => trim($data['username']),
-                    "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                    "notelp"       => trim($data['notelp']),
-                    "alamat"       => trim($data['alamat']),
-                    "tgl_lahir"    => trim($data['tgl_lahir']),
-                    "kelamin"      => $data['kelamin'],
-                    "is_verify"    => (trim($data['is_verify']) == '1') ?true:false,
-                ];
-
-                if ($newpass != '') {
-                    $data['password'] = $this->encrypt($newpass);
-                }
-
-                $editNasabah  = $this->userModel->editUser($data);
-
-                return $this->respond($editNasabah,$editNasabah['status']);
-            }
-        } 
-        else {
+        if($errors) {
             $response = [
-                'status'   => 404,
+                'status'   => 400,
                 'error'    => true,
-                'messages' => [
-                    'id'   => "nasabah with id ($id) not found",
-                ],
+                'messages' => $errors,
             ];
     
-            return $this->respond($response,404);
+            return $this->respond($response,400);
+        } 
+        else {
+            $newpass = '';
+
+            if (isset($data['new_password'])) {
+                if ($data['new_password'] != '') {
+                    $this->validation->run($data,'newPassword');
+                    $errors = $this->validation->getErrors();
+                    
+                    if($errors) {
+                        $response = [
+                            'status'   => 400,
+                            'error'    => true,
+                            'messages' => $errors,
+                        ];
+                
+                        return $this->respond($response,400);
+                    } 
+                    else {
+                        $newpass = $data['new_password'];
+                    }
+                }
+            }
+    
+            $data = [
+                "id"           => $data['id'],
+                "username"     => trim($data['username']),
+                "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
+                "notelp"       => trim($data['notelp']),
+                "alamat"       => trim($data['alamat']),
+                "tgl_lahir"    => trim($data['tgl_lahir']),
+                "kelamin"      => $data['kelamin'],
+                "is_verify"    => (trim($data['is_verify']) == '1') ?true:false,
+                "is_active"    => (trim($data['is_active']) == '1') ?true:false,
+            ];
+
+            if ($newpass != '') {
+                $data['password'] = $this->encrypt($newpass);
+            }
+            
+            $dataNasabah  = $this->userModel->db->table('users')->select('is_active')->where("id",$data['id'])->get()->getResultArray();
+            
+            if ($dataNasabah[0]['is_active'] == 'f') {
+                if ($data['is_active'] == true) {
+                    $data['last_active'] = (int)time();
+                    $data['created_at']  = (int)time();
+                }
+            }
+
+            $editNasabah  = $this->userModel->editUser($data);
+
+            return $this->respond($editNasabah,$editNasabah['status']);
         }
     }
 

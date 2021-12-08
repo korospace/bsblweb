@@ -15,11 +15,13 @@ const sessioncheck = async () => {
     // $(`#filter-year`).val(currentYear);
 
     if (httpResponse.status === 200) {
-        getSampahMasuk();
-        updateGrafikSetorNasabah();
-        getHistoriTransaksi();
-        getDataSaldo();
-        getAllJenisSampah();
+        if (pageTitle2 === 'dashboard') {
+            getSampahMasuk();
+            updateGrafikSetorNasabah();
+            getHistoriTransaksi();
+            getDataSaldo();
+            getAllJenisSampah();
+        }
         getDataProfile();
     }
 };

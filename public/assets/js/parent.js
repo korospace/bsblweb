@@ -255,9 +255,8 @@ const httpRequestDelete = (url) => {
 $('#btn-logout').on('click', function(e) {
     e.preventDefault();
 
-    let url      = (pageTitle1 == 'Nasabah')?`${APIURL}/nasabah/logout`:`${APIURL}/admin/logout`;
-    let loginUrl = (pageTitle1 == 'Nasabah')?`${BASEURL}/login`:`${BASEURL}/login/admin`;
-    // console.log(loginUrl);return 0;
+    let url      = (pageTitle1 === 'Nasabah')?`${APIURL}/nasabah/logout`:`${APIURL}/admin/logout`;
+    let loginUrl = (pageTitle1 === 'Nasabah')?`${BASEURL}/login`:`${BASEURL}/login/admin`;
     
     Swal.fire({
         title: 'LOGOUT',
@@ -280,6 +279,10 @@ $('#btn-logout').on('click', function(e) {
                 document.cookie = `token=null; path=/;`;
                 document.cookie = `lasturl=null; path=/;`;
                 window.location.replace(loginUrl);
+                // setTimeout(() => {
+                //     console.log(loginUrl);
+                //     return 0;
+                // }, 5000);
             })
             .catch(error => {
                 // unauthorized

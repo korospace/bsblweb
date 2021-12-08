@@ -82,6 +82,7 @@
 				</div>
 			</div>
 		</nav>
+
 		<!-- End Navbar -->
 		<div class="container-fluid py-4">
 			<!-- sampah masuk -->
@@ -261,48 +262,38 @@
 			</div>
 
 			<!-- grafik -->
-			<div class="row mt-5">
+			<div class="row mt-4">
 				<!-- grafik -->
-				<div class="col-lg-8">
+				<div class="col-12">
 					<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
 						<!-- header -->
 						<div class="card-header pb-0" style="z-index: 11;">
-							<h6>Grafik Penyetoran</h6>
-						</div>
-						<!-- spinner -->
-						<!-- <div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-						</div> -->
-						<div class="card-body p-3 mt-2">
-							<div class="chart">
-								<canvas id="chart-line" class="chart-canvas"></canvas>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Transaksi -->
-				<div class="col-lg-4 mt-4 mt-lg-0">
-					<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
-						<!-- header -->
-						<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
-							<div class="row" style="font-family: 'qc-semibold';">
+							<!-- tittle -->
+							<div class="row">
 								<div class="col-12">
-									<h6 class="mb-0">Rekap Transaksi</h6>
-									<select id="filter-year" class="filter-transaksi custom-select custom-select-sm w-100 mt-3" style="max-height: 31px;">
-										<?php $curYear = (int)date("Y"); ?>
-										<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
-											<option value="<?= $i; ?>"><?= $i; ?></option>
-										<?php } ?>
-									</select>
+									<h5 class="text-center">Grafik Penyetoran Sampah</h5>
+								</div>
+							</div>
+							<div class="form-row pb-0 mt-3 d-flex justify-content-between" style="font-family: 'qc-semibold';">
+								<!-- Btn filter -->
+								<div class="d-flex align-items-center text-sm">
+									<a class="shadow px-1 border-radius-none mr-2" href="" data-toggle="modal" data-target="#modalFilterGrafikSetor" style="border-radius: 4px;">
+										<i class="fas fa-sliders-h text-muted"></i>
+									</a>
+									<span id="ket-filter-grafik-penyetoran" class="">
+										<?= (int)date("Y"); ?> - semua wilayah <small class="text-xxs">(per-bulan)</small>
+									</span>
 								</div>
 							</div>
 						</div>
 						<!-- spinner -->
-						<!-- <div id="" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+						<div id="spinner-grafik-penyetoran" class="spinner-wraper position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-						</div> -->
-						<div id="transaksi-wraper" class="card-body mt-2 pl-3 pr-3 pt-0 pb-0 d-flex justify-content-center align-items-center" style="font-family: 'qc-semibold';">
-
+						</div>
+						<div class="card-body p-3 mt-2">
+							<div class="chart">
+								<canvas id="chart-grafik-penyetoran" class="chart-canvas"></canvas>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -354,6 +345,89 @@
 				<div id="table-jenis-wraper" class="table-responsive">
 
 				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- modals filter grafik setor-->
+<div class="modal fade" id="modalFilterGrafikSetor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<form id="formFilterGrafikSetor" class="modal-dialog" role="document">
+		<div class="modal-content" style="overflow: hidden;">
+
+			<!-- modal header -->
+			<div class="modal-header">
+				<h6 class="modal-title">filter grafik setor</h6>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal body -->
+			<div class="modal-body w-100 px-3">
+				<h6 class="font-italic text-xs text-secondary">Tahun</h6>
+				<div class="input-group col-12 px-0">
+					<select id="year" name="year" class="filter-transaksi custom-select custom-select-sm w-100 mt-0" style="max-height: 31px;">
+						<?php $curYear = (int)date("Y"); ?>
+						<?php for ($i=$curYear; $i >= 2017 ; $i--) { ?>
+							<option value="<?= $i; ?>"><?= $i; ?></option>
+						<?php } ?>
+					</select>
+				</div>
+				<h6 class="font-italic text-xs text-secondary mt-4">Wilayah</h6>
+				<div class="mt-2 position-relative">
+					<select class='form-control form-control-sm' name="provinsi">
+						<option value="">-- pilih provinsi --</option>
+					</select>
+					<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+				</div>
+				<div class="mt-2 position-relative">
+					<select class='form-control form-control-sm' name="kota" disabled>
+						<option value="">-- pilih kota --</option>
+					</select>
+					<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+				</div>
+				<div class="mt-2 position-relative">
+					<select class='form-control form-control-sm' name="kecamatan" disabled>
+						<option value="">-- pilih kecamatan --</option>
+					</select>
+					<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+				</div>
+				<!-- <div class="mt-2 position-relative">
+					<select class='form-control form-control-sm' name="kelurahan" disabled>
+						<option value="">-- pilih kelurahan --</option>
+					</select>
+					<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+				</div> -->
+				<h6 class="font-italic text-xs text-secondary mt-4">Tampilan</h6>
+				<div class="mt-2 form-row">
+					<div class="input-group col-3">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="tampilan"  id="per-bulan" value="per-bulan" checked>
+							<label class="form-check-label" for="per-bulan">
+								Per-bulan
+							</label>
+						</div>
+					</div>
+					<div class="input-group col-3">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="tampilan" id="per-daerah" value="per-daerah">
+							<label class="form-check-label" for="per-daerah">
+								Per-daerah
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- modal footer -->
+			<div class="modal-footer">
+				<span class="badge badge-secondary d-flex justify-content-center align-items-center border-0 cursor-pointer" onclick="resetFilterGrafik();">
+					<span>Reset</span>
+				</span>
+				<span id="btn-filter-data-transaksi" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" data-dismiss="modal" onclick="filterGrafikSetor(this,event);">
+					<span>Ok</span>
+				</span>
 			</div>
 		</div>
 	</form>

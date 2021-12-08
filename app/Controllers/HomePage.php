@@ -26,11 +26,11 @@ class HomePage extends BaseController
         return view('HomePage/listArtikel', $data);
     }
 
-    public function detilArtikel(string $id)
+    public function detilArtikel(string $slug)
     {
         $data = [
-            'title'     => 'Artikel',
-            'idArtikel' => $id,
+            'title' => 'Artikel',
+            'slug'  => $slug,
         ];
 
         return view('HomePage/detilArtikel', $data);

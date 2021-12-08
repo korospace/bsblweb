@@ -27,13 +27,15 @@ class Login extends BaseController
         $token     = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
         $result    = $this->checkToken($token, false);
         $privilege = (isset($result['data']['privilege'])) ? $result['data']['privilege'] : null;
-        
-        // dd('nasabah');
-        if ($token == null) {
+
+        if ($token == null || $token == 'null') {
             if ($data['lasturl'] == 'null') {
                 setcookie('lasturl', null, -1, '/'); 
                 unset($_COOKIE['lasturl']);
             }
+
+            setcookie('token', null, -1, '/'); 
+            unset($_COOKIE['token']);
 
             return view('LoginPage/index',$data);
         } 
@@ -61,12 +63,14 @@ class Login extends BaseController
         $result    = $this->checkToken($token, false);
         $privilege = (isset($result['data']['privilege'])) ? $result['data']['privilege'] : null;
         
-        // dd('admin');
-        if ($token == null) {
+        if ($token == null || $token == 'null') {
             if ($data['lasturl'] == 'null') {
                 setcookie('lasturl', null, -1, '/'); 
                 unset($_COOKIE['lasturl']);
             }
+
+            setcookie('token', null, -1, '/'); 
+            unset($_COOKIE['token']);
 
             return view('LoginPage/loginAdmin',$data);
         } 
@@ -175,6 +179,24 @@ class Login extends BaseController
                         return $this->respond($response,500);
                     } 
                     else {
+                        // is nasabah active or not
+                        $is_active   = $nasabahData['messages']['is_active'];
+                        $last_active = (int)$nasabahData['messages']['last_active'];
+                        $timeNow     = time();
+                        // $batasTime   = (int)$timeNow - (86400*(12*30));
+                        $batasTime   = (int)$timeNow - (86400*1);
+                        $privilege   = $nasabahData['messages']['privilege'];
+
+                        if ($last_active <  $batasTime && $privilege != 'super' || $is_active == 'f') {
+                            $response = [
+                                'status'   => 401,
+                                'error'    => true,
+                                'messages' => 'akun tidak aktif',
+                            ];
+                    
+                            return $this->respond($response,401);
+                        } 
+
                         // database row id
                         $id           = $nasabahData['messages']['id'];
                         // rememberMe check

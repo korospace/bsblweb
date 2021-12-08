@@ -7,10 +7,7 @@
 			height:100%;
 		}
 	</style>
-  	<!-- ** develoment ** -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<!-- ** production ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.listsampah.css'); ?>"> -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -28,8 +25,7 @@
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.listsampah.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.listsampah.min.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.listsampah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>

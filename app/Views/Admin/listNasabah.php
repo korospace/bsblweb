@@ -7,13 +7,13 @@
 			height:100%;
 		}
 
-		#btn-toggle{
+		.btn-toggle{
 			left: 0;
 			transition: all 0.3s;
 			transform: translateX(0px);
 		}
 
-		#btn-toggle.active{
+		.btn-toggle.active{
 			/* left: auto !important;
 			right: 0 !important; */
 			transform: translateX(25px);
@@ -33,10 +33,7 @@
 			background-color: #E9ECEF !important;
 		}
 	</style>
-  	<!-- ** develoment ** -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<!-- ** production ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.listnasabah.css'); ?>"> -->
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
@@ -54,8 +51,7 @@
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.listnasabah.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.listnasabah.min.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.listnasabah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -153,6 +149,9 @@
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Ter-verifikasi
+											</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+												Akun aktif
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Terakhir login
@@ -465,8 +464,20 @@
 							verifikasi akun
 						</label>
 						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
-							<div id="btn-toggle" class="bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
+							<div class="btn-toggle toggle-akunverify bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
 								<input type="checkbox" name="is_verify" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
+							</div>
+						</div>
+					</div>
+
+					<!-- **** akun aktif **** -->
+					<div class="editnasabah-item mb-3">
+						<label class="form-check-label">
+							akun aktif
+						</label>
+						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
+							<div class="btn-toggle toggle-akunaktif bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
+								<input type="checkbox" name="is_active" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
 							</div>
 						</div>
 					</div>

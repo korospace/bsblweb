@@ -1,13 +1,12 @@
 must be install
-- sudo apt-get install curl php-cli php-mbstring git unzip
-- sudo apt-get install php-curl
 - sudo apt-get install php-intl
-- sudo apt-get install php-xml
-- sudo apt-get install php-pgsql
+
+extension must uncomment
+- pgsql.so ->> /opt/lampp/etc/php.ini
+- intl     ->> /etc/php/php.ini
 
 deploy
 - enable .env in .gitignore
-
 
 1. change environment
 

@@ -39,9 +39,6 @@ const searchKodepos = async (el) => {
                 });
         
                 $('#kodepos-wraper').html(elPostList);
-                if (el.value == '') {
-                    $('#kodepos-wraper').html(``); 
-                }
             } 
         }
     })

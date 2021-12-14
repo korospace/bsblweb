@@ -31,7 +31,7 @@ const sessioncheck = async () => {
         }
         if (pageTitle2 === 'detil nasabah') {
             getSampahMasuk();
-            updateGrafikSetorNasabah();
+            getDataGrafikSetor();
             getHistoriTransaksi();
             getSaldoNasabah();
             getDataProfileNasabah();

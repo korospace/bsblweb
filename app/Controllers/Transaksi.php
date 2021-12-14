@@ -1070,8 +1070,13 @@ class Transaksi extends BaseController
     
             return $this->respond($response,400);
         } 
-        
-        $dbresponse = $this->transaksiModel->grafikSetorSampah($this->request->getGet());
+
+        if (isset($_GET['tampilan']) && $_GET['tampilan']=='per-daerah') {
+            $dbresponse = $this->transaksiModel->grafikSetorSampahPerdaerah($this->request->getGet());
+        }
+        else{
+            $dbresponse = $this->transaksiModel->grafikSetorSampahPerbulan($this->request->getGet());
+        } 
 
         return $this->respond($dbresponse,$dbresponse['status']);
     }

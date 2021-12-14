@@ -118,7 +118,7 @@
 			<ul class="navbar-nav">
 				<!-- setor sampah -->
 				<li class="nav-item">
-					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalSetorSaldo" onclick="openModalTransaksi(true)" >
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalSetorSaldo" onclick="openModalTransaksi('setor sampah')" >
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<i class="fas fa-trash-restore text-muted" style="font-size: 13px;transform: translateY(-1px);"></i>
@@ -128,7 +128,7 @@
 				</li>
 				<!-- pindah saldo -->
 				<li class="nav-item">
-					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalPindahSaldo" onclick="openModalTransaksi()">
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalPindahSaldo" onclick="openModalTransaksi('pindah saldo')">
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<i class="fas fa-exchange-alt text-muted" style="font-size: 13px;transform: translateY(-1px);"></i>
@@ -138,7 +138,7 @@
 				</li>
 				<!-- tarik saldo -->
 				<li class="nav-item">
-					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalTarikSaldo" onclick="openModalTransaksi()">
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalTarikSaldo" onclick="openModalTransaksi('tarik saldo')">
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<i class="fas fa-hand-holding-usd text-muted" style="font-size: 15px;transform: translateY(-1px);"></i>
@@ -842,7 +842,8 @@
 				<h6 class="font-italic opacity-8 col-12 text-sm">
 					Jumlah uang
 				</h6>
-				<div class="input-group col-12 mb-4 form-group">
+				<small class="col-12 text-xs">max: <span id="maximal-saldo"></span></small>
+				<div class="input-group col-12 mt-1 mb-4 form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-gray px-4 border-md">
@@ -984,7 +985,8 @@
 				<h6 class="font-italic opacity-8 col-12 text-sm">
 					Jumlah saldo
 				</h6>
-				<div class="input-group col-12 mb-4 form-group">
+				<small class="col-12 text-xs">max: <span id="maximal-saldo"></span></small>
+				<div class="input-group col-12 mt-1 mb-4 form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-gray px-4 border-md">

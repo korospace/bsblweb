@@ -393,12 +393,12 @@
 					</select>
 					<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
 				</div>
-				<!-- <div class="mt-2 position-relative">
+				<div class="mt-2 position-relative">
 					<select class='form-control form-control-sm' name="kelurahan" disabled>
 						<option value="">-- pilih kelurahan --</option>
 					</select>
 					<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
-				</div> -->
+				</div>
 				<h6 class="font-italic text-xs text-secondary mt-4">Tampilan</h6>
 				<div class="mt-2 form-row">
 					<div class="input-group col-3">

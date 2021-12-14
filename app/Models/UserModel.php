@@ -58,36 +58,38 @@ class UserModel extends Model
             WHERE users.privilege = 'nasabah'";
 
             if (isset($get['id'])) {
-                $query  = "SELECT users.id,users.email,users.username,users.nama_lengkap,users.notelp,users.alamat,users.tgl_lahir,users.kelamin,users.is_active,users.last_active,users.is_verify,users.created_at 
+                $query  = "SELECT users.id,users.email,users.username,users.nama_lengkap,users.notelp,users.alamat,users.tgl_lahir,users.kelamin,users.is_active,users.last_active,users.is_verify,users.created_at,dompet.uang,dompet.ubs,dompet.antam,dompet.galery24 
                 FROM users
-                WHERE users.privilege = 'nasabah'";
-                $query .= " AND users.id = '".$get['id']."'";
+                JOIN dompet ON (users.id = dompet.id_user) 
+                WHERE users.privilege = 'nasabah' 
+                AND users.id = '".$get['id']."'";
             }
             else {
                 // auto non active nasabah
                 $this->nonActiveNasabah();
+                
+                if (isset($get['kelurahan'])) {
+                    $query .= " AND wilayah.kelurahan = '".$get['kelurahan']."'";
+                }
+    
+                if (isset($get['kecamatan'])) {
+                    $query .= " AND wilayah.kecamatan = '".$get['kecamatan']."'";
+                }
+    
+                if (isset($get['kota'])) {
+                    $query .= " AND wilayah.kota = '".$get['kota']."'";
+                }
+    
+                if (isset($get['provinsi'])) {
+                    $query .= " AND wilayah.provinsi = '".$get['provinsi']."'";
+                }
+    
+                if (isset($get['orderby'])) {
+                    $ascOrDesc = ($get['orderby'] == 'terbaru') ? 'DESC' : 'ASC' ;
+                    $query    .= " ORDER BY created_at $ascOrDesc";
+                }
             }
 
-            if (isset($get['kelurahan'])) {
-                $query .= " AND wilayah.kelurahan = '".$get['kelurahan']."'";
-            }
-
-            if (isset($get['kecamatan'])) {
-                $query .= " AND wilayah.kecamatan = '".$get['kecamatan']."'";
-            }
-
-            if (isset($get['kota'])) {
-                $query .= " AND wilayah.kota = '".$get['kota']."'";
-            }
-
-            if (isset($get['provinsi'])) {
-                $query .= " AND wilayah.provinsi = '".$get['provinsi']."'";
-            }
-
-            if (isset($get['orderby'])) {
-                $ascOrDesc = ($get['orderby'] == 'terbaru') ? 'DESC' : 'ASC' ;
-                $query    .= " ORDER BY created_at $ascOrDesc";
-            }
 
             $query  .= ';';
             $nasabah = $this->db->query($query)->getResultArray();

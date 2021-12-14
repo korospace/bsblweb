@@ -155,7 +155,7 @@ const filterTransaksi = async (e) => {
         dateEndGrafik   = `${endDate[2]}-${endDate[1]}-${endDate[0]}`;
         $('#btn-filter-grafik #startdate').html(`${startDate[2]}/${startDate[1]}/${startDate[0]}`);
         $('#btn-filter-grafik #enddate').html(`${endDate[2]}/${endDate[1]}/${endDate[0]}`);
-        updateGrafikSetorNasabah();
+        getDataGrafikSetor();
     }
 };
 
@@ -164,7 +164,7 @@ const filterTransaksi = async (e) => {
  * ========================================
  */
 let chartGrafik = '';
-const updateGrafikSetorNasabah = async () => {
+const getDataGrafikSetor = async () => {
 
     $('#spinner-wraper-grafik').removeClass('d-none');
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&start=${dateStartGrafik}&end=${dateEndGrafik}`);
@@ -348,7 +348,7 @@ const getHistoriTransaksi = async () => {
             </li>`;
         });
 
-        // updateGrafikSetorNasabah(arrayId,arrayKg);
+        // getDataGrafikSetor(arrayId,arrayKg);
         $('#transaksi-wraper-histori').html(`<ul class="list-group h-100 w-100" style="font-family: 'qc-medium';">
             ${elTransaksi}
         </ul>`);
@@ -466,6 +466,7 @@ const getDetailTransaksiNasabah = async (id) => {
  * GET SALDO NASABAH
  * ==============================================
  */
+let dataSaldo = "";
 const getSaldoNasabah = async () => {
 
     $('#saldo-uang').html('_ _');
@@ -476,12 +477,12 @@ const getSaldoNasabah = async () => {
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getsaldo?idnasabah=${IDNASABAH}`);
     
     if (httpResponse.status === 200) {
-        let dataNasabah = httpResponse.data.data;
+        dataSaldo = httpResponse.data.data
 
-        $('#saldo-uang').html(modifUang(dataNasabah.uang.toString()));
-        $('#saldo-ubs').html(parseFloat(dataNasabah.ubs).toFixed(4));
-        $('#saldo-antam').html(parseFloat(dataNasabah.antam).toFixed(4));
-        $('#saldo-galery24').html(parseFloat(dataNasabah.galery24).toFixed(4));
+        $('#saldo-uang').html(modifUang(dataSaldo.uang.toString()));
+        $('#saldo-ubs').html(parseFloat(dataSaldo.ubs).toFixed(4));
+        $('#saldo-antam').html(parseFloat(dataSaldo.antam).toFixed(4));
+        $('#saldo-galery24').html(parseFloat(dataSaldo.galery24).toFixed(4));
     }
 };
 
@@ -553,17 +554,21 @@ function getCurrentTime() {
 /**
  * Edit modal when open
  */
-const openModalTransaksi = (isSetorSampah = false) => {
+const openModalTransaksi = (modalTitle) => {
     $('.form-check-input').removeClass('is-invalid');
     $('.form-check-input').prop('checked',false);
     $('.form-control').removeClass('is-invalid');
     $('.text-danger').html('');
     $(`.form-control`).val('');
+    $('#formTarikSaldo #maximal-saldo').html('');
     
-    if (isSetorSampah) {
+    if (modalTitle == 'setor sampah') {
         $('.barisSetorSampah').remove();
         tambahBaris();
         countTotalHarga();
+    }
+    else if (modalTitle == 'pindah saldo') {
+        $('#formPindahSaldo #maximal-saldo').html(`${modifUang(dataSaldo.uang)}`);
     }
 
     $(`input[type=date]`).val(getCurrentDate());
@@ -834,6 +839,21 @@ const validatePindahSaldo = () => {
  * =============================================
  */
 
+// jenis saldo on click
+$('#formTarikSaldo input[name=jenis_saldo]').on('click', function() {
+    if ($(this).attr('value') == "uang") {
+        $('#formTarikSaldo #maximal-saldo').html(`${modifUang(dataSaldo.uang)}`);
+    } 
+    else {
+        if (parseFloat(dataSaldo[$(this).attr('value')]) > 0.1) {
+            $('#formTarikSaldo #maximal-saldo').html(`${parseFloat(dataSaldo[$(this).attr('value')])-0.1} g`);
+        }
+        else {
+            $('#formTarikSaldo #maximal-saldo').html('0');   
+        }
+    }
+})
+
 // Validate Tarik Saldo
 const validateTarikSaldo = () => {
     let status = true;
@@ -950,7 +970,7 @@ const doTransaksi = async (el,event,method) => {
                 $('.form-check-input').prop('checked',false);
                 $(`input[type=date]`).val(getCurrentDate());
                 $(`input[type=time]`).val(getCurrentTime());
-                updateHistoryT(`${tglTransaksi[0]}/${tglTransaksi[1]}/${tglTransaksi[2]}`);
+                updateTableAndGrafik(`${tglTransaksi[0]}/${tglTransaksi[1]}/31`,method);
                 getSaldoNasabah();
                 
                 if (method == 'setorsampah') {
@@ -982,10 +1002,16 @@ const doTransaksi = async (el,event,method) => {
     }
 }
 
-const updateHistoryT = (valInputDate) => {
-    let unixStart = new Date(`${valInputDate} 00:00:01`).getTime();
+const updateTableAndGrafik = (valInputDate,method) => {
+    let unixStart     = new Date(`${valInputDate} 00:00:01`).getTime();
+    let isSetorSampah = (method == 'setorsampah') ? true : false ;
 
-    setCurrentStartDate(unixStart,false);
+    setCurrentStartDate(unixStart,isSetorSampah);
+    
+    if (method == 'setorsampah') {
+        getDataGrafikSetor();
+    } 
+
     getHistoriTransaksi();
 }
 
@@ -1029,7 +1055,7 @@ const deleteTransaksiNasabah = (id,event) => {
                         .then((e) => {
                             if (e.status == 201) {
                                 // chartGrafik.destroy();
-                                // updateGrafikSetorNasabah();
+                                // getDataGrafikSetor();
                                 getHistoriTransaksi();
                                 getSaldoNasabah();
                             }

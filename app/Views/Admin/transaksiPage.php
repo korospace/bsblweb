@@ -131,29 +131,45 @@
 									<table class="mr-5">
 										<tr>
 											<td class="">email</td>
-											<td>: <span id="email-check"></span></td>
+											<td>:&nbsp;&nbsp; <span id="email-check"></span></td>
 										</tr>
 										<tr>
 											<td class="">username</td>
-											<td>: <span id="username-check"></span></td>
+											<td>:&nbsp;&nbsp; <span id="username-check"></span></td>
 										</tr>
 										<tr>
 											<td class="">nama lengkap&nbsp;&nbsp;</td>
-											<td>: <span id="nama-lengkap-check"></span></td>
+											<td>:&nbsp;&nbsp; <span id="nama-lengkap-check"></span></td>
 										</tr>
-									</table>
-									<table class="ml-5">
 										<tr>
 											<td class="">kelamin</td>
-											<td>: <span id="kelamin-check"></span></td>
+											<td>:&nbsp;&nbsp; <span id="kelamin-check"></span></td>
 										</tr>
 										<tr>
-											<td class="">no.telepon&nbsp;&nbsp;</td>
-											<td>: <span id="notelp-check"></span></td>
+											<td class="">no.telepon</td>
+											<td>:&nbsp;&nbsp; <span id="notelp-check"></span></td>
 										</tr>
+									</table>
+									<table class="ml-4">
 										<tr>
 											<td class="">alamat</td>
-											<td>: <span id="alamat-check"></span></td>
+											<td>:&nbsp;&nbsp; <span id="alamat-check"></span></td>
+										</tr>
+										<tr>
+											<td class="">Saldo Uang</td>
+											<td>:&nbsp;&nbsp; <span id="saldo-uang-check"></span></td>
+										</tr>
+										<tr>
+											<td class="">Saldo Ubs</td>
+											<td>:&nbsp;&nbsp; <span id="saldo-ubs-check"></span></td>
+										</tr>
+										<tr>
+											<td class="">Saldo antam</td>
+											<td>:&nbsp;&nbsp; <span id="saldo-antam-check"></span></td>
+										</tr>
+										<tr>
+											<td class="">Saldo galery24&nbsp;&nbsp;</td>
+											<td>:&nbsp;&nbsp; <span id="saldo-galery24-check"></span></td>
 										</tr>
 									</table>
 								</div>
@@ -422,7 +438,8 @@
 										<h6 class="font-italic opacity-8 col-12 text-sm">
 											Jumlah saldo
 										</h6>
-										<div class="input-group col-12 col-md-6 mb-4 form-group">
+										<small class="col-12 text-xs">max: <span id="maximal-saldo"></span></small>
+										<div class="input-group col-12 col-md-6 mt-1 mb-4 form-group">
 											<div class="input-group">
 												<div class="input-group-prepend">
 													<span class="input-group-text bg-gray px-4 border-md">

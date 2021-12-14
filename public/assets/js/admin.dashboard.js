@@ -238,25 +238,34 @@ const getDataSetorSampah = async () => {
     let httpResponse = await httpRequestGet(penyetoranUrl);
     $('#spinner-grafik-penyetoran').addClass('d-none'); 
 
-    let chartType = 'line';
+    // let chartType = 'line';
     let arrayX = [];
     let arrayY = [];
     
     if (httpResponse.status === 200) {
         let allTransaksi = httpResponse.data.data;
         
-        for (const key in allTransaksi) {
-            arrayX.push(key);
-            arrayY.push(allTransaksi[key].totSampahMasuk);
+        if (typeTampilan == 'per-daerah') {
+            // chartType = 'bar';
+            allTransaksi.daerah.forEach(e => {
+                arrayX.push(e[allTransaksi.label]);
+                arrayY.push(e.jumlah_kg);
+            });
+        }
+        else{
+            for (const key in allTransaksi) {
+                arrayX.push(key);
+                arrayY.push(allTransaksi[key].totSampahMasuk);
+            }
         }
     }
 
     if (chartGrafik != '') {
         chartGrafik.destroy();
     }
-    if (typeTampilan == 'per-daerah') {
-        chartType = 'bar';
-    }
+    // if (typeTampilan == 'per-daerah') {
+    //     chartType = 'bar';
+    // }
 
     var ctx2 = document.getElementById("chart-grafik-penyetoran").getContext("2d");
     document.querySelector("#chart-grafik-penyetoran").style.width    = '100%';
@@ -273,7 +282,7 @@ const getDataSetorSampah = async () => {
     }
 
     chartGrafik = new Chart(ctx2, {
-        type: chartType,
+        type: 'bar',
         data: {
             labels: arrayX,
             datasets: [

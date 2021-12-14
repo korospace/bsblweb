@@ -20,17 +20,13 @@ function getCurrentTime() {
  * Clear form
  */
 const clearAllForm = (isFormJualSetorSampah = false) => {
-    $('#email-check').html('');
-    $('#username-check').html('');
-    $('#nama-lengkap-check').html('');
-    $('#kelamin-check').html('');
-    $('#notelp-check').html('');
-    $('#alamat-check').html('');
+    $('#search-nasabah-wraper table td span').html('');
     $('#formWraper .form-check-input').removeClass('is-invalid');
     $('#formWraper .form-control').removeClass('is-invalid');
     $('#formWraper .form-check-input').prop('checked',false);
     $('#formWraper .text-danger').html('');
     $(`#formWraper .form-control`).val('');
+    $('#form-tarik-saldo #maximal-saldo').html('')
 
     if (isFormJualSetorSampah) {
         $('.barisSetorSampah').remove();
@@ -84,6 +80,7 @@ $('#toggle-transaksi-wraper .switch-section').on('click',function (e) {
 /**
  * Search nasabah
  */
+let dataNasabah = "";
 const searchNasabah = async (el,event) => {
     event.preventDefault();
 
@@ -101,7 +98,7 @@ const searchNasabah = async (el,event) => {
     $('#btn-search-nasabah #spinner').addClass('d-none');
 
     if (httpResponse.status === 200) {
-        let dataNasabah = httpResponse.data.data[0];
+        dataNasabah = httpResponse.data.data[0];
         
         $('#barrier-transaksi').addClass('d-none');
         $(`#form-${formTarget}`).removeClass('opacity-6');
@@ -115,6 +112,10 @@ const searchNasabah = async (el,event) => {
         $('#kelamin-check').html(dataNasabah.kelamin);
         $('#notelp-check').html(dataNasabah.notelp);
         $('#alamat-check').html(dataNasabah.alamat);
+        $('#saldo-uang-check').html(`Rp. ${modifUang(dataNasabah.uang)}`);
+        $('#saldo-ubs-check').html(`${parseFloat(dataNasabah.ubs).toFixed(4)}`);
+        $('#saldo-antam-check').html(`${parseFloat(dataNasabah.antam).toFixed(4)}`);
+        $('#saldo-galery24-check').html(`${parseFloat(dataNasabah.galery24).toFixed(4)}`);
     }
     else if (httpResponse.status === 404) {
         showAlert({
@@ -399,6 +400,22 @@ const validatePindahSaldo = () => {
  * TRANSAKSI TARIK SALDO
  * =============================================
  */
+
+// jenis saldo on click
+$('#form-tarik-saldo input[name=jenis_saldo]').on('click', function() {
+    if ($(this).attr('value') == "uang") {
+        $('#form-tarik-saldo #maximal-saldo').html(`${modifUang(dataNasabah.uang)}`);
+    } 
+    else {
+        if (parseFloat(dataNasabah[$(this).attr('value')]) > 0.1) {
+            $('#form-tarik-saldo #maximal-saldo').html(`${parseFloat(dataNasabah[$(this).attr('value')])-0.1} g`);
+        }
+        else {
+            $('#form-tarik-saldo #maximal-saldo').html('0');   
+        }
+    }
+})
+
 // Validate Tarik Saldo
 const validateTarikSaldo = () => {
     let status = true;
@@ -531,7 +548,7 @@ const doTransaksi = async (el,event,method) => {
                 $('#barrier-transaksi').removeClass('d-none');
                 $(`#form-${formTarget}`).addClass('opacity-6');
                 clearAllForm();
-                updateAllTable(`${tglTransaksi[0]}/${tglTransaksi[1]}/${tglTransaksi[2]}`);
+                updateAllTable(`${tglTransaksi[0]}/${tglTransaksi[1]}/31`);
     
                 if (method == 'jualsampah' || method == 'setorsampah') {
                     $('.barisSetorSampah').remove();

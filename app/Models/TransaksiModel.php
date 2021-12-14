@@ -712,9 +712,10 @@ class TransaksiModel extends Model
         return $newData;
     }
 
-    public function grafikSetorSampah(array $get): array
+    public function grafikSetorSampahPerbulan(array $get): array
     {
         try {
+            $year = null;
             $transaction = [];
             
             $query  = "SELECT transaksi.id,transaksi.date,wilayah.provinsi,
@@ -722,40 +723,27 @@ class TransaksiModel extends Model
             FROM transaksi
             JOIN wilayah ON (transaksi.id_user = wilayah.id_user)";
 
-            if (isset($get['provinsi'])) {
-                $provinsi = $get['provinsi'];
-                $query    = "SELECT transaksi.id,transaksi.date,wilayah.provinsi,wilayah.kota,
-                (SELECT SUM(jumlah_kg) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id)
-                FROM transaksi
-                JOIN wilayah ON (transaksi.id_user = wilayah.id_user)
-                WHERE wilayah.provinsi = '$provinsi'";
+            $provinsi  = (isset($get['provinsi'])) ? $get['provinsi'] : "";
+            $kota      = (isset($get['kota'])) ? $get['kota'] : "";
+            $kecamatan = (isset($get['kecamatan'])) ? $get['kecamatan'] : "";
+            $kelurahan = (isset($get['kelurahan'])) ? $get['kelurahan'] : "";
+
+            if ($provinsi != "") {
+                $query .= " WHERE wilayah.provinsi = '$provinsi'";
             }
 
-            if (isset($get['kota'])) {
-                $provinsi = $get['provinsi'];
-                $kota     = $get['kota'];
-                $query    = "SELECT transaksi.id,transaksi.date,wilayah.provinsi,wilayah.kota,wilayah.kecamatan,
-                (SELECT SUM(jumlah_kg) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id)
-                FROM transaksi
-                JOIN wilayah ON (transaksi.id_user = wilayah.id_user)
-                WHERE wilayah.provinsi = '$provinsi'
-                AND  wilayah.kota      = '$kota'";
+            if ($kota != "") {
+                $query .= " AND wilayah.kota = '$kota'";
             }
 
-            if (isset($get['kecamatan'])) {
-                $provinsi = $get['provinsi'];
-                $kota     = $get['kota'];
-                $kecamatan= $get['kecamatan'];
-                $query    = "SELECT transaksi.id,transaksi.date,wilayah.provinsi,wilayah.kota,wilayah.kecamatan,
-                (SELECT SUM(jumlah_kg) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id)
-                FROM transaksi
-                JOIN wilayah ON (transaksi.id_user = wilayah.id_user)
-                WHERE wilayah.provinsi = '$provinsi'
-                AND  wilayah.kota      = '$kota'
-                AND  wilayah.kecamatan = '$kecamatan'";
+            if ($kecamatan != "") {
+                $query .= " AND wilayah.kecamatan = '$kecamatan'";
+            }
+            
+            if ($kelurahan != "") {
+                $query .= " AND wilayah.kelurahan = '$kelurahan'";
             }
 
-            $year = null;
             if (isset($get['year'])) {
                 $year   = $get['year'];
                 $start  = (int)strtotime('01-01-'.$get['year']);
@@ -772,15 +760,7 @@ class TransaksiModel extends Model
             $query      .= " ORDER BY transaksi.date ASC;";
             $transaction = $this->db->query($query)->getResultArray();
             $transaction = $this->removeNullGrafik($transaction);
-
-            if (isset($get['tampilan']) && $get['tampilan']=='perwilayah') {
-                $transaction = $this->groupingGrafikPerwilayah($transaction,$year);
-            } 
-            else {
-                $transaction = $this->groupingGrafikPerbulan($transaction,$year);
-            }
-
-            // var_dump($transaction);die;
+            $transaction = $this->groupingGrafikPerbulan($transaction,$year);
 
             if (empty($transaction)) {    
                 return [
@@ -806,13 +786,12 @@ class TransaksiModel extends Model
         }
     }
 
-
     public function removeNullGrafik(array $data): array
     {
         $newData = [];
 
         foreach ($data as $d) {
-            if ($d['sampah_masuk'] != null) {
+            if ($d['sampah_masuk'] != NULL) {
                 $newData[] = $d;
             }
         }
@@ -860,6 +839,89 @@ class TransaksiModel extends Model
         // var_dump($newTransaction);die;
 
         return $newTransaction;
+    }
+
+    public function grafikSetorSampahPerdaerah(array $get): array
+    {
+        try {
+            if (isset($get['year'])) {
+                $start  = (int)strtotime('01-01-'.$get['year']);
+                $end    = $start+(86400*365);
+            } 
+
+            $provinsi  = (isset($get['provinsi'])) ? $get['provinsi'] : "";
+            $kota      = (isset($get['kota'])) ? $get['kota'] : "";
+            $kecamatan = (isset($get['kecamatan'])) ? $get['kecamatan'] : "";
+
+            $label = "provinsi";
+            $query = "SELECT sum(setor_sampah.jumlah_kg) AS jumlah_kg,wilayah.provinsi AS provinsi
+            FROM transaksi
+            JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi)
+            JOIN wilayah      ON (transaksi.id_user = wilayah.id_user)
+                WHERE transaksi.date BETWEEN '$start' AND '$end'
+            GROUP BY wilayah.provinsi;";
+
+            if ($provinsi != "") {
+                $label = "kota";
+                $query = "SELECT sum(setor_sampah.jumlah_kg) AS jumlah_kg,wilayah.kota
+                FROM transaksi
+                JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi)
+                JOIN wilayah      ON (transaksi.id_user = wilayah.id_user)
+                    WHERE transaksi.date BETWEEN '$start' AND '$end'
+                    AND wilayah.provinsi = '$provinsi'
+                GROUP BY wilayah.kota";
+            }
+            if ($kota != "") {
+                $label = "kecamatan";
+                $query = "SELECT sum(setor_sampah.jumlah_kg) AS jumlah_kg,wilayah.kecamatan
+                FROM transaksi
+                JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi)
+                JOIN wilayah      ON (transaksi.id_user = wilayah.id_user)
+                    WHERE transaksi.date BETWEEN '$start' AND '$end'
+                    AND wilayah.provinsi = '$provinsi'
+                    AND wilayah.kota     = '$kota'
+                GROUP BY wilayah.kecamatan;";
+            }
+            if ($kecamatan != "") {
+                $label = "kelurahan";
+                $query = "SELECT sum(setor_sampah.jumlah_kg) AS jumlah_kg,wilayah.kelurahan
+                FROM transaksi
+                JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi)
+                JOIN wilayah      ON (transaksi.id_user = wilayah.id_user)
+                    WHERE transaksi.date BETWEEN '$start' AND '$end'
+                    AND wilayah.provinsi   = '$provinsi'
+                    AND wilayah.kota       = '$kota'
+                    AND wilayah.kecamatan  = '$kecamatan'
+                GROUP BY wilayah.kelurahan;";
+            }
+
+            $transaction = $this->db->query($query)->getResultArray();
+
+            if (empty($transaction)) {    
+                return [
+                    'status'   => 404,
+                    'error'    => true,
+                    'messages' => "transaction notfound",
+                ];
+            } 
+            else {   
+                return [
+                    'status' => 200,
+                    'error'  => false,
+                    'data'   => [
+                        'label' => $label,
+                        'daerah'=> $transaction
+                    ]
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
+            ];
+        }
     }
 
     public function deleteData(string $idtransaksi): array

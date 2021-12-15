@@ -38,8 +38,8 @@
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.dashboard.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.dashboard.min.js'); ?>"></script> -->
+	<!-- <script src="<?= base_url('assets/js/admin.dashboard.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.dashboard.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -265,7 +265,7 @@
 			<div class="row mt-4">
 				<!-- grafik -->
 				<div class="col-12">
-					<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
+					<div class="card z-index-2 position-relative" style="min-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
 						<!-- header -->
 						<div class="card-header pb-0" style="z-index: 11;">
 							<!-- tittle -->
@@ -293,6 +293,9 @@
 						<div class="card-body p-3 mt-2">
 							<div class="chart">
 								<canvas id="chart-grafik-penyetoran" class="chart-canvas"></canvas>
+							</div>
+							<div class="d-flex justify-content-center" style="opacity: 0.8;font-family: 'qc-semibold';letter-spacing: 2px">
+								<small id="chart-title">bulan</small>
 							</div>
 						</div>
 					</div>

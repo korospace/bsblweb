@@ -179,6 +179,16 @@ $('#formFilterGrafikSetor select[name=kecamatan]').on('change', function() {
     $('#formFilterGrafikSetor select[name=kelurahan]').val('');
 });
 
+// input tampilan onchange
+$('#formFilterGrafikSetor input[name=tampilan]').on('change', function() {
+    if ($(this).val() == 'per-daerah') {
+        $('#formFilterGrafikSetor select[name=kelurahan]').addClass('d-none');
+    } 
+    else {
+        $('#formFilterGrafikSetor select[name=kelurahan]').removeClass('d-none');
+    }
+})
+
 // do filter rekap
 const filterGrafikSetor = async (e) => {
     let formFilter = new FormData(e.parentElement.parentElement.parentElement);
@@ -238,7 +248,7 @@ const getDataSetorSampah = async () => {
     let httpResponse = await httpRequestGet(penyetoranUrl);
     $('#spinner-grafik-penyetoran').addClass('d-none'); 
 
-    // let chartType = 'line';
+    let chartType = 'line';
     let arrayX = [];
     let arrayY = [];
     
@@ -246,13 +256,17 @@ const getDataSetorSampah = async () => {
         let allTransaksi = httpResponse.data.data;
         
         if (typeTampilan == 'per-daerah') {
-            // chartType = 'bar';
+            chartType = 'bar';
+            $('#chart-title').html(allTransaksi.label);
+
             allTransaksi.daerah.forEach(e => {
                 arrayX.push(e[allTransaksi.label]);
                 arrayY.push(e.jumlah_kg);
             });
         }
         else{
+            $('#chart-title').html('bulan');
+
             for (const key in allTransaksi) {
                 arrayX.push(key);
                 arrayY.push(allTransaksi[key].totSampahMasuk);
@@ -263,9 +277,6 @@ const getDataSetorSampah = async () => {
     if (chartGrafik != '') {
         chartGrafik.destroy();
     }
-    // if (typeTampilan == 'per-daerah') {
-    //     chartType = 'bar';
-    // }
 
     var ctx2 = document.getElementById("chart-grafik-penyetoran").getContext("2d");
     document.querySelector("#chart-grafik-penyetoran").style.width    = '100%';
@@ -281,8 +292,15 @@ const getDataSetorSampah = async () => {
         arrayX.push(' ');
     }
 
+    if (chartType == 'line') {
+        if (arrayY.length == 1) {
+            arrayY.unshift(0);
+            arrayX.unshift('');
+        }
+    }
+
     chartGrafik = new Chart(ctx2, {
-        type: 'bar',
+        type: chartType,
         data: {
             labels: arrayX,
             datasets: [

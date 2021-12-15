@@ -194,7 +194,7 @@
 				<div id="row-transaksi" class="row mt-5">
 					<!-- grafik -->
 					<div class="col-lg-8">
-						<div class="card z-index-2 position-relative" style="min-height: 430px;max-height: 430px;overflow: hidden;font-family: 'qc-semibold';">
+						<div class="card z-index-2 position-relative" style="min-height: 460px;max-height: 460px;overflow: hidden;font-family: 'qc-semibold';">
 							<!-- header -->
 							<div class="card-header pb-0" style="z-index: 11;">
 								<h5>Grafik Penyetoran</h5>
@@ -221,12 +221,15 @@
 								<div class="chart">
 									<canvas id="chart-line" class="chart-canvas"></canvas>
 								</div>
+							<div class="d-flex justify-content-center" style="opacity: 0.8;font-family: 'qc-semibold';letter-spacing: 2px">
+								<small id="chart-title">id transaksi</small>
+							</div>
 							</div>
 						</div>
 					</div>
 					<!-- Transaksi -->
 					<div id="history-transaksi" class="col-lg-4 mt-5 mt-lg-0">
-						<div class="card h-100" style="min-height: 430px;max-height: 430px;overflow: auto;">
+						<div class="card h-100" style="min-height: 460px;max-height: 460px;overflow: auto;">
 							<!-- header -->
 							<div class="card-header bg-white position-sticky p-3" style="z-index: 11;top: 0;">
 								<div class="row" style="font-family: 'qc-semibold';">

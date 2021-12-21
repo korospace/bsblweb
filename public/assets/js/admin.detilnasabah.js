@@ -169,8 +169,8 @@ const getDataGrafikSetor = async () => {
     $('#spinner-wraper-grafik').removeClass('d-none');
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&start=${dateStartGrafik}&end=${dateEndGrafik}`);
     $('#spinner-wraper-grafik').addClass('d-none'); 
-    let arrayId = [];
-    let arrayKg = [];
+    let arrayKg = [0];
+    let arrayId = [''];
     
     if (httpResponse.status === 200) {
         let allTransaksi = httpResponse.data.data;
@@ -201,7 +201,7 @@ const getDataGrafikSetor = async () => {
     }
 
     chartGrafik = new Chart(ctx2, {
-        type: "bar",
+        type: "line",
         data: {
             labels: arrayId,
             datasets: [

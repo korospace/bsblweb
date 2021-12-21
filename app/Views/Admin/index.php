@@ -291,10 +291,16 @@
 							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 						</div>
 						<div class="card-body p-3 mt-2">
-							<div class="chart">
+							<div class="chart d-flex">
+								<div class="d-flex align-items-center pr-2 text-xs" style="min-height:100%;">
+									<small	style="opacity: 0.6;letter-spacing: 2px;transform:rotate(-90deg);">
+										kg
+									</small>
+								</div>
 								<canvas id="chart-grafik-penyetoran" class="chart-canvas"></canvas>
 							</div>
-							<div class="d-flex justify-content-center" style="opacity: 0.8;font-family: 'qc-semibold';letter-spacing: 2px">
+							<div class="d-flex flex-column align-items-center justify-content-center" style="opacity: 0.6;letter-spacing: 2px">
+								<hr class="w-100 horizontal dark mt-2 mb-2">
 								<small id="chart-title">bulan</small>
 							</div>
 						</div>

@@ -159,8 +159,8 @@ class UserModel extends Model
     {
         try {
             $timeNow   = time();
-            // $batasTime = (int)$timeNow - (86400*(12*30));
-            $batasTime = (int)$timeNow - (86400*1);
+            $batasTime = (int)$timeNow - (86400*(12*30));
+            // $batasTime = (int)$timeNow - (86400*1);
 
             $this->db->query("UPDATE users SET is_active = false WHERE last_active <  $batasTime AND privilege = 'nasabah'");
         } 

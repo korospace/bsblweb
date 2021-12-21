@@ -113,7 +113,7 @@
 								<div id="barrier-search-nasabah" class="position-absolute d-none" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 
 								</div>	
-								<div class="input-group col-3">
+								<div class="input-group col-12 col-sm-3">
 									<div class="input-group-prepend">
 										<span class="input-group-text bg-gray pl-2 pr-2 border-md border-right-0" style="max-height: 28px;border-radius: 4px;">
 											<i class="fas fa-search text-muted"></i>
@@ -121,8 +121,8 @@
 									</div>
 									<input id="search-nasabah" type="text" class="form-control form-control-sm h-100 px-2" placeholder="id nasabah" style="max-height: 28px;border-radius: 0px 4px 4px 0px;">
 								</div>
-								<div class="input-group p-0 col-1" style="min-width: 50px;max-width: 50px;">
-									<button id="btn-search-nasabah" class="btn btn-dark h-100 mt-4 mt-sm-0 text-xxs p-1" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="searchNasabah(this,event)" style="width: 100%;max-height: 28px;border-radius: 4px;">
+								<div class="input-group col-12 col-sm-1 w-100" style="min-width: 50px;">
+									<button id="btn-search-nasabah" class="btn btn-dark h-100 mt-2 mt-sm-0 text-xxs p-1" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="searchNasabah(this,event)" style="width: 100%;max-height: 28px;border-radius: 4px;">
 										<span id="text">check</span>
 										<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 18px;">
 									</button>
@@ -142,18 +142,8 @@
 											<td>:&nbsp;&nbsp; <span id="nama-lengkap-check"></span></td>
 										</tr>
 										<tr>
-											<td class="">kelamin</td>
-											<td>:&nbsp;&nbsp; <span id="kelamin-check"></span></td>
-										</tr>
-										<tr>
 											<td class="">no.telepon</td>
 											<td>:&nbsp;&nbsp; <span id="notelp-check"></span></td>
-										</tr>
-									</table>
-									<table class="ml-4">
-										<tr>
-											<td class="">alamat</td>
-											<td>:&nbsp;&nbsp; <span id="alamat-check"></span></td>
 										</tr>
 										<tr>
 											<td class="">Saldo Uang</td>
@@ -517,7 +507,7 @@
 										<h6 id="text-notfound" class='opacity-6'></h6>
 									</div>
 									<!-- table -->
-									<table id="table-data-transaksi" class="table table-hover text-left mb-0">
+									<table id="table-data-transaksi" class="table table-striped text-left mb-0">
 										<thead class="position-sticky bg-white" style="z-index: 11;top: 0;">
 											<tr>
 												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
@@ -584,26 +574,35 @@
 
 									</div>
 									<!-- table -->
-									<table id="table-rekap-transaksi" class="table table-hover text-left mb-0">
+									<table id="table-rekap-transaksi" class="table table-striped text-left mb-0">
 										<thead class="position-sticky" style="z-index: 11;top: 0;">
 											<tr style="background-color: rgba(255,255,255,0.2);">
 												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
 													#
 												</th>
-												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
-													Sampah
-												</th>
-												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
-													Uang
-												</th>
-												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
-													Emas
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													Action
 												</th>
 												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
 													Waktu
 												</th>
-												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
-													Action
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													Setor sampah
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													Jual sampah
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													Uang masuk
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													Tarik uang
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" style="border-right: 0.5px solid #DEE2E6;">
+													Konversi emas
+												</th>
+												<th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+													Tarik emas
 												</th>
 											</tr>
 										</thead>

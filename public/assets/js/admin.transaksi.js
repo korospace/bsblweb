@@ -92,7 +92,6 @@ const searchNasabah = async (el,event) => {
     $('#btn-search-nasabah #spinner').removeClass('d-none');
 
     let httpResponse = await httpRequestGet(`${APIURL}/admin/getnasabah?id=${$('#search-nasabah').val()}`);
-    $('#search-nasabah').val('')
 
     $('#btn-search-nasabah #text').removeClass('d-none');
     $('#btn-search-nasabah #spinner').addClass('d-none');
@@ -1348,49 +1347,51 @@ const getRekapTransaksi = async () => {
                         ${++no}
                     </span>
                 </td>
-                <td class="py-3 align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
-                    <span class="text-xs text-name font-weight-bold">
-                        <i class="fas fa-trash text-xs text-success mr-1"></i>
-                        <span class="text-success">
-                            ${parseFloat(allTransaksi[key].totSampahMasuk).toFixed(1)} kg
-                        </span>
-                        <i class="${(wilayahRekapUrl != '') ? 'd-none' : '' } fas fa-trash text-xs text-info ml-3 mr-1"></i>
-                        <span class="${(wilayahRekapUrl != '') ? 'd-none' : '' } text-info">
-                            ${parseFloat(allTransaksi[key].totSampahKeluar).toFixed(1)} kg
-                        </span>
-                    </span>
-                </td>
-                <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
-                    <span class="text-xs text-name font-weight-bold">
-                        <i class="fas fa-dollar-sign text-xs text-success mr-1"></i>
-                        <span class="text-success">
-                            Rp ${kFormatter(allTransaksi[key].totUangMasuk)}
-                        </span>
-                        <i class="fas fa-dollar-sign text-xs text-danger ml-3 mr-1"></i>
-                        <span class="text-danger">
-                            Rp ${kFormatter(allTransaksi[key].totUangKeluar)}
-                        </span>        
-                    </span>
-                </td>
-                <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
-                    <span class="text-xs text-name font-weight-bold">
-                        <i class="fas fa-coins text-xs text-success mr-1"></i>
-                        <span class="text-success">
-                            ${parseFloat(allTransaksi[key].totEmasMasuk).toFixed(1)}  g
-                        </span>
-                        <i class="fas fa-coins text-xs text-danger ml-3 mr-1"></i>
-                        <span class="text-danger">
-                            ${parseFloat(allTransaksi[key].totEmasKeluar).toFixed(1)} g
-                        </span>      
-                    </span>
+                <td class="align-middle text-center">
+                    <a href="${BASEURL}/transaksi/cetakrekap?date=${allTransaksi[key].date1}&${wilayahRekapUrl}" target="_blank" class="badge badge-dark text-xxs pb-1 cursor-pointer" style="border-radius:4px;">cetak</a>
                 </td>
                 <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
                     <span class="text-xs text-name font-weight-bold">
                         ${allTransaksi[key].date2}
                     </span>
                 </td>
-                <td class="align-middle text-center">
-                    <a href="${BASEURL}/transaksi/cetakrekap?date=${allTransaksi[key].date1}&${wilayahRekapUrl}" target="_blank" class="badge badge-dark text-xxs pb-1 cursor-pointer" style="border-radius:4px;">cetak</a>
+                <td class="py-3 align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
+                    <span class="text-xs text-name font-weight-bold">
+                        <i class="fas fa-trash text-xs text-success mr-1"></i>
+                        <span class="text-success">
+                            ${parseFloat(allTransaksi[key].totSampahMasuk).toFixed(1)} kg
+                        </span>
+                    </span>
+                </td>
+                <td class="py-3 align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
+                    <span class="${(wilayahRekapUrl != '') ? 'd-none' : '' } text-xs text-name font-weight-bold">
+                        <i class="fas fa-trash text-xs text-info mr-1"></i>
+                        <span class="text-info">
+                            ${parseFloat(allTransaksi[key].totSampahKeluar).toFixed(1)} kg
+                        </span>
+                    </span>
+                </td>
+                <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
+                    <span class="text-xs text-name font-weight-bold text-success">
+                        Rp ${kFormatter(allTransaksi[key].totUangMasuk)}
+                    </span>
+                </td>
+                <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
+                    <span class="text-xs text-name font-weight-bold text-danger">
+                        Rp ${kFormatter(allTransaksi[key].totUangKeluar)}
+                    </span>
+                </td>
+                <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
+                    <span class="text-xs text-name font-weight-bold text-warning">
+                        <i class="fas fa-coins text-xs mr-1"></i>
+                        ${parseFloat(allTransaksi[key].totEmasMasuk).toFixed(1)}  g
+                    </span>
+                </td>
+                <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
+                    <span class="text-xs text-name font-weight-bold text-danger">
+                        <i class="fas fa-coins text-xs mr-1"></i>
+                        ${parseFloat(allTransaksi[key].totEmasKeluar).toFixed(1)} g
+                    </span>
                 </td>
             </tr>`;
         }

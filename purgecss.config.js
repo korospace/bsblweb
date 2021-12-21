@@ -16,13 +16,10 @@ module.exports = {
     // ** otp
     // content: ['app/Views/OTP/index.php','assets/js/otp.js'],
     // ** nasabah dashboard
-    // content: ['app/Views/Nasabah/index.php','public/assets/js/nasabah.js'],
+    content: ['app/Views/Nasabah/index.php','public/assets/js/nasabah.js'],
     // ** nasabah profile
     // content: ['app/Views/Nasabah/profilenasabah.php','assets/js/nasabah.js'],
 
-    // ** resource bootstrap
-    // css: ['public/assets/css/bootstrap.min.css'],
-    
     // /////////////////////////////////////////////////////////////////////////
     
     // ** admin dashboard

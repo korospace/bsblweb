@@ -19,10 +19,6 @@
 			}
 		} 
 	</style>
-  	<!-- ** develoment ** -->
-	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css'); ?>"> -->
-	<!-- ** production ** -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/nasabah.profile.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">

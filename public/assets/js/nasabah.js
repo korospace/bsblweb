@@ -187,8 +187,8 @@ const updateGrafikSetorNasabah = async () => {
     $('#spinner-wraper-grafik').removeClass('d-none');
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?start=${dateStartGrafik}&end=${dateEndGrafik}`);
     $('#spinner-wraper-grafik').addClass('d-none'); 
-    let arrayId = [];
-    let arrayKg = [];
+    let arrayKg = [0];
+    let arrayId = [''];
     
     if (httpResponse.status === 200) {
         let allTransaksi = httpResponse.data.data;
@@ -199,10 +199,20 @@ const updateGrafikSetorNasabah = async () => {
                 arrayKg.push(t.total_kg_setor);
             } 
         });
+
+        // arrayKg.push(2,4,1.6,5,3,10,6,2.6,7,4);
+        // arrayId.push('TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589');
     }
     if (chartGrafik != '') {
         chartGrafik.destroy();
     }
+
+    // if (arrayKg.length < 11) {
+    //     document.querySelector(".chart #label-y").classList.add('editTransateY');
+    // }
+    // else{
+    //     document.querySelector(".chart #label-y").classList.remove('editTransateY');
+    // }
 
     var ctx2 = document.getElementById("chart-line").getContext("2d");
     document.querySelector("#chart-line").style.width    = '100%';
@@ -219,7 +229,7 @@ const updateGrafikSetorNasabah = async () => {
     }
 
     chartGrafik = new Chart(ctx2, {
-        type: "bar",
+        type: "line",
         data: {
             labels: arrayId,
             datasets: [

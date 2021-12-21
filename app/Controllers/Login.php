@@ -183,8 +183,8 @@ class Login extends BaseController
                         $is_active   = $nasabahData['messages']['is_active'];
                         $last_active = (int)$nasabahData['messages']['last_active'];
                         $timeNow     = time();
-                        // $batasTime   = (int)$timeNow - (86400*(12*30));
-                        $batasTime   = (int)$timeNow - (86400*1);
+                        $batasTime   = (int)$timeNow - (86400*(12*30));
+                        // $batasTime   = (int)$timeNow - (86400*1);
                         $privilege   = $nasabahData['messages']['privilege'];
 
                         if ($last_active <  $batasTime && $privilege != 'super' || $is_active == 'f') {

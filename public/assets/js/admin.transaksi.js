@@ -811,7 +811,7 @@ const getDataTransaksi = async () => {
             }
             else {
                 color  = 'info';
-                jumlah = `+ ${t.total_kg_jual} kg`;
+                jumlah = `- ${t.total_kg_jual} kg`;
                 // jumlah = `+ ${t.total_kg_jual}kg/Rp${modifUang(kFormatter(t.total_uang_jual))}`;
             }
 
@@ -829,18 +829,18 @@ const getDataTransaksi = async () => {
                     </${tagNamaLengkap}>
                 </td>
                 <td class="align-middle text-sm">
-                    <span class="text-xxs text-name font-weight-bold badge border text-${color} border-${color} pb-1" style="min-width:150px;max-width:150px;border-radius:4px;"> 
+                    <span class="text-xxs text-name font-weight-bold badge border bg-${color} text-white border-${color} pb-1" style="min-width:150px;max-width:150px;border-radius:4px;letter-spacing:0.5px;"> 
                         ${t.jenis_transaksi}
                     </span>
                 </td>
                 <td class="align-middle text-sm">
-                    <span class="text-xs text-name font-weight-bold text-${color}"> 
+                    <span class="text-xs text-name font-weight-bold"> 
                         ${jumlah}
                     </span>
                 </td>
                 <td class="align-middle text-sm">
                     <span class="text-xs text-name font-weight-bold">
-                    ${day}-${month}-${year} ${hour}
+                        ${day}-${month}-${year} ${hour}
                     </span>
                 </td>
                 <td class="align-middle text-center">
@@ -1381,8 +1381,8 @@ const getRekapTransaksi = async () => {
                         Rp ${kFormatter(allTransaksi[key].totUangKeluar)}
                     </span>
                 </td>
-                <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
-                    <span class="text-xs text-name font-weight-bold text-warning">
+                <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);letter-spacing:0.5px;color:orange;">
+                    <span class="text-xs text-name font-weight-bold">
                         <i class="fas fa-coins text-xs mr-1"></i>
                         ${parseFloat(allTransaksi[key].totEmasMasuk).toFixed(1)}  g
                     </span>

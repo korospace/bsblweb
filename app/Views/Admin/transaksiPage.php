@@ -46,7 +46,7 @@
 	<script src="<?= base_url('assets/js/plugins/perfect-scrollbar.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.transaksi.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.transaksi.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>

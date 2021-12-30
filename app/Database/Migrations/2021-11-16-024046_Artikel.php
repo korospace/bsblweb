@@ -10,11 +10,14 @@ class Artikel extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'text',
-                'null' => false,
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
+                'null'       => false,
             ],
             'title' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 255,
                 'null'       => false,
             ],
@@ -31,12 +34,16 @@ class Artikel extends Migration
                 'null' => false,
             ],
             'id_kategori' => [
-                'type' => 'text',
-                'null' => false,
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
+                'null'       => false,
             ],
             'created_by' => [
-                'type'       => 'text',
-                'null'       => false,
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
+                'null' => false,
             ],
             'created_at' => [
                 'type' => 'bigint',

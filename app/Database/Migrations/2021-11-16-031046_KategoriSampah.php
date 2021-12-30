@@ -10,11 +10,14 @@ class KategoriSampah extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'text',
-                'null' => false,
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
+                'null'       => false,
             ],
             'name' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 20,
                 'unique'     => true,
                 'null'       => false,
@@ -22,7 +25,7 @@ class KategoriSampah extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey('name');
+        // $this->forge->addUniqueKey('name'); // postgre
         $this->forge->createTable('kategori_sampah');
     }
 

@@ -10,19 +10,24 @@ class PindahSaldo extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'serial',
-                'null' => false,
+                // 'type' => 'serial', // postgre,
+                'type'           => 'int', // mysql
+                'auto_increment' => true,
+                'null'           => false,
             ],
             'id_transaksi' => [
-                'type' => 'text',
-                'null' => false,
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
+                'null'       => false,
             ],
             'jumlah' => [
                 'type' => 'numeric',
                 'null' => false,
             ],
             'saldo_tujuan' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 8,
                 'null'       => false,
             ],

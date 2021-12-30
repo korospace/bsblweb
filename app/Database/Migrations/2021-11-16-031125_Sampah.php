@@ -10,21 +10,27 @@ class Sampah extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'text',
-                'null' => false,
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
+                'null'       => false,
             ],
             'id_kategori' => [
-                'type' => 'text',
-                'null' => false,
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
+                'null'       => false,
             ],
             'jenis' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 40,
                 'unique'     => true,
                 'null'       => false,
             ],
             'harga' => [
-                'type' => 'integer',
+                // 'type' => 'integer', // postgre
+                'type' => 'int', // mysql
                 'null' => false,
             ],
             'jumlah' => [
@@ -35,7 +41,7 @@ class Sampah extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey('jenis');
+        // $this->forge->addUniqueKey('jenis'); // postgre
         $this->forge->addForeignKey('id_kategori','kategori_sampah','id','CASCADE','CASCADE');
         $this->forge->createTable('sampah');
     }

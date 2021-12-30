@@ -10,57 +10,68 @@ class Users extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'text',
-                'null' => false,
+                // 'type'       => 'text',    // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
+                'null'       => false,
             ],
             'email' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 30,
                 'unique'     => true,
                 'null'       => false,
             ],
             'username' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 20,
                 'unique'     => true,
                 'null'       => false,
             ],
             'password'       => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 255,
                 'null'       => false,
             ],
             'nama_lengkap' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 40,
                 'unique'     => true,
                 'null'       => false,
             ],
             'notelp' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 14,
                 'unique'     => true,
                 'null'       => false,
             ],
             'alamat' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 255,
                 'null'       => false,
             ],
             'tgl_lahir' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 10,
                 'null'       => false,
                 'default'    => '00-00-0000',
             ],
             'kelamin' => [
-                'type'       => 'character varying',
-                'constraint' => 9,
-                'default'    => 'laki-laki',
+                // 'type'       => 'character varying', // postgre
+                // 'constraint' => 9,                   // postgre
+                'type'       => "ENUM", // mysql
+                'constraint' => ['laki-laki', 'perempuan'],
                 'null'       => false,
             ],
             'token' => [
-                'type' => 'text',
+                // 'type' => 'text', // postgre
+                'type' => 'TEXT', // mysql
                 'null' => true,
             ],
             'is_active' => [
@@ -75,7 +86,8 @@ class Users extends Migration
                 'null'       => false,
             ],
             'otp' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 6,
                 'null'       => true,
             ],
@@ -85,7 +97,8 @@ class Users extends Migration
                 'default' => false,
             ],
             'privilege' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 10,
                 'null'       => false,
             ],

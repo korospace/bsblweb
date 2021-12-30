@@ -10,13 +10,16 @@ class Dompet extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'serial',
-                'null' => false,
+                // 'type'           => 'serial', // postgre,
+                'type'           => 'int', // mysql
+                'auto_increment' => true,
+                'null'           => false,
             ],
             'id_user' => [
-                'type'   => 'text',
-                'unique' => true,
-                'null'   => false,
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
+                'null'       => false,
             ],
             'uang' => [
                 'type'    => 'numeric',

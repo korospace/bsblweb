@@ -10,36 +10,44 @@ class Wilayah extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'serial',
-                'null' => false,
+                // 'type'           => 'serial', // postgre,
+                'type'           => 'int', // mysql
+                'auto_increment' => true,
+                'null'           => false,
             ],
             'id_user' => [
-                'type'   => 'text',
-                'null'   => false,
-                'unique' => true,
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
+                'null'       => false,
             ],
             'kodepos' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 10,
                 'null'       => false,
             ],
             'kelurahan' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 200,
                 'null'       => false,
             ],
             'kecamatan' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 200,
                 'null'       => false,
             ],
             'kota' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 200,
                 'null'       => false,
             ],
             'provinsi' => [
-                'type'       => 'character varying',
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 200,
                 'null'       => false,
             ],

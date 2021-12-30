@@ -68,7 +68,7 @@
     const TOKEN   = '<?= (isset($token)) ? $token : null; ?>';
     const BASEURL = '<?= base_url(); ?>';
     const APIURL  = BASEURL;
-    const APIURL  = 'https://t-gadgetcors.herokuapp.com/https://bsbl.herokuapp.com';
+    // const APIURL  = 'https://t-gadgetcors.herokuapp.com/https://bsbl.herokuapp.com';
   </script>
   
   <!-- Render Js -->

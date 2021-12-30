@@ -44,7 +44,7 @@ const getAllAdmin = async () => {
                     <span class="font-weight-bold badge border ${(n.privilege === 'superadmin')? 'text-primary border-primary' : 'text-info border-info'} pb-1 rounded-sm"> ${n.privilege} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.is_active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_active === 't')? 'yes' : 'no'} </span>
+                    <span class="font-weight-bold badge border ${(n.is_active === 't' || n.is_active === '1')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_active === 't' || n.is_active === '1')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
                     <span class="font-weight-bold text-capitalize"> 
@@ -110,7 +110,7 @@ $('#search-admin').on('keyup', function() {
                     <span class="font-weight-bold badge border ${(n.privilege === 'superadmin')? 'text-primary border-primary' : 'text-info border-info'} pb-1 rounded-sm"> ${n.privilege} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.is_active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_active === 't')? 'yes' : 'no'} </span>
+                    <span class="font-weight-bold badge border ${(n.is_active === 't' || n.is_active === '1')? 'text-success border-success' : 'text-warning border-warning'} pb-1 rounded-sm"> ${(n.is_active === 't' || n.is_active === '1')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
                     <span class="font-weight-bold text-capitalize"> 
@@ -237,7 +237,7 @@ const crudAdmin = async (el,event) => {
         }
         
         // is account active
-        if (dataAdmin.is_active == 't') {
+        if (dataAdmin.is_active == 't' || dataAdmin.is_active === '1') {
             $(`#formAddEditAdmin input[name=is_active]`).val('1');
             $(`#formAddEditAdmin .toggle-akunaktif`).removeClass('bg-secondary').addClass('active bg-success');
         } 

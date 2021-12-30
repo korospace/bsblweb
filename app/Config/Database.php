@@ -100,11 +100,11 @@ class Database extends Config
 
     //  Deploy
     // public $default = [
-    //     'DSN'      => 'Postgre://eaxzuarmydxosq:d954bef2bfff907b334e42c56281241a363d925a52f7863bc8092b09da443e01@ec2-35-171-250-21.compute-1.amazonaws.com:5432/d3njo8irs6ur6?charset=utf8&connect_timeout=100',
-    //     'hostname' => 'ec2-35-171-250-21.compute-1.amazonaws.com',
-    //     'username' => 'eaxzuarmydxosq',
-    //     'password' => 'd954bef2bfff907b334e42c56281241a363d925a52f7863bc8092b09da443e01',
-    //     'database' => 'd3njo8irs6ur6',
+    //     'DSN'      => 'Postgre://ilklznsndblfsf:fccfc072a3be5460de9a0e60f81dd169b06be4e2fdbfe9db8e3e2cf3b263b0f1@ec2-107-23-41-227.compute-1.amazonaws.com:5432/d4jlpobtu4g67i?charset=utf8&connect_timeout=100',
+    //     'hostname' => 'ec2-107-23-41-227.compute-1.amazonaws.com',
+    //     'username' => 'ilklznsndblfsf',
+    //     'password' => 'fccfc072a3be5460de9a0e60f81dd169b06be4e2fdbfe9db8e3e2cf3b263b0f1',
+    //     'database' => 'd4jlpobtu4g67i',
     //     'DBDriver' => 'Postgre',
     //     'DBPrefix' => '',
     //     'pConnect' => false,

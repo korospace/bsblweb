@@ -10,21 +10,21 @@ class SetorSampah extends Migration
     {
         $this->forge->addField([
             'id' => [
-                // 'type' => 'serial', // postgre,
-                'type'           => 'int', // mysql
-                'auto_increment' => true,
+                'type'           => 'serial', // postgre,
+                // 'type'           => 'int', // mysql
+                // 'auto_increment' => true,
                 'null'           => false,
             ],
             'id_transaksi' => [
-                // 'type'       => 'text', // postgre
-                'type'       => 'varchar', // mysql
-                'constraint' => 200,       // mysql
+                'type'       => 'text', // postgre
+                // 'type'       => 'varchar', // mysql
+                // 'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'id_sampah' => [
-                // 'type'       => 'text', // postgre
-                'type'       => 'varchar', // mysql
-                'constraint' => 200,       // mysql
+                'type'       => 'text', // postgre
+                // 'type'       => 'varchar', // mysql
+                // 'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'jumlah_kg' => [

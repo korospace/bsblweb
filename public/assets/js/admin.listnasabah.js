@@ -187,12 +187,12 @@ const getAllNasabah = async () => {
                 <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
             </td>
             <td class="align-middle text-center">
-                <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;">
-                    ${(n.is_verify === 't')? 'yes' : 'no'}
+                <span class="font-weight-bold badge border ${(n.is_verify === 't' || n.is_verify === '1')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;">
+                    ${(n.is_verify === 't' || n.is_verify === '1')? 'yes' : 'no'}
                 </span>
             </td>
             <td class="align-middle text-center">
-                <span class="font-weight-bold badge border ${(n.is_active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;"> ${(n.is_active === 't')? 'yes' : 'no'} </span>
+                <span class="font-weight-bold badge border ${(n.is_active === 't' || n.is_active === '1')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;"> ${(n.is_active === 't' || n.is_active === '1')? 'yes' : 'no'} </span>
             </td>
             <td class="align-middle text-center">
                 <span class="font-weight-bold text-capitalize"> 
@@ -257,12 +257,12 @@ $('#search-nasabah').on('keyup', function() {
                     <span class="font-weight-bold text-capitalize"> ${n.nama_lengkap} </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.is_verify === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;">
-                        ${(n.is_verify === 't')? 'yes' : 'no'}
+                    <span class="font-weight-bold badge border ${(n.is_verify === 't' || n.is_verify === '1')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;">
+                        ${(n.is_verify === 't' || n.is_verify === '1')? 'yes' : 'no'}
                     </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.is_active === 't')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;"> ${(n.is_active === 't')? 'yes' : 'no'} </span>
+                    <span class="font-weight-bold badge border ${(n.is_active === 't' || n.is_active === '1')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;"> ${(n.is_active === 't' || n.is_active === '1')? 'yes' : 'no'} </span>
                 </td>
                 <td class="align-middle text-center">
                     <span class="font-weight-bold text-capitalize"> 
@@ -446,7 +446,7 @@ const getProfileNasabah = async (id) => {
         // kelamin
         $(`#formAddEditNasabah input#kelamin-${dataNasabah.kelamin}`).prop('checked',true);
         // is verify
-        if (dataNasabah.is_verify == 't') {
+        if (dataNasabah.is_verify == 't' || dataNasabah.is_verify === '1') {
             $(`#formAddEditNasabah input[name=is_verify]`).val('1');
             $(`#formAddEditNasabah .toggle-akunverify`).removeClass('bg-secondary').addClass('active bg-success');
         } 
@@ -455,7 +455,7 @@ const getProfileNasabah = async (id) => {
             $(`#formAddEditNasabah .toggle-akunverify`).removeClass('active bg-success').addClass('bg-secondary');
         }
         // is account active
-        if (dataNasabah.is_active == 't') {
+        if (dataNasabah.is_active == 't' || dataNasabah.is_active === '1') {
             $(`#formAddEditNasabah input[name=is_active]`).val('1');
             $(`#formAddEditNasabah .toggle-akunaktif`).removeClass('bg-secondary').addClass('active bg-success');
         } 

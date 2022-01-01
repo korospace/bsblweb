@@ -3,9 +3,15 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
   <style>
-    @media (max-width:990px) {
+    @media (max-width:992px) {
       body {
         overflow: hidden;
+      }
+      #contact-us #left-side{
+        order: 2;
+      }
+      #contact-us #right-side{
+        order: 1;
       }
     }
   </style>
@@ -271,8 +277,8 @@
   <footer id="contact-us">
     <div class="container">
       <div class="footer-content">
-        <div class="row">
-          <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="row d-flex">
+          <div id="left-side" class="col-lg-6 col-md-12 col-sm-12 mt-5 mt-sm-0">
             <div class="contact-form">
               <form id="contact">
                 <div class="row">
@@ -298,14 +304,13 @@
             </div>
           </div>
           <!-- ***** Contact Form End ***** -->
-          <div class="right-content col-lg-6 col-md-12 col-sm-12">
+          <div id="right-side" class="right-content col-lg-6 col-md-12 col-sm-12">
             <h2>Hubungi <em>Kami</em></h2>
-            <p>Phasellus dapibus urna vel lacus accumsan, iaculis eleifend leo auctor. Duis at finibus odio.
-              Vivamus ut pharetra arcu, in porta metus. Suspendisse blandit pulvinar ligula ut elementum.
-              <br><br>If you need this contact form to send email to your inbox, you may follow our <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact</a> page
+            <p>
+              If you need this contact form to send email to your inbox, you may follow our <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact</a> page
               for more detail.
             </p>
-            <ul class="social" style="text-align: left;">
+            <ul class="social">
               <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
               <li><a href="#"><i class="fab fa-twitter"></i></a></li>
               <li><a href="https://www.instagram.com/banksampah.ubl/"><i class="fab fa-instagram"></i></a></li>

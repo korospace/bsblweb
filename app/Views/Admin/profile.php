@@ -13,8 +13,18 @@
 			p.text-responsive{
 				font-size: 12px !important;
 			}
-			tr.text-responsive{
-				font-size: 12px;
+			table td{
+				display: block;
+			}
+			table td.label{
+				margin-top: 16px;
+			}
+			table td.main{
+				border-left: 3px solid #c1d966;
+				padding: 6px 10px;
+			}
+			table td span.titik{
+				display: none;
 			}
 		} 
 	</style>
@@ -114,69 +124,61 @@
 								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
 							</div>
 							<div class="table-responsive card-body mt-4 p-3">
-								<table class="" style="font-family: 'qc-medium';">
+								<table class="" style="font-family: 'qc-medium';min-width: min-content;">
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
 											<strong>Nama lengkap</strong>
-
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main">
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="nama-lengkap" class="text-capitalize">_ _ _ _ _</span>
 										</td>
 									</tr>
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
 											<strong>Username</strong>
-
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="username">_ _ _ _ _</span>
 										</td>
 									</tr>
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
 											<strong>Tanggal lahir</strong>
-
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="tgl-lahir">_ _ _ _ _</span>
 										</td>
 									</tr>
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
 											<strong>Jenis kelamin</strong>
-
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="kelamin">_ _ _ _ _</span>
 										</td>
 									</tr>
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
 											<strong>Alamat</strong>
-
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="alamat">_ _ _ _ _</span>
 										</td>
 									</tr>
 									<tr class='text-responsive'>
-										<td class="max60-sm py-2" style="font-family: 'qc-semibold';">
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
 											<strong>No.telepon</strong>
-
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="notelp">_ _ _ _ _</span>
 										</td>
 									</tr>
-									<!-- <tbody> -->
-									<!-- </tbody> -->
 								</table>
 							</div>
 						</div>

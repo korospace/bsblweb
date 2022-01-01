@@ -43,6 +43,30 @@
 				height: auto !important;
 			}
 		} 
+		@media (max-width: 640px) {
+			h4.text-responsive{
+				font-size: 18px;
+			}
+			h5.text-responsive{
+				font-size: 16px !important;
+			}
+			p.text-responsive{
+				font-size: 12px !important;
+			}
+			table td{
+				display: block;
+			}
+			table td.label{
+				margin-top: 16px;
+			}
+			table td.main{
+				border-left: 3px solid #c1d966;
+				padding: 6px 10px;
+			}
+			table td span.titik{
+				display: none;
+			}
+		} 
 		@media (max-width:422px) {
 			.detil-transaksi-logo h4{
 				font-size: 14px;
@@ -459,70 +483,64 @@
 						<div class="card h-100">
 							<div class="card-header pb-0 p-3">
 								<div class="row">
-									<div class="opacity-8 col-md-8 d-flex align-items-center">
+									<div class="opacity-8 col-12 d-flex justify-content-center">
 										<h4 style="font-family: 'qc-medium';">Personoal information</h4 >
 									</div>
 								</div>
 							</div>
 							<div class="card-body mt-4 p-3">
-								<table style="font-family: 'qc-medium';">
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
-											<strong>email</strong>
-											&nbsp;&nbsp;&nbsp;
-										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
-											<span id="email">_ _ _ _ _</span>
-										</td>
-									</tr>
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
+								<table class="" style="font-family: 'qc-medium';min-width: min-content;">
+									<tr class='text-responsive'>
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
 											<strong>Nama lengkap</strong>
-											&nbsp;&nbsp;&nbsp;
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main">
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="nama-lengkap" class="text-capitalize">_ _ _ _ _</span>
 										</td>
 									</tr>
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
-											<strong>Tanggal lahir</strong>
-											&nbsp;&nbsp;&nbsp;
+									<tr class='text-responsive'>
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
+											<strong>Username</strong>
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
+											<span id="username">_ _ _ _ _</span>
+										</td>
+									</tr>
+									<tr class='text-responsive'>
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
+											<strong>Tanggal lahir</strong>
+										</td>
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="tgl-lahir">_ _ _ _ _</span>
 										</td>
 									</tr>
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
+									<tr class='text-responsive'>
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
 											<strong>Jenis kelamin</strong>
-											&nbsp;&nbsp;&nbsp;
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="kelamin">_ _ _ _ _</span>
 										</td>
 									</tr>
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
+									<tr class='text-responsive'>
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
 											<strong>Alamat</strong>
-											&nbsp;&nbsp;&nbsp;
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="alamat">_ _ _ _ _</span>
 										</td>
 									</tr>
-									<tr>
-										<td class="py-2" style="font-family: 'qc-semibold';">
+									<tr class='text-responsive'>
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
 											<strong>No.telepon</strong>
-											&nbsp;&nbsp;&nbsp;
 										</td>
-										<td>: 
-											&nbsp;&nbsp;&nbsp;
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="notelp">_ _ _ _ _</span>
 										</td>
 									</tr>

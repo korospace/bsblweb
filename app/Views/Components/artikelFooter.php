@@ -43,7 +43,7 @@
 <?= $this->endSection(); ?>
 
     <footer class="">
-        <div class="pt-5" style="background-image:url('<?= base_url('assets/images/footer-bg.png'); ?>');background-repeat: no-repeat;background-size: cover;">
+        <div class="pt-5" style="background-image:url('<?= base_url('assets/images/footer-bg.webp'); ?>');background-repeat: no-repeat;background-size: cover;">
             <div class="container-fluid pt-5 pt-lg-0">
                 <div class="row mt-5 pb-5 px-4">
                     <div class="col-12 col-md-2 mt-5 mt-md-0">

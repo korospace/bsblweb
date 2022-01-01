@@ -280,6 +280,7 @@ const getDataSetorSampah = async () => {
 
     var ctx2 = document.getElementById("chart-grafik-penyetoran").getContext("2d");
     document.querySelector("#chart-grafik-penyetoran").style.width    = '100%';
+    document.querySelector("#chart-grafik-penyetoran").style.height   = '300px';
     document.querySelector("#chart-grafik-penyetoran").style.maxHeight= '300px';
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);

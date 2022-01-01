@@ -216,6 +216,7 @@ const updateGrafikSetorNasabah = async () => {
 
     var ctx2 = document.getElementById("chart-line").getContext("2d");
     document.querySelector("#chart-line").style.width    = '100%';
+    document.querySelector("#chart-line").style.height   = '300px';
     document.querySelector("#chart-line").style.maxHeight= '300px';
 
     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);

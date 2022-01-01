@@ -12,7 +12,7 @@ class Dompet extends Migration
             'id' => [
                 'type'           => 'serial', // postgre,
                 // 'type'           => 'int', // mysql
-                // 'auto_increment' => true,
+                // 'auto_increment' => true,  // mysql
                 'null'           => false,
             ],
             'id_user' => [
@@ -22,22 +22,29 @@ class Dompet extends Migration
                 'null'       => false,
             ],
             'uang' => [
-                'type'    => 'numeric',
+                'type'    => 'integer', // postgre
+                // 'type'       => 'int', // mysql
                 'null'    => false,
                 'default' => 0,
             ],
             'ubs' => [
-                'type'    => 'numeric',
+                'type'    => 'numeric', // postgre
+                // 'type'       => 'DECIMAL', // mysql
+                // 'constraint' => '65,30',   // mysql
                 'null'    => false,
                 'default' => 0,
             ],
             'antam' => [
-                'type'    => 'numeric',
+                'type'    => 'numeric', // postgre
+                // 'type'       => 'DECIMAL', // mysql
+                // 'constraint' => '65,30',   // mysql
                 'null'    => false,
                 'default' => 0,
             ],
             'galery24' => [
-                'type'    => 'numeric',
+                'type'    => 'numeric', // postgre
+                // 'type'       => 'DECIMAL', // mysql
+                // 'constraint' => '65,30',   // mysql
                 'null'    => false,
                 'default' => 0,
             ],

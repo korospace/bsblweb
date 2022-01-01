@@ -10,7 +10,7 @@ const getSampahMasuk = async () => {
         let dataSampah = httpResponse.data.data;
 
         dataSampah.forEach(ds => {
-            $(`#sampah-${ds.kategori}`).html(ds.total+' Kg');
+            $(`#sampah-${ds.kategori}`).html(parseFloat(ds.total).toFixed(2)+' Kg');
         });   
     }
 };
@@ -36,7 +36,7 @@ const openModalSampahMasuk = async (kategori) => {
             trBody  += `<tr class="text-center">
                 <th scope="row">${++i}</th>
                 <td>${b.jenis}</td>
-                <td>${b.jumlah_kg} kg</td>
+                <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
             </tr>`;
         })
 

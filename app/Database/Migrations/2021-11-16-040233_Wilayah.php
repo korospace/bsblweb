@@ -12,7 +12,7 @@ class Wilayah extends Migration
             'id' => [
                 'type'           => 'serial', // postgre,
                 // 'type'           => 'int', // mysql
-                // 'auto_increment' => true,
+                // 'auto_increment' => true,  // mysql
                 'null'           => false,
             ],
             'id_user' => [

@@ -28,12 +28,15 @@ class JualSampah extends Migration
                 'null'       => false,
             ],
             'jumlah_kg' => [
-                'type' => 'numeric',
-                'null' => false,
+                'type'    => 'numeric', // postgre
+                // 'type'       => 'DECIMAL', // mysql
+                // 'constraint' => '65,30',   // mysql
+                'null'       => false,
             ],
             'jumlah_rp' => [
-                'type' => 'numeric',
-                'null' => false,
+                'type'    => 'integer', // postgre
+                // 'type'       => 'int', // mysql
+                'null'       => false,
             ],
         ]);
 

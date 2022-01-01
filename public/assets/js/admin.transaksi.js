@@ -20,7 +20,6 @@ function getCurrentTime() {
  * Clear form
  */
 const clearAllForm = (isFormJualSetorSampah = false) => {
-    $('#search-nasabah-wraper table td span').html('');
     $('#formWraper .form-check-input').removeClass('is-invalid');
     $('#formWraper .form-control').removeClass('is-invalid');
     $('#formWraper .form-check-input').prop('checked',false);
@@ -55,6 +54,7 @@ $('#toggle-transaksi-wraper .switch-section').on('click',function (e) {
     $('#barrier-transaksi').removeClass('d-none');
     $('#formWraper form').addClass('d-none opacity-6');
     $(`#form-${formTarget}`).removeClass('d-none');
+    $('#search-nasabah-wraper table td span').html('');
 
     if ($(this).html() == 'setor sampah' || $(this).html() == 'jual sampah') {
         clearAllForm(true);
@@ -81,8 +81,10 @@ $('#toggle-transaksi-wraper .switch-section').on('click',function (e) {
  * Search nasabah
  */
 let dataNasabah = "";
-const searchNasabah = async (el,event) => {
-    event.preventDefault();
+const searchNasabah = async (el = false,event = false) => {
+    if(event !== false){
+        event.preventDefault();
+    }
 
     if ($('#search-nasabah').val() == '') {
         return 0;
@@ -293,7 +295,7 @@ const validateSetorJualSampah = () => {
 
     // jenis sampah
     $(`.inputJenisSampah`).each(function() {
-        if ($(this).val() == '') {
+        if ($(this).val() == '' || $(this).attr('disabled')) {
             $(this).addClass('is-invalid');
             status = false;
             msg    = 'input tidak boleh kosong!';
@@ -306,7 +308,7 @@ const validateSetorJualSampah = () => {
             status = false;
             msg    = 'input tidak boleh kosong!';
         }
-        if (/[^0-9\.]/g.test($(this).val())) {
+        if (/[^0-9\.]/g.test($(this).val().replace(/ /g,''))) {
             $(this).addClass('is-invalid');
             status = false;
             msg    = 'jumlah hanya boleh berupa angka positif dan titik!';
@@ -323,12 +325,9 @@ const validateSetorJualSampah = () => {
     if (status == false && msg !== "") {
         showAlert({
             message: `<strong>${msg}</strong>`,
-            btnclose: false,
+            autohide: true,
             type:'danger'
         })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
     }
 
     return status;
@@ -365,7 +364,7 @@ const validatePindahSaldo = () => {
         $('#form-konversi-saldo #harga_emas-error').html('*harga emas harus di isi');
         status = false;
     }
-    else if (/[^0-9\.]/g.test($('#form-konversi-saldo #harga_emas').val())) {
+    else if (/[^0-9\.]/g.test($('#form-konversi-saldo #harga_emas').val().replace(/ /g,''))) {
         $('#form-konversi-saldo #harga_emas').addClass('is-invalid');
         $('#form-konversi-saldo #harga_emas-error').html('*hanya boleh berupa angka positif dan titik!');
         status = false;
@@ -376,7 +375,7 @@ const validatePindahSaldo = () => {
         $('#form-konversi-saldo #jumlah-error').html('*jumlah saldo harus di isi');
         status = false;
     }
-    else if (/[^0-9\.]/g.test($('#form-konversi-saldo #jumlah').val())) {
+    else if (/[^0-9\.]/g.test($('#form-konversi-saldo #jumlah').val().replace(/ /g,''))) {
         $('#form-konversi-saldo #jumlah').addClass('is-invalid');
         $('#form-konversi-saldo #jumlah-error').html('*hanya boleh berupa angka positif dan titik!');
         status = false;
@@ -447,7 +446,7 @@ const validateTarikSaldo = () => {
         $('#form-tarik-saldo #jumlah-error').html('*jumlah saldo harus di isi');
         status = false;
     }
-    else if (/[^0-9\.]/g.test($('#form-tarik-saldo #jumlah').val())) {
+    else if (/[^0-9\.]/g.test($('#form-tarik-saldo #jumlah').val().replace(/ /g,''))) {
         $('#form-tarik-saldo #jumlah').addClass('is-invalid');
         $('#form-tarik-saldo #jumlah-error').html('*hanya boleh berupa angka positif dan titik!');
         status = false;
@@ -544,16 +543,21 @@ const doTransaksi = async (el,event,method) => {
             hideLoadingSpinner();
     
             if (httpResponse.status === 201) {
+                $('#search-nasabah-wraper table td span').html('_ _ _ _');
                 $('#barrier-transaksi').removeClass('d-none');
                 $(`#form-${formTarget}`).addClass('opacity-6');
                 clearAllForm();
                 updateAllTable(`${tglTransaksi[0]}/${tglTransaksi[1]}/31`);
+                searchNasabah();
     
                 if (method == 'jualsampah' || method == 'setorsampah') {
                     $('.barisSetorSampah').remove();
                     tambahBaris();
                     countTotalHarga();
                 } 
+                else if(method == 'tariksaldo'){
+                    $('#form-tarik-saldo #maximal-saldo').html(``);
+                }
     
                 showAlert({
                     message: `<strong>Success...</strong> ${transaksiName} berhasil!`,
@@ -798,12 +802,12 @@ const getDataTransaksi = async () => {
 
             if (t.jenis_transaksi == 'penyetoran sampah') {
                 color  = 'success';
-                jumlah = `+ ${t.total_kg_setor} kg`;
+                jumlah = `+ ${parseFloat(t.total_kg_setor).toFixed(2)} kg`;
                 // jumlah = `+ ${t.total_kg_setor}kg/Rp${modifUang(kFormatter(t.total_uang_setor))}`;
             } 
             else if (t.jenis_transaksi == 'penarikan saldo') {
                 color  = 'danger';
-                jumlah = (t.jenis_saldo == 'uang')?`- Rp ${t.total_tarik}`:`- ${t.total_tarik} g`;
+                jumlah = (t.jenis_saldo == 'uang')?`- Rp ${modifUang(parseFloat(t.total_tarik).toFixed(0))}`:`- ${parseFloat(t.total_tarik).toFixed(4)} g`;
             } 
             else if (t.jenis_transaksi == 'konversi saldo') {
                 color  = 'warning';
@@ -811,7 +815,7 @@ const getDataTransaksi = async () => {
             }
             else {
                 color  = 'info';
-                jumlah = `- ${t.total_kg_jual} kg`;
+                jumlah = `- ${parseFloat(t.total_kg_jual).toFixed(2)} kg`;
                 // jumlah = `+ ${t.total_kg_jual}kg/Rp${modifUang(kFormatter(t.total_uang_jual))}`;
             }
 
@@ -974,7 +978,7 @@ const getDetailTransaksi = async (id) => {
         // tarik saldo
         if (httpResponse.data.data.jenis_transaksi == 'penarikan saldo') {
             let jenisSaldo = httpResponse.data.data.jenis_saldo;
-            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah_tarik):httpResponse.data.data.jumlah_tarik+' gram';
+            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(0)):parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(6)+' gram';
 
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
                 <table>
@@ -1028,7 +1032,7 @@ const getDetailTransaksi = async (id) => {
                 trBody  += `<tr class="text-center">
                     <th scope="row">${++i}</th>
                     <td>${b.jenis}</td>
-                    <td>${b.jumlah_kg} kg</td>
+                    <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
                     <td class="text-left">Rp ${modifUang(b.jumlah_rp)}</td>
                 </tr>`;
             })

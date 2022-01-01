@@ -29,7 +29,6 @@
 <?= $this->section('contentJs'); ?>
 	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/nasabah.min.js'); ?>"></script>
@@ -48,8 +47,7 @@
 
 		<div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
 			<!-- Navbar -->
-			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
-			navbar-scroll="true">
+			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl position-sticky" style="top: 20px;z-index:100;">
 				<div class="container-fluid py-1 px-3">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
@@ -234,7 +232,7 @@
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text bg-gray px-4 border-md">
-									<i class="fa fa-user text-muted"></i>
+									<i class="fas fa-at text-muted"></i>
 								</span>
 							</div>
 							<input type="text" class="form-control px-2" id="username-edit" name="username" autocomplete="off" placeholder="Masukan username anda">

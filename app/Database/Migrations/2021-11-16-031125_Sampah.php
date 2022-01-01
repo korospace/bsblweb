@@ -34,9 +34,11 @@ class Sampah extends Migration
                 'null' => false,
             ],
             'jumlah' => [
-                'type'    => 'numeric',
-                'default' => 0,
-                'null'    => false,
+                'type'    => 'numeric', // postgre
+                // 'type'       => 'DECIMAL', // mysql
+                // 'constraint' => '65,30',   // mysql
+                'default'    => 0,
+                'null'       => false,
             ],
         ]);
 

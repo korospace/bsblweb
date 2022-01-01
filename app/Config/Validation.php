@@ -926,10 +926,9 @@ class Validation
             ],
 		],
 		'jumlah' => [
-            'rules'  => 'required|max_length[11]|numeric',
+            'rules'  => 'required|numeric',
             'errors' => [
                 'required'   => 'jumlah is required',
-                'max_length' => 'max 11 character',
                 'numeric'    => 'only number allowed',
             ],
 		],

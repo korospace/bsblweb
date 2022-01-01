@@ -12,7 +12,7 @@ class TarikSaldo extends Migration
             'id' => [
                 'type'           => 'serial', // postgre,
                 // 'type'           => 'int', // mysql
-                // 'auto_increment' => true,
+                // 'auto_increment' => true,     // mysql
                 'null'           => false,
             ],
             'id_transaksi' => [
@@ -28,8 +28,10 @@ class TarikSaldo extends Migration
                 'null'       => false,
             ],
             'jumlah_tarik' => [
-                'type' => 'numeric',
-                'null' => false,
+                'type'    => 'numeric', // postgre
+                // 'type'       => 'DECIMAL', // mysql
+                // 'constraint' => '65,30',   // mysql
+                'null'       => false,
             ],
         ]);
 

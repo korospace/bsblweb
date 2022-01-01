@@ -200,9 +200,17 @@ const getAllNasabah = async () => {
                 </span>
             </td>
             <td class="align-middle text-center">
-                <a href='' id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah('${n.id}',event)" style="border-radius:4px;">hapus</a>
-                <a href='' id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')" style="border-radius:4px;">edit</a>
-                <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" style="border-radius:4px;">detil</a>
+                <div clas="row w-100">
+                    <div class="col-12 px-0">
+                        <a href='' id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer w-100" onclick="hapusNasabah('${n.id}',event)" style="border-radius:4px;">hapus</a>
+                    </div>
+                    <div class="col-12 px-0 mt-2">
+                        <a href='' id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer w-100" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')" style="border-radius:4px;">edit</a>
+                    </div>
+                    <div class="col-12 px-0 mt-2">
+                        <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer w-100" style="border-radius:4px;">detil</a>
+                    </div>
+                </div>
             </td>
         </tr>`;
         });
@@ -270,9 +278,17 @@ $('#search-nasabah').on('keyup', function() {
                     </span>
                 </td>
                 <td class="align-middle text-center">
-                    <a href='' id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusNasabah('${n.id}',event)" style="border-radius:4px;">hapus</a>
-                    <a href='' id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')" style="border-radius:4px;">edit</a>
-                    <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer" style="border-radius:4px;">detil</a>
+                    <div clas="row w-100">
+                        <div class="col-12 px-0">
+                            <a href='' id="btn-hapus" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer w-100" onclick="hapusNasabah('${n.id}',event)" style="border-radius:4px;">hapus</a>
+                        </div>
+                        <div class="col-12 px-0 mt-2">
+                            <a href='' id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer w-100" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')" style="border-radius:4px;">edit</a>
+                        </div>
+                        <div class="col-12 px-0 mt-2">
+                            <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer w-100" style="border-radius:4px;">detil</a>
+                        </div>
+                    </div>
                 </td>
             </tr>`;
         });    
@@ -345,9 +361,6 @@ const searchKodepos = async (el) => {
                 });
         
                 $('#kodepos-wraper').html(elPostList);
-                if (el.value == '') {
-                    $('#kodepos-wraper').html(``); 
-                }
             } 
         }
     })

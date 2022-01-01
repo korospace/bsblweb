@@ -12,7 +12,7 @@ class SetorSampah extends Migration
             'id' => [
                 'type'           => 'serial', // postgre,
                 // 'type'           => 'int', // mysql
-                // 'auto_increment' => true,
+                // 'auto_increment' => true,  // mysql
                 'null'           => false,
             ],
             'id_transaksi' => [
@@ -28,12 +28,15 @@ class SetorSampah extends Migration
                 'null'       => false,
             ],
             'jumlah_kg' => [
-                'type' => 'numeric',
-                'null' => false,
+                'type'    => 'numeric', // postgre
+                // 'type'       => 'DECIMAL', // mysql
+                // 'constraint' => '65,30',   // mysql
+                'null'       => false,
             ],
             'jumlah_rp' => [
-                'type' => 'numeric',
-                'null' => false,
+                'type'    => 'integer', // postgre
+                // 'type'       => 'int', // mysql
+                'null'       => false,
             ],
         ]);
 

@@ -40,7 +40,7 @@ const getSampahMasuk = async () => {
         let dataSampah = httpResponse.data.data;
 
         dataSampah.forEach(ds => {
-            $(`#sampah-${ds.kategori}`).html(ds.total+' Kg');
+            $(`#sampah-${ds.kategori}`).html(parseFloat(ds.total).toFixed(1)+' Kg');
         });    
     }
 };
@@ -66,7 +66,7 @@ const openModalSampahMasuk = async (kategori) => {
             trBody  += `<tr class="text-center">
                 <th scope="row">${++i}</th>
                 <td>${b.jenis}</td>
-                <td>${b.jumlah_kg} kg</td>
+                <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
             </tr>`;
         })
 
@@ -349,10 +349,10 @@ const getHistoriTransaksi = async () => {
             else {
                 textClass = 'text-danger';
                 if (jenisSaldo == 'uang') {
-                    totalTransaksi = '- Rp'+modifUang(t[`total_tarik`]);
+                    totalTransaksi = '- Rp'+modifUang(parseFloat(t[`total_tarik`]).toFixed(0));
                 } 
                 else {
-                    totalTransaksi = '- '+t[`total_tarik`]+'g';
+                    totalTransaksi = '- '+parseFloat(t[`total_tarik`]).toFixed(4)+'g';
                 }
             }
 
@@ -407,7 +407,7 @@ const getDetailTransaksiNasabah = async (id) => {
         // tarik saldo
         if (httpResponse.data.data.jenis_transaksi == 'penarikan saldo') {
             let jenisSaldo = httpResponse.data.data.jenis_saldo;
-            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah_tarik):httpResponse.data.data.jumlah_tarik+' gram';
+            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(0)):parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(6)+' gram';
 
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
                 <table>
@@ -461,7 +461,7 @@ const getDetailTransaksiNasabah = async (id) => {
                 trBody  += `<tr class="text-center">
                     <th scope="row">${++i}</th>
                     <td>${b.jenis}</td>
-                    <td>${b.jumlah_kg} kg</td>
+                    <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
                     <td class="text-left">Rp ${modifUang(b.jumlah_rp)}</td>
                 </tr>`;
             })

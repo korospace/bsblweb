@@ -11,7 +11,7 @@
         let dataSampah = httpResponse.data.data;
 
         dataSampah.forEach(ds => {
-            $(`#sampah-${ds.kategori}`).html(ds.total+' Kg');
+            $(`#sampah-${ds.kategori}`).html(parseFloat(ds.total).toFixed(2)+' Kg');
         });   
     }
 };
@@ -37,7 +37,7 @@ const openModalSampahMasuk = async (kategori) => {
             trBody  += `<tr class="text-center">
                 <th scope="row">${++i}</th>
                 <td>${b.jenis}</td>
-                <td>${b.jumlah_kg} kg</td>
+                <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
             </tr>`;
         })
 
@@ -321,10 +321,10 @@ const getHistoriTransaksi = async () => {
             else {
                 textClass = 'text-danger';
                 if (jenisSaldo == 'uang') {
-                    totalTransaksi = '- Rp'+modifUang(t[`total_tarik`]);
+                    totalTransaksi = '- Rp'+modifUang(parseFloat(t[`total_tarik`]).toFixed(0));
                 } 
                 else {
-                    totalTransaksi = '- '+t[`total_tarik`]+'g';
+                    totalTransaksi = '- '+parseFloat(t[`total_tarik`]).toFixed(4)+'g';
                 }
             }
 
@@ -382,7 +382,7 @@ const getDetailTransaksiNasabah = async (id) => {
         // tarik saldo
         if (httpResponse.data.data.jenis_transaksi == 'penarikan saldo') {
             let jenisSaldo = httpResponse.data.data.jenis_saldo;
-            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(httpResponse.data.data.jumlah_tarik):httpResponse.data.data.jumlah_tarik+' gram';
+            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(0)):parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(6)+' gram';
 
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
                 <table>
@@ -436,7 +436,7 @@ const getDetailTransaksiNasabah = async (id) => {
                 trBody  += `<tr class="text-center">
                     <th scope="row">${++i}</th>
                     <td>${b.jenis}</td>
-                    <td>${b.jumlah_kg} kg</td>
+                    <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
                     <td class="text-left">Rp ${modifUang(b.jumlah_rp)}</td>
                 </tr>`;
             })
@@ -469,6 +469,7 @@ const getDetailTransaksiNasabah = async (id) => {
 let dataSaldo = "";
 const getSaldoNasabah = async () => {
 
+    $('#formPindahSaldo #maximal-saldo').html(`_ _ _ _`);
     $('#saldo-uang').html('_ _');
     $('#saldo-ubs').html('_ _');
     $('#saldo-antam').html('_ _');
@@ -479,7 +480,8 @@ const getSaldoNasabah = async () => {
     if (httpResponse.status === 200) {
         dataSaldo = httpResponse.data.data
 
-        $('#saldo-uang').html(modifUang(dataSaldo.uang.toString()));
+        $('#formPindahSaldo #maximal-saldo').html(`${modifUang(dataSaldo.uang)}`);
+        $('#saldo-uang').html(modifUang(dataSaldo.uang));
         $('#saldo-ubs').html(parseFloat(dataSaldo.ubs).toFixed(4));
         $('#saldo-antam').html(parseFloat(dataSaldo.antam).toFixed(4));
         $('#saldo-galery24').html(parseFloat(dataSaldo.galery24).toFixed(4));
@@ -628,7 +630,7 @@ const tambahBaris = (event = false) => {
         </select>
     </td>
     <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
-        <input type="text" class="inputJumlahSampah form-control form-control-sm pl-2 border-radius-sm" value="0" name="transaksi[slot${totalBaris+1}][jumlah]" style="min-height: 38px" onkeyup="countHargaXjumlah(this);">
+        <input type="text" class="inputJumlahSampah form-control form-control-sm pl-2 border-radius-sm" value="0" name="transaksi[slot${totalBaris+1}][jumlah]" style="min-height: 38px" onkeyup="countHargaXjumlah(this);" autocomplete="off">
     </td>
     <td class="py-2">
         <input type="text" class="inputHargaSampah form-control form-control-sm pl-2 border-radius-sm" style="min-height: 38px" data-harga="0" value="0" disabled>
@@ -738,7 +740,7 @@ const validateSetorSampah = () => {
 
     // jenis sampah
     $(`.inputJenisSampah`).each(function() {
-        if ($(this).val() == '') {
+        if ($(this).val() == '' || $(this).attr('disabled')) {
             $(this).addClass('is-invalid');
             status = false;
             msg    = 'input tidak boleh kosong!';
@@ -751,7 +753,7 @@ const validateSetorSampah = () => {
             status = false;
             msg    = 'input tidak boleh kosong!';
         }
-        if (/[^0-9\.]/g.test($(this).val())) {
+        if (/[^0-9\.]/g.test($(this).val().replace(/ /g,''))) {
             $(this).addClass('is-invalid');
             status = false;
             msg    = 'jumlah hanya boleh berupa angka positif dan titik!';
@@ -761,12 +763,9 @@ const validateSetorSampah = () => {
     if (status == false && msg !== "") {
         showAlert({
             message: `<strong>${msg}</strong>`,
-            btnclose: false,
+            autohide: true,
             type:'danger'
-        })
-        setTimeout(() => {
-            hideAlert();
-        }, 3000);
+        });
     }
 
     return status;
@@ -804,7 +803,7 @@ const validatePindahSaldo = () => {
         $('#formPindahSaldo #harga_emas-error').html('*harga emas harus di isi');
         status = false;
     }
-    else if (/[^0-9\.]/g.test($('#formPindahSaldo #harga_emas').val())) {
+    else if (/[^0-9\.]/g.test($('#formPindahSaldo #harga_emas').val().replace(/ /g,''))) {
         $('#formPindahSaldo #harga_emas').addClass('is-invalid');
         $('#formPindahSaldo #harga_emas-error').html('*hanya boleh berupa angka positif dan titik!');
         status = false;
@@ -815,7 +814,7 @@ const validatePindahSaldo = () => {
         $('#formPindahSaldo #jumlah-error').html('*jumlah saldo harus di isi');
         status = false;
     }
-    else if (/[^0-9\.]/g.test($('#formPindahSaldo #jumlah').val())) {
+    else if (/[^0-9\.]/g.test($('#formPindahSaldo #jumlah').val().replace(/ /g,''))) {
         $('#formPindahSaldo #jumlah').addClass('is-invalid');
         $('#formPindahSaldo #jumlah-error').html('*hanya boleh berupa angka positif dan titik!');
         status = false;
@@ -886,7 +885,7 @@ const validateTarikSaldo = () => {
         $('#formTarikSaldo #jumlah-error').html('*jumlah saldo harus di isi');
         status = false;
     }
-    else if (/[^0-9\.]/g.test($('#formTarikSaldo #jumlah').val())) {
+    else if (/[^0-9\.]/g.test($('#formTarikSaldo #jumlah').val().replace(/ /g,''))) {
         $('#formTarikSaldo #jumlah').addClass('is-invalid');
         $('#formTarikSaldo #jumlah-error').html('*hanya boleh berupa angka positif dan titik!');
         status = false;
@@ -979,6 +978,9 @@ const doTransaksi = async (el,event,method) => {
                     countTotalHarga();
                     getSampahMasuk();
                 } 
+                else if(method == 'tariksaldo'){
+                    $('#formTarikSaldo #maximal-saldo').html(``);
+                }
     
                 showAlert({
                     message: `<strong>Success...</strong> ${transaksiName} berhasil!`,
@@ -1054,10 +1056,20 @@ const deleteTransaksiNasabah = (id,event) => {
                         return httpRequestDelete(`${APIURL}/transaksi/deletedata?id=${id}`)
                         .then((e) => {
                             if (e.status == 201) {
-                                // chartGrafik.destroy();
-                                // getDataGrafikSetor();
-                                getHistoriTransaksi();
+                                getSampahMasuk();
                                 getSaldoNasabah();
+
+                                if(id.includes('TSS')){
+                                    dateStartGrafik = dateStartHistori;
+                                    dateEndGrafik   = dateEndHistori;
+                                    
+                                    $('#btn-filter-grafik #startdate').html($('#btn-filter-histori #startdate').html());
+                                    $('#btn-filter-grafik #enddate').html($('#btn-filter-histori #enddate').html());
+                                    
+                                    getDataGrafikSetor();
+                                }
+
+                                getHistoriTransaksi();
                             }
                         })
                     })

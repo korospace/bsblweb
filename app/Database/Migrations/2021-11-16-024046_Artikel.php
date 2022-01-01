@@ -43,7 +43,7 @@ class Artikel extends Migration
                 'type'       => 'text', // postgre
                 // 'type'       => 'varchar', // mysql
                 // 'constraint' => 200,       // mysql
-                'null' => false,
+                'null'       => false,
             ],
             'created_at' => [
                 'type' => 'bigint',

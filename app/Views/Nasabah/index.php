@@ -56,7 +56,6 @@
 <?= $this->section('contentJs'); ?>
 	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/core/soft-ui-dashboard.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
@@ -74,9 +73,9 @@
 		<!-- **** Sidebar **** -->
 		<?= $this->include('Components/nasabahSidebar'); ?>
 
-		<main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
+		<main class="main-content position-relative mt-1 border-radius-lg">
 			<!-- Navbar -->
-			<nav id="navbarBlur" class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" navbar-scroll="true">
+			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-3 shadow-none border-radius-xl position-sticky" style="top: 20px;z-index:100;">
 				<div class="container-fluid py-1 px-3" style="font-family: 'qc-semibold';">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
@@ -89,7 +88,7 @@
 						<div class="ms-auto pe-md-3 d-flex align-items-center">
 							<ul class="navbar-nav justify-content-end">
 								<li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-									<a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+									<a href="" class="nav-link text-body p-0" id="iconNavbarSidenav">
 										<div class="sidenav-toggler-inner">
 											<i class="sidenav-toggler-line"></i>
 											<i class="sidenav-toggler-line"></i>
@@ -104,7 +103,6 @@
 			</nav>
 			<!-- End Navbar -->
 			<div class="container-fluid py-4">
-
 				<!-- sampah masuk -->
 				<div id="row-sampah-masuk" class="row">
 					<div class="card-wraper col-xl-3 col-6 mb-md-0 mb-4 cursor-pointer" data-toggle="modal" data-target="#modalDetailSampah" onclick="openModalSampahMasuk('kertas')">

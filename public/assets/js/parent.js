@@ -305,6 +305,27 @@ $('#btn-logout').on('click', function(e) {
     })
 })
 
+// --- navbar OnScroll ---
+$(window).scroll(function () {
+    var scroll = $(window).scrollTop();
+    var box    = $('.main-content').offset().top;
+    
+    if (scroll >= box) {
+        $(".navbar").addClass("blur shadow-blur");
+    } 
+    else {
+        $(".navbar").removeClass("blur shadow-blur");
+    }
+});
+
+// --- Button navbar OnClick ---
+$('#iconNavbarSidenav').on('click', function (e) {
+    e.preventDefault();
+
+    $('body').toggleClass('g-sidenav-pinned');
+    $('aside').toggleClass('bg-white');
+})
+
 // modif saldo uang
 const modifUang = (rHarga) => {
     return rHarga.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;

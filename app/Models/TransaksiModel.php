@@ -28,7 +28,9 @@ class TransaksiModel extends Model
                 $harga      = (int)$hargaAsli[0]['harga']*(float)$jumlah;
                 $totalHarga = $totalHarga+$harga;
 
-                $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah+$jumlah WHERE id = '$idSampah';";
+                // $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah+$jumlah WHERE id = '$idSampah';"; // postgreSql
+
+                $this->db->query("UPDATE sampah SET jumlah=jumlah+$jumlah WHERE id = '$idSampah';");
                 $queryDetilSetor.= "('$idtransaksi','$idSampah',$jumlah,$harga),";
             }
 
@@ -38,7 +40,9 @@ class TransaksiModel extends Model
             $this->db->transBegin();
             $this->db->query("INSERT INTO transaksi (id,id_user,jenis_transaksi,date) VALUES('$idtransaksi','$idnasabah','penyetoran sampah',$date);");
             $this->db->query("UPDATE dompet SET uang=uang+$totalHarga WHERE id_user='$idnasabah';");
-            $this->db->query($queryJmlSampah);
+            
+            // $this->db->query($queryJmlSampah); // postgreSql
+
             $this->db->query($queryDetilSetor);
 
             $transStatus = $this->db->transStatus();
@@ -185,7 +189,9 @@ class TransaksiModel extends Model
                 $hargaAsli  = $this->db->table('sampah')->select("harga")->where("id",$idSampah)->get()->getResultArray();
                 $harga      = (int)$hargaAsli[0]['harga']*(float)$jumlah;
 
-                $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah-$jumlah WHERE id = '$idSampah';";
+                // $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah-$jumlah WHERE id = '$idSampah';"; // postgreSql
+
+                $this->db->query("UPDATE sampah SET jumlah=jumlah-$jumlah WHERE id = '$idSampah';");
                 $queryDetilJual.= "('$idtransaksi','$idSampah',$jumlah,$harga),";
             }
 
@@ -194,7 +200,9 @@ class TransaksiModel extends Model
 
             $this->db->transBegin();
             $this->db->query("INSERT INTO transaksi (id,id_user,jenis_transaksi,date) VALUES('$idtransaksi','$idnasabah','penjualan sampah',$date);");
-            $this->db->query($queryJmlSampah);
+            
+            // $this->db->query($queryJmlSampah); // postgreSql
+
             $this->db->query($queryDetilJual);
 
             $transStatus = $this->db->transStatus();
@@ -547,12 +555,12 @@ class TransaksiModel extends Model
             else {
                 // var_dump($get['year']);die;
                 $query  = "SELECT transaksi.id,transaksi.date,
-                (SELECT SUM(jumlah_kg) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
-                (SELECT SUM(jumlah_kg) AS sampah_keluar from jual_sampah WHERE jual_sampah.id_transaksi = transaksi.id),
-                (SELECT SUM(jumlah_rp) AS uang_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id),
-                (SELECT SUM(jumlah_tarik) AS uang_keluar from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id AND jenis_saldo = 'uang'),
-                (SELECT SUM(hasil_konversi) AS emas_masuk from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id),
-                (SELECT SUM(jumlah_tarik) AS emas_keluar from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id AND jenis_saldo != 'uang')
+                (SELECT SUM(jumlah_kg) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS sampah_masuk,
+                (SELECT SUM(jumlah_kg) from jual_sampah WHERE jual_sampah.id_transaksi = transaksi.id) AS sampah_keluar,
+                (SELECT SUM(jumlah_rp) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS uang_masuk,
+                (SELECT SUM(jumlah_tarik) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id AND jenis_saldo = 'uang') AS uang_keluar,
+                (SELECT SUM(hasil_konversi) from pindah_saldo WHERE pindah_saldo.id_transaksi = transaksi.id) AS emas_masuk,
+                (SELECT SUM(jumlah_tarik) from tarik_saldo WHERE tarik_saldo.id_transaksi = transaksi.id AND jenis_saldo != 'uang') AS emas_keluar
                 FROM transaksi";
 
                 if (isset($get['provinsi'])) {
@@ -719,7 +727,7 @@ class TransaksiModel extends Model
             $transaction = [];
             
             $query  = "SELECT transaksi.id,transaksi.date,wilayah.provinsi,
-            (SELECT SUM(jumlah_kg) AS sampah_masuk from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id)
+            (SELECT SUM(jumlah_kg) from setor_sampah WHERE setor_sampah.id_transaksi = transaksi.id) AS sampah_masuk
             FROM transaksi
             JOIN wilayah ON (transaksi.id_user = wilayah.id_user)";
 
@@ -941,11 +949,15 @@ class TransaksiModel extends Model
 
                 foreach ($detailTs['barang'] as $t) {
                     $totalHarga      = $totalHarga+$t['jumlah_rp'];
-                    $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah-".$t['jumlah_kg']." WHERE jenis = '".$t['jenis']."';";
+                    
+                    // $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah-".$t['jumlah_kg']." WHERE jenis = '".$t['jenis']."';"; // postgreSql
+
+                    $this->db->query("UPDATE sampah SET jumlah=jumlah-".$t['jumlah_kg']." WHERE jenis = '".$t['jenis']."';");
                 }
 
                 // update jumlah sampah
-                $this->db->query($queryJmlSampah);
+                // $this->db->query($queryJmlSampah); // postgreSql
+                
                 // update saldo nasabah
                 $this->db->query("UPDATE dompet SET uang=uang-$totalHarga WHERE id_user='$idnasabah';");
             } 

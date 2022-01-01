@@ -12,7 +12,7 @@ class PindahSaldo extends Migration
             'id' => [
                 'type'           => 'serial', // postgre,
                 // 'type'           => 'int', // mysql
-                // 'auto_increment' => true,
+                // 'auto_increment' => true,  // mysql
                 'null'           => false,
             ],
             'id_transaksi' => [
@@ -22,8 +22,9 @@ class PindahSaldo extends Migration
                 'null'       => false,
             ],
             'jumlah' => [
-                'type' => 'numeric',
-                'null' => false,
+                'type'    => 'integer', // postgre
+                // 'type'       => 'int', // mysql
+                'null'       => false,
             ],
             'saldo_tujuan' => [
                 'type'       => 'character varying', // postgre
@@ -32,13 +33,16 @@ class PindahSaldo extends Migration
                 'null'       => false,
             ],
             'harga_emas' => [
-                'type'    => 'numeric',
-                'default' => 0,
-                'null'    => false,
+                'type'    => 'integer', // postgre
+                // 'type'       => 'int', // mysql
+                'default'    => 0,
+                'null'       => false,
             ],
             'hasil_konversi' => [
-                'type' => 'numeric',
-                'null' => false,
+                'type'    => 'numeric', // postgre
+                // 'type'       => 'DECIMAL', // mysql
+                // 'constraint' => '65,30',   // mysql
+                'null'       => false,
             ],
         ]);
 

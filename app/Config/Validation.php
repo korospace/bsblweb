@@ -129,7 +129,7 @@ class Validation
             'rules'  => 'required|max_length[14]|is_unique[users.notelp]|is_natural',
             'errors' => [
                 'required'    => 'nomor telepon is required',
-                'max_length'  => 'max 12 character',
+                'max_length'  => 'max 14 character',
                 'is_unique'   => 'no.telp sudah dipakai',
                 'is_natural'  => 'only number allowed',
             ],

@@ -10,27 +10,27 @@ class TarikSaldo extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'           => 'serial', // postgre,
-                // 'type'           => 'int', // mysql
-                // 'auto_increment' => true,     // mysql
+                // 'type'           => 'serial', // postgre,
+                'type'           => 'int', // mysql
+                'auto_increment' => true,     // mysql
                 'null'           => false,
             ],
             'id_transaksi' => [
-                'type'       => 'text', // postgre
-                // 'type'       => 'varchar', // mysql
-                // 'constraint' => 200,       // mysql
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'jenis_saldo' => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
-                'constraint' => 8,
+                // 'type'       => 'character varying', // postgre
+                'type'       => "ENUM", // mysql
+                'constraint' => ['uang', 'ubs', 'antam', 'galery24'], // mysql
                 'null'       => false,
             ],
             'jumlah_tarik' => [
-                'type'    => 'numeric', // postgre
-                // 'type'       => 'DECIMAL', // mysql
-                // 'constraint' => '65,30',   // mysql
+                // 'type'    => 'numeric', // postgre
+                'type'       => 'DECIMAL', // mysql
+                'constraint' => '65,30',   // mysql
                 'null'       => false,
             ],
         ]);

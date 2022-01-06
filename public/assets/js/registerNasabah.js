@@ -118,6 +118,10 @@ $('#formRegister').on('submit', function(e) {
                     $('#notelp-regist').addClass('is-invalid');
                     $('#notelp-regist-error').text(error.response.data.messages.notelp);
                 }
+                if (error.response.data.messages.nik) {
+                    $('#nik-regist').addClass('is-invalid');
+                    $('#nik-regist-error').text(error.response.data.messages.nik);
+                }
             }
             // error server
             else if (error.response.status == 500) {
@@ -286,6 +290,27 @@ function doValidate(form) {
     else if (!/^\d+$/.test($('#notelp-regist').val())) {
         $('#notelp-regist').addClass('is-invalid');
         $('#notelp-regist-error').html('*hanya boleh angka');
+        status = false;
+    }
+    // nik validation
+    if ($('#nik-regist').val() == '') {
+        $('#nik-regist').addClass('is-invalid');
+        $('#nik-regist-error').html('*NIK harus di isi');
+        status = false;
+    }
+    else if ($('#nik-regist').val().length < 16) {
+        $('#nik-regist').addClass('is-invalid');
+        $('#nik-regist-error').html('*nik tidak valid');
+        status = false;
+    }
+    else if ($('#nik-regist').val().length > 16) {
+        $('#nik-regist').addClass('is-invalid');
+        $('#nik-regist-error').html('*nik tidak valid');
+        status = false;
+    }
+    else if (!/^\d+$/.test($('#nik-regist').val())) {
+        $('#nik-regist').addClass('is-invalid');
+        $('#nik-regist-error').html('*nik tidak valid');
         status = false;
     }
 

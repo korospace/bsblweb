@@ -138,6 +138,20 @@
               <small id="notelp-regist-error" class="text-danger"></small>
             </div>
 
+            <!-- **** NIK **** -->
+            <div class="input-group col-lg-12 mb-4 form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span 
+                    class="input-group-text bg-gray px-4 border-md border-right-0" style="border-width: 2px;">
+                      <i class="fa fa-id-card"></i>
+                  </span>
+                </div>
+                <input id="nik-regist" type="text" class="form-control pb-4 pt-4" name="nik" autocomplete="off" placeholder="Masukan Nomor induk KTP anda">
+              </div>
+              <small id="nik-regist-error" class="text-danger"></small>
+            </div>
+
             <!-- **** tgl lahir **** -->
             <div class="input-group col-lg-12 mb-4 form-group">
               <div class="input-group">

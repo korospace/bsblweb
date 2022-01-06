@@ -141,14 +141,15 @@ class Login extends BaseController
             return $this->respond($response,400);
         } 
         else {
-            $email       = $this->request->getPost("email");
-            $nasabahData = $this->loginModel->getNasabahByEmail($email);
+            $username_or_email = $this->request->getPost("username_or_email");
+            $nasabahData = $this->loginModel->checkNasabah($username_or_email);
 
             if ($nasabahData['error'] == false) {
                 $login_pass    = $this->request->getPost("password");
                 $database_pass = $this->decrypt($nasabahData['messages']['password']);
                 
                 if ($login_pass === $database_pass) {
+                    $email     = $nasabahData['messages']['email'];
                     $is_verify = $nasabahData['messages']['is_verify'];
 
                     if ($is_verify == 'f') {

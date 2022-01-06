@@ -9,7 +9,7 @@ class RegisterModel extends Model
 {
     protected $primaryKey    = 'id';
     protected $table         = 'users';
-    protected $allowedFields = ['id','email','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','token','is_active','last_active','otp','is_verify','created_at','privilege'];
+    protected $allowedFields = ['id','email','username','password','nama_lengkap','notelp', 'nik','alamat','tgl_lahir','kelamin','token','is_active','last_active','otp','is_verify','created_at','privilege'];
 
     // GET Last nasabah
     public function getLastNasabah(string $kodepos): array

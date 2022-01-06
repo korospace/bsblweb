@@ -10,32 +10,32 @@ class JualSampah extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'           => 'serial', // postgre,
-                // 'type'           => 'int', // mysql
-                // 'auto_increment' => true,
+                // 'type'           => 'serial', // postgre,
+                'type'           => 'int', // mysql
+                'auto_increment' => true,
                 'null'           => false,
             ],
             'id_transaksi' => [
-                'type'       => 'text', // postgre
-                // 'type'       => 'varchar', // mysql
-                // 'constraint' => 200,       // mysql
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'id_sampah' => [
-                'type'       => 'text', // postgre
-                // 'type'       => 'varchar', // mysql
-                // 'constraint' => 200,       // mysql
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'jumlah_kg' => [
-                'type'    => 'numeric', // postgre
-                // 'type'       => 'DECIMAL', // mysql
-                // 'constraint' => '65,30',   // mysql
+                // 'type'    => 'numeric', // postgre
+                'type'       => 'DECIMAL', // mysql
+                'constraint' => '65,30',   // mysql
                 'null'       => false,
             ],
             'jumlah_rp' => [
-                'type'    => 'integer', // postgre
-                // 'type'       => 'int', // mysql
+                // 'type'    => 'integer', // postgre
+                'type'       => 'int', // mysql
                 'null'       => false,
             ],
         ]);

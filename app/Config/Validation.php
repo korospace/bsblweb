@@ -134,6 +134,16 @@ class Validation
                 'is_natural'  => 'only number allowed',
             ],
 		],
+		'nik' => [
+            'rules'  => 'required|min_length[16]|max_length[16]|is_unique[users.nik]|is_natural',
+            'errors' => [
+                'required'    => 'nomor telepon is required',
+                'min_length'  => 'min 16 character',
+                'max_length'  => 'max 16 character',
+                'is_unique'   => 'nik sudah dipakai',
+                'is_natural'  => 'only number allowed',
+            ],
+		],
 		'alamat' => [
             'rules'  => 'required|max_length[255]',
             'errors' => [
@@ -280,11 +290,10 @@ class Validation
      */
     // nasabah
 	public $nasabahLoginValidate = [
-		'email' => [
-            'rules'  => 'required|valid_email',
+		'username_or_email' => [
+            'rules'  => 'required',
             'errors' => [
                 'required'    => 'email is required',
-                'valid_email' => 'Email is not in format',
             ],
 		],
 		'password' => [

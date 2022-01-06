@@ -109,6 +109,29 @@ class BaseController extends ResourceController
     } 
 
     /**
+     * CURL
+     */
+    public function curlGetData(string $url,array $headerItem): array
+    {
+        // persiapkan curl
+        $ch = curl_init(); 
+        // set url 
+        curl_setopt($ch, CURLOPT_URL, $url);
+        // Set the content type to application/json
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headerItem);
+        // return the transfer as a string 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        $output = curl_exec($ch);
+        $output = json_decode($output); 
+        $output = (array)$output; 
+        // tutup curl 
+        curl_close($ch);      
+
+        // menampilkan hasil curl
+        return $output;
+    }
+
+    /**
      * Send Email OTP.
      */
     public function sendOtpToEmail(String $email,String $otp)

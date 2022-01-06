@@ -11,11 +11,11 @@ class LoginModel extends Model
     protected $primaryKey    = 'id';
     protected $allowedFields = ['id','token','last_active'];
 
-    // get data nasabah by email
-    public function getNasabahByEmail(string $email): array
+    // check nasabah
+    public function checkNasabah(string $username_or_email): array
     {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("id,password,is_active,last_active,is_verify,privilege")->where("email",$email)->where("privilege",'nasabah')->get()->getResultArray();
+            $dataNasabah = $this->db->table($this->table)->select("id,email,password,is_active,last_active,is_verify,privilege")->where("email=$username_or_email OR username=$username_or_email AND privilege='nasabah'")->get()->getResultArray();
             
             return [
                 'status'   => (empty($dataNasabah)) ? 404  : 200,

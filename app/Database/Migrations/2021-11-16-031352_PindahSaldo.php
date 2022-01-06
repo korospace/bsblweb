@@ -10,38 +10,32 @@ class PindahSaldo extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'           => 'serial', // postgre,
-                // 'type'           => 'int', // mysql
-                // 'auto_increment' => true,  // mysql
+                // 'type'           => 'serial', // postgre,
+                'type'           => 'int', // mysql
+                'auto_increment' => true,  // mysql
                 'null'           => false,
             ],
             'id_transaksi' => [
-                'type'       => 'text', // postgre
-                // 'type'       => 'varchar', // mysql
-                // 'constraint' => 200,       // mysql
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'jumlah' => [
-                'type'    => 'integer', // postgre
-                // 'type'       => 'int', // mysql
-                'null'       => false,
-            ],
-            'saldo_tujuan' => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
-                'constraint' => 8,
+                // 'type'    => 'integer', // postgre
+                'type'       => 'int', // mysql
                 'null'       => false,
             ],
             'harga_emas' => [
-                'type'    => 'integer', // postgre
-                // 'type'       => 'int', // mysql
+                // 'type'    => 'integer', // postgre
+                'type'       => 'int', // mysql
                 'default'    => 0,
                 'null'       => false,
             ],
             'hasil_konversi' => [
-                'type'    => 'numeric', // postgre
-                // 'type'       => 'DECIMAL', // mysql
-                // 'constraint' => '65,30',   // mysql
+                // 'type'    => 'numeric', // postgre
+                'type'       => 'DECIMAL', // mysql
+                'constraint' => '65,30',   // mysql
                 'null'       => false,
             ],
         ]);

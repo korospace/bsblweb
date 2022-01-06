@@ -10,41 +10,27 @@ class Dompet extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'           => 'serial', // postgre,
-                // 'type'           => 'int', // mysql
-                // 'auto_increment' => true,  // mysql
+                // 'type'           => 'serial', // postgre,
+                'type'           => 'int', // mysql
+                'auto_increment' => true,  // mysql
                 'null'           => false,
             ],
             'id_user' => [
-                'type'       => 'text', // postgre
-                // 'type'       => 'varchar', // mysql
-                // 'constraint' => 200,       // mysql
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'uang' => [
-                'type'    => 'integer', // postgre
-                // 'type'       => 'int', // mysql
+                // 'type'    => 'integer', // postgre
+                'type'    => 'int', // mysql
                 'null'    => false,
                 'default' => 0,
             ],
-            'ubs' => [
-                'type'    => 'numeric', // postgre
-                // 'type'       => 'DECIMAL', // mysql
-                // 'constraint' => '65,30',   // mysql
-                'null'    => false,
-                'default' => 0,
-            ],
-            'antam' => [
-                'type'    => 'numeric', // postgre
-                // 'type'       => 'DECIMAL', // mysql
-                // 'constraint' => '65,30',   // mysql
-                'null'    => false,
-                'default' => 0,
-            ],
-            'galery24' => [
-                'type'    => 'numeric', // postgre
-                // 'type'       => 'DECIMAL', // mysql
-                // 'constraint' => '65,30',   // mysql
+            'emas' => [
+                // 'type'    => 'numeric', // postgre
+                'type'       => 'DECIMAL', // mysql
+                'constraint' => '65,30',   // mysql
                 'null'    => false,
                 'default' => 0,
             ],

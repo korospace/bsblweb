@@ -10,21 +10,21 @@ class Transaksi extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'       => 'text', // postgre
-                // 'type'       => 'varchar', // mysql
-                // 'constraint' => 200,       // mysql
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'id_user' => [
-                'type'       => 'text', // postgre
-                // 'type'       => 'varchar', // mysql
-                // 'constraint' => 200,       // mysql
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'jenis_transaksi' => [
-                'type'       => 'text', // postgre
-                // 'type'       => 'varchar', // mysql
-                // 'constraint' => 50,        // mysql
+                // 'type'       => 'text', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 50,        // mysql
                 'null'       => false,
             ],
             'date' => [

@@ -10,63 +10,70 @@ class Users extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type'       => 'text',    // postgre
-                // 'type'       => 'varchar', // mysql
-                // 'constraint' => 200,       // mysql
+                // 'type'       => 'text',    // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'email' => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 30,
                 'unique'     => true,
                 'null'       => false,
             ],
             'username' => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 20,
                 'unique'     => true,
                 'null'       => false,
             ],
             'password'       => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 255,
                 'null'       => false,
             ],
             'nama_lengkap' => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 40,
                 'unique'     => true,
                 'null'       => false,
             ],
             'notelp' => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 14,
                 'unique'     => true,
                 'null'       => false,
             ],
+            'nik' => [
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
+                'constraint' => 16,
+                'unique'     => true,
+                'null'       => false,
+            ],
             'alamat' => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 255,
                 'null'       => false,
             ],
             'tgl_lahir' => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 10,
                 'null'       => false,
                 'default'    => '00-00-0000',
             ],
             'kelamin' => [
-                'type'       => 'character varying', // postgre
-                'constraint' => 9,                   // postgre
-                // 'type'       => "ENUM",                     // mysql
-                // 'constraint' => ['laki-laki', 'perempuan'], // mysql
+                // 'type'       => 'character varying', // postgre
+                // 'constraint' => 9,                   // postgre
+                'type'       => "ENUM",                     // mysql
+                'constraint' => ['laki-laki', 'perempuan'], // mysql
                 'null'       => false,
             ],
             'token' => [
@@ -85,8 +92,8 @@ class Users extends Migration
                 'null'       => false,
             ],
             'otp' => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 6,
                 'null'       => true,
             ],
@@ -96,8 +103,8 @@ class Users extends Migration
                 'default' => false,
             ],
             'privilege' => [
-                'type'       => 'character varying', // postgre
-                // 'type'       => 'varchar', // mysql
+                // 'type'       => 'character varying', // postgre
+                'type'       => 'varchar', // mysql
                 'constraint' => 10,
                 'null'       => false,
             ],

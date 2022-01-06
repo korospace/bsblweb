@@ -832,13 +832,6 @@ class Transaksi extends BaseController
     public function konversiSaldo(array $data): float
     {
         return (float)$data['jumlah']/$data['harga_emas'];
-
-        // if ($data['asal'] == 'uang') {
-        //     return (float)$data['jumlah']/$data['harga_emas'];
-        // } 
-        // else {
-        //     return round((float)$data['jumlah']*$data['harga_emas']);
-        // }
     }
 
     public function getHargaEmas(): float
@@ -853,26 +846,6 @@ class Transaksi extends BaseController
         $output = $this->curlGetData("https://free.currconv.com/api/v7/convert?q=USD_IDR&compact=ultra&apiKey=c94ee0cbe358dc63dce9",array('Content-Type:application/json'));
 
         return round((float)$output['USD_IDR']);
-    }
-
-    public function curlGetData(string $url,array $headerItem): array
-    {
-        // persiapkan curl
-        $ch = curl_init(); 
-        // set url 
-        curl_setopt($ch, CURLOPT_URL, $url);
-        // Set the content type to application/json
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headerItem);
-        // return the transfer as a string 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-        $output = curl_exec($ch);
-        $output = json_decode($output); 
-        $output = (array)$output; 
-        // tutup curl 
-        curl_close($ch);      
-
-        // menampilkan hasil curl
-        return $output;
     }
 
     /**

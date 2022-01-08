@@ -136,7 +136,7 @@ const httpRequestPut = (url,form) => {
     let newForm = new FormData();
 
     for (var pair of form.entries()) {
-        let noPair = ['id','username','password','id_kategori','new_password','old_password','thumbnail','new_thumbnail','content'];
+        let noPair = ['id','username','email','password','id_kategori','new_password','old_password','thumbnail','new_thumbnail','content'];
 
         if (noPair.includes(pair[0]) == false) {
             newForm.set(pair[0], pair[1].trim().toLowerCase());

@@ -85,22 +85,25 @@ class Validation
 		],
 	];
 
+    // email validate
+    public $emailValidate = [
+		'email' => [
+			'rules'  => 'required|is_unique[users.email]|valid_email|valid_emails',
+			'errors' => [
+                'required'     => 'email is required',
+                'is_unique'    => 'email sudah terdaftar',
+                'valid_email'  => 'Email is not in format',
+                'valid_emails' => "Email's provider is not valid",
+			]
+		],
+	];
+
     /**
      * REGSITER VALIDATE
      * ================================
      */
     // nasabah
 	public $nasabahRegisterValidate = [
-		'email' => [
-			'rules'  => 'required|max_length[40]|is_unique[users.email]|valid_email|valid_emails',
-			'errors' => [
-                'required'     => 'email is required',
-                'max_length'   => 'max 40 character',
-                'is_unique'    => 'email sudah terdaftar',
-                'valid_email'  => 'Email is not in format',
-                'valid_emails' => "Email's provider is not valid",
-			]
-		],
 		'username' => [
             'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username]',
             'errors' => [
@@ -166,20 +169,20 @@ class Validation
             ],
 		],
 		'rt' => [
-            'rules'  => 'required|min_length[2]|max_length[2]|is_natural',
+            'rules'  => 'required|min_length[3]|max_length[3]|is_natural',
             'errors' => [
                 'required'    => 'rt is required',
-                'min_length'  => 'min 2 character',
-                'max_length'  => 'max 2 character',
+                'min_length'  => 'min 3 character',
+                'max_length'  => 'max 3 character',
                 'is_natural'  => 'only number allowed',
             ],
 		],
 		'rw' => [
-            'rules'  => 'required|min_length[2]|max_length[2]|is_natural',
+            'rules'  => 'required|min_length[3]|max_length[3]|is_natural',
             'errors' => [
                 'required'    => 'rw is required',
-                'min_length'  => 'min 2 character',
-                'max_length'  => 'max 2 character',
+                'min_length'  => 'min 3 character',
+                'max_length'  => 'max 3 character',
                 'is_natural'  => 'only number allowed',
             ],
 		],
@@ -355,6 +358,15 @@ class Validation
                 'min_length'  => 'min 8 character',
                 'max_length'  => 'max 20 character',
                 'is_unique'   => 'username sudah terdaftar',
+            ],
+		],
+		'email' => [
+            'rules'  => 'required|is_unique[users.email,users.id,{id}]|valid_email|valid_emails',
+            'errors' => [
+                'required'     => 'email is required',
+                'is_unique'    => 'email sudah terdaftar',
+                'valid_email'  => 'Email is not in format',
+                'valid_emails' => "Email's provider is not valid",
             ],
 		],
 		'nama_lengkap' => [
@@ -568,13 +580,6 @@ class Validation
             'rules'  => 'required|in_list[1,0]',
             'errors' => [
                 'required'    => 'is_verify is required',
-                'in_list'     => "value must be '1' or '0'",
-            ],
-		],
-		'is_active' => [
-            'rules'  => 'required|in_list[1,0]',
-            'errors' => [
-                'required'    => 'is_active is required',
                 'in_list'     => "value must be '1' or '0'",
             ],
 		]
@@ -885,13 +890,6 @@ class Validation
             'errors' => [
                 'required'      => 'id nasabah is required',
                 'is_not_unique' => "nasabah with id ({value}) is not found",
-            ],
-		],
-		'tujuan' => [
-            'rules'  => 'required|in_list[antam,ubs,galery24]',
-            'errors' => [
-                'required'    => 'saldo tujuan is required',
-                'in_list'     => "value must be 'antam/ubs/galery24'",
             ],
 		],
 		'harga_emas' => [

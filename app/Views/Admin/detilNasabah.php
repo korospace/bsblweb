@@ -23,10 +23,6 @@
 			width: 100% !important;
 			overflow-x: scroll !important;
 		}
-
-		.rowCardWraper {
-			height: 100% !important;
-		}
 		
 		.detil-transaksi-logo img{
 			width: 80px;
@@ -39,9 +35,6 @@
 			.numbers h5 {
 				font-size: 12px !important;
 			}
-			.rowCardWraper {
-				height: auto !important;
-			}
 		} 
 		@media (max-width: 640px) {
 			h4.text-responsive{
@@ -53,17 +46,17 @@
 			p.text-responsive{
 				font-size: 12px !important;
 			}
-			table td{
+			#personal-info table td{
 				display: block;
 			}
-			table td.label{
+			#personal-info table td.label{
 				margin-top: 16px;
 			}
-			table td.main{
+			#personal-info table td.main{
 				border-left: 3px solid #c1d966;
 				padding: 6px 10px;
 			}
-			table td span.titik{
+			#personal-info table td span.titik{
 				display: none;
 			}
 		} 
@@ -85,8 +78,6 @@
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
 	<!-- ** production ** -->
 	<!-- <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/admin.detilnasabah.css'); ?>"> -->
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
 <?= $this->endSection(); ?>
 
@@ -102,7 +93,8 @@
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.detilnasabah.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.detilnasabah.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.detilnasabah.min.js'); ?>"></script> -->
 <?= $this->endSection(); ?>
 
 <!-- Html -->
@@ -148,14 +140,14 @@
 						<span class="nav-link-text ms-1">Setor sampah</span>
 					</a>
 				</li>
-				<!-- pindah saldo -->
+				<!-- konversi saldo -->
 				<li class="nav-item">
 					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalPindahSaldo" onclick="openModalTransaksi('pindah saldo')">
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<i class="fas fa-exchange-alt text-muted" style="font-size: 13px;transform: translateY(-1px);"></i>
 						</div>
-						<span class="nav-link-text ms-1">Pindah saldo</span>
+						<span class="nav-link-text ms-1">Konversi saldo</span>
 					</a>
 				</li>
 				<!-- tarik saldo -->
@@ -166,6 +158,16 @@
 							<i class="fas fa-hand-holding-usd text-muted" style="font-size: 15px;transform: translateY(-1px);"></i>
 						</div>
 						<span class="nav-link-text ms-1">Tarik saldo</span>
+					</a>
+				</li>
+				<!-- rekap transaksi -->
+				<li class="nav-item">
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalRekapTransaksi">
+						<div
+							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="fas fa-file-signature text-muted" style="font-size: 15px;transform: translateY(-1px);"></i>
+						</div>
+						<span class="nav-link-text ms-1">Rekap transaksi</span>
 					</a>
 				</li>
 			</ul>
@@ -369,109 +371,65 @@
 
 			<div class="container-fluid mt-5 p-0">
 				<!-- saldo -->
-				<div class="row px-4">
-					<div class="col-lg-12 p-0">
-						<div class="row">
-							<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
-								<div class="card-id bg-transparent shadow-xl">
-									<div class="overflow-hidden position-relative border-radius-md"
-										style="background-image: url(<?= base_url('assets/images/curved-images/curved14.jpg'); ?>);">
-										<span class="mask bg-gradient-dark"></span>
-										<div class="card-body-id position-relative z-index-1 p-3">
-											<i class="fas fa-wifi text-white p-2"></i>
-											<h5 id="card-id" class="text-white mt-4 mb-5 pb-2" style="font-family: 'qc-medium';">_ _ _ _ _&nbsp;&nbsp;&nbsp;_ _ _
-												_&nbsp;&nbsp;&nbsp;_</h5>
-											<div class="d-flex">
-												<div class="d-flex">
-													<div class="me-4" style="font-family: 'qc-medium';">
-														<p class="text-white text-sm opacity-8 mb-0">Username</p>
-														<h6 id="card-username" class="text-white mb-0">_ _ _ _ _ _</h6>
-													</div>
-													<div style="font-family: 'qc-medium';">
-														<p class="text-white text-sm opacity-8 mb-0">Tanggal Bergabung</p>
-														<h6 id="card-date" class="text-white mb-0">_ _/_ _/_ _ _ _<h6>
-													</div>
-												</div>
-												<div class="ms-auto w-20 d-flex align-items-end justify-content-end">
-													<img class="w-60 mt-2" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>"
-														alt="logo">
-												</div>
+				<div class="row">
+					<div class="col-xl-6">
+						<div class="card-id bg-transparent shadow-xl">
+							<div class="overflow-hidden position-relative border-radius-md"
+								style="background-image: url(<?= base_url('assets/images/curved-images/curved14.jpg'); ?>);">
+								<span class="mask bg-gradient-dark"></span>
+								<div class="card-body-id position-relative z-index-1 p-3">
+									<i class="fas fa-wifi text-white p-2"></i>
+									<h5 id="card-id" class="text-white mt-4 mb-5" style="font-family: 'qc-medium';">_ _ _ _ _&nbsp;&nbsp;&nbsp;_ _ _
+										_&nbsp;&nbsp;&nbsp;_</h5>
+									<div class="d-flex">
+										<div class="d-flex">
+											<div class="me-4" style="font-family: 'qc-medium';">
+												<p class="text-white text-sm opacity-8 mb-0">Username</p>
+												<h6 id="card-username" class="text-white mb-0">_ _ _ _ _ _</h6>
 											</div>
+											<div style="font-family: 'qc-medium';">
+												<p class="text-white text-sm opacity-8 mb-0">Tanggal Bergabung</p>
+												<h6 id="card-date" class="text-white mb-0">_ _/_ _/_ _ _ _<h6>
+											</div>
+										</div>
+										<div class="ms-auto w-20 d-flex align-items-end justify-content-end">
+											<img class="w-60 mt-2" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>"
+												alt="logo">
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
-								<div class="row d-flex justify-content-center rowCardWraper">
-									<div class="col-sm-6 h-100 pr-sm-1">
-										<div class="card h-100 border-radius-md">
-											<div class="card-header p-3 text-center">
-												<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-													<i class="fas fa-money-bill-wave-alt"></i>
-												</div>
-											</div>
-											<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-												<h6 class="text-center mb-0">Tunai</h6>
-												<hr class="horizontal dark my-3">
-												<h5 class="mb-0">
-													Rp <span id="saldo-uang">_ _</span>
-												</h5>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-6 h-100 pl-sm-1 mt-sm-0 mt-4">
-										<div class="card h-100 border-radius-md">
-											<div class="card-header p-3 text-center">
-												<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-													<i class="fas fa-coins"></i>
-												</div>
-											</div>
-											<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-												<h6 class="text-center mb-0">UBS</h6>
-												<hr class="horizontal dark my-3">
-												<h5 class="mb-0">
-													<span id="saldo-ubs">_ _</span> g
-												</h5>
-											</div>
-										</div>
-									</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-xl-3 h-100 pr-2 pl-2 mt-4 mt-md-0">
+						<div class="card h-100 border-radius-md">
+							<div class="card-header p-3 text-center d-flex justify-content-center">
+								<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+									<i class="fas fa-money-bill-wave-alt"></i>
 								</div>
 							</div>
-							<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
-								<div class="row d-flex justify-content-center rowCardWraper">
-									<div class="col-sm-6 pr-sm-1 h-100">
-										<div class="card h-100 border-radius-md">
-											<div class="card-header p-3 text-center">
-												<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-													<i class="fas fa-coins"></i>
-												</div>
-											</div>
-											<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-												<h6 class="text-center mb-0">Antam</h6>
-												<hr class="horizontal dark my-3">
-												<h5 class="mb-0">
-													<span id="saldo-antam">_ _</span> g
-												</h5>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-6 pl-sm-1 h-100 mt-sm-0 mt-4">
-										<div class="card h-100 border-radius-md">
-											<div class="card-header p-3 text-center">
-												<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-													<i class="fas fa-coins"></i>
-												</div>
-											</div>
-											<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-												<h6 class="text-center mb-0">Galery24</h6>
-												<hr class="horizontal dark my-3">
-												<h5 class="mb-0">
-													<span id="saldo-galery24">_ _</span> g
-												</h5>
-											</div>
-										</div>
-									</div>
+							<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
+								<h6 class="text-center mb-0">Tunai</h6>
+								<hr class="horizontal dark my-3">
+								<h5 class="mb-0">
+									Rp <span id="saldo-uang">_ _</span>
+								</h5>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-xl-3 h-100 pl-2 mt-4 mt-md-0">
+						<div class="card h-100 border-radius-md">
+							<div class="card-header p-3 text-center d-flex justify-content-center">
+								<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+									<i class="fas fa-coins"></i>
 								</div>
+							</div>
+							<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
+								<h6 class="text-center mb-0">Emas</h6>
+								<hr class="horizontal dark my-3">
+								<h5 class="mb-0">
+									<span id="saldo-emas">_ _</span> g
+								</h5>
 							</div>
 						</div>
 					</div>
@@ -492,7 +450,7 @@
 								<table class="" style="font-family: 'qc-medium';min-width: min-content;">
 									<tr class='text-responsive'>
 										<td class="py-2 label" style="font-family: 'qc-semibold';">
-											<strong>Nama lengkap</strong>
+											<strong>Nama lengkap</strong>&nbsp;&nbsp;
 										</td>
 										<td class="main">
 											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
@@ -542,6 +500,15 @@
 										<td class="main"> 
 											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="notelp">_ _ _ _ _</span>
+										</td>
+									</tr>
+									<tr class='text-responsive'>
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
+											<strong>NIK</strong>
+										</td>
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
+											<span id="nik">_ _ _ _ _</span>
 										</td>
 									</tr>
 								</table>
@@ -718,7 +685,7 @@
 			</div>
 
 			<!-- modal body -->
-			<div class="modal-body form-row">
+			<div class="modal-body row">
 				<input type="hidden" name="id_nasabah" value="<?= $idnasabah; ?>">
 				
 				<!-- **** tgl transaksi **** -->
@@ -808,7 +775,7 @@
 		<div class="modal-content">
 			<!-- modal header -->
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Transaksi pindah saldo</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Transaksi konversi saldo</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
@@ -880,37 +847,6 @@
 						id="jumlah-error"
 						class="text-danger"></small>
 				</div>
-
-				<!-- **** saldo tujuan **** -->
-				<h6 class="font-italic opacity-8 col-12 text-sm">
-					Saldo tujuan
-				</h6>
-				<div class="input-group col-12 mb-4 form-group form-row">
-					<div class="input-group col-4">
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="tujuan" id="ubs" value="ubs">
-							<label class="form-check-label" for="ubs">
-								Ubs
-							</label>
-						</div>
-					</div>
-					<div class="input-group col-4">
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="tujuan" id="antam" value="antam" checked>
-							<label class="form-check-label" for="antam">
-								Antam
-							</label>
-						</div>
-					</div>
-					<div class="input-group col-4">
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="tujuan" id="galery24" value="galery24">
-							<label class="form-check-label" for="galery24">
-								Galery24
-							</label>
-						</div>
-					</div>
-				</div>
 			</div>
 
 			<!-- modal footer -->
@@ -981,25 +917,9 @@
 					</div>
 					<div class="input-group col-3">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikUbs" value="ubs">
-							<label class="form-check-label" for="tarikUbs">
-								Ubs
-							</label>
-						</div>
-					</div>
-					<div class="input-group col-3">
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikAntam" value="antam">
-							<label class="form-check-label" for="tarikAntam">
-								Antam
-							</label>
-						</div>
-					</div>
-					<div class="input-group col-3">
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikGalery24" value="galery24">
-							<label class="form-check-label" for="tarikGalery24">
-								Galery24
+							<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikEmas" value="emas">
+							<label class="form-check-label" for="tarikEmas">
+								Emas
 							</label>
 						</div>
 					</div>
@@ -1009,7 +929,7 @@
 				<h6 class="font-italic opacity-8 col-12 text-sm">
 					Jumlah saldo
 				</h6>
-				<small class="col-12 text-xs">max: <span id="maximal-saldo"></span></small>
+				<small class="col-12 text-xs">saldo: <span id="maximal-saldo"></span></small>
 				<div class="input-group col-12 mt-1 mb-4 form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
@@ -1023,6 +943,26 @@
 						id="jumlah-error"
 						class="text-danger"></small>
 				</div>
+
+				<!-- Jenis emas -->
+				<h6 class="font-italic opacity-8 col-12 text-sm">
+					Jenis emas
+				</h6>
+				<div class="input-group col-12 mt-1 mb-4 form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md" style="min-height: 32.4px;max-height: 32.4px">
+								<i class="fas fa-list-ul mr-1 text-muted"></i>
+							</span>
+						</div>
+						<select id="jenis-emas" name="jenis_emas" class="form-control py-1 px-2" style="min-height: 32.4px;max-height: 32.4px" disabled>
+							<option value="">-- jenis emas --</option>
+							<option value="ubs">ubs</option>
+							<option value="antam">antam</option>
+							<option value="galery24">galery24</option>
+						</select>
+					</div>
+				</div>
 			</div>
 
 			<!-- modal footer -->
@@ -1035,4 +975,51 @@
 		</div>
 	</form>
 </div>
+
+<!-- modals filter rekap transaksi-->
+<div class="modal fade" id="modalRekapTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content" style="overflow: hidden;">
+
+				<!-- modal header -->
+				<div class="modal-header">
+					<h6 class="modal-title">Rekap transaksi</h6>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!-- modal body -->
+				<div class="modal-body form-row w-100 px-3">
+					<form id="formRekapTransaksi" class="mt-3 col-12">
+						<h6 class="font-italic text-xs text-secondary">From</h6>
+						<div class="input-group col-12 px-0">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-calendar-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-start" name="date-start">
+						</div>
+						<h6 class="font-italic text-xs text-secondary mt-3">To</h6>
+						<div class="input-group col-12 px-0">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-calendar-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-end" name="date-end">
+						</div>
+					</form>
+				</div>
+
+				<!-- modal footer -->
+				<div id="modal-footer-custom" class="modal-footer mt-4">
+					<button id="btn-filter-rekap-custom" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" onclick="cetakRekap();">
+						<span>Cetak</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 <?= $this->endSection(); ?>

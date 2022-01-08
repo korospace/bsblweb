@@ -81,6 +81,7 @@ $('#toggle-transaksi-wraper .switch-section').on('click',function (e) {
  * Search nasabah
  */
 let dataNasabah = "";
+let dataSaldo   = "";
 const searchNasabah = async (el = false,event = false) => {
     if(event !== false){
         event.preventDefault();
@@ -93,13 +94,16 @@ const searchNasabah = async (el = false,event = false) => {
     $('#btn-search-nasabah #text').addClass('d-none');
     $('#btn-search-nasabah #spinner').removeClass('d-none');
 
-    let httpResponse = await httpRequestGet(`${APIURL}/admin/getnasabah?id=${$('#search-nasabah').val()}`);
+    let searchVal     = $('#search-nasabah').val();
+    let httpResponse1 = await httpRequestGet(`${APIURL}/admin/getnasabah?id=${searchVal}`);
+    let httpResponse2 = await httpRequestGet(`${APIURL}/transaksi/getsaldo?idnasabah=${searchVal}`);
 
     $('#btn-search-nasabah #text').removeClass('d-none');
     $('#btn-search-nasabah #spinner').addClass('d-none');
 
-    if (httpResponse.status === 200) {
-        dataNasabah = httpResponse.data.data[0];
+    if (httpResponse1.status === 200) {
+        dataNasabah = httpResponse1.data.data[0];
+        dataSaldo   = httpResponse2.data.data
         
         $('#barrier-transaksi').addClass('d-none');
         $(`#form-${formTarget}`).removeClass('opacity-6');
@@ -110,15 +114,10 @@ const searchNasabah = async (el = false,event = false) => {
         $('#email-check').html(dataNasabah.email);
         $('#username-check').html(dataNasabah.username);
         $('#nama-lengkap-check').html(dataNasabah.nama_lengkap);
-        $('#kelamin-check').html(dataNasabah.kelamin);
-        $('#notelp-check').html(dataNasabah.notelp);
-        $('#alamat-check').html(dataNasabah.alamat);
-        $('#saldo-uang-check').html(`Rp. ${modifUang(dataNasabah.uang)}`);
-        $('#saldo-ubs-check').html(`${parseFloat(dataNasabah.ubs).toFixed(4)}`);
-        $('#saldo-antam-check').html(`${parseFloat(dataNasabah.antam).toFixed(4)}`);
-        $('#saldo-galery24-check').html(`${parseFloat(dataNasabah.galery24).toFixed(4)}`);
+        $('#saldo-uang-check').html(`Rp. ${modifUang(dataSaldo.uang)}`);
+        $('#saldo-emas-check').html(`${parseFloat(dataSaldo.emas).toFixed(4)} g`);
     }
-    else if (httpResponse.status === 404) {
+    else if (httpResponse1.status === 404) {
         showAlert({
             message: `<strong>Ups...</strong> nasabah tidak ditemukan!`,
             autohide: true,
@@ -314,9 +313,10 @@ const validateSetorJualSampah = () => {
             msg    = 'jumlah hanya boleh berupa angka positif dan titik!';
         }
         if (idnasabah == '') {
-            if (parseFloat($(this).val()) > parseFloat($(this).attr('data-tersedia'))) {
+            let kgTersedia = parseFloat($(this).attr('data-tersedia')).toFixed(2);
+            if (parseFloat($(this).val()) > kgTersedia) {
                 $(this).addClass('is-invalid');
-                $(this).siblings().html(`hanya tersedia ${$(this).attr('data-tersedia')} kg`);
+                $(this).siblings().html(`hanya tersedia ${kgTersedia} kg`);
                 status = false;
             }
         }
@@ -385,11 +385,6 @@ const validatePindahSaldo = () => {
         $('#form-konversi-saldo #jumlah-error').html('*minimal Rp.10,000');
         status = false;
     }
-    // saldo tujuan
-    if (form.get('tujuan') == null) {
-        $('#form-konversi-saldo .form-check-input').addClass('is-invalid');
-        status = false;
-    }
 
     return status;
 }
@@ -402,15 +397,13 @@ const validatePindahSaldo = () => {
 // jenis saldo on click
 $('#form-tarik-saldo input[name=jenis_saldo]').on('click', function() {
     if ($(this).attr('value') == "uang") {
-        $('#form-tarik-saldo #maximal-saldo').html(`${modifUang(dataNasabah.uang)}`);
+        $('#form-tarik-saldo #maximal-saldo').html(`Rp ${modifUang(dataSaldo.uang)}`);
+        $('#form-tarik-saldo #jenis-emas').attr(`disabled`,true);
+        $('#form-tarik-saldo #jenis-emas').val('');
     } 
     else {
-        if (parseFloat(dataNasabah[$(this).attr('value')]) > 0.1) {
-            $('#form-tarik-saldo #maximal-saldo').html(`${parseFloat(dataNasabah[$(this).attr('value')])-0.1} g`);
-        }
-        else {
-            $('#form-tarik-saldo #maximal-saldo').html('0');   
-        }
+        $('#form-tarik-saldo #maximal-saldo').html(`${dataSaldo.emas} g`);
+        $('#form-tarik-saldo #jenis-emas').removeAttr(`disabled`);
     }
 })
 
@@ -435,10 +428,16 @@ const validateTarikSaldo = () => {
         $('#form-tarik-saldo #date-error').html('*waktu harus di isi');
         status = false;
     }
-    // saldo tujuan
+    // jenis saldo
     if (form.get('jenis_saldo') == null) {
         $('#form-tarik-saldo .form-check-input').addClass('is-invalid');
         status = false;
+    }
+    if (form.get('jenis_saldo') == 'emas') {
+        if (form.get('jenis_emas') == '') {
+            $('#form-tarik-saldo #jenis-emas').addClass('is-invalid');
+            status = false;
+        }
     }
     // jumlah pindah
     if ($('#form-tarik-saldo #jumlah').val() == '') {
@@ -537,6 +536,12 @@ const doTransaksi = async (el,event,method) => {
             else {
                 form.set('id_nasabah',idnasabah);
             }
+
+            if (method == 'tariksaldo') {
+                if ($('#form-tarik-saldo #jenis-emas').val() !== '') {
+                    form.set('jenis_saldo',$('#form-tarik-saldo #jenis-emas').val());
+                }
+            } 
     
             showLoadingSpinner();
             httpResponse = await httpRequestPost(`${APIURL}/transaksi/${method}`,form);    
@@ -557,6 +562,8 @@ const doTransaksi = async (el,event,method) => {
                 } 
                 else if(method == 'tariksaldo'){
                     $('#form-tarik-saldo #maximal-saldo').html(``);
+                    $('#form-tarik-saldo #jenis-emas').attr(`disabled`,true);
+                    $('#form-tarik-saldo #jenis-emas').val('');
                 }
     
                 showAlert({
@@ -1002,10 +1009,6 @@ const getDetailTransaksi = async (id) => {
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
             <table>
                 <tr class="text-dark">
-                    <td>Saldo tujuan</td>
-                    <td>: &nbsp;&nbsp;${httpResponse.data.data.saldo_tujuan}</td>
-                </tr>
-                <tr class="text-dark">
                     <td>Jumlah</td>
                     <td>: &nbsp;&nbsp;Rp ${modifUang(httpResponse.data.data.jumlah)}</td>
                 </tr>
@@ -1016,7 +1019,7 @@ const getDetailTransaksi = async (id) => {
                 <tr class="text-dark">
                     <td>Hasil konversi&nbsp;</td>
                     <td>
-                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(4)} g
+                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(6)} g
                     </td>
                 </tr>
             </table>

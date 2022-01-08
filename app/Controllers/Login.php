@@ -105,8 +105,8 @@ class Login extends BaseController
         } 
         else {
             $email         = $this->request->getPost("email");
-            $nasabahData   = $this->loginModel->getNasabahByEmail($email);
-            $database_pass = $this->decrypt($nasabahData['message']['password']);
+            $nasabahData   = $this->loginModel->checkNasabah($email);
+            $database_pass = $this->decrypt($nasabahData['messages']['password']);
             $sendEmail     = $this->sendPassToEmail($email,$database_pass);
 
             $response = [
@@ -152,7 +152,7 @@ class Login extends BaseController
                     $email     = $nasabahData['messages']['email'];
                     $is_verify = $nasabahData['messages']['is_verify'];
 
-                    if ($is_verify == 'f') {
+                    if ($is_verify == '0' || $is_verify == 'f') {
                         $sendEmail = '';
                         $otp       = $this->generateOTP(6);
                         $dbrespond = $this->loginModel->updateNasabahOtp($email,$otp);
@@ -180,24 +180,6 @@ class Login extends BaseController
                         return $this->respond($response,500);
                     } 
                     else {
-                        // is nasabah active or not
-                        $is_active   = $nasabahData['messages']['is_active'];
-                        $last_active = (int)$nasabahData['messages']['last_active'];
-                        $timeNow     = time();
-                        $batasTime   = (int)$timeNow - (86400*(12*30));
-                        // $batasTime   = (int)$timeNow - (86400*1);
-                        $privilege   = $nasabahData['messages']['privilege'];
-
-                        if ($last_active <  $batasTime && $privilege != 'super' || $is_active == 'f') {
-                            $response = [
-                                'status'   => 401,
-                                'error'    => true,
-                                'messages' => 'akun tidak aktif',
-                            ];
-                    
-                            return $this->respond($response,401);
-                        } 
-
                         // database row id
                         $id           = $nasabahData['messages']['id'];
                         // rememberMe check

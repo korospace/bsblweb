@@ -9,21 +9,12 @@ class UserModel extends Model
 {
     protected $table         = 'users';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','username','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','is_active','last_active','created_at'];
+    protected $allowedFields = ['id','username','email','password','nama_lengkap','notelp','alamat','tgl_lahir','kelamin','is_active','last_active','created_at'];
 
     public function getProfileUser(string $iduser): array
     {
         try {
-            $userData = $this->db->table($this->table)->select("id,email,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,is_active,last_active,created_at")->where("id",$iduser)->get()->getFirstRow();
-            
-            // non active admin
-            // $this->nonActiveAdmin();
-            // if (isset($get['id'])) {
-            //     $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,alamat,notelp,tgl_lahir,kelamin,privilege,is_active,last_active,created_at")->where("id",$get['id'])->where("id !=",$id_admin)->get()->getFirstRow();
-            // } 
-            // else {
-            //     $admin = $this->db->table($this->table)->select("id,username,nama_lengkap,is_active,last_active,privilege")->where("id !=",$id_admin)->whereIn('privilege',['admin','superadmin'])->orderBy('created_at','DESC')->get()->getResultArray();
-            // }
+            $userData = $this->db->table($this->table)->select("id,email,username,nama_lengkap,alamat,notelp,nik,tgl_lahir,kelamin,privilege,last_active,created_at")->where("id",$iduser)->get()->getFirstRow();
             
             if (empty($userData)) {    
                 return [
@@ -52,21 +43,18 @@ class UserModel extends Model
     public function getNasabah(array $get): array
     {
         try {
-            $query  = "SELECT users.id,users.nama_lengkap,users.is_active,users.last_active,users.is_verify,users.created_at 
+            $query  = "SELECT users.id,users.nama_lengkap,users.last_active,users.is_verify,users.created_at 
             FROM users
             JOIN wilayah ON (users.id = wilayah.id_user) 
             WHERE users.privilege = 'nasabah'";
 
             if (isset($get['id'])) {
-                $query  = "SELECT users.id,users.email,users.username,users.nama_lengkap,users.notelp,users.alamat,users.tgl_lahir,users.kelamin,users.is_active,users.last_active,users.is_verify,users.created_at,dompet.uang,dompet.ubs,dompet.antam,dompet.galery24 
+                $query  = "SELECT users.id,users.email,users.username,users.nama_lengkap,users.notelp,users.nik,users.alamat,users.tgl_lahir,users.kelamin,users.last_active,users.is_verify,users.created_at
                 FROM users
-                JOIN dompet ON (users.id = dompet.id_user) 
                 WHERE users.privilege = 'nasabah' 
                 AND users.id = '".$get['id']."'";
             }
             else {
-                // auto non active nasabah
-                $this->nonActiveNasabah();
                 
                 if (isset($get['kelurahan'])) {
                     $query .= " AND wilayah.kelurahan = '".$get['kelurahan']."'";
@@ -152,20 +140,6 @@ class UserModel extends Model
                 'error'    => true,
                 'messages' => $e->getMessage(),
             ];
-        }
-    }
-
-    public function nonActiveNasabah(): void
-    {
-        try {
-            $timeNow   = time();
-            $batasTime = (int)$timeNow - (86400*(12*30));
-            // $batasTime = (int)$timeNow - (86400*1);
-
-            $this->db->query("UPDATE users SET is_active = false WHERE last_active <  $batasTime AND privilege = 'nasabah'");
-        } 
-        catch (Exception $e) {
-            
         }
     }
 

@@ -46,7 +46,7 @@ $('.digit-group').find('input').each(function() {
 								confirmButtonText: 'ok',
 							})
 							.then(() => {
-								if (EMAIL == '' && PASSWORD == '') {
+								if (USERNAME_OR_EMAIL == '' && PASSWORD == '') {
 									window.location.replace(`${BASEURL}/login`);
 								} 
 								else {
@@ -54,7 +54,7 @@ $('.digit-group').find('input').each(function() {
 									
 									// Login
 									let formLogin = new FormData();
-									formLogin.append('email',EMAIL);
+									formLogin.append('username_or_email',USERNAME_OR_EMAIL);
 									formLogin.append('password',PASSWORD);
 
 									axios

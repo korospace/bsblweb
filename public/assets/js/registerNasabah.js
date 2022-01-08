@@ -2,46 +2,50 @@
  * KODEPOS
  * =============================================
  */
-
 // search kodepos
 const searchKodepos = async (el) => {
- 
-    $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-       <img src="${BASEURL}/assets/images/spinner.svg" style="width: 20px;" />
-    </div>`); 
 
-    axios
-    .get(`https://kodepos.vercel.app/search/?q=${el.value}`,{
-        headers: {
-        }
-    })
-    .then((response) => {
+    if (el.value == '') {
+        return 0;
+    } 
+    else {
+        $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+           <img src="${BASEURL}/assets/images/spinner.svg" style="width: 20px;" />
+        </div>`); 
 
-        // console.log(response.data.status);
-        if (response.data.code === 200) {
-            if (response.data.messages === 'No data can be returned.') {
-                $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-                    <h6 tyle="opacity: 0.6;">kodepos tidak ditemukan</h6>
-                </div>`);    
-            } 
-            else {
-                let elPostList = '';
-
-                response.data.data.forEach(x => {
-                    elPostList += `
-                    <div class="w-100">
-                        <div class="kodepos-list w-100 d-flex align-items-center px-3 py-3" style="cursor: pointer;font-size:16px;" onclick="changeKodeposVal(this,'${x.postalcode}','${x.urban}','${x.subdistrict}','${x.city}','${x.province}');">
-                            <span class="w-100" style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
-                                ${x.postalcode} - ${x.urban}, ${x.subdistrict}, ${x.city}, ${x.province}
-                            </span>
-                        </div>
-                    </div>`;
-                });
-        
-                $('#kodepos-wraper').html(elPostList);
-            } 
-        }
-    })
+        axios
+        .get(`https://kodepos.vercel.app/search/?q=${el.value}`,{
+            headers: {
+            }
+        })
+        .then((response) => {
+    
+            // console.log(response.data.status);
+            if (response.data.code === 200) {
+                if (response.data.messages === 'No data can be returned.') {
+                    $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+                        <h6 tyle="opacity: 0.6;">kodepos tidak ditemukan</h6>
+                    </div>`);    
+                } 
+                else {
+                    let elPostList = '';
+    
+                    response.data.data.forEach(x => {
+                        elPostList += `
+                        <div class="w-100">
+                            <div class="kodepos-list w-100 d-flex align-items-center px-3 py-3" style="cursor: pointer;font-size:16px;" onclick="changeKodeposVal(this,'${x.postalcode}','${x.urban}','${x.subdistrict}','${x.city}','${x.province}');">
+                                <span class="w-100" style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+                                    ${x.postalcode} - ${x.urban}, ${x.subdistrict}, ${x.city}, ${x.province}
+                                </span>
+                            </div>
+                        </div>`;
+                    });
+            
+                    $('#kodepos-wraper').html(elPostList);
+                } 
+            }
+        })
+    }
 };
 
 const changeKodeposVal = (el,postalcode,urban,subdistrict,city,province) => {
@@ -93,7 +97,7 @@ $('#formRegister').on('submit', function(e) {
                 .then(() => {
                     var url = BASEURL + '/otp';
                     var form = $('<form action="' + url + '" method="post">' +
-                    '<input type="text" name="email" value="' + formRegister.get('email') + '" />' +
+                    '<input type="text" name="username_or_email" value="' + formRegister.get('username') + '" />' +
                     '<input type="text" name="password" value="' + formRegister.get('password') + '" />' +
                     '</form>');
                     $('body').append(form);
@@ -179,11 +183,6 @@ function doValidate(form) {
         $('#email-regist-error').html('*email harus di isi');
         status = false;
     }
-    else if ($('#email-regist').val().length > 40) {
-        $('#email-regist').addClass('is-invalid');
-        $('#email-regist-error').html('*maksimal 40 huruf');
-        status = false;
-    }
     else if (!emailRules.test(String($('#email-regist').val()).toLowerCase())) {
         $('#email-regist').addClass('is-invalid');
         $('#email-regist-error').html('*email tidak valid');
@@ -217,36 +216,36 @@ function doValidate(form) {
         
         status = false;
     }
-    // rw validation
-    if ($('#rw-regist').val() == '') {
-        $('#rw-regist').addClass('is-invalid');
-        $('#rw-regist-error').html('*rw harus di isi');
-        status = false;
-    }
-    else if ($('#rw-regist').val().length < 2 || $('#rw-regist').val().length > 2) {
-        $('#rw-regist').addClass('is-invalid');
-        $('#rw-regist-error').html('*minimal 2 huruf dan maksimal 2 huruf');
-        status = false;
-    }
-    else if (!/^\d+$/.test($('#rw-regist').val())) {
-        $('#rw-regist').addClass('is-invalid');
-        $('#rw-regist-error').html('*hanya boleh angka');
-        status = false;
-    }
     // rt validation
     if ($('#rt-regist').val() == '') {
         $('#rt-regist').addClass('is-invalid');
         $('#rt-regist-error').html('*rt harus di isi');
         status = false;
     }
-    else if ($('#rt-regist').val().length < 2 || $('#rt-regist').val().length > 2) {
+    else if ($('#rt-regist').val().length < 3 || $('#rt-regist').val().length > 3) {
         $('#rt-regist').addClass('is-invalid');
-        $('#rt-regist-error').html('*minimal 2 huruf dan maksimal 2 huruf');
+        $('#rt-regist-error').html('*minimal 3 huruf dan maksimal 3 huruf');
         status = false;
     }
     else if (!/^\d+$/.test($('#rt-regist').val())) {
         $('#rt-regist').addClass('is-invalid');
         $('#rt-regist-error').html('*hanya boleh angka');
+        status = false;
+    }
+    // rw validation
+    if ($('#rw-regist').val() == '') {
+        $('#rw-regist').addClass('is-invalid');
+        $('#rw-regist-error').html('*rw harus di isi');
+        status = false;
+    }
+    else if ($('#rw-regist').val().length < 3 || $('#rw-regist').val().length > 3) {
+        $('#rw-regist').addClass('is-invalid');
+        $('#rw-regist-error').html('*minimal 3 huruf dan maksimal 3 huruf');
+        status = false;
+    }
+    else if (!/^\d+$/.test($('#rw-regist').val())) {
+        $('#rw-regist').addClass('is-invalid');
+        $('#rw-regist-error').html('*hanya boleh angka');
         status = false;
     }
     // kodepos validation
@@ -293,24 +292,19 @@ function doValidate(form) {
         status = false;
     }
     // nik validation
+    let resultNik = '';
+    nikParse($('#nik-regist').val(), function(result) {
+        resultNik = result;
+    });	
+
     if ($('#nik-regist').val() == '') {
         $('#nik-regist').addClass('is-invalid');
         $('#nik-regist-error').html('*NIK harus di isi');
         status = false;
     }
-    else if ($('#nik-regist').val().length < 16) {
+    else if (resultNik.status == 'error') {
         $('#nik-regist').addClass('is-invalid');
-        $('#nik-regist-error').html('*nik tidak valid');
-        status = false;
-    }
-    else if ($('#nik-regist').val().length > 16) {
-        $('#nik-regist').addClass('is-invalid');
-        $('#nik-regist-error').html('*nik tidak valid');
-        status = false;
-    }
-    else if (!/^\d+$/.test($('#nik-regist').val())) {
-        $('#nik-regist').addClass('is-invalid');
-        $('#nik-regist-error').html('*nik tidak valid');
+        $('#nik-regist-error').html(resultNik.pesan);
         status = false;
     }
 

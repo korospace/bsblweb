@@ -446,7 +446,7 @@ const getDetailTransaksiNasabah = async (id) => {
                 <tr class="text-dark">
                     <td>Hasil konversi&nbsp;</td>
                     <td>
-                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(4)} g
+                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(6)} g
                     </td>
                 </tr>
             </table>
@@ -494,9 +494,7 @@ const getDetailTransaksiNasabah = async (id) => {
  */
 const getDataSaldo = async () => {
     $('#saldo-uang').html('_ _');
-    $('#saldo-ubs').html('_ _');
-    $('#saldo-antam').html('_ _');
-    $('#saldo-galery24').html('_ _');
+    $('#saldo-emas').html('_ _');
 
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getsaldo`);
     
@@ -504,9 +502,7 @@ const getDataSaldo = async () => {
         let dataNasabah = httpResponse.data.data;
 
         $('#saldo-uang').html(modifUang(dataNasabah.uang.toString()));
-        $('#saldo-ubs').html(parseFloat(dataNasabah.ubs).toFixed(4));
-        $('#saldo-antam').html(parseFloat(dataNasabah.antam).toFixed(4));
-        $('#saldo-galery24').html(parseFloat(dataNasabah.galery24).toFixed(4));
+        $('#saldo-emas').html(parseFloat(dataNasabah.emas).toFixed(4));
     }
 };
 
@@ -637,6 +633,8 @@ const updatePersonalInfo = (data) => {
     $('#alamat').html(data.alamat);
     // No Telp
     $('#notelp').html(data.notelp);
+    // nik
+    $('#nik').html(data.nik);
 };
 
 /**
@@ -715,6 +713,10 @@ $('#formEditProfile').on('submit', async function(e) {
                $('#username-edit').addClass('is-invalid');
                $('#username-edit-error').text('*'+httpResponse.message.username);
            }
+           if (httpResponse.message.email) {
+               $('#email-edit').addClass('is-invalid');
+               $('#email-edit-error').text('*'+httpResponse.message.email);
+           }
            if (httpResponse.message.notelp) {
                $('#notelp-edit').addClass('is-invalid');
                $('#notelp-edit-error').text('*'+httpResponse.message.notelp);
@@ -731,6 +733,7 @@ $('#formEditProfile').on('submit', async function(e) {
 function validateFormEditProfile(form) {
     let status     = true;
     let kelamin    = form.get('kelamin');
+    let emailRules = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
     // clear error message first
     $('#formEditProfile .form-control').removeClass('is-invalid');
@@ -762,6 +765,17 @@ function validateFormEditProfile(form) {
     else if (/\s/.test($('#username-edit').val())) {
         $('#username-edit').addClass('is-invalid');
         $('#username-edit-error').html('*tidak boleh ada spasi');
+        status = false;
+    }
+    // email
+    if ($('#email-edit').val() == '') {
+        $('#email-edit').addClass('is-invalid');
+        $('#email-edit-error').html('*email harus di isi');
+        status = false;
+    }
+    else if (!emailRules.test(String($('#email-edit').val()).toLowerCase())) {
+        $('#email-edit').addClass('is-invalid');
+        $('#email-edit-error').html('*email tidak valid');
         status = false;
     }
     // tgl lahir validation

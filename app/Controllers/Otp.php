@@ -21,8 +21,8 @@ class Otp extends BaseController
     {
         $data = [
             'title'    => 'Nasabah | verifikasi akun',
-            'email'    => (isset($_POST['email']))    ? $_POST['email']    : '' ,
-            'password' => (isset($_POST['password'])) ? $_POST['password'] : ''
+            'password' => (isset($_POST['password'])) ? $_POST['password'] : '',
+            'username_or_email' => (isset($_POST['username_or_email']))    ? $_POST['username_or_email']    : '' ,
         ];
 
         return view('OtpPage/index',$data);

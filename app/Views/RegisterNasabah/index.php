@@ -38,6 +38,7 @@
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/plugins/nikparse.min.js'); ?>"></script>
     <!-- <script src="<?= base_url('assets/js/registerNasabah.js'); ?>"></script> -->
     <script src="<?= base_url('assets/js/registerNasabah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
@@ -195,7 +196,7 @@
                       <i class="fas fa-home"></i>
                   </span>
                 </div>
-                <input id="rt-regist" type="text" class="form-control pb-4 pt-4" name="rt" autocomplete="off" placeholder="RT">
+                <input id="rt-regist" type="text" class="form-control pb-4 pt-4" name="rt" autocomplete="off" placeholder="RT: 001">
               </div>
               <small id="rt-regist-error" class="text-danger"></small>
             </div>
@@ -209,7 +210,7 @@
                       <i class="fas fa-home"></i>
                   </span>
                 </div>
-                <input id="rw-regist" type="text" class="form-control pb-4 pt-4" name="rw" autocomplete="off" placeholder="RW">
+                <input id="rw-regist" type="text" class="form-control pb-4 pt-4" name="rw" autocomplete="off" placeholder="RW: 001">
               </div>
               <small id="rw-regist-error" class="text-danger"></small>
             </div>

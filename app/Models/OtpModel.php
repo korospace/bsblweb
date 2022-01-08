@@ -17,7 +17,6 @@ class OtpModel extends Model
             $data = [
                 'otp'         => null,
                 'is_verify'   => true,
-                'is_active'   => true,
                 'last_active' => (int)time(),
                 'created_at'  => (int)time(),
             ];

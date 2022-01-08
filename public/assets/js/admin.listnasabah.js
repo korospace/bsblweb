@@ -192,9 +192,6 @@ const getAllNasabah = async () => {
                 </span>
             </td>
             <td class="align-middle text-center">
-                <span class="font-weight-bold badge border ${(n.is_active === 't' || n.is_active === '1')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;"> ${(n.is_active === 't' || n.is_active === '1')? 'yes' : 'no'} </span>
-            </td>
-            <td class="align-middle text-center">
                 <span class="font-weight-bold text-capitalize"> 
                     ${stringLastActive}
                 </span>
@@ -208,7 +205,7 @@ const getAllNasabah = async () => {
                         <a href='' id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer w-100" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')" style="border-radius:4px;">edit</a>
                     </div>
                     <div class="col-12 px-0 mt-2">
-                        <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer w-100" style="border-radius:4px;">detil</a>
+                        <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer w-100" style="border-radius:4px;" target="_blank">detil</a>
                     </div>
                 </div>
             </td>
@@ -270,9 +267,6 @@ $('#search-nasabah').on('keyup', function() {
                     </span>
                 </td>
                 <td class="align-middle text-center">
-                    <span class="font-weight-bold badge border ${(n.is_active === 't' || n.is_active === '1')? 'text-success border-success' : 'text-warning border-warning'} pb-1" style="border-radius:4px;"> ${(n.is_active === 't' || n.is_active === '1')? 'yes' : 'no'} </span>
-                </td>
-                <td class="align-middle text-center">
                     <span class="font-weight-bold text-capitalize"> 
                         ${stringLastActive}
                     </span>
@@ -286,7 +280,7 @@ $('#search-nasabah').on('keyup', function() {
                             <a href='' id="btn-hapus" class="badge badge-warning text-xxs pb-1 rounded-sm cursor-pointer w-100" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('editasabah','${n.id}')" style="border-radius:4px;">edit</a>
                         </div>
                         <div class="col-12 px-0 mt-2">
-                            <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer w-100" style="border-radius:4px;">detil</a>
+                            <a href="${BASEURL}/admin/detilnasabah/${n.id}" id="btn-detil" class="badge badge-info text-xxs pb-1 rounded-sm cursor-pointer w-100" style="border-radius:4px;" target="_blank">detil</a>
                         </div>
                     </div>
                 </td>
@@ -395,7 +389,6 @@ const crudNasabah = async (el,event) => {
         $('#formAddEditNasabah button#submit #spinner').removeClass('d-none');
         if (modalTitle == 'edit nasabah') {
             form.set('is_verify',$('#formAddEditNasabah input[name=is_verify]').val());
-            form.set('is_active',$('#formAddEditNasabah input[name=is_active]').val());
             httpResponse = await httpRequestPut(`${APIURL}/admin/editnasabah`,form);    
         } 
         else {
@@ -434,6 +427,10 @@ const crudNasabah = async (el,event) => {
                 $('#formAddEditNasabah #notelp').addClass('is-invalid');
                 $('#formAddEditNasabah #notelp-error').text(httpResponse.message.notelp);
             }
+            if (httpResponse.message.nik) {
+                $('#formAddEditNasabah #nik').addClass('is-invalid');
+                $('#formAddEditNasabah #nik-error').text(httpResponse.message.nik);
+            }
         }
     }
 }
@@ -467,15 +464,6 @@ const getProfileNasabah = async (id) => {
             $(`#formAddEditNasabah input[name=is_verify]`).val('0');
             $(`#formAddEditNasabah .toggle-akunverify`).removeClass('active bg-success').addClass('bg-secondary');
         }
-        // is account active
-        if (dataNasabah.is_active == 't' || dataNasabah.is_active === '1') {
-            $(`#formAddEditNasabah input[name=is_active]`).val('1');
-            $(`#formAddEditNasabah .toggle-akunaktif`).removeClass('bg-secondary').addClass('active bg-success');
-        } 
-        else {
-            $(`#formAddEditNasabah input[name=is_active]`).val('0');
-            $(`#formAddEditNasabah .toggle-akunaktif`).removeClass('active bg-success').addClass('bg-secondary');
-        }
 
         $('#newpass').val('');
     }
@@ -488,7 +476,7 @@ $('#formAddEditNasabah .form-check-input').on('click', function(e) {
     $(this).prop('checked',true);
 });
 
-// change akun verify/account activate value
+// change akun verify
 $('#formAddEditNasabah input[type=checkbox]').on('click', function(e) {
     if ($(this).val() == '1') {
         $(this).val('0');
@@ -540,22 +528,6 @@ const doValidate = (form) => {
 
     // add nasabah
     if (!$('#modalAddEditNasabah .addnasabah-item').hasClass('d-none')) {
-        // email validation
-        if ($('#formAddEditNasabah #email').val() == '') {
-            $('#formAddEditNasabah #email').addClass('is-invalid');
-            $('#formAddEditNasabah #email-error').html('*email harus di isi');
-            status = false;
-        }
-        else if ($('#formAddEditNasabah #email').val().length > 40) {
-            $('#formAddEditNasabah #email').addClass('is-invalid');
-            $('#formAddEditNasabah #email-error').html('*maksimal 40 huruf');
-            status = false;
-        }
-        else if (!emailRules.test(String($('#formAddEditNasabah #email').val()).toLowerCase())) {
-            $('#formAddEditNasabah #email').addClass('is-invalid');
-            $('#formAddEditNasabah #email-error').html('*email tidak valid');
-            status = false;
-        }
         // password validation
         if ($('#formAddEditNasabah #password').val() == '') {
             $('#formAddEditNasabah #password').addClass('is-invalid');
@@ -572,20 +544,20 @@ const doValidate = (form) => {
             $('#formAddEditNasabah #password-error').html('*tidak boleh ada spasi');
             status = false;
         }
-        // rw validation
-        if ($('#formAddEditNasabah #rw').val() == '') {
-            $('#formAddEditNasabah #rw').addClass('is-invalid');
-            $('#formAddEditNasabah #rw-error').html('*rw harus di isi');
+        // nik validation
+        let resultNik = '';
+        nikParse($('#formAddEditNasabah #nik').val(), function(result) {
+            resultNik = result;
+        });	
+
+        if ($('#formAddEditNasabah #nik').val() == '') {
+            $('#formAddEditNasabah #nik').addClass('is-invalid');
+            $('#formAddEditNasabah #nik-error').html('*NIK harus di isi');
             status = false;
         }
-        else if ($('#formAddEditNasabah #rw').val().length < 2 || $('#formAddEditNasabah #rw').val().length > 2) {
-            $('#formAddEditNasabah #rw').addClass('is-invalid');
-            $('#formAddEditNasabah #rw-error').html('*minimal 2 huruf dan maksimal 2 huruf');
-            status = false;
-        }
-        else if (!/^\d+$/.test($('#formAddEditNasabah #rw').val())) {
-            $('#formAddEditNasabah #rw').addClass('is-invalid');
-            $('#formAddEditNasabah #rw-error').html('*hanya boleh angka');
+        else if (resultNik.status == 'error') {
+            $('#formAddEditNasabah #nik').addClass('is-invalid');
+            $('#formAddEditNasabah #nik-error').html(resultNik.pesan);
             status = false;
         }
         // rt validation
@@ -594,14 +566,30 @@ const doValidate = (form) => {
             $('#formAddEditNasabah #rt-error').html('*rt harus di isi');
             status = false;
         }
-        else if ($('#formAddEditNasabah #rt').val().length < 2 || $('#formAddEditNasabah #rt').val().length > 2) {
+        else if ($('#formAddEditNasabah #rt').val().length < 3 || $('#formAddEditNasabah #rt').val().length > 3) {
             $('#formAddEditNasabah #rt').addClass('is-invalid');
-            $('#formAddEditNasabah #rt-error').html('*minimal 2 huruf dan maksimal 2 huruf');
+            $('#formAddEditNasabah #rt-error').html('*minimal 3 huruf dan maksimal 3 huruf');
             status = false;
         }
         else if (!/^\d+$/.test($('#formAddEditNasabah #rt').val())) {
             $('#formAddEditNasabah #rt').addClass('is-invalid');
             $('#formAddEditNasabah #rt-error').html('*hanya boleh angka');
+            status = false;
+        }
+        // rw validation
+        if ($('#formAddEditNasabah #rw').val() == '') {
+            $('#formAddEditNasabah #rw').addClass('is-invalid');
+            $('#formAddEditNasabah #rw-error').html('*rw harus di isi');
+            status = false;
+        }
+        else if ($('#formAddEditNasabah #rw').val().length < 3 || $('#formAddEditNasabah #rw').val().length > 3) {
+            $('#formAddEditNasabah #rw').addClass('is-invalid');
+            $('#formAddEditNasabah #rw-error').html('*minimal 3 huruf dan maksimal 3 huruf');
+            status = false;
+        }
+        else if (!/^\d+$/.test($('#formAddEditNasabah #rw').val())) {
+            $('#formAddEditNasabah #rw').addClass('is-invalid');
+            $('#formAddEditNasabah #rw-error').html('*hanya boleh angka');
             status = false;
         }
         // kodepos validation
@@ -622,6 +610,17 @@ const doValidate = (form) => {
         }
     }
     else{
+        // email validation
+        if ($('#formAddEditNasabah #email').val() == '') {
+            $('#formAddEditNasabah #email').addClass('is-invalid');
+            $('#formAddEditNasabah #email-error').html('*email harus di isi');
+            status = false;
+        }
+        else if (!emailRules.test(String($('#formAddEditNasabah #email').val()).toLowerCase())) {
+            $('#formAddEditNasabah #email').addClass('is-invalid');
+            $('#formAddEditNasabah #email-error').html('*email tidak valid');
+            status = false;
+        }
         // new pass 
         if ($('#modalAddEditNasabah #newpass').val() !== '') {   
             if ($('#modalAddEditNasabah #newpass').val().length < 8 || $('#modalAddEditNasabah #newpass').val().length > 20) {

@@ -407,10 +407,6 @@ const getDetailTransaksiNasabah = async (id) => {
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
             <table>
                 <tr class="text-dark">
-                    <td>Saldo tujuan</td>
-                    <td>: &nbsp;&nbsp;${httpResponse.data.data.saldo_tujuan}</td>
-                </tr>
-                <tr class="text-dark">
                     <td>Jumlah</td>
                     <td>: &nbsp;&nbsp;Rp ${modifUang(httpResponse.data.data.jumlah)}</td>
                 </tr>
@@ -421,7 +417,7 @@ const getDetailTransaksiNasabah = async (id) => {
                 <tr class="text-dark">
                     <td>Hasil konversi&nbsp;</td>
                     <td>
-                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(4)} g
+                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(6)} g
                     </td>
                 </tr>
             </table>
@@ -472,9 +468,7 @@ const getSaldoNasabah = async () => {
 
     $('#formPindahSaldo #maximal-saldo').html(`_ _ _ _`);
     $('#saldo-uang').html('_ _');
-    $('#saldo-ubs').html('_ _');
-    $('#saldo-antam').html('_ _');
-    $('#saldo-galery24').html('_ _');
+    $('#saldo-emas').html('_ _');
 
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getsaldo?idnasabah=${IDNASABAH}`);
     
@@ -483,9 +477,7 @@ const getSaldoNasabah = async () => {
 
         $('#formPindahSaldo #maximal-saldo').html(`${modifUang(dataSaldo.uang)}`);
         $('#saldo-uang').html(modifUang(dataSaldo.uang));
-        $('#saldo-ubs').html(parseFloat(dataSaldo.ubs).toFixed(4));
-        $('#saldo-antam').html(parseFloat(dataSaldo.antam).toFixed(4));
-        $('#saldo-galery24').html(parseFloat(dataSaldo.galery24).toFixed(4));
+        $('#saldo-emas').html(parseFloat(dataSaldo.emas).toFixed(4));
     }
 };
 
@@ -533,6 +525,7 @@ const getDataProfileNasabah = async () => {
         $('#personal-info #kelamin').html(dataNasabah.kelamin);
         $('#personal-info #alamat').html(dataNasabah.alamat);
         $('#personal-info #notelp').html(dataNasabah.notelp);
+        $('#personal-info #nik').html(dataNasabah.nik);
     }
 };
 
@@ -780,7 +773,6 @@ const validateSetorSampah = () => {
 // Validate Pindah Saldo
 const validatePindahSaldo = () => {
     let status = true;
-    let form   = new FormData(document.querySelector('#formPindahSaldo'));
 
     $('#formPindahSaldo .form-check-input').removeClass('is-invalid');
     $('#formPindahSaldo .form-control').removeClass('is-invalid');
@@ -825,11 +817,6 @@ const validatePindahSaldo = () => {
         $('#formPindahSaldo #jumlah-error').html('*minimal Rp.10,000');
         status = false;
     }
-    // saldo tujuan
-    if (form.get('tujuan') == null) {
-        $('#formPindahSaldo .form-check-input').addClass('is-invalid');
-        status = false;
-    }
 
     return status;
 }
@@ -838,19 +825,16 @@ const validatePindahSaldo = () => {
  * TRANSAKSI TARIK SALDO
  * =============================================
  */
-
 // jenis saldo on click
 $('#formTarikSaldo input[name=jenis_saldo]').on('click', function() {
     if ($(this).attr('value') == "uang") {
-        $('#formTarikSaldo #maximal-saldo').html(`${modifUang(dataSaldo.uang)}`);
+        $('#formTarikSaldo #maximal-saldo').html(`Rp ${modifUang(dataSaldo.uang)}`);
+        $('#formTarikSaldo #jenis-emas').attr(`disabled`,true);
+        $('#formTarikSaldo #jenis-emas').val('');
     } 
     else {
-        if (parseFloat(dataSaldo[$(this).attr('value')]) > 0.1) {
-            $('#formTarikSaldo #maximal-saldo').html(`${parseFloat(dataSaldo[$(this).attr('value')])-0.1} g`);
-        }
-        else {
-            $('#formTarikSaldo #maximal-saldo').html('0');   
-        }
+        $('#formTarikSaldo #maximal-saldo').html(`${dataSaldo.emas}`);
+        $('#formTarikSaldo #jenis-emas').removeAttr(`disabled`);
     }
 })
 
@@ -875,10 +859,16 @@ const validateTarikSaldo = () => {
         $('#formTarikSaldo #date-error').html('*waktu harus di isi');
         status = false;
     }
-    // saldo tujuan
+    // jenis saldo
     if (form.get('jenis_saldo') == null) {
         $('#formTarikSaldo .form-check-input').addClass('is-invalid');
         status = false;
+    }
+    if (form.get('jenis_saldo') == 'emas') {
+        if (form.get('jenis_emas') == '') {
+            $('#formTarikSaldo #jenis-emas').addClass('is-invalid');
+            status = false;
+        }
     }
     // jumlah pindah
     if ($('#formTarikSaldo #jumlah').val() == '') {
@@ -960,6 +950,12 @@ const doTransaksi = async (el,event,method) => {
             let tglTransaksi   = form.get('date').split('-');
             let waktuTransaksi = form.get('time');
             form.set('date',`${tglTransaksi[2]}-${tglTransaksi[1]}-${tglTransaksi[0]} ${waktuTransaksi}`);
+
+            if (method == 'tariksaldo') {
+                if ($('#formTarikSaldo #jenis-emas').val() !== '') {
+                    form.set('jenis_saldo',$('#formTarikSaldo #jenis-emas').val());
+                }
+            } 
     
             showLoadingSpinner();
             httpResponse = await httpRequestPost(`${APIURL}/transaksi/${method}`,form);    
@@ -981,6 +977,8 @@ const doTransaksi = async (el,event,method) => {
                 } 
                 else if(method == 'tariksaldo'){
                     $('#formTarikSaldo #maximal-saldo').html(``);
+                    $('#formTarikSaldo #jenis-emas').attr(`disabled`,true);
+                    $('#formTarikSaldo #jenis-emas').val('');
                 }
     
                 showAlert({
@@ -1092,3 +1090,20 @@ const deleteTransaksiNasabah = (id,event) => {
         }
     })
 }
+
+/**
+ * REKAP TRANSAKSI
+ * ============================================
+ */
+// do filter rekap
+const cetakRekap = () => {
+    let formFilter      = new FormData(document.querySelector('#formRekapTransaksi'));
+    let inputStartDate  = formFilter.get('date-start').split('-');
+    let inputEndDate    = formFilter.get('date-end').split('-');
+    
+    let start    = `${inputStartDate[2]}-${inputStartDate[1]}-${inputStartDate[0]}`;
+    let end      = `${inputEndDate[2]}-${inputEndDate[1]}-${inputEndDate[0]}`;
+    let rekapUrl = `${BASEURL}/transaksi/cetakrekap?start=${start}&end=${end}&idnasabah=${IDNASABAH}`;
+
+    window.open(rekapUrl, '_blank');
+};

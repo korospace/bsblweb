@@ -28,9 +28,9 @@ $('#formLoginNasabah').on('submit', function(e) {
 
             // error email/password
             if (error.response.status == 404) {
-                if (error.response.data.messages.email) {
-                    $('#nasabah-email').addClass('is-invalid');
-                    $('#nasabah-email-error').text(error.response.data.messages.email);
+                if (error.response.data.messages.username_or_email) {
+                    $('#nasabah-username-or-email').addClass('is-invalid');
+                    $('#nasabah-username-or-email-error').text(error.response.data.messages.username_or_email);
                 } 
                 else if (error.response.data.messages.password){
                     $('#nasabah-password').addClass('is-invalid');
@@ -50,13 +50,11 @@ $('#formLoginNasabah').on('submit', function(e) {
                         .then(() => {
                             var url = BASEURL + '/otp';
                             var form = $('<form action="' + url + '" method="post">' +
-                            '<input type="text" name="email" value="' + formLogin.get('email') + '" />' +
+                            '<input type="text" name="username_or_email" value="' + formLogin.get('username_or_email') + '" />' +
                             '<input type="text" name="password" value="' + formLogin.get('password') + '" />' +
                             '</form>');
                             $('body').append(form);
                             form.submit();
-    
-                            // window.location.replace(`${BASEURL}/otp`);
                         })
                     }, 300);
                 }
@@ -81,23 +79,18 @@ $('#formLoginNasabah').on('submit', function(e) {
 })
 
 // validate login nasabah
-function doValidateNasabah(form) {
+function doValidateNasabah() {
     let status     = true;
-    let emailRules = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    // let emailRules = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
     // clear error message first
     $('.form-control').removeClass('is-invalid');
     $('.text-danger').html('');
 
     // email validation
-    if ($('#nasabah-email').val() == '') {
-        $('#nasabah-email').addClass('is-invalid');
-        $('#nasabah-email-error').html('*email harus di isi');
-        status = false;
-    }
-    else if (!emailRules.test(String($('#nasabah-email').val()).toLowerCase())) {
-        $('#nasabah-email').addClass('is-invalid');
-        $('#nasabah-email-error').html('*email tidak valid');
+    if ($('#nasabah-username-or-email').val() == '') {
+        $('#nasabah-username-or-email').addClass('is-invalid');
+        $('#nasabah-username-or-email-error').html('*username/email harus di isi');
         status = false;
     }
     // password validation

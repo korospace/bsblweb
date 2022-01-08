@@ -36,8 +36,9 @@
 <!-- JS -->
 <?= $this->section('contentJs'); ?>
 	<script>
-		const EMAIL    = '<?= $email; ?>';
 		const PASSWORD = '<?= $password; ?>';
+		const USERNAME_OR_EMAIL = '<?= $username_or_email; ?>';
+		console.log(USERNAME_OR_EMAIL,PASSWORD);
 	</script>
   	<script src="<?= base_url('assets/js/otp.js'); ?>"></script>
 <?= $this->endSection(); ?>
@@ -57,7 +58,7 @@
 		</div>
 
 		<div class="digit-group mb-4" data-group-name="digits" data-autosubmit="true" autocomplete="off" >
-			<input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
+			<input type="text" id="digit-1" name="digit-1" data-next="digit-2" autofocus/>
 			<input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
 			<input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
 			<input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />

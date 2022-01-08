@@ -128,8 +128,8 @@
 						<form id="formLoginNasabah" class="register-form row pt-3 px-5">
 							<div class="col-md-12">
 								<div class="form-group position-relative px-0 px-md-5">
-									<input id="nasabah-email" type="text" name="email" class="form-control" placeholder="Email" autocomplete="off" />
-									<small id="nasabah-email-error" class="position-absolute text-danger"></small>
+									<input id="nasabah-username-or-email" type="text" name="username_or_email" class="form-control" placeholder="Username/email" autocomplete="off" />
+									<small id="nasabah-username-or-email-error" class="position-absolute text-danger"></small>
 								</div>
 								<div class="form-group position-relative px-0 px-md-5" style="margin-top: 30px;">
 									<input id="nasabah-password" type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" />

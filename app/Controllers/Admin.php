@@ -520,6 +520,7 @@ class Admin extends BaseController
         global $data;
         
         $this->validation->run($data,'editNasabahValidate');
+        $this->validation->run($data,'emailValidate');
         $errors = $this->validation->getErrors();
 
         if($errors) {
@@ -557,26 +558,17 @@ class Admin extends BaseController
             $data = [
                 "id"           => $data['id'],
                 "username"     => trim($data['username']),
+                "email"        => trim($data['email']),
                 "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
                 "notelp"       => trim($data['notelp']),
                 "alamat"       => trim($data['alamat']),
                 "tgl_lahir"    => trim($data['tgl_lahir']),
                 "kelamin"      => $data['kelamin'],
                 "is_verify"    => (trim($data['is_verify']) == '1') ?true:false,
-                "is_active"    => (trim($data['is_active']) == '1') ?true:false,
             ];
 
             if ($newpass != '') {
                 $data['password'] = $this->encrypt($newpass);
-            }
-            
-            $dataNasabah  = $this->userModel->db->table('users')->select('is_active')->where("id",$data['id'])->get()->getResultArray();
-            
-            if ($dataNasabah[0]['is_active'] == 'f') {
-                if ($data['is_active'] == true) {
-                    $data['last_active'] = (int)time();
-                    $data['created_at']  = (int)time();
-                }
             }
 
             $editNasabah  = $this->userModel->editUser($data);

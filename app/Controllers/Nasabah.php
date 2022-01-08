@@ -160,6 +160,7 @@ class Nasabah extends BaseController
                 $data = [
                     "id"           => $data['id'],
                     "username"     => trim($data['username']),
+                    "email"        => trim($data['email']),
                     "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
                     "notelp"       => trim($data['notelp']),
                     "alamat"       => trim($data['alamat']),

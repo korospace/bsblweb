@@ -8,8 +8,6 @@
 		}
 	</style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
 <?= $this->endSection(); ?>
 

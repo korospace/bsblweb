@@ -52,14 +52,19 @@ class Register extends BaseController
             $result = $this->checkToken();
         }
 
-		$data   = $this->request->getPost();
+		$data = $this->request->getPost();
         $this->validation->run($data,'nasabahRegisterValidate');
+        
+        if (!$this->request->getHeader('token')) {
+            $this->validation->run($data,'emailValidate');
+        }
+
         $errors = $this->validation->getErrors();
         
         if($errors) {
             $response = [
-                'status' => 400,
-                'error' => true,
+                'status'   => 400,
+                'error'    => true,
                 'messages' => $errors,
             ];
     
@@ -72,7 +77,7 @@ class Register extends BaseController
 
             if ($dbrespond['status'] == 200) {
                 $lastID = $dbrespond['data']['id'];
-                $lastID = (int)substr($lastID,9)+1;
+                $lastID = (int)substr($lastID,11)+1;
                 // $lastID = sprintf('%06d',$lastID);
 
                 $idNasabah = $data['kodepos'].$this->request->getPost("rt").$this->request->getPost("rw").$lastID;
@@ -84,11 +89,10 @@ class Register extends BaseController
                 return $this->respond($dbrespond,$dbrespond['status']);
             }
             
-            $email = trim($data['email']);
+            $email = '';
             $otp   = $this->generateOTP(6);
             $data  = [
                 "id"           => $idNasabah,
-                "email"        => $email,
                 "username"     => trim($data['username']),
                 "password"     => $this->encrypt($data['password']),
                 "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
@@ -114,30 +118,39 @@ class Register extends BaseController
 
             if ($this->request->getHeader('token')) {
                 if (in_array($result['data']['privilege'],['admin','superadmin'])) {
+                    $data['email']     = $this->generateOTP(6)."@domain.com";
                     $data['is_verify'] = true;
                 }
+            }
+            else {
+                $email         = $this->request->getPost('email');
+                $data['email'] = $email;
             }
 
             $dbrespond = $this->registerModel->addNasabah($data);
 
             if ($dbrespond['error'] == false) {
-                $sendEmail = $this->sendOtpToEmail($email,$otp);
-
-                if ($sendEmail == true) {
-                    $this->registerModel->transCommit();
-                } 
-                else {
-                    $this->registerModel->transRollback();
-
-                    $response = [
-                        'status'   => 500,
-                        'error'    => true,
-                        'messages' => $sendEmail,
-                    ];
-            
-                    return $this->respond($response,500);
-                }
+                if ($email !== '') {
+                    $sendEmail = $this->sendOtpToEmail($email,$otp);
+    
+                    if ($sendEmail == true) {
+                        $this->registerModel->transCommit();
+                    } 
+                    else {
+                        $this->registerModel->transRollback();
+    
+                        $response = [
+                            'status'   => 500,
+                            'error'    => true,
+                            'messages' => $sendEmail,
+                        ];
                 
+                        return $this->respond($response,500);
+                    }
+                }
+                else {
+                    $this->registerModel->transCommit();
+                }
             } 
     
             return $this->respond($dbrespond,$dbrespond['status']);

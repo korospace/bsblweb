@@ -34,8 +34,6 @@
 		}
 	</style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
 <?= $this->endSection(); ?>
 
@@ -49,6 +47,8 @@
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/plugins/nikparse.min.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.listnasabah.js'); ?>"></script> -->
 	<script src="<?= base_url('assets/js/admin.listnasabah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
@@ -147,9 +147,6 @@
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Ter-verifikasi
-											</th>
-											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-												Akun aktif
 											</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 												Terakhir login
@@ -304,7 +301,7 @@
 							class="text-danger"></small>
 					</div>
 					<!-- **** email **** -->
-					<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
+					<div class="editnasabah-item input-group col-lg-12 mb-4 form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
 							<span class="input-group-text bg-gray px-4 border-md border-right-0">
@@ -359,6 +356,20 @@
 							id="notelp-error"
 							class="text-danger"></small>
 					</div>
+					<!-- **** nik **** -->
+					<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fa fa-id-card text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="nik" name="nik" autocomplete="off" placeholder="Masukan NIK nasabah">
+						</div>
+						<small
+							id="nik-error"
+							class="text-danger"></small>
+					</div>
 					<!-- kelamin -->
 					<input type="hidden" name="kelamin">
 					<div class="input-group col-lg-6 mb-2 form-group">
@@ -400,7 +411,7 @@
 										<i class="fas fa-home text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control px-2" id="rt" name="rt" autocomplete="off" placeholder="RT">
+								<input type="text" class="form-control px-2" id="rt" name="rt" autocomplete="off" placeholder="RT: 001">
 							</div>
 							<small
 								id="rt-error"
@@ -413,7 +424,7 @@
 										<i class="fas fa-home text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control px-2" id="rw" name="rw" autocomplete="off" placeholder="RW">
+								<input type="text" class="form-control px-2" id="rw" name="rw" autocomplete="off" placeholder="RW: 001">
 							</div>
 							<small
 								id="rw-error"
@@ -464,18 +475,6 @@
 						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
 							<div class="btn-toggle toggle-akunverify bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
 								<input type="checkbox" name="is_verify" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
-							</div>
-						</div>
-					</div>
-
-					<!-- **** akun aktif **** -->
-					<div class="editnasabah-item mb-3">
-						<label class="form-check-label">
-							akun aktif
-						</label>
-						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
-							<div class="btn-toggle toggle-akunaktif bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
-								<input type="checkbox" name="is_active" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
 							</div>
 						</div>
 					</div>

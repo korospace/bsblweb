@@ -15,6 +15,7 @@ class AdminSeed extends Seeder
             'password'     => password_hash(trim('superadmin1'), PASSWORD_DEFAULT),
             'nama_lengkap' => 'super admin 1',
             'notelp'       => '021123456789',
+            'nik'          => '1234567890123456',
             'alamat'       => 'cileduk',
             'tgl_lahir'    => date("d-m-Y", time()),
             'kelamin'      => 'laki-laki',

@@ -19,8 +19,8 @@
             display: flex !important;
         }
         .loading{
-            width: 160px !important;
-            height: 160px !important;
+            width: 110px !important;
+            height: 110px !important;
             border-radius: 6px !important;
             background-color: white !important;
             display: flex !important;

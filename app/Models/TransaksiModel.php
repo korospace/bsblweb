@@ -73,6 +73,7 @@ class TransaksiModel extends Model
     public function getSaldoJenisX(string $idNasabah,string $jenisSaldo): string
     {
         $this->db->transBegin();
+        $jenisSaldo = ($jenisSaldo == 'uang') ? 'uang' : 'emas';
         $saldo = $this->db->table('dompet')->select($jenisSaldo)->where('id_user',$idNasabah)->get()->getResultArray();
 
         if ($this->db->transStatus()) {
@@ -91,11 +92,12 @@ class TransaksiModel extends Model
             $idtransaksi = $data['idtransaksi'];
             $idnasabah   = $data['id_nasabah'];
             $jenisSaldo  = $data['jenis_saldo'];
+            $jenisDompet = ($data['jenis_saldo'] == 'uang') ? 'uang' : 'emas';
             $jumlahTarik = $data['jumlah'];
 
             $this->db->transBegin();
             $this->db->query("INSERT INTO transaksi (id,id_user,jenis_transaksi,date) VALUES('$idtransaksi','$idnasabah','penarikan saldo',$date);");
-            $this->db->query("UPDATE dompet SET $jenisSaldo=$jenisSaldo-$jumlahTarik WHERE id_user='$idnasabah';");
+            $this->db->query("UPDATE dompet SET $jenisDompet=$jenisDompet-$jumlahTarik WHERE id_user='$idnasabah';");
             $this->db->query("INSERT INTO tarik_saldo (id_transaksi,jenis_saldo,jumlah_tarik) VALUES('$idtransaksi','$jenisSaldo',$jumlahTarik)");
 
             $transStatus = $this->db->transStatus();
@@ -126,21 +128,18 @@ class TransaksiModel extends Model
     public function pindahSaldo(array $data): array
     {
         try {
-            $date          = (int)strtotime($data['date']);
-            $idnasabah     = $data['idnasabah'];
-            $idtransaksi   = $data['idtransaksi'];
-            $jumlahPindah  = $data['jumlahPindah'];
-            $hasilKonversi = $data['hasilKonversi'];
-            $hargaemas     = $data['hargaemas'];
-            $asal          = $data['asal'];
-            $tujuan        = $data['tujuan'];
-            $saldoDompetAsal   = $data['saldo_dompet_asal'];
-            $saldoDompetTujuan = $data['saldo_dompet_tujuan'];
+            $date            = (int)strtotime($data['date']);
+            $idnasabah       = $data['idnasabah'];
+            $idtransaksi     = $data['idtransaksi'];
+            $jumlahPindah    = $data['jumlahPindah'];
+            $hasilKonversi   = $data['hasilKonversi'];
+            $hargaemas       = $data['hargaemas'];
+            $saldoDompetAsal = $data['saldo_dompet_asal'];
             
             $this->db->transBegin();
             $this->db->query("INSERT INTO transaksi (id,id_user,jenis_transaksi,date) VALUES('$idtransaksi','$idnasabah','konversi saldo',$date);");
-            $this->db->query("UPDATE dompet SET $asal=$saldoDompetAsal,$tujuan=$saldoDompetTujuan WHERE id_user='$idnasabah';");
-            $this->db->query("INSERT INTO pindah_saldo (id_transaksi,jumlah,saldo_tujuan,harga_emas,hasil_konversi) VALUES ('$idtransaksi',$jumlahPindah,'$tujuan',$hargaemas,$hasilKonversi)");
+            $this->db->query("UPDATE dompet SET uang=$saldoDompetAsal,emas=emas+$hasilKonversi WHERE id_user='$idnasabah';");
+            $this->db->query("INSERT INTO pindah_saldo (id_transaksi,jumlah,harga_emas,hasil_konversi) VALUES ('$idtransaksi',$jumlahPindah,$hargaemas,$hasilKonversi)");
             
             $transStatus = $this->db->transStatus();
 
@@ -295,10 +294,10 @@ class TransaksiModel extends Model
             $this->db->transBegin();
 
             if ($idNasabah != '') {
-                $saldo = $this->db->table('dompet')->select('uang,ubs,antam,galery24')->where('id_user',$idNasabah)->get()->getResultArray()[0];
+                $saldo = $this->db->table('dompet')->select('uang,emas')->where('id_user',$idNasabah)->get()->getResultArray()[0];
             }
             else {
-                $saldo = $this->db->query("SELECT SUM(uang) AS uang,SUM(ubs) AS ubs,SUM(antam) AS antam,SUM(galery24) AS galery24 FROM dompet")->getResultArray()[0];
+                $saldo = $this->db->query("SELECT SUM(uang) AS uang,SUM(emas) AS emas FROM dompet")->getResultArray()[0];
             }
 
             if ($this->db->transStatus()) {
@@ -348,7 +347,7 @@ class TransaksiModel extends Model
                     WHERE transaksi.id = '$id_transaksi';")->getResultArray()[0];
                 }
                 else if ($code_transaksi == 'TPS') {
-                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,pindah_saldo.jumlah,pindah_saldo.saldo_tujuan,pindah_saldo.hasil_konversi,pindah_saldo.harga_emas,transaksi.date 
+                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,pindah_saldo.jumlah,pindah_saldo.hasil_konversi,pindah_saldo.harga_emas,transaksi.date 
                     FROM transaksi 
                     JOIN users ON (transaksi.id_user = users.id) 
                     JOIN pindah_saldo ON (transaksi.id = pindah_saldo.id_transaksi) 
@@ -508,9 +507,15 @@ class TransaksiModel extends Model
                 }
                 
                 $filterWIlayah = '';
+                $nasabahWhereClause = '';
 
-                foreach ($get as $key => $value) {
-                    $filterWIlayah .= "AND wilayah.$key = '$value' ";
+                if (!isset($get['idnasabah'])) {
+                    foreach ($get as $key => $value) {
+                        $filterWIlayah .= "AND wilayah.$key = '$value' ";
+                    }
+                }
+                else {
+                    $nasabahWhereClause = 'AND transaksi.id_user = '.$get['idnasabah'];
                 }
                 
                 $dataTss = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,sampah.jenis AS jenis_sampah,setor_sampah.jumlah_kg,setor_sampah.jumlah_rp,transaksi.date 
@@ -519,23 +524,23 @@ class TransaksiModel extends Model
                 JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi) 
                 JOIN sampah       ON (setor_sampah.id_sampah = sampah.id) 
                 JOIN wilayah      ON (wilayah.id_user = users.id)
-                WHERE transaksi.date BETWEEN '$start' AND '$end' $filterWIlayah
+                WHERE transaksi.date BETWEEN '$start' AND '$end' $filterWIlayah $nasabahWhereClause
                 ORDER BY date ASC;")->getResultArray();
 
-                $dataTps = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,pindah_saldo.jumlah,pindah_saldo.saldo_tujuan,pindah_saldo.harga_emas,pindah_saldo.hasil_konversi,transaksi.date 
+                $dataTps = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,pindah_saldo.jumlah,pindah_saldo.harga_emas,pindah_saldo.hasil_konversi,transaksi.date 
                 FROM transaksi 
                 JOIN users        ON (transaksi.id_user = users.id)
                 JOIN pindah_saldo ON (transaksi.id = pindah_saldo.id_transaksi) 
                 JOIN wilayah      ON (wilayah.id_user = users.id)
-                WHERE transaksi.date BETWEEN '$start' AND '$end' $filterWIlayah
+                WHERE transaksi.date BETWEEN '$start' AND '$end' $filterWIlayah $nasabahWhereClause
                 ORDER BY date ASC;")->getResultArray();
 
                 $dataTts = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,tarik_saldo.jenis_saldo,tarik_saldo.jumlah_tarik,transaksi.date 
                 FROM transaksi 
-                JOIN users       ON (transaksi.id_user = users.id)
-                JOIN tarik_saldo ON (transaksi.id = tarik_saldo.id_transaksi) 
+                JOIN users        ON (transaksi.id_user = users.id)
+                JOIN tarik_saldo  ON (transaksi.id = tarik_saldo.id_transaksi) 
                 JOIN wilayah      ON (wilayah.id_user = users.id)
-                WHERE transaksi.date BETWEEN '$start' AND '$end' $filterWIlayah
+                WHERE transaksi.date BETWEEN '$start' AND '$end' $filterWIlayah $nasabahWhereClause
                 ORDER BY date ASC;")->getResultArray();
 
                 $dataTjs = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,sampah.jenis AS jenis_sampah,jual_sampah.jumlah_kg,jual_sampah.jumlah_rp,transaksi.date 
@@ -551,6 +556,10 @@ class TransaksiModel extends Model
                 $transaction['tps']  = $dataTps;
                 $transaction['tts']  = $dataTts;
                 $transaction['tjs']  = $dataTjs;
+                if (isset($get['idnasabah'])) {
+                    $transaction['nasabah'] = $this->db->query("SELECT nama_lengkap,username,id FROM users WHERE id = ".$get['idnasabah'])->getResultArray();
+                }
+
             } 
             else {
                 // var_dump($get['year']);die;
@@ -962,7 +971,7 @@ class TransaksiModel extends Model
                 $this->db->query("UPDATE dompet SET uang=uang-$totalHarga WHERE id_user='$idnasabah';");
             } 
             else if ($code_transaksi == 'TTS') {
-                $jenisSaldo  = $detailTs['jenis_saldo'];
+                $jenisSaldo  = ($detailTs['jenis_saldo'] !== 'uang') ? 'emas' : 'uang';
                 $jumlahTarik = $detailTs['jumlah_tarik'];
 
                 // update saldo nasabah
@@ -970,11 +979,10 @@ class TransaksiModel extends Model
             }
             else if ($code_transaksi == 'TPS') {
                 $jmlPindah     = $detailTs['jumlah'];
-                $saldoTujuan   = $detailTs['saldo_tujuan'];
                 $hasilKonversi = $detailTs['hasil_konversi'];
                 
                 // update saldo nasabah
-                $this->db->query("UPDATE dompet SET uang=uang+$jmlPindah,$saldoTujuan=$saldoTujuan-$hasilKonversi WHERE id_user='$idnasabah';");
+                $this->db->query("UPDATE dompet SET uang=uang+$jmlPindah,emas=emas-$hasilKonversi WHERE id_user='$idnasabah';");
             }
             else if ($code_transaksi == 'TJS') {
                 $queryJmlSampah  = '';

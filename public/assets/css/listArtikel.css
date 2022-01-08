@@ -25,7 +25,7 @@ section.wrapper {
 
 @media (max-width:990px) {
   body {
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 }
 

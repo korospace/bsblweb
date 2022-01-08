@@ -29,8 +29,6 @@
 		} 
 	</style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
 <?= $this->endSection(); ?>
 
@@ -40,6 +38,7 @@
 	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/nasabah.js'); ?>"></script> -->
 	<script src="<?= base_url('assets/js/nasabah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
@@ -133,7 +132,7 @@
 								<table class="" style="font-family: 'qc-medium';min-width: min-content;">
 									<tr class='text-responsive'>
 										<td class="py-2 label" style="font-family: 'qc-semibold';">
-											<strong>Nama lengkap</strong>
+											<strong>Nama lengkap</strong>&nbsp;
 										</td>
 										<td class="main">
 											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
@@ -183,6 +182,15 @@
 										<td class="main"> 
 											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
 											<span id="notelp">_ _ _ _ _</span>
+										</td>
+									</tr>
+									<tr class='text-responsive'>
+										<td class="py-2 label" style="font-family: 'qc-semibold';">
+											<strong>NIK</strong>
+										</td>
+										<td class="main"> 
+											<span class="titik">:&nbsp;&nbsp;&nbsp;</span>
+											<span id="nik">_ _ _ _ _</span>
 										</td>
 									</tr>
 								</table>
@@ -245,6 +253,20 @@
 						</div>
 						<small
 							id="username-edit-error"
+							class="text-danger"></small>
+					</div>
+					<!-- **** email **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fa fa-envelope text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="email-edit" name="email" autocomplete="off" placeholder="Masukan email anda">
+						</div>
+						<small
+							id="email-edit-error"
 							class="text-danger"></small>
 					</div>
 					<!-- **** tgl lahir **** -->

@@ -7,10 +7,6 @@
 			transform: scale(0.96);
 			transition: all 0.5s;
 		}
-
-		.rowCardWraper {
-			height: 100% !important;
-		}
 		
 		.detil-transaksi-logo img{
 			width: 80px;
@@ -26,9 +22,6 @@
 			}
 			.numbers h5 {
 				font-size: 12px !important;
-			}
-			.rowCardWraper {
-				height: auto !important;
 			}
 		} 
 		@media (max-width:422px) {
@@ -47,8 +40,6 @@
 	</style>
 
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
 <?= $this->endSection(); ?>
 
@@ -268,112 +259,70 @@
 					</div>
 				</div>
 
-				<div class="row mt-5 p-0">
-					<!-- saldo -->
-					<div id="jumlah-saldo" class="col-12">
-						<div class="row px-4">
-							<div class="col-lg-12 p-0">
-								<div class="row">
-									<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
-										<div class="card-id bg-transparent shadow-xl">
-											<div class="overflow-hidden position-relative border-radius-md"
-												style="background-image: url(<?= base_url('assets/images/curved-images/curved14.jpg'); ?>);">
-												<span class="mask bg-gradient-dark"></span>
-												<div class="card-body-id position-relative z-index-1 p-3">
-													<i class="fas fa-wifi text-white p-2"></i>
-													<h5 id="card-id" class="text-white mt-4 mb-5 pb-2" style="font-family: 'qc-medium';">_ _ _ _ _&nbsp;&nbsp;&nbsp;_ _ _
-														_&nbsp;&nbsp;&nbsp;_</h5>
-													<div class="d-flex">
-														<div class="d-flex">
-															<div class="me-4" style="font-family: 'qc-medium';">
-																<p class="text-white text-sm opacity-8 mb-0">Username</p>
-																<h6 id="card-username" class="text-white mb-0">_ _ _ _ _ _</h6>
-															</div>
-															<div style="font-family: 'qc-medium';">
-																<p class="text-white text-sm opacity-8 mb-0">Tanggal Bergabung</p>
-																<h6 id="card-date" class="text-white mb-0">_ _/_ _/_ _ _ _<h6>
-															</div>
-														</div>
-														<div class="ms-auto w-20 d-flex align-items-end justify-content-end">
-															<img class="w-60 mt-2" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>"
-																alt="logo">
-														</div>
-													</div>
-												</div>
+				<!-- saldo -->
+				<div id="jumlah-saldo" class="row mt-5">
+					<div class="col-xl-6">
+						<div class="card-id bg-transparent shadow-xl">
+							<div class="overflow-hidden position-relative border-radius-md"
+								style="background-image: url(<?= base_url('assets/images/curved-images/curved14.jpg'); ?>);">
+								<span class="mask bg-gradient-dark"></span>
+								<div class="card-body-id position-relative z-index-1 p-3">
+									<i class="fas fa-wifi text-white p-2"></i>
+									<h5 id="card-id" class="text-white mt-4 mb-5" style="font-family: 'qc-medium';">_ _ _ _ _&nbsp;&nbsp;&nbsp;_ _ _
+										_&nbsp;&nbsp;&nbsp;_</h5>
+									<div class="d-flex">
+										<div class="d-flex">
+											<div class="me-4" style="font-family: 'qc-medium';">
+												<p class="text-white text-sm opacity-8 mb-0">Username</p>
+												<h6 id="card-username" class="text-white mb-0">_ _ _ _ _ _</h6>
+											</div>
+											<div style="font-family: 'qc-medium';">
+												<p class="text-white text-sm opacity-8 mb-0">Tanggal Bergabung</p>
+												<h6 id="card-date" class="text-white mb-0">_ _/_ _/_ _ _ _<h6>
 											</div>
 										</div>
-									</div>
-									<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
-										<div class="row d-flex justify-content-center rowCardWraper">
-											<div class="col-sm-6 h-100 pr-sm-1">
-												<div class="card h-100 border-radius-md">
-													<div class="card-header p-3 text-center">
-														<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-															<i class="fas fa-money-bill-wave-alt"></i>
-														</div>
-													</div>
-													<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-														<h6 class="text-center mb-0">Tunai</h6>
-														<hr class="horizontal dark my-3">
-														<h5 class="mb-0">Rp <span id="saldo-uang">0</span></h5>
-													</div>
-												</div>
-											</div>
-											<div class="col-sm-6 h-100 pl-sm-1 mt-sm-0 mt-4">
-												<div class="card h-100 border-radius-md">
-													<div class="card-header p-3 text-center">
-														<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-															<i class="fas fa-coins"></i>
-														</div>
-													</div>
-													<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-														<h6 class="text-center mb-0">UBS</h6>
-														<hr class="horizontal dark my-3">
-														<h5 class="mb-0"><span id="saldo-ubs">0</span> g</h5>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-xl-4 mb-4 mb-md-0 pl-0 pr-0 pr-md-2">
-										<div class="row d-flex justify-content-center rowCardWraper">
-											<div class="col-sm-6 pr-sm-1 h-100">
-												<div class="card h-100 border-radius-md">
-													<div class="card-header p-3 text-center">
-														<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-															<i class="fas fa-coins"></i>
-														</div>
-													</div>
-													<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-														<h6 class="text-center mb-0">Antam</h6>
-														<hr class="horizontal dark my-3">
-														<h5 class="mb-0"><span id="saldo-antam">0</span> g</h5>
-													</div>
-												</div>
-											</div>
-											<div class="col-sm-6 pl-sm-1 h-100 mt-sm-0 mt-4">
-												<div class="card h-100 border-radius-md">
-													<div class="card-header p-3 text-center">
-														<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-															<i class="fas fa-coins"></i>
-														</div>
-													</div>
-													<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
-														<h6 class="text-center mb-0">Galery24</h6>
-														<hr class="horizontal dark my-3">
-														<h5 class="mb-0"><span id="saldo-galery24">0</span> g</h5>
-													</div>
-												</div>
-											</div>
+										<div class="ms-auto w-20 d-flex align-items-end justify-content-end">
+											<img class="w-60 mt-2" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>"
+												alt="logo">
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="col-sm-6 col-xl-3 h-100 pr-2 pl-2 mt-4 mt-md-0">
+						<div class="card h-100 border-radius-md">
+							<div class="card-header p-3 text-center d-flex justify-content-center">
+								<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+									<i class="fas fa-money-bill-wave-alt"></i>
+								</div>
+							</div>
+							<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
+								<h6 class="text-center mb-0">Tunai</h6>
+								<hr class="horizontal dark my-3">
+								<h5 class="mb-0">Rp <span id="saldo-uang">0</span></h5>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-xl-3 h-100 pl-2 mt-4 mt-md-0">
+						<div class="card h-100 border-radius-md">
+							<div class="card-header p-3 text-center d-flex justify-content-center">
+								<div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+									<i class="fas fa-coins"></i>
+								</div>
+							</div>
+							<div class="card-body pt-0 pt-4 text-center" style="font-family: 'qc-medium';">
+								<h6 class="text-center mb-0">Emas</h6>
+								<hr class="horizontal dark my-3">
+								<h5 class="mb-0"><span id="saldo-emas">0</span> g</h5>
+							</div>
+						</div>
+					</div>
+				</div>
 
-					<!-- table sampah -->
-					<div id="info-sampah" class="col-12 mt-4 mt-md-5">
+				<!-- table sampah -->
+				<div id="info-sampah" class="row mt-4 mt-md-5">
+					<div class="col-12">
 						<div class="card mb-4" style="overflow: hidden;font-family: 'qc-semibold';">
 							<!-- header -->
 							<div class="card-header form-row pb-0 d-flex flex-column" style="font-family: 'qc-semibold';">
@@ -419,21 +368,21 @@
 							</div>
 						</div>
 					</div>
-	
-					<!-- Footer -->
-					<footer class="footer mt-4">
-						<div class="container-fluid p-0">
-							<div class="mb-2">
-								<div class="copyright text-center text-sm text-muted text-lg-start">
-									© <script>
-										document.write(new Date().getFullYear())
-									</script>,
-									Bank Sampah Budi Luhur
-								</div>
+				</div>
+
+				<!-- Footer -->
+				<footer class="footer mt-4">
+					<div class="container-fluid p-0">
+						<div class="mb-2">
+							<div class="copyright text-center text-sm text-muted text-lg-start">
+								© <script>
+									document.write(new Date().getFullYear())
+								</script>,
+								Bank Sampah Budi Luhur
 							</div>
 						</div>
-					</footer>
-				</div>
+					</div>
+				</footer>
 		</main>
 
 	</body>

@@ -15,12 +15,12 @@ class LoginModel extends Model
     public function checkNasabah(string $username_or_email): array
     {
         try {
-            $dataNasabah = $this->db->table($this->table)->select("id,email,password,is_active,last_active,is_verify,privilege")->where("email=$username_or_email OR username=$username_or_email AND privilege='nasabah'")->get()->getResultArray();
+            $dataNasabah = $this->db->table($this->table)->select("id,email,password,is_verify,privilege")->where("email='$username_or_email' OR username='$username_or_email' AND privilege='nasabah'")->get()->getResultArray();
             
             return [
                 'status'   => (empty($dataNasabah)) ? 404  : 200,
                 'error'    => (empty($dataNasabah)) ? true : false,
-                'messages' => (empty($dataNasabah)) ? ['email' => "email not found"] : $dataNasabah[0],
+                'messages' => (empty($dataNasabah)) ? ['username_or_email' => "username/email not found"] : $dataNasabah[0],
             ];
         } 
         catch (Exception $e) {

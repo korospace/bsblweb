@@ -28,8 +28,6 @@
 		}
 	</style>
 	<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-icons.min.css'); ?>">
-	<link rel="stylesheet" href="<?= base_url('assets/css/nucleo-svg.min.css'); ?>">
 	<link rel="stylesheet" href="<?= base_url('assets/css/soft-ui-dashboard.min.css'); ?>">
 <?= $this->endSection(); ?>
 
@@ -44,7 +42,8 @@
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.transaksi.js'); ?>"></script>
+	<!-- <script src="<?= base_url('assets/js/admin.transaksi.js'); ?>"></script> -->
+	<script src="<?= base_url('assets/js/admin.transaksi.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -140,24 +139,12 @@
 											<td>:&nbsp;&nbsp; <span id="nama-lengkap-check"></span></td>
 										</tr>
 										<tr>
-											<td class="">no.telepon</td>
-											<td>:&nbsp;&nbsp; <span id="notelp-check"></span></td>
-										</tr>
-										<tr>
 											<td class="">Saldo Uang</td>
 											<td>:&nbsp;&nbsp; <span id="saldo-uang-check"></span></td>
 										</tr>
 										<tr>
 											<td class="">Saldo Ubs</td>
-											<td>:&nbsp;&nbsp; <span id="saldo-ubs-check"></span></td>
-										</tr>
-										<tr>
-											<td class="">Saldo antam</td>
-											<td>:&nbsp;&nbsp; <span id="saldo-antam-check"></span></td>
-										</tr>
-										<tr>
-											<td class="">Saldo galery24&nbsp;&nbsp;</td>
-											<td>:&nbsp;&nbsp; <span id="saldo-galery24-check"></span></td>
+											<td>:&nbsp;&nbsp; <span id="saldo-emas-check"></span></td>
 										</tr>
 									</table>
 								</div>
@@ -313,37 +300,6 @@
 												id="jumlah-error"
 												class="text-danger"></small>
 										</div>
-
-										<!-- **** saldo tujuan **** -->
-										<h6 class="font-italic opacity-8 col-12 text-sm">
-											Saldo tujuan
-										</h6>
-										<div class="input-group col-12 col-md-6 mb-4 form-group form-row">
-											<div class="input-group col-4">
-												<div class="form-check">
-													<input class="form-check-input" type="radio" name="tujuan" id="ubs" value="ubs">
-													<label class="form-check-label" for="ubs">
-														Ubs
-													</label>
-												</div>
-											</div>
-											<div class="input-group col-4">
-												<div class="form-check">
-													<input class="form-check-input" type="radio" name="tujuan" id="antam" value="antam" checked>
-													<label class="form-check-label" for="antam">
-														Antam
-													</label>
-												</div>
-											</div>
-											<div class="input-group col-4">
-												<div class="form-check">
-													<input class="form-check-input" type="radio" name="tujuan" id="galery24" value="galery24">
-													<label class="form-check-label" for="galery24">
-														Galery24
-													</label>
-												</div>
-											</div>
-										</div>
 									</div>
 
 									<div class="modal-footer form-row">
@@ -398,25 +354,9 @@
 											</div>
 											<div class="input-group col-3">
 												<div class="form-check">
-													<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikUbs" value="ubs">
-													<label class="form-check-label" for="tarikUbs">
-														Ubs
-													</label>
-												</div>
-											</div>
-											<div class="input-group col-3">
-												<div class="form-check">
-													<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikAntam" value="antam">
-													<label class="form-check-label" for="tarikAntam">
-														Antam
-													</label>
-												</div>
-											</div>
-											<div class="input-group col-3">
-												<div class="form-check">
-													<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikGalery24" value="galery24">
-													<label class="form-check-label" for="tarikGalery24">
-														Galery24
+													<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikEmas" value="emas">
+													<label class="form-check-label" for="tarikEmas">
+														Emas
 													</label>
 												</div>
 											</div>
@@ -426,7 +366,7 @@
 										<h6 class="font-italic opacity-8 col-12 text-sm">
 											Jumlah saldo
 										</h6>
-										<small class="col-12 text-xs">max: <span id="maximal-saldo"></span></small>
+										<small class="col-12 text-xs">saldo: <span id="maximal-saldo"></span></small>
 										<div class="input-group col-12 col-md-6 mt-1 mb-4 form-group">
 											<div class="input-group">
 												<div class="input-group-prepend">
@@ -439,6 +379,26 @@
 											<small
 												id="jumlah-error"
 												class="text-danger"></small>
+										</div>
+
+										<!-- Jenis emas -->
+										<h6 class="font-italic opacity-8 col-12 text-sm">
+											Jenis emas
+										</h6>
+										<div class="input-group col-12 mt-1 mb-4 form-group">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text bg-gray px-4 border-md" style="min-height: 32.4px;max-height: 32.4px">
+														<i class="fas fa-list-ul mr-1 text-muted"></i>
+													</span>
+												</div>
+												<select id="jenis-emas" name="jenis_emas" class="form-control py-1 px-2" style="min-height: 32.4px;max-height: 32.4px" disabled>
+													<option value="">-- jenis emas --</option>
+													<option value="ubs">ubs</option>
+													<option value="antam">antam</option>
+													<option value="galery24">galery24</option>
+												</select>
+											</div>
 										</div>
 									</div>
 

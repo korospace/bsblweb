@@ -244,13 +244,10 @@ class Transaksi extends BaseController
         $detilNasabah   = '';
         $stringDate     = '';
         $stringWilayah  = '';
-        $filterWilayah  = false;
-        $isRekapNasabah = false;
+        $filterWilayah  = ($this->request->getGet('provinsi')) ? true : false;
+        $isRekapNasabah = ($this->request->getGet('idnasabah'))? true : false;
 
         if ($this->request->getGet()) {
-            $filterWilayah = ($this->request->getGet('provinsi')) ? true : false;
-            $isRekapNasabah= ($this->request->getGet('idnasabah'))? true : false;
-
             foreach ($this->request->getGet() as $key => $value) {
                 $get[$key] = $value;
 
@@ -309,7 +306,6 @@ class Transaksi extends BaseController
                 </table>";
             }
         }
-        // dd(count($data['nasabah']));
 
         // setor sampah
         $tss   = $data['tss'];
@@ -321,6 +317,15 @@ class Transaksi extends BaseController
         foreach ($tss as $key) {
             $totKgSetor   = $totKgSetor+(float)$key['jumlah_kg'];
             $totUangSetor = $totUangSetor+(int)$key['jumlah_rp'];
+
+            $colspan= 4;
+            $tdNama = '';
+            if (!$isRekapNasabah) {
+                $colspan= 5;
+                $tdNama = "<td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['nama_lengkap']."
+                </td>";
+            }
 
             $bg     = ($noTss % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
 
@@ -334,9 +339,7 @@ class Transaksi extends BaseController
                 <td style='font-size: 0.7em;font-family: sans;'>
                     ".$key['id_transaksi']."
                 </td>
-                <td style='font-size: 0.7em;font-family: sans;'>
-                    ".$key['nama_lengkap']."
-                </td>
+                $tdNama
                 <td style='font-size: 0.7em;font-family: sans;'>
                     ".$key['jenis_sampah']."
                 </td>
@@ -350,7 +353,7 @@ class Transaksi extends BaseController
         }
 
         $trTss .= "<tr style='background: rgb(230, 230, 230);'>
-            <th colspan='5' style='text-align: center;font-size: 0.8em;font-family: sans;'>
+            <th colspan='$colspan' style='text-align: center;font-size: 0.8em;font-family: sans;'>
                 total
             </th>
             <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
@@ -427,7 +430,7 @@ class Transaksi extends BaseController
             </tbody>
         </table>";
 
-        if ($filterWilayah) {
+        if ($filterWilayah || $isRekapNasabah) {
             $elTransaksiJualS = '';
         }
         
@@ -442,6 +445,15 @@ class Transaksi extends BaseController
             $totKgPindah   = $totKgPindah+(float)$key['hasil_konversi'];
             $totUangPindah = $totUangPindah+(int)$key['jumlah'];
 
+            $colspan= 4;
+            $tdNama = '';
+            if (!$isRekapNasabah) {
+                $colspan= 5;
+                $tdNama = "<td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['nama_lengkap']."
+                </td>";
+            }
+
             $bg     = ($noTps % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
 
             $trTps .= "<tr $bg>
@@ -454,9 +466,7 @@ class Transaksi extends BaseController
                 <td style='font-size: 0.7em;font-family: sans;'>
                     ".$key['id_transaksi']."
                 </td>
-                <td style='font-size: 0.7em;font-family: sans;'>
-                    ".$key['nama_lengkap']."
-                </td>
+                $tdNama
                 <td style='font-size: 0.7em;font-family: sans;text-align: center;'>
                     ".number_format($key['harga_emas'] , 0, ',', ',')."
                 </td>
@@ -470,7 +480,7 @@ class Transaksi extends BaseController
         }
 
         $trTps .= "<tr style='background: rgb(230, 230, 230);'>
-            <th colspan='5' style='text-align: center;font-size: 0.8em;font-family: sans;'>
+            <th colspan='$colspan' style='text-align: center;font-size: 0.8em;font-family: sans;'>
                 total
             </th>
             <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
@@ -501,6 +511,15 @@ class Transaksi extends BaseController
                 $totUangTarik = $totUangTarik+(int)$key['jumlah_tarik'];
             }
 
+            $colspan= 3;
+            $tdNama = '';
+            if (!$isRekapNasabah) {
+                $colspan= 4;
+                $tdNama = "<td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['nama_lengkap']."
+                </td>";
+            }
+
             $bg     = ($noTts % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
 
             $trTts .= "<tr $bg>
@@ -513,9 +532,7 @@ class Transaksi extends BaseController
                 <td style='font-size: 0.7em;font-family: sans;'>
                     ".$key['id_transaksi']."
                 </td>
-                <td style='font-size: 0.7em;font-family: sans;'>
-                    ".$key['nama_lengkap']."
-                </td>
+                $tdNama
                 <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
                     ".number_format((int)$uang , 0, ',', ',')."
                 </td>
@@ -532,7 +549,7 @@ class Transaksi extends BaseController
         }
 
         $trTts .= "<tr style='background: rgb(230, 230, 230);'>
-            <th colspan='4' style='text-align: center;font-size: 0.8em;font-family: sans;'>
+            <th colspan='$colspan' style='text-align: center;font-size: 0.8em;font-family: sans;'>
                 total
             </th>
             <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
@@ -542,6 +559,11 @@ class Transaksi extends BaseController
                 ".round((float)$totKgTarik,6)."
             </th>
         </tr>";  
+        
+        $thNama = '';
+        if (!$isRekapNasabah) {
+            $thNama = "<th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Nama Nasabah</th>";
+        }
 
         $mpdf = new \Mpdf\Mpdf();
         
@@ -583,7 +605,7 @@ class Transaksi extends BaseController
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>#</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Tanggal</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>ID Transaksi</th>
-                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Nama Nasabah</th>
+                        $thNama
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Jenis sampah</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Jumlah(Kg)</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Harga(Rp)</th>
@@ -603,7 +625,7 @@ class Transaksi extends BaseController
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>#</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Tanggal</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>ID Transaksi</th>
-                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Nama Nasabah</th>
+                        $thNama
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Harga Emas(Rp)</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Jumlah(Rp)</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Hasil Konversi(g)</th>
@@ -623,7 +645,7 @@ class Transaksi extends BaseController
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>#</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Tanggal</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>ID Transaksi</th>
-                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Nama Nasabah</th>
+                        $thNama
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Uang(Rp)</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Antam(g)</th>
                         <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Ubs(g)</th>

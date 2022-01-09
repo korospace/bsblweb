@@ -30,7 +30,7 @@ class TarikSaldo extends Migration
             'jumlah_tarik' => [
                 // 'type'    => 'numeric', // postgre
                 'type'       => 'DECIMAL', // mysql
-                'constraint' => '65,30',   // mysql
+                'constraint' => '65,4',   // mysql
                 'null'       => false,
             ],
         ]);

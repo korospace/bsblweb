@@ -338,7 +338,7 @@ $('#search-sampah').on('keyup', function() {
                 <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
             </td>
             <td class="align-middle text-center py-3">
-                <span class="font-weight-bold"> 0 </span>
+                <span class="font-weight-bold"> ${parseFloat(n.jumlah).toFixed(2)} </span>
             </td>
             <td class="align-middle text-center">
                 <a href="" class="badge badge-danger text-xxs pb-1 rounded-sm cursor-pointer" onclick="hapusSampah('${n.id}',event)" style="border-radius:4px;">hapus</a>

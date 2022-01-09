@@ -35,7 +35,7 @@ class PindahSaldo extends Migration
             'hasil_konversi' => [
                 // 'type'    => 'numeric', // postgre
                 'type'       => 'DECIMAL', // mysql
-                'constraint' => '65,30',   // mysql
+                'constraint' => '65,4',   // mysql
                 'null'       => false,
             ],
         ]);

@@ -30,7 +30,7 @@ class JualSampah extends Migration
             'jumlah_kg' => [
                 // 'type'    => 'numeric', // postgre
                 'type'       => 'DECIMAL', // mysql
-                'constraint' => '65,30',   // mysql
+                'constraint' => '65,2',   // mysql
                 'null'       => false,
             ],
             'jumlah_rp' => [

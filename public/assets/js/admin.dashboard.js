@@ -10,7 +10,7 @@ const getSampahMasuk = async () => {
         let dataSampah = httpResponse.data.data;
 
         dataSampah.forEach(ds => {
-            $(`#sampah-${ds.kategori}`).html(parseFloat(ds.total).toFixed(2)+' Kg');
+            $(`#sampah-${ds.kategori}`).html(parseFloat(ds.total).toFixed(1)+' Kg');
         });   
     }
 };
@@ -68,9 +68,23 @@ const getSaldoNasabah = async () => {
         let dataNasabah = httpResponse.data.data;
 
         $('#saldo-uang').html(modifUang(kFormatter(dataNasabah.uang.toString())));
-        $('#saldo-ubs').html(parseFloat(dataNasabah.ubs).toFixed(2));
-        $('#saldo-antam').html(parseFloat(dataNasabah.antam).toFixed(2));
-        $('#saldo-galery24').html(parseFloat(dataNasabah.galery24).toFixed(2));
+        $('#saldo-emas').html(parseFloat(dataNasabah.emas).toFixed(4));
+    }
+};
+
+/**
+ * GET TOTAL AKUN
+ * ==============================================
+ */
+const getTotalAkun = async () => {
+
+    let httpResponse = await httpRequestGet(`${APIURL}/admin/totalakun`);
+    
+    if (httpResponse.status === 200) {
+        let dataAkun = httpResponse.data.data;
+
+        $('#jml-nasabah').html(modifUang(dataAkun.jml_nasabah));
+        $('#jml-admin').html(modifUang(dataAkun.jml_admin));
     }
 };
 

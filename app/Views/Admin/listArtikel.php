@@ -19,7 +19,7 @@
 	<script src="<?= base_url('assets/js/core/jquery-2.1.0.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/parent.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script>
 <?= $this->endSection(); ?>

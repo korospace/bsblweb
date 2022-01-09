@@ -98,6 +98,7 @@ $routes->group("admin", function ($routes) {
     $routes->get("getprofile",       "Admin::getProfile");
     $routes->put("editprofile",      "Admin::editProfile");
     $routes->delete("logout",        "Admin::logout");
+    $routes->get("totalakun",        "Admin::totalAkun");
     $routes->get("getnasabah",       "Admin::getNasabah");
     $routes->post("addnasabah",      "Admin::addNasabah");
     $routes->put("editnasabah",      "Admin::editNasabah");

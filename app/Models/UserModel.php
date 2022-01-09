@@ -40,6 +40,41 @@ class UserModel extends Model
         }
     }
 
+    public function totalAkun(): array
+    {
+        try {
+            $akunAdmin   = $this->db->query("SELECT count(privilege) AS total FROM users WHERE privilege IN('admin','superadmin')")->getResultArray()[0];
+            $akunNasabah = $this->db->query("SELECT count(privilege) AS total FROM users WHERE privilege = 'nasabah'")->getResultArray()[0];
+            
+            $akun = [
+                'jml_admin'   => $akunAdmin['total'],
+                'jml_nasabah' => $akunNasabah['total'],
+            ];
+
+            if ($akun['jml_admin'] == 0 && $akun['jml_nasabah'] == 0) {    
+                return [
+                    'status'   => 404,
+                    'error'    => true,
+                    'messages' => "akun notfound",
+                ];
+            } 
+            else {   
+                return [
+                    'status' => 200,
+                    'error'  => true,
+                    'data'   => $akun
+                ];
+            }
+        } 
+        catch (Exception $e) {
+            return [
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
+            ];
+        }
+    }
+
     public function getNasabah(array $get): array
     {
         try {

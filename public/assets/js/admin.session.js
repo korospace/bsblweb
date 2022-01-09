@@ -14,6 +14,7 @@ const sessioncheck = async () => {
             getSampahMasuk();
             getSaldoNasabah();
             getDataSetorSampah();
+            getTotalAkun();
         }
         if (pageTitle2 === 'list sampah') {
             getAllKatSampah();

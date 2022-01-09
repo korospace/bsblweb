@@ -477,6 +477,21 @@ class Admin extends BaseController
     }
 
     /**
+     * Total account
+     *   url    : - domain.com/admin/totalakun
+     *   method : GET
+     */
+    public function totalAkun()
+    {
+        $result    = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
+
+        $dbrespond = $this->userModel->totalAkun();
+
+        return $this->respond($dbrespond,$dbrespond['status']);
+    }
+
+    /**
      * Get nasabah
      *   url    : - domain.com/admin/getnasabah
      *   method : GET

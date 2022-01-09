@@ -30,7 +30,7 @@ class Dompet extends Migration
             'emas' => [
                 // 'type'    => 'numeric', // postgre
                 'type'       => 'DECIMAL', // mysql
-                'constraint' => '65,30',   // mysql
+                'constraint' => '65,4',   // mysql
                 'null'    => false,
                 'default' => 0,
             ],

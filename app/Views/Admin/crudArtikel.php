@@ -41,7 +41,7 @@
 	<script src="<?= base_url('assets/js/plugins/quill.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/image-resize.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/compress.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/parent.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script>
 <?= $this->endSection(); ?>

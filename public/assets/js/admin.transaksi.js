@@ -101,7 +101,7 @@ const searchNasabah = async (el = false,event = false) => {
     $('#btn-search-nasabah #text').removeClass('d-none');
     $('#btn-search-nasabah #spinner').addClass('d-none');
 
-    if (httpResponse1.status === 200) {
+    if (httpResponse1.status === 200 && httpResponse2.status === 200) {
         dataNasabah = httpResponse1.data.data[0];
         dataSaldo   = httpResponse2.data.data
         
@@ -256,7 +256,7 @@ const countHargaXjumlah = (el) =>{
             let elInputHarga = el.parentElement.nextElementSibling.children[0];
             let harga        = elInputHarga.getAttribute('data-harga');
             
-            elInputHarga.value = parseFloat(jumlahKg)*parseFloat(harga);
+            elInputHarga.value = parseFloat(parseFloat(jumlahKg)*parseInt(harga)).toFixed(0);
             countTotalHarga();
         }
     }
@@ -985,7 +985,7 @@ const getDetailTransaksi = async (id) => {
         // tarik saldo
         if (httpResponse.data.data.jenis_transaksi == 'penarikan saldo') {
             let jenisSaldo = httpResponse.data.data.jenis_saldo;
-            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(0)):parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(6)+' gram';
+            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(0)):parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(4)+' gram';
 
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
                 <table>
@@ -1019,7 +1019,7 @@ const getDetailTransaksi = async (id) => {
                 <tr class="text-dark">
                     <td>Hasil konversi&nbsp;</td>
                     <td>
-                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(6)} g
+                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(4)} g
                     </td>
                 </tr>
             </table>
@@ -1366,7 +1366,7 @@ const getRekapTransaksi = async () => {
                     <span class="text-xs text-name font-weight-bold">
                         <i class="fas fa-trash text-xs text-success mr-1"></i>
                         <span class="text-success">
-                            ${parseFloat(allTransaksi[key].totSampahMasuk).toFixed(1)} kg
+                            ${parseFloat(allTransaksi[key].totSampahMasuk).toFixed(2)} kg
                         </span>
                     </span>
                 </td>
@@ -1374,7 +1374,7 @@ const getRekapTransaksi = async () => {
                     <span class="${(wilayahRekapUrl != '') ? 'd-none' : '' } text-xs text-name font-weight-bold">
                         <i class="fas fa-trash text-xs text-info mr-1"></i>
                         <span class="text-info">
-                            ${parseFloat(allTransaksi[key].totSampahKeluar).toFixed(1)} kg
+                            ${parseFloat(allTransaksi[key].totSampahKeluar).toFixed(2)} kg
                         </span>
                     </span>
                 </td>
@@ -1391,13 +1391,13 @@ const getRekapTransaksi = async () => {
                 <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);letter-spacing:0.5px;color:orange;">
                     <span class="text-xs text-name font-weight-bold">
                         <i class="fas fa-coins text-xs mr-1"></i>
-                        ${parseFloat(allTransaksi[key].totEmasMasuk).toFixed(1)}  g
+                        ${parseFloat(allTransaksi[key].totEmasMasuk).toFixed(2)}  g
                     </span>
                 </td>
                 <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
                     <span class="text-xs text-name font-weight-bold text-danger">
                         <i class="fas fa-coins text-xs mr-1"></i>
-                        ${parseFloat(allTransaksi[key].totEmasKeluar).toFixed(1)} g
+                        ${parseFloat(allTransaksi[key].totEmasKeluar).toFixed(2)} g
                     </span>
                 </td>
             </tr>`;

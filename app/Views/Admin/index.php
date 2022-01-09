@@ -33,9 +33,8 @@
 	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/parent.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
-	<!-- <script src="<?= base_url('assets/js/admin.dashboard.js'); ?>"></script> -->
 	<script src="<?= base_url('assets/js/admin.dashboard.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
@@ -198,9 +197,9 @@
 							<div class="row" style="font-family: 'qc-medium';">
 								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
-										<p class="text-sm mb-0 text-capitalize font-weight-bold">Ubs</p>
+										<p class="text-sm mb-0 text-capitalize font-weight-bold">Emas</p>
 										<h5 id="sampah-logam" class="font-weight-bolder mb-0">
-											<span id="saldo-ubs">0</span> g
+											<span id="saldo-emas">0</span> g
 										</h5>
 									</div>
 								</div>
@@ -219,15 +218,15 @@
 							<div class="row" style="font-family: 'qc-medium';">
 								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
-										<p class="text-sm mb-0 text-capitalize font-weight-bold">Antam</p>
+										<p class="text-sm mb-0 text-capitalize font-weight-bold">Nasabah</p>
 										<h5 id="sampah-plastik" class="font-weight-bolder mb-0">
-											<span id="saldo-antam">0</span> g
+											<span id="jml-nasabah">0</span>
 										</h5>
 									</div>
 								</div>
 								<div class="col-4 text-end">
 									<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-										<i class="fas fa-coins"></i>
+										<i class="fas fa-user"></i>
 									</div>
 								</div>
 							</div>
@@ -240,15 +239,15 @@
 							<div class="row" style="font-family: 'qc-medium';">
 								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
-										<p class="text-sm mb-0 text-capitalize font-weight-bold">Galery24</p>
+										<p class="text-sm mb-0 text-capitalize font-weight-bold">Admin</p>
 										<h5 id="sampah-lain-lain" class="font-weight-bolder mb-0">
-											<span id="saldo-galery24">0</span> g
+											<span id="jml-admin">0</span>
 										</h5>
 									</div>
 								</div>
 								<div class="col-4 text-end">
 									<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-										<i class="fas fa-coins"></i>
+										<i class="fas fa-user-cog"></i>
 									</div>
 								</div>
 							</div>

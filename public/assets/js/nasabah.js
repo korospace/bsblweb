@@ -161,6 +161,19 @@ const filterTransaksi = async (e) => {
     let startDate  = formFilter.get('date-start').split('-');
     let endDate    = formFilter.get('date-end').split('-');
 
+    let unixStart  = new Date(`${startDate[0]}/${startDate[1]}/${startDate[2]} 00:00:01`).getTime();
+    let unixEnd    = new Date(`${endDate[0]}/${endDate[1]}/${endDate[2]} 23:00:00`).getTime();
+
+    if (parseInt(unixEnd) - parseInt(unixStart) > 2674799000) {
+        showAlert({
+            message: `maksimal 31 hari`,
+            autohide: true,
+            type:'danger'
+        });
+
+        return 0;
+    }
+
     if ($('#formFilterTransaksi .modal-title').html() == 'Filter Histori') {
         dateStartHistori = `${startDate[2]}-${startDate[1]}-${startDate[0]}`;
         dateEndHistori   = `${endDate[2]}-${endDate[1]}-${endDate[0]}`;
@@ -311,7 +324,7 @@ const updateGrafikSetorNasabah = async () => {
 const getHistoriTransaksi = async () => {
     $('#spinner-wraper-histori').removeClass('d-none');
     $('#transaksi-wraper-histori').addClass('d-none');
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?start=${dateStartHistori}&end=${dateEndHistori}`);
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?start=${dateStartHistori}&end=${dateEndHistori}&orderby=terbaru`);
     $('#spinner-wraper-histori').addClass('d-none'); 
     $('#transaksi-wraper-histori').removeClass('d-none');
     
@@ -345,7 +358,7 @@ const getHistoriTransaksi = async () => {
             } 
             else if (jenisTransaksi == 'konversi saldo') {
                 textClass      = 'text-warning';
-                totalTransaksi = 'Rp'+modifUang(kFormatter(t[`total_pindah`]))+' <i class="fas fa-exchange-alt"></i> '+parseFloat(t[`hasil_konversi`]).toFixed(2)+'g';
+                totalTransaksi = 'Rp'+modifUang(kFormatter(t[`total_pindah`]))+' <i class="fas fa-exchange-alt"></i> '+parseFloat(t[`hasil_konversi`]).toFixed(4)+'g';
             }
             else {
                 textClass = 'text-danger';
@@ -408,7 +421,7 @@ const getDetailTransaksiNasabah = async (id) => {
         // tarik saldo
         if (httpResponse.data.data.jenis_transaksi == 'penarikan saldo') {
             let jenisSaldo = httpResponse.data.data.jenis_saldo;
-            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(0)):parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(6)+' gram';
+            let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(0)):parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(4)+' gram';
 
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
                 <table>
@@ -432,10 +445,6 @@ const getDetailTransaksiNasabah = async (id) => {
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
             <table>
                 <tr class="text-dark">
-                    <td>Saldo tujuan</td>
-                    <td>: &nbsp;&nbsp;${httpResponse.data.data.saldo_tujuan}</td>
-                </tr>
-                <tr class="text-dark">
                     <td>Jumlah</td>
                     <td>: &nbsp;&nbsp;Rp ${modifUang(httpResponse.data.data.jumlah)}</td>
                 </tr>
@@ -446,7 +455,7 @@ const getDetailTransaksiNasabah = async (id) => {
                 <tr class="text-dark">
                     <td>Hasil konversi&nbsp;</td>
                     <td>
-                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(6)} g
+                        : &nbsp;&nbsp;${parseFloat(httpResponse.data.data.hasil_konversi).toFixed(4)} g
                     </td>
                 </tr>
             </table>

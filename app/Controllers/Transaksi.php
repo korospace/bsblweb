@@ -38,7 +38,7 @@ class Transaksi extends BaseController
         
         if ($jenisTransaksi == 'penarikan saldo') {
             $jenisSaldo = ($dbresponse['data']['jenis_saldo'] == 'uang')? 'uang' : 'emas '.$dbresponse['data']['jenis_saldo'];
-            $jumlah     = ($jenisSaldo == 'uang')? 'Rp '.number_format($dbresponse['data']['jumlah_tarik'] , 0, ',', ',') : round((float)$dbresponse['data']['jumlah_tarik'], 6).' gram';
+            $jumlah     = ($jenisSaldo == 'uang')? 'Rp '.number_format($dbresponse['data']['jumlah_tarik'] , 0, ',', ',') : round((float)$dbresponse['data']['jumlah_tarik'], 4).' gram';
 
             $result = "<div style='padding: 20px;width: 100%;background-color: rgb(131, 146, 171);border-radius: 6px;'>
                 <table>
@@ -87,7 +87,7 @@ class Transaksi extends BaseController
                             Hasil konversi&nbsp;&nbsp;&nbsp;
                         </td>
                         <td style='font-size: 2em;font-family: sans;'>
-                            : ".round((float)$dbresponse['data']['hasil_konversi'], 6)." gram
+                            : ".round((float)$dbresponse['data']['hasil_konversi'], 4)." gram
                         </td>
                     </tr>
                 </table>
@@ -179,34 +179,34 @@ class Transaksi extends BaseController
                 <table>
                     <tr>
                         <td style='font-size: 1.4em;font-family: sans;'>
-                            TANGGAL&nbsp;&nbsp;&nbsp;
+                            TANGGAL
                         </td>
                         <td style='font-size: 1.4em;font-family: sans;'>
-                            : ".date("d/m/Y h:i A",$dbresponse['data']['date'])."
+                            :&nbsp;&nbsp;&nbsp; ".date("d/m/Y h:i A",$dbresponse['data']['date'])."
                         </td>
                     </tr>
                     <tr>
                         <td style='font-size: 1.4em;font-family: sans;'>
-                            NAMA&nbsp;&nbsp;&nbsp;
+                            NAMA
                         </td>
                         <td style='font-size: 1.4em;font-family: sans;text-transform: uppercase;'>
-                            : ".$dbresponse['data']['nama_lengkap']."
+                            :&nbsp;&nbsp;&nbsp; ".$dbresponse['data']['nama_lengkap']."
                         </td>
                     </tr>
                     <tr>
                         <td style='font-size: 1.4em;font-family: sans;'>
-                            $userType&nbsp;&nbsp;&nbsp;
+                            $userType
                         </td>
                         <td style='font-size: 1.4em;font-family: sans;'>
-                            : ".$dbresponse['data']['id_user']."
+                            :&nbsp;&nbsp;&nbsp; ".$dbresponse['data']['id_user']."
                         </td>
                     </tr>
                     <tr>
                         <td style='font-size: 1.4em;font-family: sans;'>
-                            ID.TRANSAKSI&nbsp;&nbsp;&nbsp;
+                            ID.TRANSAKSI&nbsp;
                         </td>
                         <td style='font-size: 1.4em;font-family: sans;'>
-                            : ".$dbresponse['data']['id_transaksi']."
+                            :&nbsp;&nbsp;&nbsp; ".$dbresponse['data']['id_transaksi']."
                         </td>
                     </tr>
                 </table>
@@ -474,7 +474,7 @@ class Transaksi extends BaseController
                     ".number_format($key['jumlah'] , 0, ',', ',')."
                 </td>
                 <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
-                    ".round((float)$key['hasil_konversi'],6). "
+                    ".round((float)$key['hasil_konversi'],4). "
                 </td>
             </tr>";
         }
@@ -487,7 +487,7 @@ class Transaksi extends BaseController
                 ".number_format($totUangPindah , 0, ',', ',')."
             </th>
             <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
-                ".round((float)$totKgPindah,6)."
+                ".round((float)$totKgPindah,4)."
             </th>
         </tr>";
         
@@ -537,13 +537,13 @@ class Transaksi extends BaseController
                     ".number_format((int)$uang , 0, ',', ',')."
                 </td>
                 <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
-                    ".round((float)$antam,6)."
+                    ".round((float)$antam,4)."
                 </td>
                 <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
-                    ".round((float)$ubs,6)."
+                    ".round((float)$ubs,4)."
                 </td>
                 <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
-                    ".round((float)$galery24,6)."
+                    ".round((float)$galery24,4)."
                 </td>
             </tr>";
         }
@@ -556,7 +556,7 @@ class Transaksi extends BaseController
                 ".number_format($totUangTarik , 0, ',', ',')."
             </th>
             <th colspan='3' style='text-align: center;font-size: 0.8em;font-family: sans;text-align: right;'>
-                ".round((float)$totKgTarik,6)."
+                ".round((float)$totKgTarik,4)."
             </th>
         </tr>";  
         
@@ -751,13 +751,13 @@ class Transaksi extends BaseController
             }
             else {
                 if ($data['jenis_saldo'] !== 'uang') {
-                    if ((float)$saldoX-(float)$data['jumlah'] < 0.1) {
+                    if (round((float)$saldoX-(float)$data['jumlah'],4) < 0.1000) {
                         $valid = false;
                         $msg   = [
                             'jumlah' => 'minimal saldo yang mengendap adalah 0.1 gram',
                             'saldo'  => (float)$saldoX, 
                             'tarik'  => (float)$data['jumlah'],
-                            'hasil'  => (float)$saldoX-(float)$data['jumlah']
+                            'hasil'  => round((float)$saldoX-(float)$data['jumlah'],4)
                         ];
                     }
                 }

@@ -3,6 +3,11 @@ let pageTitle1  = docTitle[0].replace(/\s/,'');
 let pageTitle2  = docTitle[1].replace(/\s/,'');
 let dataAdmin   = '';
 
+if (pageTitle1 == 'Admin') {
+    let webUrl      = window.location.href;
+    document.cookie = `lasturl=${webUrl}; path=/;`;
+}
+
 /**
  * API REQUEST GET
  */

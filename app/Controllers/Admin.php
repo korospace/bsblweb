@@ -534,8 +534,9 @@ class Admin extends BaseController
         $this->_methodParser('data');
         global $data;
         
-        $this->validation->run($data,'editNasabahValidate');
-        $this->validation->run($data,'emailValidate');
+        $this->validation->run($data,'idNasabahValidate');
+        $this->validation->run($data,'editProfileNasabah');
+        $this->validation->run($data,'isVerifyValidate');
         $errors = $this->validation->getErrors();
 
         if($errors) {

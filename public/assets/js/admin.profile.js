@@ -285,11 +285,11 @@ function doLogout() {
         .then(() => {
             hideLoadingSpinner();
             document.cookie = `token=null; path=/;`;
-            window.location.replace(`${BASEURL}/login`);
+            window.location.replace(`${BASEURL}/login/admin`);
         })
         .catch(error => {
             hideLoadingSpinner();
             document.cookie = `token=null; path=/;`;
-            window.location.replace(`${BASEURL}/login`);
+            window.location.replace(`${BASEURL}/login/admin`);
         })
 }

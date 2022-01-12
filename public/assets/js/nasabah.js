@@ -1,34 +1,5 @@
 
 /**
- * SESSION CHECK
- * ================================
- */
-const sessioncheck = async () => {
-    showLoadingSpinner();
-    let httpResponse = await httpRequestGet(`${APIURL}/nasabah/sessioncheck`);
-    hideLoadingSpinner();
-
-    // update value filter transkasi
-    // let currentMonth = new Date().toLocaleString("en-US",{month: "numeric"});
-    // let currentYear  = new Date().toLocaleString("en-US",{year: "numeric"});
-    // $(`#filter-month option[value=${currentMonth}]`).attr('selected','selected');
-    // $(`#filter-year`).val(currentYear);
-
-    if (httpResponse.status === 200) {
-        if (pageTitle2 === 'dashboard') {
-            getSampahMasuk();
-            updateGrafikSetorNasabah();
-            getHistoriTransaksi();
-            getDataSaldo();
-            getAllJenisSampah();
-        }
-        getDataProfile();
-    }
-};
-
-sessioncheck();
-
-/**
  * GET SAMPAH MASUK
  * ==================================
  */
@@ -846,3 +817,13 @@ function validateFormEditProfile(form) {
 
     return status;
 }
+
+if (pageTitle2 === 'dashboard') {
+    getSampahMasuk();
+    updateGrafikSetorNasabah();
+    getHistoriTransaksi();
+    getDataSaldo();
+    getAllJenisSampah();
+}
+
+getDataProfile();

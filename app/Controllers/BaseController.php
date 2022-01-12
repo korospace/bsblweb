@@ -109,6 +109,20 @@ class BaseController extends ResourceController
     } 
 
     /**
+     * String Sanetize
+     */
+    public function stringSanetize(string $text,bool $toLower): string
+    {
+        if ($toLower) {
+            return strtolower(trim(htmlspecialchars($text)));
+        } 
+        else {
+            return trim(htmlspecialchars($text));
+        }
+        
+    }
+
+    /**
      * CURL
      */
     public function curlGetData(string $url,array $headerItem): array

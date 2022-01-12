@@ -159,13 +159,13 @@ class Nasabah extends BaseController
         
                 $data = [
                     "id"           => $data['id'],
-                    "username"     => trim($data['username']),
-                    "email"        => trim($data['email']),
-                    "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                    "notelp"       => trim($data['notelp']),
-                    "alamat"       => trim($data['alamat']),
-                    "tgl_lahir"    => trim($data['tgl_lahir']),
-                    "kelamin"      => strtolower(trim($data['kelamin'])),
+                    "username"     => $this->stringSanetize($data['username'],false),
+                    "email"        => $this->stringSanetize($data['email'],false),
+                    "nama_lengkap" => $this->stringSanetize($data['nama_lengkap'],true),
+                    "notelp"       => $this->stringSanetize($data['notelp'],false),
+                    "alamat"       => $this->stringSanetize($data['alamat'],false),
+                    "tgl_lahir"    => $this->stringSanetize($data['tgl_lahir'],false),
+                    "kelamin"      => $this->stringSanetize($data['kelamin'],true),
                 ];
 
                 if ($newpass != '') {

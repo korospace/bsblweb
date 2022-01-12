@@ -85,18 +85,27 @@ class Validation
 		],
 	];
 
-    // email validate
-    public $emailValidate = [
-		'email' => [
-			'rules'  => 'required|is_unique[users.email]|valid_email|valid_emails',
-			'errors' => [
-                'required'     => 'email is required',
-                'is_unique'    => 'email sudah terdaftar',
-                'valid_email'  => 'Email is not in format',
-                'valid_emails' => "Email's provider is not valid",
-			]
+    // id nasabah validate
+    public $idNasabahValidate = [
+        'id' => [
+            'rules'  => 'required|is_not_unique[users.id]',
+            'errors' => [
+                'required'      => 'id is required',
+                'is_not_unique' => 'nasabah with id ({value}) is not found',
+            ],
 		],
 	];
+
+    // is_verify validate
+    public $isVerifyValidate = [
+		'is_verify' => [
+            'rules'  => 'required|in_list[1,0]',
+            'errors' => [
+                'required' => 'is_verify is required',
+                'in_list'  => "value must be '1' or '0'",
+            ],
+		]
+    ];
 
     /**
      * REGSITER VALIDATE
@@ -326,10 +335,9 @@ class Validation
     // forgot password
     public $forgotPasswordValidate = [
 		'email' => [
-            'rules'  => 'required|valid_email|is_not_unique[users.email]',
+            'rules'  => 'required|is_not_unique[users.email]',
             'errors' => [
                 'required'      => 'email is required',
-                'valid_email'   => 'Email tidak valid',
                 'is_not_unique' => 'email tidak terdaftar',
             ],
 		],
@@ -520,72 +528,8 @@ class Validation
         //     ],
 		// ],
 	];
-
-    // edit nasabah
-	public $editNasabahValidate = [
-		'id' => [
-            'rules'  => 'required|is_not_unique[users.id]',
-            'errors' => [
-                'required'      => 'id is required',
-                'is_not_unique' => 'nasabah with id ({value}) is not found',
-            ],
-		],
-		'username' => [
-            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username,users.id,{id}]',
-            'errors' => [
-                'required'    => 'username is required',
-                'min_length'  => 'min 8 character',
-                'max_length'  => 'max 20 character',
-                'is_unique'   => 'username sudah terdaftar',
-            ],
-		],
-		'nama_lengkap' => [
-            'rules'  => 'required|max_length[40]',
-            'errors' => [
-                'required'    => 'nama lengkap is required',
-                'min_length'  => 'min 6 character',
-                'max_length'  => 'max 40 character',
-            ],
-		],
-		'notelp' => [
-            'rules'  => 'required|max_length[12]|is_unique[users.notelp,users.id,{id}]',
-            'errors' => [
-                'required'    => 'nomor telepon is required',
-                'max_length'  => 'max 12 character',
-                'is_unique'   => 'no.telp sudah dipakai',
-            ],
-		],
-		'alamat' => [
-            'rules'  => 'required|max_length[255]',
-            'errors' => [
-                'required'    => 'alamat is required',
-                'max_length'  => 'max 255 character',
-            ],
-		],
-		'tgl_lahir' => [
-            'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
-            'errors' => [
-                'required'    => 'tgl lahir is required',
-                'regex_match' => 'format must be dd-mm-yyyy',
-            ],
-		],
-		'kelamin' => [
-            'rules'  => 'required|in_list[laki-laki,perempuan]',
-            'errors' => [
-                'required'    => 'kelamin is required',
-                'in_list'     => "value must be 'laki-laki' or 'perempuan'",
-            ],
-		],
-		'is_verify' => [
-            'rules'  => 'required|in_list[1,0]',
-            'errors' => [
-                'required'    => 'is_verify is required',
-                'in_list'     => "value must be '1' or '0'",
-            ],
-		]
-	];
     
-    // edit admin data
+    // edit admin
 	public $editAdminValidate = [
 		'id' => [
             'rules'  => 'required|is_not_unique[users.id]',

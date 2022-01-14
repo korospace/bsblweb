@@ -85,6 +85,7 @@ $routes->group("admin", function ($routes) {
     $routes->add('transaksi',          'Admin::transaksiPage');
     $routes->add('listsampah',         'Admin::listSampahView');
     $routes->add('listadmin',          'Admin::listAdminView');
+    $routes->add('kategoriartikel',    'Admin::kategoriArtikelView');
     $routes->add('listartikel',        'Admin::listArtikelView');
     $routes->add('listnasabah',        'Admin::listNasabahView');
     $routes->add('detilnasabah/(:any)','Admin::detilNasabahView/$1');
@@ -111,6 +112,7 @@ $routes->group("admin", function ($routes) {
 
 $routes->group("artikel", function ($routes) {
     $routes->post("addkategori",      "Kategori::addKategori/kategori_artikel");
+    $routes->put("editkategori",      "Kategori::editKategoriArtikel");
     $routes->delete("deletekategori", "Kategori::deleteKategori/kategori_artikel");
     $routes->get("getkategori",       "Kategori::getKategori/kategori_artikel");
     $routes->post("addartikel",       "Artikel::addArtikel");

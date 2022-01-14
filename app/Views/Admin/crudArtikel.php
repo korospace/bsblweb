@@ -42,8 +42,7 @@
 	<script src="<?= base_url('assets/js/plugins/image-resize.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/compress.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.artikel.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.crudArtikel.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -54,7 +53,7 @@
 	<?= $this->include('Components/alertInfo'); ?>
 
 	<body class="g-sidenav-show bg-gray-100">
-		<aside class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main"  style="font-family: 'qc-semibold';">
+		<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main"  style="font-family: 'qc-semibold';">
 			<div class="sidenav-header">
 				<a class="nav-link mt-4" href="<?= base_url('admin/listartikel');?>" style="display: flex;align-items: center;">
 					<div
@@ -83,8 +82,11 @@
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
 							<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-							<li class="breadcrumb-item text-sm text-dark active" aria-current="page"><?= ($title == 'Admin | tambah artikel') ? 'Artikel baru' : 'Edit artikel' ?></li>
+							<li class="breadcrumb-item text-sm text-dark active" aria-current="page">artikel</li>
 						</ol>
+						<h6 class="font-weight-bolder mb-0">
+							<?= (isset($idartikel)) ? 'Tambah' : 'Edit' ; ?> Artikel 
+						</h6>
 					</nav>
 					<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 						<div class="ms-auto pe-md-3 d-flex align-items-center">
@@ -106,8 +108,8 @@
 			
 			<!-- form -->
 			<form id="formCrudArticle" class="pl-4 pr-5 pb-5 mt-2" style="font-family: 'qc-medium';">
-				<div style="font-family: 'qc-medium';" class="row">
-					<h2 class="col">Artikel</h2>
+				<!-- Button 1 -->
+				<div style="font-family: 'qc-medium';" class="row justify-content-end">
 					<button type="" class="mt-1 btn btn-success col-12 col-sm-2" style="min-width:170px;letter-spacing: 1px;">
 						<i class="far fa-paper-plane mr-1"></i>
 						<?= (isset($idartikel)) ? 'Edit' : 'Publikasikan' ; ?> 
@@ -115,155 +117,101 @@
 				</div>
 				
 				<hr>
-				<!-- Text Area Quill -->
-				<div id="standalone-container">
-					<div class="form-row mt-4 d-flex flex-column">
-						<input type="hidden" name="id" id="idartikel">
-						<div class="px-1">
-							<i class="far fa-image text-muted"></i>
-							<h6 class="text-muted" style="display:inline;">Thumbnail</h6>
+				
+				<!-- Thumbnail -->
+				<div class="form-row mt-4 d-flex flex-column">
+					<input type="hidden" name="id" id="idartikel">
+					<div class="px-1">
+						<i class="far fa-image text-muted"></i>
+						<h6 class="text-muted" style="display:inline;">Thumbnail</h6>
+					</div>
+					<div id="thumbnail-wraper" class="position-relative col-12 col-sm-6 mt-1 mb-2">
+						<!-- spinner -->
+						<div id="thumbnail-spinner" class="img-thumbnail d-none position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 11;top: 0;bottom: 0;left: 0;right: 0;">
+							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 20px;" />
 						</div>
-						<div id="thumbnail-wraper" class="position-relative col-12 col-sm-6 mt-1 mb-2">
-							<!-- spinner -->
-							<div id="thumbnail-spinner" class="img-thumbnail d-none position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 11;top: 0;bottom: 0;left: 0;right: 0;">
-								<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 20px;" />
-							</div>
-							<img src="<?= base_url('assets/images/skeleton-thumbnail.webp'); ?>" class="w-100" style="opacity: 0;">
-							<img src="<?= base_url('assets/images/default-thumbnail.webp'); ?>" alt="thumbnail" id="preview-thumbnail" class="img-thumbnail position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;min-height: 100%;left:0;">
-						</div>
-						<div class="input-group mt-2 col-12 col-sm-6">
-							<input type="file" class="form-control" id="thumbnail" autocomplete="off" placeholder="thumbnail" style="min-height: 38px" onchange="changeThumbPreview(this);">
-						</div>
+						<img src="<?= base_url('assets/images/skeleton-thumbnail.webp'); ?>" class="w-100" style="opacity: 0;">
+						<img src="<?= base_url('assets/images/default-thumbnail.webp'); ?>" alt="thumbnail" id="preview-thumbnail" class="img-thumbnail position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;min-height: 100%;left:0;">
+					</div>
+					<div class="input-group mt-2 col-12 col-sm-6">
+						<input type="file" class="form-control" id="thumbnail" autocomplete="off" placeholder="thumbnail" style="min-height: 38px" onchange="changeThumbPreview(this);">
+					</div>
+					<small
+						id="thumbnail-error"
+						class="text-danger"></small>
+				</div>
+
+				<!-- Title & Kategori -->
+				<div class="form-row mt-5">
+					<div class="col-12 col-sm-6 form-group">
+						<i class="fas fa-pencil-alt mr-1 text-muted"></i>
+						<h6 class="text-muted" style="display:inline;">Judul Artikel</h6>
+						<input type="text" class="form-control mt-1" id="title" name="title" placeholder="Title" style="min-height: 38px" autocomplete="off">
 						<small
-							id="thumbnail-error"
+							id="title-error"
 							class="text-danger"></small>
 					</div>
-					<div class="form-row mt-5">
-						<div class="col-12 col-sm-6 form-group">
-							<i class="fas fa-pencil-alt mr-1 text-muted"></i>
-							<h6 class="text-muted" style="display:inline;">Judul Artikel</h6>
-							<input type="text" class="form-control mt-1" id="title" name="title" placeholder="Title" style="min-height: 38px" autocomplete="off">
-							<small
-								id="title-error"
-								class="text-danger"></small>
-						</div>
-						<div class="col-12 col-sm-6 form-group">
-							<i class="fas fa-list-ul mr-1 text-muted"></i>
-							<h6 class="text-muted" style="display:inline;">Kategori</h6>
-							<select id="kategori-berita-wraper" name="id_kategori" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
-								
-							</select>
-							<div class="d-flex justify-content-end">
-								<a href="" data-toggle="modal" data-target="#modalAddKategori" class="text-muted text-sm" style="width: max-content;">
-									<u>manage kategori</u>
-								</a>
-							</div>
+					<div class="col-12 col-sm-6 form-group">
+						<i class="fas fa-list-ul mr-1 text-muted"></i>
+						<h6 class="text-muted" style="display:inline;">Kategori</h6>
+						<select id="kategori-artikel-wraper" name="id_kategori" class="form-control py-1 px-2 mt-1 mb-2 d-block" style="min-height: 38px">
+							
+						</select>
+						<div class="d-flex justify-content-end">
+							<a href="<?= base_url('admin/kategoriartikel') ?>" class="text-muted text-sm" style="width: max-content;">
+								<u>manage kategori</u>
+							</a>
 						</div>
 					</div>
-					<div id="toolbar-container" class="mt-4">
-						<span class="ql-formats">
-							<select class="ql-font"></select>
-							<select class="ql-size"></select>
-						</span>
-						<span class="ql-formats">
-							<button class="ql-bold"></button>
-							<button class="ql-italic"></button>
-							<button class="ql-underline"></button>
-							<button class="ql-strike"></button>
-							<select class="ql-color"></select>
-							<select class="ql-background"></select>
-							<button class="ql-script" value="sub"></button>
-							<button class="ql-script" value="super"></button>
-							<button class="ql-blockquote"></button>
-							<!-- <button class="ql-header" value="2"></button> -->
-							<!-- <button class="ql-header" value="1"></button> -->
-							<!-- <button class="ql-code-block"></button> -->
-						</span>
-						<span class="ql-formats">
-							<button class="ql-list" value="ordered"></button>
-							<button class="ql-list" value="bullet"></button>
-							<button class="ql-indent" value="-1"></button>
-							<button class="ql-indent" value="+1"></button>
-							<select class="ql-align"></select>
-							<button class="ql-direction" value="rtl"></button>
-						</span>
-						<span class="ql-formats">
-							<button class="ql-link"></button>
-							<button class="ql-image"></button>
-							<button class="ql-video"></button>
-							<!-- <button class="ql-formula"></button> -->
-						</span>
-						<!-- <span class="ql-formats">
-							<button class="ql-clean"></button>
-						</span> -->
-					</div>
-					<div id="editor-container"></div>
 				</div>
+
+				<!-- Content -->
+				<div id="toolbar-container" class="mt-4">
+					<span class="ql-formats">
+						<select class="ql-font"></select>
+						<select class="ql-size"></select>
+					</span>
+					<span class="ql-formats">
+						<button class="ql-bold"></button>
+						<button class="ql-italic"></button>
+						<button class="ql-underline"></button>
+						<button class="ql-strike"></button>
+						<select class="ql-color"></select>
+						<select class="ql-background"></select>
+						<button class="ql-script" value="sub"></button>
+						<button class="ql-script" value="super"></button>
+						<button class="ql-blockquote"></button>
+						<!-- <button class="ql-header" value="2"></button> -->
+						<!-- <button class="ql-header" value="1"></button> -->
+						<!-- <button class="ql-code-block"></button> -->
+					</span>
+					<span class="ql-formats">
+						<button class="ql-list" value="ordered"></button>
+						<button class="ql-list" value="bullet"></button>
+						<button class="ql-indent" value="-1"></button>
+						<button class="ql-indent" value="+1"></button>
+						<select class="ql-align"></select>
+						<button class="ql-direction" value="rtl"></button>
+					</span>
+					<span class="ql-formats">
+						<button class="ql-link"></button>
+						<button class="ql-image"></button>
+						<button class="ql-video"></button>
+						<!-- <button class="ql-formula"></button> -->
+					</span>
+					<!-- <span class="ql-formats">
+						<button class="ql-clean"></button>
+					</span> -->
+				</div>
+				<div id="editor-container"></div>
+
+				<!-- Button 2 -->
+				<button type="" class="mt-4 btn btn-success w-100" style="min-width:170px;letter-spacing: 1px;">
+					<i class="far fa-paper-plane mr-1"></i>
+					<?= (isset($idartikel)) ? 'Edit' : 'Publikasikan' ; ?> 
+				</button>
 			</form>
 
 		</main>
 	</body>
-
-	<!-- Modal -->
-	<div class="modal fade" id="modalAddKategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<form id="formAddKategoriArtikel" class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Manage kategori</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="input-group col-lg-12 px-0 form-group table-responsive rounded-0 d-flex flex-column justify-content-start" style="max-height: 186px;min-height: 186px;overflow: auto;border: 0.5px solid #D2D6DA;">
-						<!-- spinner -->
-						<div id="list-kategori-spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-							<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 30px;" />
-						</div>
-						<!-- message not found -->
-						<div id="list-kategori-notfound" class="d-none position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
-							<h6 id="text-notfound" class='opacity-6 text-sm'>kategori belum ditambah</h6>
-						</div>
-						<table id="table-kategori-artikel" class="table table-hover text-center mb-0" style="">
-							<thead class="position-sticky bg-white" style="z-index: 11;top: 0;">
-								<tr>
-									<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-										#
-									</th>
-									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-										Nama Kategori
-									</th>
-									<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-										Action
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								
-							</tbody>
-						</table>
-					</div>
-					<hr class="horizontal dark mt-2 mb-2">
-					<h6 class="font-italic opacity-8">kategori baru</h6>
-					<div class="input-group col-lg-12 px-0 form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray px-4 border-md">
-									<i class="fas fa-clipboard-list text-muted"></i>
-								</span>
-							</div>
-							<input type="text" class="form-control px-2" id="NewKategoriArtikel" autocomplete="off" placeholder="masukan kategori baru">
-						</div>
-						<small id="newkategori-error" class="text-danger"></small>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button id="btnAddKategoriBerita" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;">
-						<span id="text">Simpan</span>
-						<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
-					</button>
-				</div>
-			</form>
-		</div>
-	</div>
 <?= $this->endSection(); ?>

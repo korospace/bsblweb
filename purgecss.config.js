@@ -4,7 +4,7 @@ module.exports = {
     // ** alertinfo
     // content: ['app/Views/Components/artikelFooter.php'],
     // ** homepage
-    // content: ['app/Views/HomePage/index.php','public/assets/js/homepage.js'],
+    content: ['app/Views/HomePage/index.php','public/assets/js/homepage.js'],
     // ** list artikel
     // content: ['app/Views/HomePage/listArtikel.php','public/assets/js/listArtikel.js'],
     // ** detil artikel
@@ -16,7 +16,7 @@ module.exports = {
     // ** otp
     // content: ['app/Views/OTP/index.php','assets/js/otp.js'],
     // ** nasabah dashboard
-    content: ['app/Views/Nasabah/index.php','public/assets/js/nasabah.js'],
+    // content: ['app/Views/Nasabah/index.php','public/assets/js/nasabah.js'],
     // ** nasabah profile
     // content: ['app/Views/Nasabah/profilenasabah.php','assets/js/nasabah.js'],
 
@@ -29,7 +29,7 @@ module.exports = {
     // ** admin list admin
     // content: ['app/Views/Admin/listAdmin.php','public/assets/js/admin.listadmin.js'],
     // ** admin list nasabah
-    content: ['app/Views/Admin/listNasabah.php','public/assets/js/admin.listnasabah.js'],       
+    // content: ['app/Views/Admin/listNasabah.php','public/assets/js/admin.listnasabah.js'],       
     // ** admin list artikel
     // content: ['app/Views/Admin/listArtikel.php','public/assets/js/admin.artikel.js'],
     // ** admin crud artikel

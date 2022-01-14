@@ -13,6 +13,7 @@
       #contact-us #right-side{
         order: 1;
       }
+
     }
   </style>
   <!-- ** develoment ** -->
@@ -20,7 +21,6 @@
   <!-- ** production ** -->
   <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/homepage.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/flex-slider.min.css'); ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/css/owl-carousel.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/homepage.min.css'); ?>">
 <?= $this->endSection(); ?>
 
@@ -29,7 +29,6 @@
 <script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/scrollreveal.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/plugins/owl-carousel.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/jquery.counterup.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
@@ -142,46 +141,66 @@
       <h1 class="text-center mb-5">Kegiatan Bank Sampah Budi Luhur</h1>
       <div class="row">
 
-        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
-          <div class="features-item h-100">
-            <div class="features-icon h-100 position-relative">
-              <!-- <h2>01</h2> -->
-              <img src="<?= base_url('assets/images/features-icon-1.png'); ?>" alt="">
-              <h4>WEBINAR</h4>
-              <p>Curabitur pulvinar vel odio sed sagittis</p>
-              <a href="<?= base_url('/homepage/webinar'); ?>" class="main-button">
-                Read More
-              </a>
+        <div class="card-activity col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
+          <div class="features-item skeleton h-100">
+            <div class="features-icon h-100 d-flex flex-column align-items-center">
+              <img class="icon" style="min-width: 80px;min-height: 80px;max-width: 80px;max-height: 80px;" src="<?= base_url('assets/images/features-icon-1.png'); ?>" alt="">
+              <h4 class="name" style="text-transform:uppercase;">
+                WEBINAR
+              </h4>
+              <p class="description" style="flex: 1;">
+                Curabitur pulvinar vel odio sed sagittis
+              </p>
+              <div class="button">
+                <a href="<?= base_url('/homepage/webinar'); ?>" class="main-button">
+                  Read More
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4" data-scroll-reveal="enter bottom move 30px over 0.6s after 0.4s">
-          <div class="features-item" style="height: 100%;">
-            <div class="features-icon">
+        <div class="card-activity col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4" data-scroll-reveal="enter bottom move 30px over 0.6s after 0.4s">
+          <div class="features-item skeleton h-100">
+            <div class="features-icon h-100 d-flex flex-column align-items-center">
               <!-- <h2>02</h2> -->
-              <img src="<?= base_url('assets/images/features-icon-2.png'); ?>" alt="">
-              <h4>KKN</h4>
-              <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-              <a href="<?= base_url('/homepage/kkn'); ?>" class="main-button">
-                Read More
-              </a>
+              <img class="icon" style="min-width: 80px;min-height: 80px;max-width: 80px;max-height: 80px;" src="<?= base_url('assets/images/features-icon-2.png'); ?>" alt="">
+              <h4 class="name" style="text-transform:uppercase;">
+                KKN
+              </h4>
+              <p class="description" style="flex: 1;">
+                Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.
+              </p>
+              
+              <div class="button">
+                <a href="<?= base_url('/homepage/kkn'); ?>" class="main-button">
+                  Read More
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="col-md-12 col-lg-4 mb-md-4" data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
-          <div class="features-item" style="height: 100%;">
-            <div class="features-icon">
-              <img src="<?= base_url('assets/images/features-icon-3.png'); ?>" alt="">
-              <h4>Sosialisasi & Edukasi</h4>
-              <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
-              <a href="<?= base_url('/homepage/sosial%20dan%20edukasi'); ?>" class="main-button">
-                Read More
-              </a>
+        <div class="card-activity col-md-12 col-lg-4 mb-md-4" data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
+          <div class="features-item skeleton h-100">
+            <div class="features-icon h-100 d-flex flex-column align-items-center">
+              <img class="icon" style="min-width: 80px;min-height: 80px;max-width: 80px;max-height: 80px;" src="<?= base_url('assets/images/features-icon-3.png'); ?>" alt="">
+              <h4 class="name" style="text-transform:uppercase;">
+                Sosialisasi & Edukasi
+              </h4>
+              <p class="description" style="flex: 1;">
+                Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.
+              </p>
+              
+              <div class="button">
+                <a href="<?= base_url('/homepage/sosial%20dan%20edukasi'); ?>" class="main-button">
+                  Read More
+                </a>
+              </div>
             </div>
           </div>
         </div>
+        
       </div>
     </div>
   </section>

@@ -18,9 +18,13 @@ class KategoriSampah extends Migration
             'name' => [
                 // 'type'       => 'character varying', // postgre
                 'type'       => 'varchar', // mysql
-                'constraint' => 20,
+                'constraint' => 100,
                 'unique'     => true,
                 'null'       => false,
+            ],
+            'created_at' => [
+                'type' => 'bigint',
+                'null' => false,
             ],
         ]);
 

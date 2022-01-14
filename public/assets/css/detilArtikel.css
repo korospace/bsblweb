@@ -27,7 +27,7 @@
 }
 #blog-content p{
 	line-height: 30px !important;
-	margin-bottom: 10px !important;
+	margin-bottom: 0px !important;
 }
 #blog-content blockquote{
 	background: #F6F6F6;

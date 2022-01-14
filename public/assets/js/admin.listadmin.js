@@ -61,6 +61,7 @@ const getAllAdmin = async () => {
         $('#table-admin tbody').html(trAdmin);
     }
 };
+getAllAdmin();
 
 // Search admin
 $('#search-admin').on('keyup', function() {

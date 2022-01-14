@@ -865,6 +865,7 @@ const getDataTransaksi = async () => {
         $('#table-data-transaksi tbody').html(trTransaksi);
     }
 };
+getDataTransaksi();
 
 // search data transaksi
 $('#search-data-transaksi').on('keyup', function() {
@@ -1406,3 +1407,4 @@ const getRekapTransaksi = async () => {
         $('#table-rekap-transaksi tbody').html(trTransaksi);
     }
 };
+getRekapTransaksi();

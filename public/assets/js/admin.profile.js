@@ -11,6 +11,7 @@
         updatePersonalInfo(dataAdmin);
     }
 };
+getDataProfile();
  
 /** 
  * update personal info

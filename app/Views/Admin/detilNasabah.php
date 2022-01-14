@@ -93,7 +93,6 @@
 	<script src="<?= base_url('assets/js/plugins/chartjs.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.detilnasabah.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Html -->

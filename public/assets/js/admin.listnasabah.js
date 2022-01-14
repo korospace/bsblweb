@@ -216,6 +216,7 @@ const getAllNasabah = async () => {
         $('#table-nasabah tbody').html(trNasabah);
     }
 };
+getAllNasabah();
  
 // Search nasabah
 $('#search-nasabah').on('keyup', function() {
@@ -401,6 +402,7 @@ const crudNasabah = async (el,event) => {
         if (httpResponse.status === 201) {
             getAllWilayah();
             getAllNasabah();
+            
             if (modalTitle == 'tambah nasabah') {
                 $(`#formAddEditNasabah .form-control`).val('');
                 $('#kodepos-wraper').html(`<div class="position-absolute bg-white d-flex align-items-center justify-content-center" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">

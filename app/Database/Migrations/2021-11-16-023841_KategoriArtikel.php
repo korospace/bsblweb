@@ -15,13 +15,29 @@ class KategoriArtikel extends Migration
                 'constraint' => 200,       // mysql
                 'null'       => false,
             ],
+            'icon' => [
+                'type' => 'text',
+                'null' => false,
+            ],
             'name' => [
                 // 'type'       => 'character varying', // postgre
                 'type'       => 'varchar', // mysql
-                'constraint' => 20,
+                'constraint' => 100,
                 'unique'     => true,
                 'null'       => false,
-            ]
+            ],
+            'description' => [
+                'type' => 'text',
+                'null' => false,
+            ],
+            'kategori_utama' => [
+                'type'    => 'BOOLEAN',
+                'null'    => false,
+            ],
+            'created_at' => [
+                'type' => 'bigint',
+                'null' => false,
+            ],
         ]);
 
         $this->forge->addPrimaryKey('id');

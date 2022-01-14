@@ -67,7 +67,7 @@ const httpRequestPost = (url,form) => {
     let newForm = new FormData();
 
     for (var pair of form.entries()) {
-        let noPair = ['id','id_admin','id_nasabah','id_kategori','username','password','new_password','old_password','thumbnail','content'];
+        let noPair = ['id','id_admin','id_nasabah','id_kategori','username','password','new_password','old_password','thumbnail','content','icon'];
 
         if (noPair.includes(pair[0]) == false) {
             if (pair[0].includes('transaksi')) {
@@ -141,7 +141,7 @@ const httpRequestPut = (url,form) => {
     let newForm = new FormData();
 
     for (var pair of form.entries()) {
-        let noPair = ['id','username','email','password','id_kategori','new_password','old_password','thumbnail','new_thumbnail','content'];
+        let noPair = ['id','username','email','password','id_kategori','new_password','old_password','thumbnail','new_thumbnail','content','icon'];
 
         if (noPair.includes(pair[0]) == false) {
             newForm.set(pair[0], pair[1].trim().toLowerCase());
@@ -310,8 +310,8 @@ $('#btn-logout').on('click', function(e) {
     })
 })
 
-// --- navbar OnScroll ---
-$(window).scroll(function () {
+// --- give shadow to navbar ---
+const giveShadowNavbar = () => {
     var scroll = $(window).scrollTop();
     var box    = $('.main-content').offset().top;
     
@@ -321,6 +321,12 @@ $(window).scroll(function () {
     else {
         $(".navbar").removeClass("blur shadow-blur");
     }
+}
+giveShadowNavbar();
+
+// --- navbar OnScroll ---
+$(window).scroll(function () {
+    giveShadowNavbar();
 });
 
 // --- Button navbar OnClick ---

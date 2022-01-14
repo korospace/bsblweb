@@ -15,6 +15,7 @@
         });   
     }
 };
+getSampahMasuk();
 
 // open modal detail sampah masuk
 const openModalSampahMasuk = async (kategori) => {
@@ -288,6 +289,7 @@ const getDataGrafikSetor = async () => {
         },
     });
 };
+getDataGrafikSetor();
 
 /**
  * GET ALL TRANSAKSI NASABAH
@@ -368,6 +370,7 @@ const getHistoriTransaksi = async () => {
         </ul>`);
     }
 };
+getHistoriTransaksi();
 
 /**
  * GET DETAIL TRANSAKSI
@@ -493,6 +496,7 @@ const getSaldoNasabah = async () => {
         $('#saldo-emas').html(parseFloat(dataSaldo.emas).toFixed(4));
     }
 };
+getSaldoNasabah();
 
 /**
  * GET DATA PROFILE NASABAH
@@ -541,11 +545,12 @@ const getDataProfileNasabah = async () => {
         $('#personal-info #nik').html(dataNasabah.nik);
     }
 };
+getDataProfileNasabah();
 
 /**
  * Get default date AND time
  */
- function getCurrentDate() {
+function getCurrentDate() {
     let currentUnixTime = new Date(new Date().getTime());
     let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "2-digit"});
     let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "2-digit"});

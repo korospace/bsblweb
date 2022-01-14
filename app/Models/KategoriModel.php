@@ -39,6 +39,13 @@ class KategoriModel extends Model
         }
     }
 
+    public function countKategoriUtama(): string
+    {
+        $total = $this->db->table("kategori_artikel")->select('count(id) AS total')->where('kategori_utama =',"1")->get()->getResultArray()[0]['total'];
+
+        return $total;
+    }
+
     public function addKategori(array $data,string $tableName): array
     {
         try {
@@ -61,6 +68,26 @@ class KategoriModel extends Model
         }
     }
 
+    public function editKategoriArtikel(array $data): array
+    {
+        try {
+            $this->db->table("kategori_artikel")->where('id',$data['id'])->update($data);
+            
+            return [
+                'status'   => 201,
+                'error'    => false,
+                'messages' => ($this->db->affectedRows()>0) ? 'edit kategori artikel is success' : 'nothing updated'
+            ];  
+        } 
+        catch (Exception $e) {
+            return [
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getMessage(),
+            ];
+        }
+    }
+
     public function checkTransaksi(string $idkategori): bool
     {
         $transaction = $this->db->table('setor_sampah')->select('sampah.id_kategori')->join('sampah', 'sampah.id = setor_sampah.id_sampah')->where('sampah.id_kategori',$idkategori)->limit(1)->get()->getResultArray();
@@ -71,6 +98,15 @@ class KategoriModel extends Model
         else {
             return false;
         }
+    }
+
+    public function getOldIcon(string $id): string
+    {
+        $oldIcon = $this->db->table("kategori_artikel")->select('icon')->where('id',$id)->get()->getResultArray()[0]['icon'];
+
+        if (!empty($oldIcon)) {    
+            return $oldIcon;
+        } 
     }
 
     public function deleteKategori(string $id,string $tableName): array
@@ -107,7 +143,7 @@ class KategoriModel extends Model
     public function getKategori(string $tableName): array
     {
         try {
-            $kategori = $this->db->table($tableName)->get()->getResultArray();
+            $kategori = $this->db->table($tableName)->orderBy("created_at","desc")->get()->getResultArray();
             
             if (empty($kategori)) {    
                 return [

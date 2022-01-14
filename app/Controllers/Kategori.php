@@ -15,13 +15,24 @@ class Kategori extends BaseController
     }
 
     // add kategori
-	public function addKategori(string $tableName): object
+	public function addKategori(string $tableName = ""): object
     {
         $result = $this->checkToken();
         $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
 
         $data   = $this->request->getPost(); 
-        $this->validation->run($data,'kategoriSampahValidate');
+
+        if ($tableName == 'kategori_sampah') {
+            $this->validation->run($data,'kategoriSampahValidate');
+        } 
+        else if ($tableName == 'kategori_artikel') {
+            $data['icon'] = $this->request->getFile('icon'); 
+            $this->validation->run($data,'kategoriArtikelValidate');
+        }
+        else {
+            die;
+        }
+        
         $errors = $this->validation->getErrors();
 
         if($errors) {
@@ -49,13 +60,165 @@ class Kategori extends BaseController
             else {
                 return $this->respond($lastKategori,$lastKategori['status']);
             }
-            
-            $data = [
-                "id"   => $idKategori,
-                "name" => trim($data['kategori_name']),
-            ];
 
-            $dbresponse = $this->kategoriModel->addKategori($data,$tableName);
+            if ($tableName == 'kategori_sampah') {
+                $data = [
+                    "id"         => $idKategori,
+                    "name"       => trim($data['kategori_name']),
+                    "created_at" => (int)time(),
+                ];
+
+                $dbresponse = $this->kategoriModel->addKategori($data,$tableName);
+                return $this->respond($dbresponse,$dbresponse['status']);
+            } 
+            else {
+                $file        = $data['icon'];
+                $typeFile    = explode('/',$file->getClientMimeType());
+                $newFileName = uniqid().'.'.end($typeFile);
+                $dbFileName  = base_url().'/assets/images/icon-kategori-artikel/'.$newFileName;
+
+                $data = [
+                    "id"             => $idKategori,
+                    "icon"           => $dbFileName,
+                    "name"           => trim($data['kategori_name']),
+                    "description"    => trim($data['description']),
+                    "kategori_utama" => (trim($data['kategori_utama']) == '1') ? true : false,
+                    "created_at"     => (int)time(),
+                ];
+
+                if ($data['kategori_utama'] == true) {
+                    $totKategoriUtama = $this->kategoriModel->countKategoriUtama();
+
+                    if((int)$totKategoriUtama > 2){
+                        $response = [
+                            'status'   => 400,
+                            'error'    => true,
+                            'messages' => "kategori utama maksimal 3",
+                        ];
+                
+                        return $this->respond($response,400);
+                    }
+                }
+
+                if ($file->move('assets/images/icon-kategori-artikel/',$newFileName)) {
+                    $dbresponse = $this->kategoriModel->addKategori($data,$tableName);
+    
+                    if ($dbresponse['error'] == true) {
+                        unlink('./assets/images/icon-kategori-artikel/'.$newFileName);
+                    } 
+    
+                    return $this->respond($dbresponse,$dbresponse['status']);
+                } 
+                else {
+                    $response = [
+                        'status'   => 500,
+                        'error'    => false,
+                        'messages' => 'storage thumbnail berita penuh',
+                    ];
+                    
+                    unlink('./assets/images/icon-kategori-artikel/'.$newFileName);
+                    return $this->respond($response,500);
+                }
+            }
+        }
+    }
+
+    public function editKategoriArtikel(): object
+    {
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
+
+        $this->_methodParser('data');
+        global $data;
+
+        $this->validation->run($data,'editKategoriArtikelValidate');
+        $errors = $this->validation->getErrors();
+
+        if($errors) {
+            $response = [
+                'status'   => 400,
+                'error'    => true,
+                'messages' => $errors,
+            ];
+    
+            return $this->respond($response,400);
+        } 
+        else {
+            $data = [
+                "id"             => $data['id'],
+                "name"           => trim($data['kategori_name']),
+                "description"    => trim($data['description']),
+                "kategori_utama" => (trim($data['kategori_utama']) == '1') ? true : false,
+            ];
+            
+            if ($data['kategori_utama'] == true) {
+                $totKategoriUtama = $this->kategoriModel->countKategoriUtama();
+
+                if((int)$totKategoriUtama > 2){
+                    $response = [
+                        'status'   => 400,
+                        'error'    => true,
+                        'messages' => "kategori utama maksimal 3",
+                    ];
+            
+                    return $this->respond($response,400);
+                }
+            }
+
+            if ($this->request->getFile('icon')) {
+                $xx['icon'] = $this->request->getFile('icon');
+
+                $this->validation->run($xx,'newIconKategoriArtikel');
+                $errors = $this->validation->getErrors();
+
+                if($errors) {
+                    $response = [
+                        'status'   => 400,
+                        'error'    => true,
+                        'messages' => $errors,
+                    ];
+            
+                    return $this->respond($response,400);
+                }  
+
+                $file          = $xx['icon'];
+                $typeFile      = explode('/',$file->getClientMimeType());
+                $newFileName   = uniqid().'.'.end($typeFile);
+                $dbFileName    = base_url().'/assets/images/icon-kategori-artikel/'.$newFileName;
+                $old_thumbnail = $this->kategoriModel->getOldIcon($data['id']);
+                $old_thumbnail = explode('/',$old_thumbnail);
+                $old_thumbnail = end($old_thumbnail);
+                $data['icon']  = $dbFileName;
+            }
+
+            $unlinkOldIcon = false;
+            if (isset($xx['icon'])) {
+                if (rename($file->getRealPath(),'./assets/images/icon-kategori-artikel/'.$newFileName)) {
+                    $unlinkOldIcon = true;
+                } 
+                else {
+                    $response = [
+                        'status'   => 500,
+                        'error'    => false,
+                        'messages' => 'storage icoin kategori penuh',
+                    ];
+                    
+                    return $this->respond($response,500);
+                }
+            }
+
+            $dbresponse = $this->kategoriModel->editKategoriArtikel($data);
+
+            if ($dbresponse['error'] == false) {
+                if ($unlinkOldIcon) {
+                    unlink('./assets/images/icon-kategori-artikel/'.$old_thumbnail);
+                }
+            } 
+            else {
+                if ($unlinkOldIcon) {
+                    unlink('./assets/images/icon-kategori-artikel/'.$newFileName);
+                }
+            }
 
             return $this->respond($dbresponse,$dbresponse['status']);
         }
@@ -77,7 +240,20 @@ class Kategori extends BaseController
             return $this->respond($response,400);
         } 
         else {
+            if ($tableName == 'kategori_artikel') {
+                $old_icon = $this->kategoriModel->getOldIcon($this->request->getGet('id'));
+                $old_icon = explode('/',$old_icon);
+                $old_icon = end($old_icon);
+            }
+
             $dbresponse = $this->kategoriModel->deleteKategori($this->request->getGet('id'),$tableName);
+            
+            if ($tableName == 'kategori_artikel') {
+                if ($dbresponse['error'] == false) {
+                    // delete local icon
+                    unlink('./assets/images/icon-kategori-artikel/'.$old_icon);
+                } 
+            } 
 
             return $this->respond($dbresponse,$dbresponse['status']);
         }

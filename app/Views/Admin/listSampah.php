@@ -21,7 +21,6 @@
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/admin.listsampah.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.session.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>

@@ -14,6 +14,7 @@ const getSampahMasuk = async () => {
         });   
     }
 };
+getSampahMasuk();
 
 // open modal detail sampah masuk
 const openModalSampahMasuk = async (kategori) => {
@@ -71,6 +72,7 @@ const getSaldoNasabah = async () => {
         $('#saldo-emas').html(parseFloat(dataNasabah.emas).toFixed(4));
     }
 };
+getSaldoNasabah();
 
 /**
  * GET TOTAL AKUN
@@ -87,6 +89,7 @@ const getTotalAkun = async () => {
         $('#jml-admin').html(modifUang(dataAkun.jml_admin));
     }
 };
+getTotalAkun();
 
 /**
  * GRAFIK PENYETORAN Section
@@ -388,3 +391,4 @@ const getDataSetorSampah = async () => {
         },
     });
 };
+getDataSetorSampah();

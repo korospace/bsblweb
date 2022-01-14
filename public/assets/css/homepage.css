@@ -827,7 +827,28 @@ Activity
   border-radius: 5px;
   padding: 60px 30px;
   text-align: center;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-shadow{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.skeleton{
+  background: rgb(193, 217, 102) !important;
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.skeleton > * {
+  opacity: 0;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: .7;
+  }
+  50% {
+    opacity: .5;
+  }
 }
 
 .features-item h2 {

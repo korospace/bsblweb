@@ -156,6 +156,33 @@ class Admin extends BaseController
     }
 
     // List artikel page
+    public function kategoriArtikelView()
+    {
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result = $this->checkToken($token, false);
+
+        $data   = [
+            'title' => 'Admin | kategori artikel',
+            'token' => $token,
+        ];
+        
+        if($result['success'] == false) {
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
+            return redirect()->to(base_url().'/login/admin');
+        } 
+        else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+            return redirect()->to(base_url().'/notfound');
+        } 
+        else {
+            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
+            return view('Admin/kategoriArtikel',$data);
+        }
+    }
+
+    // List artikel page
     public function listArtikelView()
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;

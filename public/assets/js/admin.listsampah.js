@@ -48,6 +48,7 @@ const getAllKatSampah = async () => {
     $('#select-sampah-wraper').html(elSelectKat);
     $('#formFilterSampah select[name=kategori]').html(elKatFilter);
 };
+getAllKatSampah();
 
 // add kategori sampah
 $('#btnAddKategoriSampah').on('click', async function(e) {
@@ -89,9 +90,9 @@ function validateAddKategori() {
         })
         status = false;
     }
-    else if ($('input#NewkategoriSampah').val().length > 20) {
+    else if ($('input#NewkategoriSampah').val().length > 100) {
         showAlert({
-            message: `<strong>Kategori baru maximal 20 huruf !</strong>`,
+            message: `<strong>Kategori baru maximal 100 huruf !</strong>`,
             autohide: true,
             type:'danger'
         })
@@ -271,6 +272,7 @@ const getAllJenisSampah = async () => {
         $('#table-jenis-sampah tbody').html(trJenisSampah);
     }
 };
+getAllJenisSampah();
 
 // sorting sampah
 const sortingSampah = (data) => {

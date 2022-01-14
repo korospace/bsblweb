@@ -605,14 +605,79 @@ class Validation
      */
     // kategori artikel
 	public $kategoriArtikelValidate = [
+        'icon' => [
+            'rules'  => 'uploaded[icon]|max_size[icon,200]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
+            'errors' => [
+                'uploaded' => 'icon is required',
+                'max_size' => 'max size is 200kb',
+                // 'is_image' => 'your file is not image',
+                'mime_in'  => 'your file is not in format(png/jpg/jpeg/webp)',
+            ],
+        ],
 		'kategori_name' => [
-            'rules'  => 'required|max_length[20]|is_unique[kategori_artikel.name]',
+            'rules'  => 'required|max_length[100]|is_unique[kategori_artikel.name]',
             'errors' => [
                 'required'    => 'kategori name is required',
-                'max_length'  => 'max 20 character',
+                'max_length'  => 'max 100 character',
                 'is_unique'   => 'kategori name is exist',
             ],
+		],
+        'description' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'kategori name is required',
+            ],
+		],
+		'kategori_utama' => [
+            'rules'  => 'required|in_list[1,0]',
+            'errors' => [
+                'required'    => 'kategori_utama is required',
+                'in_list'     => "value must be '1' or '0'",
+            ],
 		]
+	];
+
+    // edit kategori artikel
+	public $editKategoriArtikelValidate = [
+        'id' => [
+            'rules'  => 'required|is_not_unique[kategori_artikel.id]',
+            'errors' => [
+                'required'      => 'id is required',
+                'is_not_unique' => 'kategori with id ({value}) is not found',
+            ],
+		],
+		'kategori_name' => [
+            'rules'  => 'required|max_length[100]|is_unique[kategori_artikel.name,kategori_artikel.id,{id}]',
+            'errors' => [
+                'required'    => 'kategori name is required',
+                'max_length'  => 'max 100 character',
+                'is_unique'   => 'kategori name is exist',
+            ],
+		],
+        'description' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'kategori name is required',
+            ],
+		],
+		'kategori_utama' => [
+            'rules'  => 'required|in_list[1,0]',
+            'errors' => [
+                'required'    => 'kategori_utama is required',
+                'in_list'     => "value must be '1' or '0'",
+            ],
+		]
+	];
+
+    // new thumbnail
+	public $newIconKategoriArtikel = [
+        'icon' => [
+            'rules'  => 'max_size[icon,200]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
+            'errors' => [
+                'max_size' => 'max size is 200kb',
+                'mime_in'  => 'your file is not in format(png/jpg/jpeg/webp)',
+            ],
+        ],
 	];
 
     // add artikel
@@ -631,7 +696,7 @@ class Validation
                 'uploaded' => 'thumbnail is required',
                 'max_size' => 'max size is 2mb',
                 // 'is_image' => 'your file is not image',
-                'mime_in'  => 'your file is not in format(png/jpg/webp)',
+                'mime_in'  => 'your file is not in format(png/jpg/jpeg/webp)',
             ],
 		],
 		'content' => [
@@ -688,7 +753,7 @@ class Validation
             'errors' => [
                 'max_size' => 'max size is 2mb',
                 // 'is_image' => 'your file is not image',
-                'mime_in'  => 'your file is not in format(png/jpg/webp)',
+                'mime_in'  => 'your file is not in format(png/jpg/jpeg/webp)',
             ],
         ],
 	];
@@ -710,10 +775,10 @@ class Validation
     // kategori sampah
 	public $kategoriSampahValidate = [
 		'kategori_name' => [
-            'rules'  => 'required|max_length[20]|is_unique[kategori_sampah.name]',
+            'rules'  => 'required|max_length[100]|is_unique[kategori_sampah.name]',
             'errors' => [
                 'required'    => 'kategori_name is required',
-                'max_length'  => 'max 20 character',
+                'max_length'  => 'max 100 character',
                 'is_unique'   => 'kategori_name is exist',
             ],
 		]

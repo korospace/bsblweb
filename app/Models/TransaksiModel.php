@@ -246,23 +246,36 @@ class TransaksiModel extends Model
                     $query .= " WHERE kategori_sampah.name='".$get['kategori']."'";
                 }
 
-                $query .= "  GROUP BY sampah.jenis;";
+                $query      .= "  GROUP BY sampah.jenis;";
+                $sampahMasuk = $this->db->query($query)->getResultArray();
             } 
             else {
-                $query  = "SELECT SUM(setor_sampah.jumlah_kg) AS total,kategori_sampah.name AS kategori
-                FROM transaksi 
-                JOIN setor_sampah    ON(setor_sampah.id_transaksi=transaksi.id)
-                JOIN sampah          ON(setor_sampah.id_sampah=sampah.id) 
-                JOIN kategori_sampah ON(sampah.id_kategori=kategori_sampah.id)";
+                $data      = [];
+                $katSampah = $this->db->query("SELECT name FROM kategori_sampah")->getResultArray();
 
-                if ($idNasabah != '') {
-                    $query .= " WHERE transaksi.id_user = '$idNasabah'";
+                foreach ($katSampah as $key => $value) {
+                    $query  = "SELECT SUM(setor_sampah.jumlah_kg) AS total
+                    FROM transaksi 
+                    JOIN setor_sampah    ON(setor_sampah.id_transaksi=transaksi.id)
+                    JOIN sampah          ON(setor_sampah.id_sampah=sampah.id) 
+                    JOIN kategori_sampah ON(sampah.id_kategori=kategori_sampah.id)
+                    WHERE kategori_sampah.name = '".$value['name']."'";
+
+                    if ($idNasabah != '') {
+                        $query .= " AND transaksi.id_user = '$idNasabah'";
+                    }
+
+                    $total = (array)$this->db->query($query)->getFirstRow();
+
+                    $data[$key] = [
+                        "kategori" => $value['name'],
+                        "total"    => ($total['total']) ? $total['total'] : 0 
+                    ];
                 }
 
-                $query .= "  GROUP BY kategori_sampah.name;";
+                $sampahMasuk = $data;
             }
 
-            $sampahMasuk = $this->db->query($query)->getResultArray();
             
             if (empty($sampahMasuk)) {    
                 return [

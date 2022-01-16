@@ -238,9 +238,9 @@ axios.get(APIURL+'/transaksi/sampahmasuk')
 .then(res => {
 	let totalSampah   = res.data.data;
 
-	totalSampah.forEach(ts => {
-		$(`#sampah-${ts.kategori}`).html(ts.total);
-	});  
+	for (const key in totalSampah) {
+		$(`#sampah-${key.replace(/\s/g,'-')}`).html(parseFloat(totalSampah[key].total).toFixed(1));
+	}
 
 	counterUp();
 }) 

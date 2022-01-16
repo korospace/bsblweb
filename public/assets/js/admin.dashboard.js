@@ -8,10 +8,10 @@ const getSampahMasuk = async () => {
 
     if (httpResponse.status === 200) {
         let dataSampah = httpResponse.data.data;
-
-        dataSampah.forEach(ds => {
-            $(`#sampah-${ds.kategori}`).html(parseFloat(ds.total).toFixed(1)+' Kg');
-        });   
+        
+        for (const key in dataSampah) {
+            $(`#sampah-${key.replace(/\s/g,'-')}`).html(parseFloat(dataSampah[key].total).toFixed(1)+' Kg');
+        } 
     }
 };
 getSampahMasuk();

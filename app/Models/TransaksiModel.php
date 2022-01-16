@@ -267,7 +267,7 @@ class TransaksiModel extends Model
 
                     $total = (array)$this->db->query($query)->getFirstRow();
 
-                    $data[$key] = [
+                    $data[$value['name']] = [
                         "kategori" => $value['name'],
                         "total"    => ($total['total']) ? $total['total'] : 0 
                     ];

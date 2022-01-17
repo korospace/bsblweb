@@ -281,7 +281,7 @@
 								</div>
 								<div class="col-4 text-end">
 									<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-										<i class="fas fa-wine-glass"></i>
+										<i class="fas fa-recycle"></i>
 									</div>
 								</div>
 							</div>

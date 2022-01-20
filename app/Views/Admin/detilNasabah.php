@@ -107,7 +107,6 @@
 
 	<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main"  style="font-family: 'qc-semibold';">
 		<div class="sidenav-header">
-			<i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" id="iconSidenav"></i>
 			<a class="nav-link mt-4" href="<?= base_url('admin/listnasabah');?>" style="display: flex;align-items: center;">
 				<div
 					class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -670,7 +669,7 @@
 </div>
 
 <!-- **** Modal Setor **** -->
-<div class="modal fade" id="modalSetorSaldo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade modalTransaksi" id="modalSetorSaldo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   	<form id="formSetorSampah" class="modal-dialog modal-lg">
 		<div class="modal-content">
 
@@ -768,7 +767,7 @@
 </div>
 
 <!-- **** Modal Pindah Saldo **** -->
-<div class="modal fade" id="modalPindahSaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade modalTransaksi" id="modalPindahSaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<form id="formPindahSaldo" class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<!-- modal header -->
@@ -859,7 +858,7 @@
 </div>
 
 <!-- **** Modal Tarik Saldo **** -->
-<div class="modal fade" id="modalTarikSaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade modalTransaksi" id="modalTarikSaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<form id="formTarikSaldo" class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<!-- modal header -->
@@ -976,48 +975,48 @@
 
 <!-- modals filter rekap transaksi-->
 <div class="modal fade" id="modalRekapTransaksi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content" style="overflow: hidden;">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content" style="overflow: hidden;">
 
-				<!-- modal header -->
-				<div class="modal-header">
-					<h6 class="modal-title">Rekap transaksi</h6>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
+			<!-- modal header -->
+			<div class="modal-header">
+				<h6 class="modal-title">Rekap transaksi</h6>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
 
-				<!-- modal body -->
-				<div class="modal-body form-row w-100 px-3">
-					<form id="formRekapTransaksi" class="mt-3 col-12">
-						<h6 class="font-italic text-xs text-secondary">From</h6>
-						<div class="input-group col-12 px-0">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray px-4 border-md">
-									<i class="fas fa-calendar-alt text-muted"></i>
-								</span>
-							</div>
-							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-start" name="date-start">
+			<!-- modal body -->
+			<div class="modal-body form-row w-100 px-3">
+				<form id="formRekapTransaksi" class="mt-3 col-12">
+					<h6 class="font-italic text-xs text-secondary">From</h6>
+					<div class="input-group col-12 px-0">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
 						</div>
-						<h6 class="font-italic text-xs text-secondary mt-3">To</h6>
-						<div class="input-group col-12 px-0">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray px-4 border-md">
-									<i class="fas fa-calendar-alt text-muted"></i>
-								</span>
-							</div>
-							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-end" name="date-end">
+						<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-start" name="date-start">
+					</div>
+					<h6 class="font-italic text-xs text-secondary mt-3">To</h6>
+					<div class="input-group col-12 px-0">
+						<div class="input-group-prepend">
+							<span class="input-group-text bg-gray px-4 border-md">
+								<i class="fas fa-calendar-alt text-muted"></i>
+							</span>
 						</div>
-					</form>
-				</div>
+						<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-end" name="date-end">
+					</div>
+				</form>
+			</div>
 
-				<!-- modal footer -->
-				<div id="modal-footer-custom" class="modal-footer mt-4">
-					<button id="btn-filter-rekap-custom" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" onclick="cetakRekap();">
-						<span>Cetak</span>
-					</button>
-				</div>
+			<!-- modal footer -->
+			<div id="modal-footer-custom" class="modal-footer mt-4">
+				<button id="btn-filter-rekap-custom" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer" onclick="cetakRekap();">
+					<span>Cetak</span>
+				</button>
 			</div>
 		</div>
 	</div>
+</div>
 <?= $this->endSection(); ?>

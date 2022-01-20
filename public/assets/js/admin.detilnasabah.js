@@ -585,8 +585,8 @@ const openModalTransaksi = (modalTitle) => {
         $('#formPindahSaldo #maximal-saldo').html(`${modifUang(dataSaldo.uang)}`);
     }
 
-    $(`input[type=date]`).val(getCurrentDate());
-    $(`input[type=time]`).val(getCurrentTime());
+    $(`.modalTransaksi input[type=date]`).val(getCurrentDate());
+    $(`.modalTransaksi input[type=time]`).val(getCurrentTime());
 }
 
 /**
@@ -1113,9 +1113,40 @@ const deleteTransaksiNasabah = (id,event) => {
  * REKAP TRANSAKSI
  * ============================================
  */
+
+// input date on change
+$('#formRekapTransaksi input[type=date]').on('change',function (e) {
+    let dateStart = $('#formRekapTransaksi input[name=date-start]').val();
+    let dateEnd   = $('#formRekapTransaksi input[name=date-end]').val();
+
+    if (dateStart && dateEnd) {
+        $('#btn-filter-transaksi').attr('data-dismiss','modal');
+        // $('#btn-filter-transaksi').attr('onclick','filterTransaksi(this,event);');
+        $('#btn-filter-transaksi').attr('disabled',true);
+
+        $('#formRekapTransaksi input[type=date]').removeClass('is-invalid');
+    }
+    else {
+        $('#btn-filter-transaksi').removeAttr('data-dismiss');
+        $('#btn-filter-transaksi').removeAttr('disabled');
+
+        if (dateStart == '') {
+            $('#formRekapTransaksi input[name=date-start]').addClass('is-invalid');
+        }
+        if (dateEnd == '') {
+            $('#formRekapTransaksi input[name=date-end]').addClass('is-invalid');
+        }
+    }
+})
+
 // do filter rekap
 const cetakRekap = () => {
     let formFilter      = new FormData(document.querySelector('#formRekapTransaksi'));
+
+    if (formFilter.get('date-start') == '' || formFilter.get('date-end') == '') {
+        return 0;
+    }
+
     let inputStartDate  = formFilter.get('date-start').split('-');
     let inputEndDate    = formFilter.get('date-end').split('-');
     

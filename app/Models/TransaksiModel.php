@@ -11,6 +11,16 @@ class TransaksiModel extends Model
     protected $primaryKey    = 'id';
     protected $allowedFields = ['id','id_nasabah','type'];
 
+    // GET Last nomor
+    public function getLastNo(): int
+    {
+        $lastNomor = $this->db->table($this->table)->select('no')->limit(1)->orderBy('no','DESC')->get()->getResultArray();
+
+        $lastNomor = ($lastNomor) ? (int)$lastNomor[0]['no'] : 0;
+        
+        return $lastNomor+1;
+    }
+
     public function setorSampah(array $data): array
     {
         try {
@@ -36,9 +46,10 @@ class TransaksiModel extends Model
 
             $queryDetilSetor  = rtrim($queryDetilSetor, ",");
             $queryDetilSetor .= ';';
+            $lastNomor        = $this->getLastNo();
 
             $this->db->transBegin();
-            $this->db->query("INSERT INTO transaksi (id,id_user,jenis_transaksi,date) VALUES('$idtransaksi','$idnasabah','penyetoran sampah',$date);");
+            $this->db->query("INSERT INTO transaksi (no,id,id_user,jenis_transaksi,date) VALUES($lastNomor,'$idtransaksi','$idnasabah','penyetoran sampah',$date);");
             $this->db->query("UPDATE dompet SET uang=uang+$totalHarga WHERE id_user='$idnasabah';");
             
             // $this->db->query($queryJmlSampah); // postgreSql
@@ -94,9 +105,10 @@ class TransaksiModel extends Model
             $jenisSaldo  = $data['jenis_saldo'];
             $jenisDompet = ($data['jenis_saldo'] == 'uang') ? 'uang' : 'emas';
             $jumlahTarik = $data['jumlah'];
+            $lastNomor   = $this->getLastNo();
 
             $this->db->transBegin();
-            $this->db->query("INSERT INTO transaksi (id,id_user,jenis_transaksi,date) VALUES('$idtransaksi','$idnasabah','penarikan saldo',$date);");
+            $this->db->query("INSERT INTO transaksi (no,id,id_user,jenis_transaksi,date) VALUES($lastNomor,'$idtransaksi','$idnasabah','penarikan saldo',$date);");
             $this->db->query("UPDATE dompet SET $jenisDompet=$jenisDompet-$jumlahTarik WHERE id_user='$idnasabah';");
             $this->db->query("INSERT INTO tarik_saldo (id_transaksi,jenis_saldo,jumlah_tarik) VALUES('$idtransaksi','$jenisSaldo',$jumlahTarik)");
 
@@ -135,9 +147,10 @@ class TransaksiModel extends Model
             $hasilKonversi   = $data['hasilKonversi'];
             $hargaemas       = $data['hargaemas'];
             $saldoDompetAsal = $data['saldo_dompet_asal'];
+            $lastNomor       = $this->getLastNo();
             
             $this->db->transBegin();
-            $this->db->query("INSERT INTO transaksi (id,id_user,jenis_transaksi,date) VALUES('$idtransaksi','$idnasabah','konversi saldo',$date);");
+            $this->db->query("INSERT INTO transaksi (no,id,id_user,jenis_transaksi,date) VALUES($lastNomor,'$idtransaksi','$idnasabah','konversi saldo',$date);");
             $this->db->query("UPDATE dompet SET uang=$saldoDompetAsal,emas=emas+$hasilKonversi WHERE id_user='$idnasabah';");
             $this->db->query("INSERT INTO pindah_saldo (id_transaksi,jumlah,harga_emas,hasil_konversi) VALUES ('$idtransaksi',$jumlahPindah,$hargaemas,$hasilKonversi)");
             
@@ -196,9 +209,10 @@ class TransaksiModel extends Model
 
             $queryDetilJual  = rtrim($queryDetilJual, ",");
             $queryDetilJual .= ';';
+            $lastNomor       = $this->getLastNo();
 
             $this->db->transBegin();
-            $this->db->query("INSERT INTO transaksi (id,id_user,jenis_transaksi,date) VALUES('$idtransaksi','$idnasabah','penjualan sampah',$date);");
+            $this->db->query("INSERT INTO transaksi (no,id,id_user,jenis_transaksi,date) VALUES($lastNomor,'$idtransaksi','$idnasabah','penjualan sampah',$date);");
             
             // $this->db->query($queryJmlSampah); // postgreSql
 
@@ -406,7 +420,7 @@ class TransaksiModel extends Model
                 }
 
                 $orderby     = (isset($get['orderby']) && $get['orderby']=='terbaru')? 'DESC': 'ASC';
-                $query      .= " ORDER BY transaksi.date $orderby;";
+                $query      .= " ORDER BY transaksi.no $orderby;";
                 $transaction = $this->db->query($query)->getResultArray();
                 $transaction = $this->filterAllTransaksi($transaction);
             } 
@@ -1001,11 +1015,12 @@ class TransaksiModel extends Model
                 $queryJmlSampah  = '';
 
                 foreach ($detailTs['barang'] as $t) {
-                    $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah+".$t['jumlah_kg']." WHERE jenis = '".$t['jenis']."';";
+                    // $queryJmlSampah .= "UPDATE sampah SET jumlah=jumlah+".$t['jumlah_kg']." WHERE jenis = '".$t['jenis']."';"; // Postgre
+                    $this->db->query("UPDATE sampah SET jumlah=jumlah+".$t['jumlah_kg']." WHERE jenis = '".$t['jenis']."';");
                 }
                 
                 // update jumlah sampah
-                $this->db->query($queryJmlSampah);
+                // $this->db->query($queryJmlSampah); // Postgre
             } 
 
             $this->db->table($this->table)->where('id', $idtransaksi)->delete();

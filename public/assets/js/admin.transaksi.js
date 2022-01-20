@@ -139,6 +139,7 @@ const getAllJenisSampah = async () => {
         arrayJenisSampah = httpResponse.data.data;
     }
 
+    $('.barisSetorSampah').remove();
     tambahBaris();
     countTotalHarga();
 };
@@ -548,19 +549,18 @@ const doTransaksi = async (el,event,method) => {
             hideLoadingSpinner();
     
             if (httpResponse.status === 201) {
-                $('#search-nasabah-wraper table td span').html('_ _ _ _');
-                $('#barrier-transaksi').removeClass('d-none');
-                $(`#form-${formTarget}`).addClass('opacity-6');
                 clearAllForm();
+                getAllJenisSampah();
                 updateAllTable(`${tglTransaksi[0]}/${tglTransaksi[1]}/31`);
-                searchNasabah();
-    
-                if (method == 'jualsampah' || method == 'setorsampah') {
-                    $('.barisSetorSampah').remove();
-                    tambahBaris();
-                    countTotalHarga();
-                } 
-                else if(method == 'tariksaldo'){
+                
+                if (method != 'jualsampah') {
+                    $('#search-nasabah-wraper table td span').html('_ _ _ _');
+                    $(`#form-${formTarget}`).addClass('opacity-6');
+                    $('#barrier-transaksi').removeClass('d-none');
+                    searchNasabah();                    
+                }
+
+                if(method == 'tariksaldo'){
                     $('#form-tarik-saldo #maximal-saldo').html(``);
                     $('#form-tarik-saldo #jenis-emas').attr(`disabled`,true);
                     $('#form-tarik-saldo #jenis-emas').val('');
@@ -640,6 +640,7 @@ const deleteTransaksi = (id,event) => {
                         return httpRequestDelete(`${APIURL}/transaksi/deletedata?id=${id}`)
                         .then((e) => {
                             if (e.status == 201) {
+                                getAllJenisSampah();
                                 getDataTransaksi();
                             }
                         })

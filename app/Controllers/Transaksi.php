@@ -234,7 +234,13 @@ class Transaksi extends BaseController
         if ($token == null || $result['success'] == false || !in_array($privilege,['superadmin','admin'])) {
             setcookie('token', null, -1, '/');
             unset($_COOKIE['token']);
-            return redirect()->to(base_url().'/login');
+
+            if ($privilege == 'nasabah') {
+                return redirect()->to(base_url().'/login');
+            }
+            else{
+                return redirect()->to(base_url().'/login/admin');
+            }
         }
         
         $transaksiModel = new TransaksiModel;
@@ -313,12 +319,12 @@ class Transaksi extends BaseController
         $noTss = 1;
         $totKgSetor   = 0;
         $totUangSetor = 0;
+        $colspan      = 4;
 
         foreach ($tss as $key) {
             $totKgSetor   = $totKgSetor+(float)$key['jumlah_kg'];
             $totUangSetor = $totUangSetor+(int)$key['jumlah_rp'];
 
-            $colspan= 4;
             $tdNama = '';
             if (!$isRekapNasabah) {
                 $colspan= 5;
@@ -440,12 +446,12 @@ class Transaksi extends BaseController
         $noTps = 1;
         $totKgPindah   = 0;
         $totUangPindah = 0;
+        $colspan       = 4;
 
         foreach ($tps as $key) {
             $totKgPindah   = $totKgPindah+(float)$key['hasil_konversi'];
             $totUangPindah = $totUangPindah+(int)$key['jumlah'];
 
-            $colspan= 4;
             $tdNama = '';
             if (!$isRekapNasabah) {
                 $colspan= 5;
@@ -497,6 +503,7 @@ class Transaksi extends BaseController
         $noTts = 1;
         $totKgTarik   = 0;
         $totUangTarik = 0;
+        $colspan      = 3;
 
         foreach ($tts as $key) {
             $uang     = ($key['jenis_saldo'] == 'uang')     ? $key['jumlah_tarik'] : 0;
@@ -511,7 +518,6 @@ class Transaksi extends BaseController
                 $totUangTarik = $totUangTarik+(int)$key['jumlah_tarik'];
             }
 
-            $colspan= 3;
             $tdNama = '';
             if (!$isRekapNasabah) {
                 $colspan= 4;

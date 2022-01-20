@@ -9,6 +9,11 @@ class Transaksi extends Migration
     public function up()
     {
         $this->forge->addField([
+            'no' => [
+                // 'type' => 'integer', // postgre,
+                'type' => 'int', // mysql
+                'null' => false,
+            ],
             'id' => [
                 // 'type'       => 'text', // postgre
                 'type'       => 'varchar', // mysql

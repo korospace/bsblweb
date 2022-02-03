@@ -343,5 +343,6 @@
 
 	<!-- **** footer artikiel **** -->
 	<?= $this->include('Components/artikelFooter'); ?>
+  
 </body>
 <?= $this->endSection(); ?>

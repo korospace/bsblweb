@@ -142,7 +142,13 @@ class ArtikelModel extends Model
                 $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail')
                 ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
                 ->join('users', 'users.id = artikel.created_by')
-                ->orderBy('artikel.created_at',$orderby)->get()->getResultArray();
+                ->orderBy('artikel.created_at',$orderby);
+
+                if (isset($geet['limit'])) {
+                    $berita = $berita->limit($geet['limit']);
+                }
+
+                $berita = $berita->get()->getResultArray();
             }
             
             if (empty($berita)) {    

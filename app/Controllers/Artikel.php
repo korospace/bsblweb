@@ -63,7 +63,7 @@ class Artikel extends BaseController
                 "slug"        => preg_replace('/ /i', '-',strtolower(trim($data['title']))),
                 // "thumbnail"   => $this->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
                 "thumbnail"   => $dbFileName,
-                "content"     => trim($data['content']),
+                "content"     => $data['content'],
                 "id_kategori" => trim($data['id_kategori']),
                 "created_by"  => $result['data']['userid'],
                 "created_at"  => (int)time(),

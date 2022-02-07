@@ -96,6 +96,18 @@ class Validation
 		],
 	];
 
+    // email validate
+    public $emailValidate = [
+		'email' => [
+            'rules'  => 'required|is_unique[users.email]|valid_email',
+            'errors' => [
+                'required'     => 'email is required',
+                'is_unique'    => 'email sudah terdaftar',
+                'valid_email'  => 'Email is not in format',
+            ],
+		],
+    ];
+
     // is_verify validate
     public $isVerifyValidate = [
 		'is_verify' => [
@@ -106,6 +118,27 @@ class Validation
             ],
 		]
     ];
+
+    // forgot password
+    public $forgotPasswordValidate = [
+		'email' => [
+            'rules'  => 'required|is_not_unique[users.email]',
+            'errors' => [
+                'required'      => 'email is required',
+                'is_not_unique' => 'email tidak terdaftar',
+            ],
+		],
+	];
+
+    // Otp verification
+	public $verifyOtpValidate = [
+		'code_otp' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'code_otp is required',
+            ],
+		]
+	];
 
     /**
      * REGSITER VALIDATE
@@ -332,27 +365,6 @@ class Validation
 		],
 	];
 
-    // forgot password
-    public $forgotPasswordValidate = [
-		'email' => [
-            'rules'  => 'required|is_not_unique[users.email]',
-            'errors' => [
-                'required'      => 'email is required',
-                'is_not_unique' => 'email tidak terdaftar',
-            ],
-		],
-	];
-
-    // Otp verification
-	public $verifyOtpValidate = [
-		'code_otp' => [
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'code_otp is required',
-            ],
-		]
-	];
-
     /**
      * NASABAH Controller Validate
      * ================================
@@ -369,12 +381,11 @@ class Validation
             ],
 		],
 		'email' => [
-            'rules'  => 'required|is_unique[users.email,users.id,{id}]|valid_email|valid_emails',
+            'rules'  => 'required|is_unique[users.email,users.id,{id}]|valid_email',
             'errors' => [
                 'required'     => 'email is required',
                 'is_unique'    => 'email sudah terdaftar',
                 'valid_email'  => 'Email is not in format',
-                'valid_emails' => "Email's provider is not valid",
             ],
 		],
 		'nama_lengkap' => [

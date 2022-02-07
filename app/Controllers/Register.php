@@ -58,6 +58,11 @@ class Register extends BaseController
         if (!$this->request->getHeader('token')) {
             $this->validation->run($data,'emailValidate');
         }
+        else{
+            if (!in_array($result['data']['privilege'],['admin','superadmin'])) {
+                $this->validation->run($data,'emailValidate');
+            }
+        }
 
         $errors = $this->validation->getErrors();
         

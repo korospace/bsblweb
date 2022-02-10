@@ -339,7 +339,7 @@ $('#iconNavbarSidenav').on('click', function (e) {
 
 // modif saldo uang
 const modifUang = (rHarga) => {
-    return rHarga.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+    return rHarga.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
 // modif number

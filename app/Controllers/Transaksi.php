@@ -16,7 +16,15 @@ class Transaksi extends BaseController
 
     public function cetakTransaksi(string $id)
     {
-        $token     = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $token = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+
+        if ($this->request->getGet('token')) {
+            $token = $this->request->getGet('token');
+        }
+        else{
+            $token = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        }
+
         $result    = $this->checkToken($token, false);
         $privilege = (isset($result['data']['privilege'])) ? $result['data']['privilege'] : null;
 

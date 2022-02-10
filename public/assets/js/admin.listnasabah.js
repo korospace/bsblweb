@@ -417,6 +417,12 @@ const crudNasabah = async (el,event) => {
             })
         }
         else if (httpResponse.status === 400) {
+            showAlert({
+                message: `<strong>Gagal...</strong> cek kembali kolom input nasabah`,
+                autohide: true,
+                type:'warning'
+            })
+
             if (httpResponse.message.email) {
                 $('#formAddEditNasabah #email').addClass('is-invalid');
                 $('#formAddEditNasabah #email-error').text(httpResponse.message.email);

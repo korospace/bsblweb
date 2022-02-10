@@ -110,6 +110,12 @@ $('#formRegister').on('submit', function(e) {
 
             // bad request
             if (error.response.status == 400) {
+                showAlert({
+                    message: `<strong>Gagal mendaftar...</strong> cek kembali data anda`,
+                    autohide: true,
+                    type:'warning'
+                })
+
                 if (error.response.data.messages.email) {
                     $('#email-regist').addClass('is-invalid');
                     $('#email-regist-error').text(error.response.data.messages.email);

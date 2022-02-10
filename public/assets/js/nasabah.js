@@ -586,7 +586,7 @@ const updateNasabahCard = (data) => {
     let date = new Date(parseInt(data.created_at) * 1000);
 
     // id card
-    $('#card-id').html(`${data.id.slice(0, 5)}&nbsp;&nbsp;&nbsp;${data.id.slice(5, 9)}&nbsp;&nbsp;&nbsp;${data.id.slice(9,99999999)}`);
+    $('#card-id').html(`${data.id.slice(0, 5)}&nbsp;&nbsp;&nbsp;${data.id.slice(5, 11)}&nbsp;&nbsp;&nbsp;${data.id.slice(11,99999999)}`);
     // username
     $('#card-username').html(data.username);
     // tgl bergabung

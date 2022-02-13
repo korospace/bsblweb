@@ -244,6 +244,8 @@ class ArtikelModel extends Model
                 }
             }
 
+            $allBerita = $this->modifImgPath($allBerita);
+            
             if (empty($allBerita)) {    
                 return [
                     'status'   => 404,

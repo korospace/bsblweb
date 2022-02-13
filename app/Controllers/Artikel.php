@@ -55,14 +55,13 @@ class Artikel extends BaseController
             $file        = $data['thumbnail'];
             // $newFileName = $file->getRandomName();
             $newFileName = uniqid().'.jpeg';
-            $dbFileName  = base_url().'/assets/images/thumbnail-berita/'.$newFileName;
 
             $data = [
                 "id"          => $idBerita,
                 "title"       => strtolower(trim($data['title'])),
                 "slug"        => preg_replace('/ /i', '-',strtolower(trim($data['title']))),
                 // "thumbnail"   => $this->base64Decode($_FILES['thumbnail']['tmp_name'],$_FILES['thumbnail']['type']),
-                "thumbnail"   => $dbFileName,
+                "thumbnail"   => $newFileName,
                 "content"     => $data['content'],
                 "id_kategori" => trim($data['id_kategori']),
                 "created_by"  => $result['data']['userid'],
@@ -141,11 +140,8 @@ class Artikel extends BaseController
 
                 $file              = $xx['new_thumbnail'];
                 $newFileName       = uniqid().'.jpeg';
-                $dbFileName        = base_url().'/assets/images/thumbnail-berita/'.$newFileName;
                 $old_thumbnail     = $this->artikelModel->getOldThumbnail($data['id']);
-                $old_thumbnail     = explode('/',$old_thumbnail);
-                $old_thumbnail     = end($old_thumbnail);
-                $data['thumbnail'] = $dbFileName;
+                $data['thumbnail'] = $newFileName;
             }
 
             $unlinkOldThumb = false;
@@ -198,9 +194,6 @@ class Artikel extends BaseController
         } 
         else {
             $old_thumbnail = $this->artikelModel->getOldThumbnail($this->request->getGet('id'));
-            $old_thumbnail = explode('/',$old_thumbnail);
-            $old_thumbnail = end($old_thumbnail);
-
             $dbresponse    = $this->artikelModel->deleteArtikel($this->request->getGet('id'));
 
             if ($dbresponse['error'] == false) {

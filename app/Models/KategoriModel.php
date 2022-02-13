@@ -144,6 +144,7 @@ class KategoriModel extends Model
     {
         try {
             $kategori = $this->db->table($tableName)->orderBy("created_at","desc")->get()->getResultArray();
+            $kategori = $this->modifImgPath($kategori);
             
             if (empty($kategori)) {    
                 return [
@@ -167,5 +168,28 @@ class KategoriModel extends Model
                 'messages' => $e->getMessage(),
             ];
         }
+    }
+
+    public function getDetilKategoriArtikel(string $id): array
+    {
+        $berita = $this->db->table('kategori_artikel')->where("id",$id)->get()->getFirstRow();
+
+        return (array)$berita;
+    }
+
+    public function modifImgPath($data): array
+    {
+        $newData = [];
+
+        foreach ($data as $array) {
+            foreach ($array as $key => $value) {
+                if($key === 'icon'){
+                    $array[$key] = base_url()."/assets/images/icon-kategori-artikel/".$array['icon'];
+                    $newData[]   = $array; 
+                }
+            }
+        }
+
+        return $newData;
     }
 }

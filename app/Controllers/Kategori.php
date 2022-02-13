@@ -75,7 +75,7 @@ class Kategori extends BaseController
                 $file        = $data['icon'];
                 $typeFile    = explode('/',$file->getClientMimeType());
                 $newFileName = uniqid().'.'.end($typeFile);
-                $dbFileName  = base_url().'/assets/images/icon-kategori-artikel/'.$newFileName;
+                $dbFileName  = $newFileName;
 
                 $data = [
                     "id"             => $idKategori,
@@ -144,6 +144,8 @@ class Kategori extends BaseController
             return $this->respond($response,400);
         } 
         else {
+            $dataInDb = $this->kategoriModel->getDetilKategoriArtikel($data['id']);
+            
             $data = [
                 "id"             => $data['id'],
                 "name"           => trim($data['kategori_name']),
@@ -151,7 +153,7 @@ class Kategori extends BaseController
                 "kategori_utama" => (trim($data['kategori_utama']) == '1') ? true : false,
             ];
             
-            if ($data['kategori_utama'] == true) {
+            if ($data['kategori_utama'] == true && $dataInDb['kategori_utama'] == '0') {
                 $totKategoriUtama = $this->kategoriModel->countKategoriUtama();
 
                 if((int)$totKategoriUtama > 2){
@@ -184,10 +186,8 @@ class Kategori extends BaseController
                 $file          = $xx['icon'];
                 $typeFile      = explode('/',$file->getClientMimeType());
                 $newFileName   = uniqid().'.'.end($typeFile);
-                $dbFileName    = base_url().'/assets/images/icon-kategori-artikel/'.$newFileName;
+                $dbFileName    = $newFileName;
                 $old_thumbnail = $this->kategoriModel->getOldIcon($data['id']);
-                $old_thumbnail = explode('/',$old_thumbnail);
-                $old_thumbnail = end($old_thumbnail);
                 $data['icon']  = $dbFileName;
             }
 
@@ -242,8 +242,6 @@ class Kategori extends BaseController
         else {
             if ($tableName == 'kategori_artikel') {
                 $old_icon = $this->kategoriModel->getOldIcon($this->request->getGet('id'));
-                $old_icon = explode('/',$old_icon);
-                $old_icon = end($old_icon);
             }
 
             $dbresponse = $this->kategoriModel->deleteKategori($this->request->getGet('id'),$tableName);

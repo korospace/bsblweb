@@ -266,8 +266,8 @@ const getDataSetorSampah = async () => {
     $('#spinner-grafik-penyetoran').addClass('d-none'); 
 
     let chartType = 'line';
-    let arrayX = [];
-    let arrayY = [];
+    let arrayX = [""];
+    let arrayY = [0];
     
     if (httpResponse.status === 200) {
         let allTransaksi = httpResponse.data.data;

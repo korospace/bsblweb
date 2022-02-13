@@ -123,6 +123,7 @@ class ArtikelModel extends Model
                 ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
                 ->join('users', 'users.id = artikel.created_by')
                 ->where("artikel.id",$get['id'])->get()->getFirstRow();
+                $berita = $this->modifImgPath($berita);
             } 
             else if (isset($get['slug']) && !isset($get['kategori'])) {
                 $berita = $this->db->table($this->table)
@@ -130,6 +131,7 @@ class ArtikelModel extends Model
                 ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
                 ->join('users', 'users.id = artikel.created_by')
                 ->where("artikel.slug",$get['slug'])->get()->getFirstRow();
+                $berita = $this->modifImgPath($berita);
             } 
             else if (isset($get['kategori']) && !isset($get['id'])) {
                 $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail')
@@ -137,6 +139,7 @@ class ArtikelModel extends Model
                 ->join('users', 'users.id = artikel.created_by')
                 ->where("kategori_artikel.name",$get['kategori'])
                 ->orderBy('artikel.created_at',$orderby)->get()->getResultArray();
+                $berita = $this->modifImgPath($berita);
             } 
             else {
                 $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail')
@@ -149,8 +152,9 @@ class ArtikelModel extends Model
                 }
 
                 $berita = $berita->get()->getResultArray();
+                $berita = $this->modifImgPath($berita);
             }
-            
+
             if (empty($berita)) {    
                 return [
                     'status'   => 404,
@@ -262,5 +266,35 @@ class ArtikelModel extends Model
                 'messages' => $e->getMessage(),
             ];
         }
+    }
+
+    public function modifImgPath($data): array
+    {
+        $newData = [];
+
+        if (is_array($data)==false) {
+            foreach ($data as $key => $value) {
+                if($key == "thumbnail"){
+                    $newData[$key] = base_url()."/assets/images/thumbnail-berita/".$value;
+                }
+                else{
+                    $newData[$key] = $value;
+                }
+            }
+        } 
+        else {
+
+            foreach ($data as $array) {
+                foreach ($array as $key => $value) {
+                    if($key === 'thumbnail'){
+                        $array[$key] = base_url()."/assets/images/thumbnail-berita/".$array['thumbnail'];
+                        $newData[]   = $array; 
+                    }
+                    
+                }
+            }
+        }
+
+        return $newData;
     }
 }

@@ -26,7 +26,7 @@
 	<?= $this->include('Components/alertInfo'); ?>
 
 	<!-- ***** Header Area Start ***** -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-sm-5 position-sticky" style="top: 0;z-index: 10;">
+	<div class="navbar navbar-expand-lg navbar-light bg-white px-4 px-sm-5 position-sticky" style="top: 0;z-index: 10;">
         <a class="logo navbar-brand" href="<?= base_url('/'); ?>">
             <img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt=""
                 width="65" height="55">
@@ -50,10 +50,10 @@
                 </li>
             </ul>
         </div>
-    </nav>
+	</div>
 
 	<section class="wrapper d-flex position-relative" style="margin-top: 30px;z-index: 0;">
-		<div class="container-fluid pl-5 pr-5">
+		<div class="container-fluid px-4 px-sm-5">
 			<div class="w-100 h-100 d-flex align-items-center d-none" id="img-404">
 				<img src="<?= base_url('assets/images/artikel-404.webp') ?>" alt="" style="min-width:100%;max-width:100%; opacity:0.7;">
 			</div>

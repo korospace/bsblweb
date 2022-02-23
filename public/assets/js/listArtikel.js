@@ -49,13 +49,13 @@ axios.get(`${APIURL}/artikel/getartikel?kategori=${KATEGORI}&orderby=terbaru`)
                     <img src="${b.thumbnail}" class="position-absolute" style="height:100%;width:100%;">
 
                     <div class="card-img-overlay d-flex flex-column">
-                        <div class="card-body">
+                        <div class="card-body px-0">
                             <h6 class="card-meta mb-2">${b.kategori}</h6>
                             <h6 class="card-title mt-0" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
                                 ${b.title}
                             </h6>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer px-0">
                             <div class="media">
                                 <div class="media-body">
                                 <small><i class="far fa-clock"></i> ${month} ${day}, ${year}</small>

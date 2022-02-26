@@ -1,5 +1,11 @@
 <?= $this->extend('Layout/template') ?>
 
+<!-- Meta -->
+<?= $this->section('contentSeo'); ?>
+    <meta name="description" content="" />
+    <link rel="image_src" href="<?= $thumbnail ?>">  
+<?= $this->endSection(); ?>
+
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
     <style>
@@ -64,12 +70,12 @@
                     <div class="blog-single-main">
                         <div class="row">
                             <div class="col-12">
-                                <div class="image position-relative skeleton">
+                                <div class="image position-relative">
                                     <img src="<?= base_url('/assets/images/skeleton-thumbnail.webp'); ?>" alt="#" class="w-100" style="opacity: 0;">
-                                    <img src="" alt="" id="blog-img" class="w-100 h-100 position-absolute d-none img-thumbnail" style="z-index: 10;left:0;">
+                                    <img src="<?= $thumbnail ?>" alt="" id="blog-img" class="w-100 h-100 position-absolute img-thumbnail" style="z-index: 10;left:0;">
                                 </div>
                                 <div class="blog-detail">
-                                    <h1 id="blog-title" class="blog-title skeleton text-justify" style="font-family: serif;font-weight: 400;"></h1>
+                                    <h1 id="blog-title" class="blog-title text-justify" style="font-family: serif;font-weight: 400;"><?= $title ?></h1>
                                     <div class="blog-meta" style="">
                                         <h6 id="blog-penulis" class="author skeleton mb-2"></h6>
                                         <h6 id="blog-date" class="author skeleton mt-2"></h6>

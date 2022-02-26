@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\ArtikelModel;
 
 class HomePage extends BaseController
 {
@@ -28,9 +29,13 @@ class HomePage extends BaseController
 
     public function detilArtikel(string $slug)
     {
+        $model = new ArtikelModel();
+        $post  = $model->select("title,thumbnail")->where('slug',$slug)->first();
+
         $data = [
-            'title' => 'Artikel',
+            'title' => $post['title'],
             'slug'  => $slug,
+            'thumbnail' => base_url().'/assets/images/thumbnail-berita/'.$post['thumbnail']
         ];
 
         return view('HomePage/detilArtikel', $data);

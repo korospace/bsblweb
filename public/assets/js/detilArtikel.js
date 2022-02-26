@@ -37,17 +37,8 @@ axios.get(`${APIURL}/artikel/getartikel?slug=${SLUG}`)
     let day       = date.toLocaleString("en-US",{day: "numeric"});
     let month     = date.toLocaleString("en-US",{month: "long"});
     let year      = date.toLocaleString("en-US",{year: "numeric"});
-
-    $('title').html(response.title);
-    $('meta#description').attr('content',response.content);
-    $('link#image_src').attr('href',response.thumbnail);
     
     $('#blog-share').removeClass('d-none');
-    $('#blog-img').parent().removeClass('skeleton');
-    $('#blog-img').removeClass('d-none');
-    $('#blog-img').attr('src', response.thumbnail);
-    $('#blog-title').removeClass('skeleton');
-    $('#blog-title').html(response.title);
     $('#blog-date').removeClass('skeleton');
     $('#blog-date').html(`<i class="fa fa-calendar text-secondary text-xxs mr-3"></i>${day} ${month} ${year}`);
     $('#blog-penulis').html(`<i class="fas fa-user-edit text-secondary text-xxs"></i>${response.penulis}`);

@@ -20,7 +20,7 @@ $('#formLoginNasabah').on('submit', function(e) {
         .then((response) => {
             hideLoadingSpinner();
 
-            document.cookie = `token=${response.data.token}; path=/;`;
+            document.cookie = `token=${response.data.token}; path=/;SameSite=None; Secure`;
             window.location.replace(`${BASEURL}/nasabah`);
         })
         .catch((error) => {
@@ -177,7 +177,7 @@ $('#formLoginAdmin').on('submit', function(e) {
                 url = LASTURL;
             }
 
-            document.cookie = `token=${response.data.token}; path=/;`;
+            document.cookie = `token=${response.data.token}; path=/;SameSite=None; Secure`;
             window.location.replace(url);
         })
         .catch((error) => {

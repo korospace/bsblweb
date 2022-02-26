@@ -5,7 +5,7 @@ let dataAdmin   = '';
 
 if (pageTitle1 == 'Admin') {
     let webUrl      = window.location.href;
-    document.cookie = `lasturl=${webUrl}; path=/;`;
+    document.cookie = `lasturl=${webUrl}; path=/;SameSite=None; Secure`;
 }
 
 /**
@@ -36,12 +36,12 @@ const httpRequestGet = (url) => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then(() => {
-                        document.cookie = `token=null;expires=;path=/;`;
+                        document.cookie = `token=null;expires=;path=/;SameSite=None; Secure`;
                         window.location.replace((pageTitle1 == 'Nasabah') ? `${BASEURL}/login` : `${BASEURL}/login/admin`);
                     })
                 }
                 else{
-                    document.cookie = `token=null;expires=;path=/;`;
+                    document.cookie = `token=null;expires=;path=/;SameSite=None; Secure`;
                     window.location.replace((pageTitle1 == 'Nasabah') ? `${BASEURL}/login` : `${BASEURL}/login/admin`);
                 }
             }
@@ -109,12 +109,12 @@ const httpRequestPost = (url,form) => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then(() => {
-                        document.cookie = `token=null;expires=;path=/;`;
+                        document.cookie = `token=null;expires=;path=/;SameSite=None; Secure`;
                         window.location.replace((pageTitle1 == 'Nasabah') ? `${BASEURL}/login` : `${BASEURL}/login/admin`);
                     })
                 }
                 else{
-                    document.cookie = `token=null;expires=;path=/;`;
+                    document.cookie = `token=null;expires=;path=/;SameSite=None; Secure`;
                     window.location.replace((pageTitle1 == 'Nasabah') ? `${BASEURL}/login` : `${BASEURL}/login/admin`);
                 }
             }
@@ -178,12 +178,12 @@ const httpRequestPut = (url,form) => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then(() => {
-                        document.cookie = `token=null;expires=;path=/;`;
+                        document.cookie = `token=null;expires=;path=/;SameSite=None; Secure`;
                         window.location.replace((pageTitle1 == 'Nasabah') ? `${BASEURL}/login` : `${BASEURL}/login/admin`);
                     })
                 }
                 else{
-                    document.cookie = `token=null;expires=;path=/;`;
+                    document.cookie = `token=null;expires=;path=/;SameSite=None; Secure`;
                     window.location.replace((pageTitle1 == 'Nasabah') ? `${BASEURL}/login` : `${BASEURL}/login/admin`);
                 }
             }
@@ -229,12 +229,12 @@ const httpRequestDelete = (url) => {
                         showCancelButton: false,
                         confirmButtonText: 'ok',
                     }).then(() => {
-                        document.cookie = `token=null;expires=;path=/;`;
+                        document.cookie = `token=null;expires=;path=/;SameSite=None; Secure`;
                         window.location.replace((pageTitle1 == 'Nasabah') ? `${BASEURL}/login` : `${BASEURL}/login/admin`);
                     })
                 }
                 else{
-                    document.cookie = `token=null;expires=;path=/;`;
+                    document.cookie = `token=null;expires=;path=/;SameSite=None; Secure`;
                     window.location.replace((pageTitle1 == 'Nasabah') ? `${BASEURL}/login` : `${BASEURL}/login/admin`);
                 }
             }
@@ -281,8 +281,8 @@ $('#btn-logout').on('click', function(e) {
             .then(() => {
                 Swal.close();
 
-                document.cookie = `token=null; path=/;`;
-                document.cookie = `lasturl=null; path=/;`;
+                document.cookie = `token=null; path=/;SameSite=None; Secure`;
+                document.cookie = `lasturl=null; path=/;SameSite=None; Secure`;
                 window.location.replace(loginUrl);
                 // setTimeout(() => {
                 //     console.log(loginUrl);
@@ -294,8 +294,8 @@ $('#btn-logout').on('click', function(e) {
                 if (error.response.status == 401) {
                     Swal.close();
 
-                    document.cookie = `token=null; path=/;`;
-                    document.cookie = `lasturl=null; path=/;`;
+                    document.cookie = `token=null; path=/;SameSite=None; Secure`;
+                    document.cookie = `lasturl=null; path=/;SameSite=None; Secure`;
                     window.location.replace(loginUrl);
                 }
                 // error server

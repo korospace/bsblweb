@@ -65,7 +65,7 @@ $('.digit-group').find('input').each(function() {
 									})
 									.then((response) => {
 										hideLoadingSpinner();
-										document.cookie = `token=${response.data.token}; path=/;`;
+										document.cookie = `token=${response.data.token}; path=/;SameSite=None; Secure`;
 										window.location.replace(`${BASEURL}/nasabah`);
 									})
 									.catch(() => {

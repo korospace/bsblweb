@@ -39,7 +39,7 @@ class Admin extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             $data['password']  = $result['data']['password'];
             $data['privilege'] = $result['data']['privilege'];
             return view('Admin/index',$data);
@@ -66,7 +66,7 @@ class Admin extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             $data['password']  = $result['data']['password'];
             $data['privilege'] = $result['data']['privilege'];
             $data['idadmin']   = $result['data']['userid'];
@@ -94,7 +94,7 @@ class Admin extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             $data['password']  = $result['data']['password'];
             $data['privilege'] = $result['data']['privilege'];
             return view('Admin/listSampah',$data);
@@ -121,7 +121,7 @@ class Admin extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             $data['password']  = $result['data']['password'];
             $data['privilege'] = $result['data']['privilege'];
             return view('Admin/listAdmin',$data);
@@ -148,7 +148,7 @@ class Admin extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             $data['password']  = $result['data']['password'];
             $data['privilege'] = $result['data']['privilege'];
             return view('Admin/listNasabah',$data);
@@ -175,7 +175,7 @@ class Admin extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             $data['password']  = $result['data']['password'];
             $data['privilege'] = $result['data']['privilege'];
             return view('Admin/kategoriArtikel',$data);
@@ -202,7 +202,7 @@ class Admin extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             $data['password']  = $result['data']['password'];
             $data['privilege'] = $result['data']['privilege'];
             return view('Admin/listArtikel',$data);
@@ -229,7 +229,7 @@ class Admin extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             $data['password']  = $result['data']['password'];
             $data['privilege'] = $result['data']['privilege'];
             return view('Admin/crudArtikel',$data);
@@ -258,7 +258,7 @@ class Admin extends BaseController
                 return redirect()->to(base_url().'/notfound');
             } 
             else {
-                setcookie('token',$token,time() + $result['data']['expired'],'/');
+                setcookie('token',$token,$this->cookieOps($result['data']['expired']));
                 $data['password']  = $result['data']['password'];
                 $data['privilege'] = $result['data']['privilege'];
                 return view('Admin/crudArtikel',$data);
@@ -288,7 +288,7 @@ class Admin extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             $data['password']  = $result['data']['password'];
             $data['privilege'] = $result['data']['privilege'];
             return view('Admin/profile',$data);
@@ -317,7 +317,7 @@ class Admin extends BaseController
                 return redirect()->to(base_url().'/notfound');
             } 
             else {
-                setcookie('token',$token,time() + $result['data']['expired'],'/');
+                setcookie('token',$token,$this->cookieOps($result['data']['expired']));
                 $data['password']  = $result['data']['password'];
                 $data['privilege'] = $result['data']['privilege'];
                 return view('Admin/detilNasabah',$data);

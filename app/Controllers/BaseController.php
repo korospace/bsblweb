@@ -70,6 +70,23 @@ class BaseController extends ResourceController
     }
 
     /**
+     * TOKEN KEY.
+     */
+    public function cookieOps(string $expired) : array
+    {
+        $cookie_options = array(
+            'expires' => time() + $expired,
+            'path' => '/',
+            'domain' => base_url(), // leading dot for compatibility or use subdomain
+            'secure' => true, // or false
+            'httponly' => false, // or false
+            'samesite' => 'None' // None || Lax || Strict
+        );
+
+        return $cookie_options;
+    }
+
+    /**
      * Generate OTP.
      */
     public function generateOTP(int $n) : string
@@ -301,9 +318,9 @@ class BaseController extends ResourceController
             "expired"    => ($rememberme == true) ? time()+2592000 : time()+3600, 
         );
 
-        if ($privilege == 'nasabah') {
-            unset($payload['password']);
-        }
+        // if ($privilege == 'nasabah') {
+        //     unset($payload['password']);
+        // }
 
         return JWT::encode($payload, $this->getKey());
     }

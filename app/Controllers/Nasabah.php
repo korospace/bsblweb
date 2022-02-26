@@ -40,7 +40,7 @@ class Nasabah extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             return view('Nasabah/index',$data);
         }
     }
@@ -69,7 +69,7 @@ class Nasabah extends BaseController
             return redirect()->to(base_url().'/notfound');
         } 
         else {
-            setcookie('token',$token,time() + $result['data']['expired'],'/');
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
             return view('Nasabah/profilenasabah',$data);
         }
 

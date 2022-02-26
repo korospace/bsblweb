@@ -5,13 +5,10 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="<?= base_url(); ?>">
-  <meta id="meta-title" property="og:title" content="" />
-  <meta id="meta-description" property="og:description" content="" />
-  <meta id="meta-img" property="og:image" itemprop="image" content="">
-
+  <meta name="description" id="description" content="" />
+  <link rel="image_src" id="image_src" href="">  
   <link rel="shortcut icon" href="<?= base_url('assets/images/banksampah-logo.webp'); ?>" type="image/x-icon">
+
   <title><?= $title ?></title>
 
   <!-- Global Css -->
@@ -67,7 +64,6 @@
     const TOKEN   = '<?= (isset($token)) ? $token : null; ?>';
     const BASEURL = '<?= base_url(); ?>';
     const APIURL  = BASEURL;
-    // const APIURL  = 'https://t-gadgetcors.herokuapp.com/https://bsbl.herokuapp.com';
   </script>
   
   <!-- Render Js -->

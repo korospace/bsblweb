@@ -38,9 +38,9 @@ axios.get(`${APIURL}/artikel/getartikel?slug=${SLUG}`)
     let month     = date.toLocaleString("en-US",{month: "long"});
     let year      = date.toLocaleString("en-US",{year: "numeric"});
 
-    $('meta#meta-title').attr('content',response.title);
-    $('meta#meta-description').attr('content',response.content);
-    $('meta#meta-img').attr('content',response.thumbnail);
+    $('title').html(response.title);
+    $('meta#description').attr('content',response.content);
+    $('link#image_src').attr('href',response.thumbnail);
     
     $('#blog-share').removeClass('d-none');
     $('#blog-img').parent().removeClass('skeleton');

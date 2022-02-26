@@ -301,6 +301,10 @@ class BaseController extends ResourceController
             "expired"    => ($rememberme == true) ? time()+2592000 : time()+3600, 
         );
 
+        if ($privilege == 'nasabah') {
+            unset($payload['password']);
+        }
+
         return JWT::encode($payload, $this->getKey());
     }
 

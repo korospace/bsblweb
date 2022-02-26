@@ -30,7 +30,7 @@ class Artikel extends Migration
                 'null' => false,
             ],
             'content' => [
-                'type' => 'text',
+                'type' => 'longtext',
                 'null' => false,
             ],
             'id_kategori' => [

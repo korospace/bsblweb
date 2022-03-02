@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" href="<?= base_url('assets/images/banksampah-logo.webp'); ?>" type="image/x-icon">
   
-  <!-- Render Meta -->
+  <!-- Render Meta Article -->
   <?= $this->renderSection('contentSeo'); ?>
 
   <!-- Global Css -->

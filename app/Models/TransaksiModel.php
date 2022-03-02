@@ -321,19 +321,29 @@ class TransaksiModel extends Model
             $this->db->transBegin();
 
             if ($idNasabah != '') {
-                $saldo = $this->db->table('dompet')->select('uang,emas')->where('id_user',$idNasabah)->get()->getResultArray()[0];
+                $saldo = $this->db->table('dompet')->select('uang,emas')->where('id_user',$idNasabah)->get()->getResultArray();
             }
             else {
-                $saldo = $this->db->query("SELECT SUM(uang) AS uang,SUM(emas) AS emas FROM dompet")->getResultArray()[0];
+                $saldo = $this->db->query("SELECT SUM(uang) AS uang,SUM(emas) AS emas FROM dompet")->getResultArray();
             }
 
             if ($this->db->transStatus()) {
                 $this->db->transCommit();
-                return [
-                    'status' => 200,
-                    'error'  => false,
-                    'data'   => $saldo,
-                ];
+
+                if ($saldo) {
+                    return [
+                        'status' => 200,
+                        'error'  => false,
+                        'data'   => $saldo,
+                    ];
+                } 
+                else {
+                    return [
+                        'status'   => 404,
+                        'error'    => true,
+                        'messages' => "nasabah not found",
+                    ];
+                }
             }
             else {
                 $this->db->transRollback();

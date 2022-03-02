@@ -144,13 +144,18 @@ class KategoriModel extends Model
     {
         try {
             $kategori = $this->db->table($tableName)->orderBy("created_at","desc")->get()->getResultArray();
-            $kategori = $this->modifImgPath($kategori);
+            
+            $kategoriName = ($tableName == 'kategori_sampah') ? "kategori sampah" : "kategori artikel";
+            
+            if ($kategoriName == 'kategori artikel') {
+                $kategori = $this->modifImgPath($kategori);
+            }
             
             if (empty($kategori)) {    
                 return [
                     'status'   => 404,
                     'error'    => true,
-                    'messages' => "kategori artikel notfound",
+                    'messages' => "$kategoriName notfound",
                 ];
             } 
             else {   

@@ -1,7 +1,7 @@
 /**
  * Get default date AND time
  */
-function getCurrentDate() {
+ function getCurrentDate() {
     let currentUnixTime = new Date(new Date().getTime());
     let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "2-digit"});
     let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "2-digit"});
@@ -103,7 +103,7 @@ const searchNasabah = async (el = false,event = false) => {
 
     if (httpResponse1.status === 200 && httpResponse2.status === 200) {
         dataNasabah = httpResponse1.data.data[0];
-        dataSaldo   = httpResponse2.data.data
+        dataSaldo   = httpResponse2.data.data[0];
         
         $('#barrier-transaksi').addClass('d-none');
         $(`#form-${formTarget}`).removeClass('opacity-6');
@@ -115,7 +115,7 @@ const searchNasabah = async (el = false,event = false) => {
         $('#username-check').html(dataNasabah.username);
         $('#nama-lengkap-check').html(dataNasabah.nama_lengkap);
         $('#saldo-uang-check').html(`Rp. ${modifUang(dataSaldo.uang)}`);
-        $('#saldo-emas-check').html(`${parseFloat(dataSaldo.emas).toFixed(4)} g`);
+        $('#saldo-emas-check').html(`${parseFloat(dataSaldo.emas || 0).toFixed(4)} g`);
     }
     else if (httpResponse1.status === 404) {
         showAlert({

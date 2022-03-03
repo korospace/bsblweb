@@ -334,7 +334,7 @@ class TransaksiModel extends Model
                     return [
                         'status' => 200,
                         'error'  => false,
-                        'data'   => $saldo,
+                        'data'   => $saldo[0],
                     ];
                 } 
                 else {

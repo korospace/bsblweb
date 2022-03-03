@@ -103,7 +103,7 @@ const searchNasabah = async (el = false,event = false) => {
 
     if (httpResponse1.status === 200 && httpResponse2.status === 200) {
         dataNasabah = httpResponse1.data.data[0];
-        dataSaldo   = httpResponse2.data.data[0];
+        dataSaldo   = httpResponse2.data.data;
         
         $('#barrier-transaksi').addClass('d-none');
         $(`#form-${formTarget}`).removeClass('opacity-6');

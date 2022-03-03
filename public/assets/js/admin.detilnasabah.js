@@ -493,7 +493,7 @@ const getSaldoNasabah = async () => {
 
         $('#formPindahSaldo #maximal-saldo').html(`${modifUang(dataSaldo.uang)}`);
         $('#saldo-uang').html(modifUang(dataSaldo.uang));
-        $('#saldo-emas').html(parseFloat(dataSaldo.emas).toFixed(4));
+        $('#saldo-emas').html(parseFloat(dataSaldo.emas || 0).toFixed(4));
     }
 };
 getSaldoNasabah();

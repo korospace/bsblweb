@@ -482,7 +482,7 @@ const getDataSaldo = async () => {
         let dataNasabah = httpResponse.data.data;
 
         $('#saldo-uang').html(modifUang(dataNasabah.uang.toString()));
-        $('#saldo-emas').html(parseFloat(dataNasabah.emas).toFixed(4));
+        $('#saldo-emas').html(parseFloat(dataNasabah.emas || 0).toFixed(4));
     }
 };
 

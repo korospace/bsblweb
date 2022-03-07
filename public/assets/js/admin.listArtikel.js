@@ -129,7 +129,7 @@ $('#search-artikel').on('keyup', function() {
     } 
     else {
         beritaFiltered = arrayBerita.filter((n) => {
-            return n.title.includes($(this).val()) || n.kategori.includes($(this).val());
+            return n.title.includes($(this).val().toLowerCase()) || n.kategori.includes($(this).val().toLowerCase());
         });
     }
 

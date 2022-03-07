@@ -313,7 +313,7 @@ $('#search-sampah').on('keyup', function() {
     } 
     else {
         sampahFiltered = arrayJenisSampah.filter((n) => {
-            return n.kategori.includes($(this).val()) || n.jenis.includes($(this).val());
+            return n.kategori.includes($(this).val().toLowerCase()) || n.jenis.includes($(this).val().toLowerCase());
         });
     }
 

@@ -228,7 +228,7 @@ $('#search-nasabah').on('keyup', function() {
     } 
     else {
         nasabahFiltered = arrayNasabah.filter((n) => {
-            return n.nama_lengkap.includes($(this).val()) || n.id.includes($(this).val());
+            return n.nama_lengkap.includes($(this).val().toLowerCase()) || n.id.includes($(this).val());
         });
     }
 

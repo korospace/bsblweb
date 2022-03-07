@@ -73,7 +73,7 @@ $('#search-admin').on('keyup', function() {
     } 
     else {
         adminFiltered = arrayAdmin.filter((n) => {
-            return n.nama_lengkap.includes($(this).val()) || n.username.includes($(this).val());
+            return n.nama_lengkap.includes($(this).val().toLowerCase()) || n.username.includes($(this).val().toLowerCase());
         });
     }
 

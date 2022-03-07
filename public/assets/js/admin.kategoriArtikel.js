@@ -255,7 +255,7 @@ $('#search-kategori').on('keyup', function() {
     } 
     else {
         kategoriFiltered = arrayKatArtikel.filter((n) => {
-            return n.name.includes($(this).val());
+            return n.name.includes($(this).val().toLowerCase());
         });
     }
 

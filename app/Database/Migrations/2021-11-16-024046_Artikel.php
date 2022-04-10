@@ -39,13 +39,11 @@ class Artikel extends Migration
                 'constraint' => 200,       // mysql
                 'null'       => false,
             ],
-            'created_by' => [
-                // 'type'       => 'text', // postgre
-                'type'       => 'varchar', // mysql
-                'constraint' => 200,       // mysql
-                'null'       => false,
-            ],
             'created_at' => [
+                'type' => 'bigint',
+                'null' => false,
+            ],
+            'published_at' => [
                 'type' => 'bigint',
                 'null' => false,
             ],
@@ -54,13 +52,12 @@ class Artikel extends Migration
         $this->forge->addPrimaryKey('id');
         $this->forge->addUniqueKey('title');
         $this->forge->addForeignKey('id_kategori','kategori_artikel','id','CASCADE','CASCADE');
-        $this->forge->addForeignKey('created_by','users','id','CASCADE','CASCADE');
         // $this->forge->addField("created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('artikel');
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable('artikel');
     }
 }

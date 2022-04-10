@@ -69,10 +69,11 @@ const getAllBerita = async () => {
         arrayBerita   = allBerita;
     
         allBerita.forEach(b => {
-            let date      = new Date(parseInt(b.created_at) * 1000);
-            let day       = date.toLocaleString("en-US",{day: "numeric"});
-            let month     = date.toLocaleString("en-US",{month: "long"});
-            let year      = date.toLocaleString("en-US",{year: "numeric"});
+            let date      = new Date(parseInt(b.published_at) * 1000);
+            // let day       = date.toLocaleString("en-US",{day: "2-digit"});
+            // let month     = date.toLocaleString("en-US",{month: "long"});
+            // let year      = date.toLocaleString("en-US",{year: "numeric"});
+            let isPublish = new Date().getTime() >= date.getTime();
 
             elBerita += `<div class="col-12 col-sm-6 col-lg-4 mb-4" style="min-height: 100%;">
             <div class="card" style="border: 0.5px solid #D2D6DA;min-height: 100%;">
@@ -87,16 +88,13 @@ const getAllBerita = async () => {
                             <i class="fas fa-list-ul mr-1 text-muted text-xs"></i>
                             ${b.kategori}
                         </h6>
-                        <h6 class="card-subtitle mb-2 text-muted text-sm">
-                            <i class="far fa-clock mr-1 text-muted text-xs"></i>
-                            ${month}, ${day}, ${year}
-                        </h6>
-                        <h6 class="card-subtitle text-muted text-sm" style="display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
-                            <i class="fas fa-user-edit mr-1 text-muted text-xs"></i>
-                            ${b.penulis}
-                        </h6>
+                        <div class="px-2">
+                            <div style="width:max-content;" class="badge ${isPublish?'badge-success':'badge-secondary'}">
+                                ${isPublish?'sudah terpublikasi':'belum terpublikasi'}
+                            </div>
+                        </div>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row mt-5">
                         <div class="col-6">
                             <a href="${BASEURL}/admin/editartikel/${b.id}" class="w-100 btn btn-warning p-2 border-radius-sm" style="height: 34px;">
                                 <i class="far fa-edit"></i>

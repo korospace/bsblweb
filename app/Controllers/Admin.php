@@ -155,7 +155,7 @@ class Admin extends BaseController
         }
     }
 
-    // List artikel page
+    // List kategori artikel page
     public function kategoriArtikelView()
     {
         $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
@@ -179,6 +179,60 @@ class Admin extends BaseController
             $data['password']  = $result['data']['password'];
             $data['privilege'] = $result['data']['privilege'];
             return view('Admin/kategoriArtikel',$data);
+        }
+    }
+    
+    // List penghargaan page
+    public function listPenghargaanView()
+    {
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result = $this->checkToken($token, false);
+
+        $data   = [
+            'title' => 'Admin | list penghargaan',
+            'token' => $token,
+        ];
+        
+        if($result['success'] == false) {
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
+            return redirect()->to(base_url().'/login/admin');
+        } 
+        else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+            return redirect()->to(base_url().'/notfound');
+        } 
+        else {
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
+            return view('Admin/listPenghargaan',$data);
+        }
+    }
+
+    // List mitra page
+    public function listMitraView()
+    {
+        $token  = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result = $this->checkToken($token, false);
+
+        $data   = [
+            'title' => 'Admin | list mitra',
+            'token' => $token,
+        ];
+        
+        if($result['success'] == false) {
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
+            return redirect()->to(base_url().'/login/admin');
+        } 
+        else if(!in_array($result['data']['privilege'],['admin','superadmin'])) {
+            return redirect()->to(base_url().'/notfound');
+        } 
+        else {
+            setcookie('token',$token,$this->cookieOps($result['data']['expired']));
+            $data['password']  = $result['data']['password'];
+            $data['privilege'] = $result['data']['privilege'];
+            return view('Admin/listMitra',$data);
         }
     }
 

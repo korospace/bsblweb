@@ -30,6 +30,7 @@
 <script src="<?= base_url('assets/js/plugins/scrollreveal.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
+<script src="https://apps.elfsight.com/p/platform.js" defer></script>
 <script src="<?= base_url('assets/js/plugins/jquery.counterup.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
@@ -291,6 +292,11 @@
     </div>
   </section>
   <!-- Services Ends -->
+
+  <!-- Instagram Feed -->
+  <div style="padding: 0 40px;margin-top:80px;">
+    <div style="width: 100%;" class="elfsight-app-af63f7fb-2dc8-43cf-ac87-f3967815b740"></div>
+  </div>
 
   <!-- ***** Hubungi Kami ***** -->
   <footer id="contact-us">

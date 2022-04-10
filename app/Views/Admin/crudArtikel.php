@@ -118,13 +118,10 @@
 				
 				<hr>
 				
-				<!-- Thumbnail -->
+				<input type="hidden" name="id" id="idartikel">
+				
+				<!-- Thumbnail preview -->
 				<div class="form-row mt-4 d-flex flex-column">
-					<input type="hidden" name="id" id="idartikel">
-					<div class="px-1">
-						<i class="far fa-image text-muted"></i>
-						<h6 class="text-muted" style="display:inline;">Thumbnail</h6>
-					</div>
 					<div id="thumbnail-wraper" class="position-relative col-12 col-sm-6 mt-1 mb-2">
 						<!-- spinner -->
 						<div id="thumbnail-spinner" class="img-thumbnail d-none position-absolute bg-white d-flex align-items-center justify-content-center pt-4" style="z-index: 11;top: 0;bottom: 0;left: 0;right: 0;">
@@ -133,16 +130,30 @@
 						<img src="<?= base_url('assets/images/skeleton-thumbnail.webp'); ?>" class="w-100" style="opacity: 0;">
 						<img src="<?= base_url('assets/images/default-thumbnail.webp'); ?>" alt="thumbnail" id="preview-thumbnail" class="img-thumbnail position-absolute" style="z-index: 10;min-width: 100%;max-width: 100%;max-height: 100%;min-height: 100%;left:0;">
 					</div>
-					<div class="input-group mt-2 col-12 col-sm-6">
-						<input type="file" class="form-control" id="thumbnail" autocomplete="off" placeholder="thumbnail" style="min-height: 38px" onchange="changeThumbPreview(this);">
+				</div>
+
+				<!-- Thumbnail & Published_at -->
+				<div class="form-row mt-4">
+					<div class="col-12 col-sm-6 form-group">
+						<i class="far fa-image text-muted"></i>
+						<h6 class="text-muted" style="display:inline;">Thumbnail</h6>
+						<input type="file" class="form-control mt-1" id="thumbnail" autocomplete="off" placeholder="thumbnail" style="min-height: 38px" onchange="changeThumbPreview(this);">
+						<small
+							id="thumbnail-error"
+							class="text-danger"></small>
 					</div>
-					<small
-						id="thumbnail-error"
-						class="text-danger"></small>
+					<div class="col-12 col-sm-6 form-group">
+						<i class="fas fa-calendar-alt mr-1 text-muted"></i>
+						<h6 class="text-muted" style="display:inline;">Tanggal publikasi</h6>
+						<input type="date" class="form-control mt-1" id="published_at" name="published_at" style="min-height: 38px" autocomplete="off">
+						<small
+							id="published_at-error"
+							class="text-danger"></small>
+					</div>
 				</div>
 
 				<!-- Title & Kategori -->
-				<div class="form-row mt-5">
+				<div class="form-row mt-4">
 					<div class="col-12 col-sm-6 form-group">
 						<i class="fas fa-pencil-alt mr-1 text-muted"></i>
 						<h6 class="text-muted" style="display:inline;">Judul Artikel</h6>

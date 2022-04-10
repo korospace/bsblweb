@@ -60,6 +60,6 @@ class Wilayah extends Migration
 
     public function down()
     {
-        //
+        $this->forge->dropTable('wilayah');
     }
 }

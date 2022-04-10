@@ -7,8 +7,8 @@ use Exception;
 
 class KategoriModel extends Model
 {
-    protected $primaryKey    = 'id';
-    protected $allowedFields = ['id','name'];
+    // protected $primaryKey    = 'id';
+    // protected $allowedFields = ['id','name'];
 
     public function getLastKategori(string $tableName): array
     {

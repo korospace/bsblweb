@@ -439,7 +439,7 @@
 							<div class="card-header pb-0 p-3">
 								<div class="row">
 									<div class="opacity-8 col-12 d-flex justify-content-center">
-										<h4 style="font-family: 'qc-medium';">Personoal information</h4 >
+										<h4 style="font-family: 'qc-medium';">Personal information</h4 >
 									</div>
 								</div>
 							</div>

@@ -52,10 +52,10 @@ class Kategori extends BaseController
                 $lastID     = $lastKategori['data']['id'];
                 $lastID     = (int)substr($lastID,2)+1;
                 $lastID     = sprintf('%02d',$lastID);
-                $idKategori = 'KS'.$lastID;
+                $idKategori = ($tableName=='kategori_sampah') ? 'KS' : 'KA'.$lastID;
             }
             else if ($lastKategori['status'] == 404) {
-                $idKategori = 'KS01';
+                $idKategori = ($tableName=='kategori_sampah') ? 'KS01' : 'KA01';
             } 
             else {
                 return $this->respond($lastKategori,$lastKategori['status']);

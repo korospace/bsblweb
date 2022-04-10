@@ -38,7 +38,7 @@ axios.get(`${APIURL}/artikel/getartikel?kategori=${KATEGORI}&orderby=terbaru`)
         arrayBerita   = allBerita;
         
         allBerita.forEach(b => {
-            let date      = new Date(parseInt(b.created_at) * 1000);
+            let date      = new Date(parseInt(b.published_at) * 1000);
             let day       = date.toLocaleString("en-US",{day: "numeric"});
             let month     = date.toLocaleString("en-US",{month: "long"});
             let year      = date.toLocaleString("en-US",{year: "numeric"});

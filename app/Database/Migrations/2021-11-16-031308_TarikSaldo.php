@@ -42,6 +42,6 @@ class TarikSaldo extends Migration
 
     public function down()
     {
-        //
+        $this->forge->dropTable('tarik_saldo');
     }
 }

@@ -77,7 +77,6 @@
                                 <div class="blog-detail">
                                     <h1 id="blog-title" class="blog-title text-justify" style="font-family: serif;font-weight: 400;"><?= $title ?></h1>
                                     <div class="blog-meta" style="">
-                                        <h6 id="blog-penulis" class="author skeleton mb-2"></h6>
                                         <h6 id="blog-date" class="author skeleton mt-2"></h6>
                                     </div>
                                     <div id="blog-content" class="text-justify" style="font-family: 'qc-medium';">

@@ -64,8 +64,8 @@ class Artikel extends BaseController
                 "thumbnail"   => $newFileName,
                 "content"     => $data['content'],
                 "id_kategori" => trim($data['id_kategori']),
-                "created_by"  => $result['data']['userid'],
                 "created_at"  => (int)time(),
+                "published_at"=> (int)strtotime($data['published_at']),
             ];
 
             if ($file->move('assets/images/thumbnail-berita/',$newFileName)) {
@@ -118,8 +118,8 @@ class Artikel extends BaseController
                 "slug"        => preg_replace('/ /i', '-',strtolower(trim($data['title']))),
                 "content"     => trim($data['content']),
                 "id_kategori" => trim($data['id_kategori']),
-                "created_by"  => $result['data']['userid'],
                 "created_at"  => (int)time(),
+                "published_at"=> (int)strtotime($data['published_at'])
             ];
 
             if ($this->request->getFile('new_thumbnail')) {
@@ -208,7 +208,13 @@ class Artikel extends BaseController
     // get all artikel
     public function getArtikel(): object
     {
-        $dbResponse = $this->artikelModel->getArtikel($this->request->getGet());
+        $isAdmin = false;
+        if ($this->request->getHeader('token')) {
+            $result     = $this->checkToken();
+            $isAdmin    = (in_array($result['data']['privilege'],['admin','superadmin'])) ? true : false ;
+        }
+
+        $dbResponse = $this->artikelModel->getArtikel($this->request->getGet(),$isAdmin);
     
         return $this->respond($dbResponse,$dbResponse['status']);
     }

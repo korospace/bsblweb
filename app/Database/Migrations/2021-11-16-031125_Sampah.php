@@ -50,6 +50,6 @@ class Sampah extends Migration
 
     public function down()
     {
-        //
+        $this->forge->dropTable('sampah');
     }
 }

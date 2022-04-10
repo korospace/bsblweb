@@ -270,7 +270,7 @@ let counterUp = () => {
     let kategoriUtama = res.data.data.filter(e => e.kategori_utama == "1");
 	
 	if (kategoriUtama.length < 3) {
-		
+		$('.features-item').addClass('d-none');
 	} 
 	else {
 		$('.card-activity').each(function (e){

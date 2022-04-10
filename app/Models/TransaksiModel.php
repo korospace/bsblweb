@@ -148,6 +148,8 @@ class TransaksiModel extends Model
             $hargaemas       = $data['hargaemas'];
             $saldoDompetAsal = $data['saldo_dompet_asal'];
             $lastNomor       = $this->getLastNo();
+
+            // var_dump($hasilKonversi);die;
             
             $this->db->transBegin();
             $this->db->query("INSERT INTO transaksi (no,id,id_user,jenis_transaksi,date) VALUES($lastNomor,'$idtransaksi','$idnasabah','konversi saldo',$date);");

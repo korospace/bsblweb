@@ -33,6 +33,7 @@
         @media (max-width:640px){
             #page_title{
                 font-size: 24px;
+                margin-top: 40px !important;
                 margin-bottom: 10px !important;
                 padding-bottom: 10px !important;
             }
@@ -69,7 +70,8 @@
         }
 	</style>
     
-    <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/css/purge/bootstrap/listPenghargaan.css'); ?>">
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
 <?= $this->endSection(); ?>
 
 <!-- JS -->

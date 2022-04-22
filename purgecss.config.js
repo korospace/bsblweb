@@ -4,9 +4,11 @@ module.exports = {
     // ** alertinfo
     // content: ['app/Views/Components/artikelFooter.php'],
     // ** homepage
-    content: ['app/Views/HomePage/index.php','public/assets/js/homepage.js'],
+    // content: ['app/Views/HomePage/index.php','public/assets/js/homepage.js'],
     // ** list artikel
     // content: ['app/Views/HomePage/listArtikel.php','public/assets/js/listArtikel.js'],
+    // ** list penghargaan
+    content: ['app/Views/HomePage/listPenghargaan.php','public/assets/js/listPenghargaan.js'],
     // ** detil artikel
     // content: ['app/Views/HomePage/detilArtikel.php','public/assets/js/detilArtikel.js'],
     // ** login

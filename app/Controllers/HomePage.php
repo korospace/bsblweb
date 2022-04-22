@@ -17,6 +17,15 @@ class HomePage extends BaseController
         return view('HomePage/index',$data);
     }
 
+    public function listPenghargaan()
+    {
+        $data = [
+            'title'    => 'Penghargaan Yang Diperoleh Banksampah Budiluhur',
+        ];
+
+        return view('HomePage/listPenghargaan', $data);
+    }
+
     public function listArtikel(string $kategori)
     {
         $data = [

@@ -32,9 +32,10 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-$routes->add('/',                'HomePage::index');
-$routes->add('/homepage/(:any)', 'HomePage::listArtikel/$1');
-$routes->add('/artikel/(:any)',  'HomePage::detilArtikel/$1');
+$routes->add('/',                  'HomePage::index');
+$routes->add('/penghargaan',       'HomePage::listPenghargaan');
+$routes->add('/homepage/(:any)',   'HomePage::listArtikel/$1');
+$routes->add('/artikel/(:any)',    'HomePage::detilArtikel/$1');
 $routes->get("/homepage/statistik","HomePage::getStatistik");
 
 $routes->group("register", function ($routes) {

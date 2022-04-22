@@ -64,13 +64,6 @@
 						<div class="card text-white position-relative skeleton" style="box-shadow: none;min-height: 220px;border-radius: 10px;">
 						</div>
 					</div>
-
-					<!-- <div class="col-12 col-sm-6 position-relative d-flex align-items-center" style="min-height: 220px;">
-						<img src="<?= base_url('assets/images/default-thumbnail.webp') ?>" alt="" style="min-width:100%;max-width:100%; opacity:0;">
-						<div class="card text-white position-absolute skeleton" style="min-width:93%;max-width:93%;min-height:88%;max-height:88%;border-radius: 10px;box-shadow: none;">
-
-						</div>
-					</div> -->
 				<?php } ?>
 			</div>
 		</div>

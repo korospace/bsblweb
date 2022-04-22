@@ -74,7 +74,8 @@ const httpRequestPost = (url,form) => {
                 newForm.set(pair[0], pair[1].trim());    
             } 
             else {
-                newForm.set(pair[0], pair[1].trim().toLowerCase());    
+                // newForm.set(pair[0], pair[1].trim().toLowerCase());
+                newForm.set(pair[0], pair[1].trim());    
             }
         }
         else{
@@ -144,7 +145,8 @@ const httpRequestPut = (url,form) => {
         let noPair = ['id','username','email','password','id_kategori','new_password','old_password','thumbnail','new_thumbnail','content','icon'];
 
         if (noPair.includes(pair[0]) == false) {
-            newForm.set(pair[0], pair[1].trim().toLowerCase());
+            // newForm.set(pair[0], pair[1].trim().toLowerCase());
+            newForm.set(pair[0], pair[1].trim());
         }
         else{
             if (pair[1].type) {

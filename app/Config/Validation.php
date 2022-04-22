@@ -615,10 +615,10 @@ class Validation
      */
 	public $penghargaanValidate = [
         'icon' => [
-            'rules'  => 'uploaded[icon]|max_size[icon,200]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
+            'rules'  => 'uploaded[icon]|max_size[icon,2000]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
             'errors' => [
                 'uploaded' => 'icon is required',
-                'max_size' => 'max size is 200kb',
+                'max_size' => 'max size is 2mb',
                 // 'is_image' => 'your file is not image',
                 'mime_in'  => 'your file is not in format(png/jpg/jpeg/webp)',
             ],
@@ -644,10 +644,10 @@ class Validation
      */
 	public $mitraValidate = [
         'icon' => [
-            'rules'  => 'uploaded[icon]|max_size[icon,200]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
+            'rules'  => 'uploaded[icon]|max_size[icon,2000]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
             'errors' => [
                 'uploaded' => 'icon is required',
-                'max_size' => 'max size is 200kb',
+                'max_size' => 'max size is 2mb',
                 // 'is_image' => 'your file is not image',
                 'mime_in'  => 'your file is not in format(png/jpg/jpeg/webp)',
             ],
@@ -675,10 +675,10 @@ class Validation
     // kategori artikel
 	public $kategoriArtikelValidate = [
         'icon' => [
-            'rules'  => 'uploaded[icon]|max_size[icon,200]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
+            'rules'  => 'uploaded[icon]|max_size[icon,2000]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
             'errors' => [
                 'uploaded' => 'icon is required',
-                'max_size' => 'max size is 200kb',
+                'max_size' => 'max size is 2mb',
                 // 'is_image' => 'your file is not image',
                 'mime_in'  => 'your file is not in format(png/jpg/jpeg/webp)',
             ],

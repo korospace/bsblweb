@@ -55,19 +55,21 @@ $(document).ready(function () {
 
 	//smoothscroll
 	$('.menu-item').on('click', function (e) {
-		e.preventDefault();
-		var athis = this;
-		var target = this.hash,
+		if ($(this).html().toLowerCase() !== "penghargaan") {
+			e.preventDefault();
+			var athis = this;
+			var target = this.hash,
 			menu = target;
-		var $target = $(target);
+			var $target = $(target);
 
-		$('html, body').stop().animate({
-			'scrollTop': $target.offset().top
-		}, 500, 'swing', function () {
-			window.location.hash = target;
-			$('.menu-item').removeClass('active');
-			$(athis).addClass('active');
-		});
+			$('html, body').stop().animate({
+				'scrollTop': $target.offset().top
+			}, 500, 'swing', function () {
+				window.location.hash = target;
+				$('.menu-item').removeClass('active');
+				$(athis).addClass('active');
+			});
+		}
 	});
 
 	$(window).scroll(function (event) {
@@ -236,7 +238,7 @@ get total sampah
 */
 axios.get(APIURL+'/transaksi/sampahmasuk')
 .then(res => {
-	let totalSampah   = res.data.data;
+	let totalSampah = res.data.data;
 
 	for (const key in totalSampah) {
 		$(`#sampah-${key.replace(/\s/g,'-')}`).html(parseFloat(totalSampah[key].total).toFixed(1));
@@ -290,6 +292,29 @@ let counterUp = () => {
  .catch(err => {
  
  });
+
+/**
+ * Get Mitra
+ */
+axios.get(`${APIURL}/mitra/getmitra`)
+.then(res => {
+	let elMitra = ''
+	res.data.data.forEach(e => {
+		elMitra += `<div class="col-12 col-sm-6 col-md-4 mb-5 h-100">
+			<div class="card h-100" style="display:flex;flex-direction:column;justify-content:center;align-items:center;border:none;">
+				<img src="${e.icon}" style="width:60%;"/>
+				<p class="text-center text-uppercase" style="margin-top:10px;">
+					${e.name}
+				</p>
+			</div>
+		</div>`;
+	});
+
+	$('#container-mitra').html(elMitra);
+})
+.catch(err => {
+
+});
 
 /* 
 -------------- 

@@ -48,6 +48,7 @@ function cardOnClick(el) {
     console.log();
 }
 zoomClose.addEventListener("click", () => {
+    document.body.style.overflow="auto";
     zoomBg.classList.add("hide");
     zoomImg.src = "";
 })

@@ -316,6 +316,13 @@ axios.get(`${APIURL}/mitra/getmitra`)
 
 });
 
+/**
+ * Remove IG widget button
+ */
+setTimeout(() => {
+	document.querySelector(".eapps-link").remove();
+}, 3000);
+
 /* 
 -------------- 
 send kritik 

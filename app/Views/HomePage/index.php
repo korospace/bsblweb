@@ -54,9 +54,9 @@
 <script src="<?= base_url('assets/js/plugins/scrollreveal.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
-<script src="https://apps.elfsight.com/p/platform.js" defer></script>
+<script src="https://apps.elfsight.com/p/platform.js"></script>
 <script src="<?= base_url('assets/js/plugins/jquery.counterup.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/homepage.js'); ?>"></script>
+<script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->

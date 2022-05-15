@@ -70,7 +70,7 @@ class BaseController extends ResourceController
     }
 
     /**
-     * TOKEN KEY.
+     * Cookie Option
      */
     public function cookieOps(string $expired) : array
     {

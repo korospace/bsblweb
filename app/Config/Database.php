@@ -34,33 +34,12 @@ class Database extends Config
     // --- Mysql ---
 
     // Local
-    // public $default = [
-    //     'DSN'      => '',
-    //     'hostname' => '127.0.0.1',
-    //     'username' => 'root',
-    //     'password' => '',
-    //     'database' => 'banksampah',
-    //     'DBDriver' => 'MySQLi',
-    //     'DBPrefix' => '',
-    //     'pConnect' => false,
-    //     'DBDebug'  => (ENVIRONMENT !== 'production'),
-    //     'charset'  => 'utf8',
-    //     'DBCollat' => 'utf8_general_ci',
-    //     'swapPre'  => '',
-    //     'encrypt'  => false,
-    //     'compress' => false,
-    //     'strictOn' => false,
-    //     'failover' => [],
-    //     'port'     => 3306,
-    // ];
-    
-    // Deploy
     public $default = [
         'DSN'      => '',
-        'hostname' => 'remotemysql.com',
-        'username' => 'dXku1KycHO',
-        'password' => 'GAYmmcQGkL',
-        'database' => 'dXku1KycHO',
+        'hostname' => 'localhost',
+        'username' => '',
+        'password' => '',
+        'database' => '',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
@@ -76,7 +55,6 @@ class Database extends Config
     ];
 
     //  --- PostgreSql ---
-
     // Local
     // public $default = [
     //     'DSN'      => 'Postgre://banksampah:banksampah@localhost:5432/banksampah?charset=utf8&connect_timeout=5',
@@ -97,7 +75,6 @@ class Database extends Config
     //     'failover' => [],
     //     'port'     => 5432,
     // ];
-
     //  Deploy
     // public $default = [
     //     'DSN'      => 'Postgre://ilklznsndblfsf:fccfc072a3be5460de9a0e60f81dd169b06be4e2fdbfe9db8e3e2cf3b263b0f1@ec2-107-23-41-227.compute-1.amazonaws.com:5432/d4jlpobtu4g67i?charset=utf8&connect_timeout=100',

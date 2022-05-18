@@ -9,7 +9,7 @@ class TarikSaldo extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id' => [
+            'no' => [
                 // 'type'           => 'serial', // postgre,
                 'type'           => 'int', // mysql
                 'auto_increment' => true,     // mysql
@@ -35,7 +35,7 @@ class TarikSaldo extends Migration
             ],
         ]);
 
-        $this->forge->addPrimaryKey('id');
+        $this->forge->addPrimaryKey('no');
         $this->forge->addForeignKey('id_transaksi','transaksi','id','CASCADE','CASCADE');
         $this->forge->createTable('tarik_saldo');
     }

@@ -11,8 +11,9 @@ class Transaksi extends Migration
         $this->forge->addField([
             'no' => [
                 // 'type' => 'integer', // postgre,
-                'type' => 'int', // mysql
-                'null' => false,
+                'type'           => 'int', // mysql
+                'auto_increment' => true,  // mysql
+                'null'           => false,
             ],
             'id' => [
                 // 'type'       => 'text', // postgre
@@ -38,7 +39,8 @@ class Transaksi extends Migration
             ],
         ]);
 
-        $this->forge->addPrimaryKey('id');
+        $this->forge->addKey("no");
+        $this->forge->addPrimaryKey("id");
         $this->forge->addForeignKey('id_user','users','id','CASCADE','CASCADE');
         // $this->forge->addField("date TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('transaksi');

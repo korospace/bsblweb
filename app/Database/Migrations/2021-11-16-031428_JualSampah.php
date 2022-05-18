@@ -9,7 +9,7 @@ class JualSampah extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id' => [
+            'no' => [
                 // 'type'           => 'serial', // postgre,
                 'type'           => 'int', // mysql
                 'auto_increment' => true,
@@ -40,7 +40,7 @@ class JualSampah extends Migration
             ],
         ]);
 
-        $this->forge->addPrimaryKey('id');
+        $this->forge->addPrimaryKey('no');
         $this->forge->addForeignKey('id_transaksi','transaksi','id','CASCADE','CASCADE');
         $this->forge->addForeignKey('id_sampah','sampah','id','CASCADE','CASCADE');
         $this->forge->createTable('jual_sampah');

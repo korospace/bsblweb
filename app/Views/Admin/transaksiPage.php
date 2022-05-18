@@ -114,7 +114,7 @@
 											<i class="fas fa-search text-muted"></i>
 										</span>
 									</div>
-									<input id="search-nasabah" type="text" class="form-control form-control-sm h-100 px-2" placeholder="id nasabah" style="max-height: 28px;border-radius: 0px 4px 4px 0px;">
+									<input id="search-nasabah" type="text" class="form-control form-control-sm h-100 px-2" placeholder="id nasabah/username/nama" style="max-height: 28px;border-radius: 0px 4px 4px 0px;">
 								</div>
 								<div class="input-group col-12 col-sm-1 w-100" style="min-width: 50px;">
 									<button id="btn-search-nasabah" class="btn btn-dark h-100 mt-2 mt-sm-0 text-xxs p-1" data-toggle="modal" data-target="#modalAddEditAdmin" onclick="searchNasabah(this,event)" style="width: 100%;max-height: 28px;border-radius: 4px;">
@@ -124,6 +124,10 @@
 								</div>
 								<div class="input-group p-0 col-12 mt-2 px-1 d-flex">
 									<table class="mr-5">
+										<tr>
+											<td class="">id</td>
+											<td>:&nbsp;&nbsp; <span id="id-check"></span></td>
+										</tr>
 										<tr>
 											<td class="">email</td>
 											<td>:&nbsp;&nbsp; <span id="email-check"></span></td>

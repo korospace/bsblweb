@@ -95,27 +95,29 @@ const searchNasabah = async (el = false,event = false) => {
     $('#btn-search-nasabah #spinner').removeClass('d-none');
 
     let searchVal     = $('#search-nasabah').val();
-    let httpResponse1 = await httpRequestGet(`${APIURL}/admin/getnasabah?id=${searchVal}`);
-    let httpResponse2 = await httpRequestGet(`${APIURL}/transaksi/getsaldo?idnasabah=${searchVal}`);
+    let httpResponse1 = await httpRequestGet(`${APIURL}/admin/getnasabah?key=${searchVal}`);
 
-    $('#btn-search-nasabah #text').removeClass('d-none');
-    $('#btn-search-nasabah #spinner').addClass('d-none');
-
-    if (httpResponse1.status === 200 && httpResponse2.status === 200) {
+    if (httpResponse1.status === 200) {
         dataNasabah = httpResponse1.data.data[0];
-        dataSaldo   = httpResponse2.data.data;
-        
-        $('#barrier-transaksi').addClass('d-none');
-        $(`#form-${formTarget}`).removeClass('opacity-6');
-        $(`#form-${formTarget} input[type=date]`).val(getCurrentDate());
-        $(`#form-${formTarget} input[type=time]`).val(getCurrentTime());
+        idnasabah   = dataNasabah.id;
 
-        idnasabah  = dataNasabah.id;
+        let httpResponse2 = await httpRequestGet(`${APIURL}/transaksi/getsaldo?idnasabah=${idnasabah}`);
+        dataSaldo = httpResponse2.data.data;
+
+        $('#btn-search-nasabah #text').removeClass('d-none');
+        $('#btn-search-nasabah #spinner').addClass('d-none');
+
+        $('#id-check').html(idnasabah);
         $('#email-check').html(dataNasabah.email);
         $('#username-check').html(dataNasabah.username);
         $('#nama-lengkap-check').html(dataNasabah.nama_lengkap);
         $('#saldo-uang-check').html(`Rp. ${modifUang(dataSaldo.uang)}`);
         $('#saldo-emas-check').html(`${parseFloat(dataSaldo.emas || 0).toFixed(4)} g`);
+        
+        $('#barrier-transaksi').addClass('d-none');
+        $(`#form-${formTarget}`).removeClass('opacity-6');
+        $(`#form-${formTarget} input[type=date]`).val(getCurrentDate());
+        $(`#form-${formTarget} input[type=time]`).val(getCurrentTime());
     }
     else if (httpResponse1.status === 404) {
         showAlert({

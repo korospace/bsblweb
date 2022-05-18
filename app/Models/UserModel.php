@@ -89,6 +89,14 @@ class UserModel extends Model
                 WHERE users.privilege = 'nasabah' 
                 AND users.id = '".$get['id']."'";
             }
+            else if (isset($get['key'])) {
+                $query  = "SELECT users.id,users.email,users.username,users.nama_lengkap,users.notelp,users.nik,users.alamat,users.tgl_lahir,users.kelamin,users.last_active,users.is_verify,users.created_at
+                FROM users
+                WHERE users.privilege = 'nasabah' 
+                AND users.id = '".$get['key']."'
+                OR users.username = '".$get['key']."'
+                OR users.nama_lengkap = '".$get['key']."'";
+            }
             else {
                 
                 if (isset($get['kelurahan'])) {

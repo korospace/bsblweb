@@ -103,7 +103,7 @@
                     <div class="col-12 col-md-5 mt-5 mt-md-0">
                         <div class="widget widegt_about">
                             <h4 class="text-white" style="font-weight: bold;">Social media</h4>
-                            <p class="mt-4 text-white">Quisque orci nisl, viverra et sem ac, tincidunt egestas massa. Morbi est arcu, hendrerit ac vehicula condimentum, euismod nec tortor praesent consequat urna.</p>
+                            <!-- <p class="mt-4 text-white">Quisque orci nisl, viverra et sem ac, tincidunt egestas massa. Morbi est arcu, hendrerit ac vehicula condimentum, euismod nec tortor praesent consequat urna.</p> -->
                             <div class="social">
                                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                                 <li><a href="#"><i class="fab fa-twitter"></i></a></li>

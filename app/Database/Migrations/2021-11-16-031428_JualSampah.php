@@ -48,6 +48,6 @@ class JualSampah extends Migration
 
     public function down()
     {
-        //
+        $this->forge->dropTable('jual_sampah');
     }
 }

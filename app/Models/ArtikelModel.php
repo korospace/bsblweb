@@ -112,40 +112,46 @@ class ArtikelModel extends Model
         }
     }
 
-    public function getArtikel(array $get): array
+    public function getArtikel(array $get,bool $isAdmin): array
     {
         try {
             $orderby = (isset($get['orderby']) && $get['orderby']=='terbaru')? 'DESC': 'ASC';
 
             if (isset($get['id']) && !isset($get['kategori'])) {
                 $berita = $this->db->table($this->table)
-                ->select("artikel.id,artikel.title,artikel.slug,artikel.id_kategori,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail,artikel.content")
+                ->select("artikel.id,artikel.title,artikel.slug,artikel.id_kategori,kategori_artikel.name AS kategori,artikel.published_at,artikel.created_at,artikel.thumbnail,artikel.content")
                 ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
-                ->join('users', 'users.id = artikel.created_by')
                 ->where("artikel.id",$get['id'])->get()->getFirstRow();
                 $berita = $this->modifImgPath($berita);
             } 
             else if (isset($get['slug']) && !isset($get['kategori'])) {
                 $berita = $this->db->table($this->table)
-                ->select("artikel.id,artikel.title,artikel.slug,artikel.id_kategori,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail,artikel.content")
+                ->select("artikel.id,artikel.title,artikel.slug,artikel.id_kategori,kategori_artikel.name AS kategori,artikel.published_at,artikel.created_at,artikel.thumbnail,artikel.content")
                 ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
-                ->join('users', 'users.id = artikel.created_by')
                 ->where("artikel.slug",$get['slug'])->get()->getFirstRow();
                 $berita = $this->modifImgPath($berita);
             } 
             else if (isset($get['kategori']) && !isset($get['id'])) {
-                $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail')
+                $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,artikel.published_at,artikel.created_at,artikel.thumbnail')
                 ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
-                ->join('users', 'users.id = artikel.created_by')
-                ->where("kategori_artikel.name",$get['kategori'])
-                ->orderBy('artikel.created_at',$orderby)->get()->getResultArray();
+                ->where("kategori_artikel.name",$get['kategori']);
+
+                if (!$isAdmin) {
+                    $berita = $berita->where("artikel.published_at <=",(int)time());
+                }
+
+                $berita = $berita->orderBy('artikel.created_at',$orderby)->get()->getResultArray();
                 $berita = $this->modifImgPath($berita);
             } 
             else {
-                $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,users.nama_lengkap AS penulis,artikel.created_at,artikel.thumbnail')
-                ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori')
-                ->join('users', 'users.id = artikel.created_by')
-                ->orderBy('artikel.created_at',$orderby);
+                $berita = $this->db->table($this->table)->select('artikel.id,artikel.title,artikel.slug,kategori_artikel.name AS kategori,artikel.published_at,artikel.created_at,artikel.thumbnail')
+                ->join('kategori_artikel', 'kategori_artikel.id = artikel.id_kategori');
+
+                if (!$isAdmin) {
+                    $berita = $berita->where("artikel.published_at <=",(int)time());
+                }
+
+                $berita = $berita->orderBy('artikel.created_at',$orderby);
 
                 if (isset($geet['limit'])) {
                     $berita = $berita->limit($geet['limit']);

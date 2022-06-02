@@ -104,6 +104,26 @@
                     <span class="nav-link-text ms-1">Nasabah</span>
                 </a>
             </li>
+            <!-- list penghargaan -->
+            <li class="nav-item mt-2">
+                <a class="nav-link <?= ($title=='Admin | list penghargaan') ? 'active' : ''?>" href="<?= base_url('admin/listpenghargaan');?>">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-trophy <?= ($title=='Admin | list penghargaan') ? 'text-white' : 'text-muted'?>" style="font-size: 14px;transform: translateY(-2px);"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Penghargaan</span>
+                </a>
+            </li>
+            <!-- list mitra -->
+            <li class="nav-item mt-2">
+                <a class="nav-link <?= ($title=='Admin | list mitra') ? 'active' : ''?>" href="<?= base_url('admin/listmitra');?>">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-hands-helping <?= ($title=='Admin | list mitra') ? 'text-white' : 'text-muted'?>" style="font-size: 14px;transform: translateY(-2px);"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Mitra</span>
+                </a>
+            </li>
             <!-- list artikel -->
             <li class="nav-item mt-2">
                 <a class="nav-link <?= ($title=='Admin | list artikel') ? 'active' : ''?>" href="<?= base_url('admin/listartikel');?>">

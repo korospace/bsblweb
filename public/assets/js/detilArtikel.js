@@ -33,15 +33,14 @@ axios.get(`${APIURL}/artikel/getkategori`)
 axios.get(`${APIURL}/artikel/getartikel?slug=${SLUG}`)
 .then(res => {
     let response  = res.data.data;
-    let date      = new Date(parseInt(response.created_at) * 1000);
+    let date      = new Date(parseInt(response.published_at) * 1000);
     let day       = date.toLocaleString("en-US",{day: "numeric"});
     let month     = date.toLocaleString("en-US",{month: "long"});
     let year      = date.toLocaleString("en-US",{year: "numeric"});
     
     $('#blog-share').removeClass('d-none');
     $('#blog-date').removeClass('skeleton');
-    $('#blog-date').html(`<i class="fa fa-calendar text-secondary text-xxs mr-3"></i>${day} ${month} ${year}`);
-    $('#blog-penulis').html(`<i class="fas fa-user-edit text-secondary text-xxs"></i>${response.penulis}`);
+    $('#blog-date').html(`<i class="fa fa-calendar text-secondary text-xxs mr-2"></i>${day} ${month} ${year}`);
     $('#blog-penulis').removeClass('skeleton');
     $('#blog-content').html(response.content);
 

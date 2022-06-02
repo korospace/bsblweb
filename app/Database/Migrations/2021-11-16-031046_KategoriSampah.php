@@ -35,6 +35,6 @@ class KategoriSampah extends Migration
 
     public function down()
     {
-        //
+        $this->forge->dropTable('kategori');
     }
 }

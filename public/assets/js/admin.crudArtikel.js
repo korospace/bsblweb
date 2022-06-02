@@ -43,6 +43,9 @@ const getAllKatArtikel = async () => {
             hideLoadingSpinner();
         }
     }
+    else {
+        hideLoadingSpinner();
+    }
 
     $('#kategori-artikel-wraper').html(elKategori);
     editTemporaryContent();
@@ -71,9 +74,14 @@ const getDetailBerita = async () => {
     }
     if (httpResponse.status === 200) {
         let dataArtikel = httpResponse.data.data;
+        let date        = new Date(parseInt(dataArtikel.published_at) * 1000);
+        let day         = date.toLocaleString("en-US",{day: "2-digit"});
+        let month       = date.toLocaleString("en-US",{month: "2-digit"});
+        let year        = date.toLocaleString("en-US",{year: "numeric"});
 
         $('#idartikel').val(dataArtikel.id);
         document.querySelector('#preview-thumbnail').src = dataArtikel.thumbnail;
+        $('#published_at').val(`${year}-${month}-${day}`);
         $('#title').val(dataArtikel.title);
         $(`#kategori-artikel-wraper`).val(dataArtikel.id_kategori);
         $('.ql-editor').html(dataArtikel.content);
@@ -87,11 +95,13 @@ $('#formCrudArticle').on('submit', async (e) => {
     if (validateCrudArtikel()) {
         let httpResponse = '';
         let form         = new FormData(e.target);
+        let tglPublish   = form.get('published_at').split('-');
 
         if (fileThumbnail !== '') {
             form.set('thumbnail', fileThumbnail, fileThumbnail.name);
         }
         form.append('content',$('.ql-editor').html());
+        form.set('published_at',`${tglPublish[2]}-${tglPublish[1]}-${tglPublish[0]}`);
 
         showLoadingSpinner();
 
@@ -136,7 +146,10 @@ $('#formCrudArticle').on('submit', async (e) => {
 
 // auto save ql editor
 let dataTemporaryContent = JSON.parse(localStorage.getItem('add-artikel'));
-if (pageTitle1 === 'tambah artikel') {
+if (pageTitle2 === 'tambah artikel') {
+    $('#formCrudArticle #published_at').on('change', (e) => {
+        saveTemporaryContent();
+    })
     $('#formCrudArticle #title').on('keyup', (e) => {
         saveTemporaryContent();
     })
@@ -150,6 +163,7 @@ if (pageTitle1 === 'tambah artikel') {
 
 function saveTemporaryContent() {
     let objContent = {
+        published_at: $('#formCrudArticle #published_at').val(),
         title: $('#formCrudArticle #title').val(),
         kategori: $('#formCrudArticle #kategori-artikel-wraper').val(),
         content: $('.ql-editor').html(),
@@ -159,8 +173,14 @@ function saveTemporaryContent() {
 }
 
 function editTemporaryContent() {
-    if (pageTitle1 === 'tambah artikel' && dataTemporaryContent) {
-        $('#formCrudArticle #title').val(dataTemporaryContent.title);
+    if (pageTitle2 === 'tambah artikel' && dataTemporaryContent) {
+        if (dataTemporaryContent.published_at) {
+            $('#formCrudArticle #published_at').val(dataTemporaryContent.published_at);
+        }
+
+        if (dataTemporaryContent.title) {
+            $('#formCrudArticle #title').val(dataTemporaryContent.title);
+        }
         
         if (dataTemporaryContent.kategori) {
             $('#formCrudArticle #kategori-artikel-wraper').val(dataTemporaryContent.kategori);
@@ -184,6 +204,11 @@ function validateCrudArtikel() {
             $('#thumbnail').addClass('is-invalid');
             status = false;
         }
+    }
+    // published_at
+    if ($('#published_at').val() == '') {
+        $('#published_at').addClass('is-invalid');
+        status = false;
     }
     // title
     if ($('#title').val() == '') {

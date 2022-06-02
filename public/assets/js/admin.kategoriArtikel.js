@@ -74,9 +74,9 @@ const changeThumbPreview = (el) => {
         return false;
     }
     // If image more than 200kb
-    else if(el.files[0].size > 200000){
+    else if(el.files[0].size > 2000000){
         showAlert({
-            message: `ukuran gambar maksimal 200kb`,
+            message: `ukuran gambar maksimal 2mb`,
             autohide: true,
             type:'danger'
         });

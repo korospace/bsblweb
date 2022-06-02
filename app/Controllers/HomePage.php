@@ -17,6 +17,15 @@ class HomePage extends BaseController
         return view('HomePage/index',$data);
     }
 
+    public function listPenghargaan()
+    {
+        $data = [
+            'title'    => 'Penghargaan Yang Diperoleh Banksampah Budiluhur',
+        ];
+
+        return view('HomePage/listPenghargaan', $data);
+    }
+
     public function listArtikel(string $kategori)
     {
         $data = [
@@ -39,5 +48,39 @@ class HomePage extends BaseController
         ];
 
         return view('HomePage/detilArtikel', $data);
+    }
+
+    /**
+     *  Statistik
+     */
+    public function getStatistik()
+    {
+        try {
+            $db = \Config\Database::connect();
+
+            $result = $db->query("SELECT 
+            (SELECT COUNT(id) from users WHERE privilege = 'nasabah') AS total_nasabah,
+            (SELECT COUNT(mitra.id) from mitra) AS total_mitra,
+            (SELECT COUNT(penghargaan.id) from penghargaan) AS total_penghargaan");
+            $result = $result->getResultArray();
+            
+            $dbresponse = [
+                'status' => 200,
+                'error'  => false,
+                'data'   => $result
+            ];
+
+            return $this->respond($dbresponse,$dbresponse['status']);
+        } 
+        catch (\Throwable $th) {
+            $dbresponse = [
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $th->getMessage()
+            ];
+
+            return $this->respond($dbresponse,$dbresponse['status']);
+        }
+        
     }
 }

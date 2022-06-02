@@ -609,6 +609,64 @@ class Validation
             ],
 		]
 	];
+
+    /**
+     * PENGHARGAAN 
+     */
+	public $penghargaanValidate = [
+        'icon' => [
+            'rules'  => 'uploaded[icon]|max_size[icon,2000]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
+            'errors' => [
+                'uploaded' => 'icon is required',
+                'max_size' => 'max size is 2mb',
+                // 'is_image' => 'your file is not image',
+                'mime_in'  => 'your file is not in format(png/jpg/jpeg/webp)',
+            ],
+        ],
+		'penghargaan_name' => [
+            'rules'  => 'required|max_length[255]|is_unique[penghargaan.name]',
+            'errors' => [
+                'required'    => 'penghargaan name is required',
+                'max_length'  => 'max 255 character',
+                'is_unique'   => 'penghargaan is exist',
+            ],
+		],
+        'description' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'kategori name is required',
+            ],
+		],
+	];
+
+    /**
+     * MITRA
+     */
+	public $mitraValidate = [
+        'icon' => [
+            'rules'  => 'uploaded[icon]|max_size[icon,2000]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
+            'errors' => [
+                'uploaded' => 'icon is required',
+                'max_size' => 'max size is 2mb',
+                // 'is_image' => 'your file is not image',
+                'mime_in'  => 'your file is not in format(png/jpg/jpeg/webp)',
+            ],
+        ],
+		'mitra_name' => [
+            'rules'  => 'required|max_length[255]|is_unique[mitra.name]',
+            'errors' => [
+                'required'    => 'mitra name is required',
+                'max_length'  => 'max 255 character',
+                'is_unique'   => 'mitra is exist',
+            ],
+		],
+        'description' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'mitra name is required',
+            ],
+		],
+	];
     
     /**
      * ARTIKEL Controller Validate
@@ -617,10 +675,10 @@ class Validation
     // kategori artikel
 	public $kategoriArtikelValidate = [
         'icon' => [
-            'rules'  => 'uploaded[icon]|max_size[icon,200]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
+            'rules'  => 'uploaded[icon]|max_size[icon,2000]|mime_in[icon,image/png,image/jpg,image/jpeg,image/webp]',
             'errors' => [
                 'uploaded' => 'icon is required',
-                'max_size' => 'max size is 200kb',
+                'max_size' => 'max size is 2mb',
                 // 'is_image' => 'your file is not image',
                 'mime_in'  => 'your file is not in format(png/jpg/jpeg/webp)',
             ],

@@ -47,6 +47,6 @@ class PindahSaldo extends Migration
 
     public function down()
     {
-        //
+        $this->forge->dropTable('pindah_saldo');
     }
 }

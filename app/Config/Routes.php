@@ -32,9 +32,11 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-$routes->add('/',                'HomePage::index');
-$routes->add('/homepage/(:any)', 'HomePage::listArtikel/$1');
-$routes->add('/artikel/(:any)',  'HomePage::detilArtikel/$1');
+$routes->add('/',                  'HomePage::index');
+$routes->add('/penghargaan',       'HomePage::listPenghargaan');
+$routes->add('/homepage/(:any)',   'HomePage::listArtikel/$1');
+$routes->add('/artikel/(:any)',    'HomePage::detilArtikel/$1');
+$routes->get("/homepage/statistik","HomePage::getStatistik");
 
 $routes->group("register", function ($routes) {
     // VIEWS
@@ -66,29 +68,31 @@ $routes->group("login", function ($routes) {
 
 $routes->group("nasabah", function ($routes) {
     // VIEWS
-    $routes->add('/',                    'Nasabah::dashboardNasabah');
-    $routes->add('profile',              'Nasabah::profileNasabah');
+    $routes->add('/',           'Nasabah::dashboardNasabah');
+    $routes->add('profile',     'Nasabah::profileNasabah');
     // API
-    $routes->get("sessioncheck",  "Nasabah::sessionCheck");
-    $routes->get("getprofile",    "Nasabah::getProfile");
-    $routes->put("editprofile",   "Nasabah::editProfile");
-    $routes->delete("logout",     "Nasabah::logout");
-    $routes->get("getsaldo",      "Nasabah::getSaldo");
-    $routes->get('wilayah',      'Nasabah::getWilayah');
-    $routes->post('sendkritik',   'Nasabah::sendKritik');
-    $routes->add("(:any)",        "Notfound::PageNotFound");
+    $routes->get("sessioncheck","Nasabah::sessionCheck");
+    $routes->get("getprofile",  "Nasabah::getProfile");
+    $routes->put("editprofile", "Nasabah::editProfile");
+    $routes->delete("logout",   "Nasabah::logout");
+    $routes->get("getsaldo",    "Nasabah::getSaldo");
+    $routes->get('wilayah',     'Nasabah::getWilayah');
+    $routes->post('sendkritik', 'Nasabah::sendKritik');
+    $routes->add("(:any)",      "Notfound::PageNotFound");
 });
 
 $routes->group("admin", function ($routes) {
     // VIEWS
     $routes->add('/',                  'Admin::dashboardAdmin');
-    $routes->add('transaksi',          'Admin::transaksiPage');
     $routes->add('listsampah',         'Admin::listSampahView');
-    $routes->add('listadmin',          'Admin::listAdminView');
-    $routes->add('kategoriartikel',    'Admin::kategoriArtikelView');
-    $routes->add('listartikel',        'Admin::listArtikelView');
+    $routes->add('transaksi',          'Admin::transaksiPage');
     $routes->add('listnasabah',        'Admin::listNasabahView');
     $routes->add('detilnasabah/(:any)','Admin::detilNasabahView/$1');
+    $routes->add('listadmin',          'Admin::listAdminView');
+    $routes->add('listpenghargaan',    'Admin::listPenghargaanView');
+    $routes->add('listmitra',          'Admin::listMitraView');
+    $routes->add('kategoriartikel',    'Admin::kategoriArtikelView');
+    $routes->add('listartikel',        'Admin::listArtikelView');
     $routes->add('addartikel',         'Admin::addArtikelView');
     $routes->add('editartikel/(:any)', 'Admin::editArtikelView/$1');
     $routes->add('profile',            'Admin::profileAdmin');
@@ -134,6 +138,19 @@ $routes->group("sampah", function ($routes) {
     $routes->add("(:any)",            "Notfound::PageNotFound");
 });
 
+$routes->group("penghargaan", function ($routes) {
+    $routes->post("addpenghargaan",      "Penghargaan::addPenghargaan");
+    $routes->delete("deletepenghargaan", "Penghargaan::deletePenghargaan");
+    $routes->get("getpenghargaan",       "Penghargaan::getPenghargaan");
+    $routes->add("(:any)",               "Notfound::PageNotFound");
+});
+
+$routes->group("mitra", function ($routes) {
+    $routes->post("addmitra",      "Mitra::addMitra");
+    $routes->delete("deletemitra", "Mitra::deleteMitra");
+    $routes->get("getmitra",       "Mitra::getMitra");
+    $routes->add("(:any)",         "Notfound::PageNotFound");
+});
 
 $routes->group("transaksi", function ($routes) {
     $routes->add('cetaktransaksi/(:any)','Transaksi::cetakTransaksi/$1');

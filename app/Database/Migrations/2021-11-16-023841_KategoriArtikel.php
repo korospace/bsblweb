@@ -47,6 +47,6 @@ class KategoriArtikel extends Migration
 
     public function down()
     {
-        //
+        $this->forge->dropTable('kategori_artikel');
     }
 }

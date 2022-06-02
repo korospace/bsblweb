@@ -3,6 +3,30 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
   <style>
+    #mitra .img_skeleton{
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+    }
+    #mitra .name_skeleton{
+      width: 200px;
+      height: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+    .skeleton{
+      background: rgb(193, 217, 102) !important;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse {
+      0%, 100% {
+        opacity: .8;
+      }
+      50% {
+        opacity: .5;
+      }
+    }
+
     @media (max-width:992px) {
       body {
         overflow: hidden;
@@ -30,14 +54,13 @@
 <script src="<?= base_url('assets/js/plugins/scrollreveal.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/waypoints.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins/imgfix.min.js'); ?>"></script>
+<script src="https://apps.elfsight.com/p/platform.js" defer></script>
 <script src="<?= base_url('assets/js/plugins/jquery.counterup.min.js'); ?>"></script>
-<script src="<?= base_url('assets/js/homepage.min.js'); ?>"></script>
+<script src="<?= base_url('assets/js/homepage.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <!-- Body -->
 <?= $this->section('content'); ?>
-
-<body class="">
 
   <!-- **** Loading Spinner **** -->
   <?= $this->include('Components/loadingSpinner'); ?>
@@ -61,6 +84,8 @@
               <li class="scroll-to-section"><a href="#welcome" class="menu-item">Home</a></li>
               <li class="scroll-to-section"><a href="#activity" class="menu-item">Kegiatan</a></li>
               <li class="scroll-to-section"><a href="#services" class="menu-item">Layanan</a></li>
+              <li class="scroll-to-section"><a href="#mitra" class="menu-item">Mitra</a></li>
+              <li class="scroll-to-section"><a href="<?= base_url('penghargaan'); ?>" class="menu-item">Penghargaan</a></li>
               <li class="scroll-to-section"><a href="#contact-us" class="menu-item">Contact Us</a></li>
             </ul>
             <a class='menu-trigger'>
@@ -292,6 +317,27 @@
   </section>
   <!-- Services Ends -->
 
+  <!-- Mitra -->
+  <div id="mitra" style="padding: 0 40px;margin-top:200px;">
+    <h1 class="text-center mb-5 mt-5">Mitra Kami</h1>
+    <div class="row justify-content-center align-items-center" id="container-mitra">
+				<?php for ($i=0; $i < 6; $i++) { ?>
+					<div class="col-12 col-sm-6 col-md-4 mb-5 h-100">
+            <div class="card h-100" style="display:flex;flex-direction:column;justify-content:center;align-items:center;border:none;">
+              <div class="img_skeleton skeleton"></div>
+              <p class="name_skeleton skeleton"></p>
+            </div>
+          </div>
+				<?php } ?>
+    </div>
+  </div>
+
+  <!-- Instagram Feed -->
+  <div style="padding: 0 40px;margin-top:80px;">
+    <h1 class="text-center mb-5 mt-5">Ikuti Instagram Kami</h1>
+    <div style="width: 100%;" class="elfsight-app-af63f7fb-2dc8-43cf-ac87-f3967815b740"></div>
+  </div>
+
   <!-- ***** Hubungi Kami ***** -->
   <footer id="contact-us">
     <div class="container">
@@ -344,5 +390,4 @@
 	<!-- **** footer artikiel **** -->
 	<?= $this->include('Components/artikelFooter'); ?>
   
-</body>
 <?= $this->endSection(); ?>

@@ -377,11 +377,10 @@
             </div>
           </div>
           <!-- ***** Contact Form End ***** -->
-          <div id="right-side" class="right-content col-lg-6 col-md-12 col-sm-12">
+          <div id="right-side" class="right-content col-lg-6 col-md-12 col-sm-12 ">
             <h2>Hubungi <em>Kami</em></h2>
             <p>
-              If you need this contact form to send email to your inbox, you may follow our <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact</a> page
-              for more detail.
+              Jika anda perlu menghubungi kami melalui email, anda dapat mengisi form ini
             </p>
             <ul class="social">
               <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>

@@ -338,6 +338,14 @@
     <div style="width: 100%;" class="elfsight-app-af63f7fb-2dc8-43cf-ac87-f3967815b740"></div>
   </div>
 
+  <!-- Social Media Icon Fixed -->
+  <div class="elfsight-app-5efed99f-297e-4eae-bda8-d9bb2b6ef831"></div>
+
+  <div style="padding: 0 40px;margin-top:140px;">
+    <h1 class="text-center mb-5 mt-5">Lokasi kami</h1>
+    <div class="mapouter"><div class="gmap_canvas"><iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=budiluhur&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br><style>.mapouter{position:relative;text-align:right;height:500px;width:100%;}</style><a href="https://www.embedgooglemap.net">google map in website</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:100%;}</style></div></div>
+  </div>
+
   <!-- ***** Hubungi Kami ***** -->
   <footer id="contact-us">
     <div class="container">

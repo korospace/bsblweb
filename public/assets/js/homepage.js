@@ -317,7 +317,11 @@ axios.get(`${APIURL}/mitra/getmitra`)
  * Remove IG widget button
  */
 setTimeout(() => {
-	document.querySelector(".eapps-link").remove();
+	let xx = document.querySelectorAll(".eapps-link");
+
+	xx.forEach(e => {
+		e.remove();
+	})
 }, 3000);
 
 /* 

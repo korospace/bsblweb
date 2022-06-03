@@ -11,8 +11,8 @@ axios.get(`${APIURL}/penghargaan/getpenghargaan`)
                     <div style="max-height:180px;overflow:hidden;">
                         <img class="img-thumbnail" src="${e.icon}" style="width:100%;"/>
                     </div>
-                    <p class="text-center text-uppercase" style="margin-top:10px;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
-                        ${e.description}
+                    <p class="text-center text-uppercase px-3" style="margin-top:10px;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+                        ${e.name}
                     </p>
                 </div>
             </div>`;
@@ -35,9 +35,12 @@ axios.get(`${APIURL}/penghargaan/getpenghargaan`)
 /**
  * Card On Click
  */
-let zoomBg = document.querySelector("#zoom_bg");
-let zoomImg = document.querySelector("#zoom_bg #zoom_img")
+let zoomBg    = document.querySelector("#zoom_bg");
+let zoomImg   = document.querySelector("#zoom_bg #zoom_img")
+let zoomDes   = document.querySelector("#zoom_bg #zoom_des")
+let readMore  = document.querySelector("#zoom_bg #read_more")
 let zoomClose = document.querySelector("#zoom_bg #zoom_close")
+
 function cardOnClick(el) {
     let icon = el.dataset.icon;
     let desc = el.dataset.desc;
@@ -45,8 +48,32 @@ function cardOnClick(el) {
     document.body.style.overflow="hidden";
     zoomBg.classList.remove("hide");
     zoomImg.src = icon;
-    console.log();
+    zoomDes.innerHTML = desc;
+    if (zoomDes.offsetHeight >= 48) {
+        readMore.classList.remove("hide");
+    }
+    else {
+        readMore.classList.add("hide");;
+    }
 }
+
+let isReadMore = false;
+readMore.addEventListener("click", () => {
+    if (!isReadMore) {
+        readMore.innerHTML = "hide";
+        $("#zoom_bg #zoom_des").css({
+            "-webkit-line-clamp": "2000"
+        });
+    }
+    else {
+        readMore.innerHTML = "read more";
+        $("#zoom_bg #zoom_des").css({
+            "-webkit-line-clamp": "2"
+        });
+    }
+    isReadMore = !isReadMore;
+})
+
 zoomClose.addEventListener("click", () => {
     document.body.style.overflow="auto";
     zoomBg.classList.add("hide");

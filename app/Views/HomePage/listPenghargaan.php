@@ -47,9 +47,10 @@
             right: 0;
             left: 0;
             overflow: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             background-color: rgba(20,20,20,0.7);
-            justify-content: center;
-            padding: 50px;
             box-sizing: border-box;
         }
         #zoom_close{
@@ -61,9 +62,30 @@
             color: white;
             cursor: pointer;
         }
+        #zoom_img_wraper{
+            padding: 50px 50px 0 50px;
+            width: 100%;
+        }
         #zoom_img{
             width: 100%;
-            margin-top: 20px;
+        }
+        #zoom_des_wraper{
+            background: rgba(0,0,0,0.4);
+            padding: 20px 20px 50px 20px;
+            position: relative;
+            display:flex;
+            justify-content: center;
+        }
+        #zoom_des{
+            width: 100%;
+            color: rgba(255,255,255,0.8);
+        }
+        #read_more{
+            text-decoration:underline;
+            cursor:pointer;
+            position:absolute;
+            bottom: 20px;
+            color: white;
         }
         .hide{
             display: none !important;
@@ -126,7 +148,14 @@
     <!-- Zoom Image -->
     <div id="zoom_bg" class="hide" >
         <span id="zoom_close">X</span>
-        <img id="zoom_img" src="" alt="">
+        <div id="zoom_img_wraper">
+            <img id="zoom_img" src="" alt="">
+        </div>
+        <div id="zoom_des_wraper">
+            <div id="zoom_des" style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+            </div>
+            <div id="read_more">read more</div>
+        </div>
     </div>
 
 	<!-- **** footer artikiel **** -->

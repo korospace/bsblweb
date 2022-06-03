@@ -303,9 +303,6 @@ axios.get(`${APIURL}/mitra/getmitra`)
 		elMitra += `<div class="col-12 col-sm-6 col-md-4 mb-5 h-100">
 			<div class="card h-100" style="display:flex;flex-direction:column;justify-content:center;align-items:center;border:none;">
 				<img src="${e.icon}" style="width:60%;"/>
-				<p class="text-center text-uppercase" style="margin-top:10px;">
-					${e.name}
-				</p>
 			</div>
 		</div>`;
 	});

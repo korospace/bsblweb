@@ -169,7 +169,7 @@
         <div class="card-activity col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
           <div class="features-item skeleton h-100">
             <div class="features-icon h-100 d-flex flex-column align-items-center">
-              <img class="icon" style="min-width: 80px;min-height: 80px;max-width: 80px;max-height: 80px;" src="<?= base_url('assets/images/features-icon-1.png'); ?>" alt="">
+              <img class="icon" style="min-width: 80px;min-height: 80px;max-width: 80px;max-height: 80px;" src="" alt="">
               <h4 class="name" style="text-transform:uppercase;">
                 WEBINAR
               </h4>
@@ -189,7 +189,7 @@
           <div class="features-item skeleton h-100">
             <div class="features-icon h-100 d-flex flex-column align-items-center">
               <!-- <h2>02</h2> -->
-              <img class="icon" style="min-width: 80px;min-height: 80px;max-width: 80px;max-height: 80px;" src="<?= base_url('assets/images/features-icon-2.png'); ?>" alt="">
+              <img class="icon" style="min-width: 80px;min-height: 80px;max-width: 80px;max-height: 80px;" src="" alt="">
               <h4 class="name" style="text-transform:uppercase;">
                 KKN
               </h4>
@@ -209,7 +209,7 @@
         <div class="card-activity col-md-12 col-lg-4 mb-md-4" data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
           <div class="features-item skeleton h-100">
             <div class="features-icon h-100 d-flex flex-column align-items-center">
-              <img class="icon" style="min-width: 80px;min-height: 80px;max-width: 80px;max-height: 80px;" src="<?= base_url('assets/images/features-icon-3.png'); ?>" alt="">
+              <img class="icon" style="min-width: 80px;min-height: 80px;max-width: 80px;max-height: 80px;" src="" alt="">
               <h4 class="name" style="text-transform:uppercase;">
                 Sosialisasi & Edukasi
               </h4>

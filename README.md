@@ -24,5 +24,7 @@ composer install
 
 php spark migrate
 
+php spark db:seed AdminSeed
+
 php spark serve -port 8888
 ```

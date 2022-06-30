@@ -94,7 +94,7 @@
 	  class="register-wraper container-fluid d-flex justify-content-center align-items-center p-0 p-md-5"
 	  style="height: 100vh;">
 		<div 
-		  class="register w-100 h-100 py-4 px-4"
+		  class="container register w-100 h-100 py-4 px-4"
 		  style="background: -webkit-linear-gradient(left, #577b2b, #c1d966);">
 			<div class="row h-100">
 

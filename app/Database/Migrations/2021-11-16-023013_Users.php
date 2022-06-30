@@ -12,7 +12,7 @@ class Users extends Migration
             'id' => [
                 // 'type'       => 'text',    // postgre
                 'type'       => 'varchar', // mysql
-                'constraint' => 200,       // mysql
+                'constraint' => 18,       // mysql 122600110119999999
                 'null'       => false,
             ],
             'email' => [

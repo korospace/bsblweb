@@ -148,6 +148,7 @@ class Artikel extends BaseController
             if (isset($xx['new_thumbnail'])) {
                 if (rename($file->getRealPath(),'./assets/images/thumbnail-berita/'.$newFileName)) {
                     $unlinkOldThumb = true;
+                    chmod("./assets/images/thumbnail-berita/".$newFileName, 644);
                 } 
                 else {
                     $response = [

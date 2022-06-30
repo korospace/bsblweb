@@ -111,25 +111,27 @@
 
 	<!-- ***** Header Area Start ***** -->
 	<div class="navbar navbar-light bg-white position-sticky" style="padding:14px 20px;top: 0;z-index: 10;box-shadow: 0 .25rem .375rem -.0625rem rgba(20,20,20,.12),0 .125rem .25rem -.0625rem rgba(20,20,20,.07);">
-        <a class="logo navbar-brand d-flex align-items-center pt-2 pb-1 px-3" href="<?= base_url('/'); ?>" style="cursor:pointer;box-shadow: 0 .25rem .375rem -.0625rem rgba(20,20,20,.12),0 .125rem .25rem -.0625rem rgba(20,20,20,.07)">
-            <svg width="20" height="30" viewBox="0 0 8 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_302:4)">
-                <path d="M6.50489 8.41773L3.20258 5.11542L6.50489 1.81312C6.79641 1.51129 6.79224 1.03151 6.49552 0.734794C6.1988 0.438075 5.71903 0.433906 5.4172 0.725423L1.57104 4.57158C1.27075 4.87196 1.27075 5.35889 1.57104 5.65927L5.4172 9.50542C5.61033 9.70539 5.89633 9.78559 6.16528 9.71519C6.43423 9.6448 6.64426 9.43476 6.71466 9.16582C6.78505 8.89687 6.70486 8.61087 6.50489 8.41773Z" fill="#252F40"/>
-                </g>
-                <defs>
-                <clipPath id="clip0_302:4">
-                <rect width="10" height="7" fill="white" transform="translate(7.49951 0.500031) rotate(90)"/>
-                </clipPath>
-                </defs>
-            </svg>
-        </a>
+        <div class="container">
+            <a class="logo navbar-brand d-flex align-items-center pt-2 pb-1 px-3" href="<?= base_url('/'); ?>" style="cursor:pointer;box-shadow: 0 .25rem .375rem -.0625rem rgba(20,20,20,.12),0 .125rem .25rem -.0625rem rgba(20,20,20,.07)">
+                <svg width="20" height="30" viewBox="0 0 8 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_302:4)">
+                    <path d="M6.50489 8.41773L3.20258 5.11542L6.50489 1.81312C6.79641 1.51129 6.79224 1.03151 6.49552 0.734794C6.1988 0.438075 5.71903 0.433906 5.4172 0.725423L1.57104 4.57158C1.27075 4.87196 1.27075 5.35889 1.57104 5.65927L5.4172 9.50542C5.61033 9.70539 5.89633 9.78559 6.16528 9.71519C6.43423 9.6448 6.64426 9.43476 6.71466 9.16582C6.78505 8.89687 6.70486 8.61087 6.50489 8.41773Z" fill="#252F40"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_302:4">
+                    <rect width="10" height="7" fill="white" transform="translate(7.49951 0.500031) rotate(90)"/>
+                    </clipPath>
+                    </defs>
+                </svg>
+            </a>
+        </div>
 	</div>
 
     <h1 id="page_title" class="text-center">
         Kumpulan Penghargaan <br> Banksampah Budiluhur
     </h1>
     <section class="wrapper d-flex position-relative" style="margin-top: 30px;z-index: 0;">
-		<div class="container-fluid px-4 px-sm-5">
+		<div class="container px-4 px-sm-5">
 			<div class="w-100 h-100 d-flex align-items-center d-none" id="img-404">
 				<img src="<?= base_url('assets/images/penghargaan-404.png') ?>" alt="" style="min-width:100%;max-width:100%; opacity:0.7;">
 			</div>

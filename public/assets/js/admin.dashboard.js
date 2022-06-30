@@ -312,7 +312,7 @@ const getDataSetorSampah = async () => {
 
     if (chartType == 'line') {
         if (arrayY.length == 1) {
-            arrayY.unshift(0);
+            arrayY = [];
             arrayX.unshift('');
         }
     }

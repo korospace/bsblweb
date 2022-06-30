@@ -12,15 +12,19 @@ module.exports = {
     // ** list artikel
     // content: ['app/Views/HomePage/listArtikel.php','public/assets/js/listArtikel.js'],
     // ** list penghargaan
-    content: [
-        'app/Views/HomePage/listPenghargaan.php',
-        'app/Views/Components/artikelFooter.php',
-        'public/assets/js/listPenghargaan.js'
-    ],
+    // content: [
+    //     'app/Views/HomePage/listPenghargaan.php',
+    //     'app/Views/Components/artikelFooter.php',
+    //     'public/assets/js/listPenghargaan.js'
+    // ],
     // ** detil artikel
     // content: ['app/Views/HomePage/detilArtikel.php','public/assets/js/detilArtikel.js'],
     // ** login
-    // content: ['app/Views/LoginPage/index.php','public/assets/js/login.js'],
+    content: [
+        'app/Views/LoginPage/index.php',
+        'app/Views/LoginPage/loginAdmin.php',
+        'public/assets/js/login.js'
+    ],
     // ** signup
     // content: ['app/Views/SignUp/index.php','public/assets/js/signup.js'],
     // ** otp

@@ -25,8 +25,11 @@
 	</script>
 <?= $this->endSection(); ?>
 
-<aside class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main" style="font-family: 'qc-semibold';">
-    <div class="sidenav-header">
+<aside 
+  class="noprint sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" 
+  id="sidenav-main"
+  style="font-family: 'qc-semibold';">
+    <div class="sidenav-header position-sticky bg-white" style="top: 0;z-index: 20">
         <span class="navbar-brand mt-3"
             target="_blank">
             <img src="<?= base_url('assets/images/banksampah-logo.webp');?>" class="navbar-brand-img h-100" alt="main_logo">
@@ -34,7 +37,10 @@
         </span>
     </div>
     <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto  max-height-vh-100 h-100" id="sidenav-collapse-main">
+    <div 
+      class="collapse navbar-collapse w-auto overflow-hidden" 
+      id="sidenav-collapse-main"
+      style="height: max-content;padding-bottom: 20px;">
         <ul class="navbar-nav">
             <!-- dashboard -->
             <li class="nav-item">

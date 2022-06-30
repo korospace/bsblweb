@@ -267,51 +267,61 @@ let counterUp = () => {
 /**
  * Get Kategori Artikel
  */
- axios.get(`${APIURL}/artikel/getkategori`)
- .then(res => {
-    let kategoriUtama = res.data.data.filter(e => e.kategori_utama == "1");
-	
-	if (kategoriUtama.length < 3) {
-		$('.features-item').addClass('d-none');
-	} 
-	else {
-		$('.card-activity').each(function (e){
-			$('.features-item').addClass('card-shadow');
-			$('.features-item').removeClass('skeleton');
-			$(this).find('.icon').attr('src',kategoriUtama[e].icon);
-			$(this).find('.name').html(kategoriUtama[e].name);
-			$(this).find('.description').html(kategoriUtama[e].description);
-			$(this).find('.button').html(`
-				<a href="${BASEURL}/homepage/${kategoriUtama[e].name}" class="main-button">
-					Read More
-				</a>
-			`);
-		})
-	}
- })
- .catch(err => {
- 
- });
+ function getKategoriArtikel() {
+	$('#activity').removeClass("none");
+
+	axios.get(`${APIURL}/artikel/getkategori`)
+	 .then(res => {
+		let kategoriUtama = res.data.data.filter(e => e.kategori_utama == "1");
+		
+		if (kategoriUtama.length < 3) {
+			$('#activity').addClass("none");
+		} 
+		else {
+			$('.card-activity').each(function (e){
+				$('.features-item').addClass('card-shadow');
+				$('.features-item').removeClass('skeleton');
+				$(this).find('.icon').attr('src',kategoriUtama[e].icon);
+				$(this).find('.name').html(kategoriUtama[e].name);
+				$(this).find('.description').html(kategoriUtama[e].description);
+				$(this).find('.button').html(`
+					<a href="${BASEURL}/homepage/${kategoriUtama[e].name}" class="main-button">
+						Read More
+					</a>
+				`);
+			})
+		}
+	})
+	.catch(err => {
+		$('#activity').addClass("none");
+	 });
+}
+getKategoriArtikel();
 
 /**
  * Get Mitra
  */
-axios.get(`${APIURL}/mitra/getmitra`)
-.then(res => {
-	let elMitra = ''
-	res.data.data.forEach(e => {
-		elMitra += `<div class="col-12 col-sm-6 col-md-4 mb-5 h-100">
-			<div class="card h-100" style="display:flex;flex-direction:column;justify-content:center;align-items:center;border:none;">
-				<img src="${e.icon}" style="width:60%;"/>
-			</div>
-		</div>`;
+function getMitra() {
+	$('#mitra').removeClass("node");
+
+	axios.get(`${APIURL}/mitra/getmitra`)
+	.then(res => {
+		let elMitra = ''
+		res.data.data.forEach(e => {
+			elMitra += `<div class="col-12 col-sm-6 col-md-4 mb-5 h-100">
+				<div class="card h-100" style="display:flex;flex-direction:column;justify-content:center;align-items:center;border:none;">
+					<img src="${e.icon}" style="width:60%;"/>
+				</div>
+			</div>`;
+		});
+
+		$('#container-mitra').html(elMitra);
+	})
+	.catch(err => {
+		$('#mitra').addClass("none");
 	});
-
-	$('#container-mitra').html(elMitra);
-})
-.catch(err => {
-
-});
+}
+getMitra();
 
 /**
  * Remove IG widget button

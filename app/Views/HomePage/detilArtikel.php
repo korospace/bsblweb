@@ -31,7 +31,7 @@
     <?= $this->include('Components/alertInfo'); ?>
 
     <!-- ***** Header Area Start ***** -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-sm-5 position-sticky" style="top: 0;z-index: 10;">
+    <nav class="container navbar navbar-expand-lg navbar-light bg-white px-4 px-sm-5 position-sticky" style="top: 0;z-index: 10;">
         <a class="logo navbar-brand" href="<?= base_url('/'); ?>">
             <img class="logo_nav" src="<?= base_url('assets/images/banksampah-logo.webp'); ?>" alt=""
                 width="65" height="55">
@@ -59,7 +59,7 @@
     <!-- ***** Header Area End ***** -->
 
     <section class="blog-single section position-relative" style="padding-top: 0;z-index: 0;">
-        <div class="container-fluid px-4 px-sm-5">
+        <div class="container px-4 px-sm-5">
             <div class="row position-relative">
 
                 <div id="img-404" class="w-100 h-100 d-flex justify-content-center align-items-center d-none">

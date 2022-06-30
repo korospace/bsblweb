@@ -3,6 +3,9 @@
 <!-- Css -->
 <?= $this->section('contentCss'); ?>
   <style>
+    .none{
+      display: none !important;
+    }
     #mitra .img_skeleton{
       width: 130px;
       height: 130px;
@@ -235,7 +238,7 @@
   <div class="left-image-decor"></div>
 
   <!-- ***** Features Big Item Start ***** -->
-  <section class="section" id="promotion">
+  <section class="section mt-5" id="promotion">
     <div class="container">
       <div class="row">
         <div class="left-image col-lg-5 col-md-12 col-sm-12 mobile-bottom-fix-big" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
@@ -318,7 +321,7 @@
   <!-- Services Ends -->
 
   <!-- Mitra -->
-  <div id="mitra" style="padding: 0 40px;margin-top:200px;">
+  <div class="container" id="mitra" style="margin-top:200px;">
     <h1 class="text-center mb-5 mt-5">Mitra Kami</h1>
     <div class="row justify-content-center align-items-center" id="container-mitra">
 				<?php for ($i=0; $i < 6; $i++) { ?>
@@ -333,15 +336,19 @@
   </div>
 
   <!-- Instagram Feed -->
-  <div style="padding: 0 40px;margin-top:80px;">
+  <div class="container" style="padding: 0 40px;margin-top:80px;">
     <h1 class="text-center mb-5 mt-5">Ikuti Instagram Kami</h1>
-    <div style="width: 100%;" class="elfsight-app-af63f7fb-2dc8-43cf-ac87-f3967815b740"></div>
+    <div
+      style="width: 100%;" 
+      class="elfsight-app-af63f7fb-2dc8-43cf-ac87-f3967815b740"></div>
+    </div>
+
   </div>
 
   <!-- Social Media Icon Fixed -->
-  <div class="elfsight-app-5efed99f-297e-4eae-bda8-d9bb2b6ef831"></div>
+  <div class="elfsight-app-f5dddb01-c491-41b0-be2d-b09a31678336"></div>
 
-  <div style="padding: 0 40px;margin-top:140px;">
+  <div class="container" style="padding: 0 40px;margin-top:140px;">
     <h1 class="text-center mb-5 mt-5">Lokasi kami</h1>
     <div class="mapouter"><div class="gmap_canvas"><iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=budiluhur&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br><style>.mapouter{position:relative;text-align:right;height:500px;width:100%;}</style><a href="https://www.embedgooglemap.net">google map in website</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:100%;}</style></div></div>
   </div>

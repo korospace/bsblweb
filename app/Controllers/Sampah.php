@@ -123,7 +123,26 @@ class Sampah extends BaseController
     // get sampah
     public function getSampah(): object
     {
+        $isAdmin    = false;
         $dbResponse = $this->sampahModel->getSampah($this->request->getGet());
+
+        if ($this->request->getHeader('token')) {
+            $result = $this->checkToken();
+
+            if (in_array($result['data']['privilege'],['admin','superadmin'])) {
+                $isAdmin = true;
+            }
+        }
+
+        if ($isAdmin == false && isset($dbResponse["data"])) {
+            $dataBaru = [];
+            foreach ($dbResponse["data"] as $d) {
+                unset($d["harga_pusat"]);
+                unset($d["jumlah"]);
+                $dataBaru[] = $d;
+            }
+            $dbResponse["data"] = $dataBaru;
+        }
     
         return $this->respond($dbResponse,$dbResponse['status']);
     }

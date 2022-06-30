@@ -231,6 +231,7 @@ function validateCrudArtikel() {
 
 // Thumbnail Preview
 let fileThumbnail = '';
+
 const changeThumbPreview = (el) => {
     let imgType = el.files[0].type.split('/');
     

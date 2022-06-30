@@ -195,6 +195,7 @@ class Kategori extends BaseController
             if (isset($xx['icon'])) {
                 if (rename($file->getRealPath(),'./assets/images/icon-kategori-artikel/'.$newFileName)) {
                     $unlinkOldIcon = true;
+                    chmod("./assets/images/icon-kategori-artikel/".$newFileName, 644);
                 } 
                 else {
                     $response = [

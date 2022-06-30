@@ -1,7 +1,7 @@
 /**
  * Get default date AND time
  */
- function getCurrentDate() {
+function getCurrentDate() {
     let currentUnixTime = new Date(new Date().getTime());
     let currentDay   = currentUnixTime.toLocaleString("en-US",{day: "2-digit"});
     let currentMonth = currentUnixTime.toLocaleString("en-US",{month: "2-digit"});
@@ -97,13 +97,17 @@ const searchNasabah = async (el = false,event = false) => {
     let searchVal     = $('#search-nasabah').val();
     let httpResponse1 = await httpRequestGet(`${APIURL}/admin/getnasabah?key=${searchVal}`);
 
+    $('#btn-search-nasabah #text').removeClass('d-none');
+    $('#btn-search-nasabah #spinner').addClass('d-none');
+
     if (httpResponse1.status === 200) {
         dataNasabah = httpResponse1.data.data[0];
         idnasabah   = dataNasabah.id;
 
+        $('#btn-search-nasabah #text').addClass('d-none');
+        $('#btn-search-nasabah #spinner').removeClass('d-none');
         let httpResponse2 = await httpRequestGet(`${APIURL}/transaksi/getsaldo?idnasabah=${idnasabah}`);
         dataSaldo = httpResponse2.data.data;
-
         $('#btn-search-nasabah #text').removeClass('d-none');
         $('#btn-search-nasabah #spinner').addClass('d-none');
 
@@ -125,6 +129,16 @@ const searchNasabah = async (el = false,event = false) => {
             autohide: true,
             type:'warning'
         })
+
+        $('#id-check').html("");
+        $('#email-check').html("");
+        $('#username-check').html("");
+        $('#nama-lengkap-check').html("");
+        $('#saldo-uang-check').html(``);
+        $('#saldo-emas-check').html(``);
+
+        $('#barrier-transaksi').removeClass('d-none');
+        $(`#form-${formTarget}`).addClass('opacity-6');
     }
 }
 
@@ -196,7 +210,7 @@ const tambahBaris = (event = false) => {
     document.querySelector('#table-setor-sampah tbody').insertBefore(tr,document.querySelector('#special-tr'));
 }
 
-// tambah baris
+// hapus baris
 const hapusBaris = (el) => {
     el.parentElement.parentElement.remove();
     countTotalHarga();

@@ -878,6 +878,14 @@ class Validation
                 'is_natural_no_zero' => 'only number allowed',
             ],
 		],
+		'harga_pusat' => [
+            'rules'  => 'required|max_length[11]|is_natural_no_zero',
+            'errors' => [
+                'required'           => 'harga pusat is required',
+                'max_length'         => 'max 11 character',
+                'is_natural_no_zero' => 'only number allowed',
+            ],
+		],
 	];
 
     // edit sampah
@@ -908,6 +916,14 @@ class Validation
             'rules'  => 'required|max_length[11]|is_natural_no_zero',
             'errors' => [
                 'required'           => 'harga is required',
+                'max_length'         => 'max 11 character',
+                'is_natural_no_zero' => 'only number allowed',
+            ],
+		],
+		'harga_pusat' => [
+            'rules'  => 'required|max_length[11]|is_natural_no_zero',
+            'errors' => [
+                'required'           => 'harga pusat is required',
                 'max_length'         => 'max 11 character',
                 'is_natural_no_zero' => 'only number allowed',
             ],

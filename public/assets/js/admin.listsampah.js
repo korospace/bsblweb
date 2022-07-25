@@ -259,6 +259,9 @@ const getAllJenisSampah = async () => {
                     <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
                 </td>
                 <td class="align-middle text-center py-3">
+                    <span class="font-weight-bold">Rp. ${modifUang(n.harga_pusat)} </span>
+                </td>
+                <td class="align-middle text-center py-3">
                     <span class="font-weight-bold"> ${parseFloat(n.jumlah).toFixed(2)} </span>
                 </td>
                 <td class="align-middle text-center">
@@ -340,6 +343,9 @@ $('#search-sampah').on('keyup', function() {
                 <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
             </td>
             <td class="align-middle text-center py-3">
+                <span class="font-weight-bold">Rp. ${modifUang(n.harga_pusat)} </span>
+            </td>
+            <td class="align-middle text-center py-3">
                 <span class="font-weight-bold"> ${parseFloat(n.jumlah).toFixed(2)} </span>
             </td>
             <td class="align-middle text-center">
@@ -382,7 +388,7 @@ const openModalAddEditSmp = (modalName,idSampah=null) => {
         $('#formAddEditSampah #id').val(selectedSampah[0].id);
         $('#formAddEditSampah #jenis').val(selectedSampah[0].jenis);
         $('#formAddEditSampah #harga').val(selectedSampah[0].harga);
-        // $('#formAddEditSampah #jumlah').val(selectedSampah[0].jumlah);
+        $('#formAddEditSampah #harga_pusat').val(selectedSampah[0].harga_pusat);
         $('#formAddEditSampah #select-sampah-wraper').val(selectedSampah[0].id_kategori);
         $(`#kategori-sampah-wraper .kategori-list span#${selectedSampah[0].id_kategori}`).addClass('d-none');
     }
@@ -526,6 +532,22 @@ const doValidateAddSmp = () => {
     else if (!/^\d+$/.test($('#formAddEditSampah #harga').val())) {
         $('#formAddEditNasabah #harga').addClass('is-invalid');
         $('#formAddEditNasabah #harga-error').html('*hanya boleh angka');
+        status = false;
+    }
+    // harga pusat validation
+    if ($('#formAddEditSampah #harga_pusat').val() == '') {
+        $('#formAddEditSampah #harga_pusat').addClass('is-invalid');
+        $('#formAddEditSampah #harga_pusat-error').html('*harga pengepul harus di isi');
+        status = false;
+    }
+    else if ($('#formAddEditSampah #harga_pusat').val().length > 11) {
+        $('#formAddEditSampah #harga_pusat').addClass('is-invalid');
+        $('#formAddEditSampah #harga_pusat-error').html('*maksimal 11 angka');
+        status = false;
+    }
+    else if (!/^\d+$/.test($('#formAddEditSampah #harga_pusat').val())) {
+        $('#formAddEditNasabah #harga_pusat').addClass('is-invalid');
+        $('#formAddEditNasabah #harga_pusat-error').html('*hanya boleh angka');
         status = false;
     }
     // kategori validation

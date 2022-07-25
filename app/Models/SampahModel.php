@@ -130,13 +130,13 @@ class SampahModel extends Model
             $orderby = (isset($get['orderby']) && $get['orderby']=='terbaru')? 'DESC': 'ASC';
 
             if (isset($get['kategori'])) {
-                $sampah  = $this->db->table($this->table)->select('sampah.id,sampah.id_kategori,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah')
+                $sampah  = $this->db->table($this->table)->select('sampah.id,sampah.id_kategori,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.harga_pusat,sampah.jumlah')
                 ->join('kategori_sampah', 'kategori_sampah.id = sampah.id_kategori')
                 ->where('kategori_sampah.name',$get['kategori'])
                 ->orderBy('sampah.id',$orderby)->get()->getResultArray();
             } 
             else {
-                $sampah  = $this->db->table($this->table)->select('sampah.id,sampah.id_kategori,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.jumlah')
+                $sampah  = $this->db->table($this->table)->select('sampah.id,sampah.id_kategori,kategori_sampah.name AS kategori,sampah.jenis,sampah.harga,sampah.harga_pusat,sampah.jumlah')
                 ->join('kategori_sampah', 'kategori_sampah.id = sampah.id_kategori')
                 ->orderBy("sampah.id",$orderby)->get()->getResultArray();
             }
@@ -145,7 +145,7 @@ class SampahModel extends Model
                 return [
                     'status'   => 404,
                     'error'    => true,
-                    'messages' => "artikel notfound",
+                    'messages' => "sampah notfound",
                 ];
             } 
             else {   

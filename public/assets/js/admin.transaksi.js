@@ -25,7 +25,7 @@ const clearAllForm = (isFormJualSetorSampah = false) => {
     $('#formWraper .form-check-input').prop('checked',false);
     $('#formWraper .text-danger').html('');
     $(`#formWraper .form-control`).val('');
-    $('#form-tarik-saldo #maximal-saldo').html('')
+    $('#form-tarik-saldo #maximal-saldo span').html('')
 
     if (isFormJualSetorSampah) {
         $('.barisSetorSampah').remove();
@@ -63,17 +63,75 @@ $('#toggle-transaksi-wraper .switch-section').on('click',function (e) {
         clearAllForm();
     }
 
-    if ($(this).html() == 'jual sampah') {
+    $('#pemilik-saldo-wraper').removeClass('d-none');
+    $('#pemilik-saldo').val('nasabah');
+    $(`#form-tarik-saldo #input-jenis-saldo`).removeClass('d-none');
+    $(`#form-tarik-saldo #input-jenis-emas`).removeClass('d-none');
+
+    jenisForm = $(this).html(); 
+    if (jenisForm == 'jual sampah') {
+        $('#pemilik-saldo-wraper').addClass('d-none');
         $('#barrier-transaksi').addClass('d-none');
         $(`#form-${formTarget}`).removeClass('opacity-6');
-        $('#barrier-search-nasabah').removeClass('d-none');
-        $(`#search-nasabah-wraper .input-group`).addClass('opacity-6');
+        $('#search-nasabah-wraper').addClass('d-none');
         $(`#form-${formTarget} input[type=date]`).val(getCurrentDate());
         $(`#form-${formTarget} input[type=time]`).val(getCurrentTime());
     }
     else{
+        if (jenisForm != 'tarik saldo') {
+            $('#pemilik-saldo-wraper').addClass('d-none');
+        }
+        $('#search-nasabah-wraper').removeClass('d-none');
         $('#barrier-search-nasabah').addClass('d-none');
         $(`#search-nasabah-wraper .input-group`).removeClass('opacity-6');
+    }
+})
+
+/**
+ * GET SALDO BSBL
+ * ==============================================
+ */
+const getSaldoBsbl = async () => {
+
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getsaldo`);
+    
+    if (httpResponse.status === 200) {
+        let data = httpResponse.data.data;
+        $('#form-tarik-saldo #maximal-saldo-bsbl span').html(`Rp ${modifUang(data.saldo_bank)}`);
+    }
+};
+getSaldoBsbl();
+
+/**
+ * Pemilik Saldo On Change
+ */
+ $('#pemilik-saldo').on('click',function (e) {
+
+    if ($(this).val() == "bsbl") {
+        $('#barrier-transaksi').addClass('d-none');
+        $(`#form-tarik-saldo`).removeClass('opacity-6');
+        $(`#form-tarik-saldo`).attr('data-pemilik',"bsbl");
+        $('#search-nasabah-wraper').addClass('d-none');
+        $('#barrier-search-nasabah').removeClass('d-none');
+        $(`#search-nasabah-wraper .input-group`).addClass('opacity-6');
+        $(`#form-tarik-saldo input[type=date]`).val(getCurrentDate());
+        $(`#form-tarik-saldo input[type=time]`).val(getCurrentTime());
+        $(`#form-tarik-saldo #input-jenis-saldo`).addClass('d-none');
+        $(`#form-tarik-saldo #input-jenis-emas`).addClass('d-none');
+        $('#form-tarik-saldo #maximal-saldo').addClass('d-none');
+        $('#form-tarik-saldo #maximal-saldo-bsbl').removeClass('d-none');
+    }
+    else{
+        $('#barrier-transaksi').removeClass('d-none');
+        $(`#form-tarik-saldo`).addClass('opacity-6');
+        $(`#form-tarik-saldo`).attr('data-pemilik',"nasabah");
+        $('#search-nasabah-wraper').removeClass('d-none');
+        $('#barrier-search-nasabah').addClass('d-none');
+        $(`#search-nasabah-wraper .input-group`).removeClass('opacity-6');
+        $(`#form-tarik-saldo #input-jenis-saldo`).removeClass('d-none');
+        $(`#form-tarik-saldo #input-jenis-emas`).removeClass('d-none');
+        $('#form-tarik-saldo #maximal-saldo').removeClass('d-none');
+        $('#form-tarik-saldo #maximal-saldo-bsbl').addClass('d-none');
     }
 })
 
@@ -162,6 +220,7 @@ const getAllJenisSampah = async () => {
 getAllJenisSampah();
 
 // tambah baris
+let jenisForm = '';
 const tambahBaris = (event = false) => {
     if (event) {
         event.preventDefault();
@@ -219,11 +278,11 @@ const hapusBaris = (el) => {
 // kategori sampah on change
 const insertJenisSampah = (el,event) =>{
     var kategori      = event.target.options[event.target.selectedIndex].dataset.kategori;
-    let eljenisSampah = `<option value='' data-harga='' data-tersedia="0" selected>-- jenis sampah --</option>`;
+    let eljenisSampah = `<option value='' data-harga='' data-harga_pusat='' data-tersedia="0" selected>-- jenis sampah --</option>`;
     
     arrayJenisSampah.forEach(s=> {
         if (s.kategori == kategori) {
-            eljenisSampah += `<option value='${s.id}' data-harga='${s.harga}' data-tersedia="${s.jumlah}">${s.jenis}</option>`;
+            eljenisSampah += `<option value='${s.id}' data-harga='${s.harga}'  data-harga_pusat='${s.harga_pusat}' data-tersedia="${s.jumlah}">${s.jenis}</option>`;
         }
     });
 
@@ -246,7 +305,14 @@ const insertJenisSampah = (el,event) =>{
 
 // jenis sampah on change
 const getHargaInOption = (el,event) =>{
-    var harga = event.target.options[event.target.selectedIndex].dataset.harga;
+    var harga = "";
+    if (jenisForm == "jual sampah") {
+        harga = event.target.options[event.target.selectedIndex].dataset.harga_pusat;
+    } 
+    else {
+        harga = event.target.options[event.target.selectedIndex].dataset.harga;
+    }
+
     var tersedia = event.target.options[event.target.selectedIndex].dataset.tersedia;
 
     let elInputJumlah   = el.parentElement.nextElementSibling.children[0];
@@ -414,17 +480,17 @@ const validatePindahSaldo = () => {
 // jenis saldo on click
 $('#form-tarik-saldo input[name=jenis_saldo]').on('click', function() {
     if ($(this).attr('value') == "uang") {
-        $('#form-tarik-saldo #maximal-saldo').html(`Rp ${modifUang(dataSaldo.uang)}`);
+        $('#form-tarik-saldo #maximal-saldo span').html(`Rp ${modifUang(dataSaldo.uang)}`);
         $('#form-tarik-saldo #jenis-emas').attr(`disabled`,true);
         $('#form-tarik-saldo #jenis-emas').val('');
     } 
     else {
-        $('#form-tarik-saldo #maximal-saldo').html(`${dataSaldo.emas} g`);
+        $('#form-tarik-saldo #maximal-saldo span').html(`${dataSaldo.emas} g`);
         $('#form-tarik-saldo #jenis-emas').removeAttr(`disabled`);
     }
 })
 
-// Validate Tarik Saldo
+// Validate Tarik Saldo Nasabah
 const validateTarikSaldo = () => {
     let status = true;
     let form   = new FormData(document.querySelector('#form-tarik-saldo'));
@@ -471,6 +537,42 @@ const validateTarikSaldo = () => {
     return status;
 }
 
+// Validate Tarik Saldo BSBL
+const validateTarikSaldoBsbl = () => {
+    let status = true;
+    let form   = new FormData(document.querySelector('#form-tarik-saldo'));
+
+    $('#form-tarik-saldo .form-check-input').removeClass('is-invalid');
+    $('#form-tarik-saldo .form-control').removeClass('is-invalid');
+    $('#form-tarik-saldo .text-danger').html('');
+
+    // tgl transaksi
+    if ($('#form-tarik-saldo #date').val() == '') {
+        $('#form-tarik-saldo #date').addClass('is-invalid');
+        $('#form-tarik-saldo #date-error').html('*tanggal harus di isi');
+        status = false;
+    }
+    // waktu transaksi
+    if ($('#form-tarik-saldo #time').val() == '') {
+        $('#form-tarik-saldo #time').addClass('is-invalid');
+        $('#form-tarik-saldo #date-error').html('*waktu harus di isi');
+        status = false;
+    }
+    // jumlah tarik
+    if ($('#form-tarik-saldo #jumlah').val() == '') {
+        $('#form-tarik-saldo #jumlah').addClass('is-invalid');
+        $('#form-tarik-saldo #jumlah-error').html('*jumlah saldo harus di isi');
+        status = false;
+    }
+    else if (/[^0-9\.]/g.test($('#form-tarik-saldo #jumlah').val().replace(/ /g,''))) {
+        $('#form-tarik-saldo #jumlah').addClass('is-invalid');
+        $('#form-tarik-saldo #jumlah-error').html('*hanya boleh berupa angka positif dan titik!');
+        status = false;
+    }
+
+    return status;
+}
+
 /**
  * Send Transaksi to API
  * =============================================
@@ -480,6 +582,7 @@ const doTransaksi = async (el,event,method) => {
     let validate      = '';
     let elForm        = el.parentElement.parentElement;
     let transaksiName = ''
+    let pemilikSaldo  = elForm.getAttribute("data-pemilik");
 
     if (method == 'pindahsaldo') {
         validate = validatePindahSaldo;
@@ -488,6 +591,11 @@ const doTransaksi = async (el,event,method) => {
     else if (method == 'tariksaldo') {
         validate = validateTarikSaldo;
         transaksiName = 'tarik saldo';
+
+        if (pemilikSaldo == "bsbl") {
+            method = "tariksaldobsbl";
+            validate = validateTarikSaldoBsbl;
+        }
     }
     else if (method == 'setorjualsampah') {
         validate = validateSetorJualSampah;
@@ -501,106 +609,115 @@ const doTransaksi = async (el,event,method) => {
         }
     }
 
-    if (validate()) {
-        Swal.fire({
-            input: 'password',
-            inputAttributes: {
-                autocapitalize: 'off'
-            },
-            html:`<h5 class='mb-4'>Password</h5>`,
-            showCancelButton: true,
-            confirmButtonText: 'submit',
-            showLoaderOnConfirm: true,
-            preConfirm: (password) => {
-                let form = new FormData();
-                form.append('hashedpass',PASSADMIN);
-                form.append('password',password);
-    
-                return axios
-                .post(`${APIURL}/admin/confirmdelete`,form, {
-                    headers: {
-                        // header options 
-                    }
-                })
-                .then((response) => {
-                    doTransaksiInner();
-                })
-                .catch(error => {
-                    if (error.response.status == 404) {
-                        Swal.showValidationMessage(
-                            `password salah`
-                        )
-                    }
-                    else if (error.response.status == 500) {
-                        Swal.showValidationMessage(
-                            `terjadi kesalahan, coba sekali lagi`
-                        )
-                    }
-                })
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-        })
-        
-        let doTransaksiInner = async () => {
-            let form           = new FormData(elForm);
-            let tglTransaksi   = form.get('date').split('-');
-            let waktuTransaksi = form.get('time');
-            form.set('date',`${tglTransaksi[2]}-${tglTransaksi[1]}-${tglTransaksi[0]} ${waktuTransaksi}`);
+    let doTransaksiInner = async () => {
+        let form           = new FormData(elForm);
+        let tglTransaksi   = form.get('date').split('-');
+        let waktuTransaksi = form.get('time');
+        form.set('date',`${tglTransaksi[2]}-${tglTransaksi[1]}-${tglTransaksi[0]} ${waktuTransaksi}`);
 
-            if (idnasabah == '') {
-                form.set('id_admin',IDADMIN);
-            } 
-            else {
-                form.set('id_nasabah',idnasabah);
+        if (idnasabah == '') {
+            form.set('id_admin',IDADMIN);
+        } 
+        else {
+            form.set('id_nasabah',idnasabah);
+        }
+
+        if (method == 'tariksaldo') {
+            if ($('#form-tarik-saldo #jenis-emas').val() !== '') {
+                form.set('jenis_saldo',$('#form-tarik-saldo #jenis-emas').val());
+            }
+        } 
+
+        showLoadingSpinner();
+        httpResponse = await httpRequestPost(`${APIURL}/transaksi/${method}`,form);    
+        hideLoadingSpinner();
+
+        if (httpResponse.status === 201) {
+            clearAllForm();
+            getAllJenisSampah();
+            updateAllTable(`${tglTransaksi[0]}/${tglTransaksi[1]}/31`);
+            
+            if (method != 'jualsampah') {
+                $('#search-nasabah-wraper table td span').html('_ _ _ _');
+                $(`#form-${formTarget}`).addClass('opacity-6');
+                $('#barrier-transaksi').removeClass('d-none');
+                searchNasabah();                    
             }
 
-            if (method == 'tariksaldo') {
-                if ($('#form-tarik-saldo #jenis-emas').val() !== '') {
-                    form.set('jenis_saldo',$('#form-tarik-saldo #jenis-emas').val());
+            if(method == 'tariksaldo' || method == 'tariksaldobsbl'){
+                $('#form-tarik-saldo #maximal-saldo span').html(``);
+                $('#form-tarik-saldo #jenis-emas').attr(`disabled`,true);
+                $('#form-tarik-saldo #jenis-emas').val('');
+                    
+                if (pemilikSaldo == 'bsbl') {
+                    getSaldoBsbl();
+                    $(`#form-${formTarget}`).removeClass('opacity-6');
+                    $('#barrier-transaksi').addClass('d-none');
                 }
-            } 
-    
-            showLoadingSpinner();
-            httpResponse = await httpRequestPost(`${APIURL}/transaksi/${method}`,form);    
-            hideLoadingSpinner();
-    
-            if (httpResponse.status === 201) {
-                clearAllForm();
-                getAllJenisSampah();
-                updateAllTable(`${tglTransaksi[0]}/${tglTransaksi[1]}/31`);
-                
-                if (method != 'jualsampah') {
-                    $('#search-nasabah-wraper table td span').html('_ _ _ _');
-                    $(`#form-${formTarget}`).addClass('opacity-6');
-                    $('#barrier-transaksi').removeClass('d-none');
-                    searchNasabah();                    
-                }
-
-                if(method == 'tariksaldo'){
-                    $('#form-tarik-saldo #maximal-saldo').html(``);
-                    $('#form-tarik-saldo #jenis-emas').attr(`disabled`,true);
-                    $('#form-tarik-saldo #jenis-emas').val('');
-                }
-    
-                showAlert({
-                    message: `<strong>Success...</strong> ${transaksiName} berhasil!`,
-                    autohide: true,
-                    type:'success'
-                })
             }
-            else if (httpResponse.status === 400) {
-                if (httpResponse.message.jumlah) {
-                    if (method == 'pindahsaldo') {
-                        $('#form-konversi-saldo #jumlah').addClass('is-invalid');
-                        $('#form-konversi-saldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
-                    } 
-                    else {
-                        $('#form-tarik-saldo #jumlah').addClass('is-invalid');
-                        $('#form-tarik-saldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
-                    }
+
+            showAlert({
+                message: `<strong>Success...</strong> ${transaksiName} berhasil!`,
+                autohide: true,
+                type:'success'
+            })
+        }
+        else if (httpResponse.status === 400) {
+            if (httpResponse.message.jumlah) {
+                if (method == 'pindahsaldo') {
+                    $('#form-konversi-saldo #jumlah').addClass('is-invalid');
+                    $('#form-konversi-saldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
+                } 
+                else {
+                    $('#form-tarik-saldo #jumlah').addClass('is-invalid');
+                    $('#form-tarik-saldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
                 }
             }
         }
+    }
+
+    if (validate()) {
+        doTransaksiInner();
+
+        // Swal.fire({
+        //     input: 'password',
+        //     inputAttributes: {
+        //         autocapitalize: 'off'
+        //     },
+        //     html:`<h5 class='mb-4'>Password</h5>`,
+        //     showCancelButton: true,
+        //     confirmButtonText: 'submit',
+        //     showLoaderOnConfirm: true,
+        //     preConfirm: (password) => {
+        //         let form = new FormData();
+        //         form.append('hashedpass',PASSADMIN);
+        //         form.append('password',password);
+    
+        //         return axios
+        //         .post(`${APIURL}/admin/confirmdelete`,form, {
+        //             headers: {
+        //                 // header options 
+        //             }
+        //         })
+        //         .then((response) => {
+        //             doTransaksiInner();
+        //         })
+        //         .catch(error => {
+        //             if (error.response.status == 404) {
+        //                 Swal.showValidationMessage(
+        //                     `password salah`
+        //                 )
+        //             }
+        //             else if (error.response.status == 500) {
+        //                 Swal.showValidationMessage(
+        //                     `terjadi kesalahan, coba sekali lagi`
+        //                 )
+        //             }
+        //         })
+        //     },
+        //     allowOutsideClick: () => !Swal.isLoading()
+        // })
+    
     }
 
 }
@@ -658,6 +775,7 @@ const deleteTransaksi = (id,event) => {
                             if (e.status == 201) {
                                 getAllJenisSampah();
                                 getDataTransaksi();
+                                getSaldoBsbl();
                             }
                         })
                     })
@@ -917,11 +1035,12 @@ $('#search-data-transaksi').on('keyup', function() {
 
             if (t.jenis_transaksi == 'penyetoran sampah') {
                 color  = 'success';
-                jumlah = `+ ${t.total_kg_setor} kg`;
+                jumlah = `+ ${parseFloat(t.total_kg_setor).toFixed(2)} kg`;
+                // jumlah = `+ ${t.total_kg_setor}kg/Rp${modifUang(kFormatter(t.total_uang_setor))}`;
             } 
             else if (t.jenis_transaksi == 'penarikan saldo') {
                 color  = 'danger';
-                jumlah = (t.jenis_saldo == 'uang')?`- Rp ${t.total_tarik}`:`- ${t.total_tarik} g`;
+                jumlah = (t.jenis_saldo == 'uang')?`- Rp ${modifUang(parseFloat(t.total_tarik).toFixed(0))}`:`- ${parseFloat(t.total_tarik).toFixed(4)} g`;
             } 
             else if (t.jenis_transaksi == 'konversi saldo') {
                 color  = 'warning';
@@ -929,7 +1048,8 @@ $('#search-data-transaksi').on('keyup', function() {
             }
             else {
                 color  = 'info';
-                jumlah = `+ ${t.total_kg_jual} kg`;
+                jumlah = `- ${parseFloat(t.total_kg_jual).toFixed(2)} kg`;
+                // jumlah = `+ ${t.total_kg_jual}kg/Rp${modifUang(kFormatter(t.total_uang_jual))}`;
             }
 
             let tagNamaLengkap = (t.jenis_transaksi == 'penjualan sampah') ? 'span' : 'a';
@@ -946,18 +1066,18 @@ $('#search-data-transaksi').on('keyup', function() {
                     </${tagNamaLengkap}>
                 </td>
                 <td class="align-middle text-sm">
-                    <span class="text-xxs text-name font-weight-bold badge border text-${color} border-${color} pb-1" style="min-width:150px;max-width:150px;border-radius:4px;"> 
+                    <span class="text-xxs text-name font-weight-bold badge border bg-${color} text-white border-${color} pb-1" style="min-width:150px;max-width:150px;border-radius:4px;letter-spacing:0.5px;"> 
                         ${t.jenis_transaksi}
                     </span>
                 </td>
                 <td class="align-middle text-sm">
-                    <span class="text-xs text-name font-weight-bold text-${color}"> 
+                    <span class="text-xs text-name font-weight-bold"> 
                         ${jumlah}
                     </span>
                 </td>
                 <td class="align-middle text-sm">
                     <span class="text-xs text-name font-weight-bold">
-                    ${day}-${month}-${year} ${hour}
+                        ${day}-${month}-${year} ${hour}
                     </span>
                 </td>
                 <td class="align-middle text-center">
@@ -1043,8 +1163,8 @@ const getDetailTransaksi = async (id) => {
             </table>
             </div>`);
         }
-        // setor sampah DAN jual sampah
-        if (['penyetoran sampah','penjualan sampah'].includes(httpResponse.data.data.jenis_transaksi)) {
+        // setor sampah
+        if (['penyetoran sampah'].includes(httpResponse.data.data.jenis_transaksi)) {
             let totalRp= 0;
             let trBody = '';
             let barang = httpResponse.data.data.barang;
@@ -1072,6 +1192,52 @@ const getDetailTransaksi = async (id) => {
                     <tr>
                         <th class="text-center" colspan='3'>Total</th>
                         <td class="text-left">Rp ${modifUang(totalRp.toString())}</td>
+                    </tr>
+                </tbody>
+            </table>`);
+        }
+        // jual sampah
+        if (httpResponse.data.data.jenis_transaksi == 'penjualan sampah') {
+            let totalKg      = 0;
+            let totalHJual   = 0;
+            let totalHBeli   = 0;
+            let totalSelisih = 0;
+            let trBody = '';
+            let barang = httpResponse.data.data.barang;
+            barang.forEach((b,i) => {
+                totalKg      += b.jumlah_kg;
+                totalHJual   += parseInt(b.jumlah_rp);
+                totalHBeli   += parseInt(b.harga_nasabah);
+                let selisih   = parseInt(b.jumlah_rp)-parseInt(b.harga_nasabah);
+                totalSelisih += selisih;
+
+                trBody  += `<tr class="text-center">
+                    <td>${b.jenis}</td>
+                    <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
+                    <td class="text-left">Rp ${modifUang(b.jumlah_rp)}</td>
+                    <td class="text-left">Rp ${modifUang(b.harga_nasabah)}</td>
+                    <td class="text-left">Rp ${modifUang(selisih)}</td>
+                </tr>`;
+            })
+
+            $('#detil-transaksi-body').html(`<table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Jenis sampah</th>
+                        <th scope="col">Jumlah</th>
+                        <th scope="col">Harga Jual</th>
+                        <th scope="col">Harga Beli</th>
+                        <th scope="col">Selisih</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${trBody}
+                    <tr>
+                        <th class="text-center">Total</th>
+                        <td class="text-center">${parseFloat(totalKg).toFixed(2)} kg</td>
+                        <td class="text-left">Rp ${modifUang(totalHJual)}</td>
+                        <td class="text-left">Rp ${modifUang(totalHBeli)}</td>
+                        <td class="text-left">Rp ${modifUang(totalSelisih)}</td>
                     </tr>
                 </tbody>
             </table>`);

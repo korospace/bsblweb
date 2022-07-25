@@ -121,6 +121,9 @@
 													Harga
 												</th>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+													Harga Pengepul
+												</th>
+												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 													Jumlah(Kg)
 												</th>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -235,7 +238,7 @@
 							id="jenis-error"
 							class="text-danger"></small>
 					</div>
-					<!-- **** Harga,Jumlah **** -->
+					<!-- **** Harga **** -->
 					<div class="form-row mb-4" style="padding-right: 2px;">
 						<div class="col">
 							<div class="input-group">
@@ -248,6 +251,22 @@
 							</div>
 							<small
 								id="harga-error"
+								class="text-danger"></small>
+						</div>
+					</div>
+					<!-- **** Harga Pusat **** -->
+					<div class="form-row mb-4" style="padding-right: 2px;">
+						<div class="col">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray px-4 border-md border-right-0">
+										<i class="fas fa-money-bill-wave-alt text-muted"></i>
+									</span>
+								</div>
+								<input type="number" class="form-control px-2" id="harga_pusat" name="harga_pusat" autocomplete="off" placeholder="Harga Pusat">
+							</div>
+							<small
+								id="harga_pusat-error"
 								class="text-danger"></small>
 						</div>
 					</div>

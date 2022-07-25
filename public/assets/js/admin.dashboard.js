@@ -66,10 +66,17 @@ const getSaldoNasabah = async () => {
     let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getsaldo`);
     
     if (httpResponse.status === 200) {
-        let dataNasabah = httpResponse.data.data;
+        let data = httpResponse.data.data;
 
-        $('#saldo-uang').html(modifUang(kFormatter(dataNasabah.uang.toString())));
-        $('#saldo-emas').html(parseFloat(dataNasabah.emas).toFixed(4));
+        if (data.saldo_bank != null ) {
+            $('#saldo-uang-bsbl').html(modifUang(kFormatter(data.saldo_bank.toString())));
+        }
+        if (data.saldo_nasabah.uang != null ) {
+            $('#saldo-uang-nasabah').html(modifUang(kFormatter(data.saldo_nasabah.uang.toString())));
+        }
+        if (data.saldo_nasabah.emas != null ) {
+            $('#saldo-emas').html(parseFloat(data.saldo_nasabah.emas).toFixed(4));
+        }
     }
 };
 getSaldoNasabah();

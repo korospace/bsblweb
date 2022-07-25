@@ -101,7 +101,7 @@ class Transaksi extends BaseController
                 </table>
             </div>";
         }
-        if (in_array($jenisTransaksi,['penyetoran sampah','penjualan sampah'])) {
+        if ($jenisTransaksi == 'penyetoran sampah') {
             $barang = $dbresponse['data']['barang'];
             $trBody = "";
             $no     = 1;
@@ -157,6 +157,92 @@ class Transaksi extends BaseController
                 </tbody>
             </table>";
         }
+        if ($jenisTransaksi == 'penjualan sampah') {
+            $barang = $dbresponse['data']['barang'];
+            $trBody = "";
+            $no     = 1;
+            $totalKg   = 0;
+            $totalHJual= 0;
+            $totalHBeli= 0;
+            $totalSelisih= 0;
+
+            foreach ($barang as $key) {
+                $totalKg    += $key['jumlah_kg'];
+                $totalHJual += $key['jumlah_rp'];
+                $totalHBeli += $key['harga_nasabah'];
+
+                $selisih       = (int)$key['jumlah_rp'] - (int)$key['harga_nasabah'];
+                $totalSelisih += $selisih;
+
+                $bg       = ($no % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
+
+                $trBody .= "<tr $bg>
+                    <td style='font-family: sans;text-align: center;'>
+                        ".$no++."
+                    </td>
+                    <td style='font-family: sans;text-align: center;'>
+                        ".$key['jenis']."
+                    </td>
+                    <td style='font-family: sans;text-align: center;'>
+                        ".round($key['jumlah_kg'],2)."
+                    </td>
+                    <td style='font-family: sans;text-align: right;'>
+                        Rp ".number_format($key['jumlah_rp'] , 0, ',', ',')."
+                    </td>
+                    <td style='font-family: sans;text-align: right;'>
+                        Rp ".number_format($key['harga_nasabah'] , 0, ',', ',')."
+                    </td>
+                    <td style='font-family: sans;text-align: right;'>
+                        Rp ".number_format($selisih , 0, ',', ',')."
+                    </td>
+                </tr>";
+            }
+            
+            $result = "<table border='0' width='100%' cellpadding='5'>
+                <thead>
+                    <tr>
+                        <th style='border: 1px solid black;font-family: sans;'>
+                            #
+                        </th>
+                        <th style='border: 1px solid black;font-family: sans;'>
+                            Jenis sampah
+                        </th>
+                        <th style='border: 1px solid black;font-family: sans;'>
+                            Kg
+                        </th>
+                        <th style='border: 1px solid black;font-family: sans;'>
+                            Harga Jual
+                        </th>
+                        <th style='border: 1px solid black;font-family: sans;'>
+                            Harga Beli
+                        </th>
+                        <th style='border: 1px solid black;font-family: sans;'>
+                            Selisih
+                        </th>
+                    </tr>
+                <thead>
+                <tbody>
+                    $trBody
+                    <tr style='background: rgb(230, 230, 230);'>
+                        <th style='font-family: sans;text-align: center;' colspan='2'>
+                            Total
+                        </th>
+                        <td style='font-family: sans;text-align: center;'>
+                            ".round($totalKg,2)."
+                        </td>
+                        <td style='font-family: sans;text-align: right;'>
+                            Rp ".number_format($totalHJual , 0, ',', ',')."
+                        </td>
+                        <td style='font-family: sans;text-align: right;'>
+                            Rp ".number_format($totalHBeli , 0, ',', ',')."
+                        </td>
+                        <td style='font-family: sans;text-align: right;'>
+                            Rp ".number_format($totalSelisih , 0, ',', ',')."
+                        </td>
+                    </tr>
+                </tbody>
+            </table>";
+        }
 
         $userType = ($jenisTransaksi == 'penjualan sampah')? 'ID.ADMIN' : 'ID.NASABAH';
 
@@ -174,16 +260,21 @@ class Transaksi extends BaseController
                 <table border='0' width='100%'>
                    <tr>
                         <th style='text-align: left;'>
-                            <img src='".base_url()."/assets/images/banksampah-logo.png' style='width: 100px;'>
+                            <img src='".base_url()."/assets/images/banksampah-logo.png' style='width: 160px;'>
                         </th>
-                        <th style='text-align: right;font-size: 2em;'>
-                            BUKTI TRANSAKSI
+                        <th style='text-align: right;'>
+                            <h1 style='font-size: 2em;'>
+                                BUKTI TRANSAKSI
+                            </h1>
+                            <span style='font-size: 1.2em;font-style: italic;font-family: sans;'>
+                                $jenisTransaksi
+                            </span>
                         </th>
                     </tr>';
                 </table>
             </div>
 
-            <div style='padding-top: 30px;'>
+            <div style='padding-top: 30px;margin-bottom: 40px;'>
                 <table>
                     <tr>
                         <td style='font-size: 1.4em;font-family: sans;'>
@@ -219,10 +310,6 @@ class Transaksi extends BaseController
                     </tr>
                 </table>
             </div>
-
-            <h1 style='font-style: italic;margin-top: 40px;margin-bottom: 20px;font-family: sans;'>
-                ".$jenisTransaksi."
-            </h1>
 
             ".$result."
         </body>
@@ -384,10 +471,15 @@ class Transaksi extends BaseController
         $noTjs = 1;
         $totKgjual   = 0;
         $totUangJual = 0;
+        $totUangBeli = 0;
+        $totSelisihUang = 0;
 
         foreach ($tjs as $key) {
             $totKgjual   = $totKgjual+(float)$key['jumlah_kg'];
             $totUangJual = $totUangJual+(int)$key['jumlah_rp'];
+            $totUangBeli = $totUangBeli+(int)$key['harga_nasabah'];
+            $selisih     = (int)$key['jumlah_rp'] - (int)$key['harga_nasabah'];
+            $totSelisihUang += $selisih;
 
             $bg     = ($noTjs % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
 
@@ -410,6 +502,12 @@ class Transaksi extends BaseController
                 <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
                     ".number_format($key['jumlah_rp'] , 0, ',', ',')."
                 </td>
+                <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
+                    ".number_format($key['harga_nasabah'] , 0, ',', ',')."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
+                    ".number_format($selisih , 0, ',', ',')."
+                </td>
             </tr>";
         }
 
@@ -422,6 +520,12 @@ class Transaksi extends BaseController
             </th>
             <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
                 ".number_format($totUangJual , 0, ',', ',')."
+            </th>
+            <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
+                ".number_format($totUangBeli , 0, ',', ',')."
+            </th>
+            <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
+                ".number_format($totSelisihUang , 0, ',', ',')."
             </th>
         </tr>";
 
@@ -436,7 +540,9 @@ class Transaksi extends BaseController
                     <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>ID Transaksi</th>
                     <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Jenis sampah</th>
                     <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Kg</th>
-                    <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Harga(Rp)</th>
+                    <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Harga Jual(Rp)</th>
+                    <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Harga Beli(Rp)</th>
+                    <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Selisih(Rp)</th>
                 </tr>
             <thead>
             <tbody>
@@ -444,9 +550,12 @@ class Transaksi extends BaseController
             </tbody>
         </table>";
 
-        if ($filterWilayah || $isRekapNasabah) {
+        if ($isRekapNasabah) {
             $elTransaksiJualS = '';
         }
+        // if ($filterWilayah || $isRekapNasabah) {
+        //     $elTransaksiJualS = '';
+        // }
         
         // koonversi saldo
         $tps   = $data['tps'];
@@ -505,7 +614,7 @@ class Transaksi extends BaseController
             </th>
         </tr>";
         
-        // tarik saldo
+        // tarik saldo nasabah
         $tts   = $data['tts'];
         $trTts = "";
         $noTts = 1;
@@ -579,6 +688,69 @@ class Transaksi extends BaseController
             $thNama = "<th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Nama Nasabah</th>";
         }
 
+        // tarik saldo Bank
+        $tts   = $data['ttsBsbl'];
+        $trTtsBsbl = "";
+        $noTts = 1;
+        $totUangTarikBsbl = 0;
+        $colspan      = 3;
+
+        foreach ($tts as $key) {
+            $uang = $key['jumlah_tarik'];
+            $totUangTarikBsbl = $totUangTarikBsbl+(int)$key['jumlah_tarik'];
+
+            $bg     = ($noTts % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
+
+            $trTtsBsbl .= "<tr $bg>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$noTts++."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".date("d/m/Y", $key['date'])."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['id_transaksi']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$key['nama_lengkap']."
+                </td>
+                <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
+                    ".number_format((int)$uang , 0, ',', ',')."
+                </td>
+            </tr>";
+        }
+
+        $trTtsBsbl .= "<tr style='background: rgb(230, 230, 230);'>
+            <th colspan='4' style='text-align: center;font-size: 0.8em;font-family: sans;'>
+                total
+            </th>
+            <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
+                ".number_format($totUangTarikBsbl , 0, ',', ',')."
+            </th>
+        </tr>"; 
+
+        $elTransaksiTtsBsbl = "<table border='0' width='100%' cellpadding='5'>
+            <caption style='text-align:left;font-family:sans;caption-side:top;margin-top:40px;margin-bottom:10px;font-size: 1em;'>
+                5. Penarikan Saldo BSBL
+            </caption>
+            <thead>
+                <tr style='font-size: 0.8em;'>
+                    <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>#</th>
+                    <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Tanggal</th>
+                    <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>ID Transaksi</th>
+                    <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Nama Admin</th>
+                    <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Uang(Rp)</th>
+                </tr>
+            <thead>
+            <tbody>
+                ".$trTtsBsbl."
+            </tbody>
+        </table>";
+
+        if ($isRekapNasabah) {
+            $elTransaksiTtsBsbl = '';
+        }
+
         $mpdf = new \Mpdf\Mpdf();
         
         $mpdf->WriteHTML("
@@ -595,7 +767,7 @@ class Transaksi extends BaseController
                 <table border='0' width='100%'>
                    <tr>
                         <th style='text-align: left;'>
-                            <img src='".base_url()."/assets/images/banksampah-logo.png' style='width: 100px;'>
+                            <img src='".base_url()."/assets/images/banksampah-logo.png' style='width: 160px;'>
                         </th>
                         <th style='text-align: right;'>
                             <h1  style='font-size: 2em;'>
@@ -652,7 +824,7 @@ class Transaksi extends BaseController
 
             <table border='0' width='100%' cellpadding='5'>
                 <caption style='text-align:left;font-family:sans;caption-side:top;margin-top:40px;margin-bottom:10px;font-size: 1em;'>
-                    3. Penarikan Saldo
+                    3. Penarikan Saldo Nasabah
                 </caption>
                 <thead>
                     <tr>
@@ -673,6 +845,7 @@ class Transaksi extends BaseController
 
             $elTransaksiJualS
 
+            $elTransaksiTtsBsbl
         </body>
         
         </html>");
@@ -732,12 +905,21 @@ class Transaksi extends BaseController
      *   url    : domain.com/transaksi/tariksaldo
      *   method : POST
      */
-    public function tarikSaldo()
+    public function tarikSaldo($pemilik = "nasabah")
     {
         $result = $this->checkToken();
         $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
 
-        $data   = $this->request->getPost();
+        $data    = $this->request->getPost();
+        $isAdmin = false;
+        $data["pemilik"] = $pemilik;
+
+        if ($pemilik == "bsbl") {
+            $isAdmin = true;
+            $data["id_nasabah"]  = $result['data']['userid'];
+            $data['jenis_saldo'] = 'uang';
+        }
+
         $this->validation->run($data,'tarikSaldo');
         $errors = $this->validation->getErrors();
 
@@ -753,7 +935,7 @@ class Transaksi extends BaseController
         else {
             $valid  = true;
             $msg    = '';
-            $saldoX = $this->transaksiModel->getSaldoJenisX($data['id_nasabah'],$data['jenis_saldo']);
+            $saldoX = $this->transaksiModel->getSaldoJenisX($data['id_nasabah'],$data['jenis_saldo'],$isAdmin);
 
             if ((float)$saldoX < (float)$data['jumlah']) {
                 $valid      = false;

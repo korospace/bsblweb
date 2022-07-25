@@ -104,6 +104,15 @@
 							</div>
 
 							<!-- search nasabah -->
+							<div id="pemilik-saldo-wraper" class="form-row p-0 d-flex justify-content-center mt-2 px-4 mb-4 d-none">
+								<div class="position-relative" style="width: 320px;border-radius: 0.5rem;border: 1px solid #d2d6da;">
+									<select id="pemilik-saldo" class='form-control form-control-sm' name="pemilik-saldo" style="border: none">
+										<option value="nasabah" selected>saldo nasabah</option>
+										<option value="bsbl">saldo bsbl</option>
+									</select>
+									<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:7px;right:10px;"></i>
+								</div>
+							</div>
 							<div id="search-nasabah-wraper" class="form-row p-0 d-flex mt-4 px-4 position-relative" style="font-family: 'qc-semibold';">
 								<div id="barrier-search-nasabah" class="position-absolute d-none" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
 
@@ -342,24 +351,26 @@
 										</div>
 
 										<!-- **** jenis saldo **** -->
-										<h6 class="font-italic opacity-8 col-12 text-sm">
-											Jenis saldo
-										</h6>
-										<div class="input-group col-12 col-md-6 mb-4 form-group form-row">
-											<div class="input-group col-3">
-												<div class="form-check">
-													<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikUang" value="uang" checked>
-													<label class="form-check-label" for="tarikUang">
-														Uang
-													</label>
+										<div id="input-jenis-saldo" class="col-12 row">
+											<h6 class="font-italic opacity-8 col-12 text-sm">
+												Jenis saldo
+											</h6>
+											<div class="input-group col-12 col-md-6 mb-4 form-group form-row">
+												<div class="input-group col-3">
+													<div class="form-check">
+														<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikUang" value="uang" checked>
+														<label class="form-check-label" for="tarikUang">
+															Uang
+														</label>
+													</div>
 												</div>
-											</div>
-											<div class="input-group col-3">
-												<div class="form-check">
-													<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikEmas" value="emas">
-													<label class="form-check-label" for="tarikEmas">
-														Emas
-													</label>
+												<div class="input-group col-3">
+													<div class="form-check">
+														<input class="form-check-input" type="radio" name="jenis_saldo" id="tarikEmas" value="emas">
+														<label class="form-check-label" for="tarikEmas">
+															Emas
+														</label>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -368,7 +379,12 @@
 										<h6 class="font-italic opacity-8 col-12 text-sm">
 											Jumlah saldo
 										</h6>
-										<small class="col-12 text-xs">saldo: <span id="maximal-saldo"></span></small>
+										<small id="maximal-saldo" class="col-12 text-xs">
+											saldo: <span></span>
+										</small>
+										<small id="maximal-saldo-bsbl" class="col-12 text-xs d-none">
+											saldo: <span></span>
+										</small>
 										<div class="input-group col-12 col-md-6 mt-1 mb-4 form-group">
 											<div class="input-group">
 												<div class="input-group-prepend">
@@ -384,22 +400,24 @@
 										</div>
 
 										<!-- Jenis emas -->
-										<h6 class="font-italic opacity-8 col-12 text-sm">
-											Jenis emas
-										</h6>
-										<div class="input-group col-12 mt-1 mb-4 form-group">
-											<div class="input-group">
-												<div class="input-group-prepend">
-													<span class="input-group-text bg-gray px-4 border-md" style="min-height: 32.4px;max-height: 32.4px">
-														<i class="fas fa-list-ul mr-1 text-muted"></i>
-													</span>
+										<div id="input-jenis-emas" class="col-12 row">
+											<h6 class="font-italic opacity-8 col-12 text-sm">
+												Jenis emas
+											</h6>
+											<div class="input-group col-12 mt-1 mb-4 form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text bg-gray px-4 border-md" style="min-height: 32.4px;max-height: 32.4px">
+															<i class="fas fa-list-ul mr-1 text-muted"></i>
+														</span>
+													</div>
+													<select id="jenis-emas" name="jenis_emas" class="form-control py-1 px-2" style="min-height: 32.4px;max-height: 32.4px" disabled>
+														<option value="">-- jenis emas --</option>
+														<option value="ubs">ubs</option>
+														<option value="antam">antam</option>
+														<option value="galery24">galery24</option>
+													</select>
 												</div>
-												<select id="jenis-emas" name="jenis_emas" class="form-control py-1 px-2" style="min-height: 32.4px;max-height: 32.4px" disabled>
-													<option value="">-- jenis emas --</option>
-													<option value="ubs">ubs</option>
-													<option value="antam">antam</option>
-													<option value="galery24">galery24</option>
-												</select>
 											</div>
 										</div>
 									</div>

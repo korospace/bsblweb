@@ -12,15 +12,15 @@ class Dompet extends Migration
             'id' => [
                 // 'type'           => 'serial', // postgre,
                 'type'           => 'int', // mysql
-                'constraint' => 7,       // mysql
-                'null'            => false,
+                'constraint'     => 7,     // mysql
+                'null'           => false,
                 'auto_increment' => true,  // mysql
             ],
             'id_user' => [
                 // 'type'       => 'text', // postgre
                 'type'       => 'varchar', // mysql
                 'constraint' => 200,       // mysql
-                'null'       => false,
+                'null'       => true,
             ],
             'uang' => [
                 // 'type'    => 'integer', // postgre

@@ -33,6 +33,11 @@ class JualSampah extends Migration
                 'constraint' => '65,2',   // mysql
                 'null'       => false,
             ],
+            'harga_nasabah' => [
+                // 'type'    => 'integer', // postgre
+                'type'       => 'int', // mysql
+                'null'       => false,
+            ],
             'jumlah_rp' => [
                 // 'type'    => 'integer', // postgre
                 'type'       => 'int', // mysql

@@ -55,6 +55,7 @@ class Sampah extends BaseController
                 "id_kategori" => trim($data['id_kategori']),
                 "jenis"       => strtolower(trim($data['jenis'])),
                 "harga"       => trim($data['harga']),
+                "harga_pusat" => trim($data['harga_pusat']),
             ];
 
             $dbresponse = $this->sampahModel->addSampah($data);
@@ -90,6 +91,7 @@ class Sampah extends BaseController
                 "id_kategori" => trim($data['id_kategori']),
                 "jenis"       => strtolower(trim($data['jenis'])),
                 "harga"       => trim($data['harga']),
+                "harga_pusat" => trim($data['harga_pusat']),
             ];
 
             $dbresponse = $this->sampahModel->editSampah($data);

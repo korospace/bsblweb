@@ -33,6 +33,11 @@ class Sampah extends Migration
                 'type' => 'int', // mysql
                 'null' => false,
             ],
+            'harga_pusat' => [
+                // 'type' => 'integer', // postgre
+                'type'    => 'int', // mysql
+                'default' => 0,
+            ],
             'jumlah' => [
                 // 'type'    => 'numeric', // postgre
                 'type'       => 'DECIMAL', // mysql

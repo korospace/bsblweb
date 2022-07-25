@@ -175,9 +175,30 @@
 							<div class="row" style="font-family: 'qc-medium';">
 								<div class="col-8 d-flex align-items-center">
 									<div class="numbers">
-										<p class="text-sm mb-0 text-capitalize font-weight-bold">Uang</p>
+										<p class="text-sm mb-0 text-capitalize font-weight-bold">Uang BSBL</p>
 										<h5 id="sampah-kertas" class="font-weight-bolder mb-0">
-											Rp <span id="saldo-uang">0</span>
+											Rp <span id="saldo-uang-bsbl">0</span>
+										</h5>
+									</div>
+								</div>
+								<div class="col-4 text-end">
+									<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+										<i class="fas fa-money-bill-wave-alt"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-6 mb-4">
+					<div class="card">
+						<div class="card-body p-3">
+							<div class="row" style="font-family: 'qc-medium';">
+								<div class="col-8 d-flex align-items-center">
+									<div class="numbers">
+										<p class="text-sm mb-0 text-capitalize font-weight-bold">Uang Nasabah</p>
+										<h5 id="sampah-kertas" class="font-weight-bolder mb-0">
+											Rp <span id="saldo-uang-nasabah">0</span>
 										</h5>
 									</div>
 								</div>
@@ -226,27 +247,6 @@
 								<div class="col-4 text-end">
 									<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
 										<i class="fas fa-user"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-3 col-6 mb-4">
-					<div class="card">
-						<div class="card-body p-3">
-							<div class="row" style="font-family: 'qc-medium';">
-								<div class="col-8 d-flex align-items-center">
-									<div class="numbers">
-										<p class="text-sm mb-0 text-capitalize font-weight-bold">Admin</p>
-										<h5 id="sampah-lain-lain" class="font-weight-bolder mb-0">
-											<span id="jml-admin">0</span>
-										</h5>
-									</div>
-								</div>
-								<div class="col-4 text-end">
-									<div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-										<i class="fas fa-user-cog"></i>
 									</div>
 								</div>
 							</div>

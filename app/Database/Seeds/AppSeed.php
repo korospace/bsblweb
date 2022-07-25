@@ -4,10 +4,13 @@ namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
 
-class AdminSeed extends Seeder
+class AppSeed extends Seeder
 {
     public function run()
     {
+        /**
+         * Admin
+         */
         $data = [
             'id'           => 'A001',
             'email'        => 'superadmin1@gmail.com',
@@ -27,5 +30,16 @@ class AdminSeed extends Seeder
         ];
 
         $this->db->table('users')->insert($data);
+
+        /**
+         * Dompet Admin
+         */
+        $dataDompet = [
+            'id_user' => null,
+            'uang'    => 0,
+            'emas'    => 0,
+        ];
+
+        $this->db->table('dompet')->insert($dataDompet);
     }
 }

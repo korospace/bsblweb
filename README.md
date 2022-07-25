@@ -13,18 +13,24 @@
 ## Setup
 
 <ol>
-    <li> Clone <b>or</b> Download as ZIP
-    <li> Change Directory to root project </li>
+    <li> Clone <b>or</b> Download as ZIP </li>
+    <li> Place the project into htdocs </li>
+    <li> Change directory to root project </li>
     <li> Create database <b>db_bsbl</b> </li>
-    <li> run:</li>
-</ol>
+<li> 
+run from your cmd:
 
 ```
 composer install
 
 php spark migrate
 
-php spark db:seed AdminSeed
-
-php spark serve -port 8888
+php spark db:seed AppSeed
 ```
+</li>
+</ol>
+
+## Preview
+
+<img src="./public/assets/images/preview_homepage.png">
+<img src="./public/assets/images/preview_dashboard.png">

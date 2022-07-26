@@ -643,6 +643,11 @@ const doTransaksi = async (el,event,method) => {
                 $('#barrier-transaksi').removeClass('d-none');
                 searchNasabah();                    
             }
+            else{
+                getSaldoBsbl();
+                $(`#form-${formTarget} input[type=date]`).val(getCurrentDate());
+                $(`#form-${formTarget} input[type=time]`).val(getCurrentTime());
+            }
 
             if(method == 'tariksaldo' || method == 'tariksaldobsbl'){
                 $('#form-tarik-saldo #maximal-saldo span').html(``);
@@ -653,6 +658,8 @@ const doTransaksi = async (el,event,method) => {
                     getSaldoBsbl();
                     $(`#form-${formTarget}`).removeClass('opacity-6');
                     $('#barrier-transaksi').addClass('d-none');
+                    $(`#form-${formTarget} input[type=date]`).val(getCurrentDate());
+                    $(`#form-${formTarget} input[type=time]`).val(getCurrentTime());
                 }
             }
 

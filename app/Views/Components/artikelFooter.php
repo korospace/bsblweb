@@ -75,7 +75,7 @@
                                     <i class="fas fa-envelope" style="color:#C1D966;"></i>
                                 </div>
                                 <div class="info d-flex flex-column" style="line-height: 1.5;">
-                                    <a class="text-white" href="bankasampahbudiluhur@gmail.com">
+                                    <a class="text-white" href="mailto:bankasampahbudiluhur@gmail.com">
                                         bankasampahbudiluhur@gmail.com
                                     </a>
                                     <a class="text-white" href="mailto:bsblservice@gmail.com">
@@ -100,8 +100,8 @@
                         <h4 class="text-white" style="font-weight: bold;">Social media</h4>
                         <div class="social">
                             <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="https://www.instagram.com/banksampahubl.id/"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="https://www.youtube.com/channel/UCzZBxFNCkebnY1BlDTUwZ7g"><i class="fab fa-youtube"></i></a></li>
                         </div>
                     </div>
                 </div>

@@ -350,7 +350,7 @@
 
   <div class="container" style="padding: 0 40px;margin-top:140px;">
     <h1 class="text-center mb-5 mt-5">Lokasi kami</h1>
-    <div class="mapouter"><div class="gmap_canvas"><iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=budiluhur&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br><style>.mapouter{position:relative;text-align:right;height:500px;width:100%;}</style><a href="https://www.embedgooglemap.net">google map in website</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:100%;}</style></div></div>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2151572109346!2d106.74706501434338!3d-6.235345295486444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f0c0cdf88a49%3A0x7ec7cd56a5fa1192!2sJl.%20H.%20Gaim%20Gg.%20H.%20Kasan%20Misin%20No.50%2C%20RT.11%2FRW.2%2C%20Petukangan%20Utara%2C%20Kec.%20Pesanggrahan%2C%20Kota%20Jakarta%20Selatan%2C%20Daerah%20Khusus%20Ibukota%20Jakarta%2012260!5e0!3m2!1sid!2sid!4v1659409417933!5m2!1sid!2sid" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 
   <!-- ***** Hubungi Kami ***** -->
@@ -391,8 +391,8 @@
             </p>
             <ul class="social">
               <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-              <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-              <li><a href="https://www.instagram.com/banksampah.ubl/"><i class="fab fa-instagram"></i></a></li>
+              <li><a href="https://www.instagram.com/banksampahubl.id/"><i class="fab fa-instagram"></i></a></li>
+              <li><a href="https://www.youtube.com/channel/UCzZBxFNCkebnY1BlDTUwZ7g"><i class="fab fa-youtube"></i></a></li>
             </ul>
           </div>
         </div>

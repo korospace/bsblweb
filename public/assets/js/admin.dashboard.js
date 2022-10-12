@@ -69,10 +69,10 @@ const getSaldoNasabah = async () => {
         let data = httpResponse.data.data;
 
         if (data.saldo_bank != null ) {
-            $('#saldo-uang-bsbl').html(modifUang(kFormatter(data.saldo_bank.toString())));
+            $('#saldo-uang-bsbl').html(modifUang(data.saldo_bank.toString()));
         }
         if (data.saldo_nasabah.uang != null ) {
-            $('#saldo-uang-nasabah').html(modifUang(kFormatter(data.saldo_nasabah.uang.toString())));
+            $('#saldo-uang-nasabah').html(modifUang(data.saldo_nasabah.uang.toString()));
         }
         if (data.saldo_nasabah.emas != null ) {
             $('#saldo-emas').html(parseFloat(data.saldo_nasabah.emas).toFixed(4));

@@ -260,7 +260,8 @@ class Login extends BaseController
                     $batasTime   = (int)$timeNow - (86400*30);
                     $privilege   = $adminData['messages']['privilege'];
 
-                    if ($last_active <  $batasTime && $privilege != 'super' || $is_active == 'f') {
+                    // if ($last_active <  $batasTime && $is_active == false) {
+                    if ($last_active <  $batasTime && $privilege != 'superadmin' || $is_active == 'f') {
                         $response = [
                             'status'   => 401,
                             'error'    => true,

@@ -53,14 +53,20 @@ class Register extends BaseController
         }
 
 		$data = $this->request->getPost();
-        $this->validation->run($data,'nasabahRegisterValidate');
         
         if (!$this->request->getHeader('token')) {
-            $this->validation->run($data,'emailValidate');
+            $this->validation->run($data,'nasabahRegisterValidate');
         }
         else{
             if (!in_array($result['data']['privilege'],['admin','superadmin'])) {
-                $this->validation->run($data,'emailValidate');
+                $this->validation->run($data,'nasabahRegisterValidate');
+            }
+            else {
+                $this->validation->run($data,'nasabahRegisterValidateByAdmin');
+
+                if (isset($data['tgl_lahir']) && $data['tgl_lahir'] != "") {
+                    $this->validation->run($data,'tglLahirValidate');
+                }
             }
         }
 
@@ -78,7 +84,7 @@ class Register extends BaseController
         else {
             // create id nasabah
             $idNasabah  = '';
-            $dbrespond  = $this->registerModel->getLastNasabah($data['kodepos']);
+            $dbrespond  = $this->registerModel->getLastNasabah($data['kodepos'].$this->request->getPost("rt").$this->request->getPost("rw"));
 
             if ($dbrespond['status'] == 200) {
                 $lastID = $dbrespond['data']['id'];
@@ -98,13 +104,11 @@ class Register extends BaseController
             $otp   = $this->generateOTP(6);
             $data  = [
                 "id"           => $idNasabah,
-                "username"     => trim($data['username']),
-                "password"     => $this->encrypt($data['password']),
                 "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                "notelp"       => trim($data['notelp']),
-                "nik"          => trim($data['nik']),
-                "alamat"       => trim($data['alamat']),
-                "tgl_lahir"    => trim($data['tgl_lahir']),
+                "nik"          => $data['nik'] ? trim($data['nik']) : null,
+                "notelp"       => $data['notelp'] ? trim($data['notelp']) : null,
+                "alamat"       => $data['alamat'] ? trim($data['alamat']) : null,
+                "tgl_lahir"    => isset($data['tgl_lahir']) && $data['tgl_lahir'] != "" ? trim($data['tgl_lahir']) : "00-00-000",
                 "kelamin"      => $data['kelamin'],
                 "is_active"    => true,
                 "last_active"  => (int)time(),
@@ -123,13 +127,17 @@ class Register extends BaseController
 
             if ($this->request->getHeader('token')) {
                 if (in_array($result['data']['privilege'],['admin','superadmin'])) {
-                    $data['email']     = $this->generateOTP(6)."@domain.com";
+                    $data['email']     = null;
                     $data['is_verify'] = true;
+                    $data["username"] = trim($idNasabah);
+                    $data["password"] = $this->encrypt($idNasabah);
                 }
             }
             else {
                 $email         = $this->request->getPost('email');
                 $data['email'] = $email;
+                $data["username"] = trim($this->request->getPost('username'));
+                $data["password"] = $this->encrypt($this->request->getPost('password'));
             }
 
             $dbrespond = $this->registerModel->addNasabah($data);
@@ -202,13 +210,13 @@ class Register extends BaseController
             
             $data = [
                 "id"           => $idAdmin,
-                "email"        => trim($data['username']).'@gmail.com',
                 "username"     => trim($data['username']),
                 "password"     => password_hash(trim($data['password']), PASSWORD_DEFAULT),
+                "email"        => null,
                 "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                "notelp"       => trim($data['notelp']),
-                "nik"          => $this->generateOTP(16),
-                "alamat"       => trim($data['alamat']),
+                "nik"          => null,
+                "notelp"       => $data['notelp'] ? trim($data['notelp']) : null,
+                "alamat"       => $data['alamat'] ? trim($data['alamat']) : null,
                 "tgl_lahir"    => trim($data['tgl_lahir']),
                 "kelamin"      => strtolower(trim($data['kelamin'])),
                 "is_active"    => true,

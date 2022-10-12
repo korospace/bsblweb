@@ -20,7 +20,7 @@ class Users extends Migration
                 'type'       => 'varchar', // mysql
                 'constraint' => 30,
                 'unique'     => true,
-                'null'       => false,
+                'null'       => true,
             ],
             'username' => [
                 // 'type'       => 'character varying', // postgre
@@ -39,7 +39,7 @@ class Users extends Migration
                 // 'type'       => 'character varying', // postgre
                 'type'       => 'varchar', // mysql
                 'constraint' => 40,
-                'unique'     => true,
+                // 'unique'     => true,
                 'null'       => false,
             ],
             'notelp' => [
@@ -47,20 +47,20 @@ class Users extends Migration
                 'type'       => 'varchar', // mysql
                 'constraint' => 14,
                 'unique'     => true,
-                'null'       => false,
+                'null'       => true,
             ],
             'nik' => [
                 // 'type'       => 'character varying', // postgre
                 'type'       => 'varchar', // mysql
                 'constraint' => 16,
                 'unique'     => true,
-                'null'       => false,
+                'null'       => true,
             ],
             'alamat' => [
                 // 'type'       => 'character varying', // postgre
                 'type'       => 'varchar', // mysql
                 'constraint' => 255,
-                'null'       => false,
+                'null'       => true,
             ],
             'tgl_lahir' => [
                 // 'type'       => 'character varying', // postgre
@@ -115,7 +115,7 @@ class Users extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey(['email','username','notelp']);
+        // $this->forge->addUniqueKey(['email','username','notelp']);
         // $this->forge->addField("created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
         $this->forge->createTable('users');
     }

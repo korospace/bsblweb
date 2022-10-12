@@ -26,6 +26,20 @@
 			font-family: 'qc-medium';
 			border-radius: 4px;
 		}
+
+		button {
+			background: #537629;
+			color: #fff;
+			width: 274.27px;
+			outline: none;
+			border: none;
+			padding: 8px 0;
+		}
+
+		button:hover {
+			background: #c1d966;
+			color: #537629;
+		}
 	</style>
   	<!-- ** develoment ** -->
     <!-- <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.min.css'); ?>"> -->
@@ -66,6 +80,15 @@
 			<input type="text" id="digit-6" name="digit-6" data-previous="digit-5" />
 		</div>
 
-		<a class="text-white" style="margin-top: 20px;" href="https://wa.me/6281287200602?text=Hallo%20Admin,%20saya%20ada%20kendala%20mengenai%20password">hubungi admin</a>
+		<button 
+		class="" 
+		style="max-width: 374px;max-height: 54px;border-radius: 4px;cursor: pointer;">
+			kirim</button>
+
+		<div class="text-white" style="margin-top: 40px;">
+			<a id="kirim_ulang" class="text-white" href="">kirim ulang</a> |
+			<a class="text-white" href="<?= base_url('/login') ?>">login</a> |
+			<a class="text-white" style="margin-top: 20px;" href="https://wa.me/6281287200602?text=Hallo%20Admin,%20saya%20ada%20kendala%20mengenai%20password">hubungi admin</a>
+		</div>
 	</section>
 <?= $this->endSection(); ?>

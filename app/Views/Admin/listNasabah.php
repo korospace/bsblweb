@@ -47,7 +47,7 @@
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.min.js'); ?>"></script>
     <script src="<?= base_url('assets/js/plugins/nikparse.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.listnasabah.min.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.listnasabah.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -284,22 +284,8 @@
 							id="nama-error"
 							class="text-danger"></small>
 					</div>
-					<!-- **** username **** -->
-					<div class="input-group col-lg-12 mb-4 form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray px-4 border-md">
-									<i class="fas fa-at text-muted"></i>
-								</span>
-							</div>
-							<input type="text" class="form-control px-2" id="username" name="username" autocomplete="off" placeholder="Masukan username">
-						</div>
-						<small
-							id="username-error"
-							class="text-danger"></small>
-					</div>
 					<!-- **** email **** -->
-					<div class="editnasabah-item input-group col-lg-12 mb-4 form-group">
+					<div class="editnasabah-item editnasabah-item input-group col-lg-12 mb-4 form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
 							<span class="input-group-text bg-gray px-4 border-md border-right-0">
@@ -312,60 +298,18 @@
 							id="email-error"
 							class="text-danger"></small>
 					</div>
-					<!-- **** password **** -->
-					<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-									<i class="fa fa-lock text-muted"></i>
-								</span>
-							</div>
-							<input type="password" class="form-control px-2" id="password" name="password" autocomplete="off" placeholder="masukan password">
-						</div>
-						<small
-							id="password-error"
-							class="text-danger"></small>
-					</div>
-					<!-- **** tgl lahir **** -->
-					<div class="input-group col-lg-12 mb-4 form-group">
+					<!-- **** username **** -->
+					<div class="editnasabah-item input-group col-lg-12 mb-4 form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text bg-gray px-4 border-md">
-									<i class="fas fa-calendar-alt text-muted"></i>
+									<i class="fas fa-at text-muted"></i>
 								</span>
 							</div>
-							<input type="date" class="form-control px-2 h-100" id="tgllahir" name="tgl_lahir">
+							<input type="text" class="form-control px-2" id="username" name="username" autocomplete="off" placeholder="Masukan username">
 						</div>
 						<small
-							id="tgllahir-error"
-							class="text-danger"></small>
-					</div>
-					<!-- **** no telp **** -->
-					<div class="input-group col-lg-12 mb-4 form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-									<i class="fa fa-phone-square text-muted"></i>
-								</span>
-							</div>
-							<input type="text" class="form-control px-2" id="notelp" name="notelp" autocomplete="off" placeholder="Masukan no.telp">
-						</div>
-						<small
-							id="notelp-error"
-							class="text-danger"></small>
-					</div>
-					<!-- **** nik **** -->
-					<div class="addnasabah-item input-group col-lg-12 mb-4 form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-									<i class="fa fa-id-card text-muted"></i>
-								</span>
-							</div>
-							<input type="text" class="form-control px-2" id="nik" name="nik" autocomplete="off" placeholder="Masukan NIK nasabah">
-						</div>
-						<small
-							id="nik-error"
+							id="username-error"
 							class="text-danger"></small>
 					</div>
 					<!-- kelamin -->
@@ -385,20 +329,6 @@
 							Perempuan
 							</label>
 						</div>
-					</div>
-					<!-- **** alamat **** -->
-					<div class="input-group col-12 mb-4">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
-									<i class="fas fa-map-marker-alt text-muted"></i>
-								</span>
-							</div>
-							<input type="text" class="form-control px-2" id="alamat" name="alamat" autocomplete="off" placeholder="Masukan alamat lengkap">
-						</div>
-						<small
-							id="alamat-error"
-							class="text-danger"></small>
 					</div>
 					<!-- **** RT RW KODEPOS **** -->
 					<div class="addnasabah-item form-row mb-4" style="padding-right: 2px;">
@@ -422,7 +352,7 @@
 										<i class="fas fa-home text-muted"></i>
 									</span>
 								</div>
-								<input type="text" class="form-control px-2" id="rw" name="rw" autocomplete="off" placeholder="RW: 001">
+								<input type="text" class="form-control px-2" id="rw" name="rw" autocomplete="off" placeholder="RW: 002">
 							</div>
 							<small
 								id="rw-error"
@@ -477,9 +407,66 @@
 						</div>
 					</div>
 
+					<hr class="horizontal dark mb-2">
+					<h6 class="font-italic opacity-8 mb-2">data opsionial</h6>
+
+					<!-- **** tgl lahir **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-calendar-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="date" class="form-control px-2 h-100" id="tgllahir" name="tgl_lahir">
+						</div>
+						<small
+							id="tgllahir-error"
+							class="text-danger"></small>
+					</div>
+					<!-- **** no telp **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fa fa-phone-square text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="notelp" name="notelp" autocomplete="off" placeholder="Masukan no.telp">
+						</div>
+						<small
+							id="notelp-error"
+							class="text-danger"></small>
+					</div>
+					<!-- **** nik **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fa fa-id-card text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="nik" name="nik" autocomplete="off" placeholder="Masukan NIK nasabah">
+						</div>
+						<small
+							id="nik-error"
+							class="text-danger"></small>
+					</div>
+					<!-- **** alamat **** -->
+					<div class="input-group col-12 mb-4">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fas fa-map-marker-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="alamat" name="alamat" autocomplete="off" placeholder="Detil alamat lengkap">
+						</div>
+						<small
+							id="alamat-error"
+							class="text-danger"></small>
+					</div>
 					<!-- **** change password **** -->
-					<hr class="editnasabah-item horizontal dark mt-2 mb-2">
-					<h6 class="editnasabah-item font-italic opacity-8">Ubah password (opsionial)</h6>
 					<div class="editnasabah-item input-group col-lg-12 mt-2 mb-4 form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">

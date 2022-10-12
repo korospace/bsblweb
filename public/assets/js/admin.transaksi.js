@@ -279,8 +279,10 @@ const hapusBaris = (el) => {
 const insertJenisSampah = (el,event) =>{
     var kategori      = event.target.options[event.target.selectedIndex].dataset.kategori;
     let eljenisSampah = `<option value='' data-harga='' data-harga_pusat='' data-tersedia="0" selected>-- jenis sampah --</option>`;
+
+    let arrayJenisSampahSorted = arrayJenisSampah.sort((a, b) => a.jenis.localeCompare(b.jenis));
     
-    arrayJenisSampah.forEach(s=> {
+    arrayJenisSampahSorted.forEach(s=> {
         if (s.kategori == kategori) {
             eljenisSampah += `<option value='${s.id}' data-harga='${s.harga}'  data-harga_pusat='${s.harga_pusat}' data-tersedia="${s.jumlah}">${s.jenis}</option>`;
         }
@@ -339,7 +341,7 @@ const countHargaXjumlah = (el) =>{
             let elInputHarga = el.parentElement.nextElementSibling.children[0];
             let harga        = elInputHarga.getAttribute('data-harga');
             
-            elInputHarga.value = parseFloat(parseFloat(jumlahKg)*parseInt(harga)).toFixed(0);
+            elInputHarga.value = parseFloat(parseFloat(jumlahKg)*parseInt(harga)).toFixed(2);
             countTotalHarga();
         }
     }
@@ -395,14 +397,14 @@ const validateSetorJualSampah = () => {
             status = false;
             msg    = 'jumlah hanya boleh berupa angka positif dan titik!';
         }
-        if (idnasabah == '') {
-            let kgTersedia = parseFloat($(this).attr('data-tersedia')).toFixed(2);
-            if (parseFloat($(this).val()) > kgTersedia) {
-                $(this).addClass('is-invalid');
-                $(this).siblings().html(`hanya tersedia ${kgTersedia} kg`);
-                status = false;
-            }
-        }
+        // if (idnasabah == '') {
+        //     let kgTersedia = parseFloat($(this).attr('data-tersedia')).toFixed(2);
+        //     if (parseFloat($(this).val()) > kgTersedia) {
+        //         $(this).addClass('is-invalid');
+        //         $(this).siblings().html(`hanya tersedia ${kgTersedia} kg`);
+        //         status = false;
+        //     }
+        // }
     });
 
     if (status == false && msg !== "") {
@@ -1122,9 +1124,11 @@ const getDetailTransaksi = async (id) => {
 
         if (httpResponse.data.data.jenis_transaksi == 'penjualan sampah') {
             $('#modalPrintTransaksiTarget td#id-user').html('ID.ADMIN');
+            $('#modalPrintTransaksi .modal-dialog').addClass('modal-lg');
         } 
         else {
             $('#modalPrintTransaksiTarget td#id-user').html('ID.NASABAH');
+            $('#modalPrintTransaksi .modal-dialog').removeClass('modal-lg');
         }
 
         // tarik saldo
@@ -1181,7 +1185,7 @@ const getDetailTransaksi = async (id) => {
                     <th scope="row">${++i}</th>
                     <td>${b.jenis}</td>
                     <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
-                    <td class="text-left">Rp ${modifUang(b.jumlah_rp)}</td>
+                    <td class="text-right">${modifUang(b.jumlah_rp)}</td>
                 </tr>`;
             })
 
@@ -1198,7 +1202,7 @@ const getDetailTransaksi = async (id) => {
                     ${trBody}
                     <tr>
                         <th class="text-center" colspan='3'>Total</th>
-                        <td class="text-left">Rp ${modifUang(totalRp.toString())}</td>
+                        <td class="text-right">Rp ${modifUang(totalRp.toString())}</td>
                     </tr>
                 </tbody>
             </table>`);
@@ -1213,17 +1217,17 @@ const getDetailTransaksi = async (id) => {
             let barang = httpResponse.data.data.barang;
             barang.forEach((b,i) => {
                 totalKg      += b.jumlah_kg;
-                totalHJual   += parseInt(b.jumlah_rp);
-                totalHBeli   += parseInt(b.harga_nasabah);
-                let selisih   = parseInt(b.jumlah_rp)-parseInt(b.harga_nasabah);
-                totalSelisih += selisih;
+                totalHJual   += parseFloat(b.jumlah_rp);
+                totalHBeli   += parseFloat(b.harga_nasabah);
+                let selisih   = parseFloat(b.jumlah_rp).toFixed(2)-parseFloat(b.harga_nasabah).toFixed(2);
+                totalSelisih += parseFloat(selisih).toFixed(2);
 
                 trBody  += `<tr class="text-center">
                     <td>${b.jenis}</td>
-                    <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
-                    <td class="text-left">Rp ${modifUang(b.jumlah_rp)}</td>
-                    <td class="text-left">Rp ${modifUang(b.harga_nasabah)}</td>
-                    <td class="text-left">Rp ${modifUang(selisih)}</td>
+                    <td class="text-right">${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
+                    <td class="text-right">${modifUang(b.jumlah_rp)}</td>
+                    <td class="text-right">${modifUang(b.harga_nasabah)}</td>
+                    <td class="text-right">${modifUang(parseFloat(selisih).toFixed(2))}</td>
                 </tr>`;
             })
 
@@ -1241,10 +1245,10 @@ const getDetailTransaksi = async (id) => {
                     ${trBody}
                     <tr>
                         <th class="text-center">Total</th>
-                        <td class="text-center">${parseFloat(totalKg).toFixed(2)} kg</td>
-                        <td class="text-left">Rp ${modifUang(totalHJual)}</td>
-                        <td class="text-left">Rp ${modifUang(totalHBeli)}</td>
-                        <td class="text-left">Rp ${modifUang(totalSelisih)}</td>
+                        <td class="text-right">${parseFloat(totalKg).toFixed(2)} kg</td>
+                        <td class="text-right">Rp ${modifUang(parseFloat(totalHJual).toFixed(2))}</td>
+                        <td class="text-right">Rp ${modifUang(parseFloat(totalHBeli).toFixed(2))}</td>
+                        <td class="text-right">Rp ${modifUang(parseFloat(totalSelisih).toFixed(2))}</td>
                     </tr>
                 </tbody>
             </table>`);

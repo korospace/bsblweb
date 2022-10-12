@@ -450,7 +450,7 @@ const getDetailTransaksiNasabah = async (id) => {
                     <th scope="row">${++i}</th>
                     <td>${b.jenis}</td>
                     <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
-                    <td class="text-left">Rp ${modifUang(b.jumlah_rp)}</td>
+                    <td class="text-right">${modifUang(b.jumlah_rp)}</td>
                 </tr>`;
             })
 
@@ -467,7 +467,7 @@ const getDetailTransaksiNasabah = async (id) => {
                     ${trBody}
                     <tr>
                         <th class="text-center" colspan='3'>Total</th>
-                        <td class="text-left">Rp ${modifUang(totalRp.toString())}</td>
+                        <td class="text-right">Rp ${modifUang(totalRp.toString())}</td>
                     </tr>
                 </tbody>
             </table>`);
@@ -666,7 +666,9 @@ const insertJenisSampah = (el,event) =>{
     var kategori      = event.target.options[event.target.selectedIndex].dataset.kategori;
     let eljenisSampah = `<option value='' data-harga='' selected>-- jenis sampah --</option>`;
     
-    arrayJenisSampah.forEach(s=> {
+    let arrayJenisSampahSorted = arrayJenisSampah.sort((a, b) => a.jenis.localeCompare(b.jenis));
+
+    arrayJenisSampahSorted.forEach(s=> {
         if (s.kategori == kategori) {
             eljenisSampah += `<option value='${s.id}' data-harga='${s.harga}'>${s.jenis}</option>`;
         }
@@ -714,7 +716,7 @@ const countHargaXjumlah = (el) =>{
             let elInputHarga = el.parentElement.nextElementSibling.children[0];
             let harga        = elInputHarga.getAttribute('data-harga');
             
-            elInputHarga.value = parseFloat(jumlahKg)*parseFloat(harga);
+            elInputHarga.value = parseFloat(parseFloat(jumlahKg)*parseInt(harga)).toFixed(2);
             countTotalHarga();
         }
     }

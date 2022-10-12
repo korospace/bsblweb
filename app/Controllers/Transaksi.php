@@ -122,7 +122,7 @@ class Transaksi extends BaseController
                         ".round($key['jumlah_kg'],2)."
                     </td>
                     <td style='font-family: sans;text-align: right;'>
-                        Rp ".number_format($key['jumlah_rp'] , 0, ',', ',')."
+                        Rp ".number_format($key['jumlah_rp'] , 2, '.', ',')."
                     </td>
                 </tr>";
             }
@@ -151,7 +151,7 @@ class Transaksi extends BaseController
                             Total :
                         </th>
                         <td style='font-family: sans;text-align: right;'>
-                            Rp ".number_format($totalRp , 0, ',', ',')."
+                            Rp ".number_format($totalRp , 2, '.', ',')."
                         </td>
                     </tr>
                 </tbody>
@@ -171,7 +171,7 @@ class Transaksi extends BaseController
                 $totalHJual += $key['jumlah_rp'];
                 $totalHBeli += $key['harga_nasabah'];
 
-                $selisih       = (int)$key['jumlah_rp'] - (int)$key['harga_nasabah'];
+                $selisih       = (float)$key['jumlah_rp'] - (float)$key['harga_nasabah'];
                 $totalSelisih += $selisih;
 
                 $bg       = ($no % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
@@ -187,13 +187,13 @@ class Transaksi extends BaseController
                         ".round($key['jumlah_kg'],2)."
                     </td>
                     <td style='font-family: sans;text-align: right;'>
-                        Rp ".number_format($key['jumlah_rp'] , 0, ',', ',')."
+                        Rp ".number_format($key['jumlah_rp'] , 2, '.', ',')."
                     </td>
                     <td style='font-family: sans;text-align: right;'>
-                        Rp ".number_format($key['harga_nasabah'] , 0, ',', ',')."
+                        Rp ".number_format($key['harga_nasabah'] , 2, '.', ',')."
                     </td>
                     <td style='font-family: sans;text-align: right;'>
-                        Rp ".number_format($selisih , 0, ',', ',')."
+                        Rp ".number_format($selisih , 2, '.', ',')."
                     </td>
                 </tr>";
             }
@@ -231,13 +231,13 @@ class Transaksi extends BaseController
                             ".round($totalKg,2)."
                         </td>
                         <td style='font-family: sans;text-align: right;'>
-                            Rp ".number_format($totalHJual , 0, ',', ',')."
+                            Rp ".number_format($totalHJual , 2, '.', ',')."
                         </td>
                         <td style='font-family: sans;text-align: right;'>
-                            Rp ".number_format($totalHBeli , 0, ',', ',')."
+                            Rp ".number_format($totalHBeli , 2, '.', ',')."
                         </td>
                         <td style='font-family: sans;text-align: right;'>
-                            Rp ".number_format($totalSelisih , 0, ',', ',')."
+                            Rp ".number_format($totalSelisih , 2, '.', ',')."
                         </td>
                     </tr>
                 </tbody>
@@ -418,7 +418,7 @@ class Transaksi extends BaseController
 
         foreach ($tss as $key) {
             $totKgSetor   = $totKgSetor+(float)$key['jumlah_kg'];
-            $totUangSetor = $totUangSetor+(int)$key['jumlah_rp'];
+            $totUangSetor = $totUangSetor+(float)$key['jumlah_rp'];
 
             $tdNama = '';
             if (!$isRekapNasabah) {
@@ -448,7 +448,7 @@ class Transaksi extends BaseController
                     ".round((float)$key['jumlah_kg'],2)."
                 </td>
                 <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
-                    ".number_format($key['jumlah_rp'] , 0, ',', ',')."
+                    ".number_format($key['jumlah_rp'] , 2, '.', ',')."
                 </td>
             </tr>";
         }
@@ -461,7 +461,7 @@ class Transaksi extends BaseController
                 ".$totKgSetor."
             </th>
             <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
-                ".number_format($totUangSetor , 0, ',', ',')."
+                ".number_format($totUangSetor , 2, '.', ',')."
             </th>
         </tr>";
 
@@ -476,9 +476,9 @@ class Transaksi extends BaseController
 
         foreach ($tjs as $key) {
             $totKgjual   = $totKgjual+(float)$key['jumlah_kg'];
-            $totUangJual = $totUangJual+(int)$key['jumlah_rp'];
-            $totUangBeli = $totUangBeli+(int)$key['harga_nasabah'];
-            $selisih     = (int)$key['jumlah_rp'] - (int)$key['harga_nasabah'];
+            $totUangJual = $totUangJual+(float)$key['jumlah_rp'];
+            $totUangBeli = $totUangBeli+(float)$key['harga_nasabah'];
+            $selisih     = (float)$key['jumlah_rp'] - (float)$key['harga_nasabah'];
             $totSelisihUang += $selisih;
 
             $bg     = ($noTjs % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
@@ -500,13 +500,13 @@ class Transaksi extends BaseController
                     ".round((float)$key['jumlah_kg'],2)."
                 </td>
                 <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
-                    ".number_format($key['jumlah_rp'] , 0, ',', ',')."
+                    ".number_format($key['jumlah_rp'] , 2, '.', ',')."
                 </td>
                 <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
-                    ".number_format($key['harga_nasabah'] , 0, ',', ',')."
+                    ".number_format($key['harga_nasabah'] , 2, '.', ',')."
                 </td>
                 <td style='font-size: 0.7em;font-family: sans;text-align: right;'>
-                    ".number_format($selisih , 0, ',', ',')."
+                    ".number_format($selisih , 2, '.', ',')."
                 </td>
             </tr>";
         }
@@ -519,13 +519,13 @@ class Transaksi extends BaseController
                 ".$totKgjual."
             </th>
             <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
-                ".number_format($totUangJual , 0, ',', ',')."
+                ".number_format($totUangJual , 2, '.', ',')."
             </th>
             <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
-                ".number_format($totUangBeli , 0, ',', ',')."
+                ".number_format($totUangBeli , 2, '.', ',')."
             </th>
             <th style='text-align: left;font-size: 0.8em;font-family: sans;text-align: right;'>
-                ".number_format($totSelisihUang , 0, ',', ',')."
+                ".number_format($totSelisihUang , 2, '.', ',')."
             </th>
         </tr>";
 

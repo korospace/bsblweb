@@ -11,15 +11,15 @@ class AppSeed extends Seeder
         /**
          * Admin
          */
-        $data = [
+        $dataAdmin = [
             'id'           => 'A001',
-            'email'        => 'superadmin1@gmail.com',
+            'email'        => null,
             'username'     => 'superadmin1',
             'password'     => password_hash(trim('superadmin1'), PASSWORD_DEFAULT),
             'nama_lengkap' => 'super admin 1',
-            'notelp'       => '021123456789',
-            'nik'          => '1234567890123456',
-            'alamat'       => 'cileduk',
+            'notelp'       => null,
+            'nik'          => null,
+            'alamat'       => null,
             'tgl_lahir'    => date("d-m-Y", time()),
             'kelamin'      => 'laki-laki',
             'is_active'    => true,
@@ -29,7 +29,7 @@ class AppSeed extends Seeder
             'created_at'   => time(),
         ];
 
-        $this->db->table('users')->insert($data);
+        $this->db->table('users')->insert($dataAdmin);
 
         /**
          * Dompet Admin

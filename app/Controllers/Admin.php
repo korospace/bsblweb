@@ -616,8 +616,14 @@ class Admin extends BaseController
         global $data;
         
         $this->validation->run($data,'idNasabahValidate');
-        $this->validation->run($data,'editProfileNasabah');
+        $this->validation->run($data,'editProfileNasabahByAdmin');
         $this->validation->run($data,'isVerifyValidate');
+        if (isset($data['email']) && $data['email'] != "") {
+            $this->validation->run($data,'emailValidateById');
+        }
+        if (isset($data['tgl_lahir']) && $data['tgl_lahir'] != "") {
+            $this->validation->run($data,'tglLahirValidate');
+        }
         $errors = $this->validation->getErrors();
 
         if($errors) {
@@ -655,11 +661,12 @@ class Admin extends BaseController
             $data = [
                 "id"           => $data['id'],
                 "username"     => trim($data['username']),
-                "email"        => trim($data['email']),
+                "email"        => isset($data['email']) && $data['email'] != "" ? trim($data['email']) : null,
                 "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                "notelp"       => trim($data['notelp']),
-                "alamat"       => trim($data['alamat']),
-                "tgl_lahir"    => trim($data['tgl_lahir']),
+                "nik"          => $data['nik'] ? trim($data['nik']) : null,
+                "notelp"       => $data['notelp'] ? trim($data['notelp']) : null,
+                "alamat"       => $data['alamat'] ? trim($data['alamat']) : null,
+                "tgl_lahir"    => isset($data['tgl_lahir']) && $data['tgl_lahir'] != "" ? trim($data['tgl_lahir']) : null,
                 "kelamin"      => $data['kelamin'],
                 "is_verify"    => (trim($data['is_verify']) == '1') ?true:false,
             ];
@@ -772,8 +779,8 @@ class Admin extends BaseController
                 "id"           => trim($data['id']),
                 "username"     => trim($data['username']),
                 "nama_lengkap" => strtolower(trim($data['nama_lengkap'])),
-                "notelp"       => trim($data['notelp']),
-                "alamat"       => trim($data['alamat']),
+                "notelp"       => $data['notelp'] ? trim($data['notelp']) : null,
+                "alamat"       => $data['alamat'] ? trim($data['alamat']) : null,
                 "tgl_lahir"    => trim($data['tgl_lahir']),
                 "kelamin"      => strtolower(trim($data['kelamin'])),
                 "privilege"    => strtolower(trim($data['privilege'])),

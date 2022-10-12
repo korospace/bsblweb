@@ -52,6 +52,7 @@ $routes->group("otp", function ($routes) {
     $routes->add('/',       'Otp::otpView');
     // API
     $routes->post("verify", 'Otp::verifyOtp');
+    $routes->post("resend",  'Otp::resendOtp');
     $routes->add("(:any)",  "Notfound::PageNotFound");
 });
 

@@ -108,6 +108,27 @@ class Validation
 		],
     ];
 
+    public $emailValidateById = [
+		'email' => [
+            'rules'  => 'required|is_unique[users.email,users.id,{id}]|valid_email',
+            'errors' => [
+                'required'     => 'email is required',
+                'is_unique'    => 'email sudah terdaftar',
+                'valid_email'  => 'Email is not in format',
+            ],
+		],
+    ];
+
+    // tgl_lahir validate
+    public $tglLahirValidate = [
+		'tgl_lahir' => [
+            'rules'  => 'regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'regex_match' => 'format must be dd-mm-yyyy',
+            ],
+		]
+    ];
+
     // is_verify validate
     public $isVerifyValidate = [
 		'is_verify' => [
@@ -140,12 +161,30 @@ class Validation
 		]
 	];
 
+    // Resend OTP
+	public $resendOtpValidate = [
+		'username_or_email' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required'    => 'username_or_email is required',
+            ],
+		],
+	];
+
     /**
      * REGSITER VALIDATE
      * ================================
      */
     // nasabah
 	public $nasabahRegisterValidate = [
+		'email' => [
+            'rules'  => 'required|is_unique[users.email]|valid_email',
+            'errors' => [
+                'required'     => 'email is required',
+                'is_unique'    => 'email sudah terdaftar',
+                'valid_email'  => 'Email is not in format',
+            ],
+		],
 		'username' => [
             'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username]',
             'errors' => [
@@ -182,7 +221,7 @@ class Validation
 		'nik' => [
             'rules'  => 'required|min_length[16]|max_length[16]|is_unique[users.nik]|is_natural',
             'errors' => [
-                'required'    => 'nomor telepon is required',
+                'required'    => 'nik is required',
                 'min_length'  => 'min 16 character',
                 'max_length'  => 'max 16 character',
                 'is_unique'   => 'nik sudah dipakai',
@@ -201,6 +240,99 @@ class Validation
             'errors' => [
                 'required'    => 'tgl lahir is required',
                 'regex_match' => 'format must be dd-mm-yyyy',
+            ],
+		],
+		'kelamin' => [
+            'rules'  => 'required|in_list[laki-laki,perempuan]',
+            'errors' => [
+                'required'    => 'kelamin is required',
+                'in_list'     => "value must be 'laki-laki' or 'perempuan'",
+            ],
+		],
+		'rt' => [
+            'rules'  => 'required|min_length[3]|max_length[3]|is_natural',
+            'errors' => [
+                'required'    => 'rt is required',
+                'min_length'  => 'min 3 character',
+                'max_length'  => 'max 3 character',
+                'is_natural'  => 'only number allowed',
+            ],
+		],
+		'rw' => [
+            'rules'  => 'required|min_length[3]|max_length[3]|is_natural',
+            'errors' => [
+                'required'    => 'rw is required',
+                'min_length'  => 'min 3 character',
+                'max_length'  => 'max 3 character',
+                'is_natural'  => 'only number allowed',
+            ],
+		],
+		'kodepos' => [
+            'rules'  => 'required|is_natural|max_length[5]',
+            'errors' => [
+                'required'    => 'kodepos is required',
+                'is_natural'  => 'only number allowed',
+                'max_length'  => 'max 5 character',
+            ],
+		],
+		'kelurahan' => [
+            'rules'  => 'required|max_length[200]',
+            'errors' => [
+                'required'    => 'kelurahan is required',
+                'max_length'  => 'max 200 character',
+            ],
+		],
+		'kecamatan' => [
+            'rules'  => 'required|max_length[200]',
+            'errors' => [
+                'required'    => 'kecamatan is required',
+                'max_length'  => 'max 200 character',
+            ],
+		],
+		'kota' => [
+            'rules'  => 'required|max_length[200]',
+            'errors' => [
+                'required'    => 'kota is required',
+                'max_length'  => 'max 200 character',
+            ],
+		],
+		'provinsi' => [
+            'rules'  => 'required|max_length[200]',
+            'errors' => [
+                'required'    => 'provinsi is required',
+                'max_length'  => 'max 200 character',
+            ],
+		],
+	];
+
+    public $nasabahRegisterValidateByAdmin = [
+		'nama_lengkap' => [
+            'rules'  => 'required|max_length[40]',
+            'errors' => [
+                'required'    => 'nama lengkap is required',
+                'max_length'  => 'max 40 character',
+            ],
+		],
+		'notelp' => [
+            'rules'  => 'max_length[14]|is_unique[users.notelp]',
+            'errors' => [
+                'max_length'  => 'max 14 character',
+                'is_unique'   => 'no.telp sudah dipakai',
+                // 'is_natural'  => 'only number allowed',
+            ],
+		],
+		'nik' => [
+            'rules'  => 'max_length[16]|is_unique[users.nik]',
+            'errors' => [
+                'max_length'  => 'max 16 character',
+                'is_unique'   => 'nik sudah dipakai',
+                // 'is_natural'  => 'only number allowed',
+            ],
+		],
+		'alamat' => [
+            'rules'  => 'max_length[255]',
+            'errors' => [
+                'max_length'  => 'max 255 character',
             ],
 		],
 		'kelamin' => [
@@ -292,17 +424,15 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|max_length[14]|is_unique[users.notelp]',
+            'rules'  => 'max_length[14]|is_unique[users.notelp]',
             'errors' => [
-                'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 14 character',
                 'is_unique'   => 'no.telp sudah dipakai',
             ],
 		],
 		'alamat' => [
-            'rules'  => 'required|max_length[255]',
+            'rules'  => 'max_length[255]',
             'errors' => [
-                'required'    => 'alamat is required',
                 'max_length'  => 'max 255 character',
             ],
 		],
@@ -372,20 +502,18 @@ class Validation
     //  edit profile
 	public $editProfileNasabah = [
 		'username' => [
-            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username,users.id,{id}]',
+            'rules'  => 'required|min_length[7]|max_length[20]|is_unique[users.username,users.id,{id}]',
             'errors' => [
                 'required'    => 'username is required',
-                'min_length'  => 'min 8 character',
+                'min_length'  => 'min 7 character',
                 'max_length'  => 'max 20 character',
                 'is_unique'   => 'username sudah terdaftar',
             ],
 		],
 		'email' => [
-            'rules'  => 'required|is_unique[users.email,users.id,{id}]|valid_email',
+            'rules'  => 'is_unique[users.email,users.id,{id}]',
             'errors' => [
-                'required'     => 'email is required',
                 'is_unique'    => 'email sudah terdaftar',
-                'valid_email'  => 'Email is not in format',
             ],
 		],
 		'nama_lengkap' => [
@@ -396,17 +524,22 @@ class Validation
                 'max_length'  => 'max 40 character',
             ],
 		],
-		'notelp' => [
-            'rules'  => 'required|max_length[12]|is_unique[users.notelp,users.id,{id}]|is_natural',
+		'nik' => [
+            'rules'  => 'max_length[16]|is_unique[users.nik,users.id,{id}]',
             'errors' => [
-                'required'    => 'nomor telepon is required',
+                'max_length'  => 'max 16 character',
+                'is_unique'   => 'nik sudah dipakai',
+            ],
+		],
+		'notelp' => [
+            'rules'  => 'max_length[12]|is_unique[users.notelp,users.id,{id}]',
+            'errors' => [
                 'max_length'  => 'max 12 character',
                 'is_unique'   => 'no.telp sudah dipakai',
-                'is_natural'  => 'only number allowed',
             ],
 		],
 		'alamat' => [
-            'rules'  => 'required|max_length[255]',
+            'rules'  => 'max_length[255]',
             'errors' => [
                 'required'    => 'alamat is required',
                 'max_length'  => 'max 255 character',
@@ -417,6 +550,54 @@ class Validation
             'errors' => [
                 'required'    => 'tgl lahir is required',
                 'regex_match' => 'format must be dd-mm-yyyy',
+            ],
+		],
+		'kelamin' => [
+            'rules'  => 'required|in_list[laki-laki,perempuan]',
+            'errors' => [
+                'required'    => 'kelamin is required',
+                'in_list'     => "value must be 'laki-laki' or 'perempuan'",
+            ],
+		]
+	];
+
+	public $editProfileNasabahByAdmin = [
+		'username' => [
+            'rules'  => 'required|min_length[7]|max_length[20]|is_unique[users.username,users.id,{id}]',
+            'errors' => [
+                'required'    => 'username is required',
+                'min_length'  => 'min 7 character',
+                'max_length'  => 'max 20 character',
+                'is_unique'   => 'username sudah terdaftar',
+            ],
+		],
+		'nama_lengkap' => [
+            'rules'  => 'required|max_length[40]',
+            'errors' => [
+                'required'    => 'nama lengkap is required',
+                'min_length'  => 'min 6 character',
+                'max_length'  => 'max 40 character',
+            ],
+		],
+		'nik' => [
+            'rules'  => 'max_length[16]|is_unique[users.nik,users.id,{id}]',
+            'errors' => [
+                'max_length'  => 'max 16 character',
+                'is_unique'   => 'nik sudah dipakai',
+            ],
+		],
+		'notelp' => [
+            'rules'  => 'max_length[12]|is_unique[users.notelp,users.id,{id}]',
+            'errors' => [
+                'max_length'  => 'max 12 character',
+                'is_unique'   => 'no.telp sudah dipakai',
+            ],
+		],
+		'alamat' => [
+            'rules'  => 'max_length[255]',
+            'errors' => [
+                'required'    => 'alamat is required',
+                'max_length'  => 'max 255 character',
             ],
 		],
 		'kelamin' => [
@@ -566,17 +747,15 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'required|max_length[14]|is_unique[users.notelp,users.id,{id}]',
+            'rules'  => 'max_length[14]|is_unique[users.notelp,users.id,{id}]',
             'errors' => [
-                'required'    => 'nomor telepon is required',
                 'max_length'  => 'max 14 character',
                 'is_unique'   => 'no.telp sudah dipakai',
             ],
 		],
 		'alamat' => [
-            'rules'  => 'required|max_length[255]',
+            'rules'  => 'max_length[255]',
             'errors' => [
-                'required'    => 'alamat is required',
                 'max_length'  => 'max 255 character',
             ],
 		],
@@ -634,7 +813,7 @@ class Validation
         'description' => [
             'rules'  => 'required',
             'errors' => [
-                'required' => 'kategori name is required',
+                'required' => 'description is required',
             ],
 		],
 	];
@@ -663,7 +842,7 @@ class Validation
         'description' => [
             'rules'  => 'required',
             'errors' => [
-                'required' => 'mitra name is required',
+                'required' => 'description is required',
             ],
 		],
 	];
@@ -694,7 +873,7 @@ class Validation
         'description' => [
             'rules'  => 'required',
             'errors' => [
-                'required' => 'kategori name is required',
+                'required' => 'description is required',
             ],
 		],
 		'kategori_utama' => [
@@ -726,7 +905,7 @@ class Validation
         'description' => [
             'rules'  => 'required',
             'errors' => [
-                'required' => 'kategori name is required',
+                'required' => 'description is required',
             ],
 		],
 		'kategori_utama' => [

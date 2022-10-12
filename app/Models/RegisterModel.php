@@ -15,7 +15,7 @@ class RegisterModel extends Model
     public function getLastNasabah(string $kodepos): array
     {
         try {
-            $lastNasabah = $this->db->table($this->table)->select('id')->like('id', $kodepos)->limit(1)->orderBy('created_at','DESC')->get()->getResultArray();
+            $lastNasabah = $this->db->table($this->table)->select('id')->like('id', $kodepos, 'after')->limit(1)->orderBy('created_at','DESC')->get()->getResultArray();
 
             if (empty($lastNasabah)) {    
                 return [

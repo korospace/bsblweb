@@ -260,6 +260,32 @@
 							</label>
 						</div>
 					</div>
+					<!-- **** superadmin **** -->
+					<div class="mb-3">
+						<label class="form-check-label">
+							super admin
+						</label>
+						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
+							<div class="btn-toggle toggle-privilege bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
+								<input type="checkbox" name="privilege" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
+							</div>
+						</div>
+					</div>
+					<!-- **** akun aktif **** -->
+					<div class="editadmin-item mb-3">
+						<label class="form-check-label">
+							akun aktif
+						</label>
+						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
+							<div class="btn-toggle toggle-akunaktif bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
+								<input type="checkbox" name="is_active" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
+							</div>
+						</div>
+					</div>
+
+					<hr class="horizontal dark mt-2 mb-2">
+					<h6 class="font-italic opacity-8">data opsionial</h6>
+
 					<!-- **** alamat **** -->
 					<div class="input-group col-lg-12 mb-4 form-group">
 						<div class="input-group">
@@ -288,30 +314,6 @@
 							id="notelp-error"
 							class="text-danger"></small>
 					</div>
-					<!-- **** superadmin **** -->
-					<div class="mb-3">
-						<label class="form-check-label">
-							super admin
-						</label>
-						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
-							<div class="btn-toggle toggle-privilege bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
-								<input type="checkbox" name="privilege" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
-							</div>
-						</div>
-					</div>
-					<!-- **** akun aktif **** -->
-					<div class="editadmin-item mb-3">
-						<label class="form-check-label">
-							akun aktif
-						</label>
-						<div class="mt-2 position-relative p-0 d-flex align-items-center" style="border-radius: 14px;width: 50px;height: 25px;box-shadow: inset 0 0 4px 0px rgba(0, 0, 0, 0.4);">
-							<div class="btn-toggle toggle-akunaktif bg-secondary rounded-circle position-absolute" style="width: 25px;height: 25px;">
-								<input type="checkbox" name="is_active" class="cursor-pointer" style="width: 25px;height: 25px;opacity: 0;">
-							</div>
-						</div>
-					</div>
-					<hr class="editadmin-item horizontal dark mt-2 mb-2">
-					<h6 class="editadmin-item font-italic opacity-8">Ubah password (opsionial)</h6>
 					<!-- **** change password **** -->
 					<div class="editadmin-item input-group col-lg-12 mt-2 mb-4 form-group">
 						<div class="input-group">

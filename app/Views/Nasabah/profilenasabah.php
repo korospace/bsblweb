@@ -38,6 +38,7 @@
 	<script src="<?= base_url('assets/js/core/bootstrap.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.js'); ?>"></script>
+    <script src="<?= base_url('assets/js/plugins/nikparse.min.js'); ?>"></script>
 	<!-- <script src="<?= base_url('assets/js/nasabah.js'); ?>"></script> -->
 	<script src="<?= base_url('assets/js/nasabah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
@@ -313,6 +314,20 @@
 						</div>
 						<small
 							id="alamat-edit-error"
+							class="text-danger"></small>
+					</div>
+					<!-- **** nik **** -->
+					<div class="input-group col-lg-12 mb-4 form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray border-md" style="padding-left: 1.66rem;padding-right: 1.66rem;">
+									<i class="fa fa-id-card"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control px-2" id="nik-edit" name="nik" autocomplete="off" placeholder="Masukan NIK nasabah">
+						</div>
+						<small
+							id="nik-edit-error"
 							class="text-danger"></small>
 					</div>
 					<!-- **** no telp **** -->

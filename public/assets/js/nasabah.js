@@ -697,6 +697,10 @@ $('#formEditProfile').on('submit', async function(e) {
                $('#email-edit').addClass('is-invalid');
                $('#email-edit-error').text('*'+httpResponse.message.email);
            }
+           if (httpResponse.message.nik) {
+               $('#nik-edit').addClass('is-invalid');
+               $('#nik-edit-error').text('*'+httpResponse.message.nik);
+           }
            if (httpResponse.message.notelp) {
                $('#notelp-edit').addClass('is-invalid');
                $('#notelp-edit-error').text('*'+httpResponse.message.notelp);
@@ -737,9 +741,9 @@ function validateFormEditProfile(form) {
         $('#username-edit-error').html('*username harus di isi');
         status = false;
     }
-    else if ($('#username-edit').val().length < 8 || $('#username-edit').val().length > 20) {
+    else if ($('#username-edit').val().length < 7 || $('#username-edit').val().length > 20) {
         $('#username-edit').addClass('is-invalid');
-        $('#username-edit-error').html('*minimal 8 huruf dan maksimal 20 huruf');
+        $('#username-edit-error').html('*minimal 7 huruf dan maksimal 20 huruf');
         status = false;
     }
     else if (/\s/.test($('#username-edit').val())) {
@@ -769,15 +773,20 @@ function validateFormEditProfile(form) {
         $('#formEditProfile .form-check-input').addClass('is-invalid');
         status = false;
     }
-    // alamat validation
-    if ($('#alamat-edit').val() == '') {
-        $('#alamat-edit').addClass('is-invalid');
-        $('#alamat-edit-error').html('*alamat harus di isi');
+    // nik validation
+    let resultNik = '';
+    nikParse($('#nik-edit').val(), function(result) {
+        resultNik = result;
+    });	
+
+    if ($('#nik-edit').val() == '') {
+        $('#nik-edit').addClass('is-invalid');
+        $('#nik-edit-error').html('*NIK harus di isi');
         status = false;
     }
-    else if ($('#alamat-edit').val().length > 255) {
-        $('#alamat-edit').addClass('is-invalid');
-        $('#alamat-edit-error').html('*maksimal 255 huruf');
+    else if (resultNik.status == 'error') {
+        $('#nik-edit').addClass('is-invalid');
+        $('#nik-edit-error').html(resultNik.pesan);
         status = false;
     }
     // notelp validation
@@ -796,11 +805,22 @@ function validateFormEditProfile(form) {
         $('#notelp-edit-error').html('*hanya boleh angka');
         status = false;
     }
+    // alamat validation
+    if ($('#alamat-edit').val() == '') {
+        $('#alamat-edit').addClass('is-invalid');
+        $('#alamat-edit-error').html('*alamat harus di isi');
+        status = false;
+    }
+    else if ($('#alamat-edit').val().length > 255) {
+        $('#alamat-edit').addClass('is-invalid');
+        $('#alamat-edit-error').html('*maksimal 255 huruf');
+        status = false;
+    }
     // pass validation
     if ($('#newpass-edit').val() !== '') {   
-        if ($('#newpass-edit').val().length < 8 || $('#newpass-edit').val().length > 20) {
+        if ($('#newpass-edit').val().length < 7 || $('#newpass-edit').val().length > 20) {
             $('#newpass-edit').addClass('is-invalid');
-            $('#newpass-edit-error').html('*minimal 8 huruf dan maksimal 20 huruf');
+            $('#newpass-edit-error').html('*minimal 7 huruf dan maksimal 20 huruf');
             status = false;
         }
         else if (/\s/.test($('#newpass-edit').val())) {

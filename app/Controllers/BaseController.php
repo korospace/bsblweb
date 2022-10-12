@@ -315,7 +315,7 @@ class BaseController extends ResourceController
             "uniqueid"   => uniqid(),
             "password"   => $password,
             "privilege"  => $privilege,
-            "expired"    => ($rememberme == true) ? time()+2592000 : time()+3600, 
+            "expired"    => ($rememberme == true) ? time()+2592000 : time()+(3600*24), 
         );
 
         // if ($privilege == 'nasabah') {

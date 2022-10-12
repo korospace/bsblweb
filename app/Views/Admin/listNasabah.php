@@ -47,7 +47,7 @@
   	<script src="<?= base_url('assets/js/plugins/font-awesome.min.js'); ?>"></script>
 	<script src="<?= base_url('assets/js/parent.min.js'); ?>"></script>
     <script src="<?= base_url('assets/js/plugins/nikparse.min.js'); ?>"></script>
-	<script src="<?= base_url('assets/js/admin.listnasabah.js'); ?>"></script>
+	<script src="<?= base_url('assets/js/admin.listnasabah.min.js'); ?>"></script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>

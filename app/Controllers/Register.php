@@ -108,7 +108,7 @@ class Register extends BaseController
                 "nik"          => $data['nik'] ? trim($data['nik']) : null,
                 "notelp"       => $data['notelp'] ? trim($data['notelp']) : null,
                 "alamat"       => $data['alamat'] ? trim($data['alamat']) : null,
-                "tgl_lahir"    => isset($data['tgl_lahir']) && $data['tgl_lahir'] != "" ? trim($data['tgl_lahir']) : "00-00-000",
+                "tgl_lahir"    => isset($data['tgl_lahir']) && $data['tgl_lahir'] != "" ? trim($data['tgl_lahir']) : "",
                 "kelamin"      => $data['kelamin'],
                 "is_active"    => true,
                 "last_active"  => (int)time(),

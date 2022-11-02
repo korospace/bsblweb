@@ -18,7 +18,7 @@ class Transaksi extends Migration
             'id' => [
                 // 'type'       => 'text', // postgre
                 'type'       => 'varchar', // mysql
-                'constraint' => 12,       // mysql
+                'constraint' => 200,       // mysql
                 'null'       => false,
             ],
             'id_user' => [

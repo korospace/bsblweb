@@ -12,7 +12,7 @@ class Dompet extends Migration
             'id' => [
                 // 'type'           => 'serial', // postgre,
                 'type'           => 'int', // mysql
-                'constraint'     => 7,     // mysql
+                'constraint'     => 11,     // mysql
                 'null'           => false,
                 'auto_increment' => true,  // mysql
             ],
@@ -20,11 +20,12 @@ class Dompet extends Migration
                 // 'type'       => 'text', // postgre
                 'type'       => 'varchar', // mysql
                 'constraint' => 200,       // mysql
-                'null'       => true,
+                'null'       => false,
             ],
             'uang' => [
                 // 'type'    => 'integer', // postgre
-                'type'    => 'int', // mysql
+                'type'    => 'DECIMAL', // mysql
+                'constraint' => '11,2',   // mysql
                 'null'    => false,
                 'default' => 0,
             ],

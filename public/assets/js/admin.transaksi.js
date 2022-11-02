@@ -245,6 +245,11 @@ const tambahBaris = (event = false) => {
         </span>
     </td>
     <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <span class="nomor w-100 d-flex justify-content-center align-items-center border-radius-sm" style="height: 38px;margin: 0;">
+            ${$('.barisSetorSampah').size()+1}
+        </span>
+    </td>
+    <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
         <select id="kategori-berita-wraper" class="inputJenisSampah form-control form-control-sm py-1 pl-2 border-radius-sm" style="min-height: 38px" onchange="insertJenisSampah(this,event);">
             ${elKatSampah}
         </select>
@@ -272,6 +277,9 @@ const tambahBaris = (event = false) => {
 // hapus baris
 const hapusBaris = (el) => {
     el.parentElement.parentElement.remove();
+    $('.barisSetorSampah').each(function (e,i) {
+        i.querySelector('.nomor').innerHTML = e+1;
+    })
     countTotalHarga();
 }
 

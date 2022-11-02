@@ -532,9 +532,9 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'max_length[12]|is_unique[users.notelp,users.id,{id}]',
+            'rules'  => 'max_length[14]|is_unique[users.notelp,users.id,{id}]',
             'errors' => [
-                'max_length'  => 'max 12 character',
+                'max_length'  => 'max 14 character',
                 'is_unique'   => 'no.telp sudah dipakai',
             ],
 		],
@@ -587,9 +587,9 @@ class Validation
             ],
 		],
 		'notelp' => [
-            'rules'  => 'max_length[12]|is_unique[users.notelp,users.id,{id}]',
+            'rules'  => 'max_length[14]|is_unique[users.notelp,users.id,{id}]',
             'errors' => [
-                'max_length'  => 'max 12 character',
+                'max_length'  => 'max 14 character',
                 'is_unique'   => 'no.telp sudah dipakai',
             ],
 		],
@@ -619,10 +619,9 @@ class Validation
             ],
 		],
 		'email' => [
-            'rules'  => 'required|max_length[40]|valid_email',
+            'rules'  => 'required|valid_email',
             'errors' => [
                 'required'    => 'email is required',
-                'max_length'  => 'max 40 character',
                 'valid_email' => 'Email is not in format',
             ],
 		],
@@ -1152,6 +1151,37 @@ class Validation
             'errors' => [
                 'required'   => 'jumlah is required',
                 'numeric'    => 'only number allowed',
+            ],
+		],
+	];
+
+    public $editSetorSampah1 = [
+		'id_nasabah' => [
+            'rules'  => 'required|is_not_unique[users.id]',
+            'errors' => [
+                'required'      => 'id_nasabah is required',
+                'is_not_unique' => 'nasabah dengan id ({value}) tidak ditemukan',
+            ],
+		],
+        'id_transaksi' => [
+            'rules'  => 'required|is_not_unique[transaksi.id]',
+            'errors' => [
+                'required'      => 'id_transaksi is required',
+                'is_not_unique' => 'transaksi dengan id ({value}) tidak ditemukan',
+            ],
+		],
+		'transaksi' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'transaksi is required',
+            ],
+		],
+		'date' => [
+            'rules'  => 'required|regex_match[/^[0-3][0-9][-][0-1][0-9][-][2-9][0-9][0-9][0-9] [0-2][0-9][:][0-5][0-9]$/]',
+            // 'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'date is required',
+                'regex_match' => 'format must be dd-mm-yyyy hh:mm',
             ],
 		],
 	];

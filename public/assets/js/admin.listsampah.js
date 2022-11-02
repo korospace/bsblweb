@@ -256,10 +256,10 @@ const getAllJenisSampah = async () => {
                     ${n.jenis}
                 </td>
                 <td class="align-middle text-center py-3">
-                    <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
+                    <span class="font-weight-bold">Rp. ${modifUang(n.harga_pusat)} </span>
                 </td>
                 <td class="align-middle text-center py-3">
-                    <span class="font-weight-bold">Rp. ${modifUang(n.harga_pusat)} </span>
+                    <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
                 </td>
                 <td class="align-middle text-center py-3">
                     <span class="font-weight-bold"> ${parseFloat(n.jumlah).toFixed(2)} </span>
@@ -340,10 +340,10 @@ $('#search-sampah').on('keyup', function() {
             ${n.jenis}
             </td>
             <td class="align-middle text-center py-3">
-                <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
+                <span class="font-weight-bold">Rp. ${modifUang(n.harga_pusat)} </span>
             </td>
             <td class="align-middle text-center py-3">
-                <span class="font-weight-bold">Rp. ${modifUang(n.harga_pusat)} </span>
+                <span class="font-weight-bold">Rp. ${modifUang(n.harga)} </span>
             </td>
             <td class="align-middle text-center py-3">
                 <span class="font-weight-bold"> ${parseFloat(n.jumlah).toFixed(2)} </span>
@@ -393,6 +393,11 @@ const openModalAddEditSmp = (modalName,idSampah=null) => {
         $(`#kategori-sampah-wraper .kategori-list span#${selectedSampah[0].id_kategori}`).addClass('d-none');
     }
 }
+
+// Auto insert nasabah price
+$('input#harga_pusat').on('keyup', function(e) {
+    $('input#harga').val(this.value - ((10/100)*this.value));
+});
 
 // crud sampah
 const crudSampah = async (el,event) => {

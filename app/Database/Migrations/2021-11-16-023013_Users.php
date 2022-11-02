@@ -12,13 +12,13 @@ class Users extends Migration
             'id' => [
                 // 'type'       => 'text',    // postgre
                 'type'       => 'varchar', // mysql
-                'constraint' => 18,       // mysql 122600110119999999
+                'constraint' => 200,       // mysql 122600110119999999
                 'null'       => false,
             ],
             'email' => [
                 // 'type'       => 'character varying', // postgre
                 'type'       => 'varchar', // mysql
-                'constraint' => 30,
+                'constraint' => 200,
                 'unique'     => true,
                 'null'       => true,
             ],
@@ -87,7 +87,6 @@ class Users extends Migration
             ],
             'last_active' => [
                 'type'       => 'bigint',
-                'constraint' => 19,
                 'default'    => 0,
                 'null'       => false,
             ],

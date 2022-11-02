@@ -12,7 +12,7 @@ class Sampah extends Migration
             'id' => [
                 // 'type'       => 'text', // postgre
                 'type'       => 'varchar', // mysql
-                'constraint' => 6,       // mysql S00999
+                'constraint' => 200,       // mysql S00999
                 'null'       => false,
             ],
             'id_kategori' => [
@@ -30,12 +30,12 @@ class Sampah extends Migration
             ],
             'harga' => [
                 // 'type' => 'integer', // postgre
-                'type' => 'int', // mysql
+                'type'       => 'int', // mysql
                 'null' => false,
             ],
             'harga_pusat' => [
                 // 'type' => 'integer', // postgre
-                'type'    => 'int', // mysql
+                'type'       => 'int', // mysql
                 'default' => 0,
             ],
             'jumlah' => [

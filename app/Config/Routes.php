@@ -158,6 +158,7 @@ $routes->group("transaksi", function ($routes) {
     $routes->add('cetakrekap',           'Transaksi::cetakRekap');
     //API
     $routes->post("setorsampah",  "Transaksi::setorSampah");
+    $routes->post("editsetorsampah",   "Transaksi::editSetorSampah");
     $routes->post("tariksaldo",   "Transaksi::tarikSaldo");
     $routes->post("tariksaldobsbl","Transaksi::tarikSaldo/bsbl");
     $routes->post("pindahsaldo",  "Transaksi::pindahSaldo");

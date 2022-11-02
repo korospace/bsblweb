@@ -12,7 +12,7 @@ class Artikel extends Migration
             'id' => [
                 // 'type'       => 'text', // postgre
                 'type'       => 'varchar', // mysql
-                'constraint' => 10,       // mysql BA00999999
+                'constraint' => 200,       // mysql BA00999999
                 'null'       => false,
             ],
             'title' => [
@@ -22,13 +22,11 @@ class Artikel extends Migration
                 'null'       => false,
             ],
             'slug' => [
-                'type' => 'varchar',
-                'constraint' => 300,
+                'type' => 'text',
                 'null' => false,
             ],
             'thumbnail' => [
-                'type' => 'varchar',
-                'constraint' => 50,
+                'type' => 'text',
                 'null' => false,
             ],
             'content' => [

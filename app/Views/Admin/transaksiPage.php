@@ -205,6 +205,9 @@
 															#
 														</th>
 														<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+															no
+														</th>
+														<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
 															kategori
 														</th>
 														<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
@@ -220,7 +223,7 @@
 												</thead>
 												<tbody style="border: 0.5px solid #E9ECEF;">
 													<tr id="special-tr">
-														<td colspan="4" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+														<td colspan="5" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
 															Total harga
 														</td>
 														<td class="p-2 text-left">

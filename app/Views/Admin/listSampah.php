@@ -118,10 +118,10 @@
 													Jenis
 												</th>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													Harga
+													Harga Pengepul
 												</th>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-													Harga Pengepul
+													Harga Nasabah
 												</th>
 												<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 													Jumlah(Kg)
@@ -226,52 +226,73 @@
 					<input type="hidden" name="id" id="id">
 					<!-- **** JENIS **** -->
 					<div class="input-group col-lg-12 mb-4 form-group">
+						<h6 class="font-italic text-xs text-secondary">Jenis</h6>
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text bg-gray px-4 border-md border-right-0">
 									<i class="fas fa-recycle text-muted"></i>
 								</span>
 							</div>
-							<input type="text" class="form-control px-2" id="jenis" name="jenis" autocomplete="off" placeholder="Jenis sampah">
+							<input type="text" class="form-control px-2" id="jenis" name="jenis" autocomplete="off">
 						</div>
 						<small
 							id="jenis-error"
 							class="text-danger"></small>
 					</div>
-					<!-- **** Harga **** -->
+					<!-- **** Harga Pengepul **** -->
 					<div class="form-row mb-4" style="padding-right: 2px;">
 						<div class="col">
+							<h6 class="font-italic text-xs text-secondary">Harga Pengepul</h6>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text bg-gray px-4 border-md border-right-0">
 										<i class="fas fa-money-bill-wave-alt text-muted"></i>
 									</span>
 								</div>
-								<input type="number" class="form-control px-2" id="harga" name="harga" autocomplete="off" placeholder="Harga">
-							</div>
-							<small
-								id="harga-error"
-								class="text-danger"></small>
-						</div>
-					</div>
-					<!-- **** Harga Pusat **** -->
-					<div class="form-row mb-4" style="padding-right: 2px;">
-						<div class="col">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text bg-gray px-4 border-md border-right-0">
-										<i class="fas fa-money-bill-wave-alt text-muted"></i>
-									</span>
-								</div>
-								<input type="number" class="form-control px-2" id="harga_pusat" name="harga_pusat" autocomplete="off" placeholder="Harga Pusat">
+								<input type="number" class="form-control px-2" id="harga_pusat" name="harga_pusat" autocomplete="off">
 							</div>
 							<small
 								id="harga_pusat-error"
 								class="text-danger"></small>
 						</div>
 					</div>
+					<!-- **** Harga Nasabah **** -->
+					<div class="form-row mb-4" style="padding-right: 2px;">
+						<div class="col">
+							<h6 class="font-italic text-xs text-secondary">Harga Nasabah</h6>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray px-4 border-md border-right-0">
+										<i class="fas fa-money-bill-wave-alt text-muted"></i>
+									</span>
+								</div>
+								<input type="number" class="form-control px-2" id="harga" name="harga" autocomplete="off" readonly>
+							</div>
+							<small
+								id="harga-error"
+								class="text-danger"></small>
+						</div>
+					</div>
+					<!-- **** Jumlah **** -->
+					<div class="form-row mb-4 d-none inputJumlah" style="padding-right: 2px;">
+						<div class="col">
+							<h6 class="font-italic text-xs text-secondary">Jumlah</h6>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text bg-gray px-4 border-md border-right-0">
+										<i class="fas fa-weight text-muted"></i>
+									</span>
+								</div>
+								<input type="text" class="form-control px-2" id="jumlah" name="jumlah" autocomplete="off" placeholder="Jumlah">
+							</div>
+							<small
+								id="jumlah-error"
+								class="text-danger"></small>
+						</div>
+					</div>
 					<!-- **** KATEGORI **** -->
 					<div class="input-group col-lg-12 mb-4 form-group">
+						<h6 class="font-italic text-xs text-secondary">Kategori</h6>
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text bg-gray px-4 border-md" style="max-height: 38px;">

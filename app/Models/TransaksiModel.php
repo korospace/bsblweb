@@ -81,6 +81,74 @@ class TransaksiModel extends Model
         }
     }
 
+    public function editSetorSampah(array $data): array
+    {
+        try {
+            $this->db->transBegin();
+            $date        = (int)strtotime($data['date']);
+            $idtransaksi = $data['idtransaksi'];
+            $idnasabah   = $data['id_nasabah'];
+
+            $oldSaldo = $this->db->table('setor_sampah')->select("sum(jumlah_rp) as uang")->where("id_transaksi",$idtransaksi)->get()->getFirstRow();
+            $oldSetorSampah = $this->db->table('setor_sampah')->select("*")->where("id_transaksi",$idtransaksi)->get()->getResultArray();
+
+            $this->db->query("UPDATE dompet SET uang=uang-$oldSaldo->uang WHERE id_user='$idnasabah';");
+            $this->db->query("DELETE FROM setor_sampah WHERE id_transaksi = '$idtransaksi';");
+
+            foreach ($oldSetorSampah as $t) {
+                $idSampah   = $t['id_sampah'];
+                $jumlah     = $t['jumlah_kg'];
+                $this->db->query("UPDATE sampah SET jumlah=jumlah-$jumlah WHERE id = '$idSampah';");
+            }
+
+            $totalHarga  = 0;
+            $queryDetilSetor = "INSERT INTO setor_sampah (id_transaksi,id_sampah,jumlah_kg,jumlah_rp) VALUES";
+
+            foreach ($data['transaksi'] as $t) {
+                $idSampah   = $t['id_sampah'];
+                $jumlah     = $t['jumlah'];
+                $hargaAsli  = $this->db->table('sampah')->select("harga")->where("id",$idSampah)->get()->getResultArray();
+                $harga      = (int)$hargaAsli[0]['harga']*(float)$jumlah;
+                $totalHarga = $totalHarga+$harga;
+
+                $this->db->query("UPDATE sampah SET jumlah=jumlah+$jumlah WHERE id = '$idSampah';");
+                $queryDetilSetor.= "('$idtransaksi','$idSampah',$jumlah,$harga),";
+            }
+
+            $queryDetilSetor  = rtrim($queryDetilSetor, ",");
+            $queryDetilSetor .= ';';
+
+            $this->db->query("UPDATE transaksi SET date=$date WHERE id='$idtransaksi';");
+            $this->db->query("UPDATE dompet SET uang=uang+$totalHarga WHERE id_user='$idnasabah';");
+            
+            $this->db->query($queryDetilSetor);
+
+            $transStatus = $this->db->transStatus();
+
+            if ($transStatus) {
+                $this->db->transCommit();
+            } 
+            else {
+                $this->db->transRollback();
+            }
+
+            return [
+                'status'   => ($transStatus) ? 201   : 500,
+                'error'    => ($transStatus) ? false : true,
+                'messages' => ($transStatus) ? 'setor sampah is success' : "setor sampah is failed",
+                'id_transaksi' => ($transStatus) ? $idtransaksi : null,
+            ];
+        } 
+        catch (Exception $e) {
+            $this->db->transRollback();
+            return [
+                'status'   => 500,
+                'error'    => true,
+                'messages' => $e->getTrace(),
+            ];
+        }
+    }
+
     public function getSaldoJenisX(string $idNasabah,string $jenisSaldo,bool $isAdmin = false): string
     {
         $this->db->transBegin();
@@ -392,11 +460,12 @@ class TransaksiModel extends Model
                 $code_transaksi = substr($get['id_transaksi'],0,3);
                 
                 if ($code_transaksi == 'TSS') {
-                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,sampah.jenis,setor_sampah.jumlah_kg,setor_sampah.jumlah_rp,transaksi.date 
+                    $transaction  = $this->db->query("SELECT transaksi.id AS id_transaksi,transaksi.id_user,transaksi.jenis_transaksi,users.nama_lengkap,kategori_sampah.name AS kategori,sampah.jenis,setor_sampah.jumlah_kg,setor_sampah.jumlah_rp,transaksi.date 
                     FROM transaksi 
                     JOIN users        ON (transaksi.id_user = users.id) 
                     JOIN setor_sampah ON (transaksi.id = setor_sampah.id_transaksi) 
                     JOIN sampah       ON (setor_sampah.id_sampah = sampah.id) 
+                    JOIN kategori_sampah ON (sampah.id_kategori = kategori_sampah.id)
                     WHERE transaksi.id = '$id_transaksi';")->getResultArray();
 
                     $transaction = $this->makeDetilSetorJualSampah($transaction);

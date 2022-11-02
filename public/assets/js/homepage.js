@@ -410,11 +410,11 @@ function doValidate() {
 		$('#contact-email-error').html('*email harus di isi');
 		status = false;
 	}
-	else if ($('#contact-email').val().length > 40) {
-		$('#contact-email').addClass('is-invalid');
-		$('#contact-email-error').html('*lebih dari 40 huruf');
-		status = false;
-	}
+	// else if ($('#contact-email').val().length > 40) {
+	// 	$('#contact-email').addClass('is-invalid');
+	// 	$('#contact-email-error').html('*lebih dari 40 huruf');
+	// 	status = false;
+	// }
 	else if (!emailRules.test(String($('#contact-email').val()).toLowerCase())) {
 		$('#contact-email').addClass('is-invalid');
 		$('#contact-email-error').html('*email tidak valid');

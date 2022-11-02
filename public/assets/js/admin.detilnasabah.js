@@ -1,3 +1,24 @@
+const confirmModalClose = (modalId) => {
+    if (document.querySelector(`${modalId} #total-harga`).innerHTML == 0) {
+        $(modalId).modal('hide');
+        $(".modal-backdrop").remove();
+        return 0;
+    }
+
+    Swal.fire({
+        title: 'Data akan terhapus <br> lanjut keluar?',
+        showDenyButton: true,
+        confirmButtonText: 'yes',
+        denyButtonText: `no`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $(modalId).modal('hide');
+          $(".modal-backdrop").remove();
+        } else if (result.isDenied) {
+          Swal.close()
+        }
+      })
+}
 
 /**
  * GET TOTAL SAMPAH MASUK
@@ -355,6 +376,9 @@ const getHistoriTransaksi = async () => {
                         <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 text-sm bg-info border-radius-sm" data-toggle="modal" data-target="#modalPrintTransaksi" onclick="getDetailTransaksiNasabah('${t.id_transaksi}');">
                             <i class="fas fa-file-pdf text-xs text-white"></i>
                         </a>
+                        <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 ml-1 text-sm bg-warning border-radius-sm" data-toggle="modal" data-target="#modalEditSetor" data-backdrop="static" data-keyboard="false" onclick="openModalEditSetor('${t.id_transaksi}',event);">
+                            <i class="fas fa-edit text-xs text-white"></i>
+                        </a>
                         <a href='' class="btn btn-link text-dark text-sm mb-0 p-2 ml-1 text-sm bg-danger border-radius-sm" onclick="deleteTransaksiNasabah('${t.id_transaksi}',event);">
                             <i class="fas fa-trash text-xs text-white"></i>
                         </a>
@@ -577,7 +601,7 @@ const openModalTransaksi = (modalTitle) => {
     $('#formTarikSaldo #maximal-saldo').html('');
     
     if (modalTitle == 'setor sampah') {
-        $('.barisSetorSampah').remove();
+        $('#formSetorSampah .barisSetorSampah').remove();
         tambahBaris();
         countTotalHarga();
     }
@@ -632,6 +656,11 @@ const tambahBaris = (event = false) => {
         </span>
     </td>
     <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <span class="nomor w-100 d-flex justify-content-center align-items-center border-radius-sm" style="height: 38px;margin: 0;">
+            ${$('.barisSetorSampah').size()+1}
+        </span>
+    </td>
+    <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
         <select id="kategori-berita-wraper" class="inputJenisSampah form-control form-control-sm py-1 pl-2 border-radius-sm" style="min-height: 38px" onchange="insertJenisSampah(this,event);">
             ${elKatSampah}
         </select>
@@ -652,12 +681,17 @@ const tambahBaris = (event = false) => {
     tr.classList.add('barisSetorSampah');
     
     tr.innerHTML=elementRow;
-    document.querySelector('#table-setor-sampah tbody').insertBefore(tr,document.querySelector('#special-tr'));
+    document.querySelector('#table-setor-sampah tbody').insertBefore(tr,document.querySelector('#formSetorSampah #special-tr'));
 }
 
 // tambah baris
 const hapusBaris = (el) => {
     el.parentElement.parentElement.remove();
+    
+    $('#formSetorSampah .barisSetorSampah').each(function (e,i) {
+        i.querySelector('.nomor').innerHTML = e+1;
+    })
+    
     countTotalHarga();
 }
 
@@ -682,6 +716,7 @@ const insertJenisSampah = (el,event) =>{
     elInputHarga.value           = 0;
     elInputHarga.setAttribute('data-harga',0);
     countTotalHarga();
+    countTotalHargaEditSetor();
 
     if (kategori != '') {
         elInputJenisSampah.removeAttribute('disabled');
@@ -725,11 +760,11 @@ const countHargaXjumlah = (el) =>{
 // count total harga sampah
 const countTotalHarga = () =>{
     let total = 0;
-    $(`.inputHargaSampah`).each(function() {
+    $(`#formSetorSampah .inputHargaSampah`).each(function() {
         total = total + parseFloat($(this).val());
     });
 
-    $('#special-tr #total-harga').html(modifUang(total.toString()));
+    $('#formSetorSampah #special-tr #total-harga').html(modifUang(total.toString()));
 };
 
 // Validate Setor sampah
@@ -753,7 +788,7 @@ const validateSetorSampah = () => {
     }
 
     // jenis sampah
-    $(`.inputJenisSampah`).each(function() {
+    $(`#formSetorSampah .inputJenisSampah`).each(function() {
         if ($(this).val() == '' || $(this).attr('disabled')) {
             $(this).addClass('is-invalid');
             status = false;
@@ -761,7 +796,7 @@ const validateSetorSampah = () => {
         }
     });
     // jumlah sampah
-    $(`.inputJumlahSampah`).each(function() {
+    $(`#formSetorSampah .inputJumlahSampah`).each(function() {
         if ($(this).val() == '') {
             $(this).addClass('is-invalid');
             status = false;
@@ -905,7 +940,10 @@ const validateTarikSaldo = () => {
     return status;
 }
 
-// Send Transaksi to API
+/**
+ * SEND TRANSAKSI SETOR TARIK KONVERSI
+ * =============================================
+ */
 const doTransaksi = async (el,event,method) => {
     event.preventDefault();
     let validate  = '';
@@ -926,114 +964,339 @@ const doTransaksi = async (el,event,method) => {
     }
 
     if (validate()) {
-        Swal.fire({
-            input: 'password',
-            inputAttributes: {
-                autocapitalize: 'off'
-            },
-            html:`<h5 class='mb-4'>Password</h5>`,
-            showCancelButton: true,
-            confirmButtonText: 'submit',
-            showLoaderOnConfirm: true,
-            preConfirm: (password) => {
-                let form = new FormData();
-                form.append('hashedpass',PASSADMIN);
-                form.append('password',password);
-    
-                return axios
-                .post(`${APIURL}/admin/confirmdelete`,form, {
-                    headers: {
-                        // header options 
-                    }
-                })
-                .then((response) => {
-                    doTransaksiInner();
-                })
-                .catch(error => {
-                    if (error.response.status == 404) {
-                        Swal.showValidationMessage(
-                            `password salah`
-                        )
-                    }
-                    else if (error.response.status == 500) {
-                        Swal.showValidationMessage(
-                            `terjadi kesalahan, coba sekali lagi`
-                        )
-                    }
-                })
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-        })
-        
-        let doTransaksiInner = async () => {
-            let form           = new FormData(elForm);
-            let tglTransaksi   = form.get('date').split('-');
-            let waktuTransaksi = form.get('time');
-            form.set('date',`${tglTransaksi[2]}-${tglTransaksi[1]}-${tglTransaksi[0]} ${waktuTransaksi}`);
+        let form           = new FormData(elForm);
+        let tglTransaksi   = form.get('date').split('-');
+        let waktuTransaksi = form.get('time');
+        form.set('date',`${tglTransaksi[2]}-${tglTransaksi[1]}-${tglTransaksi[0]} ${waktuTransaksi}`);
 
-            if (method == 'tariksaldo') {
-                if ($('#formTarikSaldo #jenis-emas').val() !== '') {
-                    form.set('jenis_saldo',$('#formTarikSaldo #jenis-emas').val());
-                }
-            } 
-    
-            showLoadingSpinner();
-            httpResponse = await httpRequestPost(`${APIURL}/transaksi/${method}`,form);    
-            hideLoadingSpinner();
-    
-            if (httpResponse.status === 201) {
-                $(`.form-control`).val('');
-                $('.form-check-input').prop('checked',false);
-                $(`input[type=date]`).val(getCurrentDate());
-                $(`input[type=time]`).val(getCurrentTime());
-                updateTableAndGrafik(`${tglTransaksi[0]}/${tglTransaksi[1]}/31`,method);
-                getSaldoNasabah();
-                
-                if (method == 'setorsampah') {
-                    $('.barisSetorSampah').remove();
-                    tambahBaris();
-                    countTotalHarga();
-                    getSampahMasuk();
-                } 
-                else if(method == 'tariksaldo'){
-                    $('#formTarikSaldo #maximal-saldo').html(``);
-                    $('#formTarikSaldo #jenis-emas').attr(`disabled`,true);
-                    $('#formTarikSaldo #jenis-emas').val('');
-                }
-    
-                showAlert({
-                    message: `<strong>Success...</strong> ${transaksiName} berhasil!`,
-                    autohide: true,
-                    type:'success'
-                })
+        if (method == 'tariksaldo') {
+            if ($('#formTarikSaldo #jenis-emas').val() !== '') {
+                form.set('jenis_saldo',$('#formTarikSaldo #jenis-emas').val());
             }
-            else if (httpResponse.status === 400) {
-                if (httpResponse.message.jumlah) {
-                    if (method == 'pindahsaldo') {
-                        $('#formPindahSaldo #jumlah').addClass('is-invalid');
-                        $('#formPindahSaldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
-                    } 
-                    else {
-                        $('#formTarikSaldo #jumlah').addClass('is-invalid');
-                        $('#formTarikSaldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
-                    }
+        } 
+
+        showLoadingSpinner();
+        httpResponse = await httpRequestPost(`${APIURL}/transaksi/${method}`,form);    
+        hideLoadingSpinner();
+
+        if (httpResponse.status === 201) {
+            $(`.form-control`).val('');
+            $('.form-check-input').prop('checked',false);
+            $(`input[type=date]`).val(getCurrentDate());
+            $(`input[type=time]`).val(getCurrentTime());
+            updateTableAndGrafik(`${tglTransaksi[0]}/${tglTransaksi[1]}/31`,method);
+            getSaldoNasabah();
+            
+            if (method == 'setorsampah') {
+                $('.barisSetorSampah').remove();
+                tambahBaris();
+                countTotalHarga();
+                getSampahMasuk();
+            } 
+            else if(method == 'tariksaldo'){
+                $('#formTarikSaldo #maximal-saldo').html(``);
+                $('#formTarikSaldo #jenis-emas').attr(`disabled`,true);
+                $('#formTarikSaldo #jenis-emas').val('');
+            }
+
+            showAlert({
+                message: `<strong>Success...</strong> ${transaksiName} berhasil!`,
+                autohide: true,
+                type:'success'
+            })
+        }
+        else if (httpResponse.status === 400) {
+            if (httpResponse.message.jumlah) {
+                if (method == 'pindahsaldo') {
+                    $('#formPindahSaldo #jumlah').addClass('is-invalid');
+                    $('#formPindahSaldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
+                } 
+                else {
+                    $('#formTarikSaldo #jumlah').addClass('is-invalid');
+                    $('#formTarikSaldo #jumlah-error').html(`*${httpResponse.message.jumlah}`);
                 }
             }
         }
+
+        // Swal.fire({
+        //     input: 'password',
+        //     inputAttributes: {
+        //         autocapitalize: 'off'
+        //     },
+        //     html:`<h5 class='mb-4'>Password</h5>`,
+        //     showCancelButton: true,
+        //     confirmButtonText: 'submit',
+        //     showLoaderOnConfirm: true,
+        //     preConfirm: (password) => {
+        //         let form = new FormData();
+        //         form.append('hashedpass',PASSADMIN);
+        //         form.append('password',password);
+    
+        //         return axios
+        //         .post(`${APIURL}/admin/confirmdelete`,form, {
+        //             headers: {
+        //                 // header options 
+        //             }
+        //         })
+        //         .then((response) => {
+        //             doTransaksiInner();
+        //         })
+        //         .catch(error => {
+        //             if (error.response.status == 404) {
+        //                 Swal.showValidationMessage(
+        //                     `password salah`
+        //                 )
+        //             }
+        //             else if (error.response.status == 500) {
+        //                 Swal.showValidationMessage(
+        //                     `terjadi kesalahan, coba sekali lagi`
+        //                 )
+        //             }
+        //         })
+        //     },
+        //     allowOutsideClick: () => !Swal.isLoading()
+        // })
     }
 }
 
-const updateTableAndGrafik = (valInputDate,method) => {
-    let unixStart     = new Date(`${valInputDate} 00:00:01`).getTime();
-    let isSetorSampah = (method == 'setorsampah') ? true : false ;
+/**
+ * Edit Setor Sampah
+ * =============================================
+ */
+const openModalEditSetor = async (id) => {
+    $('#formEditSetor .form-check-input').removeClass('is-invalid');
+    $('#formEditSetor .form-check-input').prop('checked',false);
+    $('#formEditSetor .form-control').removeClass('is-invalid');
+    $('#formEditSetor .text-danger').html('');
+    $(`#formEditSetor .form-control`).val('');
+    $('#formEditSetor .barisEditSetor').remove();
 
-    setCurrentStartDate(unixStart,isSetorSampah);
+    $('#formEditSetor #spinner').removeClass('d-none');
+    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?id_transaksi=${id}`);
     
-    if (method == 'setorsampah') {
-        getDataGrafikSetor();
-    } 
+    if (httpResponse.status === 200) {
+        $('#formEditSetor #spinner').addClass('d-none');
 
-    getHistoriTransaksi();
+        let date  = new Date(parseInt(httpResponse.data.data.date) * 1000);
+        let day   = date.toLocaleString("en-US",{day: "2-digit"});
+        let month = date.toLocaleString("en-US",{month: "2-digit"});
+        let year  = date.toLocaleString("en-US",{year: "numeric"});
+        let time  = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit',hour12: false });
+        let barang= httpResponse.data.data.barang;
+        console.log(`${year}-${month}-${day}`);
+        
+        $('#formEditSetor input[name=id_nasabah]').val(httpResponse.data.data.id_user);
+        $('#formEditSetor input[name=id_transaksi]').val(httpResponse.data.data.id_transaksi);
+        $('#formEditSetor input[name=date]').val(`${year}-${month}-${day}`);
+        $('#formEditSetor input[name=time]').val(time);
+
+        barang.forEach(b => {
+            tambahBarisEditSetor(false,b);
+        })
+
+        countTotalHargaEditSetor();
+    }
+};
+
+// hapus baris edit setor
+const hapusBarisEditSetor = (el) => {
+    el.parentElement.parentElement.remove();
+    
+    $('#formEditSetor .barisEditSetor').each(function (e,i) {
+        i.querySelector('.nomor').innerHTML = e+1;
+    })
+
+    countTotalHargaEditSetor();
+}
+
+// tambah baris edit setor
+const tambahBarisEditSetor = (event = false,barang = false) => {
+    if (event) {
+        event.preventDefault();
+    }
+
+    let tmpKatSampah = [];
+    let elKatSampah  = `<option data-kategori="" selected>-- kategori sampah  --</option>`;
+
+    if (arrayJenisSampah.length !== 0) {
+        arrayJenisSampah.forEach(s=> {
+            if (!tmpKatSampah.includes(s.kategori)) {
+                tmpKatSampah.push(s.kategori)
+                elKatSampah += `<option data-kategori="${s.kategori}"  ${barang.kategori == s.kategori ? 'selected' : ''}>${s.kategori}</option>`;
+            }
+        });
+    }
+
+    let eljenisSampah = `<option value='' data-harga='' selected>-- jenis sampah --</option>`;
+
+    if (barang != false) {
+        let arrayJenisSampahSorted = arrayJenisSampah.sort((a, b) => a.jenis.localeCompare(b.jenis));
+    
+        arrayJenisSampahSorted.forEach(s=> {
+            if (s.kategori == barang.kategori) {
+                eljenisSampah += `<option value='${s.id}' data-harga='${s.harga}' ${barang.jenis == s.jenis ? 'selected' : ''}>${s.jenis}</option>`;
+            }
+        });
+    }
+
+    let totalBaris = $('.barisEditSetor').size();
+    let elementRow = ` <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <span class="w-100 btn btn-danger d-flex justify-content-center align-items-center border-radius-sm" style="height: 38px;margin: 0;" onclick="hapusBarisEditSetor(this);">
+            <i class="fas fa-times text-white"></i>
+        </span>
+    </td>
+    <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <span class="nomor w-100 d-flex justify-content-center align-items-center border-radius-sm" style="height: 38px;margin: 0;">
+            ${$('.barisEditSetor').size()+1}
+        </span>
+    </td>
+    <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <select id="kategori-berita-wraper" class="inputJenisSampah form-control form-control-sm py-1 pl-2 border-radius-sm" style="min-height: 38px" onchange="insertJenisSampah(this,event);">
+            ${elKatSampah}
+        </select>
+    </td>
+    <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <select id="kategori-berita-wraper" class="inputJenisSampah form-control form-control-sm py-1 pl-2 border-radius-sm" name="transaksi[slot${totalBaris+1}][id_sampah]" style="min-height: 38px" onchange="getHargaInOptionEditSetor(this,event);" ${barang != false ? '' : 'disabled'}>
+            ${eljenisSampah}
+        </select>
+    </td>
+    <td class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+        <input type="text" class="inputJumlahSampah form-control form-control-sm pl-2 border-radius-sm" value="${barang != false ? barang.jumlah_kg : 0}" name="transaksi[slot${totalBaris+1}][jumlah]" style="min-height: 38px" onkeyup="countHargaXjumlahEditSetor(this);" autocomplete="off">
+    </td>
+    <td class="py-2">
+        <input type="text" class="inputHargaSampah form-control form-control-sm pl-2 border-radius-sm" style="min-height: 38px" data-harga="${barang != false ? barang.jumlah_rp/barang.jumlah_kg : 0}"  value="${barang != false ? barang.jumlah_rp : 0}" disabled>
+    </td>`
+
+    let tr = document.createElement('tr');
+    tr.classList.add('barisEditSetor');
+
+    tr.innerHTML=elementRow;
+    document.querySelector('#table-edit-setor tbody').insertBefore(tr,document.querySelector('#table-edit-setor #special-tr'));
+}
+
+// jenis sampah on change edit setor
+const getHargaInOptionEditSetor = (el,event) =>{
+    var harga = event.target.options[event.target.selectedIndex].dataset.harga;
+
+    let elInputJumlah   = el.parentElement.nextElementSibling.children[0];
+    elInputJumlah.value = 1;
+
+    let elInputHarga   = el.parentElement.nextElementSibling.nextElementSibling.children[0];
+    // elInputHarga.value = modifUang(harga);
+    elInputHarga.value = harga;
+    elInputHarga.setAttribute('data-harga',harga);
+
+    countTotalHargaEditSetor();
+};
+
+// count harga*jumlah edit setor
+const countHargaXjumlahEditSetor = (el) =>{
+    var jumlahKg = el.value == '' ? 0 : el.value;
+    let elInputJenis = el.parentElement.previousElementSibling.children[0];
+    
+    if (elInputJenis.value !== '') {
+        if (jumlahKg !== '') {
+            let elInputHarga = el.parentElement.nextElementSibling.children[0];
+            let harga        = elInputHarga.getAttribute('data-harga');
+            
+            elInputHarga.value = parseFloat(parseFloat(jumlahKg)*parseInt(harga)).toFixed(2);
+            countTotalHargaEditSetor();
+        }
+    }
+};
+
+// count total harga sampah edit setor
+const countTotalHargaEditSetor = () =>{
+    let total = 0;
+    $(`#formEditSetor .inputHargaSampah`).each(function() {
+        total = total + parseFloat($(this).val());
+    });
+
+    $('#formEditSetor #special-tr #total-harga').html(modifUang(total.toString()));
+};
+
+// Validate Edit Setor sampah
+const validateEditSetor = () => {
+    let status = true;
+    let msg    = '';
+    $('#formEditSetor .form-control').removeClass('is-invalid');
+    $('#formEditSetor .text-danger').html('');
+
+    // tgl transaksi
+    if ($('#formEditSetor #date').val() == '') {
+        $('#formEditSetor #date').addClass('is-invalid');
+        $('#formEditSetor #date-error').html('*waktu harus di isi');
+        status = false;
+    }
+    // waktu transaksi
+    if ($('#formEditSetor #time').val() == '') {
+        $('#formEditSetor #time').addClass('is-invalid');
+        $('#formEditSetor #date-error').html('*waktu harus di isi');
+        status = false;
+    }
+
+    // jenis sampah
+    $(`#formEditSetor .inputJenisSampah`).each(function() {
+        if ($(this).val() == '' || $(this).attr('disabled')) {
+            $(this).addClass('is-invalid');
+            status = false;
+            msg    = 'input tidak boleh kosong!';
+        }
+    });
+    // jumlah sampah
+    $(`#formEditSetor .inputJumlahSampah`).each(function() {
+        if ($(this).val() == '') {
+            $(this).addClass('is-invalid');
+            status = false;
+            msg    = 'input tidak boleh kosong!';
+        }
+        if (/[^0-9\.]/g.test($(this).val().replace(/ /g,''))) {
+            $(this).addClass('is-invalid');
+            status = false;
+            msg    = 'jumlah hanya boleh berupa angka positif dan titik!';
+        }
+    });
+
+    if (status == false && msg !== "") {
+        showAlert({
+            message: `<strong>${msg}</strong>`,
+            autohide: true,
+            type:'danger'
+        });
+    }
+
+    return status;
+}
+
+/**
+ * SEND EDIT SETOR
+ * =============================================
+ */
+const doEditSetor = async (el,event) => {
+    event.preventDefault();
+    let elForm    = el.parentElement.parentElement.parentElement;
+
+    if (validateEditSetor()) {
+        let form           = new FormData(elForm);
+        let tglTransaksi   = form.get('date').split('-');
+        let waktuTransaksi = form.get('time');
+        form.set('date',`${tglTransaksi[2]}-${tglTransaksi[1]}-${tglTransaksi[0]} ${waktuTransaksi}`);
+
+        showLoadingSpinner();
+        httpResponse = await httpRequestPost(`${APIURL}/transaksi/editsetorsampah`,form);    
+        hideLoadingSpinner();
+
+        if (httpResponse.status === 201) {
+            updateTableAndGrafik(`${tglTransaksi[0]}/${tglTransaksi[1]}/31`,'setorsampah');
+            getSaldoNasabah();
+
+            showAlert({
+                message: `<strong>Success...</strong> edit setor berhasil!`,
+                autohide: true,
+                type:'success'
+            })
+        }
+    }
 }
 
 /**
@@ -1158,3 +1421,17 @@ const cetakRekap = () => {
 
     window.open(rekapUrl, '_blank');
 };
+
+// update grafik
+const updateTableAndGrafik = (valInputDate,method) => {
+    let unixStart     = new Date(`${valInputDate} 00:00:01`).getTime();
+    let isSetorSampah = (method == 'setorsampah') ? true : false ;
+
+    setCurrentStartDate(unixStart,isSetorSampah);
+    
+    if (method == 'setorsampah') {
+        getDataGrafikSetor();
+    } 
+
+    getHistoriTransaksi();
+}

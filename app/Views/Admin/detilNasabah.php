@@ -129,7 +129,7 @@
 			<ul class="navbar-nav">
 				<!-- setor sampah -->
 				<li class="nav-item">
-					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalSetorSaldo" onclick="openModalTransaksi('setor sampah')" >
+					<a class="nav-link cursor-pointer" data-toggle="modal" data-target="#modalSetorSaldo"  data-backdrop="static" data-keyboard="false" onclick="openModalTransaksi('setor sampah')" >
 						<div
 							class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 							<i class="fas fa-trash-restore text-muted" style="font-size: 13px;transform: translateY(-1px);"></i>
@@ -676,7 +676,7 @@
 			<!-- modal header -->
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Setor sampah</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<button type="button" class="close" aria-label="Close" onclick="confirmModalClose('#modalSetorSaldo')">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -721,6 +721,9 @@
 									#
 								</th>
 								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									no
+								</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
 									kategori
 								</th>
 								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
@@ -736,7 +739,7 @@
 						</thead>
 						<tbody style="border: 0.5px solid #E9ECEF;">
 							<tr id="special-tr">
-								<td colspan="4" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+								<td colspan="5" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
 									Total harga
 								</td>
 								<td class="p-2 text-left">
@@ -1018,5 +1021,111 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<!-- **** Modal Edit Setor **** -->
+<div class="modal fade" id="modalEditSetor" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  	<form id="formEditSetor" class="modal-dialog modal-lg">
+		<div class="modal-content" style="position: relative;overflow: hidden;">
+			<!-- spinner -->
+			<div id="spinner" class="position-absolute bg-white d-flex align-items-center justify-content-center d-none" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
+				<img src="<?= base_url('assets/images/spinner.svg');?>" style="width: 40px;" />
+			</div>
+
+			<!-- modal header -->
+			<div class="modal-header" style="position: relative;;z-index:1;">
+				<h5 class="modal-title" id="exampleModalLongTitle">Edit Setor Sampah</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- modal body -->
+			<div class="modal-body row" style="position: relative;;z-index:1;">
+				<input type="hidden" name="id_nasabah" value="">
+				<input type="hidden" name="id_transaksi" value="">
+				
+				<!-- **** tgl transaksi **** -->
+				<!-- <h6 class="font-italic opacity-8 col-12 text-sm">Waktu transaksi</h6> -->
+				<div class="input-group col-12 col-lg-6 mb-5 form-group">
+					<div class="w-100 form-row">
+						<div class="input-group col-6">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-calendar-alt text-muted"></i>
+								</span>
+							</div>
+							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date" name="date">
+						</div>
+						<div class="input-group col-6">
+							<div class="input-group-prepend">
+								<span class="input-group-text bg-gray px-4 border-md">
+									<i class="fas fa-clock text-muted"></i>
+								</span>
+							</div>
+							<input type="time" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="time" name="time">
+						</div>
+					</div>
+					<small
+						id="date-error"
+						class="text-danger"></small>
+				</div>
+
+				<!-- **** table **** -->
+				<!-- <hr class="editnasabah-item horizontal col-12 dark mt-0 mb-4"> -->
+				<div class="table-responsive col-12" style="overflow: auto;font-family: 'qc-semibold';">
+					<table id="table-edit-setor" class="table table-sm text-center mb-0">
+						<thead class="bg-white" style="border: 0.5px solid #E9ECEF;">
+							<tr>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									#
+								</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									no
+								</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									kategori
+								</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									jenis
+								</th>
+								<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="border-right: 0.5px solid #E9ECEF;">
+									jumlah(kg)
+								</th>
+								<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+									harga
+								</th>
+							</tr>
+						</thead>
+						<tbody style="border: 0.5px solid #E9ECEF;">
+							<tr id="special-tr">
+								<td colspan="5" class="py-2" style="border-right: 0.5px solid #E9ECEF;">
+									Total harga
+								</td>
+								<td class="p-2 text-left">
+									Rp. <span id="total-harga"></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<!-- tambah baris -->
+				<div class="input-group col-12 mt-2">
+					<a href="" class="badge badge-info w-100 border-radius-sm" onclick="tambahBarisEditSetor(event);">
+						<i class="fas fa-plus text-white"></i>
+					</a>
+				</div>
+			</div>
+
+			<!-- modal footer -->
+			<div class="modal-footer" style="position: relative;z-index:1;">
+				<button id="submit" type="submit" class="btn btn-success d-flex justify-content-center align-items-center" style="height: 40.8px;" onclick="doEditSetor(this,event);">
+					<span id="text">Submit</span>
+					<img id="spinner" class="d-none" src="<?= base_url('assets/images/spinner-w.svg');?>" style="width: 20px;">
+				</button>
+			</div>
+		</div>
+	</form>
 </div>
 <?= $this->endSection(); ?>

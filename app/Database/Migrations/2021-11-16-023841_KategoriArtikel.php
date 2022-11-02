@@ -12,7 +12,7 @@ class KategoriArtikel extends Migration
             'id' => [
                 // 'type'       => 'text', // postgre
                 'type'       => 'varchar', // mysql
-                'constraint' => 6,       // mysql KA0999
+                'constraint' => 200,       // mysql KA0999
                 'null'       => false,
             ],
             'icon' => [

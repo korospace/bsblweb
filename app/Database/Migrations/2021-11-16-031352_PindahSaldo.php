@@ -23,13 +23,14 @@ class PindahSaldo extends Migration
             ],
             'jumlah' => [
                 // 'type'    => 'integer', // postgre
-                'type'       => 'int', // mysql
+                'type'       => 'DECIMAL', // mysql
+                'constraint' => '65,2',   // mysql
                 'null'       => false,
             ],
             'harga_emas' => [
                 // 'type'    => 'integer', // postgre
-                'type'       => 'int', // mysql
-                'default'    => 0,
+                'type'       => 'DECIMAL', // mysql
+                'constraint' => '11,2',   // mysql
                 'null'       => false,
             ],
             'hasil_konversi' => [

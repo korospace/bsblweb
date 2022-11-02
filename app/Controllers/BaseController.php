@@ -170,7 +170,7 @@ class BaseController extends ResourceController
         $mail = new PHPMailer(true);
 
         try {
-            $mail->isSMTP();                          
+            // $mail->isSMTP();                     
             $mail->Host       = 'smtp.gmail.com';
             $mail->Port       = 465;
             $mail->SMTPAuth   = true;
@@ -203,7 +203,7 @@ class BaseController extends ResourceController
         $mail = new PHPMailer(true);
 
         try {
-            $mail->isSMTP();                          
+            // $mail->isSMTP();                          
             $mail->Host       = 'smtp.gmail.com';
             $mail->Port       = 465;
             $mail->SMTPAuth   = true;
@@ -236,7 +236,7 @@ class BaseController extends ResourceController
         $mail = new PHPMailer(true);
 
         try {
-            $mail->isSMTP();                          
+            // $mail->isSMTP();                          
             $mail->Host       = 'smtp.gmail.com';
             $mail->Port       = 465;
             $mail->SMTPAuth   = true;

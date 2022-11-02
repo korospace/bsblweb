@@ -901,6 +901,52 @@ class Transaksi extends BaseController
     }
 
     /**
+     * Setor sampah
+     *   url    : domain.com/transaksi/setorsampah
+     *   method : PUT
+     */
+    public function editSetorSampah()
+    {
+        $result = $this->checkToken();
+        $this->checkPrivilege($result['data']['privilege'],['admin','superadmin']);
+
+        $data   = $this->request->getPost();
+        $this->validation->run($data,'editSetorSampah1');
+        $errors = $this->validation->getErrors();
+
+        if($errors) {
+            $response = [
+                'status'   => 400,
+                'error'    => true,
+                'messages' => $errors,
+            ];
+    
+            return $this->respond($response,400);
+        } 
+        else {
+            foreach ($data['transaksi'] as $t) {
+                $this->validation->run($t,'setorSampah2');
+                $errors = $this->validation->getErrors();
+    
+                if($errors) {
+                    $response = [
+                        'status'   => 400,
+                        'error'    => true,
+                        'messages' => $errors,
+                    ];
+            
+                    return $this->respond($response,400);
+                } 
+            }
+
+            $data['idtransaksi'] = $data["id_transaksi"];
+            $dbresponse          = $this->transaksiModel->editSetorSampah($data);
+
+            return $this->respond($dbresponse,$dbresponse['status']);
+        }
+    }
+
+    /**
      * Tarik saldo
      *   url    : domain.com/transaksi/tariksaldo
      *   method : POST

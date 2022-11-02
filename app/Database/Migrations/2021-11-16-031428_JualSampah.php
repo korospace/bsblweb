@@ -35,12 +35,14 @@ class JualSampah extends Migration
             ],
             'harga_nasabah' => [
                 // 'type'    => 'integer', // postgre
-                'type'       => 'int', // mysql
+                'type'       => 'DECIMAL', // mysql
+                'constraint' => '11,2',   // mysql
                 'null'       => false,
             ],
             'jumlah_rp' => [
                 // 'type'    => 'integer', // postgre
-                'type'       => 'int', // mysql
+                'type'       => 'DECIMAL', // mysql
+                'constraint' => '11,2',   // mysql
                 'null'       => false,
             ],
         ]);

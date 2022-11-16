@@ -1816,3 +1816,91 @@ preloader
 }
 
 /* End Services */
+
+/* 
+  Mobile Download
+*/
+.bg-finjop-blue {
+  background: rgb(83, 118, 41);
+}
+
+.bg-finjop-blue-400 {
+  background: #C1D966;
+}
+
+.bg-finjop-white {
+  background: white;
+}
+
+section.download #mobile-mockup {
+  width: 75%;
+  position: absolute;
+  filter: drop-shadow(0px 3px 36px rgba(83, 118, 41, 0.7));
+  -webkit-filter: drop-shadow(0px 3px 36px rgba(83, 118, 41, 0.7));
+}
+@media (max-width: 992px) {
+  section.download #mobile-mockup {
+    width: 90%;
+  }
+}
+@media (max-width: 768px) {
+  section.download #mobile-mockup {
+    width: 100%;
+    position: relative;
+  }
+}
+section.download .title {
+  font-size: 42px;
+  font-weight: 700;
+}
+@media (max-width: 1200px) {
+  section.download .title {
+    font-size: 36px;
+  }
+}
+@media (max-width: 992px) {
+  section.download .title {
+    font-size: 28px;
+  }
+}
+@media (max-width: 768px) {
+  section.download .title {
+    text-align: center;
+  }
+}
+section.download .description {
+  font-size: 18px;
+  font-weight: 400;
+}
+@media (max-width: 1200px) {
+  section.download .description {
+    font-size: 15px;
+  }
+}
+@media (max-width: 992px) {
+  section.download .description {
+    font-size: 12px;
+  }
+}
+@media (max-width: 768px) {
+  section.download .description {
+    text-align: center;
+  }
+}
+section.download #badges-wraper {
+  width: 220px;
+}
+@media (max-width: 1200px) {
+  section.download #badges-wraper {
+    width: 200px;
+  }
+}
+section.download #badges-wraper a {
+  transition: all 0.5s;
+}
+section.download #badges-wraper a.badge-appstore{
+  transform: scale(1.03);
+}
+section.download #badges-wraper a:hover {
+  transform: scale(1.1);
+}

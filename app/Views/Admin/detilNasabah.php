@@ -297,7 +297,16 @@
 						<!-- header -->
 						<div class="card-header pb-0" style="z-index: 11;">
 							<h5>Grafik Penyetoran</h5>
-							<div class="mt-3 form-row">
+							<div class="mt-2 position-relative" style="max-width: 120px;">
+								<select class='form-control form-control-sm' name="tahun-grafik-setor">
+										<option value="">-- pilih tahun --</option>
+									<?php foreach(range(2014, (int)date("Y")) as $year) { ?>
+										<option value="<?= $year ?>" <?= $year== (int)date("Y") ? 'selected' : ''?>><?= $year ?></option>
+									<?php } ?>
+								</select>
+								<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+							</div>
+							<!-- <div class="mt-3 form-row">
 								<div id="btn-filter-grafik" class="d-flex align-items-center">
 									<a class="shadow px-1 pt-1 border-radius-none mr-2" href="" data-toggle="modal" data-whatever="filter grafik" data-target="#modalFilterTransaksi" onclick="openModalFilterT('Filter Grafik');">
 										<i class="fas fa-sliders-h text-secondary"></i>
@@ -310,7 +319,7 @@
 										00/00/0000
 									</span>
 								</div>
-							</div>
+							</div> -->
 						</div>
 						<!-- spinner -->
 						<div id="spinner-wraper-grafik" class="position-absolute bg-white d-flex align-items-center justify-content-center pt-5" style="z-index: 10;top: 0;bottom: 0;left: 0;right: 0;">
@@ -992,8 +1001,16 @@
 			<!-- modal body -->
 			<div class="modal-body form-row w-100 px-3">
 				<form id="formRekapTransaksi" class="mt-3 col-12">
-					<h6 class="font-italic text-xs text-secondary">From</h6>
-					<div class="input-group col-12 px-0">
+					<h6 class="font-italic text-xs text-secondary">Jenis Rekap</h6>
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="jenis">
+							<option value="penimbangan-sampah">penimbangan sampah</option>
+							<option value="buku-tabungan">buku tabungan</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+					<h6 class="font-italic text-xs text-secondary mt-3 input-start-date">From</h6>
+					<div class="input-group col-12 px-0 input-start-date">
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-gray px-4 border-md">
 								<i class="fas fa-calendar-alt text-muted"></i>
@@ -1001,8 +1018,8 @@
 						</div>
 						<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-start" name="date-start">
 					</div>
-					<h6 class="font-italic text-xs text-secondary mt-3">To</h6>
-					<div class="input-group col-12 px-0">
+					<h6 class="font-italic text-xs text-secondary mt-3 input-end-date">To</h6>
+					<div class="input-group col-12 px-0 input-end-date">
 						<div class="input-group-prepend">
 							<span class="input-group-text bg-gray px-4 border-md">
 								<i class="fas fa-calendar-alt text-muted"></i>

@@ -24,7 +24,7 @@ class Sampah extends Migration
             'jenis' => [
                 // 'type'       => 'character varying', // postgre
                 'type'       => 'varchar', // mysql
-                'constraint' => 40,
+                'constraint' => 200,
                 'unique'     => true,
                 'null'       => false,
             ],

@@ -78,7 +78,7 @@ class UserModel extends Model
     public function getNasabah(array $get): array
     {
         try {
-            $query  = "SELECT users.id,users.nama_lengkap,users.last_active,users.is_verify,users.created_at 
+            $query  = "SELECT users.id,users.nama_lengkap,users.alamat,users.last_active,users.is_verify,users.created_at 
             FROM users
             JOIN wilayah ON (users.id = wilayah.id_user) 
             WHERE users.privilege = 'nasabah'";
@@ -116,8 +116,13 @@ class UserModel extends Model
                 }
     
                 if (isset($get['orderby'])) {
-                    $ascOrDesc = ($get['orderby'] == 'terbaru') ? 'DESC' : 'ASC' ;
-                    $query    .= " ORDER BY created_at $ascOrDesc";
+                    if ($get['orderby'] == 'norek') {
+                        $query    .= " ORDER BY id ASC";
+                    }
+                    else{
+                        $ascOrDesc = ($get['orderby'] == 'terbaru') ? 'DESC' : 'ASC' ;
+                        $query    .= " ORDER BY created_at $ascOrDesc";
+                    }
                 }
             }
 
@@ -135,7 +140,7 @@ class UserModel extends Model
             else {   
                 return [
                     'status' => 200,
-                    'error'  => true,
+                    'error'  => false,
                     'data'   => $nasabah
                 ];
             }

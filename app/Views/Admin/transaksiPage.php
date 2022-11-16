@@ -423,6 +423,19 @@
 												</div>
 											</div>
 										</div>
+
+										<!-- **** description **** -->
+										<h6 class="font-italic opacity-8 col-12 text-sm keterangan d-none">
+											Keterangan
+										</h6>
+										<div class="input-group col-12 col-md-6 mt-1 mb-4 form-group  keterangan d-none">
+											<div class="input-group">
+												<input type="text" class="form-control form-control-sm px-2 py-2 h-100" id="description" name="description" autocomplete="off">
+											</div>
+											<small
+												id="description-error"
+												class="text-danger"></small>
+										</div>
 									</div>
 
 									<div class="modal-footer form-row">
@@ -852,6 +865,16 @@
 							</div>
 							<input type="date" class="form-control form-control-sm px-2 h-100 border-radius-sm" id="date-end" name="date-end">
 						</div>
+						<h6 class="font-italic text-xs text-secondary mt-3">Jenis Rekap</h6>
+						<div class="mt-2 position-relative">
+							<select class='form-control form-control-sm' name="jenis">
+								<option value="penimbangan-sampah">penimbangan sampah</option>
+								<option value="penarikan-saldo">penarikan saldo</option>
+								<option value="penjualan-sampah">penjualan sampah</option>
+								<option value="konversi-saldo">konversi saldo</option>
+							</select>
+							<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+						</div>
 						<h6 class="font-italic text-xs text-secondary mt-4">Wilayah</h6>
 						<div class="mt-2 position-relative">
 							<select class='form-control form-control-sm' name="provinsi">
@@ -895,6 +918,38 @@
 					</button>
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<!-- **** Modal jenis transaksi **** -->
+	<div class="modal fade" id="modalJenisLaporan" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<form id="formJenisLaporan" class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Pilih Jenis Rekap</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body w-100 position-relative" style="overflow: hidden;">
+					<input type="hidden" name="date">
+					<div class="mt-2 position-relative">
+						<select class='form-control form-control-sm' name="jenis">
+							<option value="">-- jenis rekap --</option>
+							<option value="penimbangan-sampah">penimbangan sampah</option>
+							<option value="penarikan-saldo">penarikan saldo</option>
+							<option value="penjualan-sampah">penjualan sampah</option>
+							<option value="konversi-saldo">konversi saldo</option>
+						</select>
+						<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="btn-filter-rekap-custom" class="badge badge-success d-flex justify-content-center align-items-center border-0 cursor-pointer">
+						<span>Cetak</span>
+					</button>
+				</div>
+			</form>
 		</div>
 	</div>
 <?= $this->endSection(); ?>

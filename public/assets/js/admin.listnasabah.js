@@ -598,9 +598,9 @@ const doValidate = (form) => {
             $('#formAddEditNasabah #username-error').html('*username harus di isi');
             status = false;
         }
-        else if ($('#formAddEditNasabah #username').val().length < 7 || $('#formAddEditNasabah #username').val().length > 20) {
+        else if ($('#formAddEditNasabah #username').val().length < 8 || $('#formAddEditNasabah #username').val().length > 20) {
             $('#formAddEditNasabah #username').addClass('is-invalid');
-            $('#formAddEditNasabah #username-error').html('*minimal 7 huruf dan maksimal 20 huruf');
+            $('#formAddEditNasabah #username-error').html('*minimal 8 huruf dan maksimal 20 huruf');
             status = false;
         }
         else if (/\s/.test($('#formAddEditNasabah #username').val())) {
@@ -610,9 +610,9 @@ const doValidate = (form) => {
         }
         // new pass 
         if ($('#modalAddEditNasabah #newpass').val() !== '') {   
-            if ($('#modalAddEditNasabah #newpass').val().length < 7 || $('#modalAddEditNasabah #newpass').val().length > 20) {
+            if ($('#modalAddEditNasabah #newpass').val().length < 8 || $('#modalAddEditNasabah #newpass').val().length > 20) {
                 $('#modalAddEditNasabah #newpass').addClass('is-invalid');
-                $('#modalAddEditNasabah #newpass-error').html('*minimal 7 huruf dan maksimal 20 huruf');
+                $('#modalAddEditNasabah #newpass-error').html('*minimal 8 huruf dan maksimal 20 huruf');
                 status = false;
             }
             else if (/\s/.test($('#modalAddEditNasabah #newpass').val())) {

@@ -190,19 +190,13 @@
 							<!-- header -->
 							<div class="card-header pb-0" style="z-index: 11;">
 								<h5>Grafik Penyetoran</h5>
-								<div class="mt-3 form-row">
-									<div id="btn-filter-grafik" class="d-flex align-items-center">
-										<a class="shadow px-1 pt-1 border-radius-none mr-2" href="" data-toggle="modal" data-target="#modalFilterTransaksi" onclick="openModalFilterT('Filter Grafik');">
-											<i class="fas fa-sliders-h text-secondary"></i>
-										</a>
-										<span id="startdate" class=" text-secondary text-sm mt-1">
-											00/00/0000
-										</span>
-										<i class="fas fa-long-arrow-alt-right text-secondary mt-1 mx-2"></i>
-										<span id="enddate" class=" text-secondary text-sm mt-1">
-											00/00/0000
-										</span>
-									</div>
+								<div class="mt-2 position-relative" style="max-width: 120px;">
+									<select class='form-control form-control-sm' name="tahun-grafik-setor">
+										<?php foreach(range(2014, (int)date("Y")) as $year) { ?>
+											<option value="<?= $year ?>" <?= $year== (int)date("Y") ? 'selected' : ''?>><?= $year ?></option>
+										<?php } ?>
+									</select>
+									<i class="fas fa-sort-down text-secondary text-xs" style="position: absolute;top:6px;right:10px;"></i>
 								</div>
 							</div>
 							<!-- spinner -->

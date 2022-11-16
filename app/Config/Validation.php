@@ -502,10 +502,10 @@ class Validation
     //  edit profile
 	public $editProfileNasabah = [
 		'username' => [
-            'rules'  => 'required|min_length[7]|max_length[20]|is_unique[users.username,users.id,{id}]',
+            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username,users.id,{id}]',
             'errors' => [
                 'required'    => 'username is required',
-                'min_length'  => 'min 7 character',
+                'min_length'  => 'min 8 character',
                 'max_length'  => 'max 20 character',
                 'is_unique'   => 'username sudah terdaftar',
             ],
@@ -563,10 +563,10 @@ class Validation
 
 	public $editProfileNasabahByAdmin = [
 		'username' => [
-            'rules'  => 'required|min_length[7]|max_length[20]|is_unique[users.username,users.id,{id}]',
+            'rules'  => 'required|min_length[8]|max_length[20]|is_unique[users.username,users.id,{id}]',
             'errors' => [
                 'required'    => 'username is required',
-                'min_length'  => 'min 7 character',
+                'min_length'  => 'min 8 character',
                 'max_length'  => 'max 20 character',
                 'is_unique'   => 'username sudah terdaftar',
             ],
@@ -1248,6 +1248,30 @@ class Validation
             'errors' => [
                 'required'    => 'date is required',
                 'regex_match' => 'format must be dd-mm-yyyy hh:mm',
+            ],
+		],
+	];
+
+    public $tarikSaldoBst = [
+		'jumlah' => [
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required'   => 'jumlah is required',
+                'numeric'    => 'only number allowed',
+            ],
+		],
+		'date' => [
+            'rules'  => 'required|regex_match[/^[0-3][0-9][-][0-1][0-9][-][2-9][0-9][0-9][0-9] [0-2][0-9][:][0-5][0-9]$/]',
+            // 'rules'  => 'required|regex_match[/^(0[1-9]|[12][0-9]|3[01])[\-\ ](0[1-9]|1[012])[\-\ ](19|20)\d\d$/]',
+            'errors' => [
+                'required'    => 'date is required',
+                'regex_match' => 'format must be dd-mm-yyyy hh:mm',
+            ],
+		],
+        'description' => [
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'description is required',
             ],
 		],
 	];

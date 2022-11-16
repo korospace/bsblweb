@@ -120,6 +120,7 @@ getSaldoBsbl();
         $(`#form-tarik-saldo #input-jenis-emas`).addClass('d-none');
         $('#form-tarik-saldo #maximal-saldo').addClass('d-none');
         $('#form-tarik-saldo #maximal-saldo-bsbl').removeClass('d-none');
+        $('#form-tarik-saldo .keterangan').removeClass('d-none');
     }
     else{
         $('#barrier-transaksi').removeClass('d-none');
@@ -132,6 +133,7 @@ getSaldoBsbl();
         $(`#form-tarik-saldo #input-jenis-emas`).removeClass('d-none');
         $('#form-tarik-saldo #maximal-saldo').removeClass('d-none');
         $('#form-tarik-saldo #maximal-saldo-bsbl').addClass('d-none');
+        $('#form-tarik-saldo .keterangan').addClass('d-none');
     }
 })
 
@@ -501,7 +503,7 @@ $('#form-tarik-saldo input[name=jenis_saldo]').on('click', function() {
 })
 
 // Validate Tarik Saldo Nasabah
-const validateTarikSaldo = () => {
+const validateTarikSaldo = (pemilikSaldo) => {
     let status = true;
     let form   = new FormData(document.querySelector('#form-tarik-saldo'));
 
@@ -522,17 +524,19 @@ const validateTarikSaldo = () => {
         status = false;
     }
     // jenis saldo
-    if (form.get('jenis_saldo') == null) {
-        $('#form-tarik-saldo .form-check-input').addClass('is-invalid');
-        status = false;
-    }
-    if (form.get('jenis_saldo') == 'emas') {
-        if (form.get('jenis_emas') == '') {
-            $('#form-tarik-saldo #jenis-emas').addClass('is-invalid');
+    if (pemilikSaldo != "bsbl") {
+        if (form.get('jenis_saldo') == null) {
+            $('#form-tarik-saldo .form-check-input').addClass('is-invalid');
             status = false;
         }
+        if (form.get('jenis_saldo') == 'emas') {
+            if (form.get('jenis_emas') == '') {
+                $('#form-tarik-saldo #jenis-emas').addClass('is-invalid');
+                status = false;
+            }
+        }
     }
-    // jumlah pindah
+    // jumlah
     if ($('#form-tarik-saldo #jumlah').val() == '') {
         $('#form-tarik-saldo #jumlah').addClass('is-invalid');
         $('#form-tarik-saldo #jumlah-error').html('*jumlah saldo harus di isi');
@@ -542,6 +546,14 @@ const validateTarikSaldo = () => {
         $('#form-tarik-saldo #jumlah').addClass('is-invalid');
         $('#form-tarik-saldo #jumlah-error').html('*hanya boleh berupa angka positif dan titik!');
         status = false;
+    }
+    // keterangan
+    if(pemilikSaldo == 'bsbl') {
+        if ($('#form-tarik-saldo #description').val() == '') {
+            $('#form-tarik-saldo #description').addClass('is-invalid');
+            $('#form-tarik-saldo #description-error').html('*keterangan harus di isi');
+            status = false;
+        }
     }
 
     return status;
@@ -602,9 +614,9 @@ const doTransaksi = async (el,event,method) => {
         validate = validateTarikSaldo;
         transaksiName = 'tarik saldo';
 
+        console.log(pemilikSaldo);
         if (pemilikSaldo == "bsbl") {
             method = "tariksaldobsbl";
-            validate = validateTarikSaldoBsbl;
         }
     }
     else if (method == 'setorjualsampah') {
@@ -693,7 +705,7 @@ const doTransaksi = async (el,event,method) => {
         }
     }
 
-    if (validate()) {
+    if (validate(pemilikSaldo)) {
         doTransaksiInner();
 
         // Swal.fire({
@@ -1143,6 +1155,7 @@ const getDetailTransaksi = async (id) => {
         if (httpResponse.data.data.jenis_transaksi == 'penarikan saldo') {
             let jenisSaldo = httpResponse.data.data.jenis_saldo;
             let jumlah     = (jenisSaldo == 'uang')?'Rp '+modifUang(parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(0)):parseFloat(httpResponse.data.data.jumlah_tarik).toFixed(4)+' gram';
+            let keterangan = httpResponse.data.data.description;
 
             $('#detil-transaksi-body').html(`<div class="p-4 bg-secondary border-radius-sm">
                 <table>
@@ -1159,6 +1172,12 @@ const getDetailTransaksi = async (id) => {
                         <td><h4>: &nbsp;&nbsp;${jumlah}</h4></td>
                     </tr>
                 </table>
+                <div class="${(keterangan == null) ? 'd-none' : ""}">
+                    <hr class="horizontal dark mt-2">
+                    <div class="text-dark text-center">
+                        "<i>${keterangan}</i>"
+                    </div>
+                </div>
             </div>`);
         }
         // konversi saldo
@@ -1185,10 +1204,12 @@ const getDetailTransaksi = async (id) => {
         // setor sampah
         if (['penyetoran sampah'].includes(httpResponse.data.data.jenis_transaksi)) {
             let totalRp= 0;
+            let totalKg= 0;
             let trBody = '';
             let barang = httpResponse.data.data.barang;
             barang.forEach((b,i) => {
                 totalRp += parseFloat(b.jumlah_rp);
+                totalKg += parseFloat(b.jumlah_kg);
                 trBody  += `<tr class="text-center">
                     <th scope="row">${++i}</th>
                     <td>${b.jenis}</td>
@@ -1209,8 +1230,9 @@ const getDetailTransaksi = async (id) => {
                 <tbody>
                     ${trBody}
                     <tr>
-                        <th class="text-center" colspan='3'>Total</th>
-                        <td class="text-right">Rp ${modifUang(totalRp.toString())}</td>
+                        <th class="text-center" colspan='2'>Total</th>
+                        <td class="text-center">${parseFloat(totalKg).toFixed(2)}</td>
+                        <td class="text-center">${modifUang(totalRp.toString())}</td>
                     </tr>
                 </tbody>
             </table>`);
@@ -1483,29 +1505,32 @@ const cetakCustomRekap = () => {
     let formFilter      = new FormData(document.querySelector('#formFilterRekap-custom'));
     let inputStartDate  = formFilter.get('date-start').split('-');
     let inputEndDate    = formFilter.get('date-end').split('-');
+    let jenis           = formFilter.get('jenis');
     
     let start = `${inputStartDate[2]}-${inputStartDate[1]}-${inputStartDate[0]}`;
     let end   = `${inputEndDate[2]}-${inputEndDate[1]}-${inputEndDate[0]}`;
-    let customRekapTUrl = `${BASEURL}/transaksi/cetakrekap?start=${start}&end=${end}`;
+    let wilayah = "&wilayah=false";
+
+    let customRekapTUrl = `${BASEURL}/transaksi/cetakrekap/${jenis}?start=${start}&end=${end}`;
 
     if (formFilter.get('kelurahan')) {
+        wilayah = "&wilayah=true";
         customRekapTUrl  += `&kelurahan=${formFilter.get('kelurahan')}`;
     }
     if (formFilter.get('kecamatan')) {
+        wilayah = "&wilayah=true";
         customRekapTUrl  += `&kecamatan=${formFilter.get('kecamatan')}`;
     }
     if (formFilter.get('kota')) {
+        wilayah = "&wilayah=true";
         customRekapTUrl  += `&kota=${formFilter.get('kota')}`;
     }
     if (formFilter.get('provinsi')) {
+        wilayah = "&wilayah=true";
         customRekapTUrl  += `&provinsi=${formFilter.get('provinsi')}`
     }
-    if (formFilter.get('provinsi') == '') {
-        customRekapTUrl  = `${BASEURL}/transaksi/cetakrekap?start=${start}&end=${end}`;
-    }
 
-    console.log(customRekapTUrl);
-    window.open(customRekapTUrl, '_blank');
+    window.open(customRekapTUrl+wilayah, '_blank');
 };
 
 // reset filter rekap
@@ -1558,7 +1583,9 @@ const getRekapTransaksi = async () => {
                     </span>
                 </td>
                 <td class="align-middle text-center">
-                    <a href="${BASEURL}/transaksi/cetakrekap?date=${allTransaksi[key].date1}&${wilayahRekapUrl}" target="_blank" class="badge badge-dark text-xxs pb-1 cursor-pointer" style="border-radius:4px;">cetak</a>
+                    <a href="" target="_blank" class="badge badge-dark text-xxs pb-1 cursor-pointer" style="border-radius:4px;"  data-toggle="modal" data-target="#modalJenisLaporan" onclick="openModalJenisLaporan('${allTransaksi[key].date1}');">
+                        cetak
+                    </a>
                 </td>
                 <td class="align-middle text-sm text-center" style="border-right: 0.5px solid rgba(222, 226, 230, 0.6);">
                     <span class="text-xs text-name font-weight-bold">
@@ -1610,3 +1637,31 @@ const getRekapTransaksi = async () => {
     }
 };
 getRekapTransaksi();
+
+// open modal jenis laporan
+const openModalJenisLaporan = (date) => {
+    document.querySelector('#formJenisLaporan input[name=date]').value = date;
+}
+
+// OnSubmit: Form Jenis Laporan
+document.querySelector("#formJenisLaporan").addEventListener('submit', function (e) {
+    e.preventDefault()
+
+    let form = new FormData(e.target);
+
+    let date = form.get('date');
+    let jenis = form.get('jenis');
+
+    $('#formJenisLaporan input[name=jenis]').removeClass('is-invalid');
+
+    if (jenis == "") {
+        showAlert({
+            message: `<strong>Warning!!</strong> pilih jenis laporan !!`,
+            autohide: true,
+            type:'warning'
+        })
+        return 0;
+    }
+
+    window.open(`${BASEURL}/transaksi/cetakrekap/${jenis}?date=${date}&wilayah=${wilayahRekapUrl != "" ? 'true' : ''}&${wilayahRekapUrl}`,'_blank')
+})

@@ -33,6 +33,10 @@ class TarikSaldo extends Migration
                 'constraint' => '65,4',   // mysql
                 'null'       => false,
             ],
+            'description' => [
+                'type'       => 'text', // mysql
+                'null'       => true,
+            ],
         ]);
 
         $this->forge->addPrimaryKey('no');

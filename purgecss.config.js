@@ -4,11 +4,11 @@ module.exports = {
     // ** Footer
     // content: ['app/Views/Components/artikelFooter.php'],
     // ** homepage
-    // content: [
-    //     'app/Views/HomePage/index.php',
-    //     'app/Views/Components/artikelFooter.php',
-    //     'public/assets/js/homepage.js'
-    // ],
+    content: [
+        'app/Views/HomePage/index.php',
+        'app/Views/Components/artikelFooter.php',
+        'public/assets/js/homepage.js'
+    ],
     // ** list artikel
     // content: ['app/Views/HomePage/listArtikel.php','public/assets/js/listArtikel.js'],
     // ** list penghargaan
@@ -20,11 +20,11 @@ module.exports = {
     // ** detil artikel
     // content: ['app/Views/HomePage/detilArtikel.php','public/assets/js/detilArtikel.js'],
     // ** login
-    content: [
-        'app/Views/LoginPage/index.php',
-        'app/Views/LoginPage/loginAdmin.php',
-        'public/assets/js/login.js'
-    ],
+    // content: [
+    //     'app/Views/LoginPage/index.php',
+    //     'app/Views/LoginPage/loginAdmin.php',
+    //     'public/assets/js/login.js'
+    // ],
     // ** signup
     // content: ['app/Views/SignUp/index.php','public/assets/js/signup.js'],
     // ** otp

@@ -157,7 +157,6 @@ const filterTransaksi = async (e) => {
         dateEndGrafik   = `${endDate[2]}-${endDate[1]}-${endDate[0]}`;
         $('#btn-filter-grafik #startdate').html(`${startDate[2]}/${startDate[1]}/${startDate[0]}`);
         $('#btn-filter-grafik #enddate').html(`${endDate[2]}/${endDate[1]}/${endDate[0]}`);
-        updateGrafikSetorNasabah();
     }
 };
 
@@ -165,128 +164,135 @@ const filterTransaksi = async (e) => {
  * UPDATE GRAFIK SETOR
  * ========================================
  */
-let chartGrafik = '';
-const updateGrafikSetorNasabah = async () => {
-
-    $('#spinner-wraper-grafik').removeClass('d-none');
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?start=${dateStartGrafik}&end=${dateEndGrafik}`);
-    $('#spinner-wraper-grafik').addClass('d-none'); 
-    let arrayKg = [0];
-    let arrayId = [''];
-    
-    if (httpResponse.status === 200) {
-        let allTransaksi = httpResponse.data.data;
-        
-        allTransaksi.forEach(t => {
-            if (t.jenis_transaksi == 'penyetoran sampah') {
-                arrayId.push(t.id_transaksi);
-                arrayKg.push(t.total_kg_setor);
-            } 
-        });
-
-        // arrayKg.push(2,4,1.6,5,3,10,6,2.6,7,4);
-        // arrayId.push('TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589','TSS712429589');
-    }
-    if (chartGrafik != '') {
-        chartGrafik.destroy();
-    }
-
-    // if (arrayKg.length < 11) {
-    //     document.querySelector(".chart #label-y").classList.add('editTransateY');
-    // }
-    // else{
-    //     document.querySelector(".chart #label-y").classList.remove('editTransateY');
-    // }
-
-    var ctx2 = document.getElementById("chart-line").getContext("2d");
-    document.querySelector("#chart-line").style.width    = '100%';
-    document.querySelector("#chart-line").style.height   = '300px';
-    document.querySelector("#chart-line").style.maxHeight= '300px';
-
-    var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
-    gradientStroke1.addColorStop(1, 'rgba(193,217,102,0.2)');
-
-    var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
-    gradientStroke2.addColorStop(1, 'rgba(193,217,102,0.2)');
-
-    for (let i = arrayId.length; i <10; i++) {
-        arrayId.push(' ');
-    }
-
-    chartGrafik = new Chart(ctx2, {
-        type: "line",
-        data: {
-            labels: arrayId,
-            datasets: [
-                {
-                    label: "Kg",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    pointRadius: 0,
-                    borderColor: "#c1d966",
-                    borderWidth: 3,
-                    backgroundColor: gradientStroke1,
-                    fill: true,
-                    data: arrayKg,
-                    maxBarThickness: 6,
-                    minBarLength: 6,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false,
-                }
-            },
-            scales: {
-            y: {
-                grid: {
-                    drawBorder: false,
-                    display: true,
-                    drawOnChartArea: true,
-                    drawTicks: false,
-                    borderDash: [5, 5]
-                },
-                ticks: {
-                    display: true,
-                    padding: 10,
-                    color: '#b2b9bf',
-                    beginAtZero: true,
-                    font: {
-                        size: 11,
-                        family: "Open Sans",
-                        style: 'normal',
-                        lineHeight: 2
-                    },
-                }
-            },
-            x: {
-                grid: {
-                    drawBorder: false,
-                    display: false,
-                    drawOnChartArea: false,
-                    drawTicks: false,
-                    borderDash: [5, 5]
-                },
-                ticks: {
-                    display: true,
-                    color: '#b2b9bf',
-                    padding: 0,
-                    font: {
-                        size: 11,
-                        family: "Open Sans",
-                        style: 'normal',
-                        lineHeight: 2
-                    },
-                }
-            },
-            },
-        },
-    });
-};
+ let chartGrafik = '';
+ let grafikSetorYear = new Date().getFullYear();
+ let grafikSetorUrl  = `${APIURL}/transaksi/grafikssampah?year=${grafikSetorYear}&tampilan=per-bulan`;
+ 
+ const getDataGrafikSetor = async () => {
+     $('#spinner-wraper-grafik').removeClass('d-none');
+     let httpResponse = await httpRequestGet(grafikSetorUrl);
+     $('#spinner-wraper-grafik').addClass('d-none'); 
+ 
+     let chartType = 'line';
+     let arrayX = [""];
+     let arrayY = [0];
+     
+     if (httpResponse.status === 200) {
+         let allTransaksi = httpResponse.data.data;
+         
+         for (const key in allTransaksi) {
+             arrayX.push(key);
+             arrayY.push(allTransaksi[key].totSampahMasuk);
+         }
+     }
+ 
+     if (chartGrafik != '') {
+         chartGrafik.destroy();
+     }
+ 
+     var ctx2 = document.getElementById("chart-line").getContext("2d");
+     document.querySelector("#chart-line").style.width    = '100%';
+     document.querySelector("#chart-line").style.height   = '300px';
+     document.querySelector("#chart-line").style.maxHeight= '300px';
+ 
+     var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
+     gradientStroke1.addColorStop(1, 'rgba(193,217,102,0.2)');
+ 
+     var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+     gradientStroke2.addColorStop(1, 'rgba(193,217,102,0.2)');
+ 
+     for (let i = arrayX.length; i <10; i++) {
+         arrayX.push(' ');
+     }
+ 
+     if (chartType == 'line') {
+         if (arrayY.length == 1) {
+             arrayY = [];
+             arrayX.unshift('');
+         }
+     }
+ 
+     chartGrafik = new Chart(ctx2, {
+         type: chartType,
+         data: {
+             labels: arrayX,
+             datasets: [
+                 {
+                     label: "Kg",
+                     tension: 0.4,
+                     borderWidth: 0,
+                     pointRadius: 0,
+                     borderColor: "#c1d966",
+                     borderWidth: 3,
+                     backgroundColor: gradientStroke1,
+                     fill: true,
+                     data: arrayY,
+                     maxBarThickness: 6,
+                     minBarLength: 6,
+                 },
+             ],
+         },
+         options: {
+             responsive: true,
+             maintainAspectRatio: false,
+             plugins: {
+                 legend: {
+                     display: false,
+                 }
+             },
+             scales: {
+             y: {
+                 grid: {
+                     drawBorder: false,
+                     display: true,
+                     drawOnChartArea: true,
+                     drawTicks: false,
+                     borderDash: [5, 5]
+                 },
+                 ticks: {
+                     display: true,
+                     padding: 10,
+                     color: '#b2b9bf',
+                     beginAtZero: true,
+                     font: {
+                         size: 11,
+                         family: "Open Sans",
+                         style: 'normal',
+                         lineHeight: 2
+                     },
+                 }
+             },
+             x: {
+                 grid: {
+                     drawBorder: false,
+                     display: false,
+                     drawOnChartArea: false,
+                     drawTicks: false,
+                     borderDash: [5, 5]
+                 },
+                 ticks: {
+                     display: true,
+                     color: '#b2b9bf',
+                     padding: 0,
+                     font: {
+                         size: 11,
+                         family: "Open Sans",
+                         style: 'normal',
+                         lineHeight: 2
+                     },
+                 }
+             },
+             },
+         },
+     });
+ };
+ getDataGrafikSetor();
+ 
+ $("select[name=tahun-grafik-setor]").on('change', function () {
+     grafikSetorYear = $(this).val();
+     grafikSetorUrl  = `${APIURL}/transaksi/grafikssampah?year=${grafikSetorYear}&tampilan=per-bulan`;
+     getDataGrafikSetor();
+ })  
 
 /**
  * GET ALL TRANSAKSI NASABAH
@@ -358,7 +364,6 @@ const getHistoriTransaksi = async () => {
             </li>`;
         });
 
-        // updateGrafikSetorNasabah(arrayId,arrayKg);
         $('#transaksi-wraper-histori').html(`<ul class="list-group h-100 w-100" style="font-family: 'qc-medium';">
             ${elTransaksi}
         </ul>`);
@@ -435,15 +440,17 @@ const getDetailTransaksiNasabah = async (id) => {
         // setor sampah
         if (httpResponse.data.data.jenis_transaksi == 'penyetoran sampah') {
             let totalRp= 0;
+            let totalKg= 0;
             let trBody = '';
             let barang = httpResponse.data.data.barang;
             barang.forEach((b,i) => {
                 totalRp += parseFloat(b.jumlah_rp);
+                totalKg += parseFloat(b.jumlah_kg);
                 trBody  += `<tr class="text-center">
                     <th scope="row">${++i}</th>
                     <td>${b.jenis}</td>
                     <td>${parseFloat(b.jumlah_kg).toFixed(2)} kg</td>
-                    <td class="text-left">Rp ${modifUang(b.jumlah_rp)}</td>
+                    <td class="text-right">${modifUang(b.jumlah_rp)}</td>
                 </tr>`;
             })
 
@@ -459,8 +466,9 @@ const getDetailTransaksiNasabah = async (id) => {
                 <tbody>
                     ${trBody}
                     <tr>
-                        <th class="text-center" colspan='3'>Total</th>
-                        <td class="text-left">Rp ${modifUang(totalRp.toString())}</td>
+                        <th class="text-center" colspan='2'>Total</th>
+                        <td class="text-center">${parseFloat(totalKg).toFixed(2)}</td>
+                        <td class="text-center">${modifUang(totalRp.toString())}</td>
                     </tr>
                 </tbody>
             </table>`);
@@ -741,9 +749,9 @@ function validateFormEditProfile(form) {
         $('#username-edit-error').html('*username harus di isi');
         status = false;
     }
-    else if ($('#username-edit').val().length < 7 || $('#username-edit').val().length > 20) {
+    else if ($('#username-edit').val().length < 8 || $('#username-edit').val().length > 20) {
         $('#username-edit').addClass('is-invalid');
-        $('#username-edit-error').html('*minimal 7 huruf dan maksimal 20 huruf');
+        $('#username-edit-error').html('*minimal 8 huruf dan maksimal 20 huruf');
         status = false;
     }
     else if (/\s/.test($('#username-edit').val())) {
@@ -818,9 +826,9 @@ function validateFormEditProfile(form) {
     }
     // pass validation
     if ($('#newpass-edit').val() !== '') {   
-        if ($('#newpass-edit').val().length < 7 || $('#newpass-edit').val().length > 20) {
+        if ($('#newpass-edit').val().length < 8 || $('#newpass-edit').val().length > 20) {
             $('#newpass-edit').addClass('is-invalid');
-            $('#newpass-edit-error').html('*minimal 7 huruf dan maksimal 20 huruf');
+            $('#newpass-edit-error').html('*minimal 8 huruf dan maksimal 20 huruf');
             status = false;
         }
         else if (/\s/.test($('#newpass-edit').val())) {
@@ -840,7 +848,6 @@ function validateFormEditProfile(form) {
 
 if (pageTitle2 === 'dashboard') {
     getSampahMasuk();
-    updateGrafikSetorNasabah();
     getHistoriTransaksi();
     getDataSaldo();
     getAllJenisSampah();

@@ -49,6 +49,7 @@
                             <a class="text-white mb-3" href="#activity">Kegiatan</a>
                             <a class="text-white mb-3" href="#services">Layanan</a>
                             <a class="text-white mb-3" href="#contact-us">Kontak Kami</a>
+                            <a class="text-white mb-3" href="<?= base_url('/privacy') ?>">Privacy Policy</a>
                         </div>
                     </div>
                 </div>

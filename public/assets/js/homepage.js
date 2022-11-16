@@ -429,3 +429,31 @@ function doValidate() {
 
 	return status;
 }
+
+/* 
+-------------- 
+Link Download On Click 
+--------------
+*/
+document.querySelectorAll('#badges-wraper a').forEach(function (e) {
+	e.addEventListener('click', function (event) {
+		event.preventDefault();
+	
+		let href = event.target.parentElement.getAttribute('href');
+		
+		if (href != '') {
+			window.open(href,'_blank');
+		} else {
+			Swal.fire({
+				title:`Maaf, link belum tersedia`,
+				iconHtml: `<img src="${BASEURL}/assets/images/cukupbaik.svg" style="width: 120px;">`,
+				showCloseButton: false,
+				showCancelButton: true,
+				showConfirmButton: false,
+				focusConfirm: false,
+				cancelButtonText:
+				  'tutup',
+			});
+		}
+	})
+})

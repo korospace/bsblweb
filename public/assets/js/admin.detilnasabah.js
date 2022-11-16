@@ -190,7 +190,7 @@ const filterTransaksi = async (e) => {
         dateEndGrafik   = `${endDate[2]}-${endDate[1]}-${endDate[0]}`;
         $('#btn-filter-grafik #startdate').html(`${startDate[2]}/${startDate[1]}/${startDate[0]}`);
         $('#btn-filter-grafik #enddate').html(`${endDate[2]}/${endDate[1]}/${endDate[0]}`);
-        getDataGrafikSetor();
+        // getDataGrafikSetor();
     }
 };
 
@@ -199,24 +199,27 @@ const filterTransaksi = async (e) => {
  * ========================================
  */
 let chartGrafik = '';
-const getDataGrafikSetor = async () => {
+let grafikSetorYear = new Date().getFullYear();
+let grafikSetorUrl  = `${APIURL}/transaksi/grafikssampah?year=${grafikSetorYear}&tampilan=per-bulan&idnasabah=${IDNASABAH}`;
 
+const getDataGrafikSetor = async () => {
     $('#spinner-wraper-grafik').removeClass('d-none');
-    let httpResponse = await httpRequestGet(`${APIURL}/transaksi/getdata?idnasabah=${IDNASABAH}&start=${dateStartGrafik}&end=${dateEndGrafik}`);
+    let httpResponse = await httpRequestGet(grafikSetorUrl);
     $('#spinner-wraper-grafik').addClass('d-none'); 
-    let arrayKg = [0];
-    let arrayId = [''];
+
+    let chartType = 'line';
+    let arrayX = [""];
+    let arrayY = [0];
     
     if (httpResponse.status === 200) {
         let allTransaksi = httpResponse.data.data;
         
-        allTransaksi.forEach(t => {
-            if (t.jenis_transaksi == 'penyetoran sampah') {
-                arrayId.push(t.id_transaksi);
-                arrayKg.push(t.total_kg_setor);
-            } 
-        });
+        for (const key in allTransaksi) {
+            arrayX.push(key);
+            arrayY.push(allTransaksi[key].totSampahMasuk);
+        }
     }
+
     if (chartGrafik != '') {
         chartGrafik.destroy();
     }
@@ -232,14 +235,21 @@ const getDataGrafikSetor = async () => {
     var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
     gradientStroke2.addColorStop(1, 'rgba(193,217,102,0.2)');
 
-    for (let i = arrayId.length; i <10; i++) {
-        arrayId.push(' ');
+    for (let i = arrayX.length; i <10; i++) {
+        arrayX.push(' ');
+    }
+
+    if (chartType == 'line') {
+        if (arrayY.length == 1) {
+            arrayY = [];
+            arrayX.unshift('');
+        }
     }
 
     chartGrafik = new Chart(ctx2, {
-        type: "line",
+        type: chartType,
         data: {
-            labels: arrayId,
+            labels: arrayX,
             datasets: [
                 {
                     label: "Kg",
@@ -250,7 +260,7 @@ const getDataGrafikSetor = async () => {
                     borderWidth: 3,
                     backgroundColor: gradientStroke1,
                     fill: true,
-                    data: arrayKg,
+                    data: arrayY,
                     maxBarThickness: 6,
                     minBarLength: 6,
                 },
@@ -311,6 +321,12 @@ const getDataGrafikSetor = async () => {
     });
 };
 getDataGrafikSetor();
+
+$("select[name=tahun-grafik-setor]").on('input', function () {
+    grafikSetorYear = $(this).val();
+    grafikSetorUrl  = `${APIURL}/transaksi/grafikssampah?year=${grafikSetorYear}&tampilan=per-bulan&idnasabah=${IDNASABAH}`;
+    getDataGrafikSetor();
+}) 
 
 /**
  * GET ALL TRANSAKSI NASABAH
@@ -466,10 +482,12 @@ const getDetailTransaksiNasabah = async (id) => {
         // setor sampah
         if (httpResponse.data.data.jenis_transaksi == 'penyetoran sampah') {
             let totalRp= 0;
+            let totalKg= 0;
             let trBody = '';
             let barang = httpResponse.data.data.barang;
             barang.forEach((b,i) => {
                 totalRp += parseFloat(b.jumlah_rp);
+                totalKg += parseFloat(b.jumlah_kg);
                 trBody  += `<tr class="text-center">
                     <th scope="row">${++i}</th>
                     <td>${b.jenis}</td>
@@ -490,8 +508,9 @@ const getDetailTransaksiNasabah = async (id) => {
                 <tbody>
                     ${trBody}
                     <tr>
-                        <th class="text-center" colspan='3'>Total</th>
-                        <td class="text-right">Rp ${modifUang(totalRp.toString())}</td>
+                        <th class="text-center" colspan='2'>Total</th>
+                        <td class="text-center">${parseFloat(totalKg).toFixed(2)}</td>
+                        <td class="text-center">${modifUang(totalRp.toString())}</td>
                     </tr>
                 </tbody>
             </table>`);
@@ -1348,7 +1367,7 @@ const deleteTransaksiNasabah = (id,event) => {
                                     $('#btn-filter-grafik #startdate').html($('#btn-filter-histori #startdate').html());
                                     $('#btn-filter-grafik #enddate').html($('#btn-filter-histori #enddate').html());
                                     
-                                    getDataGrafikSetor();
+                                    // getDataGrafikSetor();
                                 }
 
                                 getHistoriTransaksi();
@@ -1378,6 +1397,19 @@ const deleteTransaksiNasabah = (id,event) => {
  * REKAP TRANSAKSI
  * ============================================
  */
+// input jenis on change
+$('#formRekapTransaksi select[name=jenis]').on('change',function (e) {
+    let value = $(this).val();
+
+    if (value == 'buku-tabungan') {
+        $('#formRekapTransaksi .input-start-date').addClass('d-none');
+        $('#formRekapTransaksi .input-end-date').addClass('d-none');
+    }
+    else {
+        $('#formRekapTransaksi .input-start-date').removeClass('d-none');
+        $('#formRekapTransaksi .input-end-date').removeClass('d-none');
+    }
+})
 
 // input date on change
 $('#formRekapTransaksi input[type=date]').on('change',function (e) {
@@ -1407,9 +1439,17 @@ $('#formRekapTransaksi input[type=date]').on('change',function (e) {
 // do filter rekap
 const cetakRekap = () => {
     let formFilter      = new FormData(document.querySelector('#formRekapTransaksi'));
+    let jenis           = formFilter.get('jenis');
 
-    if (formFilter.get('date-start') == '' || formFilter.get('date-end') == '') {
-        return 0;
+    if (jenis != 'buku-tabungan') {
+        if (formFilter.get('date-start') == '' || formFilter.get('date-end') == '') {
+            showAlert({
+                message: `<strong>Perhatian...</strong> isi waktu mulai dan waktu berakhir!`,
+                autohide: true,
+                type:'warning'
+            })
+            return 0;
+        }
     }
 
     let inputStartDate  = formFilter.get('date-start').split('-');
@@ -1417,7 +1457,7 @@ const cetakRekap = () => {
     
     let start    = `${inputStartDate[2]}-${inputStartDate[1]}-${inputStartDate[0]}`;
     let end      = `${inputEndDate[2]}-${inputEndDate[1]}-${inputEndDate[0]}`;
-    let rekapUrl = `${BASEURL}/transaksi/cetakrekap?start=${start}&end=${end}&idnasabah=${IDNASABAH}`;
+    let rekapUrl = `${BASEURL}/transaksi/cetakrekap/${jenis}?start=${start}&end=${end}&idnasabah=${IDNASABAH}`;
 
     window.open(rekapUrl, '_blank');
 };
@@ -1430,7 +1470,7 @@ const updateTableAndGrafik = (valInputDate,method) => {
     setCurrentStartDate(unixStart,isSetorSampah);
     
     if (method == 'setorsampah') {
-        getDataGrafikSetor();
+        // getDataGrafikSetor();
     } 
 
     getHistoriTransaksi();

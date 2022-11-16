@@ -27,6 +27,18 @@ class JualSampah extends Migration
                 'constraint' => 200,       // mysql
                 'null'       => false,
             ],
+            // alter table jual_sampah add column harga int(11) not null default 0 after id_sampah
+            'harga' => [
+                // 'type' => 'integer', // postgre
+                'type' => 'int', // mysql
+                'null' => false,
+            ],
+            // alter table jual_sampah add column harga_pusat int(11) not null default 0 after id_sampah
+            'harga_pusat' => [
+                // 'type' => 'integer', // postgre
+                'type'    => 'int', // mysql
+                'default' => 0,
+            ],
             'jumlah_kg' => [
                 // 'type'    => 'numeric', // postgre
                 'type'       => 'DECIMAL', // mysql

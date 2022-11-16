@@ -37,6 +37,11 @@ $routes->add('/penghargaan',       'HomePage::listPenghargaan');
 $routes->add('/homepage/(:any)',   'HomePage::listArtikel/$1');
 $routes->add('/artikel/(:any)',    'HomePage::detilArtikel/$1');
 $routes->get("/homepage/statistik","HomePage::getStatistik");
+$routes->get("/privacy",function () {
+    echo view("HomePage/privacy",[
+        "title" => "Privacy Policy"
+    ]);
+});
 
 $routes->group("register", function ($routes) {
     // VIEWS
@@ -97,6 +102,7 @@ $routes->group("admin", function ($routes) {
     $routes->add('addartikel',         'Admin::addArtikelView');
     $routes->add('editartikel/(:any)', 'Admin::editArtikelView/$1');
     $routes->add('profile',            'Admin::profileAdmin');
+    $routes->add('printlistnasabah',   'Admin::printListNasabah');
     // API
     // $routes->post("login",           "Admin::login");
     $routes->post("confirmdelete",   "Admin::confirmDelete");
@@ -156,20 +162,25 @@ $routes->group("mitra", function ($routes) {
 $routes->group("transaksi", function ($routes) {
     $routes->add('cetaktransaksi/(:any)','Transaksi::cetakTransaksi/$1');
     $routes->add('cetakrekap',           'Transaksi::cetakRekap');
+    $routes->add('cetakrekap/penimbangan-sampah', 'Transaksi::cetakLaporanPenimbanganSampah');
+    $routes->add('cetakrekap/penarikan-saldo',    'Transaksi::cetakLaporanPenarikanSaldo');
+    $routes->add('cetakrekap/penjualan-sampah',   'Transaksi::cetakLaporanPenjualanSampah');
+    $routes->add('cetakrekap/konversi-saldo',     'Transaksi::cetakLaporanKonversiSaldo');
+    $routes->add('cetakrekap/buku-tabungan',      'Transaksi::cetakLaporanBukuTabungan');
     //API
-    $routes->post("setorsampah",  "Transaksi::setorSampah");
+    $routes->post("setorsampah",       "Transaksi::setorSampah");
     $routes->post("editsetorsampah",   "Transaksi::editSetorSampah");
-    $routes->post("tariksaldo",   "Transaksi::tarikSaldo");
-    $routes->post("tariksaldobsbl","Transaksi::tarikSaldo/bsbl");
-    $routes->post("pindahsaldo",  "Transaksi::pindahSaldo");
-    $routes->post("jualsampah",   "Transaksi::jualSampah");
-    $routes->get("sampahmasuk",   "Transaksi::getSampahMasuk");
-    $routes->get("getsaldo",      "Transaksi::getSaldo");
-    $routes->get("getdata",       "Transaksi::getData");
-    $routes->get("rekapdata",     "Transaksi::rekapData");
-    $routes->get("grafikssampah", "Transaksi::grafikSetorSampah");
-    $routes->delete("deletedata", "Transaksi::deleteData");
-    $routes->add("(:any)",        "Notfound::PageNotFound");
+    $routes->post("tariksaldo",        "Transaksi::tarikSaldo");
+    $routes->post("tariksaldobsbl",    "Transaksi::tarikSaldo/bsbl");
+    $routes->post("pindahsaldo",       "Transaksi::pindahSaldo");
+    $routes->post("jualsampah",        "Transaksi::jualSampah");
+    $routes->get("sampahmasuk",        "Transaksi::getSampahMasuk");
+    $routes->get("getsaldo",           "Transaksi::getSaldo");
+    $routes->get("getdata",            "Transaksi::getData");
+    $routes->get("rekapdata",          "Transaksi::rekapData");
+    $routes->get("grafikssampah",      "Transaksi::grafikSetorSampah");
+    $routes->delete("deletedata",      "Transaksi::deleteData");
+    $routes->add("(:any)",             "Notfound::PageNotFound");
 });
 
 $routes->add('/(:any)', 'Notfound::PageNotFound');

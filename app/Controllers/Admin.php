@@ -382,6 +382,100 @@ class Admin extends BaseController
         }
     }
 
+    public function printListNasabah()
+    {
+        $token     = (isset($_COOKIE['token'])) ? $_COOKIE['token'] : null;
+        $result    = $this->checkToken($token, false);
+        $privilege = (isset($result['data']['privilege'])) ? $result['data']['privilege'] : null;
+
+        if ($token == null || $result['success'] == false || !in_array($privilege,['superadmin','admin'])) {
+            setcookie('token', null, -1, '/');
+            unset($_COOKIE['token']);
+
+            if ($privilege == 'nasabah') {
+                return redirect()->to(base_url().'/login');
+            }
+            else{
+                return redirect()->to(base_url().'/login/admin');
+            }
+        }
+
+        $getnasabah = $this->userModel->getNasabah(['orderby' => 'norek']);
+
+        $noNasabah = 1;
+        $trNasabah = "";
+
+        foreach ($getnasabah['data'] as $value) {
+
+            $bg = ($noNasabah % 2 == 0) ? "style='background: rgb(230, 230, 230);'" : "style='background: rgb(255, 255, 255);'";
+
+            $trNasabah .= "<tr $bg>
+                <td style='font-size: 0.7em;font-family: sans;'>
+                    ".$noNasabah++."
+                </td>
+                <td style='text-align: center;font-size: 0.7em;font-family: sans;'>
+                    ".$value["id"]."
+                </td>
+                <td style='text-align: left;font-size: 0.7em;font-family: sans;'>
+                    ".strtoupper($value["nama_lengkap"])."
+                </td>
+                <td style='text-align: center;font-size: 0.7em;font-family: sans;'>
+                    ".$value["alamat"]."
+                </td>
+            </tr>";
+        }
+
+        $mpdf = new \Mpdf\Mpdf();
+        
+        $mpdf->WriteHTML("
+        <!DOCTYPE html>
+        <html lang='en'>
+        
+        <head>
+            <meta charset='utf-8'>
+            <title>bsbl | daftar nasabah</title>
+        </head>
+        
+        <body>
+            <div style='border-bottom: 2px solid black;padding-bottom: 20px;'>
+                <table border='0' width='100%'>
+                   <tr>
+                        <th style='text-align: left;'>
+                            <img src='".base_url()."/assets/images/banksampah-logo.png' style='width: 160px;'>
+                        </th>
+                        <th style='text-align: right;'>
+                            <h1  style='font-size: 2em;'>
+                                DAFTAR NASABAH
+                            </h1>
+                            <span  style='font-size: 1em;font-family: sans;'>
+                                ".date("F d, Y", time())."
+                            </span>
+                        </th>
+                    </tr>';
+                </table>
+            </div>
+
+            <table border='0' width='100%' cellpadding='5' style='margin-top: 40px;'>
+                <thead>
+                    <tr style='font-size: 0.8em;'>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>No</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>No Rekening</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Nama Lengkap</th>
+                        <th style='border: 0.5px solid black;font-size: 0.8em;font-family: sans;'>Alamat</th>
+                    </tr>
+                <thead>
+                <tbody>
+                    $trNasabah
+                </tbody>
+            </table>
+        </body>
+        
+        </html>");
+
+        $this->response->setHeader('Content-Type', 'application/pdf');
+        $mpdf->Output('daftar nasabah bank sampah teratai.pdf', 'I');
+    }
+
     /**
      * Confirm delete
      *   url    : domain.com/admin/confirmdelete

@@ -20,7 +20,7 @@ class Dompet extends Migration
                 // 'type'       => 'text', // postgre
                 'type'       => 'varchar', // mysql
                 'constraint' => 200,       // mysql
-                'null'       => false,
+                'null'       => true,
             ],
             'uang' => [
                 // 'type'    => 'integer', // postgre

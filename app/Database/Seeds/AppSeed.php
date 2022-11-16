@@ -35,7 +35,7 @@ class AppSeed extends Seeder
          * Dompet Admin
          */
         $dataDompet = [
-            'id_user' => 'A001',
+            'id_user' => null,
             'uang'    => 0,
             'emas'    => 0,
         ];

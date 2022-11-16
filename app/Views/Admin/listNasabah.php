@@ -97,7 +97,7 @@
 						<div class="card mb-4 h-100 d-flex flex-column" style="max-height: 100%;overflow: hidden;font-family: 'qc-semibold';">
 							<!-- search input -->
 							<div class="card-header form-row pb-0 mb-3 d-flex justify-content-between" style="font-family: 'qc-semibold';">
-								<div class="input-group col-12 col-sm-6">
+								<div class="input-group col-12 col-md-6 mb-3">
 									<div class="input-group-prepend">
 										<span class="input-group-text bg-gray px-4 border-md border-right-0" style="max-height: 39px;">
 											<i class="fas fa-search text-muted"></i>
@@ -105,8 +105,9 @@
 									</div>
 									<input id="search-nasabah" type="text" class="form-control h-100 px-2" placeholder="id/nama lengkap" style="max-height: 39px;">
 								</div>
-								<div class="input-group col-12 col-sm-1 p-0" style="min-width: 90px;">
-									<button class="btn btn-success mt-4 mt-sm-0 text-xxs" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('addnasabah')" style="width: 100%;">tambah</button>
+								<div class="input-group col-12 col-md-3">
+									<button class="btn btn-success text-xxs" data-toggle="modal" data-target="#modalAddEditNasabah" onclick="openModalAddEditNsb('addnasabah')" style="width: 50%;">tambah</button>
+									<a href="<?= base_url('/admin/printlistnasabah') ?>" target="_blank" class="btn btn-primary text-xxs" style="width: 50%;">cetak</a>
 								</div>
 								<div class="input-group col-12 flex-column text-sm">
 									<div class="d-flex align-items-center">
